@@ -59,6 +59,7 @@ module.exports = {
     template: require('./templates/notification.pug'),
     events: {
       'click .server-message': 'markAsRead',
+      'click .view-all': 'markAllAsRead',
     },
 
     initialize(options) {
@@ -126,7 +127,7 @@ module.exports = {
     markAsRead(e) {
       e.preventDefault();
 
-      const message_id = $(e.target).closest('a.server-message').data('messageid');
+      const message_id = $(e.target).closest('.server-message').data('messageid');
 
       let message = _.find(this.model.data, m => m.id == message_id);
       this.notifications.markAsRead(message_id);
@@ -137,6 +138,10 @@ module.exports = {
       this.updateUnreadCount();
 
       return false;
+    },
+
+    markAllAsRead(e) {
+      //TODO: mark all notifications as read
     },
 
   }),

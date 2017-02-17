@@ -14,9 +14,8 @@ li.nav-item.notification.notification-bell.text-center.drop-container
               #{ unreadCount || ''}
             | &nbsp;
             | pending comment(s)
-        a(href="#").pull-right  view all
+        a(href="#").view-all.pull-right  view all
     each n in notifications
-      - console.log(n);
       snippets.message(n)
           
           
