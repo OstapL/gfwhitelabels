@@ -56,7 +56,7 @@ module.exports = {
   }),
 
   notification: Backbone.View.extend({
-    template: require('./templates/notification.pug'),
+    template: require('./templates/userNotifications.pug'),
     events: {
       'click .server-message': 'markAsRead',
       'click .view-all': 'markAllAsRead',
@@ -68,7 +68,7 @@ module.exports = {
       };
 
       this.snippets = {
-        message: require('./templates/snippets/message.pug'),
+        notification: require('./templates/snippets/notification.pug'),
       };
 
       this.initNotifications();
@@ -105,7 +105,7 @@ module.exports = {
     updateUnreadCount() {
       const unreadCount = this.countUnreadMessages();
       if (unreadCount)
-        this.$notificationsCount.show()
+        this.$notificationsCount.show();
       else
         this.$notificationsCount.hide();
 
@@ -119,21 +119,26 @@ module.exports = {
         this.model.data = this.model.data.concat(data);
         this.updateUnreadCount();
         _.each(data, (m) => {
-          this.$notifications.append(this.snippets.message(m));
+          this.$notifications.append(this.snippets.notification(m));
         });
       });
+    },
+
+    updateNotification(notification) {
+      this.$('.notification-item[data-id=' + notification.id + ']').replaceWith(this.snippets.notification(notification));
     },
 
     markAsRead(e) {
       e.preventDefault();
 
-      const message_id = $(e.target).closest('.server-message').data('messageid');
+      const id = $(e.target).closest('.notification-item').data('id');
 
-      let message = _.find(this.model.data, m => m.id == message_id);
-      this.notifications.markAsRead(message_id);
-      message.read_flag = true;
+      let notification = _.find(this.model.data, m => m.id == id);
 
-      $(e.target).closest('li').replaceWith(this.snippets.message(message));
+      notification.read_flag = true;
+      this.notifications.markAsRead(id);
+
+      $(e.target).closest('li').replaceWith(this.snippets.notification(notification));
 
       this.updateUnreadCount();
 
@@ -142,6 +147,17 @@ module.exports = {
 
     markAllAsRead(e) {
       //TODO: mark all notifications as read
+      let unreadNotifications = _.filter(this.model.data, n => !n.read_flag);
+      if (!unreadNotifications || !unreadNotifications.length)
+        return;
+
+      _.each(unreadNotifications, (n) => {
+        n.read_flag = true;
+        this.notifications.markAsRead(n.id);
+        this.updateNotification(n);
+      });
+
+      this.updateUnreadCount();
     },
 
   }),
