@@ -72,9 +72,11 @@ li.nav-item.hidden-md-down
               i.fa.fa-lock.pull-right
         li
           a(href="/pg/entrepreneurquestions").nav-link FAQ
+
+
   li.nav-item.hidden-md-down
     a(href="/company/create").nav-link Raise Capital
 if app.user.is_anonymous()
-  .mobile-singup-wrap.hidden-lg-up.text-xs-left
+  .mobile-signup.mobile-singup-wrap.hidden-lg-up.text-xs-left
     a(href="/account/login").btn.m-b-2.m-t-2.btn-login-mobile Log in
     a(href="/account/signup").btn.btn-primary.btn-login-mobile Sign up
