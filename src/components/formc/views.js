@@ -146,7 +146,7 @@ module.exports = {
       return this;
     },
 
-    formData () {
+    setFormData () {
       this.formData = this.$el.find('form').serializeJSON();
     },
 
@@ -155,6 +155,7 @@ module.exports = {
       const reqUrl = global.esignServer + '/pdf-doc';
       const formData = this.getDocMetaData();
       const data = [{
+        object_id: this.model.id,
         type: typeOfDocuments[listingAgreement],
         meta_data: formData,
         template: listingAgreement
@@ -216,7 +217,7 @@ module.exports = {
     stripeSubmit(e) {
       e.preventDefault();
       
-      this.formData()
+      this.setFormData();
       let $stripeForm = $('.payment-block');
 
       function validateCard(form, selectors) {
