@@ -424,7 +424,7 @@ $('body').on('click', '.notification-bell', function () {
   return false;
 });
 
-$('body').on('click', '#menuList .nav-item', function (event) {
+$('body').on('click', '#menuList .nav-item, #menuList .mobile-signup', function (event) {
   var href = $(event.target).attr('href');
 
   if ($('.navbar-toggler:visible').length !== 0) {
