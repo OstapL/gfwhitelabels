@@ -179,7 +179,7 @@ module.exports = {
 
       this._initSliders();
 
-      setTimeout(() => { this.createDropzones() } , 1000);
+      // setTimeout(() => { this.createDropzones() } , 1000);
 
       this.onImageCrop();
 
