@@ -62,6 +62,7 @@ module.exports = {
         linkedin: 'Linkedin',
       };
       this.assignLabels();
+
       if(this.model.hasOwnProperty('id')) {
         this.urlRoot += '/:id/edit';
       }
@@ -547,7 +548,7 @@ module.exports = {
         'click #postForReview': raiseHelpers.postForReview,
         'click .submit-specifics': 'checkMinMaxRaise',
         'change #valuation_determination': 'valuationDetermine',
-      }, leavingConfirmationHelper.events, menuHelper.events, dropzoneHelpers.events),
+      }, leavingConfirmationHelper.events, menuHelper.events),
 
       preinitialize() {
         // ToDo
@@ -598,6 +599,10 @@ module.exports = {
 
         this.fields.minimum_raise.dependies = ['maximum_raise',];
         this.fields.maximum_raise.dependies = ['minimum_raise',];
+
+        if(this.model.hasOwnProperty('id')) {
+          this.urlRoot = this.urlRoot.replace(':id', this.model.id);
+        }
 
       },
 
@@ -677,11 +682,12 @@ module.exports = {
                 fields: this.fields,
                 values: this.model,
                 formc: this.formc,
+                view: this,
               })
         );
         // delete this.model.progress;
 
-        setTimeout(() => { this.createDropzones() } , 1000);
+        // setTimeout(() => { this.createDropzones() } , 1000);
 
         this.calculateNumberOfShares(null);
 
@@ -698,7 +704,7 @@ module.exports = {
         disableEnterHelper.disableEnter.call(this);
         return this;
       },
-  }, leavingConfirmationHelper.methods, menuHelper.methods, dropzoneHelpers.methods, addSectionHelper.methods)),
+  }, leavingConfirmationHelper.methods, menuHelper.methods, addSectionHelper.methods)),
 
   perks: Backbone.View.extend(_.extend({
     urlRoot: raiseCapitalServer + '/campaign/:id/perks',

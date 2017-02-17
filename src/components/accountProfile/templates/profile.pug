@@ -3,7 +3,7 @@
   var rolesConsts = require('consts/team_member/roles.json');
   var countryDirective = require('directives/country/index.js');
   var ssnDirective = require('directives/ssn/index.js');
-  var dropzoneDirective = require('directives/setdropzone/index.js');
+  var dropzoneDirective = require('directives/setdropzone/file.js');
 
   pug_html += app.breadcrumbs('Profile', '', [ ['Home', '/'], ['Profile', ''],]);
 
@@ -21,8 +21,8 @@
               text: 'Drop your profile photo here or click to upload',
               data: user.image_data[0],
             }, fields.image));
-            var self = this;
 
+            var self = this;
             $(window).ready(function() {
               setTimeout(function() {
                 new dropzoneDirective(self, '.dropzone__image_image_id', 'image_image_id', 'image_data', '.img-image_image_id').render();

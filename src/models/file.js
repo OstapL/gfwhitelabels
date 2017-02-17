@@ -1,3 +1,5 @@
+const defaultIcon = 'file'; 
+
 const mimetypeIconMap = {
   'pdf': 'pdf',
   'doc': 'doc',
@@ -9,41 +11,64 @@ const mimetypeIconMap = {
 
 
 class File {
-  constructor(data={}) {
+  constructor(urlRoot, data={}) {
+    //
+    // urlRoot - url for update model assosiated with that file
+    // data - file data
+    //
+    this.urlRoot = urlRoot;
+    this.id = data.id;
+    this.name = data.name;
+    this.urls = data.urls || [];
+    this.mime = data.mime;
+  }
+
+  updateData(data) {
     this.id = data.id;
     this.name = data.name;
     this.urls = data.urls;
     this.mime = data.mime;
-  },
+  }
 
   getOriginalFile() {
     return this.urls[this.urls.length];
-  },
+  }
 
   getExtention() {
     return this.getOriginalFile().split('.').reverse()[0];
-  },
+  }
 
   getExtentionByMime() {
-    return mimetypeIconMap[this.mime];
-  },
+    return mimetypeIconMap[this.mime.split('/').reverse()[0]];
+  }
 
   getIcon() {
-    return `/img/icons/${mimetypeIconMap[this.mime] || defaultIcon}.png` 
+    debugger;
+    return mimetypeIconMap[this.mime.split('/').reverse()[0]] || defaultIcon
+  }
+
+  getIconUrl(icon) {
+
+    if(icon == null) {
+      icon = this.getIcon();
+    }
+
+    return `/img/icons/${icon}.png` 
+  }
+
+  shortenFileName(toLength=20) {
+    const lastLength = 8;
+
+    if (text.length <= toLength) {
+      return this.name;
+    }
+
+    let lastPart = text.substring(this.name.length - lastLength);
+    let firstPart = text.substring(0, toLength - lastLength - 3);
+
+    return `${firstPart}...${lastPart}`;
+
   }
 }
 
-
-class Image(File) {
-  // ToDo have size and cropped copies
-}
-
-
-class Folder {
-  // ToDo have a set of files
-}
-
-
-class Gallery(Folder) {
-  // ToDo have a set of images
-}
+module.exports = File

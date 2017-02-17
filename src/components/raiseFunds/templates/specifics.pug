@@ -1,7 +1,8 @@
-- 'use strict';
 include menu.pug
 
-- pug_html += app.breadcrumbs('Create Company', '', [ ['Home', '/'], ['Create Company', '/campaign/' + values.id + '/general_information'], ['specifics', ''], ]);
+- 
+  var fileDropzone = require('directives/setdropzone/file.js'); 
+  pug_html += app.breadcrumbs('Create Company', '', [ ['Home', '/'], ['Create Company', '/campaign/' + values.id + '/general_information'], ['specifics', ''], ]);
 
 section.campaign-specifics.container.m-b-85
   - var campaignId = values.id;
@@ -58,6 +59,12 @@ section.campaign-specifics.container.m-b-85
             pug_html += app.fields.fileDropzone("investor_presentation_file_id", {
                 data: values.investor_presentation_data[0],
               }, fields.investor_presentation_file_id);
+
+            $(window).ready(function() {
+              setTimeout(function() {
+                new fileDropzone(view, '.dropzone__investor_presentation_file_id', 'investor_presentation_file_id', 'investor_presentation_file_data', '.img-investor_presentation_file_id').render();
+              }, 900);
+            });
         .row
           .col-xl-12
             .border-bottom
