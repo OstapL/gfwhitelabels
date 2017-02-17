@@ -1,0 +1,8 @@
+-
+  var dateHelper = require('helpers/dateHelper.js');
+  var cssClass = 'clearfix nav-link notification-item ';
+  cssClass += read_flag ? 'notification-item-read' : '';
+
+li(class=cssClass data-id=id)
+  span.pull-left #{ message.text }
+  i.pull-right #{ dateHelper.fromNow(time) }
