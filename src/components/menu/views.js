@@ -126,7 +126,7 @@ module.exports = {
     markAsRead(e) {
       e.preventDefault();
 
-      const message_id = $(e.target).closest('a.server-message').data('messageid');
+      const message_id = $(e.target).closest('.server-message').data('messageid');
 
       let message = _.find(this.model.data, m => m.id == message_id);
       this.notifications.markAsRead(message_id);

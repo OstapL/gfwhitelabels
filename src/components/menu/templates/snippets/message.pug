@@ -4,6 +4,6 @@
   cssClass += read_flag ? 'read' : '';
 
 li(class=cssClass)
-  a(href=message.href data-messageid=id).server-message
+  span(data-messageid=id).server-message
     span.pull-left #{ message.text }
     i.pull-right #{ dateHelper.formatTime(time) }
