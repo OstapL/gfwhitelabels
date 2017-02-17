@@ -59,6 +59,7 @@ module.exports = {
     template: require('./templates/notification.pug'),
     events: {
       'click .server-message': 'markAsRead',
+      'click .view-all': 'markAllAsRead',
     },
 
     initialize(options) {
@@ -137,6 +138,10 @@ module.exports = {
       this.updateUnreadCount();
 
       return false;
+    },
+
+    markAllAsRead(e) {
+      //TODO: mark all notifications as read
     },
 
   }),
