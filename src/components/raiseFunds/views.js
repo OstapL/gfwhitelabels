@@ -674,8 +674,8 @@ module.exports = {
       },
 
       render() {
-        this.template = require('./templates/specifics.pug');
-        this.el.innerHTML = this.template({
+        const template = require('./templates/specifics.pug');
+        this.el.innerHTML = template({
           fields: this.fields,
           values: this.model,
           formc: this.formc,
