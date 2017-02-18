@@ -56,15 +56,11 @@ section.campaign-specifics.container.m-b-85
 
         .text-lg-right.img-ppt.m-b-3
           -
-            pug_html += app.fields.fileDropzone("investor_presentation_file_id", {
-                data: values.investor_presentation_data[0],
-              }, fields.investor_presentation_file_id);
-
-            $(window).ready(function() {
-              setTimeout(function() {
-                new fileDropzone(view, '.dropzone__investor_presentation_file_id', 'investor_presentation_file_id', 'investor_presentation_file_data', '.img-investor_presentation_file_id').render();
-              }, 900);
-            });
+            pug_html += fileDropzone(view, 
+              'investor_presentation_file_id', 
+              'investor_presentation_data', 
+              view.fields.investor_presentation_file_id
+            ).render().resultHTML;
         .row
           .col-xl-12
             .border-bottom

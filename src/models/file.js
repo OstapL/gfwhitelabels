@@ -20,14 +20,14 @@ class File {
     this.id = data.id;
     this.name = data.name;
     this.urls = data.urls || [];
-    this.mime = data.mime;
+    this.mime = data.mime || defaultIcon;
   }
 
   updateData(data) {
     this.id = data.id;
     this.name = data.name;
-    this.urls = data.urls;
-    this.mime = data.mime;
+    this.urls = data.urls || [];
+    this.mime = data.mime || defaultIcon;
   }
 
   getOriginalFile() {
@@ -43,7 +43,6 @@ class File {
   }
 
   getIcon() {
-    debugger;
     return mimetypeIconMap[this.mime.split('/').reverse()[0]] || defaultIcon
   }
 
@@ -59,15 +58,39 @@ class File {
   shortenFileName(toLength=20) {
     const lastLength = 8;
 
-    if (text.length <= toLength) {
+    if (this.name.length <= toLength) {
       return this.name;
     }
 
-    let lastPart = text.substring(this.name.length - lastLength);
-    let firstPart = text.substring(0, toLength - lastLength - 3);
+    let lastPart = this.name.substring(this.name.length - lastLength);
+    let firstPart = this.name.substring(0, toLength - lastLength - 3);
 
     return `${firstPart}...${lastPart}`;
 
+  }
+
+  save(idName, dataName) {
+    const type = 'PATCH';
+    const data = {};
+
+    data[idName] = this.id;
+
+    // ToDo
+    // Fix this
+    data[dataName] = [{
+      id: this.id,
+      name: this.name,
+      mime: this.mime,
+      urls: this.urls
+    }];
+
+    return api.makeRequest(
+      this.urlRoot,
+      type,
+      data
+    ).fail((xhr, status) => {
+      alert('show standart error message');
+    });
   }
 }
 

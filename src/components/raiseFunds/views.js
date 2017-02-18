@@ -674,17 +674,13 @@ module.exports = {
       },
 
       render() {
-        const template = require('./templates/specifics.pug');
-        this.$el.html(
-            template({
-                serverUrl: serverUrl,
-                Urls: Urls,
-                fields: this.fields,
-                values: this.model,
-                formc: this.formc,
-                view: this,
-              })
-        );
+        this.template = require('./templates/specifics.pug');
+        this.el.innerHTML = this.template({
+          fields: this.fields,
+          values: this.model,
+          formc: this.formc,
+          view: this,
+        });
         // delete this.model.progress;
 
         // setTimeout(() => { this.createDropzones() } , 1000);
