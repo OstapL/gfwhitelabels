@@ -4,6 +4,12 @@ let __instance = null;
 class Notifications {
   constructor() {
     _.extend(this, Backbone.Events);
+
+    if (!_.isFunction(window.io)) {
+      console.error("socket.io script is not loaded");
+      return this;
+    }
+
     this.__socket = io(notificationsServer);
     this.__socket.on('connect', () => {
       this.__socket.emit('subscribe', {
