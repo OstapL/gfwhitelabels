@@ -443,15 +443,7 @@ $('body').on('click', 'a', function (event) {
   } else if (href && href == '#')  {
     event.preventDefault();
   } else if (href && href.startsWith('mailto:')) {
-    //TODO: move this to method
-    event.preventDefault();
-    var popupOpt = 'toolbar=0,status=0,left=45%,top=45%,width=1,height=1';
-    var windowChild = window.open(event.currentTarget.href, '', popupOpt);
-
-    let closeScript = "<script>setTimeout(window.close.bind(window), 400);</script>";
-    windowChild.document.write(closeScript);
-    return false;
-
+    window.location = href;
   } else if(href && href != '' &&
     href.substr(0, 1) != '#' &&
     href.substr(0, 4) != 'http' &&

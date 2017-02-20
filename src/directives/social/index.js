@@ -46,16 +46,14 @@ class SocialNetworks {
   }
 
   attachEvents() {
-
     let $mainContent = $(mainContent);
 
     $mainContent.on('click', '.facebook-share', this.socialPopup.bind(this));
-
     $mainContent.on('click', '.twitter-share', this.socialPopup.bind(this));
-
     $mainContent.on('click', '.linkedin-share', this.shareLinkedin.bind(this));
 
-    $mainContent.on('click', '.email-share', this.socialPopup.bind(this));
+    //default logic will work for sharing via mailto links
+    // $mainContent.on('click', '.email-share', this.socialPopup.bind(this));
   }
 
   render() {
