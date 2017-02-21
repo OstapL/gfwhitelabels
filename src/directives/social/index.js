@@ -31,7 +31,7 @@ class SocialNetworks {
       title: stripHtml(this.options.titlePrefix + companyName + '\'s ' + corporateStructure + 'on GrowthFountain.com'),
       description: stripHtml(this.options.descriptionPrefix + (this.model.description || '')),
       picture: campaignHelper.getImageCampaign(this.model.campaign),
-      text: stripHtml(this.options.titlePrefix + companyName + '\'s' + corporateStructure + 'on @growthfountain '),
+      text: stripHtml(this.options.titlePrefix + companyName + '\'s ' + corporateStructure + 'on @growthfountain '),
     };
 
     this.shareLinks = {
@@ -46,16 +46,14 @@ class SocialNetworks {
   }
 
   attachEvents() {
-
     let $mainContent = $(mainContent);
 
     $mainContent.on('click', '.facebook-share', this.socialPopup.bind(this));
-
     $mainContent.on('click', '.twitter-share', this.socialPopup.bind(this));
-
     $mainContent.on('click', '.linkedin-share', this.shareLinkedin.bind(this));
 
-    $mainContent.on('click', '.email-share', this.socialPopup.bind(this));
+    //default logic will work for sharing via mailto links
+    // $mainContent.on('click', '.email-share', this.socialPopup.bind(this));
   }
 
   render() {
