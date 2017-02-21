@@ -13,7 +13,7 @@ section.issuer-dashbord-top
           h2.text-uppercase.dosis.m-t-0 #{values.name}
           .timer_day #{campaignHelpers.daysLeft(values.campaign.expiration_date)} Days Left
         .share-block.d-inline-block.share
-          | !{ socialDirective(this.model).render() }
+          | !{ socialDirective.render(this.model) }
 
       .col-md-2.col-sm-6.col-xs-6
         a(href="").dashboard-stat
