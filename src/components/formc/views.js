@@ -143,6 +143,7 @@ module.exports = {
 
     setFormData () {
       this.formData = this.$el.find('form').serializeJSON();
+      return this.formData;
     },
 
     saveEsign() {
@@ -171,7 +172,7 @@ module.exports = {
     },
 
     getDocMetaData () {
-      const formData = this.formData;
+      const formData = this.formData || this.setFormData();
       const issuer_legal_name = app.user.get('first_name') + ' ' + app.user.get('last_name');
       
       return {
@@ -195,11 +196,7 @@ module.exports = {
     },
 
     _success(data, newData) {
-      // means that it is a payment request
-      if(this.formData && this.formData.full_name) {
-        this.saveEsign(data);
-        this.formData = null;
-      }
+      this.saveEsign(data);
       formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
       return 1;
     },
