@@ -4,5 +4,5 @@
   cssClass += read_flag ? 'notification-item-read' : '';
 
 li(class=cssClass data-id=id)
-  span.pull-left #{ message.text }
-  i.pull-right #{ dateHelper.fromNow(time) }
+  p.pull-left #{ message.text }
+  p.pull-left.date #{ dateHelper.fromNow(time) }

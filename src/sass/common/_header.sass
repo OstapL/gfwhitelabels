@@ -332,7 +332,7 @@ header
               font-weight: 600
 
         &.notification-container 
-          left: -70px
+          left: -340px
 
           .nav-link
             margin-left: 0 
@@ -347,7 +347,7 @@ header
             position: relative
 
             line-height: 33px
-            font-size: 14px
+            font-size: 18px
 
             color: $icon_header_color
 
@@ -360,14 +360,14 @@ header
             height: 16px
             width: 16px
 
-            background: $boulder
+            background: $bgc-notificatin-bell
             border-radius: 50%
 
             color: $menu_text_color
 
             line-height: 1.4
             text-align: center
-            font-size: 11px
+            font-size: 12px
             letter-spacing: initial
             font-family: 'Open Sans', sans-serif;
 
@@ -400,19 +400,13 @@ header
             & > *
               display: inline-block
 
-              font-size: 11px!important
-
+              font-size: 12px!important
+              line-height: normal
               color: rgba($menu_text_color, 0.7)
 
             &:hover
               span, i 
                 color: rgba($menu_text_color, 1)
-
-            span
-
-              @include ellipsis
-
-              width: 152px
 
             &.title
 
@@ -421,7 +415,7 @@ header
               
               margin-bottom: 0
               padding: 12px 17px 12px 11px;
-              width: 245px
+              width: 255px
 
               border-bottom: 1px rgba($menu_text_color, 0.3) solid
               background-color: $notific_list_title
@@ -447,7 +441,7 @@ header
 
                   cursor: pointer
               & + li 
-                margin-top: 48px
+                margin-top: 42px
 
       &.user-info
         min-width: 105px
@@ -475,6 +469,73 @@ header
                 font-size: 24px
                 line-height: 2
                 letter-spacing: 0
+  #menuNotification
+    position: relative
+    top: 25px
+    height: 50px
+    right: 10px
+    .nav-item.notification
+      &:hover
+        .submenu
+          overflow-y: scroll
+          height: auto
+    .filescroll
+      .file-scroll
+        max-height: 281px
+        margin: rem(42) auto 0px
+      .all-file-scroll
+        ::-webkit-scrollbar-thumb
+          border-color: rgba(#585858, .9)
+          background-color: rgba(#585858, .9)
+        ::-webkit-scrollbar-thumb:hover
+          border-color: #1c1f22
+          background-color: $small-text
+        ::-webkit-scrollbar-track
+          border-width: 0
+        ::-webkit-scrollbar-track:hover
+          border-left: none
+    .notification-container
+      width: 370px
+      &:before
+        content: ''
+        position: absolute
+        z-index: 999
+        right: 10px
+        top: -24px
+        border: 12px solid transparent
+        border-bottom: 12px solid $notific_list_title
+      .title
+        width: 100%
+        text-transform: uppercase
+        position: absolute
+        top: 0    
+        margin-bottom: 0
+        padding: rem(10) rem(17) rem(10) rem(11)
+        background-color: $notific_list_title
+        cursor: default
+        font-size: rem(12)
+        letter-spacing: 1.2px
+        font-family: $brandon-grotesque-medium
+        span
+          color: $white
+      .notifications
+        width: 100%
+        
+        .date
+          margin-top: rem(5)
+        li
+          a
+            color: $wild_willow
+        .nav-link
+          border-bottom: solid 1px 
+          border-bottom-color: rgba($small-text, .5)
+          margin-bottom: 0
+          padding-left: 0
+          padding-right: 0
+          margin-left: rem(10)
+          &:last-child
+            border-bottom: none
+
 
   @media screen and (min-width: 992px) and (max-width: 1100px)
     .navbar-nav .nav-item a
@@ -484,7 +545,7 @@ header
       top: -55%
 
       font-size: 0.6875rem
-    
+
   @media screen and (min-width: 992px)
     .nav-item:hover .list-container
       position: absolute
@@ -535,6 +596,8 @@ header
 
     .logo
       display: none!important
+    #menuNotification
+      display: none
 
   @media screen and (max-width: 991px)
     -webkit-transition: height 0.35s ease-in
