@@ -474,6 +474,26 @@ header
     top: 25px
     height: 50px
     right: 10px
+    .nav-item.notification
+      &:hover
+        .submenu
+          overflow-y: scroll
+          height: auto
+    .filescroll
+      .file-scroll
+        max-height: 281px
+        margin: rem(42) auto 0px
+      .all-file-scroll
+        ::-webkit-scrollbar-thumb
+          border-color: rgba(#585858, .9)
+          background-color: rgba(#585858, .9)
+        ::-webkit-scrollbar-thumb:hover
+          border-color: #1c1f22
+          background-color: $small-text
+        ::-webkit-scrollbar-track
+          border-width: 0
+        ::-webkit-scrollbar-track:hover
+          border-left: none
     .notification-container
       width: 370px
       &:before
@@ -484,18 +504,37 @@ header
         top: -24px
         border: 12px solid transparent
         border-bottom: 12px solid $notific_list_title
+      .title
+        width: 100%
+        text-transform: uppercase
+        position: absolute
+        top: 0    
+        margin-bottom: 0
+        padding: rem(10) rem(17) rem(10) rem(11)
+        background-color: $notific_list_title
+        cursor: default
+        font-size: rem(12)
+        letter-spacing: 1.2px
+        font-family: $brandon-grotesque-medium
+        span
+          color: $white
       .notifications
         width: 100%
-        li.title
-          width: 100%
-          text-transform: uppercase
+        
         .date
-          margin-top: 5px
+          margin-top: rem(5)
         li
           a
             color: $wild_willow
         .nav-link
-          border-bottom: solid 1px $small-text
+          border-bottom: solid 1px 
+          border-bottom-color: rgba($small-text, .5)
+          margin-bottom: 0
+          padding-left: 0
+          padding-right: 0
+          margin-left: rem(10)
+          &:last-child
+            border-bottom: none
 
 
   @media screen and (min-width: 992px) and (max-width: 1100px)
