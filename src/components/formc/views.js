@@ -97,7 +97,6 @@ module.exports = {
       'click .save-and-continue': 'submit',
       // 'submit form': 'submit',
       'click .link-2': 'openPdf',
-      'click .submit_formc': submitFormc,
       'keyup #full_name': 'changeSign',
       'click #pay-btn': 'stripeSubmit',
     }, menuHelper.events, yesNoHelper.events, /*leavingConfirmationHelper.events*/),
@@ -133,10 +132,6 @@ module.exports = {
           fullName: app.user.get('first_name') + ' ' + app.user.get('last_name'),
         })
       );
-
-      if(app.user.formc.is_paid == 0) {
-        app.user.formc = null;
-      }
 
       let eSignForm = this.$('.electronically-sign');
       this.eSignCompanyName = eSignForm.find('#company-name');
@@ -200,7 +195,11 @@ module.exports = {
     },
 
     _success(data, newData) {
-      this.saveEsign(data);
+      // means that it is a payment request
+      if(this.formData && this.formData.full_name) {
+        this.saveEsign(data);
+        this.formData = null;
+      }
       formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
       return 1;
     },
@@ -1939,7 +1938,6 @@ module.exports = {
         this.$('.help-block').prev().scrollTo(5);
         return;
       } else {
-        debugger;
 
         if(e.currentTarget.dataset.update == -1) {
           this.$el.find('.outstanding_securities_block').show();
