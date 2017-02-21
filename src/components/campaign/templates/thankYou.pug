@@ -20,7 +20,7 @@
     .col-xl-12.text-xs-center
       h2.font-weight-light.m-t-0.m-b-2 “I just invested in #{ investment.company.name }!”
     .col-lg-12.share.p-t-0.text-xs-center.m-b-2
-      | !{ socialDirective(socialShare, { titlePrefix: 'I invested in '}).render() }
+      | !{ socialDirective.render(socialShare, { titlePrefix: 'I invested in '}) }
   .row.thank-you-page
     .col-xl-8.offset-xl-2.overview
       .thankyou-page
