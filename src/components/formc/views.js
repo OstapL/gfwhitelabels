@@ -97,7 +97,6 @@ module.exports = {
       'click .save-and-continue': 'submit',
       // 'submit form': 'submit',
       'click .link-2': 'openPdf',
-      'click .submit_formc': submitFormc,
       'keyup #full_name': 'changeSign',
       'click #pay-btn': 'stripeSubmit',
     }, menuHelper.events, yesNoHelper.events, /*leavingConfirmationHelper.events*/),
@@ -200,7 +199,10 @@ module.exports = {
     },
 
     _success(data, newData) {
-      this.saveEsign(data);
+      // means that it is payment request
+      if(Object.keys(newData).length == 0) {
+        this.saveEsign(data);
+      }
       formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
       return 1;
     },
