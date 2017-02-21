@@ -133,10 +133,6 @@ module.exports = {
         })
       );
 
-      if(app.user.formc.is_paid == 0) {
-        app.user.formc = null;
-      }
-
       let eSignForm = this.$('.electronically-sign');
       this.eSignCompanyName = eSignForm.find('#company-name');
       this.eSignFullName = eSignForm.find('#full_name');
@@ -199,9 +195,10 @@ module.exports = {
     },
 
     _success(data, newData) {
-      // means that it is payment request
-      if(Object.keys(newData).length == 0) {
+      // means that it is a payment request
+      if(this.formData && this.formData.full_name) {
         this.saveEsign(data);
+        this.formData = null;
       }
       formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
       return 1;
@@ -1941,7 +1938,6 @@ module.exports = {
         this.$('.help-block').prev().scrollTo(5);
         return;
       } else {
-        debugger;
 
         if(e.currentTarget.dataset.update == -1) {
           this.$el.find('.outstanding_securities_block').show();
