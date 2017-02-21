@@ -58,7 +58,7 @@ module.exports = {
   notification: Backbone.View.extend({
     template: require('./templates/userNotifications.pug'),
     events: {
-      'click .server-message': 'markAsRead',
+      'mouseover .notification-item': 'markAsRead',
       'click .view-all': 'markAllAsRead',
     },
 
@@ -134,6 +134,8 @@ module.exports = {
       const id = $(e.target).closest('.notification-item').data('id');
 
       let notification = _.find(this.model.data, m => m.id == id);
+      if (!notification || notification.read_flag)
+        return;
 
       notification.read_flag = true;
       this.notifications.markAsRead(id);
