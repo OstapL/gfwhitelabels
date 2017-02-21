@@ -12,8 +12,8 @@ div(class=attr.class data-content=(attr.help_text|| ''))
             p.drop-photo #{attr.text}
             .icon-gallery
               i(class=" fa fa-" + attr.icon)
-        div.row
-          div(id=name).col-xl-12.all-gallery
+        div
+          div(id=name).col-xl-12.all-gallery.p-l-0.p-r-0
             each v, k in attr.data
               .col-xl-4.col-lg-4.col-md-4.col-sm-6.col-xs-12.one-photo
                 .delete-image-container
