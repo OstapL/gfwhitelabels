@@ -14,7 +14,7 @@ module.exports = Backbone.Router.extend({
         const model = require('components/campaign/models.js');
         const template = require('templates/mainPage.pug');
         const campaigns = new model.collection();
-
+        $(document.head).append('<meta name="keywords" content="local investing equity crowdfunding GrowthFountain is changing equity crowdfunding for small businesses. Focused on local investing, they give a whole new meaning to finding investment"></meta>');
         api.makeCacheRequest(raiseCapitalServer + '?limit=6').then((data) => {
           var html = template({
             collection: data,
@@ -55,6 +55,12 @@ module.exports = Backbone.Router.extend({
         if ((name=='success_guide' || name=='advertising')  && !app.user.ensureLoggedIn(window.location.pathname)) {
       return false;
         };
+          if(window.location.pathname == '/pg/faq') {
+          $(document.head).append('<meta name="keywords" content="local investing equity crowdfunding Have a question about local investing? Interested in equity crowdfunding but unsure how it works? Then visit our FAQ page to learn more"></meta>');
+          }
+          else {
+            $(document.head).append('<meta name="keywords" content="local investing equity crowdfunding GrowthFountain is changing equity crowdfunding for small businesses. Focused on local investing, they give a whole new meaning to finding investment"></meta>');
+          };
         require.ensure([], () => {
             let view = require('templates/' + name + '.pug');
             $('#content').html(view({

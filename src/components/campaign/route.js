@@ -56,6 +56,7 @@ module.exports = Backbone.Router.extend({
       });
 
     });
+    $(document.head).append('<meta name="keywords" content="local investing equity crowdfunding GrowthFountain is focused on local investing. Find the perfect fit for your investment with our equity crowdfunding setup by clicking here."></meta>');
   },
 
   detail(id) {
