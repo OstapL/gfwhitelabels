@@ -110,7 +110,7 @@ class SocialNetworks {
       IN.API.Raw('/people/~/shares?format=json')
         .method('POST')
         .body(JSON.stringify(payload))
-        .result(() => {alert('You\'ve just shared a page on your Linked in page')})
+        .result(() => {alert('You\'ve just shared the page to LinkedIn')})
         .error( console.log.bind(console, 'linkedin error: ') );
     })
 
