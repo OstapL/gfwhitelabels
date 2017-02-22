@@ -13,6 +13,8 @@ const disableEnterHelper = require('helpers/disableEnterHelper.js');
 
 const valuation_determination = require('consts/raisecapital/valuation_determination.json');
 
+const Campaign = require('models/campaign.js');
+
 module.exports = {
   company: Backbone.View.extend(_.extend({
     urlRoot: raiseCapitalServer + '/company',
@@ -224,8 +226,7 @@ module.exports = {
         'click .submit_form': raiseHelpers.submitCampaign,
         'click #postForReview': raiseHelpers.postForReview,
         'click .onPreview': raiseHelpers.onPreviewAction,
-      }, leavingConfirmationHelper.events, menuHelper.events,
-        addSectionHelper.events, dropzoneHelpers.events
+      }, leavingConfirmationHelper.events, menuHelper.events, addSectionHelper.events
     ),
 
     _success(data, newData) {
@@ -252,19 +253,24 @@ module.exports = {
     },
 
     initialize(options) {
-      this.model = options.campaign;
+      this.model = new Campaign(
+        this.urlRoot.replace(':id', options.campaign.id),
+        options.campaign,
+        options.fields
+      );
       this.urlRoot = this.urlRoot.replace(':id', this.model.id);
       this.formc = options.formc;
       this.fields = options.fields;
 
       this.fields.header_image_image_id = _.extend(this.fields.header_image_image_id, {
+        label: 'Header Image',
+        help_text: 'This is the image that will appear at the top of your campaign. A minimum size of 1600х960 is recommended.',
         crop: {
           control: {
             aspectRatio: 1600/960,
           },
           cropper: {
             cssClass : 'img-crop',
-            // preview: false,
           },
           auto: {
             width: 1600,
@@ -274,6 +280,8 @@ module.exports = {
       });
 
       this.fields.list_image_image_id = _.extend(this.fields.list_image_image_id, {
+        label: 'Thumbnail Picture',
+        help_text: ' This image entices investors to view your campaign. A minimum size of 350x209 is recommended.',
         crop: {
           control:  {
             aspectRatio: 350 / 209,
@@ -342,11 +350,12 @@ module.exports = {
           // values: this.model.toJSON(),
           values: this.model,
           formc: this.formc,
+          view: this,
           templates: this.jsonTemplates,
         })
       );
 
-      setTimeout(() => { this.createDropzones() } , 1000);
+      // setTimeout(() => { this.createDropzones() } , 1000);
       disableEnterHelper.disableEnter.call(this);
       this.checkForm();
 
@@ -364,8 +373,7 @@ module.exports = {
       $videoContainer.find('iframe').attr('src', src);
     },
 
-  }, leavingConfirmationHelper.methods, menuHelper.methods,
-    dropzoneHelpers.methods, addSectionHelper.methods)),
+  }, leavingConfirmationHelper.methods, menuHelper.methods, addSectionHelper.methods)),
 
   teamMemberAdd: Backbone.View.extend(_.extend({
     urlRoot: raiseCapitalServer + '/campaign/:id/team-members',
@@ -561,7 +569,11 @@ module.exports = {
       initialize(options) {
         this.fields = options.fields;
         this.formc = options.formc;
-        this.model = options.campaign;
+        this.model = new Campaign(
+          this.urlRoot.replace(':id', options.campaign.id),
+          options.campaign,
+          options.fields
+        );
         this.company = options.company;
         this.fields.valuation_determination_other = _.extend(this.fields.valuation_determination_other, {
           dependies: ['valuation_determination'],
