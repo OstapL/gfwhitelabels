@@ -399,7 +399,7 @@ header
 
             & > *
               display: inline-block
-
+              width: 100%
               font-size: 12px!important
               line-height: normal
               color: rgba($menu_text_color, 0.7)
@@ -530,12 +530,20 @@ header
           border-bottom: solid 1px 
           border-bottom-color: rgba($small-text, .5)
           margin-bottom: 0
-          padding-left: 0
-          padding-right: 0
-          margin-left: rem(10)
+          
+          
           &:last-child
             border-bottom: none
-
+          
+          &.notification-item
+            background-color: rgba(70,70,70, .5)
+            padding-left: 10px
+            padding-right: 0
+            &.notification-item-read
+              background-color: transparent
+              margin-left: rem(10)
+              padding-left: 0px
+            
 
   @media screen and (min-width: 992px) and (max-width: 1100px)
     .navbar-nav .nav-item a
