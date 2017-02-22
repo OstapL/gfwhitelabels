@@ -1,5 +1,5 @@
 const io = require('socket.io-client');
-const channels = ['message', 'notification', 'alert'];
+const channels = ['general'];
 
 let __instance = null;
 
@@ -24,7 +24,8 @@ class Notifications {
       this.__socket.on(channel, (data) => {
         if (data === null || typeof data[Symbol.iterator] !== 'function')
           data = [data];
-
+        console.log('Data from websocket');
+        console.log(data);
         this.trigger(channel, data);
       });
     });
