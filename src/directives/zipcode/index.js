@@ -8,6 +8,7 @@
 // extend Backbone.Events ?
 const mainElement = '#content';
 const usaStates = require('consts/usaStatesChoices.json');
+const countries = require('consts/countries.json');
 
 class GeoCoder {
 
@@ -58,6 +59,14 @@ class GeoCoder {
     return this;
   }
 
+  __getCountry(e) {
+    return '';
+    // let $form = $(e.target).closest('form');
+    // let $country = $form.find('[name=country]');
+    // let countryCode  = $country && $country.length ? $country.val() : '';
+    // return countries[countryCode] || '';
+  }
+
   onZipCodeChange(e) {
     const zip = e.target.value;
 
@@ -65,32 +74,39 @@ class GeoCoder {
       return;
     }
 
-    if(zip.length >= 5 && typeof google != 'undefined') {
-      let geocoder = new google.maps.Geocoder();
-      geocoder.geocode({ 'address': zip }, (results, status) => {
-        if (status == google.maps.GeocoderStatus.OK){
-          if (results.length >= 1) {
-            let strs = results[0].formatted_address.split(", ");
-            let city = strs[0];
-            let state = strs[1].substr(0, 2);
+    if (!google || !google.maps)
+      return;
 
-            // Use overlord
-            let cityStateElem = document.querySelector('.js-city-state');
-            if (cityStateElem)
-              cityStateElem.innerHTML = city + ', ' + state;
+    let geocoder = new google.maps.Geocoder();
 
-            this.view.model.city = city;
-            this.view.model.state = state;
-            document.querySelector('#city').value = city;
-            document.querySelector('#state').value = state;
-          } else {
-            console.debug('error')
-          }
-        } else {
-          console.debug('error')
-        }
-      });
-    }
+    let country = this.__getCountry(e);
+    let address = zip + (country ? (', ' + country) : '');
+
+    geocoder.geocode({ 'address': address }, (results, status) => {
+      if (status != google.maps.GeocoderStatus.OK) {
+        console.debug('Failed to get state by zip code');
+        return;
+      }
+
+      if (!results || results.length < 1) {
+        console.log('Geocoder results shorter than expected');
+        return;
+      }
+
+      let strs = results[0].formatted_address.split(", ");
+      let city = strs[0];
+      let state = strs[1].substr(0, 2);
+
+      // Use overlord
+      let cityStateElem = document.querySelector('.js-city-state');
+      if (cityStateElem)
+        cityStateElem.innerHTML = city + ', ' + state;
+
+      this.view.model.city = city;
+      this.view.model.state = state;
+      document.querySelector('#city').value = city;
+      document.querySelector('#state').value = state;
+    });
   }
 
   saveCityState(e) {
