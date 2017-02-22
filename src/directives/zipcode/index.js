@@ -74,8 +74,10 @@ class GeoCoder {
       return;
     }
 
-    if (!google || !google.maps)
+    if (!google || !google.maps) {
+      console.debug('google maps API is not available.');
       return;
+    }
 
     let geocoder = new google.maps.Geocoder();
 
