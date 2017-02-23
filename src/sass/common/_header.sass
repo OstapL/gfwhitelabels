@@ -231,8 +231,8 @@ header
       padding-bottom: 0
       padding-top: 0
       width: $logo-width-desktop
-      margin-right: 0!important
-
+      margin-right: $navbar-brand-margin-right!important
+      margin-left: $navbar-brand-margin-left!important
       img
         +centered
 
@@ -281,8 +281,10 @@ header
         font-size: $font-size-menu
         letter-spacing: $letter-sp-menu
         text-transform: uppercase
-        color: $white
+        color: $menu_text_color!important
         font-family: $font-family-menu
+        &:hover
+          color: rgba($menu_text_color, .7)!important
 
 
         &.user-info-name
@@ -309,7 +311,7 @@ header
 
           li
             &:hover
-              background-color: rgba($white, .09)
+              background-color: rgba($submenu-bgc-hover, .09)
 
               a 
                 color: rgba($menu_text_color, 1)
@@ -471,8 +473,8 @@ header
                 letter-spacing: 0
   #menuNotification
     position: relative
-    top: 25px
-    height: 50px
+    top: $top-position-notification
+    height: $height-notification
     right: 10px
     .nav-item.notification
       &:hover
