@@ -19,14 +19,14 @@ class File {
     this.urlRoot = urlRoot;
     this.id = data.id;
     this.name = data.name;
-    this.urls = data.urls || [];
+    this.urls = data.urls || {};
     this.mime = data.mime || defaultIcon;
   }
 
   updateData(data) {
     this.id = data.id;
     this.name = data.name;
-    this.urls = data.urls || [];
+    this.urls = data.urls || {};
     this.mime = data.mime || defaultIcon;
   }
 
@@ -35,7 +35,8 @@ class File {
   }
 
   getExtention() {
-    return this.getOriginalFile().split('.').reverse()[0];
+    if(this.urls.origin)
+      return this.urls.origin.split('.').reverse()[0];
   }
 
   getExtentionByMime() {
@@ -77,12 +78,12 @@ class File {
 
     // ToDo
     // Fix this
-    data[dataName] = [{
+    data[dataName] = {
       id: this.id,
       name: this.name,
       mime: this.mime,
       urls: this.urls
-    }];
+    };
 
     return api.makeRequest(
       this.urlRoot,

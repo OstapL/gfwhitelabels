@@ -263,24 +263,22 @@ module.exports = {
       this.fields = options.fields;
 
       this.fields.header_image_image_id = _.extend(this.fields.header_image_image_id, {
-        label: 'Header Image',
+        title: 'Drop your photo here or click to upload',
         help_text: 'This is the image that will appear at the top of your campaign. A minimum size of 1600х960 is recommended.',
         crop: {
           control: {
             aspectRatio: 1600/960,
           },
-          cropper: {
-            cssClass : 'img-crop',
-          },
           auto: {
             width: 1600,
             height: 960
-          }
+          },
+          cssClass: 'img-crop',
+          template: 'regular'
         },
       });
 
       this.fields.list_image_image_id = _.extend(this.fields.list_image_image_id, {
-        label: 'Thumbnail Picture',
         help_text: ' This image entices investors to view your campaign. A minimum size of 350x209 is recommended.',
         crop: {
           control:  {
