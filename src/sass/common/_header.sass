@@ -230,7 +230,7 @@ header
       height: $navbar_height
       padding-bottom: 0
       padding-top: 0
-      width: 20%
+      width: $logo-width-desktop
       margin-right: 0!important
 
       img
@@ -399,7 +399,7 @@ header
 
             & > *
               display: inline-block
-
+              width: 100%
               font-size: 12px!important
               line-height: normal
               color: rgba($menu_text_color, 0.7)
@@ -515,7 +515,7 @@ header
         cursor: default
         font-size: rem(12)
         letter-spacing: 1.2px
-        font-family: $brandon-grotesque-medium
+        font-family: $notification-title-ff
         span
           color: $white
       .notifications
@@ -530,12 +530,20 @@ header
           border-bottom: solid 1px 
           border-bottom-color: rgba($small-text, .5)
           margin-bottom: 0
-          padding-left: 0
-          padding-right: 0
-          margin-left: rem(10)
+          
+          
           &:last-child
             border-bottom: none
-
+          
+          &.notification-item
+            background-color: rgba(70,70,70, .5)
+            padding-left: 10px
+            padding-right: 0
+            &.notification-item-read
+              background-color: transparent
+              margin-left: rem(10)
+              padding-left: 0px
+            
 
   @media screen and (min-width: 992px) and (max-width: 1100px)
     .navbar-nav .nav-item a
@@ -624,7 +632,7 @@ header
     .navbar .navbar-brand
       display: inline-block
       height: $navbar_height_mobile
-      width: 190px
+      width: $logo-width-mobile
       z-index: 999
       left: -4px
 

@@ -135,7 +135,7 @@ section.campaigndetail
             |  Founded #{ formatHelper.formatDate(values.founding_date) }
       .row.hidden-xs-down
         .col-lg-12.share
-          | !{ socialDirective(this.model).render() }
+          | !{ socialDirective.render(this.model) }
     .col-lg-6.right-block-investors.p-l-0.p-sm-0
       .progress_bar_container
         -
@@ -178,7 +178,7 @@ section.campaigndetail
             a(href="/" + values.id + "/invest").btn.btn-primary.text-uppercase.pull-lg-right Invest
         .row.social-share-mobile
           .col-lg-12.share.hidden-sm-up.text-xs-center
-            | !{ socialDirective(this.model).render() }
+            | !{ socialDirective.render(this.model) }
 section.border-bottom-scroll.hidden-lg-down
   .container.tabs-scroll.p-t-2
     nav(data-toggle="sticky-onscroll").navbar.navbar-default.sticky
@@ -273,11 +273,13 @@ section
                     -
                       var additionalVideo = app.getVideoId(v.link);
                     if additionalVideo && additionalVideo.provider == 'youtube'
-                      img(src="http://img.youtube.com/vi/" + additionalVideo.id + "/0.jpg" alt="" style="width: 338px").card-img.w-100
+                      div(style="background-image: url(http://img.youtube.com/vi/" + additionalVideo.id + "/0.jpg)").additional-video
+                      //img(src="http://img.youtube.com/vi/" + additionalVideo.id + "/0.jpg" alt="" style="width: 338px").card-img.w-100
                     else if additionalVideo && additionalVideo.provider == 'vimeo'
                       img(src="" alt="" style="width: 338px;" data-vimeo-id=additionalVideo.id).card-img.w-100.vimeo-thumbnail
                     else
-                      img(src="http://img.youtube.com/vi/" + "/0.jpg" alt="" style="width: 338px").card-img.w-100
+                      //img(src="http://img.youtube.com/vi/" + "/0.jpg" alt="" style="width: 338px").card-img.w-100
+                      div(style="background-image: url(http://img.youtube.com/vi/" + "/0.jpg)").additional-video
                     .card-img-overlays
                       .card-title
                         a(data-toggle="modal" href="#videoModal-" + k data-target="#videoModal-" + k).small-icon.link-6.m-t-0

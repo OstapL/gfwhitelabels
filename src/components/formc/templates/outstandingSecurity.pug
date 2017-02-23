@@ -138,14 +138,15 @@ section.formc-team-members-director.container.m-b-85
                   class1: 'col-lg-12',
                   class2: 'col-lg-12', 
                   value: values.amount_outstanding,})
-            .row.form-group.m-b-0
-              -
-                pug_html += app.fields.radioLabel('voting_right',{
-                value: values.voting_right,
-                class1: 'col-lg-3',
-                class2: 'col-lg-9',
-                schema: fields.outstanding_securities.schema.voting_right,
-                });
+            .row.form-group.m-b-0.voting_right
+              #voting_right
+                -
+                  pug_html += app.fields.radioLabel('voting_right',{
+                  value: values.voting_right,
+                  class1: 'col-lg-3',
+                  class2: 'col-lg-9',
+                  schema: fields.outstanding_securities.schema.voting_right,
+                  });
             .row.m-b-0
               .col-lg-12.text-lg-center.text-md-center.text-xs-center
                 button.update-location.btn.btn-primary.text-uppercase.pull-lg-right.add-outstanding Save And Continue
