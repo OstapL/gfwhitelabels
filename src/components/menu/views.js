@@ -1,4 +1,5 @@
 const Notifications = require('./notifications');
+const notifications_channel = 'general';
 
 module.exports = {
   menu: Backbone.View.extend({
@@ -57,9 +58,9 @@ module.exports = {
 
   notification: Backbone.View.extend({
     template: require('./templates/userNotifications.pug'),
+
     events: {
       'mouseover .notification-item': 'markAsRead',
-      'click .view-all': 'markAllAsRead',
     },
 
     initialize(options) {
@@ -114,12 +115,11 @@ module.exports = {
 
     initNotifications() {
       this.notifications = new Notifications();
-      this.notifications.on('notification', (data) => {
-        console.log(data);
+      this.notifications.on(notifications_channel, (data) => {
         this.model.data = this.model.data.concat(data);
         this.updateUnreadCount();
         _.each(data, (m) => {
-          this.$notifications.append(this.snippets.notification(m));
+          this.$notifications.prepend(this.snippets.notification(m));
         });
       });
     },
