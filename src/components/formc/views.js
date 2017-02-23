@@ -143,6 +143,7 @@ module.exports = {
 
     setFormData () {
       this.formData = this.$el.find('form').serializeJSON();
+      this.formData.is_paid = this.model.is_paid;
       return this.formData;
     },
 
@@ -196,7 +197,7 @@ module.exports = {
     },
 
     _success(data, newData) {
-      this.saveEsign(data);
+      if (!this.formData.is_paid) this.saveEsign(data);
       formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
       return 1;
     },
