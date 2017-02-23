@@ -585,6 +585,12 @@ module.exports = {
         nonUs: require('./templates/snippets/nonUsFields.pug'),
       };
 
+      if(window.location.pathname == 'dcu.growthfountain.com') {
+        this.fields.is_understand_securities_related = this.fields.is_reviewed_educational_material;
+      } else {
+        delete this.fields.is_understand_securities_related;
+      }
+
       this.assignLabels();
 
       this.getCityStateByZipCode = require("helpers/getSityStateByZipCode");
