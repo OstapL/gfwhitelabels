@@ -197,7 +197,7 @@ module.exports = {
     },
 
     _success(data, newData) {
-      if (!this.formData.is_paid) this.saveEsign(data);
+      if (this.formData && !this.formData.is_paid) this.saveEsign(data);
       formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
       return 1;
     },
