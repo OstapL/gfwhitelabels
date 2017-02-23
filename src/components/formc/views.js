@@ -133,6 +133,10 @@ module.exports = {
         })
       );
 
+      if(app.user.formc.is_paid == 0) {
+        app.user.formc = null;
+      }
+
       let eSignForm = this.$('.electronically-sign');
       this.eSignCompanyName = eSignForm.find('#company-name');
       this.eSignFullName = eSignForm.find('#full_name');
@@ -259,7 +263,7 @@ module.exports = {
       }
 
       if (!this.eSignFullName.val().trim()) {
-        validation.invalidMsg({ $: $ }, 'full-name', ['Check your name']);
+        validation.invalidMsg({ $: $, $el: $('#content'), }, 'full-name', ['Check your name']);
         $payBtn.prop('disabled', false);
         return;
       }
@@ -270,9 +274,8 @@ module.exports = {
 
       Stripe.card.createToken(card, (status, stripeResponse) => {
         if (stripeResponse.error) {
-          validation.invalidMsg({ $: $ }, 'form-section', [stripeResponse.error.message]);
+          validation.invalidMsg({ $: $, $el: $('#content'), }, 'card_number', [stripeResponse.error.message]);
           $payBtn.prop('disabled', false); // Re-enable submission
-          $('#certify').scrollTo(20);
           app.hideLoading();
           return;
         }
@@ -281,7 +284,7 @@ module.exports = {
           stripeToken: stripeResponse.id
         }).done((formcResponse, statusText, xhr) => {
           if (xhr.status !== 200) {
-            validation.invalidMsg({'$': $}, "expiration-block",
+            validation.invalidMsg({'$': $, $el: $('#content'),}, "expiration-block",
               [formcResponse.description || 'Some error message should be here']);
 
             $payBtn.prop('disabled', false);
@@ -1901,7 +1904,6 @@ module.exports = {
         });
 
         e.target.querySelector('textarea').value = '';
-        debugger;
         api.makeRequest(
           this.urlRoot.replace(':id', this.model.id),
           'PATCH',

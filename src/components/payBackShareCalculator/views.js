@@ -178,7 +178,7 @@ module.exports = {
                     }
                 }
 
-                this.outputData[i].total = Math.min(parseFloat(helper.sum.toFixed(1)), 2 * raiseMoney);
+                this.outputData[i].total = Math.min(parseFloat(helper.sum).toFixed(1), 2 * raiseMoney);
             }
 
             // save data
