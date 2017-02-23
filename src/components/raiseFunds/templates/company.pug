@@ -27,6 +27,15 @@ section.create-company.container.m-b-85
           schema: fields.short_name, 
           placeholder: 'Short Name', 
           value: values.short_name,})
+
+        if values.id == null
+          - 
+            pug_html += app.fields.textLabel('slug', {
+            class1: 'col-xl-3 col-lg-12 p-t-0 text-lg-left text-xl-right m-b-0 m-b-lg-1', 
+            schema: fields.slug, 
+            placeholder: 'url name', 
+            value: values.slug,})
+
         -
           pug_html += app.fields.fieldChoiceLabel('industry', _.extend({
               'empty': { '': 'Choose Industry' },
