@@ -1,0 +1,11 @@
+.row
+  .col-xl-12.one-photo
+    if file.file.id
+      .delete-image-container
+        a(href="#" data-imageid=file.file.id).crop-image
+          i.fa.fa-crop
+        a(href="#" data-imageid=file.file.id).delete-image.deleteFile
+          i.fa.fa-times
+      img(class=("w-100 img-" + name) src=file.file.urls.origin)
+    else
+      img(class=("w-100 img-" + name) src=file.getDefaultImage())

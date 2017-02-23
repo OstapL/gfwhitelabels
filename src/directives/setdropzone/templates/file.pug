@@ -1,0 +1,11 @@
+.file-scroll
+  .thumb-file-container.col-xl-12
+    if file.file.id
+      .delete-file-container
+        a(href="#" data-fileid=file.file.id).delete-file.deleteFile
+          i.fa.fa-times
+      img(src=file.file.getIconUrl() alt=label class=("img-file img-" + file.fieldName))
+      div.row
+        a(class=("a-" + file.fieldName) href=file.file.urls[0] title=file.file.name) #{ file.file.shortenFileName() }
+    else
+      img(src=file.file.getIconUrl() alt=attr.label class="img-file img-" + file.fieldName)
