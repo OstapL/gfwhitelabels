@@ -423,6 +423,8 @@ mixin confirmStatement(name, attr)
               +confirmStatement('is_understand_securities_related',
                 _.extend({}, fields.is_understand_securities_related)
               )
+            else
+              input(type='hidden' value='1' name='is_understand_securities_related')
 
             .col-lg-12.m-t-2
               .row

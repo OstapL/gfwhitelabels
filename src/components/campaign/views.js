@@ -586,7 +586,7 @@ module.exports = {
       };
 
       // For check in localhost
-      // if(window.location.hostname == '127.0.0.1:7070') {
+      // if(window.location.hostname == 'localhost') {
       if(window.location.hostname == 'dcu.growthfountain.com') {
         this.fields.is_understand_securities_related = this.fields.is_reviewed_educational_material;
         this.fields.is_understand_securities_related.label = this.labels.is_understand_securities_related;
