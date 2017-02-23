@@ -230,8 +230,9 @@ header
       height: $navbar_height
       padding-bottom: 0
       padding-top: 0
-      width: 20%
-      margin-right: 0!important
+      width: $logo-width-desktop
+      margin-right: $navbar-brand-margin-right!important
+      margin-left: $navbar-brand-margin-left!important
 
       img
         +centered
@@ -281,9 +282,10 @@ header
         font-size: $font-size-menu
         letter-spacing: $letter-sp-menu
         text-transform: uppercase
-        color: $white
+        color: $menu_text_color!important
         font-family: $font-family-menu
-
+        &:hover 
+          color: rgba($menu_text_color, .7)!important
 
         &.user-info-name
           padding-top: 0px
@@ -309,7 +311,7 @@ header
 
           li
             &:hover
-              background-color: rgba($white, .09)
+              background-color: rgba($submenu-bgc-hover, .09)
 
               a 
                 color: rgba($menu_text_color, 1)
@@ -471,8 +473,8 @@ header
                 letter-spacing: 0
   #menuNotification
     position: relative
-    top: 25px
-    height: 50px
+    top: $top-position-notification
+    height: $height-notification
     right: 10px
     .nav-item.notification
       &:hover
@@ -515,7 +517,7 @@ header
         cursor: default
         font-size: rem(12)
         letter-spacing: 1.2px
-        font-family: $brandon-grotesque-medium
+        font-family: $notification-title-ff
         span
           color: $white
       .notifications
@@ -635,7 +637,7 @@ header
     .navbar .navbar-brand
       display: inline-block
       height: $navbar_height_mobile
-      width: 190px
+      width: $logo-width-mobile
       z-index: 999
       left: -4px
 
