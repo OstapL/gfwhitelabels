@@ -420,7 +420,7 @@ mixin confirmStatement(name, attr)
               _.extend({}, fields.is_understand_investing_is_risky)
             )
             // FOR DCU
-            //.dcu-confirmation
+            if window.location.pathname == 'dcu.growthfountain.com'
               +confirmStatement('is_understand_securities_related',
                 _.extend({}, fields.is_understand_securities_related)
               )
