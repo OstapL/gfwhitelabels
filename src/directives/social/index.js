@@ -20,6 +20,8 @@ class SocialNetworks {
 
     this.__loadScripts();
 
+    this.__eventsAttached = false;
+
     return this;
   }
 
@@ -32,20 +34,17 @@ class SocialNetworks {
   }
 
   attachEvents() {
-    setTimeout(() => {
-      if (this.$mainContent)
-        return;
+    if (this.__eventsAttached)
+      return;
 
-      let $mainContent = $(mainContent);
-      $mainContent.on('click', '.facebook-share', this.socialPopup.bind(this));
-      $mainContent.on('click', '.twitter-share', this.socialPopup.bind(this));
-      $mainContent.on('click', '.linkedin-share', this.shareLinkedin.bind(this));
-      //default logic will work for sharing via mailto links
-      // $mainContent.on('click', '.email-share', this.socialPopup.bind(this));
+    let $page = $('#page');
+    $page.on('click', mainContent + ' .facebook-share', this.socialPopup);
+    $page.on('click', mainContent + ' .twitter-share', this.socialPopup);
+    $page.on('click', mainContent + ' .linkedin-share', this.shareLinkedin.bind(this));
+    //default logic will work for sharing via mailto links
+    // $page.on('click', mainContent + ' .email-share', this.socialPopup);
 
-      this.$mainContent = $mainContent;
-    }, 100);
-
+    this.__eventsAttached = true;
   }
 
   __initTemplateData(model={}, options={}) {
