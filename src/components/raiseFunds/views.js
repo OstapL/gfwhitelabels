@@ -60,7 +60,7 @@ module.exports = {
         facebook: 'Facebook',
         instagram: 'Instagram',
         linkedin: 'Linkedin',
-        slug: 'URL on our site',
+        slug: 'What would you like your custom URL to be?',
       };
       this.assignLabels();
       if(this.model.hasOwnProperty('id')) {
