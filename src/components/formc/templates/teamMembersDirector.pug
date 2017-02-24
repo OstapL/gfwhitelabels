@@ -12,6 +12,7 @@ section.formc-team-members-director.container.m-b-85
     h2.text-uppercase.text-lg-center.text-xs-center.m-t-0 Team members (director)
     form.form-section
       input(type="hidden" value=2 name="role[]")
+      input(type="hidden" value=1 name="individual_director_choice")
       .col-xl-12.p-xs-0
         - 
           pug_html += app.fields.textLabel('first_name', {
@@ -104,10 +105,36 @@ section.formc-team-members-director.container.m-b-85
                     'placeholder': 'YYYY',
                     'name': 'employer_start_date',
                     }, fields.employer_start_date));
-
+        .col-lg-12.p-xs-0.m-t-2
+          strong Is this individual also a 20%+ Voting Shareholder?
+          .form-group.form-section.m-t-1.m-b-0
+            .radio-input.m-b-1.yesno
+              label 
+                input(type="radio" name="voting_shareholder_choice" value="1" checked=((values.role & 1) == 1 ? true : false))
+                |  Yes
+              label 
+                input(type="radio" name="voting_shareholder_choice" value="0" checked=((values.role & 1) != 1 ? true : false))
+                |  No
+        .voting_shareholder_choice.shown-yes(style="display:" + ((values.role & 1) == 1? 'block' : 'none'))
+          - 
+            pug_html += app.fields.textLabel('number_of_shares', {
+            schema: fields.number_of_shares,
+            label: 'Number of Shares', 
+            value: values.number_of_shares,})
+          - 
+            pug_html += app.fields.textLabel('class_of_securities', {
+            schema: fields.class_of_securities,
+            label: 'Class of Securities',
+            value: values.class_of_securities,})
+          - 
+            pug_html += app.fields.textLabel('voting_power_percent', {
+            schema: fields.voting_power_percent,
+            label: '% of Voting Power Prior to Offering',
+            class1: 'col-xl-3 col-lg-12 text-lg-left p-t-0 m-b-0 m-b-lg-1 text-xl-right',  
+            value: values.voting_power_percent,})
         .row
           .col-xl-12
-            .border-bottom.m-t-3.m-b-3
+            .border-bottom.m-t-2.m-b-3
             
         |!{ templates.positions }
         .row

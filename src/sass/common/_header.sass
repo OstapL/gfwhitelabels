@@ -227,11 +227,12 @@ header
 
     .navbar-brand
       position: relative
-
       height: $navbar_height
       padding-bottom: 0
       padding-top: 0
-      width: 20%
+      width: $logo-width-desktop
+      margin-right: $navbar-brand-margin-right!important
+      margin-left: $navbar-brand-margin-left!important
 
       img
         +centered
@@ -281,9 +282,10 @@ header
         font-size: $font-size-menu
         letter-spacing: $letter-sp-menu
         text-transform: uppercase
-        color: $white
+        color: $menu_text_color!important
         font-family: $font-family-menu
-
+        &:hover 
+          color: rgba($menu_text_color, .7)!important
 
         &.user-info-name
           padding-top: 0px
@@ -309,7 +311,7 @@ header
 
           li
             &:hover
-              background-color: rgba($white, .09)
+              background-color: rgba($submenu-bgc-hover, .09)
 
               a 
                 color: rgba($menu_text_color, 1)
@@ -332,7 +334,7 @@ header
               font-weight: 600
 
         &.notification-container 
-          left: -70px
+          left: -340px
 
           .nav-link
             margin-left: 0 
@@ -347,7 +349,7 @@ header
             position: relative
 
             line-height: 33px
-            font-size: 14px
+            font-size: 18px
 
             color: $icon_header_color
 
@@ -355,19 +357,16 @@ header
             position: absolute
             top: 0
             left: -6px
-              
             display: block
             height: 16px
             width: 16px
-
-            background: $boulder
+            background: $bgc-notificatin-bell
             border-radius: 50%
-
-            color: $menu_text_color
-
+            color: $white
+            font-weight: bold
             line-height: 1.4
             text-align: center
-            font-size: 11px
+            font-size: 12px
             letter-spacing: initial
             font-family: 'Open Sans', sans-serif;
 
@@ -399,20 +398,14 @@ header
 
             & > *
               display: inline-block
-
-              font-size: 11px!important
-
+              width: 100%
+              font-size: 12px!important
+              line-height: normal
               color: rgba($menu_text_color, 0.7)
 
             &:hover
               span, i 
                 color: rgba($menu_text_color, 1)
-
-            span
-
-              @include ellipsis
-
-              width: 152px
 
             &.title
 
@@ -421,7 +414,7 @@ header
               
               margin-bottom: 0
               padding: 12px 17px 12px 11px;
-              width: 245px
+              width: 255px
 
               border-bottom: 1px rgba($menu_text_color, 0.3) solid
               background-color: $notific_list_title
@@ -447,7 +440,7 @@ header
 
                   cursor: pointer
               & + li 
-                margin-top: 48px
+                margin-top: 42px
 
       &.user-info
         min-width: 105px
@@ -475,6 +468,121 @@ header
                 font-size: 24px
                 line-height: 2
                 letter-spacing: 0
+  #menuNotification
+    position: relative
+    top: $top-position-notification
+    height: $height-notification
+    right: 10px
+    .nav-item
+      margin-left: 0
+      z-index: 999
+      .list-container
+        display: none
+    .notification-bell.notification-active
+      position: relative
+      .list-container
+        display: block
+        width: 370px
+        position: absolute
+        top: 100%
+        background-color: rgba($menu_backgound_from, 0.96)
+        &:before
+          content: ''
+          position: absolute
+          z-index: 99
+          right: 10px
+          top: -24px
+          border: 12px solid transparent
+          border-bottom: 12px solid $notific_list_title
+      .title
+        width: 100%
+        text-transform: uppercase
+        position: absolute
+        top: 0    
+        margin-bottom: 0
+        padding: rem(10) rem(17) rem(10) rem(11)
+        background-color: $notific_list_title
+        cursor: default
+        font-size: rem(12)
+        letter-spacing: 1.2px
+        font-family: $notification-title-ff
+        span
+          color: $white
+      .notifications
+        width: 100%
+        
+        .date
+          margin-top: rem(5)
+        li
+          a
+            color: $notification-link-color
+            font-size: 12px
+            padding-left: 0
+            text-decoration: underline
+            &:hover
+              color: $notification-link-color-hover
+              text-decoration: none
+        .nav-link
+          border-bottom: solid 1px 
+          border-bottom-color: rgba($small-text, .5)
+          margin-bottom: 0
+          
+          
+          &:last-child
+            border-bottom: none
+          
+          &.notification-item
+            background-color: rgba(70,70,70, .5)
+            padding-left: 10px
+            padding-right: 0
+            p
+              color: $white
+              font-weight: normal!important
+            &.notification-item-read
+              background-color: transparent
+              margin-left: rem(10)
+              padding-left: 0px
+              p
+                color: rgba($menu_text_color, 0.7)
+                font-weight: normal!important
+      .submenu
+        overflow-y: scroll
+        height: auto
+        li:not(.title)
+            cursor: pointer
+            padding-right: 1rem
+        li
+          margin-bottom: 5px
+          text-align: left
+          &:last-child
+            margin-bottom: 0
+          & > *
+            display: inline-block
+            width: 100%
+            font-size: 12px!important
+            line-height: normal
+            color: rgba($menu_text_color, 0.7)
+
+          &:hover
+            span, i 
+              color: rgba($menu_text_color, 1)
+    .filescroll
+      .file-scroll
+        max-height: 281px
+        margin: rem(42) auto 0px
+      .all-file-scroll
+        ::-webkit-scrollbar-thumb
+          border-color: rgba(#585858, .9)
+          background-color: rgba(#585858, .9)
+        ::-webkit-scrollbar-thumb:hover
+          border-color: #1c1f22
+          background-color: $small-text
+        ::-webkit-scrollbar-track
+          border-width: 0
+        ::-webkit-scrollbar-track:hover
+          border-left: none
+      
+            
 
   @media screen and (min-width: 992px) and (max-width: 1100px)
     .navbar-nav .nav-item a
@@ -484,7 +592,7 @@ header
       top: -55%
 
       font-size: 0.6875rem
-    
+
   @media screen and (min-width: 992px)
     .nav-item:hover .list-container
       position: absolute
@@ -535,6 +643,8 @@ header
 
     .logo
       display: none!important
+    #menuNotification
+      display: none
 
   @media screen and (max-width: 991px)
     -webkit-transition: height 0.35s ease-in
@@ -561,8 +671,9 @@ header
     .navbar .navbar-brand
       display: inline-block
       height: $navbar_height_mobile
-      width: 180px
+      width: $logo-width-mobile
       z-index: 999
+      left: -4px
 
     .navbar-nav
       height: $navbar_height_mobile
@@ -759,12 +870,11 @@ header
 
     .navbar-brand
       float: none
-      margin-left: rem(-25)
 
     .wrap-toggle-menu
       position: absolute
       top: 0
-      left: 10px
+      left: 20px
 
       display: inline-block
       float: left
@@ -911,6 +1021,7 @@ header
     text-align: left
     text-transform: uppercase
     color: rgba($menu_text_color, .5)
+    display: block
     &:hover
       color:#fff
 
@@ -937,3 +1048,11 @@ header
   #menuProfile
     .user-info
       left: 90%
+  .navbar-brand 
+    img
+      left: -10px
+@media screen and (max-width: 320px)
+  header 
+    .navbar 
+      .navbar-brand
+        left: 0

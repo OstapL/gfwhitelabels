@@ -59,7 +59,7 @@ section(style="background-image: url(" + backgroundImgUrl + ")")#home.home-secti
             p Days Left
             h2.font-weight-bold.no-margin #{ helpers.campaign.daysLeft(values.campaign.expiration_date) }
           .col-xl-4.col-lg-3.col-md-2.hidden-xs-down.p-sm-0.pull-lg-right.text-xs-center
-            a(href="/" + values.id + "/invest").btn.btn-primary.text-uppercase.pull-lg-right Invest
+            a(href="/" + values.slug + "/invest").btn.btn-primary.text-uppercase.pull-lg-right Invest
 
 if app.getParams().preview == '1'
   div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#company_publish.modal.fade
@@ -135,7 +135,7 @@ section.campaigndetail
             |  Founded #{ formatHelper.formatDate(values.founding_date) }
       .row.hidden-xs-down
         .col-lg-12.share
-          | !{ socialDirective(this.model).render() }
+          | !{ socialDirective.render(this.model) }
     .col-lg-6.right-block-investors.p-l-0.p-sm-0
       .progress_bar_container
         -
@@ -175,21 +175,10 @@ section.campaigndetail
                   img(src="/img/avatar1.jpg" alt="...").img-circle
               a(href="#" style="display: none").link-1 see all...
         .col-xl-4.col-lg-3.col-md-2.hidden-sm-up.p-sm-0.pull-lg-right.text-xs-center
-            a(href="/" + values.id + "/invest").btn.btn-primary.text-uppercase.pull-lg-right Invest
-        .row
+            a(href="/" + values.slug + "/invest").btn.btn-primary.text-uppercase.pull-lg-right Invest
+        .row.social-share-mobile
           .col-lg-12.share.hidden-sm-up.text-xs-center
-            span.d-block 
-              i.fa.fa-share
-              |  Share:
-            .d-block.m-t-1
-              a(href=facebookLink target="_blank").facebook-share
-                i.fa.fa-facebook-square
-              a(href=twitterLink target="_blank").twitter-share
-                i.fa.fa-twitter-square
-              a(href=linkedinLink target="_blank").linkedin-share
-                i.fa.fa-linkedin-square
-              a(href=mailtoLink data-close="true" data-popup-opt="width=1,height=1").email-share
-                i.fa.fa-envelope-square
+            | !{ socialDirective.render(this.model) }
 section.border-bottom-scroll.hidden-lg-down
   .container.tabs-scroll.p-t-2
     nav(data-toggle="sticky-onscroll").navbar.navbar-default.sticky
@@ -206,7 +195,7 @@ section.border-bottom-scroll.hidden-lg-down
           a(href="#faq").nav-link faq
         li.nav-item.text-uppercase
           a(href="#ask").nav-link Ask a Question
-        a(href="/" + values.id + "/invest").btn.btn-primary.text-uppercase.pull-xl-right.pull-lg-left invest
+        a(href="/" + values.slug + "/invest").btn.btn-primary.text-uppercase.pull-xl-right.pull-lg-left invest
 section
   div(data-spy="scroll"
   data-target="#navbar-example2"
@@ -284,11 +273,13 @@ section
                     -
                       var additionalVideo = app.getVideoId(v.link);
                     if additionalVideo && additionalVideo.provider == 'youtube'
-                      img(src="http://img.youtube.com/vi/" + additionalVideo.id + "/0.jpg" alt="" style="width: 338px").card-img.w-100
+                      div(style="background-image: url(http://img.youtube.com/vi/" + additionalVideo.id + "/0.jpg)").additional-video
+                      //img(src="http://img.youtube.com/vi/" + additionalVideo.id + "/0.jpg" alt="" style="width: 338px").card-img.w-100
                     else if additionalVideo && additionalVideo.provider == 'vimeo'
                       img(src="" alt="" style="width: 338px;" data-vimeo-id=additionalVideo.id).card-img.w-100.vimeo-thumbnail
                     else
-                      img(src="http://img.youtube.com/vi/" + "/0.jpg" alt="" style="width: 338px").card-img.w-100
+                      //img(src="http://img.youtube.com/vi/" + "/0.jpg" alt="" style="width: 338px").card-img.w-100
+                      div(style="background-image: url(http://img.youtube.com/vi/" + "/0.jpg)").additional-video
                     .card-img-overlays
                       .card-title
                         a(data-toggle="modal" href="#videoModal-" + k data-target="#videoModal-" + k).small-icon.link-6.m-t-0
@@ -718,7 +709,7 @@ section
               .like-detail-icon.d-inline-block
                 i.fa.fa-thumbs-o-up.like-icon-circle
               |  I’d Like to Invest in #{ values.short_name || values.name }!
-            a(href="/" + values.id + "/invest").btn.btn-lg.btn-primary.text-uppercase.m-t-2 invest in this company
+            a(href="/" + values.slug + "/invest").btn.btn-lg.btn-primary.text-uppercase.m-t-2 invest in this company
   
 
 div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#videoModal.modal.fade.video-modal
