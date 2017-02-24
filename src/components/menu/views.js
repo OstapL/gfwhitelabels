@@ -1,5 +1,6 @@
 const Notifications = require('./notifications');
 const notifications_channel = 'general';
+const HIDE_TIMEOUT = 1000;
 
 module.exports = {
   menu: Backbone.View.extend({
@@ -61,8 +62,9 @@ module.exports = {
 
     events: {
       'mouseover .notification-item': 'markAsRead',
-      'mouseover .notification-bell': 'showNotifications',
-      'mouseout .notification-bell': 'hideNotifications',
+      'click .notification.notification-bell': 'showNotifications',
+      // 'mouseover .notification-container': 'showNotifications',
+      // 'mouseout .notification-bell': 'hideNotifications',
     },
 
     initialize(options) {
@@ -75,6 +77,8 @@ module.exports = {
       };
 
       this.initNotifications();
+
+      this._hideTimeout = null;
     },
 
     render: function () {
@@ -99,16 +103,31 @@ module.exports = {
     },
 
     showNotifications(e) {
+      this.$notificationContainer.toggleClass('notification-active');
+      return;
+      if(this._hideTimeout) {
+        clearTimeout(this._hideTimeout);
+        this._hideTimeout = null;
+      }
+
       if (this.$notificationContainer.hasClass('notification-active'))
         return;
+
+      console.log('show notifications');
       this.$notificationContainer.addClass('notification-active');
     },
 
     hideNotifications(e) {
+      if (this._hideTimeout) {
+        clearTimeout(this._hideTimeout);
+        this._hideTimeout = null;
+      }
+
       setTimeout(() => {
+        console.log('hide notifications')
         if (this.$notificationContainer.hasClass('notification-active'))
           this.$notificationContainer.removeClass('notification-active');
-      }, 300);
+      }, HIDE_TIMEOUT);
     },
 
     countUnreadMessages() {
