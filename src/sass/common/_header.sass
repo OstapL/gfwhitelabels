@@ -476,6 +476,14 @@ header
     top: $top-position-notification
     height: $height-notification
     right: 10px
+    .nav-item
+      margin-left: 0
+      .list-container
+        display: none
+
+    .notification.notification-active
+      &:hover .list-container
+        display: block
     .nav-item.notification
       &:hover
         .submenu
