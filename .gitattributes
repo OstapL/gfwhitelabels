@@ -1,7 +1,9 @@
 src/config.js merge=ours
 src/img/logo.png merge=ours
 src/img/u merge=ours
-
+src/sass/common/_colors.sass merge=ours
+.gitattributes merge=ours
+src/sass/common/_common.sass merge=ours
 src/sass/unique/_accordion.sass merge=ours
 src/sass/unique/_card.sass merge=ours
 src/sass/unique/_dropdown.sass merge=ours
@@ -47,7 +49,6 @@ src/sass/unique/_utilities.sass merge=ours
 
 src/sass/config/_colors.sass merge=ours
 src/sass/config/_vars.sass merge=ours
-<<<<<<< HEAD
 src/sass/pages/_index.sass merge=ours
 src/templates/overview.pug merge=ours
 src/templates/mainPage.pug merge=ours
@@ -55,6 +56,4 @@ src/templates/contact.pug merge=ours
 src/templates/careers.pug merge=ours
 src/templates/partners.pug merge=ours
 src/img/favicon.ico merge=ours
-=======
 src/config.js merge=ours
->>>>>>> vladyslav2/master

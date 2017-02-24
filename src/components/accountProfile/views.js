@@ -438,6 +438,17 @@ module.exports = {
       helpers.fileList.show(data);
     },
 
+    onCancel(investment) {
+      _.each(this.model.data, (i) => {
+        if (i.campaign_id != investment.campaign_id)
+          return;
+
+        i.campaign.amount_raised -= investment.amount;
+        this.$('[data-investmentid=' + i.id + ']').replaceWith(this.snippets.investment(i));
+      });
+    },
+
+    //TODO: sort investments in dom on historical tab after cancel investment
     cancelInvestment(e) {
       e.preventDefault();
 
@@ -456,6 +467,7 @@ module.exports = {
         return false;
 
       api.makeRequest(investmentServer + '/' + id + '/decline', 'PUT').done((response) => {
+      // setTimeout(() => {
         investment.status = FINANCIAL_INFORMATION.INVESTMENT_STATUS.CancelledByUser;
         helpers.campaign.initInvestment(investment);
 
@@ -470,11 +482,26 @@ module.exports = {
               '</div>');
 
         let historicalInvestmentsBlock = this.$el.find('#historical .investor_table');
-        let historicalInvestments = _.filter(this.model.data, i => !i.active);
-        if (historicalInvestments && historicalInvestments.length === 1)
-          historicalInvestmentsBlock.empty();
+        let historicalInvestmentElements = historicalInvestmentsBlock.find('.one_table');
+        let cancelledInvestmentElem = this.snippets.investment(investment);
 
-        historicalInvestmentsBlock.append(this.snippets.investment(investment));
+        if (historicalInvestmentElements.length) {
+          //find investment to insert after it
+          let block = _.find(historicalInvestmentElements, (elem) => {
+            const investmentId = Number(elem.dataset.investmentid);
+            return investmentId > investment.id;
+          });
+          if (block)
+            $(block).after(cancelledInvestmentElem);
+          else
+            historicalInvestmentsBlock.prepend(cancelledInvestmentElem);
+        } else {
+          historicalInvestmentsBlock.empty();
+          historicalInvestmentsBlock.append(cancelledInvestmentElem);
+        }
+
+        this.onCancel(investment);
+      // }, 500);
 
       }).fail((err) => {
         alert(err.error);

@@ -49,7 +49,7 @@ else
   ul.nav.navbar-nav
     // for desktop
     li.login-sinup.hidden-md-down
-      a(href="/account/login").btn.btn-primary Log in
+      a(href="/account/login").btn Log in
     
     li.login-sinup.hidden-md-down
       a(href="/account/signup").btn.btn-primary Sign up
@@ -60,7 +60,7 @@ ul.submenu.list-unstyled.mobile-profile-menu.hidden-lg-up
   if user.companiesMember && user.companiesMember.data
     each v,k in user.companiesMember.data
       li
-        a(href="/dashboard/issuer-dashboard?id=" + v.company_id).nav-link #{v.company}
+        a(href="/dashboard/" + v.formc_id + "/issuer-dashboard" ).nav-link #{v.company}
   li
     a(href="/account/investor-dashboard").nav-link Investor Dashboard
   li

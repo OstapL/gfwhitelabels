@@ -3,7 +3,7 @@ const today = moment.utc();
 
 const FINANCIAL_INFO = require('consts/financialInformation.json');
 const ACTIVE_STATUSES = FINANCIAL_INFO.INVESTMENT_STATUS_ACTIVE;
-const HISTORICAL_STATUSES = FINANCIAL_INFO.INVESTMENT_STATUS_HISTORICAL;
+const CANCELLED_STATUSES = FINANCIAL_INFO.INVESTMENT_STATUS_CANCELLED;
 
 let exports = {
   formcLinks: {
@@ -72,7 +72,8 @@ let exports = {
       : moment(i.campaign.expiration_date);
 
     i.expired = i.campaign.expiration_date.isBefore(today);
-    i.historical = i.expired || _.contains(HISTORICAL_STATUSES, i.status);
+    i.cancelled = _.contains(CANCELLED_STATUSES, i.status);
+    i.historical = i.expired || i.cancelled;
     i.active = !i.historical  && _.contains(ACTIVE_STATUSES, i.status);
   }
 };
