@@ -1,0 +1,20 @@
+li.nav-item.notification.notification-bell.text-center.drop-container.filescroll
+  a(href="#")
+    i.fa.fa-bell-o
+    - var style = unreadCount ? '' : '"display: none;"';
+    span(style="#{ style }").count-notific
+      #{ unreadCount || '' }
+
+  .list-container.notification-container.all-file-scroll
+    .title
+      span.pull-left
+        span.count-notific
+          #{ unreadCount || ''}
+        | &nbsp;
+        | pending notifications
+    .file-scroll
+      ul.submenu.list-unstyled.notifications
+      each n in notifications
+        snippets.message(n)
+          
+          

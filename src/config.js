@@ -13,10 +13,10 @@ global.esignServer = 'https://api-esign.growthfountain.com';
 global.commentsServer = "https://api-comments.growthfountain.com";
 global.blogServer = "https://api-blog.growthfountain.com";
 global.bucketServer = "http://growthfountain-dcu-storage.s3-website-us-west-1.amazonaws.com";
-
+global.notificationsServer = "https://notifications.growthfountain.com/";
 global.teamName = 'GrowthFountain Team';
 global.teamTitle = "Meet The Team";
-global.pageTitle ="Crowdfunding | Digital Federal Credit Union";
+document.title = "Crowdfunding | Digital Federal Credit Union";
 //global.serverUrl = "http://192.168.99.100:8000";
 //global.serverUrl = "http://gfauth.com:8000";
 

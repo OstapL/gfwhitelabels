@@ -199,7 +199,10 @@
 		+mt(.2s)
 		&:hover
 			color: $btn-email-hover-bg
-
+.social-share-mobile
+	.share
+		span
+			display: block!important
 
 
 
@@ -221,6 +224,11 @@
 		.card-img
 			border-radius: 0
 			max-height: 210px
+		.additional-video
+			width: 100%
+			height: 210px
+			background-position: center
+			background-size: 110%
 		.card-img-overlays
 			text-align: center!important
 			top: 50%
@@ -460,11 +468,14 @@
 		margin-bottom: 0
 	padding-bottom: rem(50)
 	.form-section
-		input
+		textarea
 			border: none
 			border-bottom: solid 1px $gallery
 			outline: none
 			padding: rem(6) rem(10)
+			resize: none
+			height: 36px
+			overflow: hidden
 
 	.hr
 		width: 100%
@@ -525,6 +536,18 @@
 		p
 			margin-bottom: rem(5)
 			margin-top: rem(5)
+	.edit-comment
+		textarea
+			border: solid 1px #ebebeb!important
+			
+@media only screen and (min-width : 991px)
+	.col-lg-12
+		.col-lg-11.comment
+			padding-left: 25px!important
+			.col-xl-1
+				width: 9%
+			.col-xl-11
+				width: 91%
 .like-detail
 	.like-text-wrap
 		text-align: center
@@ -576,8 +599,6 @@
 			margin-bottom: 20px
 		.comments-wrap
 			display: block
-			.kvalificatio-comments
-				margin-left: 0
 	.comment-form
 		.btn.m-r-2
 			margin-right: 1rem!important
@@ -590,7 +611,7 @@
 		padding-right: 0!important
 @media only screen and (max-width : 576px)
 	.js-height-parent
-		height: 40vh
+		height: 250px
 	h1.big-h1
 		font-size: rem(28)
 	.top-info-wrap-item
