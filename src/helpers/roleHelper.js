@@ -7,18 +7,32 @@ const OFFICER_ROLES = [
   roles.OFFICER_SECRETARY,
   roles.OFFICER_PAO,
 ];
+
 const DIRECTOR_ROLES = [
   roles.DIRECTOR,
 ];
+
 const SHAREHOLDER_ROLES = [
   roles.SHAREHOLDER,
 ];
 
 const ALL_ROLES = [].concat.apply([], [SHAREHOLDER_ROLES, DIRECTOR_ROLES, OFFICER_ROLES]);
 
+const COMMENTS_ROLES_PRIORITY = [
+  roles.OFFICER_CEO,
+  roles.DIRECTOR,
+  roles.OFFICER_PFO,
+  roles.OFFICER_VP,
+  roles.OFFICER_SECRETARY,
+  roles.OFFICER_PAO,
+  roles.OFFICER,
+  roles.SHAREHOLDER,
+];
+
+
 module.exports = {
   isOfficer(role) {
-    return !!(role & OFFICER_ROLES_MASK);
+    return role > 2;
   },
 
   isDirector(role) {
@@ -44,7 +58,22 @@ module.exports = {
   extractRoles(roleBitmap, extractRoles=ALL_ROLES) {
     return _(extractRoles)
       .filter((r) => { return !!(r & roleBitmap); })
-      .map((r) => { return { title: roles.ROLES[r], id: r }; });
+      .map((r) => {
+        return {
+          title: roles.ROLES_SHORT[r],
+          id: r,
+        };
+      });
+  },
+
+  extractRolesByPriority(roleBitmap) {
+    let extractRoles = COMMENTS_ROLES_PRIORITY;
+    let result = _(extractRoles).find((r) => { return !!(r & roleBitmap)});
+    return result
+      ? [{
+        title: roles.COMMENT_PRIORITY_ROLES_SHORT[result],
+        id: result,
+      }] : [];
   },
 
 };
