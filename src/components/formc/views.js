@@ -183,6 +183,7 @@ module.exports = {
         nonrefundable_fees: companyFees.nonrefundable_fees,
         amendment_fee: companyFees.amendment_fee,
         commencement_date_x: this.getCurrentDate(),
+        commitment_date_x: this.getCurrentDate(),
         zip_code: app.user.company.zip_code,
         city: app.user.company.city,
         state: app.user.company.state,
