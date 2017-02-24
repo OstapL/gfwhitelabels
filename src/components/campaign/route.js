@@ -1,6 +1,8 @@
 // Polyfill webpack require.ensure.
 if (typeof require.ensure !== `function`) require.ensure = (d, c) => c(require);    
 
+const helpers = require('./helpers.js');
+
 module.exports = Backbone.Router.extend({
   routes: {
     ':id/invest-thanks': 'investmentThankYou',
@@ -58,6 +60,11 @@ module.exports = Backbone.Router.extend({
 
   detail(id) {
     require.ensure([], () => {
+
+      if(helpers.slugs[id]) {
+        id = helpers.slugs[id];
+      }
+
       const View = require('./views.js');
 
       api.makeCacheRequest(raiseCapitalServer + "/" + id).

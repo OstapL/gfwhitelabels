@@ -15,7 +15,6 @@ const validation = require('components/validation/validation.js');
 const User = require('components/accountProfile/user.js');
 global.formatHelper = require('helpers/formatHelper');
 
-document.title = pageTitle;
 if (!global.Intl) {
   require('intl');
   require('intl/locale-data/jsonp/en.js');

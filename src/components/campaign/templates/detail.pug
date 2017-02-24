@@ -1,10 +1,8 @@
-- var percentage_raised = formatHelper.calculateRaisedPercentage(values.campaign.minimum_raise, values.campaign.amount_raised)
-- var formcLinks = require('./../helpers.js').formcLinks
-
 -
-  var campaignHelpers = require('components/campaign/helpers.js');
   var c = require('consts/campaign/file.json');
   var backgroundImgUrl = app.getUrl(values.campaign.header_image_data) || '/img/default.png';
+  var socialDirective = require('directives/social/index.js');
+    
 section(style="background-image: url(" + backgroundImgUrl + ")")#home.home-section.bg-dark-alfa-70.parallax-2.fixed-height-small.hide-bg-fixed
   .js-height-parent.container-fluid
     .home-content
@@ -137,40 +135,16 @@ section.campaigndetail
             |  Founded #{ formatHelper.formatDate(values.founding_date) }
       .row.hidden-xs-down
         .col-lg-12.share
-          span.d-inline-block 
-            i.fa.fa-share
-            |  Share:
-          
-          .d-inline-block
-          - var mailtoLink = 'mailto:?subject=Check out ' + values.name + '\'s fundraise on GrowthFountain&body=Check out ' + values.name + '\'s fundraise on GrowthFountain%0D%0A' + window.location.origin + '/' + values.id;
-
-          - var facebookLink = 'https://www.facebook.com/dialog/share?app_id=' + global.facebookClientId + '&href=' + window.location.origin + '/' + values.id + '?r=' + Math.random() + '&description=' + values.description + '&locale=en_US&picture=' + campaignHelpers.getImageCampaign(values.campaign) + '&title=Check out ' + (values.short_name || values.name) + '\'s fundraise on GrowthFountain.com&caption=' + (values.campaign.caption || '');
-
-          - var twitterLink = 'https://twitter.com/share?url=' + window.location.origin + '/' + values.id + '&via=growthfountain&hashtags=investment,fundraising&text=Check out ' + (values.short_name || values.name) + '\'s fundraise on @growthfountain ';
-
-          - var linkedinLink = 'https://www.linkedin.com/shareArticle?mini=true&url=' + window.location.origin + '/' + values.id + '&title=Check out ' + (values.short_name || values.name) + '\'s fundraise on GrowthFountain.com&summary=' + values.description + '&source=Growth Fountain';
-
-            a(href=facebookLink target="_blank").facebook-share
-              i.fa.fa-facebook-square
-            a(href=twitterLink target="_blank").twitter-share
-              i.fa.fa-twitter-square
-            a(href=linkedinLink target="_blank").linkedin-share
-              i.fa.fa-linkedin-square
-            a(href=mailtoLink data-close="true" data-popup-opt="width=1,height=1").email-share
-              i.fa.fa-envelope-square
-            //- a(href=values.company.instagram).link-1
-            //-   i.fa.fa-google-plus
+          | !{ socialDirective(this.model).render() }
     .col-lg-6.right-block-investors.p-l-0.p-sm-0
       .progress_bar_container
-        //- span Less than 20% Funded
         -
-          var percentage_raised = helpers.campaign.percentage(values.campaign.amount_raised, values.campaign.minimum_raise);
-          percentage_raised = percentage_raised < 20 ? 20 : percentage_raised;
-        span #{ percentage_raised <= 20 ? 'Less than 20' : percentage_raised }% Funded
+          var percentage_raised = helpers.campaign.fundedPercentage(values.campaign, 20);
+        span #{ percentage_raised.text }
         span.pull-right Committed 
           span.committed #{ formatHelper.formatPrice(values.campaign.amount_raised)}
         .clear
-        progress(value=percentage_raised max="100").progress
+        progress(value=percentage_raised.value max="100").progress
       .mt25
         .row.col-xl-8.col-md-6.text-xs-center.text-sm-center.text-md-left
           p Target
@@ -248,7 +222,19 @@ section
         p !{ textHelper.restoreLineBreak(values.campaign.pitch) }
     .container-fluid.p-l-0.p-r-0
       #gallery1.col-lg-12.pt50.photo-gallegy.text-center-flex
-        if values.campaign.gallery_group_data
+        - var gallery_company_film = require('components/campaign/templates/snippets/gallery_company_film.pug')
+        - var gallery_company_cogent = require('components/campaign/templates/snippets/gallery_company_cogent.pug')
+        - var gallery_company_venue = require('components/campaign/templates/snippets/gallery_company_venue.pug')
+        - var gallery_company_oma = require('components/campaign/templates/snippets/gallery_company_oma.pug')
+        if values.id == 564
+          | !{ gallery_company_film()}
+        else if values.id == 52
+          | !{ gallery_company_cogent()}
+        else if values.id == 51
+          | !{ gallery_company_venue()}
+        else if values.id == 536
+          | !{ gallery_company_oma()}
+        else if values.campaign.gallery_group_data
           each v,k in values.campaign.gallery_group_data
             .col-lg-4.col-sm-12.col-xs-12.col-md-6.no-padding-img
               a(href=v.urls[v.urls.length - 1] data-size='1440x900' rel="gallery1").fancybox
@@ -303,34 +289,34 @@ section
                       img(src="" alt="" style="width: 338px;" data-vimeo-id=additionalVideo.id).card-img.w-100.vimeo-thumbnail
                     else
                       img(src="http://img.youtube.com/vi/" + "/0.jpg" alt="" style="width: 338px").card-img.w-100
-                    .card-img-overlay
+                    .card-img-overlays
                       .card-title
-                        a(data-toggle="modal" href="#videoModal-" + k data-target="#videoModal-" + k).small-icon.link-6
+                        a(data-toggle="modal" href="#videoModal-" + k data-target="#videoModal-" + k).small-icon.link-6.m-t-0
                           i.fa.fa-play-circle-o
                       h3.card-text.text-lg-center #{ v.headline }
           else
             .col-xl-4.col-md-6.col-xs-12.col-sm-12.p-xs-0
               .card.card-inverse
                 img(src="/img/Smartbe-Intelligent-Stroller-5.jpg" alt="").card-img
-                .card-img-overlay
+                .card-img-overlays
                   .card-title
-                    a(data-toggle="modal" href="#videoModal-2" data-target="#videoModal-2").small-icon.link-6
+                    a(data-toggle="modal" href="#videoModal-2" data-target="#videoModal-2").small-icon.link-6.m-t-0
                       i.fa.fa-play-circle-o
                   h3.card-text.text-lg-center Title for Optional Video 2
             .col-xl-4.col-md-6.col-xs-12.col-sm-12.p-xs-0
               .card.card-inverse
                 img(src="/img/Smartbe-Intelligent-Stroller-5.jpg" alt="").card-img
-                .card-img-overlay
+                .card-img-overlays
                   .card-title
-                    a(data-toggle="modal" href="#videoModal-3" data-target="#videoModal-3").small-icon.link-6
+                    a(data-toggle="modal" href="#videoModal-3" data-target="#videoModal-3").small-icon.link-6.m-t-0
                       i.fa.fa-play-circle-o
                   h3.card-text.text-lg-center Title for Optional Video 3
             .col-xl-4.col-md-6.col-xs-12.col-sm-12.p-xs-0
               .card.card-inverse
                 img(src="/img/Smartbe-Intelligent-Stroller-5.jpg" alt="").card-img
-                .card-img-overlay
+                .card-img-overlays
                   .card-title
-                    a(data-toggle="modal" href="#videoModal-3" data-target="#videoModal-3").small-icon.link-6
+                    a(data-toggle="modal" href="#videoModal-3" data-target="#videoModal-3").small-icon.link-6.m-t-0
                       i.fa.fa-play-circle-o
                   h3.card-text.text-lg-center Title for Optional Video 3
       if values.campaign.additional_info
@@ -412,7 +398,7 @@ section
                     - var v = values.campaign.press[k]
                     if v
                       - showMore = true;
-                      div.col-xs-12.col-sm-12.col-md-12.col-lg-6.articles_press
+                      div.col-xl-4.col-xs-12.col-sm-12.col-md-12.col-lg-6.articles_press.p-xs-0
                         a(href=v.link target="_blank")
                           .card.card-inverse.m-b-2
                             .card-title

@@ -32,10 +32,6 @@ module.exports = {
       'click .tabs-scroll .nav .nav-link': 'smoothScroll',
       'hide.bs.collapse .panel': 'onCollapse',
       'show.bs.collapse .panel': 'onCollapse',
-      'click .email-share': 'shareWithEmail',
-      'click .linkedin-share': 'shareOnLinkedin',
-      'click .facebook-share': 'shareOnFacebook',
-      'click .twitter-share': 'shareOnTwitter',
       'click .see-all-risks': 'seeAllRisks',
       'click .see-all-faq': 'seeAllFaq',
       'click .linkresponse': 'checkResponse',
@@ -175,41 +171,41 @@ module.exports = {
       });
     },
 
-    shareWithEmail (e) {
-      event.preventDefault();
-      // Check out COMPANY NAME's fundraise on GrowthFountain
-      let companyName = this.model.company.name;
-      let text = "Check out " + companyName + "'s fundraise on GrowthFountain";
-      window.open("mailto:?subject=" + text + "&body=" + text + "%0D%0A" + window.location.href);
-    },
-
-    shareOnFacebook(event) {
-      event.preventDefault();
-      FB.ui({
-        method: 'share',
-        href: window.location.href,
-        caption: this.model.company.tagline,
-        description: this.model.company.description,
-        title: this.model.company.name,
-        picture: (this.model.header_image_data ? this.model.header_image_data.url : null),
-      }, function(response){});
-    },
-
-    shareOnLinkedin(event) {
-      event.preventDefault();
-      window.open(encodeURI('https://www.linkedin.com/shareArticle?mini=true&url=' + window.location.href +
-            '&title=' + this.model.company.name +
-            '&summary=' + this.model.company.description +
-            '&source=Growth Fountain'),'Growth Fountain Campaign','width=605,height=545');
-    },
-
-    shareOnTwitter(event) {
-      event.preventDefault();
-      window.open(encodeURI('https://twitter.com/share?url=' + window.location.href +
-            '&via=' + 'growthfountain' +
-            '&hashtags=investment,fundraising' +
-            '&text=Check out '),'Growth Fountain Campaign','width=550,height=420');
-    },
+    // shareWithEmail (e) {
+    //   event.preventDefault();
+    //   // Check out COMPANY NAME's fundraise on GrowthFountain
+    //   let companyName = this.model.company.name;
+    //   let text = "Check out " + companyName + "'s fundraise on GrowthFountain";
+    //   window.open("mailto:?subject=" + text + "&body=" + text + "%0D%0A" + window.location.href);
+    // },
+    //
+    // shareOnFacebook(event) {
+    //   event.preventDefault();
+    //   FB.ui({
+    //     method: 'share',
+    //     href: window.location.href,
+    //     caption: this.model.company.tagline,
+    //     description: this.model.company.description,
+    //     title: this.model.company.name,
+    //     picture: (this.model.header_image_data ? this.model.header_image_data.url : null),
+    //   }, function(response){});
+    // },
+    //
+    // shareOnLinkedin(event) {
+    //   event.preventDefault();
+    //   window.open(encodeURI('https://www.linkedin.com/shareArticle?mini=true&url=' + window.location.href +
+    //         '&title=' + this.model.company.name +
+    //         '&summary=' + this.model.company.description +
+    //         '&source=Growth Fountain'),'Growth Fountain Campaign','width=605,height=545');
+    // },
+    //
+    // shareOnTwitter(event) {
+    //   event.preventDefault();
+    //   window.open(encodeURI('https://twitter.com/share?url=' + window.location.href +
+    //         '&via=' + 'growthfountain' +
+    //         '&hashtags=investment,fundraising' +
+    //         '&text=Check out '),'Growth Fountain Campaign','width=550,height=420');
+    // },
 
     render() {
       const socialMediaScripts = require('helpers/shareButtonHelper.js');
@@ -402,7 +398,8 @@ module.exports = {
           this.$el.find('.has-error').scrollTo();
         }
       }
-    }
+    },
+
   }),
 
   investment: Backbone.View.extend({

@@ -2,6 +2,7 @@ const formatHelper = require('helpers/formatHelper');
 const textHelper = require('helpers/textHelper');
 const companyFees = require('consts/companyFees.json');
 const typeOfDocuments = require('consts/typeOfDocuments.json');
+const campaignHelpers = require('components/campaign/helpers.js');
 
 const usaStates = require('helpers/usaStates.js');
 
@@ -59,10 +60,6 @@ module.exports = {
       'click .tabs-scroll .nav .nav-link': 'smoothScroll',
       'hide.bs.collapse .panel': 'onCollapse',
       'show.bs.collapse .panel': 'onCollapse',
-      'click .email-share': 'socialPopup',
-      'click .linkedin-share': 'socialPopup',
-      'click .facebook-share': 'socialPopup',
-      'click .twitter-share': 'socialPopup',
       'click .see-all-risks': 'seeAllRisks',
       'click .see-all-faq': 'seeAllFaq',
       'click .show-more-members': 'readMore',
@@ -211,17 +208,6 @@ module.exports = {
           currLink.removeClass("active");
         }
       });
-    },
-
-    socialPopup (e) {
-      e.preventDefault();
-      var popupOpt = e.currentTarget.dataset.popupOpt || 'toolbar=0,status=0,left=45%,top=45%,width=626,height=436';
-      var windowChild = window.open(e.currentTarget.href, '', popupOpt);
-   
-      if (e.currentTarget.dataset.close) {
-        let closeScript = "<script>setTimeout(window.close.bind(window), 400);</script>";
-        windowChild.document.write(closeScript);
-      }
     },
 
     showDocumentsModal(e) {
@@ -388,6 +374,8 @@ module.exports = {
       'keyup #annual_income,#net_worth': 'updateLimitInModal',
       'click button.submit-income-worth': 'updateIncomeWorth',
       'click': 'hidePopover',
+      'hidden.bs.collapse #hidden-article-press' :'onArticlePressCollapse',
+      'shown.bs.collapse #hidden-article-press' :'onArticlePressCollapse',
     },
 
     initialize(options) {
@@ -628,7 +616,13 @@ module.exports = {
 
       return this;
     },
-
+    onArticlePressCollapse(e) {
+      if (e.type == 'hidden') {
+        this.$('.see-all-perks').text('Show More')
+      } else if (e.type == 'shown') {
+        this.$('.see-all-perks').text('Show Less')
+      }
+    },
     initAmountPopover() {
       this.$amount = this.$el.find('#amount');
       this.$amount.data('contentselector', 'amount-campaign');
@@ -775,19 +769,18 @@ module.exports = {
     },
 
     updatePerks(amount) {
-      //update perks
-      let $targetPerk;
-      let $perks = this.$('.perk');
-      $perks.each((i, el) => {
-        if(parseInt(el.dataset.amount) <= amount) {
-          $targetPerk = $(el);
-          return false;
-        }
-      });
+      function updatePerkElements($elms, amount) {
+        $elms.removeClass('active').find('i.fa.fa-check').hide();
+        $elms.each((idx, el) => {
+          if(parseInt(el.dataset.amount) <= amount) {
+            $(el).addClass('active').find('i.fa.fa-check').show();
+            return false;
+          }
+        });
+      }
 
-      $perks.removeClass('active').find('i.fa.fa-check').hide();
-      if ($targetPerk)
-        $targetPerk.addClass('active').find('i.fa.fa-check').show();
+      updatePerkElements($('.invest-perks-mobile .perk'), amount);
+      updatePerkElements($('.invest-perks .perk'), amount);
     },
 
     _updateTotalAmount() {

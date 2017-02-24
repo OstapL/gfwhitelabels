@@ -93,7 +93,8 @@ module.exports = {
     urlRoot: formcServer + '/:id/introduction',
 
     events: _.extend({
-      'submit form': 'submit',
+      'click .save-and-continue': 'submit',
+      // 'submit form': 'submit',
       'click .link-2': 'openPdf',
       'click .submit_formc': submitFormc,
       'keyup #full_name': 'changeSign',
@@ -132,6 +133,10 @@ module.exports = {
         })
       );
 
+      if(app.user.formc.is_paid == 0) {
+        app.user.formc = null;
+      }
+
       let eSignForm = this.$('.electronically-sign');
       this.eSignCompanyName = eSignForm.find('#company-name');
       this.eSignFullName = eSignForm.find('#full_name');
@@ -150,8 +155,10 @@ module.exports = {
         template: 'formc/funding_portal_listing_agreement.pdf'
       };
 
-      $.post(reqUrl, data)
-        .fail( (err) => console.log(err));
+      app.makeRequest(reqUrl, 'POST', data, {
+        contentType: 'application/json; charset=utf-8',
+        crossDomain: true
+      })
     },
 
     openPdf (e) {
@@ -256,7 +263,7 @@ module.exports = {
       }
 
       if (!this.eSignFullName.val().trim()) {
-        validation.invalidMsg({ $: $ }, 'full-name', ['Check your name']);
+        validation.invalidMsg({ $: $, $el: $('#content'), }, 'full-name', ['Check your name']);
         $payBtn.prop('disabled', false);
         return;
       }
@@ -267,9 +274,8 @@ module.exports = {
 
       Stripe.card.createToken(card, (status, stripeResponse) => {
         if (stripeResponse.error) {
-          validation.invalidMsg({ $: $ }, 'form-section', [stripeResponse.error.message]);
+          validation.invalidMsg({ $: $, $el: $('#content'), }, 'card_number', [stripeResponse.error.message]);
           $payBtn.prop('disabled', false); // Re-enable submission
-          $('#certify').scrollTo(20);
           app.hideLoading();
           return;
         }
@@ -278,7 +284,7 @@ module.exports = {
           stripeToken: stripeResponse.id
         }).done((formcResponse, statusText, xhr) => {
           if (xhr.status !== 200) {
-            validation.invalidMsg({'$': $}, "expiration-block",
+            validation.invalidMsg({'$': $, $el: $('#content'),}, "expiration-block",
               [formcResponse.description || 'Some error message should be here']);
 
             $payBtn.prop('disabled', false);
@@ -307,6 +313,7 @@ module.exports = {
 
           this.$('#save-button-block').removeClass('collapse');
 
+          this.$('.save-and-continue').click();
           app.hideLoading();
 
         }).fail((xhr, ajaxOptions, err) => {
@@ -325,10 +332,12 @@ module.exports = {
       e.preventDefault();
 
       let $target = $(e.target);
-      let $submitBtn = $target.find('#pay-btn');
+      let $form = $target.closest('form');
+
+      let $submitBtn = $form.find('#pay-btn');
       $submitBtn.prop('disabled', true);
 
-      let data = $target.serializeJSON({ checkboxUncheckedValue: 'false', useIntKeysAsArrayIndex: true });
+      let data = $form.serializeJSON({ checkboxUncheckedValue: 'false', useIntKeysAsArrayIndex: true });
 
       if (data.certify == 0) {
         delete data.certify;
@@ -466,6 +475,7 @@ module.exports = {
     events: _.extend({
       'click #submitForm': 'submit',
       'click .submit_formc': submitFormc,
+      'click .team-current-date': 'setCurrentDate',
     }, addSectionHelper.events, menuHelper.events, yesNoHelper.events, leavingConfirmationHelper.events),
 
     preinitialize() {
@@ -631,6 +641,21 @@ module.exports = {
       api.submitAction.call(this, e, data);
     },
 
+    setCurrentDate(e) {
+      let $target = $(e.target);
+      const isCurrentDate = $target.is(':checked');
+
+      let $container = $target.parent().parent().parent();
+      let monthControl = $container.find('select');
+      let yearControl = $container.find('input[type=text]');
+
+      monthControl.val('');
+      monthControl.prop('disabled', isCurrentDate);
+
+      yearControl.val('');
+      yearControl.prop('disabled', isCurrentDate);
+    },
+
   }, addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods, leavingConfirmationHelper.methods)),
 
 
@@ -749,6 +774,16 @@ module.exports = {
           this.model[key].push({max: 0, min: 0, title: titles[i]});
         }
       }
+
+      let less_offering_expense = this.model['less_offering_express'];
+      let commission = _(less_offering_expense).find((item) => {
+        return item.title == 'Commissions and Broker Expenses';
+      });
+
+      commission.min = Math.round(this.campaign.minimum_raise * companyFees.trans_percent / 100);
+      commission.max = Math.round(this.campaign.maximum_raise * companyFees.trans_percent / 100);
+      commission.fee = true;
+
       this.assignLabels();
       this.createIndexes();
       this.buildJsonTemplates('formc');
@@ -1782,7 +1817,7 @@ module.exports = {
           security_type: "Security Type",
           custom_security_type: "Custom Security Type",
           other_rights: "Other Rights",
-          amount_authroized: "Amount Authorized",
+          amount_authorized: "Amount Authorized",
           amount_outstanding: "Amount Outstanding",
           voting_right: "Voting right",
           terms_and_rights: "Describe all material terms and rights",
@@ -1835,7 +1870,10 @@ module.exports = {
       const sectionName = e.target.dataset.section;
       const template = require('./templates/snippets/outstanding_securities.pug');
 
-      data.amount_authroized = data.amount_authroized.replace(/[\$\,]/g, '');
+      data.amount_authorized = data.amount_authorized.replace(/[\$\,]/g, '');
+      if(data.amount_authorized.toLocaleLowerCase() == 'n/a' || data.amount_authorized.toLocaleLowerCase() == 'not available') {
+        data.amount_authorized = null;
+      }
       data.amount_outstanding = data.amount_outstanding.replace(/[\$\,]/g, '');
       if (!validation.validate(this.fields.outstanding_securities.schema, data, this)) {
         _(validation.errors).each((errors, key) => {
