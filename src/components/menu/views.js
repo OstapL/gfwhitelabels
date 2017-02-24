@@ -98,6 +98,7 @@ module.exports = {
 
       this.$notificationContainer = this.$('.notification-bell');
       this.$notificationList = this.$('.notification-container ul.notifications');
+      this.$notificationsTextHeader = this.$('.notification-text-header');
       this.$notificationsCount = this.$('.count-notific');
 
       return this;
@@ -146,6 +147,12 @@ module.exports = {
         this.$notificationsCount.hide();
 
       this.$notificationsCount.text(unreadCount || '');
+
+      let text = unreadCount <= 0
+        ? 'notifications'
+        : ` pending notification${unreadCount > 1 ? 's' : ''}`
+
+      this.$notificationsTextHeader.text(text);
     },
 
     initNotifications() {
