@@ -114,6 +114,11 @@ module.exports = {
 
     _success(data) {
       this.undelegateEvents();
+
+      if(data == null) {
+        data = {};
+      }
+
       if (data.hasOwnProperty('campaign_id') == false) {
         data.campaign_id = this.formc.campaign_id;
       }
