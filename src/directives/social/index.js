@@ -30,7 +30,7 @@ class SocialNetworks {
     script.type = 'text/javascript';
     script.src = '//platform.linkedin.com/in.js';
     script.innerHTML = 'api_key: ' + linkedinClientId;
-    document.head.append(script);
+    $(document.head).append(script);
   }
 
   attachEvents() {
