@@ -18,7 +18,7 @@ global.bucketServer = "https://s3.amazonaws.com/growthfountain-alpha-storage";
 global.notificationsServer = "http://notifications-dev.growthfountain.com/";
 global.teamName = 'GrowthFountain Team';
 global.teamTitle = "Meet The Team";
-global.pageTitle ="Crowdfunding | Momentum3 Growth";
+document.title = "Crowdfunding | Momentum3 Growth";
 
 //global.serverUrl = "http://192.168.99.100:8000";
 //global.serverUrl = "http://gfauth.com:8000";

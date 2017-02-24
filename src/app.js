@@ -11,7 +11,7 @@ global.Urls = require('./jsreverse.js');
 require('jquery-serializejson/jquery.serializejson.min.js');
 require('js/html5-dataset.js');
 const validation = require('components/validation/validation.js');
-document.title = pageTitle;
+
 const User = require('components/accountProfile/user.js');
 global.formatHelper = require('helpers/formatHelper');
 
