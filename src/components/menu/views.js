@@ -1,5 +1,6 @@
 const Notifications = require('./notifications');
 const notifications_channel = 'general';
+const HIDE_TIMEOUT = 500;
 
 module.exports = {
   menu: Backbone.View.extend({
@@ -60,6 +61,10 @@ module.exports = {
     template: require('./templates/userNotifications.pug'),
 
     events: {
+      'click .notification.notification-bell': 'showNotifications',
+      'mouseover .notification-bell': 'showNotifications',
+      'mouseover .notification-container': 'showNotifications',
+      'mouseout .notification-container': 'hideNotifications',
       'mouseover .notification-item': 'markAsRead',
     },
 
@@ -73,6 +78,8 @@ module.exports = {
       };
 
       this.initNotifications();
+
+      this._hideTimeout = null;
     },
 
     render: function () {
@@ -89,10 +96,38 @@ module.exports = {
         })
       );
 
-      this.$notifications = $('.notification-container ul.notifications');
-      this.$notificationsCount = $('.count-notific');
+      this.$notificationContainer = this.$('.notification-bell');
+      this.$notificationList = this.$('.notification-container ul.notifications');
+      this.$notificationsCount = this.$('.count-notific');
 
       return this;
+    },
+
+    showNotifications(e) {
+      this._clearTimeout();
+
+      if (this.$notificationContainer.hasClass('notification-active'))
+        return;
+
+      this.$notificationContainer.addClass('notification-active');
+    },
+
+    _clearTimeout() {
+      if (this._hideTimeout) {
+        clearTimeout(this._hideTimeout);
+        this._hideTimeout = null;
+      }
+    },
+
+    hideNotifications(e) {
+      if (this._hideTimeout)
+        return;
+
+      this._hideTimeout = setTimeout(() => {
+        console.log('hide notifications')
+        if (this.$notificationContainer.hasClass('notification-active'))
+          this.$notificationContainer.removeClass('notification-active');
+      }, HIDE_TIMEOUT);
     },
 
     countUnreadMessages() {
@@ -119,7 +154,7 @@ module.exports = {
         this.model.data = this.model.data.concat(data);
         this.updateUnreadCount();
         _.each(data, (m) => {
-          this.$notifications.prepend(this.snippets.notification(m));
+          this.$notificationList.prepend(this.snippets.notification(m));
         });
       });
     },
