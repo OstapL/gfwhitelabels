@@ -1,4 +1,4 @@
-| !{app.breadcrumbs('Invest', '', [ ['Home', '/'], ['Explore', '/companies'], [investment.company.name, '/' + investment.company_id], ['Invest in ' + investment.company.name, '']])}
+| !{app.breadcrumbs('thank you!', '', [ ['Home', '/'], ['Explore', '/companies'], [investment.company.name, '/' + investment.company_id], ['Invest in ' + investment.company.name, '']])}
 -
   var SECURITY_TYPE = require('consts/raisecapital/security_type.json');
   var socialDirective = require('directives/social/index.js');
@@ -18,13 +18,13 @@
       hr.m-t-0.m-b-0
   .row
     .col-xl-12.text-xs-center
-      h3.font-weight-light.m-t-0 “I just invested in #{ investment.company.name }!”
+      h2.font-weight-light.m-t-0.m-b-2 “I just invested in #{ investment.company.name }!”
     .col-lg-12.share.p-t-0.text-xs-center.m-b-2
-      | !{ socialDirective(socialShare, { titlePrefix: 'I invested in '}).render() }
+      | !{ socialDirective.render(socialShare, { titlePrefix: 'I invested in '}) }
   .row.thank-you-page
     .col-xl-8.offset-xl-2.overview
       .thankyou-page
-        table.table.table-bordered.pb10
+        table.table.table-bordered
           tbody
             tr.bgc-row-top
               td(colspan="2")
@@ -51,11 +51,12 @@
                     h3.font-weight-bold #{ investment.percentage_revenue}% Revenue Share Capped at #{investment.cap}x
                   td
                     h3.font-weight-bold $#{ investment.amount }
-                tr.bgc-row-middle
-                  td(colspan="2") Perk
-                tr
-                  td(colspan="2")
-                    if investment.perk
+                if investment.perk && investment.perk.length
+                  tr.bgc-row-middle
+                    td(colspan="2") Perk
+                
+                  tr
+                    td(colspan="2")
                       h3.font-weight-bold #{ investment.perk }
               when SECURITY_TYPE.CommonEquity
                 tr.bgc-row-middle
@@ -78,9 +79,12 @@
                     h3.font-weight-bold $#{ investment.amount }
                   td
                     h3.font-weight-bold
-                      if investment.perk
+                      if investment.perk && investment.perk.length
                         h3.font-weight-bold #{ investment.perk }
-        h3.m-b-2 You will have the opportunity to track your investments in the Investor Dashboard
+                      else
+                        h3
+                          hr(style="width:40px;")
+        h3.m-b-2.m-t-2 You will have the opportunity to track your investments in the Investor Dashboard
         .info-btn-block
           a(href="/account/investor-dashboard").btn.btn-secondary INVESTOR DASHBOARD
             i.fa.fa-angle-right

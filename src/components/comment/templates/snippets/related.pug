@@ -1,0 +1,21 @@
+.related-role.form-group.m-b-0
+  .col-xl-12.p-l-0
+    label.yesno
+      input(
+        type='checkbox'
+        data-name='related'
+        checked=false
+      ).related-cb
+      span.font-weight-normal.p-l-1
+        | I am speaking on behalf of the company
+  div(style="display: none;").form-group.m-b-0.related.field-related.shown-yes
+    .col-lg-2.p-l-0
+      span.font-weight-bold
+        | I am an:
+    .col-lg-9.radio-input.p-l-0
+      label.p-t-0.m-b-0
+        input(type="radio" name="related" value="Employee" selected=false)
+        | Employee
+      label.p-t-0.m-b-0
+        input(type="radio" name="related" value="Promoter" selected=false)
+        | Promoter

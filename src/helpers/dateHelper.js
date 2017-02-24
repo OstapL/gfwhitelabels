@@ -11,8 +11,12 @@ module.exports = {
     return this.formatDate(date);
   },
 
-  formatDate (date) {
+  formatDate(date) {
     return moment(date).format('YYYY-MM-DD');
+  },
+
+  formatTime(date) {
+    return moment(date).format('HH:MM:SS');
   },
 
   differenceInDays (dateA, dateB) {

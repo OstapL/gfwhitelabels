@@ -3,6 +3,7 @@ const helpers = {
   yesNo: require('helpers/yesNoHelper.js'),
   fields: require('./fields.js'),
 };
+
 const validation = require('components/validation/validation.js');
 
 function initDates(c) {
@@ -53,6 +54,12 @@ module.exports = {
       _.each(this.model.data, (c) => {
         initDates(c);
       });
+
+      this.snippets = {
+        related: require('./templates/snippets/related.pug'),
+        add: require('./templates/snippets/add.pug'),
+        edit: require('./templates/snippets/edit.pug'),
+      };
     },
 
     getComment(uid) {
@@ -87,9 +94,8 @@ module.exports = {
         },
         fields: this.fields,
         userRole: this.userRole,
+        snippets: this.snippets,
       }));
-
-      this.$stubs = this.$('.stubs');
 
       return this;
     },
@@ -114,7 +120,18 @@ module.exports = {
       }
     },
 
-    keyupHandler(e) {
+    resizeArea() {
+      setTimeout(() => {
+        var area = document.querySelector('.text-body');
+        if (!area)
+          return;
+        area.style.height = 'auto';
+        area.style.height = area.scrollHeight+'px';
+        console.log(area.scrollHeight+'px')
+      }, 0);
+    },
+
+    ensureRelatedRolesBlock(e) {
       if (this.userRole)
         return;
 
@@ -127,9 +144,7 @@ module.exports = {
         if (hasRelatedBlock)
           return;
 
-        $relatedBlock = this.$stubs.find('.related-role').clone();
-        $relatedBlock.find('.field-related').addClass('shown-yes');
-        //$form.append($relatedBlock);
+        $relatedBlock = $(this.snippets.related());
         $target.parent().after($relatedBlock);
         $relatedBlock.show();
       } else {
@@ -137,7 +152,11 @@ module.exports = {
           return;
         $relatedBlock.remove();
       }
+    },
 
+    keyupHandler(e) {
+      this.resizeArea(e);
+      this.ensureRelatedRolesBlock(e)
     },
 
     submitComment(e) {
@@ -256,16 +275,11 @@ module.exports = {
       let $commentBlock = $(e.target).closest('.comment');
 
       let $newCommentBlock = $commentBlock.find('.comment-form');
-      if ($newCommentBlock && $newCommentBlock.length) {
+      if ($newCommentBlock && $newCommentBlock.length)
         return false;
-      }
 
-      $newCommentBlock = this.$stubs.find('.edit-comment').clone();
-
-      $newCommentBlock.removeClass('edit-comment collapse');
-
+      $newCommentBlock = $(this.snippets.edit());
       $newCommentBlock.appendTo($commentBlock);
-
       $newCommentBlock.find('.text-body').focus();
 
       return false;
