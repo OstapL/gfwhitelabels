@@ -586,6 +586,14 @@ module.exports = {
 
       this.assignLabels();
 
+			if(window.location.hostname == 'dcu.growthfountain.com') {
+			//if(window.location.hostname == 'localhost') {
+        this.fields.is_understand_securities_related = Object.assign({}, this.fields.is_reviewed_educational_material);
+        this.fields.is_understand_securities_related.label = this.labels.is_understand_securities_related;
+      } else {
+        delete this.fields.is_understand_securities_related;
+      }
+
       this.getCityStateByZipCode = require("helpers/getSityStateByZipCode");
       this.usaStates = usaStates;
 
