@@ -16,7 +16,7 @@ global.blogServer = "https://api-blog.growthfountain.com";
 global.bucketServer = "http://growthfountain-rivermarkcu-storage.s3-website-us-west-1.amazonaws.com";
 
 //var data = 'Crowdfunding | Rivermark Community CU';
-global.pageTitle ="Crowdfunding | Rivermark Community CU";
+document.title = "Crowdfunding | Rivermark Community CU";
 global.teamName = 'GrowthFountain Team';
 global.teamTitle = "Meet The Growthfountain Team";
 

@@ -1,6 +1,6 @@
 -
   var auth = require('consts/auth/user.json');
-  pug_html += app.breadcrumbs('Invest', '', [ ['Home', '/'], ['Explore', '/companies'], [values.name, '/' + values.id], ['Invest in ' + values.name, '']]);
+  pug_html += app.breadcrumbs('Invest in '+ values.name, '', [ ['Home', '/'], ['Explore', '/companies'], [values.name, '/' + values.id], ['Invest in ' + values.name, '']]);
 
 mixin fieldInput(name, attr)
   - attr = attr ? attr : fields[name];
@@ -53,7 +53,7 @@ mixin confirmStatement(name, attr)
         form(action="POST" data-method="POST" name="invest_form").invest_form.clearfix
           input(type="hidden" name="company_id" value=values.id)
           .row
-            .col-xl-12
+            .col-xl-12.col-xs-6
               -
                 pug_html += app.fields.fieldTextLabel("amount", _.extend({
                     class1: 'col-xl-3 col-lg-4 text-md-left text-lg-right text-xl-right',
@@ -62,12 +62,13 @@ mixin confirmStatement(name, attr)
                     text: "$10 of payment processing fee. Your money will be returned to you if the " +
                       "campaign doesn't reach the target goal ($500,000).",
                   }, fields.amount));
-          .row
-            .col-xl-12
+
+            .col-xl-12.col-xs-6
               -
                 pug_html += app.fields.fieldTextLabel("fee", _.extend({
                     class1: 'col-xl-3 col-lg-4 text-md-left text-lg-right text-xl-right',
                     class2: 'col-xl-4 col-lg-8 input-border-bottom',
+                    class3: 'c',
                     placeholder: '+ $10',
                     value: '$10',
                     label: 'Commission',
@@ -107,10 +108,69 @@ mixin confirmStatement(name, attr)
           div.popover-content-amount-ok
             i.fa.fa-info-circle
             span Based on your updated annual income and net worth, you can invest up to $:amount.
+          section.hidden-sm-up
+            h2.text-uppercase.m-t-3.text-xs-center Investment Summary
+            .jumbotron.jumbotron-fluid.investment-summary
+              .container
+                .col-md-7.col-xs-6.text-xs-center
+                  .row
+                    span Target
+                    p.font-weight-bold
+                      | $#{values.campaign.minimum_raise.toLocaleString('en-US')} -
+                      | $#{values.campaign.maximum_raise.toLocaleString('en-US')}
+                .col-md-5.col-xs-6.text-xs-center
+                  .row
+                    span Committed
+                    p.font-weight-bold $#{values.campaign.amount_raised.toLocaleString('en-US')}
+              .container
+                .col-md-7.col-xs-6.text-xs-center
+                  .row
+                    span Offering deadline
+                    p.font-weight-bold.m-b-0 #{values.campaign.expiration_date.toLocaleDateString('en-US', {timeZone: 'UTC'})}
+                .col-md-5.col-xs-6.text-xs-center
+                  .row
+                    span Type of security
+                    p.font-weight-bold.m-b-0
+                      | #{values.campaign.security_type == 0 ? 'Common Equity' : 'Revenue Share'}
+          section.hidden-sm-up.invest-perks-mobile
+            - var perks = values.campaign.perks;
+            if perks && perks.length
+              - perks.sort(function (a, b) { return Number(b.amount) - Number(a.amount); });
+              h2.text-uppercase.dosis.m-t-3.text-xs-center PERKS
+                span.small-text.open-sans.hidden-xs-up
+                  | Investor Perks are not intended to affect the value of the security and
+                  | investors should evaluate the merits of each investment without regard to any
+                  | Investor Perks.
+              .list-group.list-group-border-invest.invest-right-margin
+                div
+                  -
+                    var idx = 0;
+                  while (idx < 2 && perks[idx])
+                    - var p = perks[idx];
+                    a(href="#" data-amount=p.amount).list-group-item.list-group-item-action.perk
+                      h3.list-group-item-heading
+                        span.text-color-puerto_rico.font-weight-bold $#{p.amount}
+                        |  Investment
+                        i.fa.fa-check(style="display:none;")
+                      p.list-group-item-text.text-justify #{p.perk}
+                    - idx += 1;
 
-
+                #hidden-article-press.hidden-article-press.collapse
+                  - var showMore = perks.length > 2
+                  while idx < perks.length && perks[idx]
+                    - var p = perks[idx];
+                    a(href="#" data-amount=p.amount).list-group-item.list-group-item-action.perk
+                      h3.list-group-item-heading
+                        span.text-color-puerto_rico.font-weight-bold $#{p.amount}
+                        |  Investment
+                        i.fa.fa-check(style="display:none;")
+                      p.list-group-item-text.text-justify #{p.perk}
+                    - idx += 1;
+              div(style="display:" + (showMore ? 'block' : 'none') + ";").row
+                .col-lg-12.text-xs-center.m-t-1
+                  a(href="#hidden-article-press" data-toggle="collapse").link-4.see-all-perks Show More
           section.personal_information
-            h2.text-uppercase.dosis.text-md-center.text-sm-center.text-xs-center.text-lg-left Personal Information
+            h2.text-uppercase.dosis.text-md-center.text-sm-center.text-xs-center.text-lg-left.m-t-3 Personal Information
               span.small-text.open-sans Required by United States banking laws. This information is transmitted securely and will never be used for any purpose beyond executing your investment. You only have to do this once.
             .form-group.row.required
               label.col-lg-3.col-md-12.text-lg-right.text-xs-left.pull-xs-left Legal Name
@@ -393,7 +453,7 @@ mixin confirmStatement(name, attr)
                   type="submit").btn.btn-primary.pull-lg-right.text-uppercase invest
     //END LEFT BLOCK
     //START RIGHT BLOCK
-    .col-xl-4.col-lg-5.pull-right
+    .col-xl-4.col-lg-5.pull-right.hidden-xs-down.invest-perks
       if values.campaign.perks
         h2.text-uppercase.dosis.m-t-0 PERKS
           span.small-text.open-sans
@@ -406,6 +466,7 @@ mixin confirmStatement(name, attr)
             values.campaign.perks = Object.keys(values.campaign.perks).map(function(key) {
               return values.campaign.perks[key];
             });
+
             values.campaign.perks.sort(function (a, b) {
               return Number(b.amount) - Number(a.amount);
             });
@@ -413,34 +474,34 @@ mixin confirmStatement(name, attr)
           each v,k in values.campaign.perks
             a(href="#" data-amount=v.amount).list-group-item.list-group-item-action.perk
               h3.list-group-item-heading
-                span.text-color-puerto_rico $#{v.amount}
-                |  Investments
+                span.text-color-puerto_rico.font-weight-bold $#{v.amount}
+                |  Investment 
                 i.fa.fa-check(style="display:none;")
               p.list-group-item-text.text-justify #{v.perk}
-
-      h2.text-uppercase Investment Summary
-      .jumbotron.jumbotron-fluid.investment-summary
-        .container
-          .col-md-7
-            .row
-              span Target
-              p.font-weight-bold
-                | $#{values.campaign.minimum_raise.toLocaleString('en-US')} -
-                | $#{values.campaign.maximum_raise.toLocaleString('en-US')}
-          .col-md-5
-            .row
-              span Committed
-              p.font-weight-bold $#{values.campaign.amount_raised.toLocaleString('en-US')}
-        .container
-          .col-md-7
-            .row
-              span Offering deadline
-              p.font-weight-bold.m-b-0 #{values.campaign.expiration_date.toLocaleDateString('en-US', {timeZone: 'UTC'})}
-          .col-md-5
-            .row
-              span Type of security
-              p.font-weight-bold.m-b-0
-                | #{values.campaign.security_type == 0 ? 'Common Equity' : 'Revenue Share'}
+      section.hidden-xs-down
+        h2.text-uppercase Investment Summary
+        .jumbotron.jumbotron-fluid.investment-summary
+          .container
+            .col-md-7
+              .row
+                span Target
+                p.font-weight-bold
+                  | $#{values.campaign.minimum_raise.toLocaleString('en-US')} -
+                  | $#{values.campaign.maximum_raise.toLocaleString('en-US')}
+            .col-md-5
+              .row
+                span Committed
+                p.font-weight-bold $#{values.campaign.amount_raised.toLocaleString('en-US')}
+          .container
+            .col-md-7
+              .row
+                span Offering deadline
+                p.font-weight-bold.m-b-0 #{values.campaign.expiration_date.toLocaleDateString('en-US', {timeZone: 'UTC'})}
+            .col-md-5
+              .row
+                span Type of security
+                p.font-weight-bold.m-b-0
+                  | #{values.campaign.security_type == 0 ? 'Common Equity' : 'Revenue Share'}
 
 //MODAL
 div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#city_state_modal.modal.fade

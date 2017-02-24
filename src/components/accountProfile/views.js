@@ -10,15 +10,12 @@ const helpers = {
   dropzone: require('helpers/dropzoneHelpers.js'),
   yesNo: require('helpers/yesNoHelper.js'),
   fileList: require('helpers/fileList.js'),
+  campaign: require('components/campaign/helpers.js'),
 };
 
 const moment = require('moment');
 
-const invest = require('consts/financialInformation.json');
-
-const activeStatuses = [invest.investment_status.New, invest.investment_status.Approved];
-const canceledStatuses = [invest.investment_status.CanceledByClient,
-    invest.investment_status.CanceledByBank, invest.investment_status.CanceledByInquisitor];
+const FINANCIAL_INFORMATION = require('consts/financialInformation.json');
 
 import 'bootstrap-slider/dist/bootstrap-slider'
 import 'bootstrap-slider/dist/css/bootstrap-slider.css'
@@ -42,6 +39,10 @@ module.exports = {
       this.activeTab = options.activeTab;
 
       this.fields = options.fields;
+
+      this.fields.phone = _.extend(this.fields.phone, {
+        required: true,
+      });
 
       this.fields.image_image_id = _.extend(this.fields.image_image_id, {
         crop: {
@@ -135,9 +136,9 @@ module.exports = {
 
       this.labels = {
         country: 'Country',
-        street_address_1: 'Street address 1',
-        street_address_2: 'Street address 2',
-        zip_code: 'Zip code',
+        street_address_1: 'Street Address 1',
+        street_address_2: 'Street Address 2',
+        zip_code: 'Zip Code',
         state: 'State/Province/Region',
         city: 'City',
         phone: 'Phone',
@@ -147,13 +148,13 @@ module.exports = {
         routing_number_re: "Re-Enter Routing Number",
         annual_income: 'My Annual Income',
         net_worth: 'My Net Worth',
-        twitter: 'Your Twitter link',
-        facebook: 'Your Facebook link',
-        instagram: 'Your Instagram link',
-        linkedin: 'Your LinkedIn link',
+        twitter: 'Your Twitter Link',
+        facebook: 'Your Facebook Link',
+        instagram: 'Your Instagram Link',
+        linkedin: 'Your LinkedIn Link',
         bank_name: 'Bank Name',
-        name_on_bank_account: 'Name on Bank Account',
-        ssn: 'Social Security number (SSN) or Tax ID (ITIN/EIN)',
+        name_on_bank_account: 'Name On Bank Account',
+        ssn: 'Social Security Number (SSN) Or Tax ID (ITIN/EIN)',
         ssn_re: 'Re-enter',
       };
 
@@ -166,18 +167,13 @@ module.exports = {
     },
 
     render() {
-      this.usaStates = require("helpers/usaStates.js");
-
       this.$el.html(
         this.template({
           tab: this.activeTab || 'account_info',
           serverUrl: serverUrl,
           user: this.model,
-          companiesMember: app.user.companiesMember,
-          roleInfo: app.user.getRoleInfo(),
           company: app.user.get('company'),
           fields: this.fields,
-          states: this.usaStates,
         })
       );
 
@@ -302,36 +298,37 @@ module.exports = {
       validation.invalidMsg(this, 'zip_code', 'Sorry your zip code is not found');
     },
 
+    _updateUserInfo() {
+      let first_name = this.el.querySelector('#first_name').value;
+      let last_name = this.el.querySelector('#last_name').value;
+
+      if (app.user.first_name == first_name && app.user.last_name == last_name)
+        return;
+
+      app.user.first_name = first_name;
+      app.user.last_name = last_name;
+
+      //TODO: move this code to user.js
+      let userData = app.user.toJSON();
+      localStorage.setItem('user', JSON.stringify(userData));
+
+      let full_name = `${first_name} ${last_name}`;
+
+      $('#user_name').text(full_name);
+      $('.image_image_id').siblings('h3').text(full_name);
+    },
+
     _success(data) {
+      this._updateUserInfo();
+
       app.routers.navigate("/", {trigger: true});
       return 0;
 
-      if ($("#financial_info").hasClass("active")) {
-        app.routers.navigate("/", {trigger: true});
-        return;
-      }
+      // if ($("#financial_info").hasClass("active")) {
+      //   app.routers.navigate("/", {trigger: true});
+      //   return;
+      // }
 
-      app.hideLoading();
-
-      //todo: this is bad solution
-      this.model.first_name = this.el.querySelector('#first_name').value;
-      this.model.last_name = this.el.querySelector('#last_name').value;
-
-      app.user.set('first_name', this.model.first_name);
-      app.user.set('last_name', this.model.last_name);
-
-      let userData = app.user.toJSON();
-
-      localStorage.setItem('user', JSON.stringify(userData));
-      // app.trigger('userLoaded', userData);
-      let fullName = app.user.get('first_name') + ' ' + app.user.get('last_name');
-      $('#user_name').text(fullName);
-      $('.image_image_id').siblings('h3').text(fullName);
-
-      $('#content').scrollTo();
-
-      //switch to financial info tab
-      // this.$('.profile-tabs a[href="#financial_info"]').tab('show');
     },
 
   }, helpers.phone.methods, helpers.dropzone.methods, helpers.yesNo.methods)),
@@ -342,6 +339,7 @@ module.exports = {
       'submit form': api.submitAction,
     },
     getSuccessUrl(data) {
+      localStorage.setItem('token', data.key);
       return '/account/profile';
     },
     render(){
@@ -381,22 +379,7 @@ module.exports = {
     initialize(options) {
       this.fields = options.fields;
 
-      this.investments = {
-        active: [],
-        historical: [],
-      };
-
-      let today = moment.utc();
-
-      _.each(this.model.data, (i) => {
-        i.created_date = moment.parseZone(i.created_date);
-        i.campaign.expiration_date = moment(i.campaign.expiration_date);
-
-        if (_.contains(canceledStatuses, i.status) || i.campaign.expiration_date.isBefore(today))
-          this.investments.historical.push(i);
-        else
-          this.investments.active.push(i);
-      });
+      _.each(this.model.data, helpers.campaign.initInvestment);
 
       this.snippets = {
         investment: require('./templates/investment.pug'),
@@ -405,7 +388,7 @@ module.exports = {
 
     render() {
       this.$el.html(this.template({
-        investments: this.investments,
+        investments: this.model.data,
         snippets: this.snippets,
       }));
     },
@@ -465,25 +448,22 @@ module.exports = {
       if (!id)
         return false;
 
-      let idx = _.findIndex(this.investments.active, (i) => {
-        return i.id == id;
-      });
+      let investment = this._findInvestment(id);
 
-      if (idx < 0)
-        return console.error(`Investment doesn't exist: ${id}`);
+      if (!investment)
+        return console.error('Investment doesn\'t exist: ' + id);
 
       if (!confirm('Are you sure?'))
         return false;
 
       api.makeRequest(investmentServer + '/' + id + '/decline', 'PUT').done((response) => {
-        console.log(response);
-        let investment = this.investments.active.splice(idx, 1)[0];
-        investment.status = 2;
-        this.investments.historical.push(investment);
+        investment.status = FINANCIAL_INFORMATION.INVESTMENT_STATUS.CancelledByUser;
+        helpers.campaign.initInvestment(investment);
 
         $target.closest('.one_table').remove();
 
-        if (this.investments.active.length <= 0)
+        let hasActiveInvestments = _.some(this.model.data, i => i.active);
+        if (!hasActiveInvestments)
           $('#active .investor_table')
             .append(
               '<div role="alert" class="alert alert-warning">' +
@@ -491,14 +471,11 @@ module.exports = {
               '</div>');
 
         let historicalInvestmentsBlock = this.$el.find('#historical .investor_table');
-
-        if (this.investments.historical.length === 1)
+        let historicalInvestments = _.filter(this.model.data, i => !i.active);
+        if (historicalInvestments && historicalInvestments.length === 1)
           historicalInvestmentsBlock.empty();
 
-        historicalInvestmentsBlock.append(this.snippets.investment({
-          i: investment,
-          attr: {},
-        }));
+        historicalInvestmentsBlock.append(this.snippets.investment(investment));
 
       }).fail((err) => {
         alert(err.error);
@@ -519,6 +496,7 @@ module.exports = {
       return this;
     },
   }),
+
   companyDashboardFirst: Backbone.View.extend({
     el: '#content',
     template: require('./templates/companyDashboardFirst.pug'),
@@ -532,6 +510,7 @@ module.exports = {
       return this;
     },
   }),
+
   afterPaymentDashboard: Backbone.View.extend({
     el: '#content',
     template: require('./templates/afterPaymentDashboard.pug'),
@@ -545,6 +524,7 @@ module.exports = {
       return this;
     },
   }),
+
   afterCompleteDashboard: Backbone.View.extend({
     el: '#content',
     template: require('./templates/afterCompleteFillingDashboard.pug'),
@@ -558,6 +538,7 @@ module.exports = {
       return this;
     },
   }),
+
   afterFinalDashboard: Backbone.View.extend({
     el: '#content',
     template: require('./templates/afterFinalSubmitDashboard.pug'),
@@ -571,6 +552,7 @@ module.exports = {
       return this;
     },
   }),
+
   afterSubmittingGovermentDashboard: Backbone.View.extend({
     el: '#content',
     template: require('./templates/afterSubmittingGovermentDashboard.pug'),
@@ -588,11 +570,6 @@ module.exports = {
   issuerDashboard: Backbone.View.extend({
     template: require('./templates/issuerDashboard.pug'),
     events: {
-      'click .email-share': 'socialPopup',
-      'click .linkedin-share': 'socialPopup',
-      'click .facebook-share': 'socialPopup',
-      'click .twitter-share': 'socialPopup',
-      'click .google-plus-share': 'socialPopup',
       'click .cancel-campaign': 'cancelCampaign',
     },
 
@@ -635,17 +612,6 @@ module.exports = {
       //   $('.notification-container ul').append($('<li>').html('<a>' + msg + '</a>'));
       // });
       return this;
-    },
-
-    socialPopup (e) {
-      e.preventDefault();
-      var popupOpt = e.currentTarget.dataset.popupOpt || 'toolbar=0,status=0,left=45%,top=45%,width=626,height=436';
-      var windowChild = window.open(e.currentTarget.href, '', popupOpt);
-   
-      if (e.currentTarget.dataset.close) {
-        let closeScript = "<script>setTimeout(window.close.bind(window), 400);</script>";
-        windowChild.document.write(closeScript);
-      }
     },
 
     cancelCampaign(e) {
