@@ -490,7 +490,7 @@ header
       position: absolute
       top: 100%
       left: -10px
-      z-index: 9991
+      z-index: 999
       
       display: block
 
@@ -562,6 +562,7 @@ header
       display: inline-block
       height: $navbar_height_mobile
       width: 180px
+      z-index: 999
 
     .navbar-nav
       height: $navbar_height_mobile
@@ -643,6 +644,7 @@ header
         position: absolute
         right: 15px
         width: auto
+        top: 0
         // padding-top: 25px!important
 
         li.nav-item.user-info
@@ -664,6 +666,8 @@ header
 
               &.fa-angle-down
                 display: none
+          &:hover
+            background: none
 
       #menuList, .mobile-profile-menu
         -webkit-transition: visibility 0s linear 1s
@@ -717,6 +721,7 @@ header
           a 
             padding: rem(20) rem(3)
             font-size: rem(18)
+            font-family: $font-family-menu
       
       .mobile-menu
         display: block
@@ -757,7 +762,9 @@ header
       margin-left: rem(-25)
 
     .wrap-toggle-menu
-      position: relative
+      position: absolute
+      top: 0
+      left: 10px
 
       display: inline-block
       float: left
@@ -913,10 +920,19 @@ header
     left: 0!important
     width: 100%
     .mobile-profile-menu
+      padding: 15px 10px 0px 25px !important
       opacity: 0
+      li
+        &:hover
+          background-color: rgba($white, .09)
+
     .user-info
       position: relative
       left: 95%
+  .nav-item
+    &:hover
+      background-color: rgba($white, .09)
+
 @media screen and (max-width: 576px)
   #menuProfile
     .user-info
