@@ -64,7 +64,8 @@ module.exports = {
       'click .notification.notification-bell': 'showNotifications',
       'mouseover .notification-bell': 'showNotifications',
       'mouseover .notification-container': 'showNotifications',
-      'mouseout .notification-container': 'hideNotifications',
+      'mouseout .user-notifications-list': 'hideNotifications',
+      'mouseout .notification-bell': 'hideNotifications',
       'mouseover .notification-item': 'markAsRead',
     },
 
@@ -141,10 +142,10 @@ module.exports = {
 
     updateUnreadCount() {
       const unreadCount = this.countUnreadMessages();
-      if (unreadCount)
-        this.$notificationsCount.show();
-      else
-        this.$notificationsCount.hide();
+      // if (unreadCount)
+      //   this.$notificationsCount.show();
+      // else
+      //   this.$notificationsCount.hide();
 
       this.$notificationsCount.text(unreadCount || '');
 
