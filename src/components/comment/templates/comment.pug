@@ -38,7 +38,7 @@ div(id=id class=cssClass data-level=level data-id=comment.uid).p-r-0.p-t-0.p-xs-
       span.date-comments.pull-right.hidden-xs-down #{ passedTime }
       p !{ comment.message.replace(/\n/g, '<br />') }
       div.responce.comment-actions
-        if level <= 0
+        if level <= 2
           li.icon-comment
             i.fa.fa-comment-o.p-r-5
             a(href="#").link-1.link-response-count
