@@ -1,6 +1,6 @@
 const Notifications = require('./notifications');
 const notifications_channel = 'general';
-const HIDE_TIMEOUT = 1000;
+const HIDE_TIMEOUT = 500;
 
 module.exports = {
   menu: Backbone.View.extend({
@@ -61,10 +61,11 @@ module.exports = {
     template: require('./templates/userNotifications.pug'),
 
     events: {
-      'mouseover .notification-item': 'markAsRead',
       'click .notification.notification-bell': 'showNotifications',
-      // 'mouseover .notification-container': 'showNotifications',
-      // 'mouseout .notification-bell': 'hideNotifications',
+      'mouseover .notification-bell': 'showNotifications',
+      'mouseover .notification-container': 'showNotifications',
+      'mouseout .notification-container': 'hideNotifications',
+      'mouseover .notification-item': 'markAsRead',
     },
 
     initialize(options) {
@@ -103,27 +104,26 @@ module.exports = {
     },
 
     showNotifications(e) {
-      this.$notificationContainer.toggleClass('notification-active');
-      return;
-      if(this._hideTimeout) {
-        clearTimeout(this._hideTimeout);
-        this._hideTimeout = null;
-      }
+      this._clearTimeout();
 
       if (this.$notificationContainer.hasClass('notification-active'))
         return;
 
-      console.log('show notifications');
       this.$notificationContainer.addClass('notification-active');
     },
 
-    hideNotifications(e) {
+    _clearTimeout() {
       if (this._hideTimeout) {
         clearTimeout(this._hideTimeout);
         this._hideTimeout = null;
       }
+    },
 
-      setTimeout(() => {
+    hideNotifications(e) {
+      if (this._hideTimeout)
+        return;
+
+      this._hideTimeout = setTimeout(() => {
         console.log('hide notifications')
         if (this.$notificationContainer.hasClass('notification-active'))
           this.$notificationContainer.removeClass('notification-active');
