@@ -61,6 +61,8 @@ module.exports = {
 
     events: {
       'mouseover .notification-item': 'markAsRead',
+      'mouseover .notification-bell': 'showNotifications',
+      'mouseout .notification-bell': 'hideNotifications',
     },
 
     initialize(options) {
@@ -89,10 +91,24 @@ module.exports = {
         })
       );
 
-      this.$notifications = $('.notification-container ul.notifications');
-      this.$notificationsCount = $('.count-notific');
+      this.$notificationContainer = this.$('.notification-bell');
+      this.$notificationList = this.$('.notification-container ul.notifications');
+      this.$notificationsCount = this.$('.count-notific');
 
       return this;
+    },
+
+    showNotifications(e) {
+      if (this.$notificationContainer.hasClass('notification-active'))
+        return;
+      this.$notificationContainer.addClass('notification-active');
+    },
+
+    hideNotifications(e) {
+      setTimeout(() => {
+        if (this.$notificationContainer.hasClass('notification-active'))
+          this.$notificationContainer.removeClass('notification-active');
+      }, 300);
     },
 
     countUnreadMessages() {
@@ -119,7 +135,7 @@ module.exports = {
         this.model.data = this.model.data.concat(data);
         this.updateUnreadCount();
         _.each(data, (m) => {
-          this.$notifications.prepend(this.snippets.notification(m));
+          this.$notificationList.prepend(this.snippets.notification(m));
         });
       });
     },
