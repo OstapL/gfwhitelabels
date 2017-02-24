@@ -24,8 +24,6 @@ class Notifications {
       this.__socket.on(channel, (data) => {
         if (data === null || typeof data[Symbol.iterator] !== 'function')
           data = [data];
-        console.log('Data from websocket');
-        console.log(data);
         this.trigger(channel, data);
       });
     });
