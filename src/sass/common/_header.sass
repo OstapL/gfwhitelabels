@@ -357,16 +357,13 @@ header
             position: absolute
             top: 0
             left: -6px
-              
             display: block
             height: 16px
             width: 16px
-
             background: $bgc-notificatin-bell
             border-radius: 50%
-
-            color: $menu_text_color
-
+            color: $white
+            font-weight: bold
             line-height: 1.4
             text-align: center
             font-size: 12px
@@ -518,10 +515,13 @@ header
           margin-top: rem(5)
         li
           a
-            color: $wild_willow
+            color: $notification-link-color
             font-size: 12px
             padding-left: 0
             text-decoration: underline
+            &:hover
+              color: $notification-link-color-hover
+              text-decoration: none
         .nav-link
           border-bottom: solid 1px 
           border-bottom-color: rgba($small-text, .5)
@@ -535,10 +535,16 @@ header
             background-color: rgba(70,70,70, .5)
             padding-left: 10px
             padding-right: 0
+            p
+              color: $white
+              font-weight: normal!important
             &.notification-item-read
               background-color: transparent
               margin-left: rem(10)
               padding-left: 0px
+              p
+                color: rgba($menu_text_color, 0.7)
+                font-weight: normal!important
       .submenu
         overflow-y: scroll
         height: auto
@@ -575,7 +581,6 @@ header
           border-width: 0
         ::-webkit-scrollbar-track:hover
           border-left: none
-    .notification-container
       
             
 
