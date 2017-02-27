@@ -236,6 +236,7 @@ header
       width: $logo-width-desktop
       margin-right: $navbar-brand-margin-right!important
       margin-left: $navbar-brand-margin-left!important
+
       img
         +centered
 
@@ -286,9 +287,8 @@ header
         text-transform: uppercase
         color: $menu_text_color!important
         font-family: $font-family-menu
-        &:hover
+        &:hover 
           color: rgba($menu_text_color, .7)!important
-
 
         &.user-info-name
           padding-top: 0px
@@ -360,16 +360,13 @@ header
             position: absolute
             top: 0
             left: -6px
-              
             display: block
             height: 16px
             width: 16px
-
             background: $bgc-notificatin-bell
             border-radius: 50%
-
-            color: $menu_text_color
-
+            color: $white
+            font-weight: bold
             line-height: 1.4
             text-align: center
             font-size: 12px
@@ -479,36 +476,27 @@ header
     top: $top-position-notification
     height: $height-notification
     right: 10px
-    .nav-item.notification
-      &:hover
-        .submenu
-          overflow-y: scroll
-          height: auto
-    .filescroll
-      .file-scroll
-        max-height: 281px
-        margin: rem(42) auto 0px
-      .all-file-scroll
-        ::-webkit-scrollbar-thumb
-          border-color: rgba(#585858, .9)
-          background-color: rgba(#585858, .9)
-        ::-webkit-scrollbar-thumb:hover
-          border-color: #1c1f22
-          background-color: $small-text
-        ::-webkit-scrollbar-track
-          border-width: 0
-        ::-webkit-scrollbar-track:hover
-          border-left: none
-    .notification-container
-      width: 370px
-      &:before
-        content: ''
+    .nav-item
+      margin-left: 0
+      z-index: 999
+      .list-container
+        display: none
+    .notification-bell.notification-active
+      position: relative
+      .list-container
+        display: block
+        width: 370px
         position: absolute
-        z-index: 999
-        right: 10px
-        top: -24px
-        border: 12px solid transparent
-        border-bottom: 12px solid $notific_list_title
+        top: 100%
+        background-color: rgba($menu_backgound_from, 0.96)
+        &:before
+          content: ''
+          position: absolute
+          z-index: 99
+          right: 10px
+          top: -24px
+          border: 12px solid transparent
+          border-bottom: 12px solid $notific_list_title
       .title
         width: 100%
         text-transform: uppercase
@@ -530,7 +518,13 @@ header
           margin-top: rem(5)
         li
           a
-            color: $wild_willow
+            color: $notification-link-color
+            font-size: 12px
+            padding-left: 0
+            text-decoration: underline
+            &:hover
+              color: $notification-link-color-hover
+              text-decoration: none
         .nav-link
           border-bottom: solid 1px 
           border-bottom-color: rgba($small-text, .5)
@@ -544,10 +538,53 @@ header
             background-color: rgba(70,70,70, .5)
             padding-left: 10px
             padding-right: 0
+            p
+              color: $white
+              font-weight: normal!important
             &.notification-item-read
               background-color: transparent
               margin-left: rem(10)
               padding-left: 0px
+              p
+                color: rgba($menu_text_color, 0.7)
+                font-weight: normal!important
+      .submenu
+        overflow-y: scroll
+        height: auto
+        li:not(.title)
+            cursor: pointer
+            padding-right: 1rem
+        li
+          margin-bottom: 5px
+          text-align: left
+          &:last-child
+            margin-bottom: 0
+          & > *
+            display: inline-block
+            width: 100%
+            font-size: 12px!important
+            line-height: normal
+            color: rgba($menu_text_color, 0.7)
+
+          &:hover
+            span, i 
+              color: rgba($menu_text_color, 1)
+    .filescroll
+      .file-scroll
+        max-height: 281px
+        margin: rem(42) auto 0px
+      .all-file-scroll
+        ::-webkit-scrollbar-thumb
+          border-color: rgba(#585858, .9)
+          background-color: rgba(#585858, .9)
+        ::-webkit-scrollbar-thumb:hover
+          border-color: #1c1f22
+          background-color: $small-text
+        ::-webkit-scrollbar-track
+          border-width: 0
+        ::-webkit-scrollbar-track:hover
+          border-left: none
+      
             
 
   @media screen and (min-width: 992px) and (max-width: 1100px)

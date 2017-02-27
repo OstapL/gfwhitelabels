@@ -1,5 +1,6 @@
 const Notifications = require('./notifications');
 const notifications_channel = 'general';
+const HIDE_TIMEOUT = 500;
 
 module.exports = {
   menu: Backbone.View.extend({
@@ -60,6 +61,11 @@ module.exports = {
     template: require('./templates/userNotifications.pug'),
 
     events: {
+      'click .notification.notification-bell': 'showNotifications',
+      'mouseover .notification-bell': 'showNotifications',
+      'mouseover .notification-container': 'showNotifications',
+      'mouseout .user-notifications-list': 'hideNotifications',
+      'mouseout .notification-bell': 'hideNotifications',
       'mouseover .notification-item': 'markAsRead',
     },
 
@@ -73,6 +79,8 @@ module.exports = {
       };
 
       this.initNotifications();
+
+      this._hideTimeout = null;
     },
 
     render: function () {
@@ -89,10 +97,39 @@ module.exports = {
         })
       );
 
-      this.$notifications = $('.notification-container ul.notifications');
-      this.$notificationsCount = $('.count-notific');
+      this.$notificationContainer = this.$('.notification-bell');
+      this.$notificationList = this.$('.notification-container ul.notifications');
+      this.$notificationsTextHeader = this.$('.notification-text-header');
+      this.$notificationsCount = this.$('.count-notific');
 
       return this;
+    },
+
+    showNotifications(e) {
+      this._clearTimeout();
+
+      if (this.$notificationContainer.hasClass('notification-active'))
+        return;
+
+      this.$notificationContainer.addClass('notification-active');
+    },
+
+    _clearTimeout() {
+      if (this._hideTimeout) {
+        clearTimeout(this._hideTimeout);
+        this._hideTimeout = null;
+      }
+    },
+
+    hideNotifications(e) {
+      if (this._hideTimeout)
+        return;
+
+      this._hideTimeout = setTimeout(() => {
+        console.log('hide notifications')
+        if (this.$notificationContainer.hasClass('notification-active'))
+          this.$notificationContainer.removeClass('notification-active');
+      }, HIDE_TIMEOUT);
     },
 
     countUnreadMessages() {
@@ -105,12 +142,18 @@ module.exports = {
 
     updateUnreadCount() {
       const unreadCount = this.countUnreadMessages();
-      if (unreadCount)
-        this.$notificationsCount.show();
-      else
-        this.$notificationsCount.hide();
+      // if (unreadCount)
+      //   this.$notificationsCount.show();
+      // else
+      //   this.$notificationsCount.hide();
 
       this.$notificationsCount.text(unreadCount || '');
+
+      let text = unreadCount <= 0
+        ? 'notifications'
+        : ` pending notification${unreadCount > 1 ? 's' : ''}`
+
+      this.$notificationsTextHeader.text(text);
     },
 
     initNotifications() {
@@ -119,7 +162,7 @@ module.exports = {
         this.model.data = this.model.data.concat(data);
         this.updateUnreadCount();
         _.each(data, (m) => {
-          this.$notifications.prepend(this.snippets.notification(m));
+          this.$notificationList.prepend(this.snippets.notification(m));
         });
       });
     },

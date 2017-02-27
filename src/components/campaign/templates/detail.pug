@@ -59,7 +59,7 @@ section(style="background-image: url(" + backgroundImgUrl + ")")#home.home-secti
             p Days Left
             h2.font-weight-bold.no-margin #{ helpers.campaign.daysLeft(values.campaign.expiration_date) }
           .col-xl-4.col-lg-3.col-md-2.hidden-xs-down.p-sm-0.pull-lg-right.text-xs-center
-            a(href="/" + values.id + "/invest").btn.btn-primary.text-uppercase.pull-lg-right Invest
+            a(href="/" + values.slug + "/invest").btn.btn-primary.text-uppercase.pull-lg-right Invest
 
 if app.getParams().preview == '1'
   div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#company_publish.modal.fade
@@ -175,7 +175,7 @@ section.campaigndetail
                   img(src="/img/avatar1.jpg" alt="...").img-circle
               a(href="#" style="display: none").link-1 see all...
         .col-xl-4.col-lg-3.col-md-2.hidden-sm-up.p-sm-0.pull-lg-right.text-xs-center
-            a(href="/" + values.id + "/invest").btn.btn-primary.text-uppercase.pull-lg-right Invest
+            a(href="/" + values.slug + "/invest").btn.btn-primary.text-uppercase.pull-lg-right Invest
         .row.social-share-mobile
           .col-lg-12.share.hidden-sm-up.text-xs-center
             | !{ socialDirective.render(this.model) }
@@ -195,7 +195,7 @@ section.border-bottom-scroll.hidden-lg-down
           a(href="#faq").nav-link faq
         li.nav-item.text-uppercase
           a(href="#ask").nav-link Ask a Question
-        a(href="/" + values.id + "/invest").btn.btn-primary.text-uppercase.pull-xl-right.pull-lg-left invest
+        a(href="/" + values.slug + "/invest").btn.btn-primary.text-uppercase.pull-xl-right.pull-lg-left invest
 section
   div(data-spy="scroll"
   data-target="#navbar-example2"
@@ -697,6 +697,7 @@ section
                   ) !{ textHelper.restoreLineBreak(v.answer) }
                   - counter ++;
         
+  #comments
   .border-bottom.m-t-3
   section.ask.border-bottom
     .container.comments-container
@@ -709,7 +710,7 @@ section
               .like-detail-icon.d-inline-block
                 i.fa.fa-thumbs-o-up.like-icon-circle
               |  I’d Like to Invest in #{ values.short_name || values.name }!
-            a(href="/" + values.id + "/invest").btn.btn-lg.btn-primary.text-uppercase.m-t-2 invest in this company
+            a(href="/" + values.slug + "/invest").btn.btn-lg.btn-primary.text-uppercase.m-t-2 invest in this company
   
 
 div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#videoModal.modal.fade.video-modal

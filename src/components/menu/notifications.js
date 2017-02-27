@@ -30,7 +30,7 @@ class Notifications {
   }
 
   markAsRead(messageId) {
-    this.__socket.emit('mark_read', messageId);
+    this.__socket.emit('markRead', messageId);
   }
 
 }

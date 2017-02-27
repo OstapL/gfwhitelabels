@@ -143,6 +143,7 @@ module.exports = {
 
     setFormData () {
       this.formData = this.$el.find('form').serializeJSON();
+      this.formData.is_paid = this.model.is_paid;
       return this.formData;
     },
 
@@ -182,6 +183,7 @@ module.exports = {
         nonrefundable_fees: companyFees.nonrefundable_fees,
         amendment_fee: companyFees.amendment_fee,
         commencement_date_x: this.getCurrentDate(),
+        commitment_date_x: this.getCurrentDate(),
         zip_code: app.user.company.zip_code,
         city: app.user.company.city,
         state: app.user.company.state,
@@ -196,7 +198,7 @@ module.exports = {
     },
 
     _success(data, newData) {
-      this.saveEsign(data);
+      if (this.formData && !this.formData.is_paid) this.saveEsign(data);
       formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
       return 1;
     },
