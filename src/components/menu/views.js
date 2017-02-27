@@ -64,7 +64,8 @@ module.exports = {
       'click .notification.notification-bell': 'showNotifications',
       'mouseover .notification-bell': 'showNotifications',
       'mouseover .notification-container': 'showNotifications',
-      'mouseout .notification-container': 'hideNotifications',
+      'mouseout .user-notifications-list': 'hideNotifications',
+      'mouseout .notification-bell': 'hideNotifications',
       'mouseover .notification-item': 'markAsRead',
     },
 
@@ -98,6 +99,7 @@ module.exports = {
 
       this.$notificationContainer = this.$('.notification-bell');
       this.$notificationList = this.$('.notification-container ul.notifications');
+      this.$notificationsTextHeader = this.$('.notification-text-header');
       this.$notificationsCount = this.$('.count-notific');
 
       return this;
@@ -140,12 +142,18 @@ module.exports = {
 
     updateUnreadCount() {
       const unreadCount = this.countUnreadMessages();
-      if (unreadCount)
-        this.$notificationsCount.show();
-      else
-        this.$notificationsCount.hide();
+      // if (unreadCount)
+      //   this.$notificationsCount.show();
+      // else
+      //   this.$notificationsCount.hide();
 
       this.$notificationsCount.text(unreadCount || '');
+
+      let text = unreadCount <= 0
+        ? 'notifications'
+        : ` pending notification${unreadCount > 1 ? 's' : ''}`
+
+      this.$notificationsTextHeader.text(text);
     },
 
     initNotifications() {
