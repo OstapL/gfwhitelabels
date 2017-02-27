@@ -3,6 +3,6 @@
   var cssClass = 'clearfix nav-link notification-item ';
   cssClass += read_flag ? 'notification-item-read' : '';
 
-li(class=cssClass data-id=id)
+li(class=cssClass data-id=id id=('comment' + id))
   p.pull-left !{ message.text }
   p.pull-left.date #{ dateHelper.fromNow(time) }
