@@ -150,7 +150,7 @@ mixin confirmStatement(name, attr)
                     a(href="#" data-amount=p.amount).list-group-item.list-group-item-action.perk
                       h3.list-group-item-heading
                         span.text-color-puerto_rico.font-weight-bold $#{p.amount}
-                        |  Investment
+                        |  Investment 
                         i.fa.fa-check(style="display:none;")
                       p.list-group-item-text.text-justify #{p.perk}
                     - idx += 1;
@@ -419,12 +419,14 @@ mixin confirmStatement(name, attr)
             +confirmStatement('is_understand_investing_is_risky',
               _.extend({}, fields.is_understand_investing_is_risky)
             )
-            // FOR DCU
-            //.dcu-confirmation
+
+            if fields.is_understand_securities_related
               +confirmStatement('is_understand_securities_related',
                 _.extend({}, fields.is_understand_securities_related)
               )
-            input(type='hidden' value='1' name='is_understand_securities_related')
+            else
+              input(type='hidden' value='1' name='is_understand_securities_related')
+
             .col-lg-12.m-t-2
               .row
                 span By Signing You Acknowledge and Agree to the 
@@ -450,7 +452,7 @@ mixin confirmStatement(name, attr)
               .col-md-12.text-md-center.text-sm-center.text-xs-center
                 .controls
                   button(
-                  type="submit").btn.btn-primary.pull-lg-right.text-uppercase invest
+                  type="submit").btn.btn-lg.btn-primary.pull-lg-right.text-uppercase invest
     //END LEFT BLOCK
     //START RIGHT BLOCK
     .col-xl-4.col-lg-5.pull-right.hidden-xs-down.invest-perks

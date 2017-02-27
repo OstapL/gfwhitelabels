@@ -2,7 +2,7 @@ src/config.js merge=ours
 src/img/logo.png merge=ours
 .gitattributes merge=ours
 src/img/u merge=ours
-
+src/sass/common/_colors.sass merge=ours
 src/sass/unique/_accordion.sass merge=ours
 src/sass/unique/_card.sass merge=ours
 src/sass/unique/_dropdown.sass merge=ours
