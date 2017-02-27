@@ -60,11 +60,10 @@ class GeoCoder {
   }
 
   __getCountry(e) {
-    return '';
-    // let $form = $(e.target).closest('form');
-    // let $country = $form.find('[name=country]');
-    // let countryCode  = $country && $country.length ? $country.val() : '';
-    // return countries[countryCode] || '';
+    let $form = $(e.target).closest('form');
+    let $country = $form.find('[name=country]');
+    let countryCode  = $country && $country.length ? $country.val() : '';
+    return countries[countryCode] || '';
   }
 
   onZipCodeChange(e) {
@@ -84,6 +83,7 @@ class GeoCoder {
     let country = this.__getCountry(e);
     let address = zip + (country ? (', ' + country) : '');
 
+    console.log(address);
     geocoder.geocode({ 'address': address }, (results, status) => {
       if (status != google.maps.GeocoderStatus.OK) {
         console.debug('Failed to get state by zip code');
@@ -94,6 +94,8 @@ class GeoCoder {
         console.log('Geocoder results shorter than expected');
         return;
       }
+
+      console.log(results);
 
       let strs = results[0].formatted_address.split(", ");
       let city = strs[0];
