@@ -188,6 +188,7 @@ module.exports = {
         acceptedFiles: 'application/pdf,' +
           '.pptx,' +
           '.ppt,' +
+          '.pps,' +
           '.doc,' +
           '.docx'
       };
