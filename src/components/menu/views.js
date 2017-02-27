@@ -142,10 +142,10 @@ module.exports = {
 
     updateUnreadCount() {
       const unreadCount = this.countUnreadMessages();
-      // if (unreadCount)
-      //   this.$notificationsCount.show();
-      // else
-      //   this.$notificationsCount.hide();
+      if (unreadCount)
+        this.$notificationsCount.show();
+      else
+        this.$notificationsCount.hide();
 
       this.$notificationsCount.text(unreadCount || '');
 
