@@ -1,16 +1,5 @@
 if attr.allowQuestion
-  h2#ask.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-subheading ASK A QUESTION
-  .col-lg-8.offset-lg-2.col-md-12.offset-md-0.col-sm-12.offset-sm-0.col-xs-12.offset-xs-0.pt30.p-xs-0.comment-form-div
-    form.comment-form.form-section
-      .col-lg-9.p-l-0.p-r-0
-        .col-lg-12.p-l-0.p-r-0
-          input(
-            type='text'
-            name='message',
-            placeholder='Type your text here...'
-          ).w-100.text-body
-      .col-lg-3.p-r-0.text-xl-right.text-xs-center.p-t-sm-1
-        button(type="button").btn.btn-primary.text-uppercase.pull-lg-right.ask-question Submit
+  | !{ snippets.add() }
 
 div(class=(attr.cssClass || '')).p-xs-0
   .comments
@@ -22,41 +11,3 @@ div(class=(attr.cssClass || '')).p-xs-0
 
     each c in comments
       | !{ helpers.fields.comment(c, 0, options, helpers) }
-
-.stubs.collapse
-  .row
-    .related-role.form-group.m-b-0
-      .col-xl-12.p-l-0
-        label.yesno
-          input(
-            type='checkbox'
-            data-name='related'
-            checked=false
-          ).related-cb
-          span.font-weight-normal.p-l-1
-            | I am speaking on behalf of the company
-      div(style="display: none;").form-group.m-b-0.related.field-related
-        .col-lg-2.p-l-0
-          span.font-weight-bold
-            | I am an:
-        .col-lg-9.radio-input.p-l-0
-          label.p-t-0.m-b-0
-            input(type="radio" name="related" value="Employee" selected=false)
-            | Employee
-          label.p-t-0.m-b-0
-            input(type="radio" name="related" value="Promoter" selected=false)
-            | Promoter
-
-  //- todo: move this to fields
-  form.comment-form.form-section.edit-comment.collapse
-    .col-lg-11.offset-lg-1.m-t-2.p-r-0.p-l-3.p-xs-0.form-group
-      .border-bottom.m-t-0.mb30.hidden-xs-down
-      .col-lg-12.p-xs-0
-        textarea(
-          name="message"
-          placeholder="Type your text here"
-        ).form-control.big-textarea.text-body.col-lg-12
-    .col-lg-12.p-r-0.text-xl-right.text-lg-right.text-xs-center.p-xs-0
-      button(type="button").btn.btn-sm.btn-secondary.text-uppercase.m-r-2.cancel-comment Cancel
-      button(type="button").btn.btn-sm.btn-primary.text-uppercase.submit-comment Submit
-      

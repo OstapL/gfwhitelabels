@@ -105,6 +105,7 @@ module.exports = Backbone.Router.extend({
 
   company() {
     const optionsR = app.makeCacheRequest(raiseCapitalServer + '/company', 'OPTIONS');
+    $(document.head).append('<meta name="keywords" content="local investing equity crowdfunding Get to work and secure funding with our equity crowdfunding platform. Harness the power of local investing to secure the capital you need by getting started."></meta>');
     getOCCF(optionsR, 'company', {});
   },
 

@@ -8,7 +8,7 @@
   for company in collection.data
     - var percentage_raised = campaignHelper.fundedPercentage(company.campaign, 20);
     .col-xl-4.col-lg-6.col-xs-12.col-sm-12.col-md-12
-      a(href="/" + (campaignHelper.urls[company.id] || company.id)).block_link
+      a(href="/" + company.slug).block_link
       .one_block
         .for_img
           -
@@ -30,9 +30,9 @@
                 p #{company.tagline.substr(0, 120)}
 
             .ico_cont
-              a(href="/" + company.id + '#team').link-1
+              a(href="/" + company.slug + '#team').link-1
                 i.fa.fa-users
-              a(href="/" + company.id + '#overview').link-1
+              a(href="/" + company.slug + '#overview').link-1
                 i.fa.fa-list
 
             .bottom_pr

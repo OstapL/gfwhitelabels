@@ -14,7 +14,7 @@ global.esignServer = 'https://api-esign.growthfountain.com';
 global.commentsServer = "https://api-comments.growthfountain.com";
 global.blogServer = "https://api-blog.growthfountain.com";
 global.bucketServer = "http://growthfountain-rivermarkcu-storage.s3-website-us-west-1.amazonaws.com";
-
+global.notificationsServer = "https://notifications.growthfountain.com/";
 //var data = 'Crowdfunding | Rivermark Community CU';
 document.title = "Crowdfunding | Rivermark Community CU";
 global.teamName = 'GrowthFountain Team';
