@@ -206,7 +206,8 @@ header.no-overflow-bell
 header
   .navbar-toggleable-md::after
     clear: none
-
+  position: relative
+  z-index: 3
   background-color: $menu_backgound_from
   background: $menu_backgound_from $header_bg_image
   -webkit-box-shadow: $box-shadow-top-menu 
@@ -286,6 +287,7 @@ header
         text-transform: uppercase
         color: $menu_text_color!important
         font-family: $font-family-menu
+        font-weight: $menu-font-weight
         &:hover 
           color: rgba($menu_text_color, .7)!important
 
