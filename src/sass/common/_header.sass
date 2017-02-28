@@ -490,6 +490,9 @@ header
         position: absolute
         top: 100%
         background-color: rgba($menu_backgound_from, 0.96)
+        -webkit-box-shadow: $sub-menu-box-shadov
+        -moz-box-shadow: $sub-menu-box-shadov
+        box-shadow: $sub-menu-box-shadov
         &:before
           content: ''
           position: absolute
@@ -605,7 +608,9 @@ header
       z-index: 999
       
       display: block
-
+      -webkit-box-shadow: $sub-menu-box-shadov
+      -moz-box-shadow: $sub-menu-box-shadov
+      box-shadow: $sub-menu-box-shadov
       background-color: rgba($menu_backgound_from, 0.96)
 
       &.two-columns
@@ -676,6 +681,8 @@ header
       display: inline-block
       height: $navbar_height_mobile
       width: $logo-width-mobile
+      margin-left: $navbar-brand-margin-left-mobile
+      margin-right: $navbar-brand-margin-right-mobile
       z-index: 999
       left: -4px
 
