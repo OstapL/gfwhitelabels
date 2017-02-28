@@ -164,9 +164,8 @@ module.exports = {
       this.notifications.on(notifications_channel, (data) => {
         this.model.data = this.model.data.concat(data);
         this.updateUnreadCount();
-        _.each(data, (m) => {
-          this.$notificationList.prepend(this.snippets.notification(m));
-        });
+        let notificationsHtml = data.map(this.snippets.notification);
+        this.$notificationList.prepend(notificationsHtml);
       });
     },
 
