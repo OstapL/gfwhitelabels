@@ -70,6 +70,9 @@ module.exports = {
     },
 
     initialize(options) {
+      if (app.user.is_anonymous())
+        return;
+
       this.model = {
         data: [],
       };
