@@ -2,7 +2,7 @@
   var c = require('consts/campaign/file.json');
   var backgroundImgUrl = app.getUrl(values.campaign.header_image_data) || '/img/default.png';
   var socialDirective = require('directives/social/index.js');
-    
+
 section(style="background-image: url(" + backgroundImgUrl + ")")#home.home-section.bg-dark-alfa-70.parallax-2.fixed-height-small.hide-bg-fixed
   .js-height-parent.container-fluid
     .home-content
@@ -354,7 +354,7 @@ section
                           if v.college
                             i.fa.fa-graduation-cap
                             |  #{v.college}
-    .col-lg-12.border-bottom.m-b-3
+    .col-lg-12.border-bottom.m-t-2.m-b-3
     section.articles
       .container
         if values.campaign.press && Object.keys(values.campaign.press).length > 0 && values.campaign.press[0].headline != ''
@@ -401,74 +401,10 @@ section
               div(style="display:" + (showMore ? 'block' : 'none') + ";").row
                 .col-lg-12.text-xs-center
                   a(href="#hidden-article-press" data-toggle="collapse").link-4.see-all-article-press Show More
-  
+    .col-lg-12.border-bottom.m-t-2.m-b-3
   else
-      //
-        section.team.border-bottom
-          .container
-            h2#team.dosis.text-uppercase.text-lg-center.col-lg-12 Team
-            a(href="").link-1
-              .col-lg-4.text-lg-center
-                .card
-                  img(src="/img/values/avatar1.jpg" alt="").img-circle
-                  .card-block
-                    h4.card-title.text-uppercase Jan Mertz
-                    p.card-text
-                      small.text-muted CEO
-                    a(href="#").link-1
-                      i.fa.fa-facebook
-                    a(href="#").link-1
-                      i.fa.fa-linkedin
-                    p.card-text.text-justify Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque mollis lacus augue, a hendrerit leo tristique vitae. Consectetur adipiscing elit. Integer posuere erat a ante. Mauris non ipsum molestie, sagittis elit ac, vulputate odio.
-                    .d-block.text-lg-left.cite_education
-                      a(href="#").link-1.text-lg-left
-                        i.fa.fa-home.p-l-0
-                        |  Pittsburgh, PA
-                      a(href="#").link-1.pull-right
-                        i.fa.fa-graduation-cap
-                        |  Dickinson College
+    .col-lg-12.m-t-2.m-b-3
 
-            .col-lg-4
-              a(href="")
-                .card.text-lg-center
-                  img(src="/img/values/avatar2.jpg" alt="").img-circle
-                  .card-block
-                    h4.card-title.text-uppercase Maria Mertz
-                    p.card-text
-                      small.text-muted CEO
-                    a(href="#").link-1
-                      i.fa.fa-facebook
-                    a(href="#").link-1
-                      i.fa.fa-linkedin
-                    p.card-text.text-justify Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque mollis lacus augue, a hendrerit leo tristique vitae. Consectetur adipiscing elit. Integer posuere erat a ante. Mauris non ipsum molestie, sagittis elit ac, vulputate odio.
-                    .d-block.text-lg-left.cite_education
-                      a(href="#").link-1.text-lg-left
-                        i.fa.fa-home.p-l-0
-                        |  Pittsburgh, PA
-                      a(href="#").link-1.pull-right
-                        i.fa.fa-graduation-cap
-                        |  Dickinson College
-            .col-lg-4.text-lg-center
-              a(href="").link-1
-                .card
-                  img(src="/img/values/avatar3.jpg" alt="").img-circle
-                  .card-block
-                    h4.card-title.text-uppercase Alex Klarck
-                    p.card-text
-                      small.text-muted General Councel
-                    a(href="#").link-1
-                      i.fa.fa-facebook
-                    a(href="#").link-1
-                      i.fa.fa-linkedin
-                    p.card-text.text-justify Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque mollis lacus augue, a hendrerit leo tristique vitae. Consectetur adipiscing elit. Integer posuere erat a ante. Mauris non ipsum molestie, sagittis elit ac, vulputate odio.
-                    .d-block.text-lg-left.cite_education
-                      a(href="#").link-1.text-lg-left
-                        i.fa.fa-home.p-l-0
-                        |  Pittsburgh, PA
-                      a(href="#").link-1.pull-right
-                        i.fa.fa-graduation-cap
-                        |  Dickinson College
-  .col-lg-12.border-bottom.m-t-2.m-b-3
   section.document.border-bottom
     .container
       .row
