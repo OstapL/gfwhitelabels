@@ -70,6 +70,9 @@ module.exports = {
     },
 
     initialize(options) {
+      if (app.user.is_anonymous())
+        return;
+
       this.model = {
         data: [],
       };
@@ -142,10 +145,10 @@ module.exports = {
 
     updateUnreadCount() {
       const unreadCount = this.countUnreadMessages();
-      // if (unreadCount)
-      //   this.$notificationsCount.show();
-      // else
-      //   this.$notificationsCount.hide();
+      if (unreadCount)
+        this.$notificationsCount.show();
+      else
+        this.$notificationsCount.hide();
 
       this.$notificationsCount.text(unreadCount || '');
 
@@ -161,9 +164,8 @@ module.exports = {
       this.notifications.on(notifications_channel, (data) => {
         this.model.data = this.model.data.concat(data);
         this.updateUnreadCount();
-        _.each(data, (m) => {
-          this.$notificationList.prepend(this.snippets.notification(m));
-        });
+        let notificationsHtml = data.map(this.snippets.notification);
+        this.$notificationList.prepend(notificationsHtml);
       });
     },
 
