@@ -220,7 +220,9 @@
 
 			color: $black_pearl
 			font-weight: 400
-
+	.logo
+		p.custom-text
+			color: #006f51
 	.powered-by-logo
 		img
 			width: rem(175)
@@ -238,6 +240,15 @@
 	box-shadow: inset 0px 6px 5px -2px rgba(0,0,0,0.5);
 	border-top: 1px solid $limed_spruce
 
+.home-wrap-text-block
+	.wrap
+		position: absolute 
+		left: 50%
+		top: 50%
+		-ms-transform: translate(-50%,-50%)
+		-webkit-transform: translate(-50%,-50%)
+		transform: translate(-50%,-50%)
+		width: 100%
 @media only screen and (min-width : 992px) and (max-width : 1150px)
 	.home-section .home-text-main
 		h1
@@ -263,6 +274,9 @@
 			color: $white
 		h1, span
 			color: $white
+	.home-what-is		
+		.embed-responsive
+			margin-bottom: rem(30)
 @media only screen and (max-width : 768px)
 	.home-text-main
 		h1
@@ -343,7 +357,7 @@
   -webkit-animation-name: zoomOut
   animation-name: zoomOut
 .main-section-invest
-	background: url(/img/main-bg-section-one.jpg)
+	background: url(/img/dcu-bg-bottom-block.jpg)
 	background-position: center center
 	background-attachment: fixed
 	height: 340px
