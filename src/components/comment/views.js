@@ -97,8 +97,6 @@ module.exports = {
         snippets: this.snippets,
       }));
 
-      this.$stubs = this.$('.stubs');
-
       return this;
     },
 

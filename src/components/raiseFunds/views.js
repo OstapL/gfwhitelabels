@@ -25,6 +25,7 @@ module.exports = {
       'click .submit_form': raiseHelpers.submitCampaign,
       'click #postForReview': raiseHelpers.postForReview,
       'change #website': appendHttpIfNecessary,
+      'keyup #slug': 'fixSlug',
       'change #website,#twitter,#facebook,#instagram,#linkedin': 'appendHttpsIfNecessary',
     }, /*leavingConfirmationHelper.events,*/ phoneHelper.events, menuHelper.events),
 
@@ -60,11 +61,16 @@ module.exports = {
         facebook: 'Facebook',
         instagram: 'Instagram',
         linkedin: 'Linkedin',
+        slug: 'What would you like your custom URL to be?',
       };
       this.assignLabels();
       if(this.model.hasOwnProperty('id')) {
         this.urlRoot += '/:id/edit';
       }
+    },
+
+    fixSlug(e) {
+      e.currentTarget.value = e.currentTarget.value.replace(/\s+/g,'-').replace(/[^a-zA-Z0-9\-]/g,'').toLowerCase();
     },
 
     updateLocation(e) {
@@ -113,6 +119,11 @@ module.exports = {
 
     _success(data) {
       this.undelegateEvents();
+
+      if(data == null) {
+        data = {};
+      }
+
       if (data.hasOwnProperty('campaign_id') == false) {
         data.campaign_id = this.formc.campaign_id;
       }

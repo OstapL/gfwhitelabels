@@ -30,7 +30,7 @@
 
 	.fade-in-logo
 		position: relative
-
+		margin-right: rem(10)
 		display: inline-block
 		height: 30px
 		width: 40px
@@ -51,11 +51,10 @@
 			opacity: 1
 
 	.company
-		margin-left: 10px
 
 		span
 			font-size: 13px
-			color: $grey
+			color: $footer-company-text-color
 			text-transform: uppercase
 			letter-spacing: $footer_logo_lett_space
 			line-height: 18px
@@ -63,20 +62,20 @@
 
 		p
 			font-size: 12px
-			color: $grey
+			color: $footer-company-text-color
 			line-height: 18px
 	.footer-bottom
-		background-color: $social_color
+		background-color: $footer-bottom-bgc
 		padding-top: 15px
 		padding-bottom: 15px
 		.footer-social
 			a
-				color: $grey
+				color: $footer-bottom-link-color
 				font-size: rem(24)
 				margin: 7px 10px
 				+mt(.2s)
 				&:hover
-					color: #b0afaf
+					color: $footer-bottom-link-color-hover
 @media only screen and (max-width : 580px)
 	.footer-bottom
 		span, p

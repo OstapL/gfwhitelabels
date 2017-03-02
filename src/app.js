@@ -233,6 +233,7 @@ let app = {
   },
 
   runGoogleAnalytics(id) {
+    return;
     (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
       new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
@@ -425,60 +426,73 @@ $('body').on('click', '.notification-bell', function () {
 });
 
 $('body').on('click', '#menuList .nav-item, #menuList .mobile-signup', function (event) {
-  var href = $(event.target).attr('href');
+  var href = $(event.target).closest('a').attr('href');
 
   if ($('.navbar-toggler:visible').length !== 0) {
     $(this).find('.list-container').slideToggle();
 
-    if (href.indexOf('/') != -1) {
+    if (href && href.indexOf('/') != -1) {
       $('html').toggleClass('show-menu');
     }
   }
 });
 
-$('body').on('click', 'a', function (event) {
-  var href = event.currentTarget.getAttribute('href');
+$('body').on('click', 'a', (event) => {
+  const href = event.currentTarget.getAttribute('href');
+
   if (href == window.location.pathname) {
     window.location.reload();
-  } else if (href && href == '#')  {
-    event.preventDefault();
-  } else if(href && href != '' &&
-    href.substr(0, 1) != '#' &&
-    href.substr(0, 4) != 'http' &&
-    href.substr(0, 3) != 'ftp' &&
-    href.substr(0, 7) != 'mailto:' &&
-    href != 'javascript:void(0);' &&
-    href != 'javascript:void(0)' &&
-    event.currentTarget.getAttribute('target') == null) {
-    event.preventDefault();
-
-    // If we already have that url in cache - we will just update browser location
-    // and set cache version of the page
-    // overise we will trigger app router function
-    var url = href;
-
-    // Clear page
-    $('#content').undelegate();
-    $('form').undelegate();
-    $('.popover').remove();
-
-    $('.modal-backdrop').remove();
-    $('.modal-open').removeClass('modal-open');
-
-    if (app.cache.hasOwnProperty(url) == false) {
-      app.routers.navigate(
-          url, { trigger: true, replace: false }
-      );
-      app.trigger('userReady');
-      app.trigger('menuReady');
-    } else {
-      $('#content').html(app.cache[url]);
-      app.routers.navigate(
-          url, { trigger: false, replace: false }
-      );
-      app.trigger('userReady');
-      app.trigger('menuReady');
-    }
-    app.runGoogleAnalytics(global.googleAnalyticsId);
+    return;
   }
+
+  if (href == '#') {
+    event.preventDefault();
+    return false;
+  }
+
+  if (!href ||
+    href.startsWith('#') ||
+    href.startsWith('http') ||
+    href.startsWith('ftp') ||
+    href.startsWith('javascript:') ||
+    event.currentTarget.getAttribute('target')) {
+    return;
+  }
+
+  if (href.startsWith('mailto:')) {
+    event.preventDefault();
+    window.location = href;
+    return false;
+  }
+
+  event.preventDefault();
+  // If we already have that url in cache - we will just update browser location
+  // and set cache version of the page
+  // overise we will trigger app router function
+  var url = href;
+
+  // Clear page
+  $('#content').undelegate();
+  $('form').undelegate();
+  $('.popover').remove();
+
+  $('.modal-backdrop').remove();
+  $('.modal-open').removeClass('modal-open');
+
+  if (app.cache.hasOwnProperty(url) == false) {
+    app.routers.navigate(
+      url, { trigger: true, replace: false }
+    );
+    app.trigger('userReady');
+    app.trigger('menuReady');
+  } else {
+    $('#content').html(app.cache[url]);
+    app.routers.navigate(
+      url, { trigger: false, replace: false }
+    );
+    app.trigger('userReady');
+    app.trigger('menuReady');
+  }
+  app.runGoogleAnalytics(global.googleAnalyticsId);
+
 });
