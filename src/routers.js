@@ -20,14 +20,15 @@ const errorPageHelper = require('helpers/errorPageHelper.js');
 // };
 
 const AppRoutes = Backbone.Router.extend(_.extend({
-  routes: _.extend({
-    '*notFound': function () {
-      errorPageHelper({ status: 404 });
-      app.hideLoading();
-    },
-  }, accountProfile.routes, anonymousAccount.routes, establishedBusinessCalc.routes,
-      capitalRaiseCalculator.routes, campaignRoute.routes, formc.routes,
-      whatMyBusinessWorthCalc.routes, raiseFunds.routes, pageRoute.routes, blog.routes),
+  routes: _.extend({}, accountProfile.routes, anonymousAccount.routes,
+    establishedBusinessCalc.routes, capitalRaiseCalculator.routes, campaignRoute.routes,
+    formc.routes, whatMyBusinessWorthCalc.routes, raiseFunds.routes, pageRoute.routes, blog.routes,
+    {
+      '*notFound': () => {
+        errorPageHelper({ status: 404 });
+        app.hideLoading();
+      },
+    }),
 
   initialize() {
     console.log('initialize');
