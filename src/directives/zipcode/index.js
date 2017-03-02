@@ -61,10 +61,11 @@ class GeoCoder {
 
   __getCountry(e) {
     return '';
-    // let $form = $(e.target).closest('form');
-    // let $country = $form.find('[name=country]');
-    // let countryCode  = $country && $country.length ? $country.val() : '';
-    // return countries[countryCode] || '';
+    //this code should be refactored
+    let $form = $(e.target).closest('form');
+    let $country = $form.find('[name=country]');
+    let countryCode  = $country && $country.length ? $country.val() : '';
+    return countries[countryCode] || '';
   }
 
   onZipCodeChange(e) {
