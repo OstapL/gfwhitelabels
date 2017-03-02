@@ -1,12 +1,14 @@
 // Polyfill webpack require.ensure.
 if (typeof require.ensure !== `function`) require.ensure = (d, c) => c(require);    
 
+const helpers = require('./helpers.js');
+
 module.exports = Backbone.Router.extend({
   routes: {
     ':id/invest-thanks': 'investmentThankYou',
     'companies': 'list',
-    ':id': 'detail',
-    ':id/invest': 'investment',
+    ':name': 'detail',
+    ':name/invest': 'investment',
   },
 
   execute: function (callback, args, name) {
@@ -54,13 +56,15 @@ module.exports = Backbone.Router.extend({
       });
 
     });
+    $(document.head).append('<meta name="keywords" content="local investing equity crowdfunding GrowthFountain is focused on local investing. Find the perfect fit for your investment with our equity crowdfunding setup by clicking here."></meta>');
   },
 
-  detail(id) {
+  detail(name) {
     require.ensure([], () => {
+
       const View = require('./views.js');
 
-      api.makeCacheRequest(raiseCapitalServer + "/" + id).
+      api.makeCacheRequest(raiseCapitalServer + "/" + name).
         then((companyData) => {
           let i = new View.detail({
             model: companyData,
@@ -76,7 +80,7 @@ module.exports = Backbone.Router.extend({
     })
   },
 
-  investment(id) {
+  investment(name) {
     if (!app.user.ensureLoggedIn(window.location.pathname))
       return false;
 
@@ -84,7 +88,9 @@ module.exports = Backbone.Router.extend({
       if (!app.user.is_anonymous()) {
         const View = require('./views.js');
         let investmentR = api.makeCacheRequest(investmentServer + '/', 'OPTIONS');
-        let companyR = api.makeCacheRequest(raiseCapitalServer + '/' + id);
+        let companyR = api.makeCacheRequest(raiseCapitalServer + '/' + name);
+        // ToDo
+        // Do we really need this ?
         let userR = api.makeCacheRequest(authServer + '/rest-auth/data');
 
         $.when(investmentR, companyR, userR).done((investmentMeta, companyData, userData) => {

@@ -1,10 +1,10 @@
 .slider.slider-horizontal {
-	width:100%!important;
+	width:97%!important;
 	margin-bottom: 0px!important;
 
 	.slider-track {
 		height: 15px!important;
-
+		box-shadow: none;
 		border-radius: 0!important;
 	}
 
@@ -48,7 +48,7 @@
 	.slider-tick-label-container {
 		.slider-tick-label {
 			position: absolute;
-			top: -15px;
+			top: -20px;
 			font-size: 11px;
 			color: $small-text;
 			margin-left: -15px!important;
@@ -76,6 +76,7 @@
 			top: 5px;
 			background: $btstr_slider_other_nandle_block_bg;
 			border-radius: 0;
+			box-shadow: none;
 		}
 	}
 
@@ -98,3 +99,11 @@
 	}
 	}
 
+.slider-track {
+	box-shadow: none;
+}
+@media only screen and (max-width:767px) {
+	.slider.slider-horizontal {
+		width: 95%!important;
+	}
+}

@@ -1,0 +1,23 @@
+li.nav-item.notification.notification-bell.text-center.drop-container.filescroll
+  a(href="#")
+    i.fa.fa-bell-o
+    - var style = unreadCount ? '' : 'display: none;';
+    span(style=style).count-notific
+      | !{ unreadCount || '' }
+
+  .user-notifications-list.list-container.notification-container.all-file-scroll
+    .title
+      span.pull-left
+        span.count-notific
+          | !{ unreadCount <= 0 ? '' : unreadCount }
+        span.notification-text-header
+          if unreadCount <= 0
+            | notifications
+          else
+            | pending notification ${ unreadCount > 1 's' : '' }
+    .file-scroll
+      ul.submenu.list-unstyled.notifications
+      each n in notifications
+        snippets.message(n)
+          
+          

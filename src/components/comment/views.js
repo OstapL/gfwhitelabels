@@ -1,7 +1,10 @@
 const helpers = {
   date: require('helpers/dateHelper.js'),
   yesNo: require('helpers/yesNoHelper.js'),
+  fields: require('./fields.js'),
 };
+
+const validation = require('components/validation/validation.js');
 
 function initDates(c) {
   c.created_date = new Date(c.created_date);
@@ -29,16 +32,34 @@ module.exports = {
 
     initialize(options) {
       this.fields = options.fields;
+      this.fields.message = _.extend(this.fields.message, {
+        fn: function(name, value, attr, data, schema) {
+          if (value.length > 2000)
+            throw 'Length of comment should not exceed more than 2000 characters.'
+        },
+      });
 
       this.allowQuestion = _.isBoolean(options.allowQuestion) ? options.allowQuestion : true;
       this.allowResponse = _.isBoolean(options.allowResponse) ? options.allowResponse : true;
       this.cssClass = _.isString(options.cssClass) ? options.cssClass : '';
 
       this.urlRoot = this.urlRoot.replace(':model', 'company').replace(':id', this.model.id);
+
+      this.userRole = 0;
+      _.each(app.user.companiesMember.data, (company) => {
+        if (company.company_id == this.model.id)
+          this.userRole = company.role;
+      });
       //init dates
       _.each(this.model.data, (c) => {
         initDates(c);
       });
+
+      this.snippets = {
+        related: require('./templates/snippets/related.pug'),
+        add: require('./templates/snippets/add.pug'),
+        edit: require('./templates/snippets/edit.pug'),
+      };
     },
 
     getComment(uid) {
@@ -70,10 +91,11 @@ module.exports = {
           allowQuestion: this.allowQuestion,
           allowResponse: this.allowResponse,
           cssClass: this.cssClass,
-        }
+        },
+        fields: this.fields,
+        userRole: this.userRole,
+        snippets: this.snippets,
       }));
-
-      this.$stubs = this.$('.stubs');
 
       return this;
     },
@@ -98,8 +120,19 @@ module.exports = {
       }
     },
 
-    keyupHandler(e) {
-      if (this.model.id == app.user.get('role').company_id)
+    resizeArea() {
+      setTimeout(() => {
+        var area = document.querySelector('.text-body');
+        if (!area)
+          return;
+        area.style.height = 'auto';
+        area.style.height = area.scrollHeight+'px';
+        console.log(area.scrollHeight+'px')
+      }, 0);
+    },
+
+    ensureRelatedRolesBlock(e) {
+      if (this.userRole)
         return;
 
       let $target = $(e.target);
@@ -111,22 +144,25 @@ module.exports = {
         if (hasRelatedBlock)
           return;
 
-        $relatedBlock = this.$stubs.find('.related-role').clone();
-        //$form.append($relatedBlock);
-        $target.after($relatedBlock);
+        $relatedBlock = $(this.snippets.related());
+        $target.parent().after($relatedBlock);
         $relatedBlock.show();
       } else {
         if(!hasRelatedBlock)
           return;
         $relatedBlock.remove();
       }
+    },
 
+    keyupHandler(e) {
+      this.resizeArea(e);
+      this.ensureRelatedRolesBlock(e)
     },
 
     submitComment(e) {
       e.preventDefault();
 
-      if (!app.user.ensureLoggedIn(e))
+      if (!app.user.ensureLoggedIn(window.location.pathname))
         return false;
 
       let $target = $(e.target);
@@ -156,17 +192,26 @@ module.exports = {
       if (relatedCb.is(':checked')) {
         let relatedRole = $form.find('input[name=related]:checked').val();
         if (!relatedRole) {
-          // validation.invalidMsg(this, );
-          alert('Please, select role');
+          this.invalidMsg('related', ['Please, select role.'], $form);
+          $target.prop('disabled', false);
           return;
         }
         data.related = relatedRole;
       }
 
+      if(!validation.validate(this.fields, data)) {
+        _(validation.errors).each((errors, name) => {
+          this.invalidMsg(name, errors, $form);
+        });
+        $target.prop('disabled', false);
+        // this.$('.help-block').prev().scrollTo(5);
+        return false;
+      }
+
       app.showLoading();
+
       api.makeRequest(this.urlRoot, 'POST', data).done((newData) => {
         $target.prop('disabled', false);
-        let role = app.user.get('role');
 
         let newCommentModel = {
           related: data.related,
@@ -175,17 +220,10 @@ module.exports = {
           uid: newData.new_message_id,
           created_date: new Date(),
           user: {
-            first_name: app.user.get('first_name'),
-            last_name: app.user.get('last_name'),
-            id: app.user.get('id'),
+            first_name: app.user.first_name,
+            last_name: app.user.last_name,
             image_data: app.user.get('image_data'),
-            role: role,
-            // role: {
-            //   company_name: role.company_name,
-            //   // company_id: role.company_id,
-            //   company_id: this.model.id,
-            //   role: role.role,
-            // },
+            role: this.userRole,
           },
         };
 
@@ -203,10 +241,10 @@ module.exports = {
           this.keyupHandler(e);//remove related role checkbox
         }
 
-        let newCommentHtml = app.fields.comment(newCommentModel, level, {
+        let newCommentHtml = helpers.fields.comment(newCommentModel, level, {
           owner_id: this.model.owner_id,
           company_id: this.model.id,
-        });
+        }, helpers);
         $(newCommentHtml).appendTo(isChild ? $parentComment : this.$('.comments'));
 
         app.hideLoading();
@@ -237,16 +275,11 @@ module.exports = {
       let $commentBlock = $(e.target).closest('.comment');
 
       let $newCommentBlock = $commentBlock.find('.comment-form');
-      if ($newCommentBlock && $newCommentBlock.length) {
+      if ($newCommentBlock && $newCommentBlock.length)
         return false;
-      }
 
-      $newCommentBlock = this.$stubs.find('.edit-comment').clone();
-
-      $newCommentBlock.removeClass('edit-comment collapse');
-
+      $newCommentBlock = $(this.snippets.edit());
       $newCommentBlock.appendTo($commentBlock);
-
       $newCommentBlock.find('.text-body').focus();
 
       return false;
@@ -288,18 +321,30 @@ module.exports = {
       return false;
     },
 
-    checkResponse(e) {
-        e.preventDefault();
-        this.$el.find('.comment-form-div').remove();
-        var $el = $(e.currentTarget);
-        $el.parents('.comment').after(
-            new this.commentView.form({
-            }).getHtml({
-                model: {parent: e.currentTarget.dataset.id},
-                company: this.model.company,
-                app: app,
-            })
-        );
+    invalidMsg(name, errors, form) {
+      errors = errors.join(', ');
+      let el = form.find(`[name=${name}]`);
+      if (el.length) {
+        let group = el.closest('.field-' + name);
+        group = group.length ? group : el.parent();
+        group.addClass('has-error');
+
+        let errorBlock = group.find('.help-block');
+        if (errorBlock.length)
+          errorBlock.html(errors);
+        else
+          group.append(`<div class="help-block">${errors}</div>`);
+
+        return;
+      }
+
+      //show general error
+      let errorBlock = form.find('.alert-warning');
+
+      if (errorBlock.length)
+        errorBlock.html(errors);
+      else
+        this.$el.prepend('<div class="alert alert-warning" role="alert"><p>' + errors + '</p></div>');
     },
 
   }, helpers.yesNo.methods)),

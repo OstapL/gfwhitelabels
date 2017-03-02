@@ -2,8 +2,49 @@ const View = require('components/raiseFunds/views.js');
 const raiseHelper = require('./helpers.js');
 
 function getOCCF(optionsR, viewName, params = {}) {
+
   $('#content').scrollTo();
   params.el = '#content';
+/*
+  $.when(
+      app.user.getFormcR(params.id),
+  ).then((formcFields, formc) => {
+    if(formc[0]) {
+      app.user.formc = formc[0];
+    }
+
+    $.when(
+      api.makeCacheRequest(raiseCapitalServer + '/company/' + app.user.formc.company_id + '/edit', 'OPTIONS'),
+      api.makeCacheRequest(raiseCapitalServer + '/campaign/' + app.user.formc.company_id + '/edit', 'OPTIONS'),
+      app.user.getCompanyR(app.user.formc.company_id, 'GET'),
+      app.user.getCampaignR(app.user.formc.campaign_id, 'GET'),
+    ).done((companyFields, campaignFields,  company, campaign) => {
+    
+      const fields = {
+        company: companyFields[0].fields,
+        campaign: campaignFields[0].fields,
+        formc: formcFields[0].fields,
+      };
+
+      if(company[0]) app.user.company = company[0];
+      if(campaign[0]) app.user.campaign = campaign[0];
+
+      var model = app.user.company;
+      model.campaign = app.user.campaign;
+      model.formc = app.user.formc;
+      
+      const finalReviewView = new View.finalReview({
+        el: '#content',
+        fields: fields,
+        model: model,
+        formcId: id,
+      });
+      finalReviewView.render();
+      app.hideLoading();
+
+    });
+  })
+*/
   $.when(optionsR, app.user.getCompanyR(), app.user.getCampaignR(), app.user.getFormcR())
     .done((options, company, campaign, formc) => {
 
@@ -64,6 +105,7 @@ module.exports = Backbone.Router.extend({
 
   company() {
     const optionsR = app.makeCacheRequest(raiseCapitalServer + '/company', 'OPTIONS');
+    $(document.head).append('<meta name="keywords" content="local investing equity crowdfunding Get to work and secure funding with our equity crowdfunding platform. Harness the power of local investing to secure the capital you need by getting started."></meta>');
     getOCCF(optionsR, 'company', {});
   },
 

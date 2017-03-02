@@ -7,17 +7,25 @@
 // ToDo
 // extend Backbone.Events ?
 const mainElement = '#content';
+const usaStates = require('consts/usaStatesChoices.json');
+const countries = require('consts/countries.json');
 
 class GeoCoder {
 
-  constructor(view, template) { 
+  constructor(view, forUSA) {
     this.overlord = document.querySelector(mainElement);
 
     this.view = view;
     this.fields = view.fields;
     this.values = view.model;
-    this.template = require('./templates/teamMember.pug');
+    // if(forUSA == 1) {
+      this.template = require('./templates/usa.pug');
+    // } else {
+    //   this.template = require('./templates/non_usa.pug');
+    // }
     this.resultHtml = '';
+    // fix me
+    // as script loads async we can add multiple google api scripts
     if(!window.google || !window.google.maps) {
       let p = document.createElement("script");
       p.type = "text/javascript";
@@ -44,7 +52,20 @@ class GeoCoder {
     });
     this.$resultHtml = $(this.resultHtml);
     this.attacheEvents();
+
+    if (this.values.zip_code && !this.values.city && !this.values.state)
+      setTimeout(() => { $('#zip_code').trigger('change'); }, 50);
+
     return this;
+  }
+
+  __getCountry(e) {
+    return '';
+    //this code should be refactored
+    let $form = $(e.target).closest('form');
+    let $country = $form.find('[name=country]');
+    let countryCode  = $country && $country.length ? $country.val() : '';
+    return countries[countryCode] || '';
   }
 
   onZipCodeChange(e) {
@@ -54,29 +75,41 @@ class GeoCoder {
       return;
     }
 
-    if(zip.length >= 5 && typeof google != 'undefined') {
-      let geocoder = new google.maps.Geocoder();
-      geocoder.geocode({ 'address': zip }, (results, status) => {
-        if (status == google.maps.GeocoderStatus.OK){
-          if (results.length >= 1) {
-            let strs = results[0].formatted_address.split(", ");
-            let city = strs[0];
-            let state = strs[1].substr(0, 2);
-
-            // Use overlord
-            document.querySelector('.js-city-state').innerHTML = city + ', ' + state;
-            this.view.model.city = city;
-            this.view.model.state = state;
-            document.querySelector('#city').value = city;
-            document.querySelector('#state').value = state;
-          } else {
-            console.debug('error')
-          }
-        } else {
-          console.debug('error')
-        }
-      });
+    if (!google || !google.maps) {
+      console.debug('google maps API is not available.');
+      return;
     }
+
+    let geocoder = new google.maps.Geocoder();
+
+    let country = this.__getCountry(e);
+    let address = zip + (country ? (', ' + country) : '');
+
+    geocoder.geocode({ 'address': address }, (results, status) => {
+      if (status != google.maps.GeocoderStatus.OK) {
+        console.debug('Failed to get state by zip code');
+        return;
+      }
+
+      if (!results || results.length < 1) {
+        console.log('Geocoder results shorter than expected');
+        return;
+      }
+
+      let strs = results[0].formatted_address.split(", ");
+      let city = strs[0];
+      let state = strs[1].substr(0, 2);
+
+      // Use overlord
+      let cityStateElem = document.querySelector('.js-city-state');
+      if (cityStateElem)
+        cityStateElem.innerHTML = city + ', ' + state;
+
+      this.view.model.city = city;
+      this.view.model.state = state;
+      document.querySelector('#city').value = city;
+      document.querySelector('#state').value = state;
+    });
   }
 
   saveCityState(e) {
@@ -89,7 +122,7 @@ class GeoCoder {
     };
 
     document.querySelector('.js-city-state').innerHTML = 
-      this.view.model.city + ', ' + this.view.model.state;
+      (this.view.model.city || '(City)') + ', ' + (usaStates[this.view.model.state] || '(State)');
 
     api.makeRequest(this.view.urlRoot.replace(':id', this.view.model.id), 'PATCH', data)
       .fail((response) => {

@@ -15,7 +15,7 @@ section.team-members.container.m-b-85
 
   //START RIGHT BLOCK
   .col-xl-8.col-lg-8.col-md-12.p-sm-0
-    h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0.m-b-3 #{type == 'advisor' ? 'advisor' : 'team member'}
+    h2.text-uppercase.text-lg-center.text-xs-center.m-t-0 #{type == 'advisor' ? 'advisor' : 'team member'}
 
     form.form-section.col-xl-12.p-sm-0
       - 
@@ -51,7 +51,14 @@ section.team-members.container.m-b-85
         class2: 'col-xl-9 col-lg-12 big-textarea', 
         schema: fields.bio, 
         placeholder: 'At least 150 characters', value: member.bio, label: 'Bio',})
-      - pug_html += zipCodeDirective(this, 'teamMember.pug').render().resultHtml;
+      - 
+        pug_html += app.fields.textLabel('city', {
+        class1: 'col-xl-3 col-lg-12 p-t-0 text-lg-left text-xl-right m-b-0 m-b-lg-1', 
+        schema: fields.city, 
+        value: member.city, 
+        label:  'Where did you grow up?',
+        help_text: 'Why do we ask? These affinity based questions can help us share your campaign with potential  investors with similar backgrounds.', 
+        placeholder: 'Name of Hometown',})
       - 
         pug_html += app.fields.textLabel('college', {
         class1: 'col-xl-3 col-lg-12 p-t-0 text-lg-left text-xl-right m-b-0 m-b-lg-1', 
@@ -85,5 +92,5 @@ section.team-members.container.m-b-85
           }, fields.photo_image_id);
 
       .col-lg-12.text-lg-right.p-l-0.p-r-0.p-t-2.text-md-center.text-sm-center.text-xs-center
-        button.btn.btn-secondary.text-uppercase.m-r-3.cancel cancel
+        button.btn.btn-secondary.text-uppercase.mr30.cancel cancel
         button(data-method=index == 'new' ? 'POST' : 'PUT').btn.btn-primary.text-uppercase.pull-lg-right.save Save

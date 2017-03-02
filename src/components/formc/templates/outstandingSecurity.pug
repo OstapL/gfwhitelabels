@@ -99,7 +99,7 @@ section.formc-team-members-director.container.m-b-85
             i.fa.fa-times
 
       .modal-body.p-t-0
-        form(data-section='outstanding_securities')#security_model_form.modal-form
+        form(data-section='outstanding_securities' data-update=-1)#security_model_form.modal-form
           .form-section
             -
               pug_html += app.fields.fieldChoiceLabel('security_type', _.extend({
@@ -126,11 +126,11 @@ section.formc-team-members-director.container.m-b-85
             .row
               .col-lg-6
                 - 
-                  pug_html += app.fields.textLabel('amount_authroized', {
-                  schema: fields.outstanding_securities.schema.amount_authroized,
+                  pug_html += app.fields.textLabel('amount_authorized', {
+                  schema: fields.outstanding_securities.schema.amount_authorized,
                   class1: 'col-lg-12',
                   class2: 'col-lg-12', 
-                  value: values.amount_authroized,})
+                  value: values.amount_authorized,})
               .col-lg-6
                 - 
                   pug_html += app.fields.textLabel('amount_outstanding', {
@@ -138,14 +138,15 @@ section.formc-team-members-director.container.m-b-85
                   class1: 'col-lg-12',
                   class2: 'col-lg-12', 
                   value: values.amount_outstanding,})
-            .row.form-group.m-b-0
-              -
-                pug_html += app.fields.radioLabel('voting_right',{
-                value: values.voting_right,
-                class1: 'col-lg-3',
-                class2: 'col-lg-9',
-                schema: fields.outstanding_securities.schema.voting_right,
-                });
+            .row.form-group.m-b-0.voting_right
+              #voting_right
+                -
+                  pug_html += app.fields.radioLabel('voting_right',{
+                  value: values.voting_right,
+                  class1: 'col-lg-3',
+                  class2: 'col-lg-9',
+                  schema: fields.outstanding_securities.schema.voting_right,
+                  });
             .row.m-b-0
               .col-lg-12.text-lg-center.text-md-center.text-xs-center
                 button.update-location.btn.btn-primary.text-uppercase.pull-lg-right.add-outstanding Save And Continue

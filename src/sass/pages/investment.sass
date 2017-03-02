@@ -57,12 +57,23 @@
 		margin-bottom: 0
 	.investment-summary
 		padding-top: 11px
+		background-color: $detail-overview-background
 		p
 			line-height: 1
 			margin-top: 7px
 			margin-bottom: 20px
+			color: $white
 		span
-			color: $small-text
+			color: $white
+	.fee
+		.input-border-bottom
+			&:before
+				content: '+'
+				position: absolute
+				top: 6px
+				left: 15px
+				@media screen and (max-width: 576px)
+					top: 3px
 
 	.varification
 		label
@@ -71,6 +82,8 @@
 			color: $black
 			text-align: justify
 			margin-bottom: 0
+			font-size: 15px
+			line-height: rem(22)
 		.label-true-false
 			font-size: rem(11)
 			text-transform: uppercase
@@ -99,3 +112,7 @@
 			float: left
 			padding-left: 15px
 			padding-right: 15px
+@media screen and (max-width: 576px)
+	.investment 
+		.list-group-item-heading
+			margin-bottom: rem(5)

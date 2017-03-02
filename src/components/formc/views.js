@@ -1,8 +1,11 @@
 'use strict';
 
+const typeOfDocuments = require('consts/typeOfDocuments.json');
 const companyFees = require('consts/companyFees.json');
 const formcHelpers = require('./helpers.js');
-const formatHelper = require('../../helpers/formatHelper');
+const formatHelper = require('../../helpers/formatHelper.js');
+const securityTypeConsts = require('consts/formc/security_type.json');
+const yesNoConsts = require('consts/yesNo.json');
 const roles = ['Shareholder', 'Director', 'Officer'];
 
 const menuHelper = require('helpers/menuHelper.js');
@@ -91,9 +94,9 @@ module.exports = {
     urlRoot: formcServer + '/:id/introduction',
 
     events: _.extend({
-      'submit form': 'submit',
+      'click .save-and-continue': 'submit',
+      // 'submit form': 'submit',
       'click .link-2': 'openPdf',
-      'click .submit_formc': submitFormc,
       'keyup #full_name': 'changeSign',
       'click #pay-btn': 'stripeSubmit',
     }, menuHelper.events, yesNoHelper.events, /*leavingConfirmationHelper.events*/),
@@ -138,18 +141,29 @@ module.exports = {
       return this;
     },
 
+    setFormData () {
+      this.formData = this.$el.find('form').serializeJSON();
+      this.formData.is_paid = this.model.is_paid;
+      return this.formData;
+    },
+
     saveEsign() {
+      const listingAgreement = 'formc/listing_agreement.pdf';
       const reqUrl = global.esignServer + '/pdf-doc';
       const formData = this.getDocMetaData();
-      const data = {
-        type: 2,
-        esign: formData.issuer_signer,
+      const data = [{
+        object_id: this.model.id,
+        type: typeOfDocuments[listingAgreement],
         meta_data: formData,
-        template: 'formc/funding_portal_listing_agreement.pdf'
-      };
+        template: listingAgreement
+      }];
 
-      $.post(reqUrl, data)
-        .fail( (err) => console.log(err));
+      app.makeRequest(reqUrl, 'POST', data, {
+        contentType: 'application/json; charset=utf-8',
+        crossDomain: true,
+      })
+      .done( (res) => console.log('esign success: ', res))
+      .fail( (err) => console.log('esign error: ', err));
     },
 
     openPdf (e) {
@@ -159,15 +173,17 @@ module.exports = {
     },
 
     getDocMetaData () {
-      const formData = this.$el.find('form').serializeJSON();
+      const formData = this.formData || this.setFormData();
       const issuer_legal_name = app.user.get('first_name') + ' ' + app.user.get('last_name');
       
       return {
+        esign: formData.full_name,
         trans_percent: companyFees.trans_percent,
         registration_fee: companyFees.registration_fee,
         nonrefundable_fees: companyFees.nonrefundable_fees,
         amendment_fee: companyFees.amendment_fee,
         commencement_date_x: this.getCurrentDate(),
+        commitment_date_x: this.getCurrentDate(),
         zip_code: app.user.company.zip_code,
         city: app.user.company.city,
         state: app.user.company.state,
@@ -182,7 +198,7 @@ module.exports = {
     },
 
     _success(data, newData) {
-      this.saveEsign(data);
+      if (this.formData && !this.formData.is_paid) this.saveEsign(data);
       formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
       return 1;
     },
@@ -198,7 +214,8 @@ module.exports = {
 
     stripeSubmit(e) {
       e.preventDefault();
-
+      
+      this.setFormData();
       let $stripeForm = $('.payment-block');
 
       function validateCard(form, selectors) {
@@ -254,7 +271,7 @@ module.exports = {
       }
 
       if (!this.eSignFullName.val().trim()) {
-        validation.invalidMsg({ $: $ }, 'full-name', ['Check your name']);
+        validation.invalidMsg({ $: $, $el: $('#content'), }, 'full-name', ['Check your name']);
         $payBtn.prop('disabled', false);
         return;
       }
@@ -265,9 +282,8 @@ module.exports = {
 
       Stripe.card.createToken(card, (status, stripeResponse) => {
         if (stripeResponse.error) {
-          validation.invalidMsg({ $: $ }, 'form-section', [stripeResponse.error.message]);
+          validation.invalidMsg({ $: $, $el: $('#content'), }, 'card_number', [stripeResponse.error.message]);
           $payBtn.prop('disabled', false); // Re-enable submission
-          $('#certify').scrollTo(20);
           app.hideLoading();
           return;
         }
@@ -276,7 +292,7 @@ module.exports = {
           stripeToken: stripeResponse.id
         }).done((formcResponse, statusText, xhr) => {
           if (xhr.status !== 200) {
-            validation.invalidMsg({'$': $}, "expiration-block",
+            validation.invalidMsg({'$': $, $el: $('#content'),}, "expiration-block",
               [formcResponse.description || 'Some error message should be here']);
 
             $payBtn.prop('disabled', false);
@@ -305,6 +321,7 @@ module.exports = {
 
           this.$('#save-button-block').removeClass('collapse');
 
+          this.$('.save-and-continue').click();
           app.hideLoading();
 
         }).fail((xhr, ajaxOptions, err) => {
@@ -323,10 +340,12 @@ module.exports = {
       e.preventDefault();
 
       let $target = $(e.target);
-      let $submitBtn = $target.find('#pay-btn');
+      let $form = $target.closest('form');
+
+      let $submitBtn = $form.find('#pay-btn');
       $submitBtn.prop('disabled', true);
 
-      let data = $target.serializeJSON({ checkboxUncheckedValue: 'false', useIntKeysAsArrayIndex: true });
+      let data = $form.serializeJSON({ checkboxUncheckedValue: 'false', useIntKeysAsArrayIndex: true });
 
       if (data.certify == 0) {
         delete data.certify;
@@ -344,7 +363,7 @@ module.exports = {
   }, menuHelper.methods, yesNoHelper.methods, leavingConfirmationHelper.methods)),
 
   teamMembers: Backbone.View.extend(_.extend({
-    urlRoot: formcServer + '/:id/team-members',
+    urlRoot: formcServer + '/:id/team-members/employers',
     events: _.extend({
       'click #submitForm': api.submitAction,
       'click .inviteAction': 'repeatInvitation',
@@ -366,6 +385,7 @@ module.exports = {
       this.fields = options.fields;
       this.fields.full_time_employers = { label: 'Full Time Employees' };
       this.fields.part_time_employers = { label: 'Part Time Employees' };
+      this.urlRoot = this.urlRoot.replace(':id', this.model.id);
     },
 
     _success(data, newData) {
@@ -383,9 +403,9 @@ module.exports = {
 
       if (confirm('Are you sure you would like to delete this team member?')) {
         api.makeRequest(
-          this.urlRoot.replace(':id', this.model.id) + '/delete',
-          'PUT',
-          {'user_id': userId}
+          this.urlRoot.replace('employers', '') +  userId,
+          'DELETE',
+          {'role': e.currentTarget.dataset.role }
         ).
         then((data) => {
           let index = this.model.team_members.findIndex((el) => { return el.user_id == userId });
@@ -410,8 +430,8 @@ module.exports = {
     updateEmployees(e) {
       e.preventDefault();
       api.makeRequest(
-        this.urlRoot.replace(':id', this.model.id),
-        'PUT',
+        this.urlRoot,
+        'PATCH',
         {
           'full_time_employers': this.el.querySelector('#full_time_employers').value,
           'part_time_employers': this.el.querySelector('#part_time_employers').value,
@@ -422,9 +442,8 @@ module.exports = {
     repeatInvitation(e) {
       e.preventDefault();
       api.makeRequest(
-        formcServer + '/invitation/repeat',
+        formcServer + '/' + this.model.id + '/team-members/invitation/' +  e.target.dataset.id,
         'PUT',
-        {'user_id': e.target.dataset.id}
       ).then((data) => {
         e.target.innerHTML = 'sent';
         e.target.className = 'link-3 invite';
@@ -457,14 +476,15 @@ module.exports = {
 
   }, menuHelper.methods, addSectionHelper.methods, leavingConfirmationHelper.methods)),
 
-  teamMemberAdd: Backbone.View.extend(_.extend({
+	teamMemberAdd: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id/team-members',
     doNotExtendModel: true,
     roles: ['shareholder', 'director', 'officer'],
     events: _.extend({
-      'click #submitForm': api.submitAction,
+      'click #submitForm': 'submit',
       'click .submit_formc': submitFormc,
-    }, addSectionHelper.events, menuHelper.events, leavingConfirmationHelper.events),
+      'click .team-current-date': 'setCurrentDate',
+    }, addSectionHelper.events, menuHelper.events, yesNoHelper.events, leavingConfirmationHelper.events),
 
     preinitialize() {
       // ToDo
@@ -493,6 +513,8 @@ module.exports = {
       }
       this.fields = options.fields;
       this.role = options.role;
+      this.allFields = options.fields;
+      this.fields = options.fields[this.role].fields;
 
       this.labels = {
         first_name: 'First name',
@@ -505,6 +527,7 @@ module.exports = {
         number_of_shares: 'Number of Shares',
         class_of_securities: 'Class of Securities',
         voting_power_percent: '% of Voting Power Prior to Offering',
+        voting_power: '% of Voting Power Prior to Offering',
         experiences: {
           employer: 'Employer',
           employer_principal: 'Employer Principal',
@@ -531,9 +554,9 @@ module.exports = {
       this.urlRoot = this.urlRoot.replace(':id', this.model.formc_id);
       if(this.model.hasOwnProperty('user_id')  && this.model.user_id != '') {
         this.model.id = this.model.formc_id;
-        this.urlRoot += '/' + this.role + '/' + this.model.user_id;
+        this.urlRoot += '/' +  this.model.user_id;
       } else {
-        this.urlRoot += '/' + this.role;
+        // this.urlRoot += '/' + this.role;
         this.model.title = [];
       }
 
@@ -577,11 +600,76 @@ module.exports = {
       */
     },
 
-  }, addSectionHelper.methods, menuHelper.methods, leavingConfirmationHelper.methods)),
+    submit(e) {
+      let data = $(e.target).closest('form').serializeJSON({ useIntKeysAsArrayIndex: true });
+
+      if(data.role) {
+        data.role = data.role.reduce((a,b) => { return parseInt(a)+parseInt(b)}, 0)
+        let newRole = data.role;
+
+        // delete data['experiences'];
+        // delete data['positions'];
+        // data['number_of_shares'] = 100;
+        if(data.voting_shareholder_choice == 1) {
+          _.extend(this.fields, this.allFields.shareholder.fields);
+          if((newRole & 1) != 1) {
+            newRole += 1;
+          }
+        } else {
+          if((newRole & 1) == 1) {
+            newRole -= 1;
+          }
+          delete data.number_of_shares;
+          delete data.class_of_securities;
+          delete data.voting_power_percent;
+        }
+        if(data.individual_director_choice == 1) {
+          _.extend(this.fields, this.allFields.director.fields);
+          if((newRole & 2) != 2) {
+            newRole += 2;
+          }
+        } else {
+          if((newRole & 2) == 2) {
+            newRole -= 2;
+          }
+          delete data.board_service_start_date__month;
+          delete data.board_service_start_date__year;
+          delete data.principal_occupation;
+          delete data.employer_principal_businesss;
+          delete data.employer_start_date__year;
+          delete data.employer_start_date__month;
+        }
+        if(data.role != newRole) {
+          data.role = newRole;
+        }
+        else if(this.model.hasOwnProperty('id') == true) {
+          delete data.role;
+        }
+      }
+      api.submitAction.call(this, e, data);
+    },
+
+    setCurrentDate(e) {
+      let $target = $(e.target);
+      const isCurrentDate = $target.is(':checked');
+
+      let $container = $target.parent().parent().parent();
+      let monthControl = $container.find('select');
+      let yearControl = $container.find('input[type=text]');
+
+      monthControl.val('');
+      monthControl.prop('disabled', isCurrentDate);
+
+      yearControl.val('');
+      yearControl.prop('disabled', isCurrentDate);
+    },
+
+  }, addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods, leavingConfirmationHelper.methods)),
+
 
   relatedParties: Backbone.View.extend(_.extend({
     el: '#content',
-    urlRoot: formcServer + '/:id' + '/related-parties',
+    urlRoot: formcServer + '/:id/related-parties',
 
     events: _.extend({
       'submit form': 'submit',
@@ -694,6 +782,16 @@ module.exports = {
           this.model[key].push({max: 0, min: 0, title: titles[i]});
         }
       }
+
+      let less_offering_expense = this.model['less_offering_express'];
+      let commission = _(less_offering_expense).find((item) => {
+        return item.title == 'Commissions and Broker Expenses';
+      });
+
+      commission.min = Math.round(this.campaign.minimum_raise * companyFees.trans_percent / 100);
+      commission.max = Math.round(this.campaign.maximum_raise * companyFees.trans_percent / 100);
+      commission.fee = true;
+
       this.assignLabels();
       this.createIndexes();
       this.buildJsonTemplates('formc');
@@ -1113,7 +1211,7 @@ module.exports = {
       this.fields.risk = { label: 'Describe Your Risk' };
       this.defaultRisks = {
         0: {
-          title: 'We have a limited operating history upon which you can e valuate ' +
+          title: 'We have a limited operating history upon which you can evaluate ' +
                   'our performance.',
           risk: 'We have a limited history upon which an evaluation of our prospects and ' +
                 'future performance can be made. Our proposed operations are subject to all ' +
@@ -1290,7 +1388,7 @@ module.exports = {
         },
         3: {
           title: 'New competitors may enter our market in a manner that could make it difficult ' +
-                  'to differentiate our Comapny.',
+                  'to differentiate our Company.',
           risk: 'While the Company is aware of certain competitors in the market, there is ' +
                 'the possibility that new competitors may enter and that they may be better ' +
                 'funded.  To the extent that the market becomes more crowded, this may make it ' +
@@ -1689,6 +1787,8 @@ module.exports = {
       'change #security_type': 'outstandingSecurityUpdate',
       'click #submitForm': api.submitAction,
       'click .submit_formc': submitFormc,
+      'click .newOustanding': 'newOustanding',
+      'click .editOutstanding': 'editOutstanding',
       'click .delete-outstanding': 'deleteOutstanding',
     }, addSectionHelper.events, menuHelper.events, yesNoHelper.events, /*leavingConfirmationHelper.events*/),
 
@@ -1715,14 +1815,7 @@ module.exports = {
       };
       this.fields.outstanding_securities.schema.security_type.type = 'choice';
       this.fields.outstanding_securities.schema.security_type.validate = {};
-      this.fields.outstanding_securities.schema.security_type.validate.choices = {
-        0: 'Preferred Stock',
-        1: 'Common Stock',
-        2: 'Debt',
-        3: 'Warrants',
-        4: 'Options',
-        5: 'Other',
-      };
+      this.fields.outstanding_securities.schema.security_type.validate.choices = securityTypeConsts.SECURITY_TYPES;
       this.fields.outstanding_securities.schema.voting_right.type = 'radio';
       this.fields.outstanding_securities.schema.voting_right.validate = {};
       this.fields.outstanding_securities.schema.voting_right.validate.choices = {
@@ -1734,7 +1827,7 @@ module.exports = {
           security_type: "Security Type",
           custom_security_type: "Custom Security Type",
           other_rights: "Other Rights",
-          amount_authroized: "Amount Authorized",
+          amount_authorized: "Amount Authorized",
           amount_outstanding: "Amount Outstanding",
           voting_right: "Voting right",
           terms_and_rights: "Describe all material terms and rights",
@@ -1747,7 +1840,7 @@ module.exports = {
           securities_offered: 'Securities Offered',
         },
         business_loans_or_debt: {
-          maturity_date: 'Maturity Date',
+          maturity_date: 'Date of Offering',
           outstanding_amount: 'Outstanding Amount',
           interest_rate: 'Interest Rate',
           other_material_terms: 'Other Material Terms',
@@ -1772,12 +1865,48 @@ module.exports = {
 
     },
 
+    newOustanding(e) {
+      e.preventDefault();
+      this.el.querySelector('#security_type').selectedIndex = "";
+      this.el.querySelector('#terms_and_rights').value = "";
+      this.el.querySelector('#amount_authorized').value = "";
+      this.el.querySelector('#amount_outstanding').value = "";
+      this.el.querySelector('input[name="voting_right"][value="0"]').checked = false;
+      this.el.querySelector('input[name="voting_right"][value="1"]').checked = false;
+      this.el.querySelector('#custom_security_type').value = '';
+      this.el.querySelector('#security_model_form').dataset.update = -1;
+      this.el.querySelector('.custom_security_type').style.display = 'none';
+      $('#security_modal').modal();
+    },
+
     outstandingSecurityUpdate(e) {
       if (e.target.options[e.target.selectedIndex].value == '5') {
         $('#security_modal #custom_security_type').parent().parent().show();
       } else {
         $('#security_modal #custom_security_type').parent().parent().hide();
       }
+    },
+
+    editOutstanding(e) {
+      e.preventDefault();
+      const data = this.model.outstanding_securities[e.currentTarget.dataset.index];
+
+      if(data.amount_authorized == null || data.amount_authorized == "") {
+        data.amount_authorized = 'n/a';
+      }
+
+      this.el.querySelector('#security_type').selectedIndex = data.security_type;
+      this.el.querySelector('#terms_and_rights').value = data.terms_and_rights;
+      this.el.querySelector('#amount_authorized').value = data.amount_authorized;
+      this.el.querySelector('#amount_outstanding').value = data.amount_outstanding;
+      this.el.querySelector('input[name="voting_right"][value="' + (+data.voting_right) + '"]').checked = true;
+      this.el.querySelector('#custom_security_type').value = data.custom_security_type;
+      this.el.querySelector('#security_model_form').dataset.update = e.currentTarget.dataset.index;
+
+      if(data.security_type == 5) {
+          this.el.querySelector('.custom_security_type').style.display = 'block';
+      }
+      $('#security_modal').modal();
     },
 
     addOutstanding(e) {
@@ -1787,8 +1916,20 @@ module.exports = {
       const sectionName = e.target.dataset.section;
       const template = require('./templates/snippets/outstanding_securities.pug');
 
-      data.amount_authroized = data.amount_authroized.replace(/[\$\,]/g, '');
-      data.amount_outstanding = data.amount_outstanding.replace(/[\$\,]/g, '');
+      if(data.amount_authorized.toLocaleLowerCase() == 'n/a' ||
+          data.amount_authorized.toLocaleLowerCase() == 'not available' ||
+          data.amount_authorized.toLocaleLowerCase() == 'na') {
+        data.amount_authorized = null;
+      } else {
+        data.amount_authorized = Math.round(
+            data.amount_authorized.replace(/[\$\,]/g, '') * 100 
+        ) / 100;
+      }
+
+      data.amount_outstanding = Math.round(
+          data.amount_outstanding.replace(/[\$\,]/g, '') * 100
+      ) / 100;
+
       if (!validation.validate(this.fields.outstanding_securities.schema, data, this)) {
         _(validation.errors).each((errors, key) => {
           validation.invalidMsg(this, key, errors);
@@ -1796,19 +1937,26 @@ module.exports = {
         this.$('.help-block').prev().scrollTo(5);
         return;
       } else {
-        this.$el.find('.outstanding_securities_block').show();
-        $('.' + sectionName + '_container').append(
-          template({
-            fields: this.fields[sectionName],
-            name: sectionName,
-            attr: this.fields[sectionName],
-            value: data,
-            index: this[sectionName + 'Index'],
-          })
-        );
 
-        this.model[sectionName].push(data);
-        this[sectionName + 'Index']++;
+        if(e.currentTarget.dataset.update == -1) {
+          this.$el.find('.outstanding_securities_block').show();
+          $('.' + sectionName + '_container').append(
+            template({
+              fields: this.fields[sectionName],
+              name: sectionName,
+              attr: this.fields[sectionName],
+              value: data,
+              index: this[sectionName + 'Index'],
+            })
+          );
+
+          this.model[sectionName].push(data);
+          this[sectionName + 'Index']++;
+        } else {
+          this.model[sectionName][e.currentTarget.dataset.update]= data;
+        }
+
+        this.el.querySelector('#security_model_form').dataset.update = -1;
 
         $('#security_modal').modal('hide');
 
@@ -1950,6 +2098,7 @@ module.exports = {
       }
     },
     initialize(options) {
+      this.formcId = options.formcId;
       this.fields = options.fields;
       disableEnterHelper.disableEnter.call(this);
     },
@@ -1994,12 +2143,12 @@ module.exports = {
         element.name = target.dataset.name;
         element.onblur = (e) => this.update(e);
 
-        let v = app.valByKeyReplaceArray(this.fields, target.dataset.name).validate.OneOf;
-        v.choices.forEach((el, i) => {
+        let v = app.valByKeyReplaceArray(this.fields, target.dataset.name).validate;
+        _(v.choices).each((el, i) => {
           let e = document.createElement('option');
-          e.innerHTML = v.labels[i];
-          e.value = v.choices[i];
-          if(v.choices[i] == target.dataset.value) {
+          e.innerHTML = el;
+          e.value = i;
+          if(i == target.dataset.value) {
             e.setAttribute('selected', true);
           }
           element.appendChild(e);
@@ -2020,9 +2169,7 @@ module.exports = {
 
     update(e) {
       let val = e.target.value;
-      if(e.target.dataset.type == 'money') {
-        val = formatHelper.unformatPrice(val);
-      }
+      val = (e.target.dataset.type == 'money') ? formatHelper.unformatPrice(val) : val;
       const name = e.target.name;
       const reloadRequiredFields = [
         'corporate_structure',
@@ -2033,9 +2180,27 @@ module.exports = {
         'length_days',
       ];
 
+      const fieldDependencies = {
+        'maximum_raise': ['minimum_raise'],
+        'minimum_raise': ['maximum_raise'],
+      };
+
+      function fillDataWithDependencies(data, fieldName, model) {
+        let dependencies = fieldDependencies[fieldName];
+        if (!dependencies || !dependencies.length)
+          return;
+
+        //this method just fill plain dependencies
+        _.each(dependencies, (dep) => {
+          if (data[dep])
+            return;
+
+          data[dep] = model[dep];
+        });
+      }
 
       e.target.setAttribute(
-        'id', e.target.name.replace(/\./g, '__').replace(/\[/g ,'_').replace(/\]/g, '_')
+        'id', name.replace(/\./g, '__').replace(/\[/g ,'_').replace(/\]/g, '_')
       );
 
       let data = {};
@@ -2045,17 +2210,20 @@ module.exports = {
       let method = 'PATCH';
 
       if(name.indexOf('company.') !== -1) {
+
         fieldName = name.split('company.')[1];
-        data[name.split('company.')[1]] = val;
-        url = raiseCapitalServer + '/company/' + this.model.company.id + '/edit';
+        data[fieldName] = val;
+        url = raiseCapitalServer + '/company/' + app.user.company.id + '/edit';
+
       } else if(name.indexOf('campaign.') !== -1) {
         fieldName = name.split('campaign.')[1];
         data[fieldName] = val;
-        url = raiseCapitalServer + '/campaign/' + this.model.campaign.id + '/general_information';
+        url = raiseCapitalServer + '/campaign/' + app.user.campaign.id + '/edit';
         updateModel = app.user.campaign;
+
       } else if(name.indexOf('formc.') !== -1) {
         fieldName = name.split('formc.')[1];
-        url = formcServer + '/' + this.model.formc.id + '/final-review';
+        url = formcServer + '/' + app.user.formc.id;
 
         if(fieldName.indexOf('[') !== -1) {
           let names = fieldName.split('.');
@@ -2064,17 +2232,20 @@ module.exports = {
           app.setValByKey(app.user, name, val);
 
           if(fieldName == 'team_members') {
-            url = formcServer + '/' + this.model.formc.id + '/team-members/' +
+            url = formcServer + '/' + app.user.formc.id + '/team-members/' +
               roles[app.user.formc.team_members[index].role[0]].toLocaleLowerCase() + '/' + 
               app.user.formc.team_members[index].user_id;
+
             data = app.user.formc.team_members[index];
             method = 'PUT';
+
           } else if(fieldName.indexOf('risk') !== -1) {
-            let riskName = fieldName.split('.')[0];
             let riskVar = name.split('.')[2];
             app.user.formc[fieldName][riskVar] = val;
-            url = formcServer + '/' + this.model.formc.id + '/risk-factors-' + fieldName.split('_')[0] + '/' + index;
-            app.user.formc[fieldName][index]
+            let riskName = fieldName.split('_')[0];
+            riskName = riskName.indexOf('miscellaneous') >= 0 ? 'misc' : riskName;
+            url = formcServer + '/' + app.user.formc.id + '/risk-factors-' + riskName + '/' + index;
+            app.user.formc[fieldName][index];
             data = app.user.formc[fieldName][index];
           } else {
             data[names[0].replace(/\[\d+\]/, '')] = app.user.formc[names[0].replace(/\[\d+\]/, '')];
@@ -2085,6 +2256,10 @@ module.exports = {
 
         updateModel = app.user.formc;
       }
+
+      fillDataWithDependencies(data, fieldName, updateModel);
+
+      this.$('.form-control-feedback').remove();
 
       api.makeRequest(url, method, data)
         .then((responseData) => {
@@ -2097,17 +2272,17 @@ module.exports = {
           }
 
           let input = document.querySelector(
-            '#' + e.target.name.replace(/\./g, '__').replace(/\[/g ,'_').replace(/\]/g, '_')
+            '#' + name.replace(/\./g, '__').replace(/\[/g ,'_').replace(/\]/g, '_')
           );
           let href = '';
           href = document.createElement('a');
           href.setAttribute('href', '#');
-          href.dataset.name = e.target.name;
+          href.dataset.name = name;
 
           let realVal = val;
           if(e.target.tagName == 'SELECT') {
             href.dataset.type = 'select';
-            let metaData = app.valByKeyReplaceArray(this.fields, e.target.name);
+            let metaData = app.valByKeyReplaceArray(this.fields, name);
             realVal = app.fieldChoiceList(metaData, val);
           } else if(e.target.tagName == "TEXTAREA") {
             href.dataset.type = "textarea";
@@ -2126,7 +2301,7 @@ module.exports = {
 
           href.className = 'createField show-input link-1';
 
-          document.querySelectorAll('[data-name="' + e.target.name + '"]').forEach((sameElement) => {
+          document.querySelectorAll('[data-name="' + name + '"]').forEach((sameElement) => {
             if(sameElement.tagName == 'SELECT') {
               sameElement.value = val
             } else {
@@ -2139,6 +2314,7 @@ module.exports = {
         })
         .fail((response) => {
           _(response.responseJSON).each((val, key) => {
+            val = Array.isArray(val) ? val : [val];
             let errorDiv = document.createElement('div');
             e.target.classList.add('form-control-danger');
             errorDiv.className = 'form-control-feedback';
@@ -2150,11 +2326,25 @@ module.exports = {
 
     render() {
       let template = require('./templates/finalReview.pug');
+      this.fields.company.industry.validate.choices = require('consts/raisecapital/industry.json');
+      this.fields.company.founding_state.validate.choices = require('consts/usaStatesChoices.json');
+      this.fields.company.state.validate.choices = require('consts/usaStatesChoices.json');
+      this.fields.company.corporate_structure.validate.choices = require('consts/raisecapital/corporate_structure.json');
+      this.fields.campaign.length_days.validate.choices = require('consts/raisecapital/length_days.json');
+      this.fields.campaign.security_type.validate.choices = yesNoConsts.YESNO;
+      this.fields.campaign.valuation_determination.validate.choices = require('consts/raisecapital/valuation_determination_options.json');
+      this.fields.formc.outstanding_securities.schema.security_type.type = 'choice';
+      this.fields.formc.outstanding_securities.schema.security_type.validate = {};
+      this.fields.formc.outstanding_securities.schema.security_type.validate.choices = securityTypeConsts.SECURITY_TYPES;
+      this.fields.formc.outstanding_securities.schema.custom_security_type.validate.choices = securityTypeConsts.SECURITY_TYPES;
+      this.fields.formc.outstanding_securities.schema.voting_right.validate.choices = yesNoConsts.YESNO;
+
       this.$el.html(
         template({
           serverUrl: serverUrl,
           Urls: Urls,
           fields: this.fields,
+          formcId: this.formcId,
           values: {
             company: app.user.company,
             campaign: app.user.campaign,
@@ -2165,65 +2355,6 @@ module.exports = {
 
       $('body').on('click', '.createField', (e) => this.createField(e));
 
-      return this;
-    },
-  }),
-
-  finalReviewTwo: Backbone.View.extend({
-    el: '#content',
-    template: require('./templates/finalReviewTwo.pug'),
-
-    preinitialize() {
-      // ToDo
-      // Hack for undelegate previous events
-      for (let k in this.events) {
-        $('#content ' + k.split(' ')[1]).undelegate();
-      }
-    },
-    initialize(options) {
-      this.fields = options.fields;
-    },
-    events: {
-      'click .show-input': 'showInput'
-    }, 
-    showInput: function (event) {
-      event.preventDefault();
-      if ($(event.target).hasClass('noactive')) {
-          return false;
-      }
-      var $this = $(event.target),
-          inputId = $this.data('name'),
-          $input = $('input' + '#' + inputId);
-
-      $this.hide();
-
-      if ($input.length == 0) {
-        $input = $('<input type="text" id="' + inputId + '" name="' + inputId + '" class="text-input"/>');
-        $this.after($input);
-      }
-
-      $input.fadeIn().focus();
-
-      $('body').on('focusout', '.text-input', function(event) {
-      var $this = $(event.target),
-          value = $this.val(),
-          inputId = $this.attr('id'),
-          $span = $('[data-name="' + inputId + '"]');
-      if (value !== '') {
-          $span.text(value);
-      }
-
-      $this.hide();
-      $span.fadeIn();
-      });
-    },
-    render() {
-      this.$el.html(
-        this.template({
-          values: this.model,
-          fields: this.fields,
-        })
-      );
       return this;
     },
   }),

@@ -9,7 +9,7 @@
   position: relative
   top: 50%;
   left: 0;
-
+//======================================
 // show main menu list on mobile devaices
 html.show-menu
   overflow: hidden !important
@@ -101,39 +101,74 @@ html.show-menu
       -ms-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
       -o-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
       transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
-
+//================================
+//right menu
 header.no-overflow
-  overflow: visible
-  nav
-    overflow: visible
+  overflow: hidden !important
+  height: 100% !important
+  overflow-y: scroll !important
 
-    // show profile menu on mobile devaices
-    .list-container.user-info-drop.notification-container
-      -webkit-transition-delay: 300ms, 300ms
-      -moz-transition-delay: 300ms, 300ms
-      -ms-transition-delay: 300ms, 300ms
-      -o-transition-delay: 300ms, 300ms
-      transition-delay: 300ms, 300ms
+  body
+    overflow: hidden !important 
+    height: 100% !important
 
-      -webkit-transition: height 0.35s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
-      -moz-transition: height 0.35s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
-      -ms-transition: height 0.35s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
-      -o-transition: height 0.35s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
-      transition: height 0.35s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
-      -webkit-transition: none
-      -moz-transition: none
-      -ms-transition: none
-      -o-transition: none
-      transform: none
-  
-      height: auto
+  header
+    height: 100%
+    -webkit-transition: height 0.35s ease-in 200ms
+    -moz-transition: height 0.35s ease-in 200ms
+    -ms-transition: height 0.35s ease-in 200ms
+    -o-transition: height 0.35s ease-in 200ms
+    transition: height 0.35s ease-in 200ms
+  #menuProfile
+    .mobile-profile-menu
+      visibility: visible
+      -webkit-transition-delay: 0s
+      -moz-transition-delay: 0s
+      -ms-transition-delay: 0s
+      -o-transition-delay: 0s
+      transition-delay: 0s
       opacity: 1
 
-      background: rgba( $menu_backgound_from, .96)
-      
-      // show login signin button and set it diff height on mobile devaices
-      &.not-log-in-user
-        height: 66px
+      li
+        -webkit-transition-delay: 300ms, 300ms
+        -moz-transition-delay: 300ms, 300ms
+        -ms-transition-delay: 300ms, 300ms
+        -o-transition-delay: 300ms, 300ms
+        transition-delay: 300ms, 300ms
+
+        -webkit-transition: none
+        -moz-transition: none
+        -ms-transition: none
+        -o-transition: none
+        transform: none
+
+        opacity: 1
+        -webkit-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+        -moz-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+        -ms-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+        -o-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+        transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+
+  form.form-inline
+    -webkit-transition-delay: 200ms, 200ms
+    -moz-transition-delay: 200ms, 200ms
+    -ms-transition-delay: 200ms, 200ms
+    -o-transition-delay: 200ms, 200ms
+    transition-delay: 200ms, 200ms
+
+    -webkit-transition: none
+    -moz-transition: none
+    -ms-transition: none
+    -o-transition: none
+    transform: none
+    opacity: 1
+    -webkit-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+    -moz-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+    -ms-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+    -o-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+//=================================
+// bell menu
 header.no-overflow-bell
   overflow: visible
   nav
@@ -171,10 +206,13 @@ header.no-overflow-bell
 header
   .navbar-toggleable-md::after
     clear: none
-
+  position: relative
+  z-index: 3
   background-color: $menu_backgound_from
   background: $menu_backgound_from $header_bg_image
-
+  -webkit-box-shadow: $box-shadow-top-menu 
+  -moz-box-shadow: $box-shadow-top-menu    
+  box-shadow: $box-shadow-top-menu
   .navbar
     padding-top: 0
     padding-bottom: 0
@@ -192,11 +230,12 @@ header
 
     .navbar-brand
       position: relative
-
       height: $navbar_height
       padding-bottom: 0
       padding-top: 0
-      width: 20%
+      width: $logo-width-desktop
+      margin-right: $navbar-brand-margin-right!important
+      margin-left: $navbar-brand-margin-left!important
 
       img
         +centered
@@ -244,10 +283,13 @@ header
         cursor: pointer
 
         font-size: $font-size-menu
-        letter-spacing: 2px
+        letter-spacing: $letter-sp-menu
         text-transform: uppercase
-        color: $white
-
+        color: $menu_text_color!important
+        font-family: $font-family-menu
+        font-weight: $menu-font-weight
+        &:hover 
+          color: rgba($menu_text_color, .7)!important
 
         &.user-info-name
           padding-top: 0px
@@ -260,7 +302,7 @@ header
 
         &.two-columns
           padding: 10px
-          width: 450px
+          width: 480px
 
      
         &.user-info-drop
@@ -273,7 +315,7 @@ header
 
           li
             &:hover
-              background-color: rgba($white, .09)
+              background-color: rgba($submenu-bgc-hover, .09)
 
               a 
                 color: rgba($menu_text_color, 1)
@@ -285,15 +327,18 @@ header
               color: rgba($menu_text_color, 0.7)
 
 
-              font-size: 13px
+              font-size: $font-size-sub-menu
               text-align: left
+              .fa
+                margin-top: rem(4)
+                margin-left: 10px
             p 
               margin-bottom: 0
 
               font-weight: 600
 
         &.notification-container 
-          left: -70px
+          left: -340px
 
           .nav-link
             margin-left: 0 
@@ -308,7 +353,7 @@ header
             position: relative
 
             line-height: 33px
-            font-size: 14px
+            font-size: 18px
 
             color: $icon_header_color
 
@@ -316,19 +361,16 @@ header
             position: absolute
             top: 0
             left: -6px
-              
             display: block
             height: 16px
             width: 16px
-
-            background: $boulder
+            background: $bgc-notificatin-bell
             border-radius: 50%
-
-            color: $menu_text_color
-
+            color: $white
+            font-weight: bold
             line-height: 1.4
             text-align: center
-            font-size: 11px
+            font-size: 12px
             letter-spacing: initial
             font-family: 'Open Sans', sans-serif;
 
@@ -360,20 +402,14 @@ header
 
             & > *
               display: inline-block
-
-              font-size: 11px!important
-
+              width: 100%
+              font-size: 12px!important
+              line-height: normal
               color: rgba($menu_text_color, 0.7)
 
             &:hover
               span, i 
                 color: rgba($menu_text_color, 1)
-
-            span
-
-              @include ellipsis
-
-              width: 152px
 
             &.title
 
@@ -382,7 +418,7 @@ header
               
               margin-bottom: 0
               padding: 12px 17px 12px 11px;
-              width: 245px
+              width: 255px
 
               border-bottom: 1px rgba($menu_text_color, 0.3) solid
               background-color: $notific_list_title
@@ -408,7 +444,7 @@ header
 
                   cursor: pointer
               & + li 
-                margin-top: 48px
+                margin-top: 42px
 
       &.user-info
         min-width: 105px
@@ -436,6 +472,124 @@ header
                 font-size: 24px
                 line-height: 2
                 letter-spacing: 0
+  #menuNotification
+    position: relative
+    top: $top-position-notification
+    height: $height-notification
+    right: 10px
+    .nav-item
+      margin-left: 0
+      z-index: 999
+      .list-container
+        display: none
+    .notification-bell.notification-active
+      position: relative
+      .list-container
+        display: block
+        width: 370px
+        position: absolute
+        top: 100%
+        background-color: rgba($menu_backgound_from, 0.96)
+        -webkit-box-shadow: $sub-menu-box-shadov
+        -moz-box-shadow: $sub-menu-box-shadov
+        box-shadow: $sub-menu-box-shadov
+        &:before
+          content: ''
+          position: absolute
+          z-index: 99
+          right: 10px
+          top: -24px
+          border: 12px solid transparent
+          border-bottom: 12px solid $notific_list_title
+      .title
+        width: 100%
+        text-transform: uppercase
+        position: absolute
+        top: 0    
+        margin-bottom: 0
+        padding: rem(10) rem(17) rem(10) rem(11)
+        background-color: $notific_list_title
+        cursor: default
+        font-size: rem(12)
+        letter-spacing: 1.2px
+        font-family: $notification-title-ff
+        span
+          color: $white
+      .notifications
+        width: 100%
+        
+        .date
+          margin-top: rem(5)
+        li
+          a
+            color: $notification-link-color
+            font-size: 12px
+            padding-left: 0
+            text-decoration: underline
+            &:hover
+              color: $notification-link-color-hover
+              text-decoration: none
+        .nav-link
+          border-bottom: solid 1px 
+          border-bottom-color: rgba($small-text, .5)
+          margin-bottom: 0
+          
+          
+          &:last-child
+            border-bottom: none
+          
+          &.notification-item
+            background-color: rgba(70,70,70, .5)
+            padding-left: 10px
+            padding-right: 0
+            p
+              color: $white
+              font-weight: normal!important
+            &.notification-item-read
+              background-color: transparent
+              margin-left: rem(10)
+              padding-left: 0px
+              p
+                color: rgba($menu_text_color, 0.7)
+                font-weight: normal!important
+      .submenu
+        overflow-y: scroll
+        height: auto
+        li:not(.title)
+            cursor: pointer
+            padding-right: 1rem
+        li
+          margin-bottom: 5px
+          text-align: left
+          &:last-child
+            margin-bottom: 0
+          & > *
+            display: inline-block
+            width: 100%
+            font-size: 12px!important
+            line-height: normal
+            color: rgba($menu_text_color, 0.7)
+
+          &:hover
+            span, i 
+              color: rgba($menu_text_color, 1)
+    .filescroll
+      .file-scroll
+        max-height: 281px
+        margin: rem(42) auto 0px
+      .all-file-scroll
+        ::-webkit-scrollbar-thumb
+          border-color: rgba(#585858, .9)
+          background-color: rgba(#585858, .9)
+        ::-webkit-scrollbar-thumb:hover
+          border-color: #1c1f22
+          background-color: $small-text
+        ::-webkit-scrollbar-track
+          border-width: 0
+        ::-webkit-scrollbar-track:hover
+          border-left: none
+      
+            
 
   @media screen and (min-width: 992px) and (max-width: 1100px)
     .navbar-nav .nav-item a
@@ -445,16 +599,18 @@ header
       top: -55%
 
       font-size: 0.6875rem
-    
+
   @media screen and (min-width: 992px)
     .nav-item:hover .list-container
       position: absolute
       top: 100%
       left: -10px
-      z-index: 9991
+      z-index: 999
       
       display: block
-
+      -webkit-box-shadow: $sub-menu-box-shadov
+      -moz-box-shadow: $sub-menu-box-shadov
+      box-shadow: $sub-menu-box-shadov
       background-color: rgba($menu_backgound_from, 0.96)
 
       &.two-columns
@@ -496,6 +652,8 @@ header
 
     .logo
       display: none!important
+    #menuNotification
+      display: none
 
   @media screen and (max-width: 991px)
     -webkit-transition: height 0.35s ease-in
@@ -508,7 +666,7 @@ header
     top: 0
     right: 0
     left: 0
-    z-index: 9999
+    z-index: 2
 
     display: block
     height: 65px;
@@ -522,7 +680,11 @@ header
     .navbar .navbar-brand
       display: inline-block
       height: $navbar_height_mobile
-      width: 180px
+      width: $logo-width-mobile
+      margin-left: $navbar-brand-margin-left-mobile
+      margin-right: $navbar-brand-margin-right-mobile
+      z-index: 999
+      left: -5px
 
     .navbar-nav
       height: $navbar_height_mobile
@@ -604,6 +766,7 @@ header
         position: absolute
         right: 15px
         width: auto
+        top: 0
         // padding-top: 25px!important
 
         li.nav-item.user-info
@@ -625,8 +788,10 @@ header
 
               &.fa-angle-down
                 display: none
+          &:hover
+            background: none
 
-      #menuList
+      #menuList, .mobile-profile-menu
         -webkit-transition: visibility 0s linear 1s
         -moz-transition: visibility 0s linear 1s
         -ms-transition: visibility 0s linear 1s
@@ -639,7 +804,7 @@ header
         height: auto
         float: none!important
         margin: 0
-        padding: rem(10) rem(30) 0
+        padding: rem(10) rem(10) 0
         overflow: hidden
         overflow-y: auto
         visibility: hidden
@@ -676,7 +841,9 @@ header
           border-bottom: 1px rgba($menu_text_color, .5) solid
 
           a 
-            padding: rem(10) rem(3)
+            padding: rem(20) rem(3)
+            font-size: rem(18)
+            font-family: $font-family-menu
       
       .mobile-menu
         display: block
@@ -714,10 +881,11 @@ header
 
     .navbar-brand
       float: none
-      margin-left: rem(-25)
 
     .wrap-toggle-menu
-      position: relative
+      position: absolute
+      top: 0
+      left: 10px
 
       display: inline-block
       float: left
@@ -764,7 +932,7 @@ header
           width: 100%
           height: 2px
           
-          background-color: rgba($white, 0.75)
+          background-color: $icon-mobile-menu-color
           backface-visibility: hidden
           border-radius: 2px
 
@@ -836,7 +1004,11 @@ header
 
     .list-container
       position: static
-
+  .mobile-singup-wrap
+    .btn-login-mobile
+      display: block
+      width: 145px
+      font-size: rem(15)
   @media screen and (max-width: 385px)
 
     .notification-container
@@ -851,3 +1023,43 @@ header
   // on mobile devaices main menu absolute positioned so we need set top padding for main content
   .page
     padding-top: 65px
+
+.mobile-profile-menu
+  padding: 15px 25px!important
+  li
+    text-align: left
+  a
+    text-align: left
+    text-transform: uppercase
+    color: $menu_text_color
+    display: block
+    font-weight: $mobile-menu-font-weight
+    &:hover
+      color: $menu_text_color-hover
+
+
+@media screen and (max-width: 991px)
+  #menuProfile
+    left: 0!important
+    width: 100%
+    .mobile-profile-menu
+      padding: 15px 10px 0px 25px !important
+      opacity: 0
+      li
+        &:hover
+          background-color: rgba($white, .09)
+
+    .user-info
+      position: relative
+      left: 95%
+  .nav-item
+    &:hover
+      background-color: rgba($white, .09)
+
+@media screen and (max-width: 576px)
+  #menuProfile
+    .user-info
+      left: 90%
+  .navbar-brand 
+    img
+      left: -10px

@@ -1,16 +1,24 @@
+global.cookies = require('cookies-js');
 global.config = require('config');
 global.$ = global.jQuery = require('jquery');
 global._ = require('underscore');
 global.Backbone = require('backbone');
 window.Tether = require('tether');
 global.Bootstrap = require('bootstrap/dist/js/bootstrap.js');
-global.userModel = require('components/accountProfile/model.js');
+global.OwlCarousel = require('owl.carousel/dist/owl.carousel.min.js');
+// global.userModel = require('components/accountProfile/model.js');
 global.Urls = require('./jsreverse.js');
 require('jquery-serializejson/jquery.serializejson.min.js');
+require('js/html5-dataset.js');
 const validation = require('components/validation/validation.js');
 
+const User = require('components/accountProfile/user.js');
 global.formatHelper = require('helpers/formatHelper');
 
+if (!global.Intl) {
+  require('intl');
+  require('intl/locale-data/jsonp/en.js');
+}
 
 $.fn.scrollTo = function (padding=0) {
   $('html, body').animate({
@@ -169,15 +177,17 @@ let app = {
   },
 
   fieldChoiceList(metaData, currentValue) {
-    let resultVal = '';
-    metaData = metaData.validate.OneOf;
-    if(metaData.labels) {
-      return metaData.labels[metaData.choices.indexOf(currentValue.toString())]
-         || metaData.labels[metaData.choices.indexOf(parseFloat(currentValue))];
-    } else {
-      return metaData.choices.indexOf(currentValue.toString())
-        || metaData.choices.indexOf(parseFloat(currentValue));
-    }
+    metaData = metaData.validate;
+    if (Array.isArray(metaData.choices))//it looks like this is old approach
+      return (metaData.labels)
+        ? metaData.labels[metaData.choices.indexOf(currentValue.toString())]
+           || metaData.labels[metaData.choices.indexOf(parseFloat(currentValue))]
+        : metaData.choices.indexOf(currentValue.toString())
+          || metaData.choices.indexOf(parseFloat(currentValue));
+
+    //this is new approach
+    return metaData.choices[currentValue] || currentValue;
+
   },
 
   getVideoId(url) {
@@ -230,11 +240,39 @@ let app = {
     })(window,document,'script','dataLayer', id);
   },
 
+  getUrl(data) {
+    data = Array.isArray(data) ? data[0] : data;
+
+    if (!data || !data.urls || !data.urls.length || !data.urls[0])
+      return null;
+
+    return this.getFilerUrl(data.urls[0]);
+  },
+
+  getFilerUrl(file) {
+    if (!file || !_.isString(file))
+      return null;
+
+    if (file.startsWith('http://') || file.startsWith('https://') || file.startsWith('/'))
+      return file;
+
+    return bucketServer + '/' + file;
+  },
+
+  breadcrumbs (title, subtitle, data) {
+    const template = require('templates/breadcrumbs.pug');
+    return template({
+      title: title,
+      subtitle: subtitle,
+      data: data
+    });
+  },
+
 };
 
 // Что-то пахнет говнецом
 _.extend(app, Backbone.Events);
-app.user = new userModel();
+
 global.api = require('helpers/forms.js');
 _.extend(app, api);
 global.app = app;
@@ -242,18 +280,14 @@ global.app = app;
 // app routers
 app.routers = require('routers');
 app.fields = require('fields');
+
+// app.user = new userModel();
+app.user = new User();
 app.user.load();
 app.trigger('userReady');
+
 app.runGoogleAnalytics(global.googleAnalyticsId);
 
-app.breadcrumbs = function(title, subtitle, data) {
-  const template = require('templates/breadcrumbs.pug');
-  return template({
-    title: title,
-    subtitle: subtitle,
-    data: data
-  });
-}
 
 const popoverTemplate = '<div class="popover  divPopover"  role="tooltip"><span class="popover-arrow"></span> <h3 class="popover-title"></h3> <span class="icon-popover"><i class="fa fa-info-circle" aria-hidden="true"></i></span> <span class="popover-content"> XXX </span></div>';
 
@@ -390,61 +424,74 @@ $('body').on('click', '.notification-bell', function () {
   return false;
 });
 
-$('body').on('click', '#menuList .nav-item', function (event) {
-  var href = $(event.target).attr('href');
+$('body').on('click', '#menuList .nav-item, #menuList .mobile-signup', function (event) {
+  var href = $(event.target).closest('a').attr('href');
 
   if ($('.navbar-toggler:visible').length !== 0) {
     $(this).find('.list-container').slideToggle();
 
-    if (href.indexOf('/') != -1) {
+    if (href && href.indexOf('/') != -1) {
       $('html').toggleClass('show-menu');
     }
   }
 });
 
-$('body').on('click', 'a', function (event) {
-  var href = event.currentTarget.getAttribute('href');
+$('body').on('click', 'a', (event) => {
+  const href = event.currentTarget.getAttribute('href');
+
   if (href == window.location.pathname) {
     window.location.reload();
-  } else if (href && href == '#')  {
-    event.preventDefault();
-  } else if(href && href != '' &&
-    href.substr(0, 1) != '#' &&
-    href.substr(0, 4) != 'http' &&
-    href.substr(0, 3) != 'ftp' &&
-    href.substr(0, 7) != 'mailto:' &&
-    href != 'javascript:void(0);' &&
-    href != 'javascript:void(0)' &&
-    event.currentTarget.getAttribute('target') == null) {
-    event.preventDefault();
-
-    // If we already have that url in cache - we will just update browser location
-    // and set cache version of the page
-    // overise we will trigger app router function
-    var url = href;
-
-    // Clear page
-    $('#content').undelegate();
-    $('form').undelegate();
-    $('.popover').remove();
-
-    $('.modal-backdrop').remove();
-    $('.modal-open').removeClass('modal-open');
-
-    if (app.cache.hasOwnProperty(url) == false) {
-      app.routers.navigate(
-          url, { trigger: true, replace: false }
-      );
-      app.trigger('userReady');
-      app.trigger('menuReady');
-    } else {
-      $('#content').html(app.cache[url]);
-      app.routers.navigate(
-          url, { trigger: false, replace: false }
-      );
-      app.trigger('userReady');
-      app.trigger('menuReady');
-    }
-    app.runGoogleAnalytics(global.googleAnalyticsId);
+    return;
   }
+
+  if (href == '#') {
+    event.preventDefault();
+    return false;
+  }
+
+  if (!href ||
+    href.startsWith('#') ||
+    href.startsWith('http') ||
+    href.startsWith('ftp') ||
+    href.startsWith('javascript:') ||
+    event.currentTarget.getAttribute('target')) {
+    return;
+  }
+
+  if (href.startsWith('mailto:')) {
+    event.preventDefault();
+    window.location = href;
+    return false;
+  }
+
+  event.preventDefault();
+  // If we already have that url in cache - we will just update browser location
+  // and set cache version of the page
+  // overise we will trigger app router function
+  var url = href;
+
+  // Clear page
+  $('#content').undelegate();
+  $('form').undelegate();
+  $('.popover').remove();
+
+  $('.modal-backdrop').remove();
+  $('.modal-open').removeClass('modal-open');
+
+  if (app.cache.hasOwnProperty(url) == false) {
+    app.routers.navigate(
+      url, { trigger: true, replace: false }
+    );
+    app.trigger('userReady');
+    app.trigger('menuReady');
+  } else {
+    $('#content').html(app.cache[url]);
+    app.routers.navigate(
+      url, { trigger: false, replace: false }
+    );
+    app.trigger('userReady');
+    app.trigger('menuReady');
+  }
+  app.runGoogleAnalytics(global.googleAnalyticsId);
+
 });

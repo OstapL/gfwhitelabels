@@ -1,5 +1,6 @@
-
-- pug_html += app.breadcrumbs('Invest', '', [ ['Home', '/'], ['Explore', '/companies'], [values.name, '/' + values.id], ['Invest in ' + values.name, '']]);
+-
+  var auth = require('consts/auth/user.json');
+  pug_html += app.breadcrumbs('Invest in '+ values.name, '', [ ['Home', '/'], ['Explore', '/companies'], [values.name, '/' + values.id], ['Invest in ' + values.name, '']]);
 
 mixin fieldInput(name, attr)
   - attr = attr ? attr : fields[name];
@@ -52,7 +53,7 @@ mixin confirmStatement(name, attr)
         form(action="POST" data-method="POST" name="invest_form").invest_form.clearfix
           input(type="hidden" name="company_id" value=values.id)
           .row
-            .col-xl-12
+            .col-xl-12.col-xs-6
               -
                 pug_html += app.fields.fieldTextLabel("amount", _.extend({
                     class1: 'col-xl-3 col-lg-4 text-md-left text-lg-right text-xl-right',
@@ -61,15 +62,16 @@ mixin confirmStatement(name, attr)
                     text: "$10 of payment processing fee. Your money will be returned to you if the " +
                       "campaign doesn't reach the target goal ($500,000).",
                   }, fields.amount));
-          .row
-            .col-xl-12
+
+            .col-xl-12.col-xs-6
               -
                 pug_html += app.fields.fieldTextLabel("fee", _.extend({
                     class1: 'col-xl-3 col-lg-4 text-md-left text-lg-right text-xl-right',
                     class2: 'col-xl-4 col-lg-8 input-border-bottom',
+                    class3: 'c',
                     placeholder: '+ $10',
                     value: '$10',
-                    label: 'Fee',
+                    label: 'Commission',
                     disabled: true,
                   }, fields.fee));
           .row
@@ -95,7 +97,7 @@ mixin confirmStatement(name, attr)
                 data-toggle="modal"
                 data-target="#income_worth_modal"
                 href="#income_worth_modal"
-              ).link-2.update-income-worth update your annual income and net worth.
+              ).link-6.update-income-worth update your annual income and net worth.
 
           div.popover-content-rounding
             i.fa.fa-info-circle
@@ -106,10 +108,69 @@ mixin confirmStatement(name, attr)
           div.popover-content-amount-ok
             i.fa.fa-info-circle
             span Based on your updated annual income and net worth, you can invest up to $:amount.
+          section.hidden-sm-up
+            h2.text-uppercase.m-t-3.text-xs-center Investment Summary
+            .jumbotron.jumbotron-fluid.investment-summary
+              .container
+                .col-md-7.col-xs-6.text-xs-center
+                  .row
+                    span Target
+                    p.font-weight-bold
+                      | $#{values.campaign.minimum_raise.toLocaleString('en-US')} -
+                      | $#{values.campaign.maximum_raise.toLocaleString('en-US')}
+                .col-md-5.col-xs-6.text-xs-center
+                  .row
+                    span Committed
+                    p.font-weight-bold $#{values.campaign.amount_raised.toLocaleString('en-US')}
+              .container
+                .col-md-7.col-xs-6.text-xs-center
+                  .row
+                    span Offering deadline
+                    p.font-weight-bold.m-b-0 #{values.campaign.expiration_date.toLocaleDateString('en-US', {timeZone: 'UTC'})}
+                .col-md-5.col-xs-6.text-xs-center
+                  .row
+                    span Type of security
+                    p.font-weight-bold.m-b-0
+                      | #{values.campaign.security_type == 0 ? 'Common Equity' : 'Revenue Share'}
+          section.hidden-sm-up.invest-perks-mobile
+            - var perks = values.campaign.perks;
+            if perks && perks.length
+              - perks.sort(function (a, b) { return Number(b.amount) - Number(a.amount); });
+              h2.text-uppercase.dosis.m-t-3.text-xs-center PERKS
+                span.small-text.open-sans.hidden-xs-up
+                  | Investor Perks are not intended to affect the value of the security and
+                  | investors should evaluate the merits of each investment without regard to any
+                  | Investor Perks.
+              .list-group.list-group-border-invest.invest-right-margin
+                div
+                  -
+                    var idx = 0;
+                  while (idx < 2 && perks[idx])
+                    - var p = perks[idx];
+                    a(href="#" data-amount=p.amount).list-group-item.list-group-item-action.perk
+                      h3.list-group-item-heading
+                        span.text-color-puerto_rico.font-weight-bold $#{p.amount}
+                        |  Investment 
+                        i.fa.fa-check(style="display:none;")
+                      p.list-group-item-text.text-justify #{p.perk}
+                    - idx += 1;
 
-
+                #hidden-article-press.hidden-article-press.collapse
+                  - var showMore = perks.length > 2
+                  while idx < perks.length && perks[idx]
+                    - var p = perks[idx];
+                    a(href="#" data-amount=p.amount).list-group-item.list-group-item-action.perk
+                      h3.list-group-item-heading
+                        span.text-color-puerto_rico.font-weight-bold $#{p.amount}
+                        |  Investment
+                        i.fa.fa-check(style="display:none;")
+                      p.list-group-item-text.text-justify #{p.perk}
+                    - idx += 1;
+              div(style="display:" + (showMore ? 'block' : 'none') + ";").row
+                .col-lg-12.text-xs-center.m-t-1
+                  a(href="#hidden-article-press" data-toggle="collapse").link-4.see-all-perks Show More
           section.personal_information
-            h2.text-uppercase.dosis.text-md-center.text-sm-center.text-xs-center.text-lg-left Personal Information
+            h2.text-uppercase.dosis.text-md-center.text-sm-center.text-xs-center.text-lg-left.m-t-3 Personal Information
               span.small-text.open-sans Required by United States banking laws. This information is transmitted securely and will never be used for any purpose beyond executing your investment. You only have to do this once.
             .form-group.row.required
               label.col-lg-3.col-md-12.text-lg-right.text-xs-left.pull-xs-left Legal Name
@@ -119,35 +180,33 @@ mixin confirmStatement(name, attr)
                   'personal_information_data',
                   'first_name',
                   user,
-                  0, {
+                  -1, {
                     'placeholder': 'First Name',
                     'class': 'col-lg-4-5 m-b-md-25 col-md-12',
-                    'id': 'personal_information_data__first_name__0',
                   }, fields.personal_information_data.schema.first_name);
 
                 pug_html += app.fields.nestedText(
                   'personal_information_data',
                   'last_name',
                   user,
-                  0, {
+                  -1, {
                     'class': 'col-lg-4-5 col-md-12 ',
                     'placeholder': 'Last Name',
-                    'id': 'personal_information_data__last_name__0',
                   }, fields.personal_information_data.schema.last_name);
             -
-              pug_html += app.fields.fieldChoiceLabel('country', _.extend({
+              pug_html += app.fields.fieldChoiceLabel('personal_information_data[country]', _.extend({
                 'class2': 'col-xl-9 col-lg-12 country-select',
                 'required': true,
-                'empty': { '': 'Choose Country' },
+                'empty': { '': 'Choose Country', 'value': '' },
                 'value': user.country,
-              }, fields.country));
+                'id': 'personal_information_data__country',
+              }, this.fields.personal_information_data.schema.country));
             -
               pug_html += app.fields.nestedTextLabel(
                 'personal_information_data',
                 'street_address_1',
                 user,
-                0, {
-                  id: 'personal_information_data__street_address_1__0',
+                -1, {
                 },
                 fields.personal_information_data.schema.street_address_1);
             -
@@ -155,90 +214,43 @@ mixin confirmStatement(name, attr)
                 'personal_information_data',
                 'street_address_2',
                 user,
-                0, {
+                -1, {
                 },
                 fields.personal_information_data.schema.street_address_2);
 
-            // IF USA
-            .row.us-fields(style="display:" + (user.country == 'US' ? "display" : "none") + ";")
-              input(type="hidden" name="personal_information_data[state]" value=user.state disabled=(user.country != 'US'))
-              input(type="hidden" name="personal_information_data[city]" value=user.city disabled=(user.country != 'US'))
-              .col-xl-7.col-lg-6.p-r-xl-0
+            if user.country == 'US'
+              | !{ snippets.us({ fields: fields, user: user }) }
+            else
+              | !{ snippets.nonUs({ fields: fields, user: user }) }
+
+            //.row
+              .col-xl-12
+                p.m-b-1.m-t-1 In order to pay you any dividends or revenue share, regulations require GrowthFountain to collect your Taxpayer Identification Number.  Don’t worry we keep this information safe, secure and encrypted on a separate server.
+
                 -
+                
                   pug_html += app.fields.nestedTextLabel(
-                    'personal_information_data',
-                    'zip_code',
+                    'payment_information_data',
+                    'ssn',
                     user,
-                    0, {
-                      class1: 'col-xl-5 col-lg-12 text-lg-left text-xl-right',
-                      class2: 'col-xl-7 col-lg-12',
-                      id: 'personal_information_data__zip_code__0',
-                      disabled: (user.country != 'US'),
+                    -1, {
+                      'placeholder': 'Social Security #',
+                      'class1': 'col-xl-3 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 m-b-lg-1',
+                      'label': 'Social Security number (SSN) or Tax ID (ITIN/EIN)',
+                      'id': 'payment_information_data__ssn__0',
                     },
-                    fields.personal_information_data.schema.zip_code);
-              .col-xl-5.col-lg-6.city_states.col-md-12
-                label.col-xl-5.col-md-6.col-sm-6.col-xs-6.p-l-0 City/State
-                  span.color-red *
-                .col-xl-7.col-lg-12.col-md-6.col-sm-6.col-xs-6.p-l-0
-                  span(data-toggle="modal" data-target="#city_state_modal" href="#city_state_modal").change_state_city
-                    span.input-value.js-city-state #{user.city}, #{user.state}
-                    i.fa.fa-pencil-square-o
-            // IF OTHER COUNTRY
-            .other-countries-fields(style="display:" + (user.country == 'US' ? "none" : "display") + ";")
-              .row
-                .col-lg-6.p-xl-0
-                  -
-                    pug_html += app.fields.nestedTextLabel(
-                      'personal_information_data',
-                      'city',
-                      user,
-                      0, {
-                        class1: 'col-xl-6 col-lg-12 text-lg-left text-xl-right m-b-lg-1',
-                        class2: 'col-xl-6 col-lg-12 p-r-xl-0',
-                        id: 'personal_information_data__city__0',
-                        disabled: (user.country != 'US'),
-                      },
-                      fields.personal_information_data.schema.city);
-                .col-lg-6
-                  .form-group.row.state.text
-                    label.text-xl-right.text-lg-left.col-xl-5.col-lg-12(for="state").p-t-0.m-b-0.m-b-lg-1 State/Province/ Region
-                      span.color-red *
-                    div.col-xl-7.col-lg-12
-                      input.form-control(
-                        name='personal_information_data[state]'
-                        placeholder='State/Province/Region'
-                        type="text"
-                        value=user.state
-                        disabled=(user.country == 'US')
-                        id='personal_information_data__state__0'
-                      )
-              .row
-                .col-lg-6.p-xl-0
-                  .form-group.row.zip_code.text
-                    label.text-xl-right.text-lg-left.col-xl-6.col-lg-12(for="zip_code") Postal Code
-                      span.color-red *
-                    div.col-xl-6.col-lg-12.p-r-xl-0
-                      input(
-                        name='personal_information_data[zip_code]'
-                        placeholder='Postal Code'
-                        type="text"
-                        value=user.zip_code
-                        disabled=(user.country == 'US')
-                        id='personal_information_data__state__0'
-                      ).form-control
-                .col-lg-6
-                  -
-                    pug_html += app.fields.nestedTextLabel(
-                      'personal_information_data',
-                      'phone',
-                      user,
-                      0, {
-                        class1: 'col-xl-5 col-lg-12 text-lg-left text-xl-right',
-                        class2: 'col-xl-7 col-lg-12',
-                        id: 'personal_information_data__phone__0',
-                        disabled: (user.country != 'US'),
-                      },
-                      fields.personal_information_data.schema.phone);
+                    fields.payment_information_data.schema.ssn);
+
+                  pug_html += app.fields.nestedTextLabel(
+                    'payment_information_data',
+                    'ssn_re',
+                    user,
+                    -1, {
+                      'class1': 'col-xl-3 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 m-b-lg-1',
+                      'label': 'Re-enter',
+                      'id': 'payment_information_data__ssn_re__0',
+                    },
+                    fields.payment_information_data.schema.ssn_re);
 
           section.payment-information.border-bottom
             h2.text-uppercase.dosis.text-md-center.text-sm-center.text-xs-center.text-lg-left
@@ -252,15 +264,13 @@ mixin confirmStatement(name, attr)
             //IF ECHECK
             //- I may need to add a value into the attr object to make sure proper data is populated.
             .echeck-fields.payment-fields
-
               -
                 pug_html += app.fields.nestedTextLabel(
                   'payment_information_data',
                   'name_on_bank_account',
                   user,
-                  0, {
+                  -1, {
                     class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right p-t-0 m-b-0 m-b-lg-1',
-                    id: 'payment_information_data__name_on_bank_account__0',
                   },
                   fields.payment_information_data.schema.name_on_bank_account);
 
@@ -269,8 +279,7 @@ mixin confirmStatement(name, attr)
                   'payment_information_data',
                   'account_number',
                   user,
-                  0, {
-                    id: 'payment_information_data__account_number__0',
+                  -1, {
                   },
                   fields.payment_information_data.schema.account_number);
 
@@ -279,8 +288,7 @@ mixin confirmStatement(name, attr)
                   'payment_information_data',
                   'account_number_re',
                   user,
-                  0, {
-                    id: 'payment_information_data__account_number_re__0',
+                  -1, {
                     class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right p-t-0 m-b-0',
                   },
                   fields.payment_information_data.schema.account_number_re);
@@ -290,27 +298,36 @@ mixin confirmStatement(name, attr)
                   'payment_information_data',
                   'routing_number',
                   user,
-                  0, {
-                    id: 'payment_information_data__routing_number__0',
+                  -1, {
                   },
                   fields.payment_information_data.schema.routing_number);
-              .form-group.row.radio.check-fields
+              -
+                pug_html += app.fields.nestedTextLabel(
+                  'payment_information_data',
+                  'routing_number_re',
+                  user,
+                  -1, {
+                  },
+                fields.payment_information_data.schema.routing_number_re);
+
+              .form-group.row.radio.check-fields.required
                 label.text-md-right.col-lg-3 Account Type
-                #payment_information_data__account_type__0.col-lg-9.radio-input
+                  span.color-red *
+                #payment_information_data__bank_account_type.col-lg-9.radio-input
                   label 
                     input(
                       type="radio"
-                      name="payment_information_data[account_type]"
-                      value=0
-                      checked=user.bank_account_type
+                      name="payment_information_data[bank_account_type]"
+                      value=auth.bank_account_type.Checking
+                      checked=(user.bank_account_type == auth.bank_account_type.Checking)
                     )
                     |  Checking
                   label
                     input(
                       type="radio"
-                      name="payment_information_data[account_type]"
-                      value=1
-                      checked=!user.bank_account_type
+                      name="payment_information_data[bank_account_type]"
+                      value=auth.bank_account_type.Savings
+                      checked=(user.bank_account_type == auth.bank_account_type.Savings)
                     )
                     |  Savings
             // IF CHECK
@@ -338,6 +355,8 @@ mixin confirmStatement(name, attr)
                         span And mail the check to:
                       .col-lg-6
                         span.font-weight-bold GrowthFountain Capital LLC
+                          br
+                          | c/o Bofl Federal Bank
                           br
                           | 79 Madison Ave, 5th Floor
                           br
@@ -400,12 +419,14 @@ mixin confirmStatement(name, attr)
             +confirmStatement('is_understand_investing_is_risky',
               _.extend({}, fields.is_understand_investing_is_risky)
             )
-            // FOR DCU
-            //.dcu-confirmation
+
+            if fields.is_understand_securities_related
               +confirmStatement('is_understand_securities_related',
                 _.extend({}, fields.is_understand_securities_related)
               )
-            input(type='hidden' value='1' name='is_understand_securities_related')
+            else
+              input(type='hidden' value='1' name='is_understand_securities_related')
+
             .col-lg-12.m-t-2
               .row
                 span By Signing You Acknowledge and Agree to the 
@@ -414,7 +435,7 @@ mixin confirmStatement(name, attr)
                   a(href="#" data-path=esignServer + "/pdf-doc/invest/participation_agreement.pdf" target="_blank").link-2 Participation Agreement
             .col-lg-12.m-t-2
               .row
-                #signature__full_name__0.form-group.row
+                #signature__full_name.form-group.row
                   - var fullName = user.first_name + ' ' + user.last_name;
                   .col-xl-5.col-lg-6.col-md-6
                     input(
@@ -431,10 +452,10 @@ mixin confirmStatement(name, attr)
               .col-md-12.text-md-center.text-sm-center.text-xs-center
                 .controls
                   button(
-                  type="submit").btn.btn-primary.pull-lg-right.text-uppercase invest
+                  type="submit").btn.btn-lg.btn-primary.pull-lg-right.text-uppercase invest
     //END LEFT BLOCK
     //START RIGHT BLOCK
-    .col-xl-4.col-lg-5.pull-right
+    .col-xl-4.col-lg-5.pull-right.hidden-xs-down.invest-perks
       if values.campaign.perks
         h2.text-uppercase.dosis.m-t-0 PERKS
           span.small-text.open-sans
@@ -447,6 +468,7 @@ mixin confirmStatement(name, attr)
             values.campaign.perks = Object.keys(values.campaign.perks).map(function(key) {
               return values.campaign.perks[key];
             });
+
             values.campaign.perks.sort(function (a, b) {
               return Number(b.amount) - Number(a.amount);
             });
@@ -454,34 +476,34 @@ mixin confirmStatement(name, attr)
           each v,k in values.campaign.perks
             a(href="#" data-amount=v.amount).list-group-item.list-group-item-action.perk
               h3.list-group-item-heading
-                span.text-color-puerto_rico $#{v.amount}
-                |  Investments
+                span.text-color-puerto_rico.font-weight-bold $#{v.amount}
+                |  Investment 
                 i.fa.fa-check(style="display:none;")
               p.list-group-item-text.text-justify #{v.perk}
-
-      h2.text-uppercase.dosis.text-md-center.text-sm-center.text-xs-center Investment Summary
-      .jumbotron.jumbotron-fluid.investment-summary
-        .container
-          .col-md-7
-            .row
-              span Target
-              p.font-weight-bold
-                | $#{values.campaign.minimum_raise.toLocaleString('en-US')} -
-                | $#{values.campaign.maximum_raise.toLocaleString('en-US')}
-          .col-md-5
-            .row
-              span Committed
-              p.font-weight-bold $#{values.campaign.amount_raised}
-        .container
-          .col-md-7
-            .row
-              span Offering deadline
-              p.font-weight-bold.m-b-0 #{values.campaign.expiration_date.toLocaleDateString()}
-          .col-md-5
-            .row
-              span Type of security
-              p.font-weight-bold.m-b-0
-                | #{values.campaign.security_type == 0 ? 'Common Equity' : 'Revenue Share'}
+      section.hidden-xs-down
+        h2.text-uppercase Investment Summary
+        .jumbotron.jumbotron-fluid.investment-summary
+          .container
+            .col-md-7
+              .row
+                span Target
+                p.font-weight-bold
+                  | $#{values.campaign.minimum_raise.toLocaleString('en-US')} -
+                  | $#{values.campaign.maximum_raise.toLocaleString('en-US')}
+            .col-md-5
+              .row
+                span Committed
+                p.font-weight-bold $#{values.campaign.amount_raised.toLocaleString('en-US')}
+          .container
+            .col-md-7
+              .row
+                span Offering deadline
+                p.font-weight-bold.m-b-0 #{values.campaign.expiration_date.toLocaleDateString('en-US', {timeZone: 'UTC'})}
+            .col-md-5
+              .row
+                span Type of security
+                p.font-weight-bold.m-b-0
+                  | #{values.campaign.security_type == 0 ? 'Common Equity' : 'Revenue Share'}
 
 //MODAL
 div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#city_state_modal.modal.fade
@@ -523,7 +545,7 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
         .container.form-section
           form.col-lg-10.offset-lg-1.border-bottom.update-income-worth
             .row
-              | Your current limit is
+              | Your current limit is&nbsp;
               b.color-green $
                 span.current-limit.color-green 1000
               | .
@@ -537,7 +559,7 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
               .row
                 .col-lg-12
                   .col-lg-12.text-lg-center
-                    button(data-dismiss="modal" type="button").btn.btn-primary.text-uppercase.submit-income-worth update
+                    button(type="button").btn.btn-primary.text-uppercase.submit-income-worth update
         .modal-footer
 
 if !window.google || !window.google.maps

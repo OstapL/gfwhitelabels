@@ -30,6 +30,12 @@
 	@media screen and (max-width: 540px)
 		i
 			padding-bottom: 25px
+.like-icon-circle
+	background-color: $campaign-like-bgc
+	color: $campaign-like-color
+	padding: 10px 11px
+	border-radius: 100px
+	font-size: rem(24)
 //
 .m-d-p-r-5
 	padding-right: 5px!important
@@ -88,6 +94,7 @@
 		font-size: rem(12)!important
 		padding-left: 0!important
 		padding-right: 0!important
+		letter-spacing: normal!important
 //uploading in drop zone
 .uploading
 	left: 50%
@@ -132,7 +139,7 @@
 
 	.all-file-scroll
 		::-webkit-scrollbar
-			width: 8px
+			width: 10px
 			background: transparent
 		::-webkit-scrollbar-thumb
 			border-width: 1px 1px 1px 2px
@@ -172,7 +179,9 @@
 				i
 					font-size: 14px!important
 					margin-top: 0
-
+.uploading
+	i.fa-spinner
+		font-size: 22px
 .fileFolderDropzone
 	.border-dropzone
 		min-height: 155px
@@ -190,6 +199,9 @@
 		right: 0
 		left: 70px
 		top: -7px
+p.drop-photo
+	max-width: 290px
+	margin: auto
 .imageDropzone
 	.p-dropzone
 		top: 45px!important
@@ -327,3 +339,10 @@
 .input-min-width
 	input
 		min-width: rem(180)
+
+// THANK YOU PAGE
+.thank-you-page
+	h3
+		color: $black!important
+	.campaign-subheading
+		color: #fff!important
