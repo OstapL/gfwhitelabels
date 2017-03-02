@@ -210,10 +210,6 @@ header
   z-index: 3
   background-color: $menu_backgound_from
   background: $menu_backgound_from $header_bg_image
-  -webkit-box-shadow: $box-shadow-top-menu
-  -moz-box-shadow: $box-shadow-top-menu
-  box-shadow: $box-shadow-top-menu
-
   .navbar
     padding-top: 0
     padding-bottom: 0
@@ -682,10 +678,10 @@ header
       display: inline-block
       height: $navbar_height_mobile
       width: $logo-width-mobile
-      z-index: 999
       margin-left: $navbar-brand-margin-left-mobile
       margin-right: $navbar-brand-margin-right-mobile
-      left: -4px
+      z-index: 999
+      left: -5px
 
     .navbar-nav
       height: $navbar_height_mobile
@@ -886,7 +882,7 @@ header
     .wrap-toggle-menu
       position: absolute
       top: 0
-      left: 20px
+      left: 10px
 
       display: inline-block
       float: left
@@ -1064,8 +1060,3 @@ header
   .navbar-brand 
     img
       left: -10px
-@media screen and (max-width: 320px)
-  header 
-    .navbar 
-      .navbar-brand
-        left: 0
