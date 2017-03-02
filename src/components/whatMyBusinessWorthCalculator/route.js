@@ -1,4 +1,13 @@
-module.exports = Backbone.Router.extend({
+//TODO: move this to common router
+// execute: function (callback, args, name) {
+//       if ((name=='calculatorWhatMyBusinessWorthIntro'
+// || name=='selectYourBusiness')  && !app.user.ensureLoggedIn(window.location.pathname)) {
+//     return false;
+//       };
+//       if (callback) callback.apply(this, args)
+//   },
+
+module.exports = {
   routes: {
     'calculator/selectYourBusiness': 'selectYourBusiness',
     'calculator/selectCalculator': 'selectCalculator',
@@ -6,106 +15,86 @@ module.exports = Backbone.Router.extend({
     'calculator/whatmybusinessworth/intro': 'calculatorWhatMyBusinessWorthIntro',
     'calculator/whatmybusinessworth/step-1': 'calculatorWhatMyBusinessWorthStep1',
     'calculator/whatmybusinessworth/step-2': 'calculatorWhatMyBusinessWorthStep2',
-    'calculator/whatmybusinessworth/finish': 'calculatorWhatMyBusinessWorthFinish'
+    'calculator/whatmybusinessworth/finish': 'calculatorWhatMyBusinessWorthFinish',
   },
-  execute: function (callback, args, name) {
-        if ((name=='calculatorWhatMyBusinessWorthIntro' || name=='selectYourBusiness')  && !app.user.ensureLoggedIn(window.location.pathname)) {
-      return false;
-        };
-        if (callback) callback.apply(this, args)
+  methods: {
+    selectYourBusiness() {
+      let View = Backbone.View.extend({
+        el: '#content',
+        initialize() {
+          this.render();
+        },
+        template: require('./templates/selectYourBusiness.pug'),
+        render() {
+          this.$el.html(this.template());
+          return this;
+        },
+      });
+
+      new View();
+      app.hideLoading();
     },
-  selectYourBusiness() {
-    let View = Backbone.View.extend({
-      el: '#content',
-      initialize: function() {
-        this.render();
-      },
-      template: require('./templates/selectYourBusiness.pug'),
-      render: function () {
-        this.$el.html(this.template());
-        return this;
-      }
-    });
 
-    new View();
-    app.hideLoading();
-  },
+    selectCalculator() {
+      let View = Backbone.View.extend({
+        el: '#content',
+        initialize() {
+          this.render();
+        },
+        template: require('./templates/selectCalculator.pug'),
+        render() {
+          this.$el.html(this.template());
+          return this;
+        },
+      });
 
-  selectCalculator() {
-    let View = Backbone.View.extend({
-      el: '#content',
-      initialize: function() {
-        this.render();
-      },
-      template: require('./templates/selectCalculator.pug'),
-      render: function () {
-        this.$el.html(this.template());
-        return this;
-      }
-    });
+      new View();
+      app.hideLoading();
+    },
 
-    new View();
-    app.hideLoading();
-  },
+    selectCalculator2() {
+      let View = Backbone.View.extend({
+        el: '#content',
+        initialize() {
+          this.render();
+        },
+        template: require('./templates/selectCalculator2.pug'),
+        render() {
+          this.$el.html(this.template());
+          return this;
+        },
+      });
 
-  selectCalculator2() {
-    let View = Backbone.View.extend({
-      el: '#content',
-      initialize: function() {
-        this.render();
-      },
-      template: require('./templates/selectCalculator2.pug'),
-      render: function () {
-        this.$el.html(this.template());
-        return this;
-      }
-    });
+      new View();
+      app.hideLoading();
+    },
 
-    new View();
-    app.hideLoading();
-  },
-
-  calculatorWhatMyBusinessWorthIntro() {
-    require.ensure([], () => {
+    calculatorWhatMyBusinessWorthIntro() {
       let View = require('./views');
-
       new View.intro().render();
-
       $('#content').scrollTo();
       app.hideLoading();
-    });
-  },
+    },
 
-  calculatorWhatMyBusinessWorthStep1() {
-    require.ensure([], () => {
+    calculatorWhatMyBusinessWorthStep1() {
       const View = require('./views');
-
       new View.step1().render();
-
       $('#content').scrollTo();
       app.hideLoading();
-    });
-  },
+    },
 
-  calculatorWhatMyBusinessWorthStep2() {
-    require.ensure([], () => {
+    calculatorWhatMyBusinessWorthStep2() {
       const View = require('./views');
-
       new View.step2().render();
-
       $('#content').scrollTo();
       app.hideLoading();
-    });
-  },
+    },
 
-  calculatorWhatMyBusinessWorthFinish() {
-    require.ensure([], () => {
+    calculatorWhatMyBusinessWorthFinish() {
       const View = require('./views');
-
       new View.finish().render();
-
       $('#content').scrollTo();
       app.hideLoading();
-    });
-  }
-});
+    },
+  },
+};
