@@ -1,12 +1,3 @@
-//TODO: move this to main router
-// execute: function (callback, args, name) {
-//       if ((name=='calculatorPaybackshareStep1')
-// && !app.user.ensureLoggedIn(window.location.pathname)) {
-//     return false;
-//       };
-//       if (callback) callback.apply(this, args)
-//   },
-
 module.exports = {
   routes: {
     'calculator/paybackshare/step-1': 'calculatorPaybackshareStep1',
@@ -35,4 +26,5 @@ module.exports = {
       app.hideLoading();
     },
   },
+  auth: ['calculatorPaybackshareStep1'],
 };

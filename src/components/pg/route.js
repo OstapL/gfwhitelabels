@@ -1,9 +1,3 @@
-//TODO: move this to main router
-// execute: function (callback, args, name) {
-//     // ga('send', 'pageview', "/" + Backbone.history.getPath());
-//     if (callback) callback.apply(this, args)
-// },
-
 module.exports = {
   routes: {
     '': 'mainPage',

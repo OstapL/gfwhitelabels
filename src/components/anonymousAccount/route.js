@@ -14,105 +14,93 @@ module.exports = {
   },
   methods: {
     login(id) {
-      require.ensure([], function () {
-        let optionsR = api.makeRequest(authServer + '/rest-auth/login', 'OPTIONS');
-        $.when(optionsR).done((metaData) => {
-          let loginView = new View.login({
-            el: '#content',
-            fields: metaData.fields,
-            model: {},
-          });
-          loginView.render();
-          app.hideLoading();
-        }).fail((xhr, error) => {
-          // ToDo
-          // Show global error message
-          console.log(xhr, error);
-          app.hideLoading();
+      let optionsR = api.makeRequest(authServer + '/rest-auth/login', 'OPTIONS');
+      $.when(optionsR).done((metaData) => {
+        let loginView = new View.login({
+          el: '#content',
+          fields: metaData.fields,
+          model: {},
         });
+        loginView.render();
+        app.hideLoading();
+      }).fail((xhr, error) => {
+        // ToDo
+        // Show global error message
+        console.log(xhr, error);
+        app.hideLoading();
       });
     },
 
     signup() {
-      require.ensure([], function () {
-        const optionsR = api.makeRequest(authServer + '/rest-auth/registration', 'OPTIONS');
-        $.when(optionsR).done((metaData) => {
-          const signView = new View.signup({
-            el: '#content',
-            fields: metaData.fields,
-            model: {},
-          });
-          signView.render();
-          app.hideLoading();
-        }).fail((xhr, error) => {
-          // ToDo
-          // Show global error message
-          console.log(xhr, error);
-          app.hideLoading();
+      const optionsR = api.makeRequest(authServer + '/rest-auth/registration', 'OPTIONS');
+      $.when(optionsR).done((metaData) => {
+        const signView = new View.signup({
+          el: '#content',
+          fields: metaData.fields,
+          model: {},
         });
+        signView.render();
+        app.hideLoading();
+      }).fail((xhr, error) => {
+        // ToDo
+        // Show global error message
+        console.log(xhr, error);
+        app.hideLoading();
       });
     },
 
     loginFacebook() {
-      require.ensure([], () => {
-        const socialAuth = require('./social-auth.js');
-        const hello = require('hellojs');
+      const socialAuth = require('./social-auth.js');
+      const hello = require('hellojs');
 
-        hello('facebook').login({
-          scope: 'public_profile,email',
-        }).then(e => {
-          let sendTokenR = socialAuth.sendToken('facebook', e.authResponse.access_token);
-          $.when(sendTokenR).done((data) => {
-            localStorage.setItem('token', data.key);
-            window.location = '/account/profile';
-          });
-        }, (e) => {
-          // TODO: notificate user about reason of error;
-          app.routers.navigate('/account/login', {trigger: true, replace: true});
+      hello('facebook').login({
+        scope: 'public_profile,email',
+      }).then(e => {
+        let sendTokenR = socialAuth.sendToken('facebook', e.authResponse.access_token);
+        $.when(sendTokenR).done((data) => {
+          localStorage.setItem('token', data.key);
+          window.location = '/account/profile';
         });
+      }, (e) => {
+        // TODO: notificate user about reason of error;
+        app.routers.navigate('/account/login', { trigger: true, replace: true });
       });
-
     },
 
     loginLinkedin() {
+      const socialAuth = require('./social-auth.js');
+      const hello = require('hellojs');
 
-      require.ensure([], () => {
-        const socialAuth = require('./social-auth.js');
-        const hello = require('hellojs');
-
-        hello('linkedin').login({
-          scope: 'r_basicprofile,r_emailaddress',
-        }).then((e) => {
-            let sendTokenR = socialAuth.sendToken('linkedin', e.authResponse.access_token);
-            $.when(sendTokenR).done(function (data) {
-              localStorage.setItem('token', data.key);
-              window.location = '/account/profile';
-            });
-          }, (e) => {
-            // TODO: notificate user about reason of error;
-            app.routers.navigate('/account/login', {trigger: true, replace: true});
-          }
-        );
-      });
-    },
-
-    loginGoogle() {
-      require.ensure([], () => {
-        const socialAuth = require('./social-auth.js');
-        const hello = require('hellojs');
-
-        hello('google').login({
-          scope: 'profile,email',
-        }).then((e) => {
-          let sendTokenR = socialAuth.sendToken('google', e.authResponse.access_token);
-          $.when(sendTokenR).done((data) => {
+      hello('linkedin').login({
+        scope: 'r_basicprofile,r_emailaddress',
+      }).then((e) => {
+          let sendTokenR = socialAuth.sendToken('linkedin', e.authResponse.access_token);
+          $.when(sendTokenR).done(function (data) {
             localStorage.setItem('token', data.key);
             window.location = '/account/profile';
           });
         }, (e) => {
           // TODO: notificate user about reason of error;
-          app.routers.navigate('/account/login', {trigger: true, replace: true});
+          app.routers.navigate('/account/login', { trigger: true, replace: true });
+        }
+      );
+    },
+
+    loginGoogle() {
+      const socialAuth = require('./social-auth.js');
+      const hello = require('hellojs');
+
+      hello('google').login({
+        scope: 'profile,email',
+      }).then((e) => {
+        let sendTokenR = socialAuth.sendToken('google', e.authResponse.access_token);
+        $.when(sendTokenR).done((data) => {
+          localStorage.setItem('token', data.key);
+          window.location = '/account/profile';
         });
+      }, (e) => {
+        // TODO: notificate user about reason of error;
+        app.routers.navigate('/account/login', { trigger: true, replace: true });
       });
     },
 
@@ -151,6 +139,7 @@ module.exports = {
     },
 
     membershipConfirmation(formcId, code) {
+      //TODO: potential candidate for app.user.passwordChanged
       if (localStorage.getItem('token') !== null) {
         localStorage.removeItem('token', '');
         localStorage.removeItem('user');

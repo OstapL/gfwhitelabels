@@ -170,5 +170,18 @@ module.exports = {
         });
       });
     },
+
   },
+  auth: [
+    'accountProfile',
+    'changePassword',
+    'setNewPassword',
+    'investorDashboard',
+    'companyDashboard',
+    'afterPaymentDashboard',
+    'afterCompleteDashboard',
+    'afterFinalDashboard',
+    'afterSubmittingGovermentDashboard',
+    'issuerDashboard',
+  ],
 };

@@ -1,3 +1,4 @@
+//TODO: rmove view into methods
 const View = require('components/formc/views.js');
 const formcHelpers = require('./helpers.js');
 
@@ -64,18 +65,6 @@ function getOCCF(optionsR, viewName, params = {}) {
     }
   });
 };
-
-//TODO: move this to main router
-// execute: function (callback, args, name) {
-//   //ga('send', 'pageview', "/" + Backbone.history.getPath());
-//   if (!app.user.ensureLoggedIn(window.location.pathname))
-//     return false;
-//
-//   if (callback)
-//     callback.apply(this, args);
-//   else
-//     alert('Not such url');
-// },
 
 module.exports = {
   routes: {

@@ -1,55 +1,76 @@
-const payBackShareCalculator = require('components/payBackShareCalculator/route');
-const capitalRaiseCalculator = require('components/capitalRaiseCalculator/route');
-const whatMyBusinessWorthCalc = require('components/whatMyBusinessWorthCalculator/route');
-const campaignRoute = require('components/campaign/route');
-const pageRoute = require('components/pg/route');
-const raiseFunds = require('components/raiseFunds/route');
-const anonymousAccount = require('components/anonymousAccount/route');
-const accountProfile = require('components/accountProfile/route');
-const establishedBusinessCalc = require('components/establishedBusinessCalculator/route');
-const formc = require('components/formc/route');
-const blog = require('components/blog/route');
+const componentRoutes = [
+  require('components/payBackShareCalculator/route'),
+  require('components/capitalRaiseCalculator/route'),
+  require('components/whatMyBusinessWorthCalculator/route'),
+  require('components/campaign/route'),
+  require('components/pg/route'),
+  require('components/raiseFunds/route'),
+  require('components/anonymousAccount/route'),
+  require('components/accountProfile/route'),
+  require('components/establishedBusinessCalculator/route'),
+  require('components/formc/route'),
+  require('components/blog/route'),
+];
 
+const routesMap = _.reduce(componentRoutes, (dest, route) => {
+  dest.routes = _.extend(dest.routes, route.routes);
+  dest.methods = _.extend(dest.methods, route.methods);
+  if (Array.isArray(route.auth)) {
+    dest.auth = dest.auth.concat(route.auth);
+  } else if (route.auth === '*') {
+    dest.auth = dest.auth.concat(Object.keys(route.methods));
+  }
+
+  return dest;
+}, { routes: {}, methods: {}, auth: [] });
+
+//TODO: move into app.js
 const errorPageHelper = require('helpers/errorPageHelper.js');
 
-// Backbone.Router.execute = function (callback, args, name) {
-//   if (name == '/company/create' && !app.user.ensureLoggedIn(name))
-//     return false;
-//
-//   if (callback) callback.apply(this, args);
-// };
+const runGoogleAnalytics = (id) => {
+  (function (w, d, s, l, i) {
+    w[l] = w[l] || [];
+    w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+    var f = d.getElementsByTagName(s)[0];
+    var j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+    j.async = true;
+    j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+    f.parentNode.insertBefore(j, f);
+  })(window, document, 'script', 'dataLayer', id);
+};
 
-const AppRoutes = Backbone.Router.extend(_.extend({
-  routes: _.extend({}, accountProfile.routes, anonymousAccount.routes,
-    establishedBusinessCalc.routes, capitalRaiseCalculator.routes, campaignRoute.routes,
-    formc.routes, whatMyBusinessWorthCalc.routes, raiseFunds.routes, pageRoute.routes, blog.routes,
-    {
-      '*notFound': () => {
-        errorPageHelper({ status: 404 });
-        app.hideLoading();
-      },
-    }),
+const emitGoogleAnalyticsEvent = () => {
+  //TODO: this will be fixed when we fix facebook/googleTagManager scripts
+  // if (!window.fbq) {
+  //   console.error('Google analytics service is not running');
+  //   return;
+  // }
+  // fbq('track', 'ViewContent');
+  // ga('send', 'pageview', '/' + Backbone.history.getPath());
+};
+
+const notFound = () => {
+  errorPageHelper({ status: 404 });
+  app.hideLoading();
+};
+
+const Router = Backbone.Router.extend(_.extend({
+  routes: _.extend({}, routesMap.routes, { '*notFound': notFound }),
 
   initialize() {
-    console.log('initialize');
+    runGoogleAnalytics(googleAnalyticsId);
   },
 
   execute(callback, args, name) {
-    debugger;
-    // alert('router: ' + name);
-    console.debug('/src/routers.js');
-    if (callback) callback.apply(this, args);
+    emitGoogleAnalyticsEvent();
 
-    //TODO: implement///!!!!!
-    // const slashAtTheEnd = /\/$/;
-    // const isSlashAtTheEnd = slashAtTheEnd.test(Backbone.history.fragment);
-    //
-    // if (isSlashAtTheEnd) {
-    //   let fragment = Backbone.history.fragment.replace(slashAtTheEnd, '');
-    //   this.navigate(fragment, {trigger: true, replace: true});
-    // } else if (callback) {
-    //   callback.apply(this, args)
-    // };
+    if (_.contains(routesMap.auth, name) && !app.user.ensureLoggedIn())
+      return false;
+
+    if (callback)
+      callback.apply(this, args);
+    else
+      console.error(`Route handler '${name}' not found.`);
   },
 
   back: function (e) {
@@ -62,14 +83,12 @@ const AppRoutes = Backbone.Router.extend(_.extend({
     $('.popover').popover('hide');
   },
 
-}, accountProfile.methods, anonymousAccount.methods, establishedBusinessCalc.methods,
-    capitalRaiseCalculator.methods, campaignRoute.methods, formc.methods,
-    whatMyBusinessWorthCalc.methods, raiseFunds.methods, pageRoute.methods, blog.methods));
+}, routesMap.methods));
 
 //TODO: why this code is here
 app.on('userLoaded', function (data) {
 
-  app.routers = new AppRoutes();
+  app.routers = new Router();
   app.user.url = serverUrl + Urls['rest_user_details']();
   Backbone.history.start({ pushState: true });
 
@@ -103,8 +122,7 @@ $(document).ready(function () {
     let $bottomLogo = $('#fade_in_logo');
     let offsetTopBottomLogo = $bottomLogo.offset().top;
 
-    if (($(window).scrollTop() + $(window).height() >= offsetTopBottomLogo) &&
-      !$bottomLogo.hasClass('fade-in')) {
+    if (($(window).scrollTop() + $(window).height() >= offsetTopBottomLogo) && !$bottomLogo.hasClass('fade-in')) {
       $bottomLogo.addClass('fade-in');
     }
   });

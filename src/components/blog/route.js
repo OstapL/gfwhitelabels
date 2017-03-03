@@ -1,4 +1,4 @@
-//TODO: move this into methods?
+//TODO: move this into methods for webpack optimization
 const View = require('components/blog/views.js');
 
 module.exports = {
@@ -37,11 +37,5 @@ module.exports = {
       });
     },
   },
-
-  // execute: function (callback, args, name) {
-  //   if (!app.user.ensureLoggedIn(window.location.pathname) && name == 'createEdit')
-  //     return false;
-  //
-  //   if (callback) callback.apply(this, args);
-  // },
+  auth: ['createEdit'],
 };

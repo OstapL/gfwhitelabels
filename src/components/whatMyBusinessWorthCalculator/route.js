@@ -1,12 +1,3 @@
-//TODO: move this to common router
-// execute: function (callback, args, name) {
-//       if ((name=='calculatorWhatMyBusinessWorthIntro'
-// || name=='selectYourBusiness')  && !app.user.ensureLoggedIn(window.location.pathname)) {
-//     return false;
-//       };
-//       if (callback) callback.apply(this, args)
-//   },
-
 module.exports = {
   routes: {
     'calculator/selectYourBusiness': 'selectYourBusiness',
@@ -97,4 +88,5 @@ module.exports = {
       app.hideLoading();
     },
   },
+  auth: ['calculatorWhatMyBusinessWorthIntro', 'selectYourBusiness'],
 };

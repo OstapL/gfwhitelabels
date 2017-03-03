@@ -1,12 +1,5 @@
+//TODO: move helpers to app.js
 const helpers = require('./helpers.js');
-
-//TODO: move this to common method in main router
-// execute: function (callback, args, name) {
-//   if (callback)
-//     callback.apply(this, args);
-//   else
-//     alert('Not such url');
-// },
 
 module.exports = {
   routes: {

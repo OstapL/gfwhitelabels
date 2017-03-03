@@ -1,13 +1,7 @@
+//TODO: move view into methods
+// move helper into app.js
 const View = require('components/raiseFunds/views.js');
 const raiseHelper = require('./helpers.js');
-//TODO: move this to main router
-// execute: function (callback, args, name) {
-//   //ga('send', 'pageview', "/" + Backbone.history.getPath());
-//   if (!app.user.ensureLoggedIn(window.location.pathname))
-//     return false;
-//
-//   if (callback) callback.apply(this, args);
-// },
 
 function getOCCF(optionsR, viewName, params = {}) {
   $('#content').scrollTo();
@@ -174,4 +168,5 @@ module.exports = {
       getOCCF('', fn);
     },
   },
+  auth: '*',
 };
