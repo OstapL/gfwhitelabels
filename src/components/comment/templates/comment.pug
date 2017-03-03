@@ -6,6 +6,7 @@
     ? 'col-lg-10 offset-lg-1'
     : 'col-lg-' + (12 - level) + ' offset-lg-' + level + ' col-xs-12 offset-xs-0';
   cssClass += ' pt30 comment ';
+  cssClass += 'comment' + (level ? '-' + level : '')
   var avatar = app.getUrl(comment.user.image_data) || '/img/default/Default_photo.png';
 
   var userName = comment.user.first_name + ' ' + comment.user.last_name;
@@ -16,52 +17,51 @@
   var passedTime = helpers.date.fromNow(comment.created_date);
 
 div(id=id class=cssClass data-level=level data-id=comment.uid).p-r-0.p-t-0.p-xs-0.p-l-0
-  .border-bottom.m-t-1.m-b-1
-  .col-xl-1.col-xs-2.text-xs-center.p-l-0.p-r-0
-    img(src=avatar alt="").img-circle
-  .col-xl-11.col-xs-10
-    .comments-wrap.col-lg-12.p-r-0.p-xs-0
-      span.name-comments.text-uppercase #{ userName }
-      -
-        //ignore Director/Shareholder role
-        // var roleBitmap = 0b1111111100 & comment.user.role;
-        var roleBitmap = comment.user.role;
-        //roleBitmap = roleBitmap || comment.user.role;
-        var roles = roleHelper.extractRolesByPriority(roleBitmap);
-
-      each role in roles
-        span.kvalificatio-comments #{ role.title }
-      else
-        if comment.related
-          span.kvalificatio-comments #{ comment.related }
-
-      span.date-comments.pull-right.hidden-xs-down #{ passedTime }
-      p !{ comment.message.replace(/\n/g, '<br />') }
-      div.responce.comment-actions
-        if level <= 2
-          li.icon-comment
-            i.fa.fa-comment-o.p-r-5
-            a(href="#").link-1.link-response-count
-              span.count #{ comment.children.length }
-              i.fa.fa-angle-up
-          li.reply
-            span.reply-left |
-            a(href="#").link-1.link-reply Reply
-            span.reply-right |
-        //li
-          a(href="#").link-1.link-like
-            i.fa.fa-heart
-      //
-        li.pull-lg-right
-          a(href="#").link1.link-edit
-            i.fa.fa-pencil-square-o.p-r-5
-          | Edit
-        li.pull-right
-          span.p-5 |
-        li.pull-right
-          a(href="#").link1.link-delete
-            i.fa.fa-times.p-r-5
-          | Delete
+  col-xs-12
+    .one-comment
+      img(src=avatar alt="").img-circle
+      .wrap-title-comment
+        h4.name-comments.text-uppercase #{ userName }
+          -
+            //ignore Director/Shareholder role
+            // var roleBitmap = 0b1111111100 & comment.user.role;
+            var roleBitmap = comment.user.role;
+            //roleBitmap = roleBitmap || comment.user.role;
+            var roles = roleHelper.extractRolesByPriority(roleBitmap);
+          each role in roles
+            span.kvalificatio-comments #{ role.title }
+          else
+            if comment.related
+              span.kvalificatio-comments #{ comment.related }
+        p.date-comments.pull-left.hidden-xs-down #{ passedTime }
+    
+      .comments-wrap
+        p !{ comment.message.replace(/\n/g, '<br />') }
+        div.responce.comment-actions
+          if level <= 2
+            li.icon-comment
+              i.fa.fa-comment-o.p-r-5
+              a(href="#").link-1.link-response-count
+                span.count #{ comment.children.length }
+                i.fa.fa-angle-up
+            li.reply
+              span.reply-left |
+              a(href="#").link-1.link-reply Reply
+              span.reply-right |
+          //li
+            a(href="#").link-1.link-like
+              i.fa.fa-heart
+        //
+          li.pull-lg-right
+            a(href="#").link1.link-edit
+              i.fa.fa-pencil-square-o.p-r-5
+            | Edit
+          li.pull-right
+            span.p-5 |
+          li.pull-right
+            a(href="#").link1.link-delete
+              i.fa.fa-times.p-r-5
+            | Delete
 
 
   if comment.children && comment.children.length
