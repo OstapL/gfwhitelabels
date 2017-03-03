@@ -68,4 +68,9 @@
             i.fa.fa-linkedin
           a(href="https://twitter.com/growthfountain" target="_blank").link-1.d-inline-block
             i.fa.fa-twitter
+        .footer-social.footer-email-subscribe.pull-sm-right
+          -
+            var subscribeDirective = require('directives/subscribe/index.js');
+            pug_html += subscribeDirective.render();
+
 
