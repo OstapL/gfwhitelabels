@@ -54,11 +54,11 @@ Backbone.sync = function (method, model, options) {
   return oldSync(method, model, options);
 };
 
-Backbone.View.prototype.assignLabels = function() {
+Backbone.View.prototype.assignLabels = function () {
   _(this.fields).each((el, key) => {
-    if(el.type == 'nested') {
+    if (el.type == 'nested') {
       _(el.schema).each((subel, subkey) => {
-        if(this.labels[key])
+        if (this.labels[key])
           subel.label = this.labels[key][subkey];
       });
     } else {
@@ -67,8 +67,8 @@ Backbone.View.prototype.assignLabels = function() {
   });
 };
 
-Backbone.View.prototype.checkForm = function() {
-  if(app.getParams().check == '1') {
+Backbone.View.prototype.checkForm = function () {
+  if (app.getParams().check == '1') {
     if (!validation.validate(this.fields, this.model, this)) {
       _(validation.errors).each((errors, key) => {
         validation.invalidMsg(this, key, errors);
@@ -110,25 +110,25 @@ let app = {
   getParams() {
     // gets url parameters and builds an object
     return _.chain(location.search.slice(1).split('&'))
-      .map(function (item) {
-        if (item) {
-          let arr = item.split('=');
-          arr[1] = decodeURIComponent(arr[1]);
-          return arr;
-        }
-      })
-      .compact()
-      .object()
-      .value();
+    .map(function (item) {
+      if (item) {
+        let arr = item.split('=');
+        arr[1] = decodeURIComponent(arr[1]);
+        return arr;
+      }
+    })
+    .compact()
+    .object()
+    .value();
   },
 
   valByKey(obj, keyString) {
-    if(keyString.indexOf('.') == -1) {
+    if (keyString.indexOf('.') == -1) {
       return values[keyString];
     } else {
       try {
-        return keyString.split('.').reduce(function(o, i, currentIndex, array) {
-          if(i.indexOf('[') != -1) {
+        return keyString.split('.').reduce(function (o, i, currentIndex, array) {
+          if (i.indexOf('[') != -1) {
             i = i.split('[');
             let k = i[0];
             i = i[1].replace(']', '');
@@ -136,40 +136,42 @@ let app = {
           }
           return o[i];
         }, obj);
-      } catch(e) { 
-        console.debug('no name ' + keyString); return ''; 
+      } catch (e) {
+        console.debug('no name ' + keyString);
+        return '';
       }
     }
   },
 
   setValByKey(obj, keyString, val) {
-    if(keyString.indexOf('.') == -1) {
+    if (keyString.indexOf('.') == -1) {
       return values[keyString];
     } else {
       try {
-        return keyString.split('.').reduce(function(o, i, currentIndex, arr) {
-          if(i.indexOf('[') != -1) {
+        return keyString.split('.').reduce(function (o, i, currentIndex, arr) {
+          if (i.indexOf('[') != -1) {
             i = i.split('[');
             let k = i[0];
             i = i[1].replace(']', '');
-            if(currentIndex == arr.length - 1) {
+            if (currentIndex == arr.length - 1) {
               o[k][i] = val;
             }
             return o[k][i];
           }
-          if(currentIndex == arr.length - 1) {
+          if (currentIndex == arr.length - 1) {
             o[i] = val;
           }
           return o[i];
         }, obj);
-      } catch(e) { 
-        console.debug('no name ' + keyString); return ''; 
+      } catch (e) {
+        console.debug('no name ' + keyString);
+        return '';
       }
     }
   },
 
   valByKeyReplaceArray(obj, keyString) {
-    if(keyString.indexOf('[') !== -1) {
+    if (keyString.indexOf('[') !== -1) {
       keyString = keyString.replace(/\[\d+\]/, '.schema');
       keyString = keyString.replace(/\[\d+\]/g, '');
     }
@@ -181,9 +183,9 @@ let app = {
     if (Array.isArray(metaData.choices))//it looks like this is old approach
       return (metaData.labels)
         ? metaData.labels[metaData.choices.indexOf(currentValue.toString())]
-           || metaData.labels[metaData.choices.indexOf(parseFloat(currentValue))]
+        || metaData.labels[metaData.choices.indexOf(parseFloat(currentValue))]
         : metaData.choices.indexOf(currentValue.toString())
-          || metaData.choices.indexOf(parseFloat(currentValue));
+        || metaData.choices.indexOf(parseFloat(currentValue));
 
     //this is new approach
     return metaData.choices[currentValue] || currentValue;
@@ -225,19 +227,11 @@ let app = {
     return '//www.youtube.com/embed/?rel=0';
   },
 
-  getThumbnail: function(size, thumbnails, _default) {
-    let thumb = thumbnails.find(function(el) {
-      return el.size == size
+  getThumbnail: function (size, thumbnails, _default) {
+    let thumb = thumbnails.find(function (el) {
+      return el.size == size;
     });
     return (thumb ? thumb.url : _default || '/img/default/default.png')
-  },
-
-  runGoogleAnalytics(id) {
-    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer', id);
   },
 
   getUrl(data) {
@@ -259,15 +253,14 @@ let app = {
     return bucketServer + '/' + file;
   },
 
-  breadcrumbs (title, subtitle, data) {
+  breadcrumbs(title, subtitle, data) {
     const template = require('templates/breadcrumbs.pug');
     return template({
       title: title,
       subtitle: subtitle,
-      data: data
+      data: data,
     });
   },
-
 };
 
 // Что-то пахнет говнецом
@@ -277,8 +270,10 @@ global.api = require('helpers/forms.js');
 _.extend(app, api);
 global.app = app;
 
+const Router = require('./routers.js');
+
 // app routers
-app.routers = require('routers');
+app.routers = require('routers');//TODO: refactor
 app.fields = require('fields');
 
 // app.user = new userModel();
@@ -286,9 +281,7 @@ app.user = new User();
 app.user.load();
 app.trigger('userReady');
 
-app.runGoogleAnalytics(global.googleAnalyticsId);
-
-
+//TODO: do we need this template and popover logic?
 const popoverTemplate = '<div class="popover  divPopover"  role="tooltip"><span class="popover-arrow"></span> <h3 class="popover-title"></h3> <span class="icon-popover"><i class="fa fa-info-circle" aria-hidden="true"></i></span> <span class="popover-content"> XXX </span></div>';
 
 $('body').on('mouseover', 'div.showPopover', function () {
@@ -305,7 +298,7 @@ $('body').on('mouseover', 'div.showPopover', function () {
 });
 
 $('body').on('mouseout', 'div.showPopover', function () {
-    //$(this).popover('hide');
+  //$(this).popover('hide');
 });
 
 $('body').on('focus', 'input.showPopover', function () {
@@ -352,15 +345,14 @@ $(window).scroll(function () {
   var $bottomLogo = $('#fade_in_logo');
   var offsetTopBottomLogo = $bottomLogo.offset().top;
 
-  if (($(window).scrollTop() + $(window).height() >= offsetTopBottomLogo) &&
-    !$bottomLogo.hasClass('fade-in')) {
+  if (($(window).scrollTop() + $(window).height() >= offsetTopBottomLogo) && !$bottomLogo.hasClass('fade-in')) {
     $bottomLogo.addClass('fade-in');
   }
 });
 
 
 // Money field auto correction
-$('body').on('keyup', '[type="money"]', function(e) {
+$('body').on('keyup', '[type="money"]', function (e) {
   var valStr = e.target.value.replace(/[\$\,]/g, '');
   var val = parseInt(valStr);
   if (val) {
@@ -368,7 +360,7 @@ $('body').on('keyup', '[type="money"]', function(e) {
   }
 });
 
-$('body').on('focus', '[type="money"]', function(e) {
+$('body').on('focus', '[type="money"]', function (e) {
   var valStr = e.target.value.replace(/[\$\,]/g, '');
   var val = parseInt(valStr);
   if (val == 0 || val == NaN) {
@@ -376,7 +368,7 @@ $('body').on('focus', '[type="money"]', function(e) {
   }
 });
 
-$('body').on('blur', '[type="money"]', function(e) {
+$('body').on('blur', '[type="money"]', function (e) {
   var valStr = e.target.value.replace(/[\$\,]/g, '');
   if (e.target.value == '') {
     e.target.value = '$0';
@@ -480,18 +472,16 @@ $('body').on('click', 'a', (event) => {
 
   if (app.cache.hasOwnProperty(url) == false) {
     app.routers.navigate(
-      url, { trigger: true, replace: false }
+      url, {trigger: true, replace: false}
     );
     app.trigger('userReady');
     app.trigger('menuReady');
   } else {
     $('#content').html(app.cache[url]);
     app.routers.navigate(
-      url, { trigger: false, replace: false }
+      url, {trigger: false, replace: false}
     );
     app.trigger('userReady');
     app.trigger('menuReady');
   }
-  app.runGoogleAnalytics(global.googleAnalyticsId);
-
 });
