@@ -97,7 +97,11 @@ module.exports = {
       method = e.target.dataset.method || 'PATCH';
     }
 
-    newData = newData || $(e.target).closest('form').serializeJSON({ useIntKeysAsArrayIndex: true });
+    newData = newData || $(e.target).closest('form').serializeJSON({
+      useIntKeysAsArrayIndex: true,
+      parseNulls: true,
+      parseNumbers: true
+    });
     api.deleteEmptyNested.call(this, this.fields, newData);
     api.fixDateFields.call(this, this.fields, newData);
     api.fixMoneyFields.call(this, this.fields, newData);

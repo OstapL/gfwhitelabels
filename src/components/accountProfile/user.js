@@ -145,7 +145,7 @@ class User {
 
   getCompanyR(id, requestMethod='GET') {
     if(id) 
-      return this.company ? '' : app.makeCacheRequest(raiseCapitalServer + '/company/' + id + '/edit', requestMethod);
+      return this.company ? '' : app.makeCacheRequest(raiseCapitalServer + '/company/' + id, requestMethod);
     else
       return this.company ? '' : app.makeCacheRequest(authServer + '/user/company', requestMethod);
   }
@@ -156,7 +156,7 @@ class User {
 
   getCampaignR(id, requestMethod='GET') {
     if(id) 
-      return this.campaign ? '' : app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/edit', requestMethod);
+      return this.campaign ? '' : app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id, requestMethod);
     else
       return this.campaign ? '' : app.makeCacheRequest(authServer + '/user/campaign', requestMethod);
   }

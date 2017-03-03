@@ -65,7 +65,7 @@ module.exports = {
       };
       this.assignLabels();
       if(this.model.hasOwnProperty('id')) {
-        this.urlRoot += '/:id/edit';
+        this.urlRoot += '/:id';
       }
     },
 
@@ -150,7 +150,7 @@ module.exports = {
   })),
 
   generalInformation: Backbone.View.extend(_.extend({
-    urlRoot: raiseCapitalServer + '/campaign/:id/general_information',
+    urlRoot: raiseCapitalServer + '/campaign/:id',
     template: require('./templates/generalInformation.pug'),
     events: _.extend({
         'click #submitForm': api.submitAction,
@@ -225,7 +225,7 @@ module.exports = {
 
   media: Backbone.View.extend(_.extend({
     template: require('./templates/media.pug'),
-    urlRoot: raiseCapitalServer + '/campaign/:id/media',
+    urlRoot: raiseCapitalServer + '/campaign/:id',
 
     events: _.extend({
         'click #submitForm': api.submitAction,
@@ -546,7 +546,7 @@ module.exports = {
   }, menuHelper.methods)),
 
   specifics: Backbone.View.extend(_.extend({
-      urlRoot: raiseCapitalServer + '/campaign/:id/specifics',
+      urlRoot: raiseCapitalServer + '/campaign/:id',
       events: _.extend({
         'click #submitForm': api.submitAction,
         'change input[name="security_type"]': 'updateSecurityType',
@@ -712,7 +712,7 @@ module.exports = {
   }, leavingConfirmationHelper.methods, menuHelper.methods, dropzoneHelpers.methods, addSectionHelper.methods)),
 
   perks: Backbone.View.extend(_.extend({
-    urlRoot: raiseCapitalServer + '/campaign/:id/perks',
+    urlRoot: raiseCapitalServer + '/campaign/:id',
     events: _.extend({
         'click #submitForm': api.submitAction,
         'click .onPreview': raiseHelpers.onPreviewAction,

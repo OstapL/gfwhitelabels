@@ -5,7 +5,7 @@ function getOCCF(optionsR, viewName, params = {}) {
 
   $('#content').scrollTo();
   params.el = '#content';
-/*
+
   $.when(
       app.user.getFormcR(params.id),
   ).then((formcFields, formc) => {
@@ -44,7 +44,7 @@ function getOCCF(optionsR, viewName, params = {}) {
 
     });
   })
-*/
+/*
   $.when(optionsR, app.user.getCompanyR(), app.user.getCampaignR(), app.user.getFormcR())
     .done((options, company, campaign, formc) => {
 
@@ -81,6 +81,7 @@ function getOCCF(optionsR, viewName, params = {}) {
     }).fail(function(xhr, response, error) {
       api.errorAction.call(this, $('#content'), xhr, response, error);
     });
+    */
 };
 
 module.exports = Backbone.Router.extend({
