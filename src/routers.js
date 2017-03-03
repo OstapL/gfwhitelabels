@@ -9,7 +9,7 @@ const componentRoutes = [
   require('components/accountProfile/route'),
   require('components/establishedBusinessCalculator/route'),
   require('components/formc/route'),
-  require('components/blog/route'),
+  // require('components/blog/route'),
 ];
 
 const routesMap = _.reduce(componentRoutes, (dest, route) => {
