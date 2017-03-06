@@ -38,7 +38,7 @@ class FileElement {
     setTimeout(() => {
       // Fix
       // this.element = $(this.resultHTML)[0];
-      this.element = document.querySelector('#' + this.fieldName + ' .fileContainer');
+      this.element = document.querySelector('.' + this.fieldName + ' .fileContainer');
       this.attacheEvents();
     }, 600);
 
