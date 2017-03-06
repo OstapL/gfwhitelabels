@@ -1,5 +1,6 @@
 const View = require('components/raiseFunds/views.js');
 const raiseHelper = require('./helpers.js');
+const STATUSES = require('consts/raisecapital/companyStatuses.json').STATUS;
 
 function getOCCF(optionsR, viewName, params = {}) {
 
@@ -7,43 +8,40 @@ function getOCCF(optionsR, viewName, params = {}) {
   params.el = '#content';
 
   $.when(
-      app.user.getFormcR(params.id),
-  ).then((formcFields, formc) => {
-    if(formc[0]) {
-      app.user.formc = formc[0];
+      app.user.getFormcR(),
+  ).then((formc) => {
+    if(formc) {
+      app.user.formc = formc;
     }
 
     $.when(
-      api.makeCacheRequest(raiseCapitalServer + '/company/' + app.user.formc.company_id + '/edit', 'OPTIONS'),
-      api.makeCacheRequest(raiseCapitalServer + '/campaign/' + app.user.formc.company_id + '/edit', 'OPTIONS'),
-      app.user.getCompanyR(app.user.formc.company_id, 'GET'),
-      app.user.getCampaignR(app.user.formc.campaign_id, 'GET'),
+      api.makeCacheRequest(raiseCapitalServer + '/company', 'OPTIONS'),
+      api.makeCacheRequest(raiseCapitalServer + '/campaign', 'OPTIONS'),
+      api.makeCacheRequest(raiseCapitalServer + '/company/' + app.user.formc.company_id, 'GET'),
+      api.makeCacheRequest(raiseCapitalServer + '/campaign/' + app.user.formc.campaign_id, 'GET'),
     ).done((companyFields, campaignFields,  company, campaign) => {
     
-      const fields = {
+      params.fields = {
         company: companyFields[0].fields,
         campaign: campaignFields[0].fields,
-        formc: formcFields[0].fields,
       };
 
       if(company[0]) app.user.company = company[0];
       if(campaign[0]) app.user.campaign = campaign[0];
 
-      var model = app.user.company;
-      model.campaign = app.user.campaign;
-      model.formc = app.user.formc;
-      
-      const finalReviewView = new View.finalReview({
-        el: '#content',
-        fields: fields,
-        model: model,
-        formcId: id,
-      });
-      finalReviewView.render();
-      app.hideLoading();
+      params.company = app.user.company;
+      params.campaign = app.user.campaign;
+      params.formc = app.user.formc;
+
+      if(typeof viewName == 'string') {
+        new View[viewName](Object.assign({}, params)).render();
+        app.hideLoading();
+      } else {
+        viewName();
+      }
 
     });
-  })
+  });
 /*
   $.when(optionsR, app.user.getCompanyR(), app.user.getCampaignR(), app.user.getFormcR())
     .done((options, company, campaign, formc) => {
@@ -150,12 +148,12 @@ module.exports = Backbone.Router.extend({
     let fn = function() {
       $('body').scrollTo();
       app.hideLoading();
-      if(app.user.company.is_approved == 1) {
+      if(app.user.company.is_approved == STATUSES.PENDING) {
         const i = new View.inReview({
           model: app.user.company,
         });
         i.render();
-      } else if(app.user.company.is_approved == 5) {
+      } else if(app.user.company.is_approved == STATUSES.APPROVED) {
         app.routers.navigate(
           '/formc/' + app.user.formc.id + '/introduction',
           { trigger: true, replace: false }

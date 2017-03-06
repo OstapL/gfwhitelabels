@@ -155,7 +155,7 @@ module.exports = Backbone.Router.extend({
 
       // noi=1 means that server should return number_of_investrs for company
       $.when(
-        app.makeCacheRequest(raiseCapitalServer + '/company/' + app.user.formc.company_id + '/edit?noi=1', 'GET'),
+        app.makeCacheRequest(raiseCapitalServer + '/company/' + app.user.formc.company_id + '?noi=1', 'GET'),
         app.user.getCampaignR(app.user.formc.campaign_id, 'GET'),
       ).done((company, campaign) => {
       

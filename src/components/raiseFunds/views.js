@@ -34,7 +34,7 @@ module.exports = {
     },
 
     initialize(options) {
-      this.fields = options.fields;
+      this.fields = options.fields.company;
       this.formc = options.formc || {};
       this.campaign = options.campaign || {};
       this.model = options.company || {};
@@ -178,7 +178,7 @@ module.exports = {
     },
 
     initialize(options) {
-      this.fields = options.fields;
+      this.fields = options.fields.campaign;
       this.model = options.campaign;
       this.formc = options.formc;
       this.labels = {
@@ -224,8 +224,8 @@ module.exports = {
   }, leavingConfirmationHelper.methods, menuHelper.methods, addSectionHelper.methods)),
 
   media: Backbone.View.extend(_.extend({
-    template: require('./templates/media.pug'),
     urlRoot: raiseCapitalServer + '/campaign/:id',
+    template: require('./templates/media.pug'),
 
     events: _.extend({
         'click #submitForm': api.submitAction,
@@ -265,7 +265,7 @@ module.exports = {
       this.model = options.campaign;
       this.urlRoot = this.urlRoot.replace(':id', this.model.id);
       this.formc = options.formc;
-      this.fields = options.fields;
+      this.fields = options.fields.campaign;
 
       this.fields.header_image_image_id = _.extend(this.fields.header_image_image_id, {
         crop: {
@@ -404,7 +404,7 @@ module.exports = {
     },
 
     initialize(options) {
-      this.fields = options.fields;
+      this.fields = options.fields.campaign;
       this.fields.photo_image_id = _.extend(this.fields.photo_image_id, {
         crop: {
           control:  {
@@ -495,7 +495,7 @@ module.exports = {
     },
 
     initialize(options) {
-      this.fields = options.fields;
+      this.fields = options.fields.campaign;
       this.formc = options.formc;
       this.model = options.campaign;
 
@@ -569,7 +569,7 @@ module.exports = {
       },
 
       initialize(options) {
-        this.fields = options.fields;
+        this.fields = options.fields.campaign;
         this.formc = options.formc;
         this.model = options.campaign;
         this.company = options.company;
@@ -729,7 +729,7 @@ module.exports = {
     },
 
     initialize(options) {
-      this.fields = options.fields;
+      this.fields = options.fields.campaign;
       this.formc = options.formc;
       this.model = options.campaign;
       this.labels = {

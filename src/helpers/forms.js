@@ -98,13 +98,21 @@ module.exports = {
     }
 
     newData = newData || $(e.target).closest('form').serializeJSON({
+      customTypes: {
+        money: function(val) { 
+          return formatHelper.unformatPrice(val);
+        },
+        url: function(val) {
+          return String(val);
+        },
+      },
       useIntKeysAsArrayIndex: true,
       parseNulls: true,
       parseNumbers: true
     });
     api.deleteEmptyNested.call(this, this.fields, newData);
     api.fixDateFields.call(this, this.fields, newData);
-    api.fixMoneyFields.call(this, this.fields, newData);
+    // api.fixFieldTypes.call(this, this.fields, newData);
 
     // if view already have some data - extend that info
     if(this.hasOwnProperty('model') && !this.doNotExtendModel && method != 'PATCH') {
@@ -314,9 +322,13 @@ module.exports = {
     });
   },
 
-  fixMoneyFields(fields, data) {
+  fixFieldsTypes(fields, data) {
     _(fields).each((el, key) => {
-      if(el.type == 'money') {
+      if(el.type == 'string') {
+        if (data && data[key]) {
+          data[key] = formatHelper.unformatPrice(data[key]);
+        }
+      } else if(el.type == 'money') {
         if (data && data[key]) {
           data[key] = formatHelper.unformatPrice(data[key]);
         }
