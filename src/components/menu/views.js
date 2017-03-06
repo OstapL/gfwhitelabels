@@ -1,4 +1,6 @@
 const Notifications = require('./notifications');
+const notifications_channel = 'general';
+const HIDE_TIMEOUT = 500;
 
 module.exports = {
   menu: Backbone.View.extend({
@@ -57,12 +59,20 @@ module.exports = {
 
   notification: Backbone.View.extend({
     template: require('./templates/userNotifications.pug'),
+
     events: {
-      'click .server-message': 'markAsRead',
-      'click .view-all': 'markAllAsRead',
+      'click .notification.notification-bell': 'showNotifications',
+      'mouseover .notification-bell': 'showNotifications',
+      'mouseover .notification-container': 'showNotifications',
+      'mouseout .user-notifications-list': 'hideNotifications',
+      'mouseout .notification-bell': 'hideNotifications',
+      'mouseover .notification-item': 'markAsRead',
     },
 
     initialize(options) {
+      if (app.user.is_anonymous())
+        return;
+
       this.model = {
         data: [],
       };
@@ -72,6 +82,8 @@ module.exports = {
       };
 
       this.initNotifications();
+
+      this._hideTimeout = null;
     },
 
     render: function () {
@@ -88,10 +100,39 @@ module.exports = {
         })
       );
 
-      this.$notifications = $('.notification-container ul.notifications');
-      this.$notificationsCount = $('.count-notific');
+      this.$notificationContainer = this.$('.notification-bell');
+      this.$notificationList = this.$('.notification-container ul.notifications');
+      this.$notificationsTextHeader = this.$('.notification-text-header');
+      this.$notificationsCount = this.$('.count-notific');
 
       return this;
+    },
+
+    showNotifications(e) {
+      this._clearTimeout();
+
+      if (this.$notificationContainer.hasClass('notification-active'))
+        return;
+
+      this.$notificationContainer.addClass('notification-active');
+    },
+
+    _clearTimeout() {
+      if (this._hideTimeout) {
+        clearTimeout(this._hideTimeout);
+        this._hideTimeout = null;
+      }
+    },
+
+    hideNotifications(e) {
+      if (this._hideTimeout)
+        return;
+
+      this._hideTimeout = setTimeout(() => {
+        console.log('hide notifications')
+        if (this.$notificationContainer.hasClass('notification-active'))
+          this.$notificationContainer.removeClass('notification-active');
+      }, HIDE_TIMEOUT);
     },
 
     countUnreadMessages() {
@@ -110,17 +151,21 @@ module.exports = {
         this.$notificationsCount.hide();
 
       this.$notificationsCount.text(unreadCount || '');
+
+      let text = unreadCount <= 0
+        ? 'notifications'
+        : ` pending notification${unreadCount > 1 ? 's' : ''}`
+
+      this.$notificationsTextHeader.text(text);
     },
 
     initNotifications() {
       this.notifications = new Notifications();
-      this.notifications.on('notification', (data) => {
-        console.log(data);
+      this.notifications.on(notifications_channel, (data) => {
         this.model.data = this.model.data.concat(data);
         this.updateUnreadCount();
-        _.each(data, (m) => {
-          this.$notifications.append(this.snippets.notification(m));
-        });
+        let notificationsHtml = data.map(this.snippets.notification);
+        this.$notificationList.prepend(notificationsHtml);
       });
     },
 
@@ -134,6 +179,8 @@ module.exports = {
       const id = $(e.target).closest('.notification-item').data('id');
 
       let notification = _.find(this.model.data, m => m.id == id);
+      if (!notification || notification.read_flag)
+        return;
 
       notification.read_flag = true;
       this.notifications.markAsRead(id);

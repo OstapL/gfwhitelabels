@@ -27,6 +27,7 @@ module.exports = {
       'click .submit_form': raiseHelpers.submitCampaign,
       'click #postForReview': raiseHelpers.postForReview,
       'change #website': appendHttpIfNecessary,
+      'keyup #slug': 'fixSlug',
       'change #website,#twitter,#facebook,#instagram,#linkedin': 'appendHttpsIfNecessary',
     }, /*leavingConfirmationHelper.events,*/ phoneHelper.events, menuHelper.events),
 
@@ -35,7 +36,7 @@ module.exports = {
     },
 
     initialize(options) {
-      this.fields = options.fields;
+      this.fields = options.fields.company;
       this.formc = options.formc || {};
       this.campaign = options.campaign || {};
       this.model = options.company || {};
@@ -62,12 +63,17 @@ module.exports = {
         facebook: 'Facebook',
         instagram: 'Instagram',
         linkedin: 'Linkedin',
+        slug: 'What would you like your custom URL to be?',
       };
       this.assignLabels();
 
       if(this.model.hasOwnProperty('id')) {
-        this.urlRoot += '/:id/edit';
+        this.urlRoot += '/:id';
       }
+    },
+
+    fixSlug(e) {
+      e.currentTarget.value = e.currentTarget.value.replace(/\s+/g,'-').replace(/[^a-zA-Z0-9\-]/g,'').toLowerCase();
     },
 
     updateLocation(e) {
@@ -116,6 +122,11 @@ module.exports = {
 
     _success(data) {
       this.undelegateEvents();
+
+      if(data == null) {
+        data = {};
+      }
+
       if (data.hasOwnProperty('campaign_id') == false) {
         data.campaign_id = this.formc.campaign_id;
       }
@@ -142,7 +153,7 @@ module.exports = {
   })),
 
   generalInformation: Backbone.View.extend(_.extend({
-    urlRoot: raiseCapitalServer + '/campaign/:id/general_information',
+    urlRoot: raiseCapitalServer + '/campaign/:id',
     template: require('./templates/generalInformation.pug'),
     events: _.extend({
         'click #submitForm': api.submitAction,
@@ -170,7 +181,7 @@ module.exports = {
     },
 
     initialize(options) {
-      this.fields = options.fields;
+      this.fields = options.fields.campaign;
       this.model = options.campaign;
       this.formc = options.formc;
       this.labels = {
@@ -216,8 +227,8 @@ module.exports = {
   }, leavingConfirmationHelper.methods, menuHelper.methods, addSectionHelper.methods)),
 
   media: Backbone.View.extend(_.extend({
+    urlRoot: raiseCapitalServer + '/campaign/:id',
     template: require('./templates/media.pug'),
-    urlRoot: raiseCapitalServer + '/campaign/:id/media',
 
     events: _.extend({
         'click #submitForm': api.submitAction,
@@ -260,7 +271,7 @@ module.exports = {
       );
       this.urlRoot = this.urlRoot.replace(':id', this.model.id);
       this.formc = options.formc;
-      this.fields = options.fields;
+      this.fields = options.fields.campaign;
 
       this.fields.header_image_image_id = _.extend(this.fields.header_image_image_id, {
         title: 'Drop your photo here or click to upload',
@@ -400,7 +411,7 @@ module.exports = {
     },
 
     initialize(options) {
-      this.fields = options.fields;
+      this.fields = options.fields.campaign;
       this.fields.photo_image_id = _.extend(this.fields.photo_image_id, {
         crop: {
           control:  {
@@ -491,7 +502,7 @@ module.exports = {
     },
 
     initialize(options) {
-      this.fields = options.fields;
+      this.fields = options.fields.campaign;
       this.formc = options.formc;
       this.model = options.campaign;
 
@@ -542,7 +553,7 @@ module.exports = {
   }, menuHelper.methods)),
 
   specifics: Backbone.View.extend(_.extend({
-      urlRoot: raiseCapitalServer + '/campaign/:id/specifics',
+      urlRoot: raiseCapitalServer + '/campaign/:id',
       events: _.extend({
         'click #submitForm': api.submitAction,
         'change input[name="security_type"]': 'updateSecurityType',
@@ -565,7 +576,7 @@ module.exports = {
       },
 
       initialize(options) {
-        this.fields = options.fields;
+        this.fields = options.fields.campaign;
         this.formc = options.formc;
         this.model = new Campaign(
           this.urlRoot.replace(':id', options.campaign.id),
@@ -713,7 +724,7 @@ module.exports = {
   }, leavingConfirmationHelper.methods, menuHelper.methods, addSectionHelper.methods)),
 
   perks: Backbone.View.extend(_.extend({
-    urlRoot: raiseCapitalServer + '/campaign/:id/perks',
+    urlRoot: raiseCapitalServer + '/campaign/:id',
     events: _.extend({
         'click #submitForm': api.submitAction,
         'click .onPreview': raiseHelpers.onPreviewAction,
@@ -730,7 +741,7 @@ module.exports = {
     },
 
     initialize(options) {
-      this.fields = options.fields;
+      this.fields = options.fields.campaign;
       this.formc = options.formc;
       this.model = options.campaign;
       this.labels = {

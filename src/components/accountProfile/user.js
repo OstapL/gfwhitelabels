@@ -63,7 +63,7 @@ class User {
         this.getCompaniesMemberR()
     ).then((data, members) => {
       this.data = data[0];
-      this.companiesMember = members[0];
+      this.companiesMember = members[0].data;
       localStorage.setItem('user', JSON.stringify(this.data));
       return this.getCompanyR();
     }).then((company) => {
@@ -86,12 +86,12 @@ class User {
   }
 
   _initRoles() {
-    if (!this.companiesMember || !this.companiesMember.data || !this.companiesMember.data.length)
+    if (!this.companiesMember || !this.companiesMember.length)
       return;
 
     this.role_data = [];
 
-    _.each(this.companiesMember.data, (data) => {
+    _.each(this.companiesMember, (data) => {
       let roles = roleHelper.extractRoles(data.role);
       this.role_data.push({
         company: {
@@ -143,33 +143,43 @@ class User {
     window.location = '/';
   }
 
-  getCompanyR(id, requestMethod='GET') {
+  getCompanyR(id) {
     if(id) 
-      return this.company ? '' : app.makeCacheRequest(raiseCapitalServer + '/company/' + id + '/edit', requestMethod);
+      return this.company ? '' : app.makeCacheRequest(raiseCapitalServer + '/company/' + id, 'GET');
     else
-      return this.company ? '' : app.makeCacheRequest(authServer + '/user/company', requestMethod);
+      return this.company ? '' : app.makeCacheRequest(authServer + '/user/company', 'GET');
   }
 
   getCompany() {
     return this.company;
   }
 
-  getCampaignR(id, requestMethod='GET') {
+  getCampaignR(id) {
     if(id) 
-      return this.campaign ? '' : app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/edit', requestMethod);
+      return this.campaign ? '' : app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id, 'GET');
     else
-      return this.campaign ? '' : app.makeCacheRequest(authServer + '/user/campaign', requestMethod);
+      return this.campaign ? '' : app.makeCacheRequest(authServer + '/user/campaign', 'GET');
   }
 
   getCampaign() {
     return this.campaign;
   }
 
-  getFormcR(id, requestMethod='GET') {
-    if(id) 
-      return this.formc ? '' : app.makeCacheRequest(formcServer + '/' + id, requestMethod);
-    else
-      return this.formc ? '' : app.makeCacheRequest(authServer + '/user/formc', requestMethod);
+  getFormcR(id) {
+    if(id)  {
+      return this.formc ? '' : app.makeCacheRequest(formcServer + '/' + id, 'GET');
+    }
+    else {
+      let formcOwner = this.companiesMember.filter((el) => {
+        return el.owner_id = this.data.company.owner_id;
+      });
+      if(formcOwner.length == 0) {
+        return '';
+      }
+      else {
+        return this.formc ? '' : app.makeCacheRequest(formcServer + '/' + formcOwner[0].formc_id, 'GET');
+      }
+    }
   }
 
   getFormc() {

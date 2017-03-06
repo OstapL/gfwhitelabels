@@ -36,10 +36,11 @@ if user.token != ""
         ul.submenu.list-unstyled 
           li
             a(href="/account/profile").nav-link Profile
-          if user.companiesMember && user.companiesMember.data
-            each v,k in user.companiesMember.data
-              li
-                a(href="/dashboard/" + v.formc_id + "/issuer-dashboard" ).nav-link #{v.company}
+          if user.companiesMember
+            each v,k in user.companiesMember
+              if v.is_paid == true
+                li
+                  a(href="/dashboard/" + v.formc_id + "/issuer-dashboard" ).nav-link #{v.company}
           li
             a(href="/account/investor-dashboard").nav-link Investor Dashboard
           li

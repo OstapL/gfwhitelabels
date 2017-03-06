@@ -143,6 +143,8 @@ module.exports = {
 
     setFormData () {
       this.formData = this.$el.find('form').serializeJSON();
+      this.formData.is_paid = this.model.is_paid;
+      return this.formData;
     },
 
     saveEsign() {
@@ -171,7 +173,7 @@ module.exports = {
     },
 
     getDocMetaData () {
-      const formData = this.formData;
+      const formData = this.formData || this.setFormData();
       const issuer_legal_name = app.user.get('first_name') + ' ' + app.user.get('last_name');
       
       return {
@@ -181,6 +183,7 @@ module.exports = {
         nonrefundable_fees: companyFees.nonrefundable_fees,
         amendment_fee: companyFees.amendment_fee,
         commencement_date_x: this.getCurrentDate(),
+        commitment_date_x: this.getCurrentDate(),
         zip_code: app.user.company.zip_code,
         city: app.user.company.city,
         state: app.user.company.state,
@@ -195,11 +198,7 @@ module.exports = {
     },
 
     _success(data, newData) {
-      // means that it is a payment request
-      if(this.formData && this.formData.full_name) {
-        this.saveEsign(data);
-        this.formData = null;
-      }
+      if (this.formData && !this.formData.is_paid) this.saveEsign(data);
       formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
       return 1;
     },
@@ -788,6 +787,10 @@ module.exports = {
       let commission = _(less_offering_expense).find((item) => {
         return item.title == 'Commissions and Broker Expenses';
       });
+
+      if(commission == null) {
+        commission = {};
+      }
 
       commission.min = Math.round(this.campaign.minimum_raise * companyFees.trans_percent / 100);
       commission.max = Math.round(this.campaign.maximum_raise * companyFees.trans_percent / 100);
