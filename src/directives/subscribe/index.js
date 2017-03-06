@@ -1,5 +1,3 @@
-// const SUBSCRIBE_URL = '//Growthfountain.us3.list-manage.com/3.0/lists/aa35949664/members/50ee1beec395ee0f981299099';
-
 class MailSubscriber {
   constructor() {
     this.template = require('./templates/subscribe.pug');
@@ -15,10 +13,16 @@ class MailSubscriber {
       const $form = $(e.target).closest('form');
       const url = $form.attr('action');
       let data = $form.serializeJSON();
-      $.post(url, data)
-        .then((response) => {
-          console.log(response);
-          alert('Thank you for subscribing to our news letters');
+      //TODO: fix 'Access-Control-Allow-Origin' header is present on the requested resource.
+      // Origin 'http://alpha.growthfountain.com:7070' is therefore not allowed access.
+      $.ajax({
+        url: url,
+        type: 'POST',
+        data: data,
+        dataType: 'json',
+      }).then((response) => {
+        console.log(response);
+        alert('Thank you for subscribing to our news letters');
       }).fail(() => {
         console.error('subscription failed');
         console.error(arguments);
