@@ -1,4 +1,5 @@
 const roleHelper = require('helpers/roleHelper.js');
+const ONE_HOUR = 1000 * 60 * 60;
 
 class User {
   constructor() {
@@ -8,7 +9,6 @@ class User {
     this.companiesMember = [];
 
     this.data = { token: '', id: ''};
-    this.roleHelper = roleHelper;
     this.role_data = null;
     this.token = null;
   }
@@ -38,8 +38,6 @@ class User {
   }
 
   load() {
-    const ONE_HOUR = 1000 * 60 * 60;
-
     const token = localStorage.getItem('token');
     if (token === null)
       return app.trigger('userLoaded', { id: '' });
@@ -65,7 +63,11 @@ class User {
       this.data = data[0];
       this.companiesMember = members[0].data;
       localStorage.setItem('user', JSON.stringify(this.data));
-      return this.getCompanyR();
+
+      // Fix
+      // Why do we need this after on user load ? 
+      // return this.getCompanyR();
+      
     }).then((company) => {
       this.data.company = company;
       app.trigger('userLoaded', this.data);
@@ -139,8 +141,29 @@ class User {
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    cookies.expire('token');
     app.trigger('userLogout', {});
+
     window.location = '/';
+  }
+
+  passwordChanged(token) {
+    if (!token) {
+      console.error('New token is empty');
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      cookies.expire('token');
+      this.token = null;
+      return;
+    }
+
+    localStorage.setItem('token', token);
+    this.token = token;
+    cookies.set('token', token, {
+      domain: '.' + domainUrl,
+      expires: ONE_HOUR,
+      path: '/',
+    });
   }
 
   getCompanyR(id) {

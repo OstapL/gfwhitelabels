@@ -82,7 +82,7 @@ function getOCCF(optionsR, viewName, params = {}) {
     */
 };
 
-module.exports = Backbone.Router.extend({
+module.exports = { 
   routes: {
     'company/create': 'company',
     'company/in-review': 'inReview',
@@ -94,79 +94,73 @@ module.exports = Backbone.Router.extend({
     'campaign/:id/perks': 'perks',
   },
 
-  execute: function (callback, args, name) {
-    //ga('send', 'pageview', "/" + Backbone.history.getPath());
-    if (!app.user.ensureLoggedIn(window.location.pathname))
-      return false;
+  methods: {
+    company() {
+      debugger;
+      const optionsR = app.makeCacheRequest(raiseCapitalServer + '/company', 'OPTIONS');
+      $(document.head).append('<meta name="keywords" content="local investing equity crowdfunding Get to work and secure funding with our equity crowdfunding platform. Harness the power of local investing to secure the capital you need by getting started."></meta>');
+      getOCCF(optionsR, 'company', {});
+    },
 
-    if (callback) callback.apply(this, args);
-  },
+    generalInformation (id) {
+      const optionsR = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/general_information', 'OPTIONS');
+      getOCCF(optionsR, 'generalInformation', {});
+    },
 
-  company() {
-    const optionsR = app.makeCacheRequest(raiseCapitalServer + '/company', 'OPTIONS');
-    $(document.head).append('<meta name="keywords" content="local investing equity crowdfunding Get to work and secure funding with our equity crowdfunding platform. Harness the power of local investing to secure the capital you need by getting started."></meta>');
-    getOCCF(optionsR, 'company', {});
-  },
+    media(id) {
+      const optionsR = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/media', 'OPTIONS');
+      getOCCF(optionsR, 'media', {});
+    },
 
-  generalInformation (id) {
-    const optionsR = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/general_information', 'OPTIONS');
-    getOCCF(optionsR, 'generalInformation', {});
-  },
+    teamMembers(id) {
+      const optionsR = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/team-members', 'OPTIONS');
+      getOCCF(optionsR, 'teamMembers', {});
+    },
 
-  media(id) {
-    const optionsR = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/media', 'OPTIONS');
-    getOCCF(optionsR, 'media', {});
-  },
+    teamMembersAdd(id, type, index) {
+      const optionsR = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/team-members', 'OPTIONS');
+      getOCCF(optionsR, 'teamMemberAdd', {
+        type: type,
+        index: index,
+      });
+    },
 
-  teamMembers(id) {
-    const optionsR = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/team-members', 'OPTIONS');
-    getOCCF(optionsR, 'teamMembers', {});
-  },
+    specifics(id) {
+      const optionsR = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/specifics', 'OPTIONS');
+      getOCCF(optionsR, 'specifics', {});
+    },
 
-  teamMembersAdd(id, type, index) {
-    const optionsR = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/team-members', 'OPTIONS');
-    getOCCF(optionsR, 'teamMemberAdd', {
-      type: type,
-      index: index,
-    });
-  },
+    perks(id) {
+      const optionsR = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/perks', 'OPTIONS');
+      getOCCF(optionsR, 'perks', {});
+    },    
 
-  specifics(id) {
-    const optionsR = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/specifics', 'OPTIONS');
-    getOCCF(optionsR, 'specifics', {});
-  },
+    inReview() {
+      app.showLoading();
 
-  perks(id) {
-    const optionsR = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/perks', 'OPTIONS');
-    getOCCF(optionsR, 'perks', {});
-  },    
+      $('#company_publish_confirm').modal('hide', 0);
+      let fn = function() {
+        $('body').scrollTo();
+        app.hideLoading();
+        if(app.user.company.is_approved == STATUSES.PENDING) {
+          const i = new View.inReview({
+            model: app.user.company,
+          });
+          i.render();
+        } else if(app.user.company.is_approved == STATUSES.APPROVED) {
+          app.routers.navigate(
+            '/formc/' + app.user.formc.id + '/introduction',
+            { trigger: true, replace: false }
+          );
+        } else {
+          app.routers.navigate(
+            '/company/create',
+            { trigger: true, replace: false }
+          );
+        }
+      };
 
-  inReview() {
-    app.showLoading();
-
-    $('#company_publish_confirm').modal('hide', 0);
-    let fn = function() {
-      $('body').scrollTo();
-      app.hideLoading();
-      if(app.user.company.is_approved == STATUSES.PENDING) {
-        const i = new View.inReview({
-          model: app.user.company,
-        });
-        i.render();
-      } else if(app.user.company.is_approved == STATUSES.APPROVED) {
-        app.routers.navigate(
-          '/formc/' + app.user.formc.id + '/introduction',
-          { trigger: true, replace: false }
-        );
-      } else {
-        app.routers.navigate(
-          '/company/create',
-          { trigger: true, replace: false }
-        );
-      }
-    };
-
-    getOCCF('', fn);
-  },
-   
-});
+      getOCCF('', fn);
+    },
+  }
+};

@@ -1,4 +1,4 @@
-module.exports = Backbone.Router.extend({
+module.exports = {
   routes: {
     'account/profile(?:active_tab)': 'accountProfile',
     'account/logout': 'logout',
@@ -13,19 +13,15 @@ module.exports = Backbone.Router.extend({
     'account/after-submitting-goverment-dashboard': 'afterSubmittingGovermentDashboard',
     'dashboard/:id/issuer-dashboard': 'issuerDashboard',
   },
+  methods: {
+    accountProfile(activeTab) {
+      if (app.user.is_anonymous()) {
+        app.routers.navigate('/account/login', { trigger: true, replace: true });
+        return;
+      }
 
-  execute: function (callback, args, name) {
-    if (name !== 'logout' && !app.user.ensureLoggedIn(window.location.pathname)) {
-      return false;
-    }
-    if (callback) callback.apply(this, args);
-  },  
-
-  accountProfile(active_tab) {
-    if(!app.user.is_anonymous()) {
-      require.ensure([], function() {
+      require.ensure([], () => {
         const View = require('components/accountProfile/views.js');
-
         const fieldsR = app.makeCacheRequest(authServer + '/rest-auth/data', 'OPTIONS');
         const dataR = app.makeCacheRequest(authServer + '/rest-auth/data');
 
@@ -34,53 +30,48 @@ module.exports = Backbone.Router.extend({
             el: '#content',
             model: data[0],
             fields: fields[0].fields,
-            activeTab: active_tab,
+            activeTab: activeTab,
           });
           i.render();
           app.hideLoading();
-        })
+        });
       });
-    } else {
-      app.routers.navigate(
-        '/account/login', {trigger: true, replace: true}
-      );
-    }
-  },
+    },
 
-  logout(id) {
-    // ToDo
-    // Do we really want have to wait till user will be ready ?
-    app.user.logout();
-  },
+    logout(id) {
+      // ToDo
+      // Do we really want have to wait till user will be ready ?
+      app.user.logout();
+    },
 
-  changePassword: function() {
-    $('#content').scrollTo();
-    const View = require('components/accountProfile/views.js');
-    let i = new View.changePassword({
-      el: '#content',
-      model: {},
-    });
-    i.render();
-    app.hideLoading();
-  },
+    changePassword() {
+      $('#content').scrollTo();
+      const View = require('components/accountProfile/views.js');
+      let i = new View.changePassword({
+        el: '#content',
+        model: {},
+      });
+      i.render();
+      app.hideLoading();
+    },
 
-  setNewPassword: function() {
-    $('body').scrollTo();
-    const View = require('components/accountProfile/views.js');
-    const i = new View.setNewPassword({
-      el: '#content',
-    });
-    i.render();
-    app.hideLoading();
-  },
+    setNewPassword() {
+      $('body').scrollTo();
+      const View = require('components/accountProfile/views.js');
+      const i = new View.setNewPassword({
+        el: '#content',
+      });
+      i.render();
+      app.hideLoading();
+    },
 
-  investorDashboard() {
-    const View = require('components/accountProfile/views.js');
+    investorDashboard() {
+      const View = require('components/accountProfile/views.js');
 
-    const fieldsR = app.makeCacheRequest(investmentServer, 'OPTIONS');
-    const dataR = app.makeCacheRequest(investmentServer);
+      const fieldsR = app.makeCacheRequest(investmentServer, 'OPTIONS');
+      const dataR = app.makeCacheRequest(investmentServer);
 
-    Promise.all([fieldsR, dataR]).then((values) => {
+      Promise.all([fieldsR, dataR]).then((values) => {
         let i = new View.InvestorDashboard({
           fields: values[0].fields,
           model: values[1],
@@ -90,70 +81,64 @@ module.exports = Backbone.Router.extend({
       }).catch((err) => {
         console.log(err);
       });
-  },
+    },
 
-  companyDashboard: function() {
+    companyDashboard() {
       const View = require('components/accountProfile/views.js');
       let i = new View.companyDashboard({
         el: '#content',
       });
       i.render();
       app.hideLoading();
-  },
+    },
 
-  companyDashboardFirst:  function() {
+    companyDashboardFirst() {
       const View = require('components/accountProfile/views.js');
       let i = new View.companyDashboardFirst({
         el: '#content',
       });
       i.render();
       app.hideLoading();
-  },
-  
-  afterPaymentDashboard:  function() {
+    },
+
+    afterPaymentDashboard() {
       const View = require('components/accountProfile/views.js');
       let i = new View.afterPaymentDashboard({
         el: '#content',
       });
       i.render();
       app.hideLoading();
-  },
-  afterCompleteDashboard:  function() {
+    },
+
+    afterCompleteDashboard() {
       const View = require('components/accountProfile/views.js');
       let i = new View.afterCompleteDashboard({
         el: '#content',
       });
       i.render();
       app.hideLoading();
-  },
-  afterFinalDashboard:  function() {
+    },
+
+    afterFinalDashboard() {
       const View = require('components/accountProfile/views.js');
       let i = new View.afterFinalDashboard({
         el: '#content',
       });
       i.render();
       app.hideLoading();
-  },
-  afterSubmittingGovermentDashboard:  function() {
+    },
+
+    afterSubmittingGovermentDashboard() {
       const View = require('components/accountProfile/views.js');
       let i = new View.afterSubmittingGovermentDashboard({
         el: '#content',
       });
       i.render();
       app.hideLoading();
-  },
-  issuerDashboard: function(id) {
-    $('#content').scrollTo();
-    $.when(
-        api.makeCacheRequest(formcServer + '/' + id, 'OPTIONS'),
-        app.user.getFormcR(id),
-    ).then((formcFields, formc) => {
+    },
 
-      if(formc[0]) {
-        app.user.formc = formc[0];
-      }
-
-      // noi=1 means that server should return number_of_investrs for company
+    issuerDashboard(id) {
+      $('#content').scrollTo();
       $.when(
         app.makeCacheRequest(raiseCapitalServer + '/company/' + app.user.formc.company_id + '?noi=1', 'GET'),
         app.user.getCampaignR(app.user.formc.campaign_id, 'GET'),
@@ -172,8 +157,20 @@ module.exports = Backbone.Router.extend({
           model: model
         }).render();
         app.hideLoading();
-
       });
-    })
+    },
+
   },
-});    
+  auth: [
+    'accountProfile',
+    'changePassword',
+    'setNewPassword',
+    'investorDashboard',
+    'companyDashboard',
+    'afterPaymentDashboard',
+    'afterCompleteDashboard',
+    'afterFinalDashboard',
+    'afterSubmittingGovermentDashboard',
+    'issuerDashboard',
+  ],
+};

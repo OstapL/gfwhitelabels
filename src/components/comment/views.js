@@ -33,9 +33,9 @@ module.exports = {
     initialize(options) {
       this.fields = options.fields;
       this.fields.message = _.extend(this.fields.message, {
-        fn: function(name, value, attr, data, schema) {
+        fn: function (name, value, attr, data, schema) {
           if (value.length > 2000)
-            throw 'Length of comment should not exceed more than 2000 characters.'
+            throw 'Length of comment should not exceed more than 2000 characters.';
         },
       });
 
@@ -50,6 +50,7 @@ module.exports = {
         if (company.company_id == this.model.id)
           this.userRole = company.role;
       });
+
       //init dates
       _.each(this.model.data, (c) => {
         initDates(c);
@@ -59,6 +60,7 @@ module.exports = {
         related: require('./templates/snippets/related.pug'),
         add: require('./templates/snippets/add.pug'),
         edit: require('./templates/snippets/edit.pug'),
+        comment: require('./templates/comment.pug'),
       };
     },
 
@@ -84,7 +86,6 @@ module.exports = {
     render() {
       this.$el.html(this.template({
         comments: this.model.data,
-        helpers: helpers,
         owner_id: this.model.owner_id,
         company_id: this.model.id,
         attr: {
@@ -103,20 +104,17 @@ module.exports = {
     keydownHandler(e) {
       let $target = $(e.target);
 
-      switch(e.which) {
-        case 13: {
+      switch (e.which) {
+        case 13:
           return $target.is('input')
             ? this.submitComment(e)
             : void(0);
-        }
-        case 27: {
+        case 27:
           return $target.is('textarea')
             ? this.cancelComment(e)
             : void(0);
-        }
-        default: {
+        default:
           break;
-        }
       }
     },
 
@@ -125,9 +123,9 @@ module.exports = {
         var area = document.querySelector('.text-body');
         if (!area)
           return;
+
         area.style.height = 'auto';
-        area.style.height = area.scrollHeight+'px';
-        console.log(area.scrollHeight+'px')
+        area.style.height = area.scrollHeight + 'px';
       }, 0);
     },
 
@@ -148,7 +146,7 @@ module.exports = {
         $target.parent().after($relatedBlock);
         $relatedBlock.show();
       } else {
-        if(!hasRelatedBlock)
+        if (!hasRelatedBlock)
           return;
         $relatedBlock.remove();
       }
@@ -156,7 +154,7 @@ module.exports = {
 
     keyupHandler(e) {
       this.resizeArea(e);
-      this.ensureRelatedRolesBlock(e)
+      this.ensureRelatedRolesBlock(e);
     },
 
     submitComment(e) {
@@ -166,21 +164,16 @@ module.exports = {
         return false;
 
       let $target = $(e.target);
-
-      let $parentComment = $target.closest('.comment');
-
+      let $parentComment = $target.closest('.single-comment');
       let isChild = $parentComment && $parentComment.length;
-
       let parentId = isChild ? $parentComment.data('id') : '';
       let level = isChild ? ($parentComment.data('level') + 1) : 0;
-
       let $form = $target.closest('form');
       let message = $form.find('.text-body').val();
       if (!message)
         return;
 
       $target.prop('disabled', true);
-
       let data = {
         parent_id: parentId,
         message: message,
@@ -196,20 +189,21 @@ module.exports = {
           $target.prop('disabled', false);
           return;
         }
+
         data.related = relatedRole;
       }
 
-      if(!validation.validate(this.fields, data)) {
+      if (!validation.validate(this.fields, data)) {
         _(validation.errors).each((errors, name) => {
           this.invalidMsg(name, errors, $form);
         });
         $target.prop('disabled', false);
+
         // this.$('.help-block').prev().scrollTo(5);
         return false;
       }
 
       app.showLoading();
-
       api.makeRequest(this.urlRoot, 'POST', data).done((newData) => {
         $target.prop('disabled', false);
 
@@ -232,8 +226,10 @@ module.exports = {
           let parentComment = this.getComment(parentId);
           if (parentComment) {
             parentComment.children.push(newCommentModel);
+
             //update parent comment response count
-            $parentComment.find('.comment-actions:first .link-response-count > .count').text(parentComment.children.length);
+            $parentComment.find('.comment-actions:first .link-response-count > .count')
+              .text(parentComment.children.length);
           }
         } else {
           this.model.data.push(newCommentModel);
@@ -241,11 +237,26 @@ module.exports = {
           this.keyupHandler(e);//remove related role checkbox
         }
 
-        let newCommentHtml = helpers.fields.comment(newCommentModel, level, {
-          owner_id: this.model.owner_id,
-          company_id: this.model.id,
-        }, helpers);
-        $(newCommentHtml).appendTo(isChild ? $parentComment : this.$('.comments'));
+        let newCommentHtml = this.snippets.comment({
+          comment: newCommentModel,
+          snippets: this.snippets,
+          attr: {
+            owner_id: this.model.owner_id,
+            company_id: this.model.id,
+          },
+          level: level,
+        });
+
+        let $newComment = $(newCommentHtml);
+
+        if (isChild) {
+          let $childComments = $parentComment.find('.multilevel-comments');
+          $newComment.appendTo($childComments);
+          if ($childComments.hasClass('collapse')) $childComments.removeClass('collapse');
+        } else {
+          let $commentsContainer = this.$('.comments');
+          $newComment.appendTo($commentsContainer);
+        }
 
         app.hideLoading();
       }).fail((err) => {
@@ -258,21 +269,20 @@ module.exports = {
     cancelComment(e) {
       e.preventDefault();
 
-      let target = $(e.target);
+      let $target = $(e.target);
 
       //escape pressed on input with ask question
-      if (target.is('input'))
+      if ($target.is('input'))
         return false;
 
-      $(e.target).closest('form').remove();
+      $target.closest('form').remove();
 
       return false;
     },
 
     showReplyTo(e) {
       e.preventDefault();
-
-      let $commentBlock = $(e.target).closest('.comment');
+      let $commentBlock = $(e.target).closest('.single-comment');
 
       let $newCommentBlock = $commentBlock.find('.comment-form');
       if ($newCommentBlock && $newCommentBlock.length)
@@ -287,11 +297,8 @@ module.exports = {
 
     showHideResponses(e) {
       e.preventDefault();
-
       let $link = $(e.target).closest('.link-response-count');
-
-      $link.closest('.comment').find('.comment').toggleClass('collapse');
-
+      $link.closest('.single-comment').find('.multilevel-comments').toggleClass('collapse');
       let $icon = $link.find('.fa');
       if ($icon.hasClass('fa-angle-up'))
         $icon.removeClass('fa-angle-up').addClass('fa-angle-down');
@@ -303,9 +310,7 @@ module.exports = {
 
     likeComment(e) {
       e.preventDefault();
-
-      console.log('Likes are not implemented')
-
+      console.log('Likes are not implemented');
       return false;
     },
 
@@ -344,7 +349,9 @@ module.exports = {
       if (errorBlock.length)
         errorBlock.html(errors);
       else
-        this.$el.prepend('<div class="alert alert-warning" role="alert"><p>' + errors + '</p></div>');
+        this.$el.prepend(
+          '<div class="alert alert-warning" role="alert"><p>' + errors + '</p></div>'
+        );
     },
 
   }, helpers.yesNo.methods)),
