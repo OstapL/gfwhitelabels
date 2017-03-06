@@ -89,7 +89,6 @@ const Router = Backbone.Router.extend(_.extend({
 app.on('userLoaded', function (data) {
 
   app.routers = new Router();
-  app.user.url = serverUrl + Urls['rest_user_details']();
   Backbone.history.start({ pushState: true });
 
   window.addEventListener('popstate', app.routers.back);

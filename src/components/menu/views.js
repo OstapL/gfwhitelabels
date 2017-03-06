@@ -8,7 +8,6 @@ module.exports = {
     render: function () {
       this.$el.html(
         this.template({
-          serverUrl: serverUrl,
           user: app.user.toJSON(),
           Urls: Urls,
         })
@@ -34,7 +33,6 @@ module.exports = {
 
       this.$el.html(
         this.template({
-          serverUrl: serverUrl,
           user: app.user.toJSON(),
           Urls: Urls,
         })
@@ -48,7 +46,6 @@ module.exports = {
     render: function () {
       this.$el.html(
         this.template({
-          serverUrl: serverUrl,
           user: app.user.toJSON(),
           Urls: Urls,
         })
@@ -92,7 +89,6 @@ module.exports = {
 
       this.$el.html(
         this.template({
-          serverUrl: serverUrl,
           user: app.user.toJSON(),
           notifications: this.model.data,
           unreadCount: this.countUnreadMessages(),
