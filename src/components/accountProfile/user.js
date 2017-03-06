@@ -144,10 +144,19 @@ class User {
   }
 
   getCompanyR(id) {
-    if(id) 
+    if(id)  {
       return this.company ? '' : app.makeCacheRequest(raiseCapitalServer + '/company/' + id, 'GET');
-    else
-      return this.company ? '' : app.makeCacheRequest(authServer + '/user/company', 'GET');
+    } else {
+      let formcOwner = this.companiesMember.filter((el) => {
+        return el.owner_id = this.data.id;
+      });
+      if(formcOwner.length == 0) {
+        return '';
+      }
+      else {
+        return this.company ? '' : app.makeCacheRequest(raiseCapitalServer + '/company/' + formcOwner[0].company_id, 'GET');
+      }
+    }
   }
 
   getCompany() {
@@ -155,10 +164,19 @@ class User {
   }
 
   getCampaignR(id) {
-    if(id) 
+    if(id)  {
       return this.campaign ? '' : app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id, 'GET');
-    else
-      return this.campaign ? '' : app.makeCacheRequest(authServer + '/user/campaign', 'GET');
+    } else {
+      let formcOwner = this.companiesMember.filter((el) => {
+        return el.owner_id = this.data.id;
+      });
+      if(formcOwner.length == 0) {
+        return '';
+      }
+      else {
+        return this.campaign ? '' : app.makeCacheRequest(raiseCapitalServer + '/campaign/' + formcOwner[0].campaign_id, 'GET');
+      }
+    }
   }
 
   getCampaign() {
@@ -168,10 +186,9 @@ class User {
   getFormcR(id) {
     if(id)  {
       return this.formc ? '' : app.makeCacheRequest(formcServer + '/' + id, 'GET');
-    }
-    else {
+    } else {
       let formcOwner = this.companiesMember.filter((el) => {
-        return el.owner_id = this.data.company.owner_id;
+        return el.owner_id = this.data.id;
       });
       if(formcOwner.length == 0) {
         return '';
