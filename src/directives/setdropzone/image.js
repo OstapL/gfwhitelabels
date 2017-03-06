@@ -27,6 +27,7 @@ class ImageDropzone extends file.FileDropzone {
       this.options.params.height = this.cropperOptions.auto.height;
     }
 
+    debugger;
     this.fileElement = new ImageElement(
       this.model[fieldName],
       fieldName,
