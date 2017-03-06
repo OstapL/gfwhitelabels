@@ -477,71 +477,183 @@
 		background-color: #e7e7e7
 		margin-bottom: rem(45)
 .comments
-	.col-lg-1
-		padding: 0
-	.col-lg-11
-		padding-right: 0
-		padding-left: rem(10)
+	.comment
+		&:nth-child(1)
+			.one-comment
+				border-top: solid 1px solid 1px $gallery
+				border-right: none
+				border-left: none
+				padding-top: 30px
+				padding-bottom: 30px
+		.one-comment
+			border-top: solid 1px $gallery
+			padding-top: 30px
+			padding-bottom: 30px
+		.comment-1
+			.one-comment
+				border-top: solid 1px $gallery
+			&:last-child
+				.one-comment
+					border-bottom: none
+		.comment-2
+			.one-comment
+				border-top: solid 1px $gallery
+			&:last-child
+				.one-comment
+					border-top: solid 1px $gallery
+					border-bottom: none
+		.comment-3
+			.one-comment
+				border-top: solid 1px $gallery
+			&:last-child
+				.one-comment
+					border-top: solid 1px $gallery
+					border-bottom: none
+
 	img
-		width: rem(55)
-		height: rem(55)
+		width: rem(65)
+		height: rem(65)
 		display: inline-block
 		//float: left
 		//margin-right: 15px
-	.comments-wrap
-		display: inline-block
-		.p-r-5
-			padding-right: 5px
-		.p-5
-			padding: 5px
-		.icon-comment
-			color: $small-text
-		.reply
-			margin: 0 10px
-			.reply-right
-				padding-left: 10px
+	.one-comment
+		.wrap-title-comment
+			position: relative
+			vertical-align: middle
+			margin-left: rem(35)
+			display: inline-block
+			.name-comments
+				font-size: rem(15)
+				letter-spacing: rem(1.5)
+				font-family: $company-comments-ff
+				color: $black
+				margin-bottom: 0
+				.kvalificatio-comments
+					font-size: rem(11)
+					font-weight: bold
+					color: $white
+					background-color: $sandy-brown
+					padding: rem(5) rem(18)
+					border-radius: 2px
+					margin-left: rem(10) 
+					text-transform: capitalize
+			.date-comments
+				font-size: rem(12)
 				color: $small-text
-			.reply-left
-				padding-right: 10px
+		.comments-wrap
+			display: block
+			width: 100%
+			p
+				margin-top: rem(10)
+				font-size: rem(14)
+			.icon-comment
 				color: $small-text
-		.name-comments
-			font-size: rem(15)
-			letter-spacing: rem(1.5)
-			font-family: $company-comments-ff
-			color: $black
-		.kvalificatio-comments
-			font-size: rem(11)
-			font-weight: bold
-			color: $white
-			background-color: $sandy-brown
-			padding: rem(5) rem(18)
-			border-radius: 2px
-			margin-left: rem(10) 
-			text-transform: capitalize
-		.date-comments
-			font-size: rem(12)
-			color: $small-text
-		.responce
-		
-			li
-				//padding-left: rem(5)
-
-				display: inline-block
-		p
-			margin-bottom: rem(5)
-			margin-top: rem(5)
+			.reply
+				margin: 0 10px
+				.reply-right
+					padding-left: 10px
+					color: $small-text
+				.reply-left
+					padding-right: 10px
+					color: $small-text
+			.responce
+				li
+					display: inline-block
+					margin-top: 3px
 	.edit-comment
 		textarea
 			border: solid 1px #ebebeb!important
-			
-@media only screen and (min-width : 991px)
-	.col-lg-12
-		.col-lg-11.comment
-			padding-left: 25px!important
-			.col-xl-1
-				width: 9%
-			.col-xl-11
-				width: 91%
+.comments
+	.single-comment
+		padding: 30px 0 0
+		margin: 30px 0 0
+		border-top: 1px solid #eee
+		&:nth-child(1)
+			border: 0
+			margin: 0
+		.author-info
+			.icon-comment
+				color: $small-text
+				.p-r-5
+					padding-right: 5px
+			.reply
+				margin: 0 10px
+				.reply-right
+					padding-left: 10px
+					color: $small-text
+				.reply-left
+					padding-right: 10px
+					color: $small-text
+			.responce
+				li
+					display: inline-block
+					margin-top: 3px
+			.comment-img
+				display: inline-block
+				margin-right: 35px
+				img
+					width: 65px
+					height: 65px
+			.author-heading
+				display: inline-block
+				vertical-align: middle
+				.author-mane
+					display: inline-block
+					font-family: $company-comments-ff
+					margin-bottom: 0
+				.kvalificatio-comments
+					display: inline-block
+					font-size: rem(11)
+					font-weight: bold
+					color: $white
+					background-color: $sandy-brown
+					padding: rem(3) rem(20)
+					border-radius: 2px
+					margin-left: rem(10)
+					text-transform: capitalize
+				.date-comments
+					font-size: rem(12)
+					color: $small-text
+					position: relative
+					top: -5px
+			.author-comment
+				margin-top: 10px
+				p
+					font-size: 14px
+					line-height: 18px
+					text-align: justify
+	.multilevel-comments
+		border-top: 1px solid #eee
+		padding: 0 0 0 65px
+		margin: 30px 0 0
+		.single-comment
+			border-top: 1px solid #eee
+			margin: 30px 0 0
+			&:nth-child(1)
+				border: 0
+				margin: 0
+@media only screen and (max-width : 768px)
+	.comments
+		.single-comment
+			.multilevel-comments
+				padding: 0
+@media only screen and (max-width : 360px)
+	.comments
+		.single-comment
+			.author-info
+				.comment-img
+					display: block
+					margin-right: 0
+					text-align: center
+
+//@media only screen and (min-width : 991px)
+//	.col-lg-12
+//		.col-lg-11.comment
+//			padding-left: 25px!important
+//			.col-xl-1
+//				width: 9%
+//			.col-xl-11
+//				width: 91%
 .like-detail
 	.like-text-wrap
 		text-align: center
