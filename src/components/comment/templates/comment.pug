@@ -28,7 +28,7 @@ div(data-id=comment.uid data-level=level).single-comment.col-xl-12
     .row
       .col-xl-12
         .author-comment
-          p.comment #{ comment.message.replace(/\n/g, '<br/>') }
+          p.comment !{ comment.message.replace(/\n/g, '<br/>') }
         div.responce.comment-actions
           if level <= 0
             li.icon-comment
