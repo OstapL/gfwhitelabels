@@ -140,34 +140,23 @@ module.exports = {
     issuerDashboard(id) {
       $('#content').scrollTo();
       $.when(
-        api.makeCacheRequest(formcServer + '/' + id, 'OPTIONS'),
-        app.user.getFormcR(id),
-      ).then((formcFields, formc) => {
+        app.makeCacheRequest(raiseCapitalServer + '/company/' + app.user.formc.company_id + '?noi=1', 'GET'),
+        app.user.getCampaignR(app.user.formc.campaign_id, 'GET'),
+      ).done((company, campaign) => {
+      
+        if(company[0]) app.user.company = company[0];
+        if(campaign[0]) app.user.campaign = campaign[0];
 
-        if (formc[0]) {
-          app.user.formc = formc[0];
-        }
+        var model = app.user.company;
+        model.campaign = app.user.campaign;
+        model.formc = app.user.formc;
 
-        // noi=1 means that server should return number_of_investrs for company
-        const companyUrl = `${raiseCapitalServer}/company/}${app.user.formc.company_id}/edit?noi=1`;
-        const companyR = app.makeCacheRequest(companyUrl, 'GET');
-        const campaignR = app.user.getCampaignR(app.user.formc.campaign_id, 'GET');
-        $.when(companyR, campaignR).done((company, campaign) => {
-          if (company[0]) app.user.company = company[0];
-          if (campaign[0]) app.user.campaign = campaign[0];
-
-          var model = app.user.company;
-          model.campaign = app.user.campaign;
-          model.formc = app.user.formc;
-
-          const View = require('components/accountProfile/views.js');
-          new View.issuerDashboard({
-            el: '#content',
-            model: model,
-          }).render();
-          app.hideLoading();
-
-        });
+        const View = require('components/accountProfile/views.js');
+        new View.issuerDashboard({
+          el: '#content',
+          model: model
+        }).render();
+        app.hideLoading();
       });
     },
 
