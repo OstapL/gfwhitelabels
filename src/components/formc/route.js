@@ -1,6 +1,7 @@
 //TODO: rmove view into methods
 const View = require('components/formc/views.js');
 const formcHelpers = require('./helpers.js');
+const STATUSES = require('consts/raisecapital/companyStatuses.json').STATUS;
 
 function getOCCF(optionsR, viewName, params = {}) {
   $('#content').scrollTo();
@@ -19,15 +20,33 @@ function getOCCF(optionsR, viewName, params = {}) {
       params.campaign = app.user.campaign;
       params.formc = app.user.formc;
     } else {
-      if (Object.keys(company[0]).length > 0) {
-        params.company = app.user.company = app.user.company || company[0];
-        params.campaign = app.user.campaign = app.user.campaign || campaign[0];
-        params.formc = app.user.formc = app.user.formc || formc[0];
+      if(options != '') {
+        params.fields = options[0].fields;
+      }
+      // ToDo
+      // This how we can avoid empty response
+      if(company == '') {
+        params.company = app.user.company;
+        params.campaign = app.user.campaign;
+        params.formc = app.user.formc;
+      }
+      else {
+        if(Object.keys(company[0]).length > 0) {
+          params.company = app.user.company = app.user.company || company[0];
+          params.campaign = app.user.campaign = app.user.campaign || campaign[0];
+          params.formc = app.user.formc = app.user.formc || formc[0];
 
-      } else {
-        params.company = {};
-        params.campaign = {};
-        params.formc = {};
+        } else {
+          params.company = {};
+          params.campaign = {};
+          params.formc = {};
+        }
+      }
+
+      if(params.company.is_approved != STATUSES.APPROVED) {
+        alert('Sorry, your campaign is not approved yet. Please wait till we check your campaign');
+        app.routers.navigate('/campaign/' + params.campaign.id +  '/general_information', { trigger: true, replace: true } );
+        return false;
       }
     }
 

@@ -788,6 +788,10 @@ module.exports = {
         return item.title == 'Commissions and Broker Expenses';
       });
 
+      if(commission == null) {
+        commission = {};
+      }
+
       commission.min = Math.round(this.campaign.minimum_raise * companyFees.trans_percent / 100);
       commission.max = Math.round(this.campaign.maximum_raise * companyFees.trans_percent / 100);
       commission.fee = true;
