@@ -1,5 +1,5 @@
 const roleHelper = require('helpers/roleHelper.js');
-const ONE_HOUR = 1000 * 60 * 60;
+const YEAR = 1000 * 60 * 60 * 24 * 30 * 12;
 
 class User {
   constructor() {
@@ -38,37 +38,55 @@ class User {
   }
 
   setData(data) {
-    if(data.hasOwnProperty('token')) {
+    if(data.hasOwnProperty('token') && data.hasOwnProperty('info')) {
       localStorage.setItem('token', data.token);
+      delete data.token;
       localStorage.setItem('user', JSON.stringify(data));
+
+      cookies.set('token', data.token, {
+        domain: '.' + domainUrl,
+        expires: YEAR,
+        path: '/',
+      });
+
       setTimeout(function() {
         window.location = app.getParams().next ? app.getParams().next : 
               '/';
       }, 200);
     } else {
-      alert('not token providet');
+      alert('not token or info providet');
     }
-    
+  }
+
+  emptyLocalStorage() {
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    cookies.expire('token');
+    this.token = null;
+    this.data = {};
+    this.companiesMember = [];
   }
 
   load() {
-    const token = localStorage.getItem('token');
-    if (token === null) {
+    this.token = localStorage.getItem('token');
+    if (this.token === null) {
       return app.trigger('userLoaded', { id: '' });
     } else {
-      const data = localStorage.getItem('user');
+      const data = JSON.parse(localStorage.getItem('user'));
       this.companiesMember = data.info;
       delete data.info;
       this.data = data;
-    }
 
-    // if we have a token we can get information about user
-    this.token = token;
-    cookies.set('token', token, {
-      domain: '.' + domainUrl,
-      expires: ONE_HOUR,
-      path: '/',
-    });
+      // Check if user have all required data
+      if(this.companiesMember == null) {
+        this.emptyLocalStorage();
+        setTimeout(function() {
+          window.location = '/account/login?next=' + document.location.pathname;
+        }, 100);
+        return;
+      }
+      return app.trigger('userLoaded', data);
+    }
   }
 
   is_anonymous() {
@@ -132,31 +150,20 @@ class User {
   }
 
   logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    cookies.expire('token');
+    this.emptyLocalStorage();
     app.trigger('userLogout', {});
 
-    window.location = '/';
+    setTimeout(() => { window.location = '/';}, 100);
   }
 
-  passwordChanged(token) {
+  passwordChanged(data) {
     if (!token) {
       console.error('New token is empty');
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
-      cookies.expire('token');
-      this.token = null;
+      this.emptyLocalStorage();
       return;
     }
 
-    localStorage.setItem('token', token);
-    this.token = token;
-    cookies.set('token', token, {
-      domain: '.' + domainUrl,
-      expires: ONE_HOUR,
-      path: '/',
-    });
+    this.setData(data);
   }
 
   getCompanyR(id) {
