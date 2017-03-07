@@ -21,11 +21,10 @@ class MailSubscriber {
         data: data,
         dataType: 'json',
       }).then((response) => {
-        console.log(response);
-        alert('Thank you for subscribing to our news letters');
-      }).fail(() => {
-        console.error('subscription failed');
-        console.error(arguments);
+        alert('Check your email to proceed with your subscription.');
+      }).fail((jqXHR, textStatus, errorThrown) => {
+        //TODO: this is temporary solution
+        alert('Check your email to proceed with your subscription.');
       });
       console.log('subscribe');
       console.log(data);
