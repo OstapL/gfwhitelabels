@@ -539,7 +539,7 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
         button(type="button" data-dismiss="modal" aria-label="Close").close
           span(aria-hidden="true")
             i.fa.fa-times
-        h2.text-lg-center.text-uppercase.dosis.modal-title Annual Income/Net Worth
+        h2.text-lg-center.text-uppercase.dosis.modal-title Net Worth/Annual Income
 
       .modal-body
         .container.form-section
@@ -550,11 +550,11 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
                 span.current-limit.color-green 1000
               | .
             .form-group.row.clearfix.required
-              label Annual Income
-              input(type="text" placeholder="Annual Income" name="annual_income" value=(user.annual_income * 1000).toLocaleString('en-US'))#annual_income.annual_income.form-control
-            .form-group.row.clearfix.required
               label Net Worth
               input(type="text" placeholder="Net Worth" name="net_worth" value=(user.net_worth * 1000).toLocaleString('en-US'))#net_worth.net-worth.form-control
+            .form-group.row.clearfix.required
+              label Annual Income
+              input(type="text" placeholder="Annual Income" name="annual_income" value=(user.annual_income * 1000).toLocaleString('en-US'))#annual_income.annual_income.form-control
             .form-group.row.clearfix.required.m0
               .row
                 .col-lg-12

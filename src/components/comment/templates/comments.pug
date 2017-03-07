@@ -1,13 +1,8 @@
-if attr.allowQuestion
-  | !{ snippets.add() }
-
-div(class=(attr.cssClass || '')).p-xs-0
-  .comments
-    -
-      var options = _.extend({
-        owner_id: owner_id,
-        company_id: company_id,
-      }, attr);
-
-    each c in comments
-      | !{ helpers.fields.comment(c, 0, options, helpers) }
+.container.m-t-3.p-x-0
+  if attr.allowQuestion
+    | !{ snippets.add() }
+  .comments.col-xl-8.offset-xl-2.p-xs-0
+      -
+        var level = 0;
+      each c in comments
+        | !{ snippets.comment({ comment: c , snippets: snippets, attr: attr , level: level }) }
