@@ -149,7 +149,7 @@ module.exports = {
         }
 
         // noi=1 means that server should return number_of_investrs for company
-        const companyUrl = `${raiseCapitalServer}/company/}${app.user.formc.company_id}/edit?noi=1`;
+        const companyUrl = `${raiseCapitalServer}/company/${app.user.formc.company_id}/edit?noi=1`;
         const companyR = app.makeCacheRequest(companyUrl, 'GET');
         const campaignR = app.user.getCampaignR(app.user.formc.campaign_id, 'GET');
         $.when(companyR, campaignR).done((company, campaign) => {
