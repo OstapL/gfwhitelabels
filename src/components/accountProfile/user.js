@@ -37,10 +37,30 @@ class User {
     this.data.last_name = value;
   }
 
+  setData(data) {
+    if(data.hasOwnProperty('token')) {
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data));
+      setTimeout(function() {
+        window.location = app.getParams().next ? app.getParams().next : 
+              '/';
+      }, 200);
+    } else {
+      alert('not token providet');
+    }
+    
+  }
+
   load() {
     const token = localStorage.getItem('token');
-    if (token === null)
+    if (token === null) {
       return app.trigger('userLoaded', { id: '' });
+    } else {
+      const data = localStorage.getItem('user');
+      this.companiesMember = data.info;
+      delete data.info;
+      this.data = data;
+    }
 
     // if we have a token we can get information about user
     this.token = token;
@@ -49,29 +69,6 @@ class User {
       expires: ONE_HOUR,
       path: '/',
     });
-
-    // let userData = localStorage.getItem('user');
-    // userData = JSON.parse(userData);
-    // this.set(userData);
-    // app.trigger('userLoaded', userData);
-    // return;
-
-    $.when(
-        api.makeRequest(authServer + '/rest-auth/data-mini', 'GET'),
-        this.getCompaniesMemberR()
-    ).then((data, members) => {
-      this.data = data[0];
-      this.companiesMember = members[0].data;
-      localStorage.setItem('user', JSON.stringify(this.data));
-      return this.getCompanyR();
-    }).then((company) => {
-      this.data.company = company;
-      app.trigger('userLoaded', this.data);
-    }).fail((xhr, status) => {
-      localStorage.removeItem('token');
-      app.defaultSaveActions.error(app, xhr, status, '');
-    });
-
   }
 
   is_anonymous() {

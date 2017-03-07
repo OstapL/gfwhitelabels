@@ -340,16 +340,7 @@ module.exports = {
     },
 
     _success(data) {
-      if(data.hasOwnProperty('key')) {
-        localStorage.setItem('token', data.key);
-        localStorage.setItem('user', JSON.stringify(data));
-        setTimeout(function() {
-          window.location = app.getParams().next ? app.getParams().next : 
-                '/';
-        }, 200);
-      } else {
-        validation.invalidMsg(form, '', 'Server return no authentication data');
-      }
+      app.user.setData(data);
     },
 
   }),
