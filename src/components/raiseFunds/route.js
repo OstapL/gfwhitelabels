@@ -131,6 +131,6 @@ module.exports = {
       };
 
     },
-    auth: '*',
-  }
+  },
+  auth: '*',
 };
