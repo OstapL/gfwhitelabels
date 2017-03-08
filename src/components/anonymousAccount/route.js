@@ -7,7 +7,6 @@ module.exports = {
     'account/facebook/login/': 'loginFacebook',
     'account/google/login/': 'loginGoogle',
     'account/linkedin/login/': 'loginLinkedin',
-    'account/finish/login/': 'finishSocialLogin',
     'account/reset': 'resetForm',
     'reset-password/code/:code': 'resetPassword',
     'code/:formcId/:code': 'membershipConfirmation',
@@ -58,8 +57,7 @@ module.exports = {
       }).then(e => {
         let sendTokenR = socialAuth.sendToken('facebook', e.authResponse.access_token);
         $.when(sendTokenR).done((data) => {
-          localStorage.setItem('token', data.key);
-          window.location = '/account/profile';
+          app.user.setData(data);
         });
       }, (e) => {
         // TODO: notificate user about reason of error;
@@ -76,8 +74,7 @@ module.exports = {
       }).then((e) => {
           let sendTokenR = socialAuth.sendToken('linkedin', e.authResponse.access_token);
           $.when(sendTokenR).done(function (data) {
-            localStorage.setItem('token', data.key);
-            window.location = '/account/profile';
+            app.user.setData(data);
           });
         }, (e) => {
           // TODO: notificate user about reason of error;
@@ -95,19 +92,11 @@ module.exports = {
       }).then((e) => {
         let sendTokenR = socialAuth.sendToken('google', e.authResponse.access_token);
         $.when(sendTokenR).done((data) => {
-          localStorage.setItem('token', data.key);
-          window.location = '/account/profile';
+          app.user.setData(data);
         });
       }, (e) => {
         // TODO: notificate user about reason of error;
         app.routers.navigate('/account/login', { trigger: true, replace: true });
-      });
-    },
-
-    finishSocialLogin() {
-      require.ensure([], function () {
-        const socialAuth = require('./social-auth.js');
-        const hello = require('hellojs');
       });
     },
 

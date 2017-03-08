@@ -4,6 +4,53 @@ const auth = {
   social: require('./social-auth.js'),
 };
 
+function _ensureAgreedWithRules(view) {
+  let data = {};
+  let cb = view.el.querySelector('#agree-rules');
+
+  if (cb.checked)
+    data.checkbox1 = cb.value;
+
+  if (!validation.validate({ checkbox1: view.fields.checkbox1 }, data, this)) {
+    _(validation.errors).each((errors, key) => {
+      validation.invalidMsg(view, key, errors);
+    });
+
+    return false;
+  }
+
+  return true;
+}
+
+function loginWithSocialNetwork(e) {
+  e.preventDefault();
+
+  if (!_ensureAgreedWithRules(this)) {
+    return false;
+  }
+
+  const network = $(e.target).data('network');
+
+  app.showLoading();
+  auth.social.login(network).then((data) => {
+    if (data.cancelled) {
+      app.hideLoading();
+      return;
+    }
+
+    app.user.setData(data.data);
+
+    $('#sign_up').modal('hide');
+    $('#sign_in').modal('hide');
+
+  }).catch((err) => {
+    app.hideLoading();
+    api.errorAction(this, err);
+  });
+
+  return false;
+};
+
 module.exports = {
 
   popupLogin: Backbone.View.extend({
@@ -14,7 +61,7 @@ module.exports = {
       'click #sign-in-form .reset-password-link': 'resetPassword',
 
       'submit #sign-up-form': 'signupSubmit',
-      'click #sign-up-form .btn-social-network': 'loginWithSocialNetwork',
+      'click #sign-up-form .btn-social-network': 'loginWithSocial',
 
       'click .link-show-login': 'switchToLogin',
       'click .link-show-sign-up': 'switchToSignup',
@@ -54,24 +101,6 @@ module.exports = {
       return this;
     },
 
-    _ensureAgreedWithRules() {
-      let data = {};
-      let cb = this.el.querySelector('#agree-rules');
-
-      if (cb.checked)
-        data.checkbox1 = cb.value;
-
-      if (!validation.validate({ checkbox1: this.fields.checkbox1 }, data, this)) {
-        _(validation.errors).each((errors, key) => {
-          validation.invalidMsg(this, key, errors);
-        });
-
-        return false;
-      }
-
-      return true;
-    },
-
     switchToLogin(e) {
       e.preventDefault();
 
@@ -100,36 +129,8 @@ module.exports = {
       this.$signUp.modal('hide');
     },
 
-    loginWithSocialNetwork(e) {
-      e.preventDefault();
-
-      if (!this._ensureAgreedWithRules())
-        return false;
-
-      const network = $(e.target).data('network');
-
-      app.showLoading();
-      auth.social.login(network).then((cancelled) => {
-        if (cancelled) {
-          app.hideLoading();
-          return;
-        }
-
-        $('#sign_up').modal('hide');
-        $('#sign_in').modal('hide');
-
-        app.hideLoading();
-
-        setTimeout(() => {
-          window.location = '/account/profile';
-        }, 100);
-
-      }).catch((err) => {
-        app.hideLoading();
-        api.errorAction(this, err);
-      });
-
-      return false;
+    loginWithSocial(e) {
+      loginWithSocialNetwork.call(this, e);
     },
 
     signupSubmit(e) {
@@ -191,10 +192,7 @@ module.exports = {
     template: require('./templates/signup.pug'),
     events: {
       'submit .signup-form': api.submitAction,
-      'click .btn-social-network': 'loginWithSocialNetwork',
-      'click .btn-google': 'loginGoogle',
-      'click .btn-linkedin': 'loginLinkedin',
-      'click .btn-facebook': 'loginFacebook',
+      'click .btn-social-network': 'loginWithSocial',
     },
 
     initialize(options) {
@@ -218,55 +216,9 @@ module.exports = {
       app.user.setData(data);
     },
 
-    _ensureAgreedWithRules() {
-      let data = {};
-      let cb = this.el.querySelector('#agree-rules');
-
-      if (cb.checked)
-        data.checkbox1 = cb.value;
-
-      if (!validation.validate({ checkbox1: this.fields.checkbox1 }, data, this)) {
-        _(validation.errors).each((errors, key) => {
-          validation.invalidMsg(this, key, errors);
-        });
-
-        return false;
-      }
-
-      return true;
-    },
-
-    loginWithSocialNetwork(e) {
-      e.preventDefault();
-
-      if (!this._ensureAgreedWithRules())
-        return false;
-
-      const network = $(e.target).data('network');
-
-      app.showLoading();
-      auth.social.login(network).then((cancelled) => {
-        if (cancelled) {
-          app.hideLoading();
-          return;
-        }
-
-        $('#sign_up').modal('hide');
-        $('#sign_in').modal('hide');
-
-        app.hideLoading();
-
-        setTimeout(() => {
-          window.location = '/account/profile';
-        }, 100);
-
-      }).catch((err) => {
-        app.hideLoading();
-        api.errorAction(this, err);
-      });
-
-      return false;
-    },
+    loginWithSocial(e) {
+      loginWithSocialNetwork.call(this, e);
+    }
 
   }),
 
