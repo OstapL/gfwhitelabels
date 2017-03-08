@@ -65,21 +65,59 @@
 			font-size: 12px
 			color: $footer-company-text-color
 			line-height: 18px
-	.footer-bottom
-		background-color: $footer-bottom-bgc
-		padding-top: 15px
-		padding-bottom: 15px
-		.footer-social
-			a
-				color: $footer-bottom-link-color
-				font-size: rem(24)
-				margin: 7px 10px
-				+mt(.2s)
-				&:hover
-					color: $footer-bottom-link-color-hover
+	//.footer-bottom
+	//	background-color: $footer-bottom-bgc
+	//	padding-top: 15px
+	//	padding-bottom: 15px
+	.footer-social
+		a
+			color: $footer-bottom-link-color
+			font-size: rem(24)
+			margin: 7px 10px
+			+mt(.2s)
+			&:hover
+				color: $footer-bottom-link-color-hover
+	.newsletter
+		p
+			color: $footer-company-text-color
+			margin-top: rem(15)
+			margin-bottom: rem(10)
+	.footer-email-subscribe
+		input
+			margin-bottom: rem(10)
+		.btn
+			margin-bottom: 0
+	.social-position
+		margin-top: 15px
+@media screen and (min-width: 768px) and (max-width : 991px)
+	.p-r-md-0
+		padding-right: 0
+	.p-l-md-0
+		padding-left: 0
+
 @media only screen and (max-width : 580px)
 	.footer-bottom
 		span, p
 			font-size: 10px!important
+	.company
+		margin-bottom: 25px
+	.social-position
+		margin-bottom: 15px
 	.m-t-mobile-1
 		margin-top: rem(30)
+@media only screen and (min-width : 991px)
+	.footer_new
+		.p-x-0-custom
+			padding-left: 0
+			padding-right: 0
+@media only screen and (min-width : 1200px)
+	.p-x-xl-0
+		padding-left: 0
+		padding-right: 0
+@media screen and (min-width: 544px) and (max-width : 1200px)
+	.footer-social.social-position
+		position: relative
+		top: -32px
+		left: 0px
+		width: 200px
+		margin-top: 0

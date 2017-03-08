@@ -339,7 +339,7 @@ module.exports = {
       'submit form': api.submitAction,
     },
     getSuccessUrl(data) {
-      localStorage.setItem('token', data.key);
+      app.user.passwordChanged(data.key);
       return '/account/profile';
     },
     render(){
