@@ -105,6 +105,9 @@ module.exports = {
         url: function(val) {
           return String(val);
         },
+        text: function(val) {
+          return String(val);
+        },
       },
       useIntKeysAsArrayIndex: true,
       parseNulls: true,

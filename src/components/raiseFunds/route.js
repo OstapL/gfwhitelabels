@@ -3,8 +3,7 @@ const raiseHelper = require('./helpers.js');
 const STATUSES = require('consts/raisecapital/companyStatuses.json').STATUS;
 
 function getOCCF(optionsR, viewName, params = {}) {
-
-  $('#content').scrollTo();
+  $('#body').scrollTo();
   params.el = '#content';
 
   $.when(
@@ -42,44 +41,6 @@ function getOCCF(optionsR, viewName, params = {}) {
 
     });
   });
-/*
-  $.when(optionsR, app.user.getCompanyR(), app.user.getCampaignR(), app.user.getFormcR())
-    .done((options, company, campaign, formc) => {
-
-      if(options) {
-        params.fields = options[0].fields;
-      }
-      // ToDo
-      // This how we can avoid empty response
-      if(company == '') {
-        params.company = app.user.company;
-        params.campaign = app.user.campaign;
-        params.formc = app.user.formc;
-      }
-      else {
-        if(Object.keys(company[0]).length > 0) {
-          params.company = app.user.company = app.user.company || company[0];
-          params.campaign = app.user.campaign = app.user.campaign || campaign[0];
-          params.formc = app.user.formc = app.user.formc || formc[0];
-        } else {
-          params.company = {};
-          params.campaign = {};
-          params.formc = {};
-        }
-      }
-
-      if(typeof viewName == 'string') {
-        new View[viewName](Object.assign({}, params)).render();
-        app.hideLoading();
-      } else {
-        viewName();
-      }
-
-      raiseHelper.updateMenu(raiseHelper.calcProgress(app.user.campaign));
-    }).fail(function(xhr, response, error) {
-      api.errorAction.call(this, $('#content'), xhr, response, error);
-    });
-    */
 };
 
 module.exports = { 
@@ -159,7 +120,7 @@ module.exports = {
         }
       };
 
-      getOCCF('', fn);
     },
+    auth: '*',
   }
 };

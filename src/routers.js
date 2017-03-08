@@ -39,16 +39,6 @@ const runGoogleAnalytics = (id) => {
   })(window, document, 'script', 'dataLayer', id);
 };
 
-const emitGoogleAnalyticsEvent = () => {
-  //TODO: this will be fixed when we fix facebook/googleTagManager scripts
-  // if (!window.fbq) {
-  //   console.error('Google analytics service is not running');
-  //   return;
-  // }
-  // fbq('track', 'ViewContent');
-  // ga('send', 'pageview', '/' + Backbone.history.getPath());
-};
-
 const notFound = () => {
   errorPageHelper({ status: 404 });
   app.hideLoading();
@@ -58,11 +48,11 @@ const Router = Backbone.Router.extend(_.extend({
   routes: _.extend({}, routesMap.routes, { '*notFound': notFound }),
 
   initialize() {
-    runGoogleAnalytics(googleAnalyticsId);
   },
 
   execute(callback, args, name) {
-    emitGoogleAnalyticsEvent();
+    app.emitFacebookPixelEvent();
+    app.emitGoogleAnalyticsEvent();
 
     if (_.contains(routesMap.auth, name) && !app.user.ensureLoggedIn(window.location.pathname)) {
       return false;
@@ -92,7 +82,6 @@ const Router = Backbone.Router.extend(_.extend({
 app.on('userLoaded', function (data) {
 
   app.routers = new Router();
-  app.user.url = serverUrl + Urls['rest_user_details']();
   Backbone.history.start({ pushState: true });
 
   window.addEventListener('popstate', app.routers.back);

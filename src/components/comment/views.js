@@ -1,7 +1,6 @@
 const helpers = {
   date: require('helpers/dateHelper.js'),
   yesNo: require('helpers/yesNoHelper.js'),
-  fields: require('./fields.js'),
 };
 
 const validation = require('components/validation/validation.js');
@@ -12,6 +11,29 @@ function initDates(c) {
     initDates(ch);
   });
 };
+
+function countChildComments(comment) {
+  let cnt = comment.children.length;
+  _.each(comment.children, (childComment) => {
+    cnt += countChildComments(childComment);
+  });
+  comment.count = cnt;
+  return cnt;
+};
+
+function findComment(comments, uid) {
+  for (let idx = 0; idx < comments.length; idx += 1) {
+    let c = comments[idx];
+    if (c.uid == uid)
+      return c;
+
+    let found = findComment(c.children, uid);
+    if (found)
+      return found;
+  }
+
+  return null;
+}
 
 module.exports = {
   comments: Backbone.View.extend(_.extend({
@@ -51,9 +73,10 @@ module.exports = {
           this.userRole = company.role;
       });
 
-      //init dates
+      //init dates, count
       _.each(this.model.data, (c) => {
         initDates(c);
+        countChildComments(c);
       });
 
       this.snippets = {
@@ -62,6 +85,21 @@ module.exports = {
         edit: require('./templates/snippets/edit.pug'),
         comment: require('./templates/comment.pug'),
       };
+    },
+
+    findRootComment(uid) {
+      for (let i = 0; i < this.model.data.length; i += 1) {
+        let comment = this.model.data[i];
+
+        if (comment.uid == uid)
+          return comment;
+
+        let found = findComment(comment.children, uid);
+        if (found)
+          return comment;
+      }
+
+      return null;
     },
 
     getComment(uid) {
@@ -114,7 +152,7 @@ module.exports = {
             ? this.cancelComment(e)
             : void(0);
         default:
-          break;
+          return;
       }
     },
 
@@ -227,9 +265,15 @@ module.exports = {
           if (parentComment) {
             parentComment.children.push(newCommentModel);
 
-            //update parent comment response count
-            $parentComment.find('.comment-actions:first .link-response-count > .count')
-              .text(parentComment.children.length);
+            let rootComment = this.findRootComment(parentId);
+            if (rootComment) {
+              countChildComments(rootComment);
+
+              //update root comment response count
+              let $rootComment = this.$(`#comment${rootComment.uid}`);
+              $rootComment.find('.comment-actions:first .link-response-count > .count')
+                .text(rootComment.count);
+            }
           }
         } else {
           this.model.data.push(newCommentModel);
@@ -250,7 +294,7 @@ module.exports = {
         let $newComment = $(newCommentHtml);
 
         if (isChild) {
-          let $childComments = $parentComment.find('.multilevel-comments');
+          let $childComments = $parentComment.find('.multilevel-comments:first');
           $newComment.appendTo($childComments);
           if ($childComments.hasClass('collapse')) $childComments.removeClass('collapse');
         } else {

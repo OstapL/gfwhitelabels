@@ -10,6 +10,24 @@ global.OwlCarousel = require('owl.carousel/dist/owl.carousel.min.js');
 global.Urls = require('./jsreverse.js');
 require('jquery-serializejson/jquery.serializejson.min.js');
 require('js/html5-dataset.js');
+
+$.serializeJSON.defaultOptions = _.extend($.serializeJSON.defaultOptions, {
+  customTypes: {
+    money: function(val) { 
+      return formatHelper.unformatPrice(val);
+    },
+    url: function(val) {
+      return String(val);
+    },
+    text: function(val) {
+      return String(val);
+    },
+  },
+  useIntKeysAsArrayIndex: true,
+  parseNulls: true,
+  parseNumbers: true
+});
+
 const validation = require('components/validation/validation.js');
 
 const User = require('components/accountProfile/user.js');
@@ -83,7 +101,35 @@ let app = {
 
   routers: {},
   cache: {},
-  models: {},
+  models: {}, //looks like unused code
+
+  emitFacebookPixelEvent(eventName='ViewContent', params={}) {
+    if (!window.fbq)
+      return console.error('Facebook pixel API is not available');
+
+    const STANDARD_EVENTS = [
+      'ViewContent',
+      'Search',
+      'AddToCart',
+      'AddToWishlist',
+      'InitiateCheckout',
+      'AddPaymentInfo',
+      'Purchase',
+      'Lead',
+      'CompleteRegistration',
+    ];
+    if (_.contains(STANDARD_EVENTS))
+      fbq('track', eventName, params);
+    else
+      fbq('trackCustom', eventName, params);
+  },
+
+  emitGoogleAnalyticsEvent(eventName, params) {
+    //TODO: this will be fixed when we fix facebook/googleTagManager scripts
+    if (!window.ga)
+      return console.error('Google analytics API is not available');
+    ga('send', 'pageview', '/' + Backbone.history.getPath());
+  },
 
   /*
    * Misc Display Functions
