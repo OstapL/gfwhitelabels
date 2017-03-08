@@ -10,6 +10,24 @@ global.OwlCarousel = require('owl.carousel/dist/owl.carousel.min.js');
 global.Urls = require('./jsreverse.js');
 require('jquery-serializejson/jquery.serializejson.min.js');
 require('js/html5-dataset.js');
+
+$.serializeJSON.defaultOptions = _.extend($.serializeJSON.defaultOptions, {
+  customTypes: {
+    money: function(val) { 
+      return formatHelper.unformatPrice(val);
+    },
+    url: function(val) {
+      return String(val);
+    },
+    text: function(val) {
+      return String(val);
+    },
+  },
+  useIntKeysAsArrayIndex: true,
+  parseNulls: true,
+  parseNumbers: true
+});
+
 const validation = require('components/validation/validation.js');
 
 const User = require('components/accountProfile/user.js');
