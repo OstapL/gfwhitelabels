@@ -1,55 +1,6 @@
-const validation = require('components/validation/validation.js');
 
-const auth = {
-  social: require('./social-auth.js'),
-};
+const socialAuth = require('./social-auth.js');
 
-function _ensureAgreedWithRules(view) {
-  let data = {};
-  let cb = view.el.querySelector('#agree-rules');
-
-  if (cb.checked)
-    data.checkbox1 = cb.value;
-
-  if (!validation.validate({ checkbox1: view.fields.checkbox1 }, data, this)) {
-    _(validation.errors).each((errors, key) => {
-      validation.invalidMsg(view, key, errors);
-    });
-
-    return false;
-  }
-
-  return true;
-}
-
-function loginWithSocialNetwork(e) {
-  e.preventDefault();
-
-  if (!_ensureAgreedWithRules(this)) {
-    return false;
-  }
-
-  const network = $(e.target).data('network');
-
-  app.showLoading();
-  auth.social.login(network).then((data) => {
-    if (data.cancelled) {
-      app.hideLoading();
-      return;
-    }
-
-    app.user.setData(data.data);
-
-    $('#sign_up').modal('hide');
-    $('#sign_in').modal('hide');
-
-  }).catch((err) => {
-    app.hideLoading();
-    api.errorAction(this, err);
-  });
-
-  return false;
-};
 
 module.exports = {
 
@@ -130,7 +81,7 @@ module.exports = {
     },
 
     loginWithSocial(e) {
-      loginWithSocialNetwork.call(this, e);
+      socialAuth.loginWithSocialNetwork.call(this, e);
     },
 
     signupSubmit(e) {
@@ -217,7 +168,7 @@ module.exports = {
     },
 
     loginWithSocial(e) {
-      loginWithSocialNetwork.call(this, e);
+      socialAuth.loginWithSocialNetwork.call(this, e);
     }
 
   }),

@@ -1,5 +1,9 @@
 const View = require('./views.js');
 
+const socialAuth = require('./social-auth.js');
+const hello = require('hellojs');
+
+
 module.exports = {
   routes: {
     'account/login': 'login',
@@ -49,54 +53,20 @@ module.exports = {
     },
 
     loginFacebook() {
-      const socialAuth = require('./social-auth.js');
-      const hello = require('hellojs');
-
-      hello('facebook').login({
-        scope: 'public_profile,email',
-      }).then(e => {
-        let sendTokenR = socialAuth.sendToken('facebook', e.authResponse.access_token);
-        $.when(sendTokenR).done((data) => {
-          app.user.setData(data);
-        });
-      }, (e) => {
-        // TODO: notificate user about reason of error;
-        app.routers.navigate('/account/login', { trigger: true, replace: true });
+      socialAuth.login('facebook').done((data) => {
+        app.user.setData(data);
       });
     },
 
     loginLinkedin() {
-      const socialAuth = require('./social-auth.js');
-      const hello = require('hellojs');
-
-      hello('linkedin').login({
-        scope: 'r_basicprofile,r_emailaddress',
-      }).then((e) => {
-          let sendTokenR = socialAuth.sendToken('linkedin', e.authResponse.access_token);
-          $.when(sendTokenR).done(function (data) {
-            app.user.setData(data);
-          });
-        }, (e) => {
-          // TODO: notificate user about reason of error;
-          app.routers.navigate('/account/login', { trigger: true, replace: true });
-        }
-      );
+      socialAuth.login('linkedin').done((data) => {
+        app.user.setData(data);
+      });
     },
 
     loginGoogle() {
-      const socialAuth = require('./social-auth.js');
-      const hello = require('hellojs');
-
-      hello('google').login({
-        scope: 'profile,email',
-      }).then((e) => {
-        let sendTokenR = socialAuth.sendToken('google', e.authResponse.access_token);
-        $.when(sendTokenR).done((data) => {
-          app.user.setData(data);
-        });
-      }, (e) => {
-        // TODO: notificate user about reason of error;
-        app.routers.navigate('/account/login', { trigger: true, replace: true });
+      socialAuth.login('google').done((data) => {
+        app.user.setData(data);
       });
     },
 
@@ -104,7 +74,7 @@ module.exports = {
       //TODO: app.user.passwordChanged?
       localStorage.removeItem('token');
       localStorage.removeItem('user');
-      $('#body').scrollTo();
+      $('body').scrollTo();
       const i = new View.reset();
       i.render();
       app.hideLoading();
@@ -113,7 +83,7 @@ module.exports = {
     resetPassword(code) {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
-      $('#body').scrollTo();
+      $('body').scrollTo();
       api.makeRequest(authServer + '/reset-password/code', 'PUT', {
         reset_password_code: code,
         domain: window.location.host,
@@ -122,7 +92,6 @@ module.exports = {
         window.location = '/account/password/new';
       }).fail((data) => {
         const template = require('./templates/expiredCode.pug');
-        $('#body').html(template());
         app.hideLoading();
       });
     },
