@@ -1,40 +1,29 @@
-module.exports = Backbone.Router.extend({
+module.exports = {
   routes: {
     'calculator/capitalraise/intro': 'calculatorCapitalraiseIntro',
     'calculator/capitalraise/step-1': 'calculatorCapitalraiseStep1',
-    'calculator/capitalraise/finish': 'calculatorCapitalraiseFinish'
+    'calculator/capitalraise/finish': 'calculatorCapitalraiseFinish',
   },
-
-  calculatorCapitalraiseIntro() {
-    require.ensure([], () => {
+  methods: {
+    calculatorCapitalraiseIntro() {
       const View = require('./views');
-
       new View.intro().render();
-
       $('#content').scrollTo();
       app.hideLoading();
-    });
-  },
+    },
 
-  calculatorCapitalraiseStep1() {
-    require.ensure([], () => {
+    calculatorCapitalraiseStep1() {
       const View = require('./views');
-
       new View.step1().render();
-
       $('#content').scrollTo();
       app.hideLoading();
-    });
-  },
+    },
 
-  calculatorCapitalraiseFinish() {
-    require.ensure([], () => {
+    calculatorCapitalraiseFinish() {
       const View = require('./views');
-
       new View.finish().render();
-
       $('#content').scrollTo();
       app.hideLoading();
-    });
-  }
-});
+    },
+  },
+};
