@@ -11,7 +11,7 @@
   var passedTime = dateHelper.fromNow(comment.created_date);
   var avatar = app.getUrl(comment.user.image_data) || '/img/default/Default_photo.png';
 
-div(data-id=comment.uid data-level=level).single-comment.col-xl-12
+div(id=('comment' + comment.uid) data-id=comment.uid data-level=level).single-comment.col-xl-12
   .author-info
     .row
       .col-xl-12
@@ -28,17 +28,18 @@ div(data-id=comment.uid data-level=level).single-comment.col-xl-12
     .row
       .col-xl-12
         .author-comment
-          p.comment #{ comment.message.replace(/\n/g, '<br/>') }
+          p.comment !{ comment.message.replace(/\n/g, '<br/>') }
         div.responce.comment-actions
           if level <= 0
             li.icon-comment
               i.fa.fa-comment-o.p-r-5
               a(href="#").link-1.link-response-count
-                span.count #{ comment.children ? comment.children.length : '' }
+                span.count #{ comment.count || '' }
                 i.fa.fa-angle-up
               span.reply-right |
-          li.reply
-            a(href="#").link-1.link-reply Reply
+          if level <= 3
+            li.reply
+              a(href="#").link-1.link-reply Reply
           //-
             li
               a(href="#").link-1.link-like

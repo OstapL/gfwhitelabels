@@ -343,15 +343,7 @@ module.exports = {
     },
 
     _success(data) {
-      if (data.token) {
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('user', JSON.stringify(data));
-        setTimeout(function () {
-          window.location = app.getParams().next ? app.getParams().next : '/';
-        }, 200);
-      } else {
-        validation.invalidMsg(this, '', 'Server return no authentication data');
-      }
+      app.user.setData(data);
     },
 
   }),
@@ -383,6 +375,7 @@ module.exports = {
     },
 
     _success(data) {
+      app.emitFacebookPixelEvent('CompleteRegistration');
       app.emitFacebookPixelEvent('CompleteRegistration');
       if (data.token) {
         localStorage.removeItem('user');
