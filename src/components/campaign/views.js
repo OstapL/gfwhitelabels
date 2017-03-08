@@ -1093,6 +1093,7 @@ module.exports = {
     },
 
     _success(data) {
+      app.emitFacebookPixelEvent('MakeInvestment');
       this.saveEsign(data);
     },
 
