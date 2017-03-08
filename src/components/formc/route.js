@@ -4,7 +4,7 @@ const formcHelpers = require('./helpers.js');
 const STATUSES = require('consts/raisecapital/companyStatuses.json').STATUS;
 
 function getOCCF(optionsR, viewName, params = {}) {
-  $('#content').scrollTo();
+  $('body').scrollTo();
   params.el = '#content';
   $.when(optionsR, app.user.getCompanyR(), app.user.getCampaignR(), app.user.getFormcR(params.id))
   .done((options, company, campaign, formc) => {

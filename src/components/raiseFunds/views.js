@@ -282,7 +282,8 @@ module.exports = {
           },
           auto: {
             width: 1600,
-            height: 960
+            height: 960,
+            name: 'original'
           },
           cssClass: 'img-crop',
           template: 'regular'
