@@ -4,46 +4,43 @@ const View = require('components/raiseFunds/views.js');
 const raiseHelper = require('./helpers.js');
 const STATUSES = require('consts/raisecapital/companyStatuses.json').STATUS;
 
+
 function getOCCF(optionsR, viewName, params = {}) {
-  $('#content').scrollTo();
+
+  $('body').scrollTo();
   params.el = '#content';
 
   $.when(
-      app.user.getFormcR(),
-  ).then((formc) => {
-    if(formc) {
-      app.user.formc = formc;
+    api.makeCacheRequest(raiseCapitalServer + '/company', 'OPTIONS'),
+    api.makeCacheRequest(raiseCapitalServer + '/campaign', 'OPTIONS'),
+    app.user.getCompanyR(),
+    app.user.getCampaignR(),
+    app.user.getFormcR()
+  ).done((companyFields, campaignFields,  company, campaign, formc) => {
+  
+    params.fields = {
+      company: companyFields[0].fields,
+      campaign: campaignFields[0].fields,
+    };
+
+    if(company[0]) app.user.company = company[0];
+    if(campaign[0]) app.user.campaign = campaign[0];
+    if(formc[0]) app.user.formc = formc[0];
+
+    params.company = app.user.company;
+    params.campaign = app.user.campaign;
+    params.formc = app.user.formc;
+
+    if(typeof viewName == 'string') {
+      new View[viewName](Object.assign({}, params)).render();
+      app.hideLoading();
+    } else {
+      viewName();
     }
 
-    $.when(
-      api.makeCacheRequest(raiseCapitalServer + '/company', 'OPTIONS'),
-      api.makeCacheRequest(raiseCapitalServer + '/campaign', 'OPTIONS'),
-      api.makeCacheRequest(raiseCapitalServer + '/company/' + app.user.formc.company_id, 'GET'),
-      api.makeCacheRequest(raiseCapitalServer + '/campaign/' + app.user.formc.campaign_id, 'GET'),
-    ).done((companyFields, campaignFields,  company, campaign) => {
-    
-      params.fields = {
-        company: companyFields[0].fields,
-        campaign: campaignFields[0].fields,
-      };
-
-      if(company[0]) app.user.company = company[0];
-      if(campaign[0]) app.user.campaign = campaign[0];
-
-      params.company = app.user.company;
-      params.campaign = app.user.campaign;
-      params.formc = app.user.formc;
-
-      if(typeof viewName == 'string') {
-        new View[viewName](Object.assign({}, params)).render();
-        app.hideLoading();
-      } else {
-        viewName();
-      }
-
-    });
   });
 };
+
 
 module.exports = {
   routes: {
