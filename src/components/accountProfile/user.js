@@ -72,19 +72,20 @@ class User {
     if (this.token === null) {
       return app.trigger('userLoaded', { id: '' });
     } else {
-      const data = JSON.parse(localStorage.getItem('user'));
-      this.companiesMember = data.info;
-      delete data.info;
-      this.data = data;
-
+      const data = JSON.parse(localStorage.getItem('user')) || {};
       // Check if user have all required data
-      if(this.companiesMember == null) {
+      if(data.hasOwnProperty('info') == false || Array.isArray(data.info) == false) {
         this.emptyLocalStorage();
         setTimeout(function() {
           window.location = '/account/login?next=' + document.location.pathname;
         }, 100);
         return;
       }
+
+      this.companiesMember = data.info;
+      delete data.info;
+      this.data = data;
+
       return app.trigger('userLoaded', data);
     }
   }

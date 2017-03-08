@@ -3,6 +3,7 @@ const raiseHelper = require('./helpers.js');
 const STATUSES = require('consts/raisecapital/companyStatuses.json').STATUS;
 
 function getOCCF(optionsR, viewName, params = {}) {
+
   $('body').scrollTo();
   params.el = '#content';
 
@@ -40,8 +41,7 @@ function getOCCF(optionsR, viewName, params = {}) {
       }
 
     });
-  });
-};
+});
 
 module.exports = { 
   routes: {
@@ -121,6 +121,6 @@ module.exports = {
       };
 
     },
-    auth: '*',
-  }
+  },
+  auth: '*',
 };

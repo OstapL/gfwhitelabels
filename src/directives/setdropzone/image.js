@@ -215,7 +215,8 @@ class CropperDropzone {
         'PUT',
         data
       ).done((responseData) => {
-        this.file.file.urls[NAME data.width + 'x' + data.height] = responseData.urls[0];
+        debugger;
+        this.file.file.urls[data.name] = responseData.urls[0];
         this.file.save().done(() => {
           this.file.render(
               this.file.element
