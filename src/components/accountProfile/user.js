@@ -73,18 +73,19 @@ class User {
       return app.trigger('userLoaded', { id: '' });
     } else {
       const data = JSON.parse(localStorage.getItem('user'));
-      this.companiesMember = data.info;
-      delete data.info;
-      this.data = data;
-
       // Check if user have all required data
-      if(this.companiesMember == null) {
+      if(this.data == null) {
         this.emptyLocalStorage();
         setTimeout(function() {
           window.location = '/account/login?next=' + document.location.pathname;
         }, 100);
         return;
       }
+
+      this.companiesMember = data.info;
+      delete data.info;
+      this.data = data;
+
       return app.trigger('userLoaded', data);
     }
   }
