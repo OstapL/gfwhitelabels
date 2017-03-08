@@ -74,7 +74,7 @@ class User {
     } else {
       const data = JSON.parse(localStorage.getItem('user')) || {};
       // Check if user have all required data
-      if(this.data == null) {
+      if(data.hasOwnProperty('info') == false || Array.isArray(data.info) == false) {
         this.emptyLocalStorage();
         setTimeout(function() {
           window.location = '/account/login?next=' + document.location.pathname;
