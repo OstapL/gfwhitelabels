@@ -3,7 +3,7 @@ const raiseHelper = require('./helpers.js');
 const STATUSES = require('consts/raisecapital/companyStatuses.json').STATUS;
 
 function getOCCF(optionsR, viewName, params = {}) {
-  $('#body').scrollTo();
+  $('body').scrollTo();
   params.el = '#content';
 
   $.when(
