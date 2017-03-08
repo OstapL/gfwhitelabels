@@ -72,8 +72,7 @@ module.exports = {
 
     resetForm() {
       //TODO: app.user.passwordChanged?
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
+      app.user.emptyLocalStorage();
       $('body').scrollTo();
       const i = new View.reset();
       i.render();
@@ -81,8 +80,7 @@ module.exports = {
     },
 
     resetPassword(code) {
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
+      app.user.emptyLocalStorage();
       $('body').scrollTo();
       api.makeRequest(authServer + '/reset-password/code', 'PUT', {
         reset_password_code: code,
@@ -99,8 +97,7 @@ module.exports = {
     membershipConfirmation(formcId, code) {
       //TODO: potential candidate for app.user.passwordChanged
       if (localStorage.getItem('token') !== null) {
-        localStorage.removeItem('token', '');
-        localStorage.removeItem('user');
+        app.user.emptyLocalStorage();
         setInterval(() => window.location.reload(), 300);
         return false;
       }
@@ -128,4 +125,3 @@ module.exports = {
     },
   },
 };
-
