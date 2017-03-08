@@ -178,16 +178,16 @@ module.exports = {
       this.fields = {
         checkbox1: {
           type: 'boolean',
-          validate:{
+          validate: {
             OneOf: {
-              choices:[ true,"1" ],
-              labels:[]
+              choices: [true, '1'],
+              labels: [],
             },
-            choices:{}
+            choices: {},
           },
           required: true,
-          messageRequired: "You must agree to the terms before creating an account"
-        }
+          messageRequired: 'You must agree to the terms before creating an account',
+        },
       };
       this.next = options.next || window.location.pathname;
     },
@@ -215,7 +215,7 @@ module.exports = {
       if (cb.checked)
         data.checkbox1 = cb.value;
 
-      if (!validation.validate({checkbox1: this.fields.checkbox1}, data, this)) {
+      if (!validation.validate({ checkbox1: this.fields.checkbox1 }, data, this)) {
         _(validation.errors).each((errors, key) => {
           validation.invalidMsg(this, key, errors);
         });
@@ -245,12 +245,15 @@ module.exports = {
     },
 
     _success(data) {
+      if (this.urlRoot.indexOf('registration') >= 0)
+        app.emitFacebookPixelEvent('CompleteRegistration');
 
       this.$signIn.modal('hide');
       this.$signUp.modal('hide');
 
-      if(data.hasOwnProperty('key')) {
-        localStorage.setItem('token', data.key);
+      //TODO: add method updating token/user info in localStorage
+      if (data.token) {
+        localStorage.setItem('token', data.token);
         setTimeout(() => {
           window.location = this.next || '/account/profile';
         }, 200);
@@ -314,7 +317,7 @@ module.exports = {
       this.$signIn.modal('hide');
 
       return false;
-    }
+    },
   }),
 
   login: Backbone.View.extend({
@@ -340,15 +343,14 @@ module.exports = {
     },
 
     _success(data) {
-      if(data.hasOwnProperty('key')) {
-        localStorage.setItem('token', data.key);
+      if (data.token) {
+        localStorage.setItem('token', data.token);
         localStorage.setItem('user', JSON.stringify(data));
-        setTimeout(function() {
-          window.location = app.getParams().next ? app.getParams().next : 
-                '/';
+        setTimeout(function () {
+          window.location = app.getParams().next ? app.getParams().next : '/';
         }, 200);
       } else {
-        validation.invalidMsg(form, '', 'Server return no authentication data');
+        validation.invalidMsg(this, '', 'Server return no authentication data');
       }
     },
 
@@ -381,19 +383,20 @@ module.exports = {
     },
 
     _success(data) {
-      if(data.hasOwnProperty('key')) {
-          localStorage.removeItem('user');
-          localStorage.setItem('token', data.key);
+      app.emitFacebookPixelEvent('CompleteRegistration');
+      if (data.token) {
+        localStorage.removeItem('user');
+        localStorage.setItem('token', data.token);
 
-          delete this.model.password1;
-          delete this.model.password2;
-          delete this.model.key;
+        delete this.model.password1;
+        delete this.model.password2;
+        delete this.model.key;
 
-          window.location = app.getParams().next ? app.getParams().next : '/account/profile';
+        window.location = app.getParams().next ? app.getParams().next : '/account/profile';
       } else {
-          validation.invalidMsg(                                 
-            this, '', 'Server return no authentication data'
-          );
+        validation.invalidMsg(
+          this, '', 'Server return no authentication data'
+        );
       }
     },
 
@@ -404,7 +407,7 @@ module.exports = {
       if (cb.checked)
         data.checkbox1 = cb.value;
 
-      if (!validation.validate({checkbox1: this.fields.checkbox1}, data, this)) {
+      if (!validation.validate({ checkbox1: this.fields.checkbox1 }, data, this)) {
         _(validation.errors).each((errors, key) => {
           validation.invalidMsg(this, key, errors);
         });
@@ -461,24 +464,33 @@ module.exports = {
       this.fields = {};
       this.fields.email = {
         type: 'email',
-        required: true
+        required: true,
       };
       this.fields.domain = {
         type: 'text',
-        required: true
+        required: true,
       };
       this.el.innerHTML = this.template();
       return this;
     },
 
     _success(data) {
+      app.emitFacebookPixelEvent('CompleteRegistration');
+
       app.hideLoading();
       $('body').scrollTo();
       $('#content').html(
-        '<section class="reset"><div class="container"><div class="col-lg-12"><h2 class="dosis text-uppercase text-sm-center text-xs-center m-t-85"> Please check your email for instructions. </h2></div></div></section>'
+        '<section class="reset">' +
+          '<div class="container">' +
+            '<div class="col-lg-12">' +
+              '<h2 class="dosis text-uppercase text-sm-center text-xs-center m-t-85">' +
+                'Please check your email for instructions. ' +
+              '</h2>' +
+            '</div>' +
+          '</div>' +
+        '</section>'
       );
-    }
-
+    },
   }),
 
   membershipConfirmation: Backbone.View.extend({
@@ -519,12 +531,12 @@ module.exports = {
       e.preventDefault();
 
       api.makeRequest(
-          this.urlRoot,
-          'PUT',
-          {
-            'activation_code': this.code,
-            'domain': window.location.host,
-          }
+        this.urlRoot,
+        'PUT',
+        {
+          activation_code: this.code,
+          domain: window.location.host,
+        }
       ).then((data) => {
         localStorage.setItem('token', data.token);
         setTimeout(() => {
@@ -541,10 +553,7 @@ module.exports = {
       e.preventDefault();
 
       $('#content').scrollTo();
-      app.routers.navigate(
-        'account/profile',
-        { trigger: true, replace: false }
-      );
+      app.routers.navigate('account/profile', { trigger: true, replace: false });
 
       return false;
     },
