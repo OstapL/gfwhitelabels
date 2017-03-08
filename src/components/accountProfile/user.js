@@ -72,7 +72,7 @@ class User {
     if (this.token === null) {
       return app.trigger('userLoaded', { id: '' });
     } else {
-      const data = JSON.parse(localStorage.getItem('user'));
+      const data = JSON.parse(localStorage.getItem('user')) || {};
       // Check if user have all required data
       if(this.data == null) {
         this.emptyLocalStorage();

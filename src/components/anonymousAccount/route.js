@@ -115,7 +115,7 @@ module.exports = {
       //TODO: app.user.passwordChanged?
       localStorage.removeItem('token');
       localStorage.removeItem('user');
-      $('#content').scrollTo();
+      $('#body').scrollTo();
       const i = new View.reset();
       i.render();
       app.hideLoading();
@@ -124,7 +124,7 @@ module.exports = {
     resetPassword(code) {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
-      $('#content').scrollTo();
+      $('#body').scrollTo();
       api.makeRequest(authServer + '/reset-password/code', 'PUT', {
         reset_password_code: code,
         domain: window.location.host,
@@ -133,7 +133,7 @@ module.exports = {
         window.location = '/account/password/new';
       }).fail((data) => {
         const template = require('./templates/expiredCode.pug');
-        $('#content').html(template());
+        $('#body').html(template());
         app.hideLoading();
       });
     },
