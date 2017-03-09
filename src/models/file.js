@@ -30,13 +30,17 @@ class File {
     this.mime = data.mime || defaultIcon;
   }
 
-  getOriginalFile() {
-    return this.urls[this.urls.length];
+  getOriginal(fallback) {
+    if(this.urls.hasOwnProperty('origin')) {
+      return this.urls.origin;
+    }
+    return '/img/default/' + fallback;
   }
 
   getExtention() {
-    if(this.urls.origin)
+    if(this.urls.origin) {
       return this.urls.origin.split('.').reverse()[0];
+    }
   }
 
   getExtentionByMime() {
@@ -68,6 +72,13 @@ class File {
 
     return `${firstPart}...${lastPart}`;
 
+  }
+
+  getUrl(name, fallback='') {
+    if(this.urls.hasOwnProperty(name)) {
+      return this.urls[name];
+    }
+    return '/img/default/' + fallback;
   }
 
   save(idName, dataName) {

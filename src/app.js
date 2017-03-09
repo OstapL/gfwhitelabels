@@ -28,7 +28,7 @@ $.serializeJSON.defaultOptions = _.extend($.serializeJSON.defaultOptions, {
   parseNumbers: true
 });
 
-const validation = require('components/validation/validation.js');
+global.validation = require('components/validation/validation.js');
 
 const User = require('components/accountProfile/user.js');
 global.formatHelper = require('helpers/formatHelper');

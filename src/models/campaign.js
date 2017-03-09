@@ -17,9 +17,11 @@ class Campaign {
       if(this.data.hasOwnProperty(key)) {
         switch(this.schema[key].type) {
           case 'file':
-            this.data[key] = new File(urlRoot, this.data[key.replace('_file_id', '_data')][0]);
+            this.data[key] = new File(urlRoot, this.data[key.replace('_file_id', '_data')]);
+            break;
           case 'image':
-            this.data[key] = new Image(urlRoot, this.data[key.replace('_image_id', '_data')][0]);
+            this.data[key] = new Image(urlRoot, this.data[key.replace('_image_id', '_data')]);
+            break;
         }
       }
     }

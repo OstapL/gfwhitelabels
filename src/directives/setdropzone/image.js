@@ -27,7 +27,12 @@ class ImageDropzone extends file.FileDropzone {
       this.options.params.height = this.cropperOptions.auto.height;
     }
 
-    debugger;
+    if(this.cropperOptions.hasOwnProperty('resize')) {
+      this.options.params.resize = true;
+      this.options.params.resize_width = this.cropperOptions.resize.width;
+      this.options.params.resize_height = this.cropperOptions.resize.height;
+    }
+
     this.fileElement = new ImageElement(
       this.model[fieldName],
       fieldName,
@@ -44,13 +49,17 @@ class ImageDropzone extends file.FileDropzone {
     reorgData.urls = {
       origin: data[1].urls[0]
     };
-    reorgData.urls[data[0].name.split('_')[1].split('.')[0]] = data[0].urls[0];
+    reorgData.urls.main = data[0].urls[0];
+    if(this.cropperOptions.resize) {
+      reorgData.urls[
+        this.cropperOptions.resize.width + 'x' + this.cropperOptions.resize.height
+      ] = data[0].urls[0];
+    }
 
     this.fileElement.update(reorgData).done(() => {
-      debugger;
       this.fileElement.render(this.fileElement.element);
       new CropperDropzone(
-        this.fileElement,
+        this,
         this.cropperOptions
       ).render('#content');
     });
@@ -66,8 +75,9 @@ const Cropper = require('cropperjs').default;
 
 
 class CropperDropzone {
-  constructor(file, options={}) {
-    this.file = file;
+  constructor(dropzone, options={}) {
+    this.dropzone = dropzone;
+    this.file = dropzone.fileElement;
     this.options = options;
 
     this.options.control = Object.assign({}, {
@@ -215,12 +225,20 @@ class CropperDropzone {
         'PUT',
         data
       ).done((responseData) => {
-        debugger;
-        this.file.file.urls[data.name] = responseData.urls[0];
+
+        let thumbSize = '';
+        this.file.file.urls.main = responseData.urls[0];
+        if(this.options.resize) {
+          thumbSize = this.options.resize.width + 'x' + this.options.resize.height;
+          this.file.file.urls[thumbSize] = responseData.urls[0];
+        }
+
         this.file.save().done(() => {
-          this.file.render(
-              this.file.element
-          )
+          if(this.options.resize) { 
+            this.file.element.querySelector('img').src = this.file.file.urls[thumbSize];
+          } else {
+            this.file.element.querySelector('img').src = this.file.file.urls.main;
+          }
           this.$modal.modal('hide');
         });
       });

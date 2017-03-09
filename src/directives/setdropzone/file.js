@@ -115,6 +115,7 @@ class FileDropzone {
       },
 
       uploadprogress: function (file, progress, bytesSend) {
+        this.element.querySelector('.help-block').remove();
         $(this.element).find('.uploading').removeClass('collapse').show().css('z-index', 999);
       },
 
@@ -206,8 +207,8 @@ class FileDropzone {
     });
 
     dropbox.on('error', (file, error, xhr) => {
-      alert('show standart error message');
-      this._errorAction(name, xhr, error);
+      $(this.element).find('.uploading').hide().addClass('collapse').css('z-index', '');
+      validation.invalidMsg(this.view, this.fileElement.fieldName, [Object.values(error)[0]]); 
     });
   }
 

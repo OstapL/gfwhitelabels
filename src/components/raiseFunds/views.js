@@ -283,7 +283,10 @@ module.exports = {
           auto: {
             width: 1600,
             height: 960,
-            name: 'original'
+          },
+          resize: {
+            width: 305,
+            height: 205,
           },
           cssClass: 'img-crop',
           template: 'regular'
@@ -291,19 +294,22 @@ module.exports = {
       });
 
       this.fields.list_image_image_id = _.extend(this.fields.list_image_image_id, {
+        title: 'Drop your photo here or click to upload',
         help_text: ' This image entices investors to view your campaign. A minimum size of 350x209 is recommended.',
         crop: {
           control:  {
-            aspectRatio: 350 / 209,
-          },
-          cropper: {
-            cssClass: 'img-crop',
-            // preview: false,
+            aspectRatio: 1400 / 960,
           },
           auto: {
-            width: 350,
-            height: 209,
-          }
+            width: 1400,
+            height: 960,
+          },
+          resize: {
+            width: 305,
+            height: 205,
+          },
+          cssClass: 'img-crop',
+          template: 'regular'
         },
       });
 
