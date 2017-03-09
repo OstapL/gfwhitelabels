@@ -67,30 +67,37 @@ mixin confirmStatement(name, attr)
               .form-group.row.fee.text
                 label.col-xl-3.col-lg-4.text-md-left.text-lg-right.text-xl-right Commission
                 .commission-group
-                  .col-xl-4.col-lg-8
-                    .col-xl-12.p-x-0.input-border-bottom.commission
-                      input(name="fee" id="fee" value="$15" disabled).form-control
-                      h4.text-uppercase.waived Waived
-                      .commission-right-block
-                        span $25
-                    .col-xl-12.p-x-0.input-border-bottom
-                      input(name="fee" id="fee" value="$10" disabled).form-control
-
-              //-
-                pug_html += app.fields.fieldTextLabel("fee", _.extend({
-                    class1: 'col-xl-3 col-lg-4 text-md-left text-lg-right text-xl-right',
-                    class2: 'col-xl-4 col-lg-8 input-border-bottom',
-                    class3: 'c',
-                    placeholder: '+ $10',
-                    value: '$10',
-                    label: 'Commission',
-                    disabled: true,
-                  }, fields.fee));
+                    .col-xl-4.col-lg-8
+                      if feeInfo.waived
+                        .col-xl-12.p-x-0.input-border-bottom.commission
+                          input(name="waived" id="waived" value=("$" + feeInfo.waived) disabled).form-control
+                          h4.text-uppercase.waived Waived
+                          .commission-right-block
+                            span #{ '$' + feeInfo.remainingCredit }
+                            if feeInfo.remainingCredit <= 0
+                              span You are using the last #{ '$' + feeInfo.credit } of your $25 credit.
+                        if feeInfo.fee > 0
+                          .col-xl-12.p-x-0.input-border-bottom
+                            input(name="fee" id="fee" value=("$" + feeInfo.fee) disabled).form-control
+                        else
+                          input(name="fee" id="fee" value=("$" + feeInfo.fee) disabled hidden=true).form-control
+                      else
+                        -
+                          var feeStr = '$' + feeInfo.fee;
+                          pug_html += app.fields.fieldTextLabel("fee", _.extend({
+                            class1: 'col-xl-3 col-lg-4 text-md-left text-lg-right text-xl-right',
+                            class2: 'col-xl-4 col-lg-8 input-border-bottom',
+                            class3: 'c',
+                            placeholder: '+ ' + feeStr,
+                            value: feeStr,
+                            label: 'Commission',
+                            disabled: true,
+                          }, fields.fee));
           .row
             label.col-xl-3.col-lg-4.text-md-left.text-lg-right.text-xl-right.p-t-0.total-investment-label Total
             .col-xl-4.col-lg-8.p-l-0
-              span.p-l-1.total-investment-amount $10
-              input(type="hidden" name="total_amount" value="$10")
+              span.p-l-1.total-investment-amount #{ '$' + feeInfo.fee }
+              input(type="hidden" name="total_amount" value=("$" + feeInfo.fee))
           // popover content for amount field
           div.popover-content-amount-campaign
             i.fa.fa-info-circle
