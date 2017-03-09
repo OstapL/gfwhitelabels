@@ -115,7 +115,12 @@ class FileDropzone {
       },
 
       uploadprogress: function (file, progress, bytesSend) {
-        this.element.querySelector('.help-block').remove();
+        let errorMessages = this.element.querySelector('.help-block');
+
+        if(errorMessages) {
+          errorMessages.remove();
+        }
+
         $(this.element).find('.uploading').removeClass('collapse').show().css('z-index', 999);
       },
 
@@ -208,13 +213,35 @@ class FileDropzone {
 
     dropbox.on('error', (file, error, xhr) => {
       $(this.element).find('.uploading').hide().addClass('collapse').css('z-index', '');
-      validation.invalidMsg(this.view, this.fileElement.fieldName, [Object.values(error)[0]]); 
+      validation.invalidMsg(
+        this.view,
+        this.fileElement.fieldName,
+        Object.values(error)[0]
+      ); 
     });
   }
 
   success(file, data) {
+
+    if(data[0]) {
+      data = data[0];
+    }
+    const urls = data.urls;
+
+    data.urls = {};
+    data.urls.origin = urls[0];
+
     this.fileElement.update(data).done(() => {
       this.fileElement.render(this.element.querySelector('.fileContainer'));
+    }).fail((xhr) => {
+      $(this.element).find('.uploading').hide().addClass('collapse').css('z-index', '');
+      // ToDo
+      // fix if <field>_data urls error
+      validation.invalidMsg(
+        this.view,
+        this.fileElement.fieldName,
+        Object.values(xhr.responseJSON)
+      ); 
     });
   }
 

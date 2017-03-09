@@ -588,7 +588,7 @@ module.exports = {
         this.model = new Campaign(
           this.urlRoot.replace(':id', options.campaign.id),
           options.campaign,
-          options.fields
+          options.fields.campaign
         );
         this.company = options.company;
         this.fields.valuation_determination_other = _.extend(this.fields.valuation_determination_other, {

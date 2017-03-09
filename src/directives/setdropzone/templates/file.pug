@@ -8,4 +8,4 @@
       div.row
         a(class=("a-" + file.fieldName) href=file.file.urls.origin title=file.file.name) #{ file.file.shortenFileName() }
     else
-      img(src=file.file.getIconUrl() alt=attr.label class="img-file img-" + file.fieldName)
+      img(src=file.file.getIconUrl() alt=file.file.name class="img-file img-" + file.fieldName)

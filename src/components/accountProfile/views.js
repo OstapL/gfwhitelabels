@@ -143,9 +143,9 @@ module.exports = {
         city: 'City',
         phone: 'Phone',
         account_number: 'Account Number',
-        account_number_re: 'Re-Enter Account Number',
+        account_number_re: 'Re-enter Account Number',
         routing_number: 'Routing Number',
-        routing_number_re: 'Re-Enter Routing Number',
+        routing_number_re: 'Re-enter Routing Number',
         annual_income: 'My Annual Income',
         net_worth: 'My Net Worth',
         twitter: 'Your Twitter Link',
@@ -153,9 +153,9 @@ module.exports = {
         instagram: 'Your Instagram Link',
         linkedin: 'Your LinkedIn Link',
         bank_name: 'Bank Name',
-        name_on_bank_account: 'Name On Bank Account',
-        ssn: 'Social Security Number (SSN) Or Tax ID (ITIN/EIN)',
-        ssn_re: 'Re-enter',
+        name_on_bank_account: 'Name on Bank Account',
+        ssn: 'Social Security Number (SSN) or Tax ID (ITIN/EIN)',
+        ssn_re: 'Re-enter SSN',
       };
 
       this.assignLabels();

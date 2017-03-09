@@ -201,7 +201,7 @@ module.exports = {
     },
 
     finalReview(id) {
-      $('#content').scrollTo();
+      $('body').scrollTo();
       const formcOptionsR = api.makeCacheRequest(formcServer + '/' + id, 'OPTIONS');
       $.when(formcOptionsR, app.user.getFormcR(id)).then((formcFields, formc) => {
         if (formc[0]) {

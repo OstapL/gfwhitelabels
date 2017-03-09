@@ -100,9 +100,7 @@ class File {
       this.urlRoot,
       type,
       data
-    ).fail((xhr, status) => {
-      alert('show standart error message');
-    });
+    )
   }
 }
 

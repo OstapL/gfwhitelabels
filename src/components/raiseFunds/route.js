@@ -2,6 +2,7 @@ const View = require('components/raiseFunds/views.js');
 const raiseHelper = require('./helpers.js');
 const STATUSES = require('consts/raisecapital/companyStatuses.json').STATUS;
 
+
 function getOCCF(optionsR, viewName, params = {}) {
 
   $('body').scrollTo();
@@ -38,7 +39,7 @@ function getOCCF(optionsR, viewName, params = {}) {
   });
 };
 
-module.exports = { 
+module.exports = {
   routes: {
     'company/create': 'company',
     'company/in-review': 'inReview',
