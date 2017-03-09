@@ -99,7 +99,8 @@ module.exports = {
       this.companyDocsData = {
         title: 'Financials',
         files: this.model.formc
-          ? _.union(this.model.formc.fiscal_prior_group_data, this.model.formc.fiscal_recent_group_data)
+          ? _.union(this.model.formc.fiscal_prior_group_data,
+                this.model.formc.fiscal_recent_group_data)
           : []
       };
 
@@ -585,8 +586,8 @@ module.exports = {
 
       this.assignLabels();
 
-			if(window.location.hostname == 'dcu.growthfountain.com') {
-			//if(window.location.hostname == 'localhost') {
+      if(window.location.hostname == 'dcu.growthfountain.com') {
+      //if(window.location.hostname == 'localhost') {
         this.fields.is_understand_securities_related = Object.assign({}, this.fields.is_reviewed_educational_material);
         this.fields.is_understand_securities_related.label = this.labels.is_understand_securities_related;
       } else {
@@ -597,7 +598,6 @@ module.exports = {
       this.usaStates = usaStates;
 
       this.initMaxAllowedAmount();
-      this.amountTimeout = null;
     },
 
     render() {
@@ -610,6 +610,7 @@ module.exports = {
           values: this.model,
           user: this.user,
           states: this.usaStates,
+          feeInfo: this.calcFeeWithCredit(),
         })
       );
 
@@ -630,6 +631,29 @@ module.exports = {
       } else if (e.type == 'shown') {
         this.$('.see-all-perks').text('Show Less')
       }
+    },
+
+    calcFeeWithCredit() {
+      const credit = this.user.credit;
+      const fee = companyFees.fees_to_investor;
+
+      if (credit <= 0)
+        return {
+          waived: 0,
+          fee: fee,
+          remainCredit: 0,
+        };
+
+      return {
+        waived: fee,
+        fee: credit > fee
+          ? 0
+          : fee - credit,
+        remainingCredit: credit >= fee
+          ? credit - fee
+          : 0,
+        credit: credit,
+      };
     },
 
     initAmountPopover() {
@@ -793,8 +817,9 @@ module.exports = {
     },
 
     _updateTotalAmount() {
-      // Here 10 is the flat rate;
-      let totalAmount = this.getInt(this.$amount.val()) + 10;
+      const feeInfo = this.calcFeeWithCredit();
+
+      let totalAmount = this.getInt(this.$amount.val()) + feeInfo.fee;
       let formattedTotalAmount = '$' + this.formatInt(totalAmount)
       this.$el.find('.total-investment-amount').text(formattedTotalAmount);
       this.$el.find('[name=total_amount]').val(formattedTotalAmount);
@@ -1093,6 +1118,9 @@ module.exports = {
     },
 
     _success(data) {
+      const feeInfo = this.calcFeeWithCredit();
+      this.user.credit = feeInfo.remainingCredit;
+
       app.emitFacebookPixelEvent('MakeInvestment');
       this.saveEsign(data);
     },
