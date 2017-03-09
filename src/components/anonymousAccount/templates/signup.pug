@@ -20,10 +20,10 @@ section.singup.m-t-85
 
         .col-xl-4.col-lg-5.col-sm-7.col-xs-12.p-l-0.sign-up-right
           .sign-up-right-padding
-            h2.text-uppercase.text-sm-center.text-xs-center.m-t-2 sign up
-              p.small-text Have an account?
+            h2.text-uppercase.text-sm-center.text-xs-center.m-t-2 Sign Up
+              p.small-text Have an Account?
                 a(href="/account/login").link-3  Log In
-            form(action="" metod="post").form-section.signup-form
+            form(action="" metod="post" novalidate).form-section.signup-form
               .col-lg-12
                 input(type="hidden" name="domain" value=window.location.host)
                 .social-btn.col-lg-12
@@ -52,11 +52,11 @@ section.singup.m-t-85
                     span or
                 .form-group.row.clearfix.required
                   input(type="text"
-                  placeholder="First name"
+                  placeholder="First Name"
                   name="first_name").form-control
                 .form-group.row.clearfix.required
                   input(type="text"
-                  placeholder="Last name"
+                  placeholder="Last Name"
                   name="last_name").form-control
                 .form-group.row.clearfix.required
                   input(type="email"
@@ -73,6 +73,4 @@ section.singup.m-t-85
                 
               .col-lg-12.m-t-1
                 .row.text-xs-center
-                  button(type="submit")#register-submit-btn.btn.btn-primary.text-uppercase sign up
-            
-            
+                  button(type="submit")#register-submit-btn.btn.btn-primary.text-uppercase Sign Up

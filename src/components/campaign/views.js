@@ -341,7 +341,7 @@ module.exports = {
           // model: commentsModel,
           model: data[0],
           fields: options[0].fields,
-          cssClass: 'col-lg-8 offset-lg-2 col-md-12 offset-md-0 col-sm-12 offset-sm-0 col-xs-12 offset-xs-0 pt50',
+          cssClass: 'offset-xl-2',
         });
         comments.render();
       });
@@ -548,12 +548,12 @@ module.exports = {
           city: 'City',
         },
         payment_information_data: {
-          name_on_bank_account: 'Name On Bank Account',
+          name_on_bank_account: 'Name on Bank Account',
           account_number: 'Account Number',
           account_number_re: 'Account Number Again',
           routing_number: 'Routing Number',
           routing_number_re: 'Routing Number Again',
-          ssn: 'Social Security number (SSN) or Tax ID (ITIN/EIN)',
+          ssn: 'Social Security Number (SSN) or Tax ID (ITIN/EIN)',
           ssn_re: 'Re-enter',
         },
         payment_information_type: 'I Want to Pay Using',
