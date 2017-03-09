@@ -53,7 +53,7 @@ mixin confirmStatement(name, attr)
         form(action="POST" data-method="POST" name="invest_form").invest_form.clearfix
           input(type="hidden" name="company_id" value=values.id)
           .row
-            .col-xl-12.col-xs-6
+            .col-xl-12.col-xs-8.col-sm-5.col-lg-8
               -
                 pug_html += app.fields.fieldTextLabel("amount", _.extend({
                     class1: 'col-xl-3 col-lg-4 text-md-left text-lg-right text-xl-right',
@@ -62,9 +62,21 @@ mixin confirmStatement(name, attr)
                     text: "$10 of payment processing fee. Your money will be returned to you if the " +
                       "campaign doesn't reach the target goal ($500,000).",
                   }, fields.amount));
+          .row
+            .col-xl-12.col-xs-8.col-sm-5.col-lg-8
+              .form-group.row.fee.text
+                label.col-xl-3.col-lg-4.text-md-left.text-lg-right.text-xl-right Commission
+                .commission-group
+                  .col-xl-4.col-lg-8
+                    .col-xl-12.p-x-0.input-border-bottom.commission
+                      input(name="fee" id="fee" value="$15" disabled).form-control
+                      h4.text-uppercase.waived Waived
+                      .commission-right-block
+                        span $25
+                    .col-xl-12.p-x-0.input-border-bottom
+                      input(name="fee" id="fee" value="$10" disabled).form-control
 
-            .col-xl-12.col-xs-6
-              -
+              //-
                 pug_html += app.fields.fieldTextLabel("fee", _.extend({
                     class1: 'col-xl-3 col-lg-4 text-md-left text-lg-right text-xl-right',
                     class2: 'col-xl-4 col-lg-8 input-border-bottom',
@@ -76,7 +88,7 @@ mixin confirmStatement(name, attr)
                   }, fields.fee));
           .row
             label.col-xl-3.col-lg-4.text-md-left.text-lg-right.text-xl-right.p-t-0.total-investment-label Total
-            .col-xl-xlcol-lg-8
+            .col-xl-4.col-lg-8.p-l-0
               span.p-l-1.total-investment-amount $10
               input(type="hidden" name="total_amount" value="$10")
           // popover content for amount field
