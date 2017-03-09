@@ -1,18 +1,58 @@
 div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#sign_up.modal.fade
   div(role="document").modal-dialog
     .modal-content
-      .modal-header
+      .modal-header.sign-up-header
         button(type="button" data-dismiss="modal" aria-label="Close").close
           span(aria-hidden="true")
             i.fa.fa-times
-        h2.text-xs-center.text-uppercase.dosis.modal-title Sign up
-        p.text-xs-center Have an account? &nbsp;
-          a(href="#").link-3.link-show-login
-            | Log In
+        .title-header-signup.m-t-1
+          h1.title.text-uppercase Get
+          h1.number.text-uppercase.font-weight-bold &nbsp;$25&nbsp;
+          h1.title.text-uppercase Credit
+        .title-header-bottom
+          span.font-weight-light If You Sign Up Now*
+        .col-xl-8.offset-xl-2.p-x-0
+          hr
+        .text.col-xl-8.offset-xl-2.text-xl-center.p-x-0
+          p *Limited time offer for new accounts only.
+            br
+            | Credit valid for 90 days and can be used
+            br
+            | only for investments made on this platform.
+            br
+            | Other conditions apply, see Terms of Use.
       .modal-body
         .container.form-section
+          h2.text-xs-center.text-uppercase.dosis.modal-title Sign up
+          p.text-xs-center Have an account? &nbsp;
+            a(href="#").link-3.link-show-login
+              | Log In
           form#sign-up-form.signup-form.col-lg-10.offset-lg-1
             input(type="hidden" name="domain" value=window.location.host)
+            .social-btn.m-t-2.m-b-2
+              button(data-network="facebook").btn.btn-block.btn-social-network.btn-facebook.text-uppercase.m-t-0
+                i.fa.fa-facebook
+                |  SIGN UP with Facebook
+              button(data-network="linkedin").btn.btn-block.btn-social-network.btn-linkedin.text-uppercase
+                i.fa.fa-linkedin
+                |  SIGN UP with linkedin
+              button(data-network="google").btn.btn-block.btn-social-network.btn-google.text-uppercase
+                i.fa.fa-google-plus
+                |  SIGN UP with Google
+            .form-group.row.clearfix.required
+              .row
+                .col-lg-12
+                  label.p-t-0
+                    input(type="checkbox" name="checkbox1" value="1")#agree-rules
+                    span.label-text I agree to the
+                      a(href="/pg/terms_of_use" target="_blank").link-3  Terms of Use
+                      | ,
+                      a(href="/pg/privacy_policy" target="_blank").link-3  Privacy Policy
+                      |  and
+                      a(href="/pg/electronic_signature" target="_blank").link-3  Electronic Signature and Electronic Delivery of Documentation.
+                
+              .col-lg-12.border-bottom.or
+                span or
             .form-group.row.clearfix.required
               input(type="text"
               placeholder="First name"
@@ -36,31 +76,9 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
               input(type="hidden"
               value=window.location.host
               name="domain")
-            .form-group.row.clearfix.required
-              .row
-                .col-lg-12
-                  label
-                    input(type="checkbox" name="checkbox1" value="1")#agree-rules
-                    span.label-text I agree to the
-                      a(href="/pg/terms_of_use" target="_blank").link-3  Terms of Use
-                      | ,
-                      a(href="/pg/privacy_policy" target="_blank").link-3  Privacy Policy
-                      |  and
-                      a(href="/pg/electronic_signature" target="_blank").link-3  Electronic Signature and Electronic Delivery of Documentation.
-                .col-lg-12.text-xs-center
-                  button(type="submit").btn.btn-primary.text-uppercase Sign up
-                .col-lg-12.border-bottom.or
-                  span or
-            .social-btn
-              button(data-network="facebook").btn.btn-block.btn-social-network.btn-facebook.text-uppercase
-                i.fa.fa-facebook
-                |  SIGN UP with Facebook
-              button(data-network="linkedin").btn.btn-block.btn-social-network.btn-linkedin.text-uppercase
-                i.fa.fa-linkedin
-                |  SIGN UP with linkedin
-              button(data-network="google").btn.btn-block.btn-social-network.btn-google.text-uppercase
-                i.fa.fa-google-plus
-                |  SIGN UP with Google
+            .col-lg-12.text-xs-center
+              button(type="submit").btn.btn-primary.text-uppercase Sign up
+            
         .modal-footer
 
 div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#sign_in.modal.fade
