@@ -3,10 +3,10 @@ section.login
     .col-lg-12
       h2.dosis.text-uppercase.text-sm-center.text-xs-center.mt50 Log in
         p.small-text New to GrowthFountain?
-          a(href="/account/signup").link-3  Sign up
+          a(href="/account/signup").link-3  Sign Up
     
     .col-xl-4.col-lg-6.col-sm-8.offset-sm-2.col-md-8.offset-md-2.offset-lg-3.offset-xl-4
-      form(action="" metod="post").form-section.login-form
+      form(action="" metod="post" novalidate).form-section.login-form
         .col-lg-12
           input(type="hidden" name="domain" value=window.location.host)
           .form-group.row.clearfix.required
@@ -19,10 +19,10 @@ section.login
             name="password").form-control
         .col-lg-12
           .row.forgot
-            a(href="/account/reset").link-3 Forgot your password?
+            a(href="/account/reset").link-3 Forgot Your Password?
         .col-lg-12
           .row.text-sm-center.text-xs-center
-            button(type="submit").btn.btn-primary.text-uppercase Log in
+            button(type="submit").btn.btn-primary.text-uppercase Log In
 
       //-
         .col-lg-12.border-bottom.or
