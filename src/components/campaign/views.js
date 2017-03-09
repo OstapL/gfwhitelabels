@@ -980,7 +980,7 @@ module.exports = {
         crossDomain: true,
       })
       .done( () => {
-        $('#content').scrollTo();
+        $('body').scrollTo();
         this.undelegateEvents();
         app.routers.navigate(successRoute, {
             trigger: true,

@@ -8,21 +8,21 @@ module.exports = {
     calculatorPaybackshareStep1() {
       const View = require('./views');
       new View.step1().render();
-      $('#content').scrollTo();
+      $('body').scrollTo();
       app.hideLoading();
     },
 
     calculatorPaybackshareStep2() {
       const View = require('./views');
       new View.step2().render();
-      $('#content').scrollTo();
+      $('body').scrollTo();
       app.hideLoading();
     },
 
     calculatorPaybackshareStep3: function () {
       const View = require('./views');
       new View.step3().render();
-      $('#content').scrollTo();
+      $('body').scrollTo();
       app.hideLoading();
     },
   },
