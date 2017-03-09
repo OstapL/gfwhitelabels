@@ -37,7 +37,7 @@ module.exports = {
     },
 
     render() {
-      $('#content').scrollTo();
+      $('body').scrollTo();
       this.$el.html(
         this.template()
       );
@@ -122,7 +122,7 @@ module.exports = {
     },
 
     render() {
-      $('#content').scrollTo();
+      $('body').scrollTo();
 
       this.$el.html(
         this.template({
@@ -270,7 +270,7 @@ module.exports = {
     cancelMembership(e) {
       e.preventDefault();
 
-      $('#content').scrollTo();
+      $('body').scrollTo();
       app.routers.navigate('account/profile', { trigger: true, replace: false });
 
       return false;

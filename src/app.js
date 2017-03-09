@@ -13,13 +13,16 @@ require('js/html5-dataset.js');
 
 $.serializeJSON.defaultOptions = _.extend($.serializeJSON.defaultOptions, {
   customTypes: {
-    money: function(val) { 
+    money(val) {
       return formatHelper.unformatPrice(val);
     },
-    url: function(val) {
+    url(val) {
       return String(val);
     },
-    text: function(val) {
+    text(val) {
+      return String(val);
+    },
+    password(val) {
       return String(val);
     },
   },
