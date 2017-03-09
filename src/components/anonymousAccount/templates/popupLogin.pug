@@ -6,20 +6,20 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
           span(aria-hidden="true")
             i.fa.fa-times
         h2.text-xs-center.text-uppercase.dosis.modal-title Sign up
-        p.text-xs-center Have an account? &nbsp;
+        p.text-xs-center Have an Account? &nbsp;
           a(href="#").link-3.link-show-login
             | Log In
       .modal-body
         .container.form-section
-          form#sign-up-form.signup-form.col-lg-10.offset-lg-1
+          form(novalidate)#sign-up-form.signup-form.col-lg-10.offset-lg-1
             input(type="hidden" name="domain" value=window.location.host)
             .form-group.row.clearfix.required
               input(type="text"
-              placeholder="First name"
+              placeholder="First Name"
               name="first_name").form-control
             .form-group.row.clearfix.required
               input(type="text"
-              placeholder="Last name"
+              placeholder="Last Name"
               name="last_name").form-control
             .form-group.row.clearfix.required
               input(type="email"
@@ -73,15 +73,16 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
               i.fa.fa-times
           h2.dosis.text-uppercase.text-sm-center.text-xs-center.mt50 Log in
           p.small-text.text-xs-center New to GrowthFountain? &nbsp;
-            a(href="#").link-3.link-show-sign-up Sign up
+            a(href="#").link-3.link-show-sign-up Sign Up
         .modal-body
           .form-section
-            form#sign-in-form.login-form.col-lg-10.offset-lg-1
+            form(novalidate)#sign-in-form.login-form.col-lg-10.offset-lg-1
               .col-lg-12
                 .form-group.row.clearfix.required
                   input(type="email"
-                  placeholder="E-mail"
-                  name="email").form-control
+                    placeholder="E-mail"
+                    name="email"
+                  ).form-control
                 .form-group.row.clearfix.required
                   input(type="password"
                   placeholder="Password"
@@ -91,10 +92,10 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
                   name="domain")
               .col-lg-12
                 .row.forgot
-                  a(href="#").reset-password-link.link-3 Forgot your password?
+                  a(href="#").reset-password-link.link-3 Forgot Your password?
               .col-lg-12
                 .row.text-sm-center.text-xs-center
-                  button(type="submit").btn.btn-primary.btn-login.text-uppercase Log in
+                  button(type="submit").btn.btn-primary.btn-login.text-uppercase Log In
             //-
               .col-lg-12.border-bottom.or
                 span or

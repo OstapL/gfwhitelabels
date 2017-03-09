@@ -153,9 +153,9 @@ module.exports = {
         instagram: 'Your Instagram Link',
         linkedin: 'Your LinkedIn Link',
         bank_name: 'Bank Name',
-        name_on_bank_account: 'Name On Bank Account',
-        ssn: 'Social Security Number (SSN) Or Tax ID (ITIN/EIN)',
-        ssn_re: 'Re-enter',
+        name_on_bank_account: 'Name on Bank Account',
+        ssn: 'Social Security Number (SSN) or Tax ID (ITIN/EIN)',
+        ssn_re: 'Re-enter SSN',
       };
 
       this.assignLabels();
