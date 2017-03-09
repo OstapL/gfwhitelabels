@@ -205,7 +205,7 @@ module.exports = {
           } 
           
           if(defaultAction == 1) {
-            $('#content').scrollTo();
+            $('body').scrollTo();
             this.undelegateEvents();
             app.routers.navigate(
               this.getSuccessUrl(responseData),

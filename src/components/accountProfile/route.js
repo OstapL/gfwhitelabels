@@ -45,7 +45,7 @@ module.exports = {
     },
 
     changePassword() {
-      $('#content').scrollTo();
+      $('body').scrollTo();
       const View = require('components/accountProfile/views.js');
       let i = new View.changePassword({
         el: '#content',
@@ -138,12 +138,12 @@ module.exports = {
     },
 
     issuerDashboard(id) {
-      $('#content').scrollTo();
+      $('body').scrollTo();
       $.when(
         app.makeCacheRequest(raiseCapitalServer + '/company/' + app.user.formc.company_id + '?noi=1', 'GET'),
         app.user.getCampaignR(app.user.formc.campaign_id, 'GET'),
       ).done((company, campaign) => {
-      
+
         if(company[0]) app.user.company = company[0];
         if(campaign[0]) app.user.campaign = campaign[0];
 

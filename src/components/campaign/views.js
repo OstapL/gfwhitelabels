@@ -551,9 +551,9 @@ module.exports = {
         payment_information_data: {
           name_on_bank_account: 'Name on Bank Account',
           account_number: 'Account Number',
-          account_number_re: 'Account Number Again',
+          account_number_re: 'Re-enter Account Number',
           routing_number: 'Routing Number',
-          routing_number_re: 'Routing Number Again',
+          routing_number_re: 'Re-enter Routing Number',
           ssn: 'Social Security Number (SSN) or Tax ID (ITIN/EIN)',
           ssn_re: 'Re-enter',
         },
@@ -1005,7 +1005,7 @@ module.exports = {
         crossDomain: true,
       })
       .done( () => {
-        $('#content').scrollTo();
+        $('body').scrollTo();
         this.undelegateEvents();
         app.routers.navigate(successRoute, {
             trigger: true,

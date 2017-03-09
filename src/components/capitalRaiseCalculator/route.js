@@ -8,21 +8,21 @@ module.exports = {
     calculatorCapitalraiseIntro() {
       const View = require('./views');
       new View.intro().render();
-      $('#content').scrollTo();
+      $('body').scrollTo();
       app.hideLoading();
     },
 
     calculatorCapitalraiseStep1() {
       const View = require('./views');
       new View.step1().render();
-      $('#content').scrollTo();
+      $('body').scrollTo();
       app.hideLoading();
     },
 
     calculatorCapitalraiseFinish() {
       const View = require('./views');
       new View.finish().render();
-      $('#content').scrollTo();
+      $('body').scrollTo();
       app.hideLoading();
     },
   },
