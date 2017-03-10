@@ -317,12 +317,16 @@ let app = {
     });
   },
 
-  initMap() {
+  initMap(options={
+    lat: 40.7440668,
+    lng: -73.98522220000001,
+    content: '<b>Growth Fountain</b><br/>79 Madison Ave, 5th Floor, New York, NY 10016<br/> New York',
+  }) {
     let mapElement = document.getElementById('map');
     if (!mapElement)
       return console.error('Missing map element');
 
-    const coords = { lat: 40.7440668, lng: -73.98522220000001 };
+    const coords = { lat: options.lat, lng: options.lng };
     let map = new google.maps.Map(mapElement, {
       zoom: 15,
       center: coords,
@@ -333,11 +337,11 @@ let app = {
       map: map,
     });
     let infowindow = new google.maps.InfoWindow({
-      content:'<b>Growth Fountain</b><br/>79 Madison Ave, 5th Floor, New York, NY 10016<br/> New York',
+      content: options.content || '',
     });
     google.maps.event.addListener(marker, "click", function(){ infowindow.open(map,marker); });
     infowindow.open(map, marker);
-  }
+  },
 };
 
 // Что-то пахнет говнецом
