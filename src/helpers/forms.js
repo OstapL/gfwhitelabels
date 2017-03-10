@@ -180,7 +180,7 @@ module.exports = {
       _(validation.errors).each((errors, key) => {
         validation.invalidMsg(this, key, errors);
       });
-      this.$('.help-block').prev().scrollTo(5);
+      // this.$('.help-block').prev().scrollTo(5);
       return false;
     } else {
 
