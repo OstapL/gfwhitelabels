@@ -97,22 +97,7 @@ module.exports = {
       method = e.target.dataset.method || 'PATCH';
     }
 
-    newData = newData || $(e.target).closest('form').serializeJSON({
-      customTypes: {
-        money: function(val) { 
-          return formatHelper.unformatPrice(val);
-        },
-        url: function(val) {
-          return String(val);
-        },
-        text: function(val) {
-          return String(val);
-        },
-      },
-      useIntKeysAsArrayIndex: true,
-      parseNulls: true,
-      parseNumbers: true
-    });
+    newData = newData || $(e.target).closest('form').serializeJSON();
     api.deleteEmptyNested.call(this, this.fields, newData);
     api.fixDateFields.call(this, this.fields, newData);
     // api.fixFieldTypes.call(this, this.fields, newData);
