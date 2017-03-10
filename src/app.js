@@ -14,7 +14,7 @@ require('js/html5-dataset.js');
 $.serializeJSON.defaultOptions = _.extend($.serializeJSON.defaultOptions, {
   customTypes: {
     decimal(val) {
-      return parseFloat(val);
+      return formatHelper.unformatPrice(val);
     },
     money(val) {
       return formatHelper.unformatPrice(val);
