@@ -13,7 +13,7 @@ global.esignServer = 'https://api-esign.growthfountain.com';
 // global.esignServer = 'https://api-esign.growthfountain.com';
 global.commentsServer = "https://api-comments.growthfountain.com";
 global.blogServer = "https://api-blog.growthfountain.com";
-global.bucketServer = "http://growthfountain-jeanne-darc-storage.s3-website-us-west-1.amazonaws.com";
+global.bucketServer = "https://s3.amazonaws.com/growthfountain-alpha-storage";
 global.notificationsServer = "https://notifications.growthfountain.com/";
 
 global.facebookClientId = "547857385398592";
