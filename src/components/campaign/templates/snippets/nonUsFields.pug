@@ -10,7 +10,7 @@
           class1: 'col-xl-6 col-lg-12 text-lg-left text-xl-right m-b-lg-1',
           class2: 'col-xl-6 col-lg-12 p-r-xl-0',
           id: 'personal_information_data__city',
-        }, fields.personal_information_data.schema.city);
+        }, _.extend({}, fields.personal_information_data.schema.city, { required: true }));
     .col-lg-6
       .form-group.row.state.text
         label.text-xl-right.text-lg-left.col-xl-5.col-lg-12(for="state").p-t-0.m-b-0.m-b-lg-1 State/Province/ Region
