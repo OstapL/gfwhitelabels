@@ -966,9 +966,9 @@ module.exports = {
     submit(e) {
       e.preventDefault();
 
-      let data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
-      data.amount = data.amount.replace(/\,/g, '');
-      if(data['payment_information_type'] == '1' || data['payment_information_type'] == 2) {
+      let data = $(e.target).serializeJSON();
+      // data.amount = data.amount.replace(/\,/g, '');
+      if(data['payment_information_type'] == 1 || data['payment_information_type'] == 2) {
         delete data['payment_information_data'];
         // Temp solution !
         delete this.fields.payment_information_data;
@@ -1072,9 +1072,9 @@ module.exports = {
       const formData = $('form.invest_form').serializeJSON();
       const issuer_signer = this.model.owner.first_name + ' ' + this.model.owner.last_name;
       const investor_legal_name = formData.personal_information_data.first_name + ' ' + formData.personal_information_data.last_name;
-      const investment_amount = parseInt( formData.amount.replace(/\D/g, '') );
+      const investment_amount = formData.amount;
       const investor_number_purchased = investment_amount / this.model.campaign.price_per_share;
-      const aggregate_inclusive_purchase = formData.total_amount.replace(/\D/g, '');
+      const aggregate_inclusive_purchase = formData.total_amount;
 
       return {
         compaign_id: this.model.id,

@@ -25,6 +25,9 @@ $.serializeJSON.defaultOptions = _.extend($.serializeJSON.defaultOptions, {
     text(val) {
       return String(val);
     },
+    email(val) {
+      return String(val);
+    },
     password(val) {
       return String(val);
     },
