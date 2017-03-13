@@ -90,8 +90,8 @@ module.exports = {
     'company/in-review': 'inReview',
     'campaign/:id/general_information': 'generalInformation',
     'campaign/:id/media': 'media',
-    'campaign/:id/team-members/add/:type/:index': 'teamMembersAdd',
-    'campaign/:id/team-members': 'teamMembers',
+    'campaign/:id/team-members/add/:type/:index': 'teamMembersAdd1',
+    'campaign/:id/team-members': 'teamMembers1',
     'campaign/:id/specifics': 'specifics',
     'campaign/:id/perks': 'perks',
   },
@@ -117,13 +117,13 @@ module.exports = {
       getOCCF(optionsR, 'media', {});
     },
 
-    teamMembers(id) {
+    teamMembers1(id) {
       const optionsUrl = raiseCapitalServer + '/campaign/' + id + '/team-members';
       const optionsR = app.makeCacheRequest(optionsUrl, 'OPTIONS');
       getOCCF(optionsR, 'teamMembers', {});
     },
 
-    teamMembersAdd(id, type, index) {
+    teamMembersAdd1(id, type, index) {
       const optionsUrl = raiseCapitalServer + '/campaign/' + id + '/team-members';
       const optionsR = app.makeCacheRequest(optionsUrl, 'OPTIONS');
       getOCCF(optionsR, 'teamMemberAdd', {
