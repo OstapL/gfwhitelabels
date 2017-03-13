@@ -634,7 +634,6 @@ module.exports = {
     },
 
     calcFeeWithCredit() {
-      this.user.credit = 25;
       const credit = this.user.credit;
       const fee = companyFees.fees_to_investor;
 
