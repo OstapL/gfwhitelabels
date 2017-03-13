@@ -19,9 +19,8 @@
 				font-size: 14px
 				font-weight: 700
 .investment
-	.input-border-bottom
+	.input-border
 		padding: 0 15px
-		border-bottom: none
 		.form-control:disabled
 			background-color: transparent!important
 	
@@ -66,7 +65,16 @@
 		span
 			color: $white
 	.fee
-		.input-border-bottom
+		.comission-0
+			&.input-border
+				border: none!important
+				input
+					border-bottom: none
+		.input-border
+			input
+				border-top: none
+				border-left: none
+				border-right: none
 			&:before
 				content: '+'
 				position: absolute
@@ -77,7 +85,6 @@
 			&.commission
 				position: relative
 				input
-					border-bottom: none
 					color: $small-text
 				&:after
 					content: ''
@@ -94,21 +101,21 @@
 					font-size: rem(13)
 					text-transform: uppercase
 					letter-spacing: 1.3px
-				.commission-right-block
-					background-image: url("/img/commission-bg.png")
+				.comission-right-block
 					position: absolute
 					top: -13px
 					left: 97%
 					width: 296px
 					height: 68px
+					background-size: 100%
+					background-repeat: no-repeat
 					z-index: 2
-					span
-						position: absolute
-						font-size: rem(30)
-						color: $puerto_rico
-						left: 105px
-						top: 13px
-						font-weight: bold
+					&.comission-0
+						background-image: url("/img/comission-0.png")
+					&.comission-5
+						background-image: url("/img/comission-5.png")
+					&.comission-15
+						background-image: url("/img/comission-15.png")
 
 
 	.commission-group
@@ -155,5 +162,9 @@
 	.investment 
 		.list-group-item-heading
 			margin-bottom: rem(5)
-	.commission-right-block
-		display: none
+@media screen and (max-width: 515px)
+	.comission-right-block
+		background-size: 100%!important
+		width: 170px!important
+		height: 50px!important
+		top: 0!important
