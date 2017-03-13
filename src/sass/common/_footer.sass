@@ -2,54 +2,42 @@
 	width: 100%
 	margin-top: 85px
 	background: $footer_background
-
-  	
 	.footer_title
 		width: 100%
 		margin-bottom: 12px
-
 		h4
 			line-height: 18px
 			letter-spacing: $footer-title-ls
 			font-size: $footer-title-size
-			color: $footer_text
+			color: $footer-title-color
 			text-transform: uppercase
-	.small
-  		line-height: 15px
+			font-weight: $footer-title-fw
 	.border_bottom
 		border-bottom: 1px solid $light_grey
-
 	a
 		line-height: 26px
-		font-size: 15px
+		font-size: $footer-menu-link-size
 		color: $footer_text
 		display: block
 
 		&:hover 
 			color: rgba($footer_text, 0.6)
-
 	.fade-in-logo
 		position: relative
 		margin-right: rem(10)
 		display: inline-block
 		height: 30px
 		width: 40px
-
 		img
 			transition: all 1s ease-in-out
-
 			position: absolute
 			top: 50px
 			left: 0
-
 			opacity: 0
 			width: 100%
-		// повешать на класс который будет добавляться при скроле
 		&.fade-in img
 			top: 0
-
 			opacity: 1
-
 	.company
 
 		span
@@ -64,10 +52,13 @@
 			font-size: 12px
 			color: $footer-company-text-color
 			line-height: 18px
-	//.footer-bottom
-	//	background-color: $footer-bottom-bgc
-	//	padding-top: 15px
-	//	padding-bottom: 15px
+	.footer-bottom
+		background-color: $footer-bottom-bgc
+		margin-top: rem(35)
+		p
+			color: $footer-bottom-text-color
+			font-size: $footer-bottom-text-size
+			line-height: 15px
 	.footer-social
 		a
 			color: $footer-bottom-link-color
