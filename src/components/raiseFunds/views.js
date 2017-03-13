@@ -301,8 +301,8 @@ module.exports = {
             aspectRatio: 1400 / 960,
           },
           auto: {
-            width: 1400,
-            height: 960,
+            width: 1200,
+            height: 1024,
           },
           resize: {
             width: 305,

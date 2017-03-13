@@ -1,8 +1,8 @@
-const file = require('./file.js');
+const folder = require('models/folder.js');
 const defaultImage = '/img/default/255x153.png'; 
 
 
-class ImageElement extends file.FileElement {
+class folderElement extends file.FileElement {
   getTemplate() {
     return require('./templates/image.pug');
   }
@@ -13,27 +13,12 @@ class ImageElement extends file.FileElement {
 };
 
 
-class ImageDropzone extends file.FileDropzone {
+class folderDropzone extends file.FileDropzone {
 
   constructor(view, fieldName, fieldDataName, imageOptions) {
     super(view, fieldName, fieldDataName, imageOptions);
-    this.options.acceptedFiles = 'image/*,.jpg,.png,.jpeg';
 
-    this.cropperOptions = imageOptions.crop;
-
-    if(this.cropperOptions.hasOwnProperty('auto')) {
-      this.options.params.crop = true;
-      this.options.params.width = this.cropperOptions.auto.width;
-      this.options.params.height = this.cropperOptions.auto.height;
-    }
-
-    if(this.cropperOptions.hasOwnProperty('resize')) {
-      this.options.params.resize = true;
-      this.options.params.resizeWidth = this.cropperOptions.resize.width;
-      this.options.params.resizeHeight = this.cropperOptions.resize.height;
-    }
-
-    this.fileElement = new ImageElement(
+    this.folderElement = new folderElement(
       this.model[fieldName],
       fieldName,
       fieldDataName
