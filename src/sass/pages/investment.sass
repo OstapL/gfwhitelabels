@@ -65,6 +65,16 @@
 		span
 			color: $white
 	.fee
+		.input-border-bottom
+			.form-control:disabled
+				background-color: transparent!important
+				border: none
+			&:before
+				content: '+'
+				position: absolute
+				top: 6px
+				left: 25px
+
 		.comission-0
 			&.input-border
 				border: none!important
@@ -101,7 +111,7 @@
 					font-size: rem(13)
 					text-transform: uppercase
 					letter-spacing: 1.3px
-				.comission-right-block
+				.commission-right-block
 					position: absolute
 					top: -13px
 					left: 97%
@@ -110,14 +120,35 @@
 					background-size: 100%
 					background-repeat: no-repeat
 					z-index: 2
-					&.comission-0
-						background-image: url("/img/comission-0.png")
-					&.comission-5
-						background-image: url("/img/comission-5.png")
-					&.comission-15
-						background-image: url("/img/comission-15.png")
-
-
+					background-image: url("/img/comission-bg.png")
+					.credit-amount
+						position: absolute
+						left: 20%
+						top: 15px
+						width: 50%
+						text-align: center
+						font-weight: bold
+						color: $puerto-rico
+						font-size: rem(38)
+					.credit-remains
+						position: absolute
+						left: 100px
+						top: 37px
+						font-weight: bold
+						color: $puerto-rico
+						font-size: rem(8)
+						text-transform: uppercase
+					.credit-text
+						color: $puerto-rico
+						font-size: rem(10)
+						left: 58%
+						padding: rem(10)
+						text-align: center
+						font-weight: bold
+						position: absolute
+						line-height: 11px
+						top: 8%
+					
 	.commission-group
 		position: relative
 	.varification
