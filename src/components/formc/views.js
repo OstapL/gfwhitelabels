@@ -14,7 +14,7 @@ const yesNoHelper = require('helpers/yesNoHelper.js');
 
 const dropzoneHelpers = require('helpers/dropzoneHelpers.js');
 const riskFactorsHelper = require('helpers/riskFactorsHelper.js');
-const validation = require('components/validation/validation.js');
+const Formc = require('models/formc.js');
 
 const disableEnterHelper = require('helpers/disableEnterHelper.js');
 
@@ -1728,7 +1728,11 @@ module.exports = {
     },
 
     initialize(options) {
-      this.model = options.formc;
+      this.model = new Formc(
+        this.urlRoot.replace(':id', options.formc.id),
+        options.formc,
+        options.fields
+      );
       this.fields = options.fields;
       this.campaign = options.campaign;
       this.labels = {
@@ -1770,8 +1774,7 @@ module.exports = {
 
       this.$el.html(
         template({
-          serverUrl: serverUrl,
-          Urls: Urls,
+          view: this,
           fields: this.fields,
           values: this.model,
           campaignId: this.campaign.id,

@@ -314,18 +314,21 @@ module.exports = {
       });
 
       this.fields.gallery_group_id = _.extend(this.fields.gallery_group_id, {
+        title: 'Drop your photo(s) here or click to upload',
+        help_text: 'We recommend uploading 6 images (minimum size of 1200x1024 is recommended) that represent your service of business. These images will be displayed in a gallery format.',
         crop: {
           control: {
-            aspectRatio: 526 / 317,
-          },
-          cropper: {
-            cssClass: 'img-crop',
-            // preview: false,
+            aspectRatio: 1200 / 1024,
           },
           auto: {
-            width: 526,
-            height: 317,
-          }
+            width: 1200,
+            height: 1024,
+          },
+          resize: {
+            width: 305,
+            height: 205,
+          },
+          cssClass: 'img-crop',
         },
 
         fn: function checkNotEmpty(name, value, attr, data, computed) { 

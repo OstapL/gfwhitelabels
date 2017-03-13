@@ -2,13 +2,14 @@ const File = require('./file.js');
 const defaultIcon = 'fileFolder.png';
 
 class Folder {
-  constructor(urlRoot, data=[]) {
+  constructor(urlRoot, id, data=[]) {
     //
     // urlRoot - url for update model assosiated with that file
     // id - id of the group element in database
     // data - collection of models.Files
     //
     this.urlRoot = urlRoot;
+    this.id = id;
     this.data = data;
   }
 
@@ -30,13 +31,15 @@ class Folder {
   }
 
   getUrl(name, fallback='fileFolder.png') {
+
     if(this.urls.hasOwnProperty(name)) {
       return this.urls[name];
     }
+
     return '/img/icon/' + fallback;
   }
 
-  save(dataName) {
+  save(dataId, dataName) {
     const type = 'PATCH';
     const data = {};
 

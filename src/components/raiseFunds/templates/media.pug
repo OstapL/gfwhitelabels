@@ -2,6 +2,7 @@ include menu.pug
 
 - 
   var imageDropzone = require('directives/setdropzone/image.js'); 
+  var galleryDropzone = require('directives/setdropzone/gallery.js'); 
   pug_html += app.breadcrumbs('Create Company', '', [ ['Home', '/'], ['Create Company', '/campaign/' + values.id + '/general_information'], ['Media', ''], ]);
 
 section.create-company-media.container.media-container
@@ -29,13 +30,11 @@ section.create-company-media.container.media-container
 
         .m-b-2
           -
-            pug_html += app.fields.galleryDropzone("gallery_group_id", {
-                class1: 'col-xl-3 col-lg-12 text-xs-center text-xl-right',
-                class2: 'col-xl-9 col-lg-12 text-xs-center p-sm-0',
-                default: '/img/default/77x45.png',
-                help_text: 'We recommend uploading 6 images (minimum size of 526x317 is recommended) that represent your service of business. These images will be displayed in a gallery format.',
-                data: values.gallery_group_data,
-              }, fields.gallery_group_id)
+            pug_html += new galleryDropzone.galleryDropzone(view, 
+              'gallery_group_id', 
+              'gallery_group_data', 
+              view.fields.gallery_group_id
+            ).render().resultHTML;
         .row
           .col-lg-12.m-t-2.m-b-3.p-sm-0
             hr

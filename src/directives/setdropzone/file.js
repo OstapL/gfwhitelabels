@@ -78,6 +78,7 @@ class FileElement {
   }
 
   save() {
+    debugger;
     return this.file.save(
       this.fieldName,
       this.fieldDataName
@@ -176,7 +177,8 @@ class FileDropzone {
     this.template = this.getTemplate();
     this.resultHTML = this.template({
       fileElement: this.fileElement,
-      options: this.fileOptions
+      options: this.fileOptions,
+      self: this
     });
 
     setTimeout(() => {

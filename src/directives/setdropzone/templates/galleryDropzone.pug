@@ -1,0 +1,39 @@
+- 
+  klass = options.class || '';
+  var requiredklass = options.required ? 'required' : '',
+    popoverklass = options.help_text ? 'showPopover' : '';
+
+  klass = "row media-item fileFolderDropzone " + klass + " " + fileElement.fieldName + " " + requiredklass + " " + popoverklass;
+
+  klass1 = klass1 || 'col-xl-3 col-lg-12 text-xl-right text-lg-left ';
+  klass1 += requiredklass;
+
+  klass2 = klass2 || 'col-xl-9 col-lg-12 p-l-1 p-r-1';
+  klass2 += ' dropzone__' + fileElement.fieldName;
+
+  label = options.label || 'Drop your PDF or DOC here or click to upload';
+
+div(class=klass data-content=(help_text|| ''))
+  div(class=klass1)
+    label(for=self.fileElement.file.id || name)!= label
+
+  div(class=attr.class2)
+    div(class=" col-lg-12 p-r-0 p-l-0 border-dropzone")
+      div(class="uploading collapse")
+        i.fa.fa-spinner.fa-pulse.fa-3x.fa-fw
+      div.row
+        div.col-xl-4.offset-xl-4.text-xs-center.dropzone-text.p-l-0.p-r-0
+          a(class='link-1' href="#")
+            p.drop-photo #{text}
+            .icon-gallery
+              i(class=" fa fa-image")
+        div
+          div(id=name).col-xl-12.all-gallery.p-l-0.p-r-0
+            each file,index in self.galleryElement.files
+              .col-xl-4.col-lg-4.col-md-4.col-sm-6.col-xs-12.one-photo
+                .delete-image-container
+                  a(href="#" data-imageid=file.file.id).crop-image
+                    i.fa.fa-crop
+                  a(href="#" data-imageid=file.file.id).delete-image
+                    i.fa.fa-times
+                img(class=("w-100 img-" + self.galleryElement.fieldName) src=file.file.urls.origin)
