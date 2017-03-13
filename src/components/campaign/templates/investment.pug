@@ -75,6 +75,7 @@ mixin confirmStatement(name, attr)
                           h4.text-uppercase.waived Waived
                           .commission-right-block
                             span.credit-amount #{ '$' + feeInfo.credit }
+                            span.credit-remains credit remains
                             span.credit-text
                               if feeInfo.remainingCredit <= 0
                                 | You are using the last $#{ feeInfo.credit } of your $25 credit
@@ -88,10 +89,8 @@ mixin confirmStatement(name, attr)
                       else
                         -
                           var feeStr = '$' + feeInfo.fee;
-                          pug_html += app.fields.textLabel("fee", _.extend({
-                            class1: 'col-xl-3 col-lg-4 text-md-left text-lg-right text-xl-right',
-                            class2: 'col-xl-4 col-lg-8 input-border-bottom',
-                            class3: 'c',
+                          pug_html += app.fields.fieldText("fee", _.extend({
+                            class: 'input-border-bottom',
                             placeholder: '+ ' + feeStr,
                             value: feeStr,
                             label: 'Commission',
