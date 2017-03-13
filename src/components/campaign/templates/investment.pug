@@ -74,7 +74,7 @@ mixin confirmStatement(name, attr)
                           h4.text-uppercase.waived Waived
                           .commission-right-block
                             span #{ '$' + feeInfo.remainingCredit }
-                            if feeInfo.remainingCredit <= 0
+                            //-if feeInfo.remainingCredit <= 0
                               span You are using the last #{ '$' + feeInfo.credit } of your $25 credit.
                         if feeInfo.fee > 0
                           .col-xl-12.p-x-0.input-border-bottom
