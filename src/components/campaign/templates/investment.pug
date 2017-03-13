@@ -69,13 +69,17 @@ mixin confirmStatement(name, attr)
                 .commission-group
                     .col-xl-4.col-lg-8.col-xs-8.col-sm-12
                       if feeInfo.waived
-                        - var cssClass = "commission comission-" + feeInfo.remainingCredit;
+                        - var cssClass = "commission commission-" + feeInfo.remainingCredit;
                         div(class=cssClass).col-xl-12.p-x-0.input-border
                           input(name="waived" id="waived" value=("$" + feeInfo.waived) disabled).form-control
                           h4.text-uppercase.waived Waived
-                          - var cssClass = "comission-right-block comission-" + feeInfo.remainingCredit;
-                          div(class=cssClass)
-
+                          .commission-right-block
+                            span.credit-amount #{ '$' + feeInfo.credit }
+                            span.credit-text
+                              if feeInfo.remainingCredit <= 0
+                                | You are using the last $#{ feeInfo.credit } of your $25 credit
+                              else
+                                | You can use the remaining credit toward your next investment
                         if feeInfo.fee > 0
                           .col-xl-12.p-x-0.input-border
                             input(name="fee" id="fee" value=("$" + feeInfo.fee) disabled).form-control
