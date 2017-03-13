@@ -14,10 +14,10 @@ require('js/html5-dataset.js');
 $.serializeJSON.defaultOptions = _.extend($.serializeJSON.defaultOptions, {
   customTypes: {
     decimal(val) {
-      return app.helpers.formatHelper.unformatPrice(val);
+      return app.helpers.format.unformatPrice(val);
     },
     money(val) {
-      return app.helpers.formatHelper.unformatPrice(val);
+      return app.helpers.format.unformatPrice(val);
     },
     url(val) {
       return String(val);
