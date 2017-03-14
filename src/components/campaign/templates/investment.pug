@@ -67,27 +67,30 @@ mixin confirmStatement(name, attr)
               .form-group.row.fee.text
                 label.col-xl-3.col-lg-4.text-md-left.text-lg-right.text-xl-right Commission
                 .commission-group
-                    .col-xl-4.col-lg-8
+                    .col-xl-4.col-lg-8.col-xs-7.col-sm-12
                       if feeInfo.waived
-                        .col-xl-12.p-x-0.input-border-bottom.commission
+                        - var cssClass = "commission commission-" + feeInfo.remainingCredit;
+                        div(class=cssClass).col-xl-12.p-x-0.input-border
                           input(name="waived" id="waived" value=("$" + feeInfo.waived) disabled).form-control
                           h4.text-uppercase.waived Waived
                           .commission-right-block
-                            span #{ '$' + feeInfo.remainingCredit }
-                            if feeInfo.remainingCredit <= 0
-                              span You are using the last #{ '$' + feeInfo.credit } of your $25 credit.
+                            span.credit-amount #{ '$' + feeInfo.credit }
+                            span.credit-remains credit remains
+                            span.credit-text
+                              if feeInfo.remainingCredit <= 0
+                                | You are using the last $#{ feeInfo.credit } of your $25 credit
+                              else
+                                | You can use the remaining credit toward your next investment
                         if feeInfo.fee > 0
-                          .col-xl-12.p-x-0.input-border-bottom
+                          .col-xl-12.p-x-0.input-border
                             input(name="fee" id="fee" value=("$" + feeInfo.fee) disabled).form-control
                         else
                           input(name="fee" id="fee" value=("$" + feeInfo.fee) disabled hidden=true).form-control
                       else
                         -
                           var feeStr = '$' + feeInfo.fee;
-                          pug_html += app.fields.textLabel("fee", _.extend({
-                            class1: 'col-xl-3 col-lg-4 text-md-left text-lg-right text-xl-right',
-                            class2: 'col-xl-4 col-lg-8 input-border-bottom',
-                            class3: 'c',
+                          pug_html += app.fields.fieldText("fee", _.extend({
+                            class: 'input-border-bottom',
                             placeholder: '+ ' + feeStr,
                             value: feeStr,
                             label: 'Commission',

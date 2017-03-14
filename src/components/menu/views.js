@@ -125,7 +125,6 @@ module.exports = {
         return;
 
       this._hideTimeout = setTimeout(() => {
-        console.log('hide notifications')
         if (this.$notificationContainer.hasClass('notification-active'))
           this.$notificationContainer.removeClass('notification-active');
       }, HIDE_TIMEOUT);

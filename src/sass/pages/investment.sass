@@ -19,9 +19,8 @@
 				font-size: 14px
 				font-weight: 700
 .investment
-	.input-border-bottom
+	.input-border
 		padding: 0 15px
-		border-bottom: none
 		.form-control:disabled
 			background-color: transparent!important
 	
@@ -67,6 +66,25 @@
 			color: $white
 	.fee
 		.input-border-bottom
+			.form-control:disabled
+				background-color: transparent!important
+				border: none
+			&:before
+				content: '+'
+				position: absolute
+				top: 6px
+				left: 25px
+
+		.commission-0
+			&.input-border
+				border: none!important
+				input
+					border-bottom: none
+		.input-border
+			input
+				border-top: none
+				border-left: none
+				border-right: none
 			&:before
 				content: '+'
 				position: absolute
@@ -77,7 +95,6 @@
 			&.commission
 				position: relative
 				input
-					border-bottom: none
 					color: $small-text
 				&:after
 					content: ''
@@ -95,22 +112,43 @@
 					text-transform: uppercase
 					letter-spacing: 1.3px
 				.commission-right-block
-					background-image: url("/img/commission-bg.png")
 					position: absolute
 					top: -13px
 					left: 97%
 					width: 296px
 					height: 68px
+					background-size: 100%
+					background-repeat: no-repeat
 					z-index: 2
-					span
+					background-image: url("/img/comission-bg.png")
+					.credit-amount
 						position: absolute
-						font-size: rem(30)
-						color: $puerto_rico
-						left: 105px
-						top: 13px
+						left: 20%
+						top: 15px
+						width: 50%
+						text-align: center
 						font-weight: bold
-
-
+						color: $puerto-rico
+						font-size: rem(38)
+					.credit-remains
+						position: absolute
+						left: 100px
+						top: 37px
+						font-weight: bold
+						color: $puerto-rico
+						font-size: rem(8)
+						text-transform: uppercase
+					.credit-text
+						color: $puerto-rico
+						font-size: rem(10)
+						left: 58%
+						padding: rem(10)
+						text-align: center
+						font-weight: bold
+						position: absolute
+						line-height: 11px
+						top: 8%
+					
 	.commission-group
 		position: relative
 	.varification
@@ -155,5 +193,25 @@
 	.investment 
 		.list-group-item-heading
 			margin-bottom: rem(5)
+@media screen and (max-width: 515px)
 	.commission-right-block
-		display: none
+		background-size: 100%!important
+		width: 250px!important
+		height: 60px!important
+		top: -9px!important
+		.credit-remains
+			left: 85px!important
+@media screen and (max-width: 515px)
+	.commission-right-block
+		width: 200px!important
+		top: -4px!important
+		.credit-amount
+			font-size: rem(20)!important
+			top: 8px!important
+		.credit-remains
+			left: 65px!important
+			top: 25px!important
+			font-size: rem(6)!important
+		.credit-text
+			line-height: 7px!important
+			font-size: rem(6)!important
