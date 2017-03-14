@@ -9,6 +9,7 @@ class FileElement {
     this.resultHTML = '';
     this.element = null;
     this.options = options;
+    this.elementSelector = '.' + this.fieldName + ' .fileContainer';
     return this;
   }
 
@@ -38,16 +39,20 @@ class FileElement {
     setTimeout(() => {
       // Fix
       // this.element = $(this.resultHTML)[0];
-      this.element = document.querySelector('.' + this.fieldName + ' .fileContainer');
-      this.attacheEvents();
+      this.element = document.querySelector(this.elementSelector);
+      if(this.element) {
+        this.attacheEvents();
+      } else {
+        console.debug('cannot find element ', this.elementSelector, this);
+      }
     }, 600);
 
     return this;
   }
 
   attacheEvents() {
-    if(this.file.id) {
-      this.element.querySelector('.deleteFile').onclick = () => {
+    this.element.querySelectorAll('.deleteFile').forEach((item) => {
+      item.addEventListener("click", (event) => {
         api.makeRequest(
             global.filerUrl,
             'DELETE',
@@ -64,8 +69,14 @@ class FileElement {
             this.render();
           })
         });
-      };
-    }
+      });
+    });
+    
+    // ToDo
+    // This should be in the image model
+    this.element.querySelectorAll('.cropImage').forEach((item) => {
+      console.log('cropper');
+    });
   }
 
   getTemplate() {

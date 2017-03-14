@@ -4,7 +4,7 @@ const fileClass = require('models/file.js');
 const defaultImage = '/img/default/255x153.png'; 
 
 
-class folderElement extends fileDropzone.FileElement {
+class FolderElement extends fileDropzone.FileElement {
   constructor(file, fieldName, fieldDataName, options={}) {
     super(file, fieldName, fieldDataName, options);
     this.files = [];
@@ -14,11 +14,16 @@ class folderElement extends fileDropzone.FileElement {
         el.urls = {};
         el.urls.origin = temp.urls[0];
       }
-      this.files.push(new fileDropzone.FileElement(
-        new fileClass('', el)
-      ));
+      let fileObj = new fileDropzone.FileElement(
+        new fileClass('', el),
+        fieldName,
+        fieldDataName
+      );
+      fileObj.getTemplate = this.getTemplate;
+      fileObj.elementSelector = '.' + fieldName + ' .fileContainer' + el.id;
+      this.files.push(fileObj);
     });
-    this.file = file;
+    // this.file = file;
     this.fieldName = fieldName;
     this.fieldDataName = fieldDataName;
     this.resultHTML = '';
@@ -28,21 +33,22 @@ class folderElement extends fileDropzone.FileElement {
   }
 
   getTemplate() {
-    return require('./templates/image.pug');
+    return require('./templates/folderElement.pug');
   }
 
   getDefaultImage() {
     return this.options.defaultImage || defaultImage;
   }
+
 };
 
 
-class folderDropzone extends fileDropzone.FileDropzone {
+class FolderDropzone extends fileDropzone.FileDropzone {
 
   constructor(view, fieldName, fieldDataName, imageOptions) {
     super(view, fieldName, fieldDataName, imageOptions);
 
-    this.folderElement = new folderElement(
+    this.folderElement = new FolderElement(
       this.model[fieldName],
       fieldName,
       fieldDataName
@@ -67,6 +73,6 @@ class folderDropzone extends fileDropzone.FileDropzone {
 }
 
 module.exports = {
-  folderElement: folderElement,
-  folderDropzone: folderDropzone
+  FolderElement: FolderElement,
+  FolderDropzone: FolderDropzone
 };

@@ -12,7 +12,18 @@ const componentRoutes = [
   // require('components/blog/route'),
 ];
 
+const checkSafeExtend = (dest={}, src={}) => {
+  let keys = Object.keys(dest);
+  _(keys).each((key) => {
+    if (src[key])
+      console.error(`Method ${key} is already in Router`, src);
+  });
+};
+
 const routesMap = _.reduce(componentRoutes, (dest, route) => {
+  checkSafeExtend(dest.routes, route.routes);
+  checkSafeExtend(dest.methods, route.methods);
+
   dest.routes = _.extend(dest.routes, route.routes);
   dest.methods = _.extend(dest.methods, route.methods);
   if (Array.isArray(route.auth)) {

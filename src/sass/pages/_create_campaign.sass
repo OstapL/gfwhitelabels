@@ -1,6 +1,24 @@
 
 .create-company,.create-company-general
-
+	.custom-link-company
+		.prefix_input_prefix
+			padding: rem(6) rem(15)
+			position: relative
+			float: left
+			z-index: 2
+			color: #828282
+			-webkit-user-select: none
+			-moz-user-select: none
+			-ms-user-select: none
+			user-select: none
+			border: 1px solid rgba(0,0,0,.15)
+			height: 35px
+			border-right: none
+			background-color: $alabaster
+			color: $black
+		.prefix_input_field
+			overflow: hidden
+			white-space: nowrap
 	.form-section
 		textarea
 			min-height: rem(172)
@@ -122,7 +140,12 @@
 @media only screen and (max-width : 1200px)
 	.create_compaign
 		margin-top: 50px
-
+	.create-company
+		.custom-link-company
+			.prefix_input_prefix
+				width: 50%
+			.prefix_input_field
+				width: 50%	
 @media only screen and (max-width : 992px)
 	.create-company
 		.form-section
@@ -139,6 +162,13 @@
 		.city_states
 			label
 				padding-left: 0
-	
-
+@media only screen and (max-width : 480px)
+	.create-company
+		.custom-link-company
+			.prefix_input_prefix
+				width: 100%
+				border: 1px solid rgba(0,0,0,.15)
+			.prefix_input_field
+				width: 100%
+				
 		

@@ -138,25 +138,44 @@ module.exports = {
     },
 
     issuerDashboard(id) {
-      $('body').scrollTo();
-      $.when(
-        app.makeCacheRequest(raiseCapitalServer + '/company/' + app.user.formc.company_id + '?noi=1', 'GET'),
-        app.user.getCampaignR(app.user.formc.campaign_id, 'GET'),
-      ).done((company, campaign) => {
 
+      $('body').scrollTo();
+      let params = {
+        el: '#content'
+      };
+
+      let companyData = app.user.companiesMember.filter((el) => {
+        return el.formc_id = id;
+      });
+      if(companyData.length == 0) {
+        alert('show 404 that user is not belong to this company');
+        return '';
+      } else {
+        companyData = companyData[0];
+      }
+
+      $.when(
+        app.makeCacheRequest(raiseCapitalServer + '/company/' + companyData.company_id + '?noi=1', 'GET'),
+        app.user.getCampaignR(companyData.campaign_id),
+        app.user.getFormcR(companyData.formc_id)
+      ).done((company, campaign, formc) => {
+      
         if(company[0]) app.user.company = company[0];
         if(campaign[0]) app.user.campaign = campaign[0];
+        if(formc[0]) app.user.formc = formc[0];
 
-        var model = app.user.company;
-        model.campaign = app.user.campaign;
-        model.formc = app.user.formc;
+        params.company = app.user.company;
+        params.campaign = app.user.campaign;
+        params.formc = app.user.formc;
+
+        // FixMe
+        // Temp fix for socialShare directive
+        params.company.campaign = params.campaign;
 
         const View = require('components/accountProfile/views.js');
-        new View.issuerDashboard({
-          el: '#content',
-          model: model
-        }).render();
+        new View.issuerDashboard(params).render();
         app.hideLoading();
+
       });
     },
 

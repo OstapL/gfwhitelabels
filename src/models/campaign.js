@@ -1,5 +1,7 @@
 const File = require('./file.js');
 const Image = require('./image.js');
+const Folder = require('./folder.js');
+const Gallery = require('./gallery.js');
 
 
 class Campaign {
@@ -21,6 +23,12 @@ class Campaign {
             break;
           case 'image':
             this.data[key] = new Image(urlRoot, this.data[key.replace('_image_id', '_data')]);
+            break;
+          case 'filefolder':
+            this.data[key] = new Folder(urlRoot, this.data[key], this.data[key.replace('_id', '_data')]);
+            break;
+          case 'imagefolder':
+            this.data[key] = new Gallery(urlRoot, this.data[key], this.data[key.replace('_id', '_data')]);
             break;
         }
       }

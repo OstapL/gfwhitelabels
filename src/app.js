@@ -14,15 +14,18 @@ require('js/html5-dataset.js');
 $.serializeJSON.defaultOptions = _.extend($.serializeJSON.defaultOptions, {
   customTypes: {
     decimal(val) {
-      return parseFloat(val);
+      return app.helpers.format.unformatPrice(val);
     },
     money(val) {
-      return formatHelper.unformatPrice(val);
+      return app.helpers.format.unformatPrice(val);
     },
     url(val) {
       return String(val);
     },
     text(val) {
+      return String(val);
+    },
+    email(val) {
       return String(val);
     },
     password(val) {
@@ -37,7 +40,9 @@ $.serializeJSON.defaultOptions = _.extend($.serializeJSON.defaultOptions, {
 global.validation = require('components/validation/validation.js');
 
 const User = require('components/accountProfile/user.js');
-global.formatHelper = require('helpers/formatHelper');
+// FixMe
+// user app.helpers.format
+global.formatHelper = require('helpers/formatHelper.js');
 
 if (!global.Intl) {
   require('intl');
@@ -313,6 +318,32 @@ let app = {
       data: data,
     });
   },
+
+  initMap(options={
+    lat: 40.7440668,
+    lng: -73.98522220000001,
+    content: '<b>Growth Fountain</b><br/>79 Madison Ave, 5th Floor, New York, NY 10016<br/> New York',
+  }) {
+    let mapElement = document.getElementById('map');
+    if (!mapElement)
+      return console.error('Missing map element');
+
+    const coords = { lat: options.lat, lng: options.lng };
+    let map = new google.maps.Map(mapElement, {
+      zoom: 15,
+      center: coords,
+      scrollwheel: false,
+    });
+    let marker = new google.maps.Marker({
+      position: coords,
+      map: map,
+    });
+    let infowindow = new google.maps.InfoWindow({
+      content: options.content || '',
+    });
+    google.maps.event.addListener(marker, "click", function(){ infowindow.open(map,marker); });
+    infowindow.open(map, marker);
+  },
 };
 
 // Что-то пахнет говнецом
@@ -327,6 +358,8 @@ const Router = require('./routers.js');
 // app routers
 app.routers = require('routers');//TODO: refactor
 app.fields = require('fields');
+app.helpers = {};
+app.helpers.format = require('helpers/formatHelper.js');
 
 // app.user = new userModel();
 app.user = new User();

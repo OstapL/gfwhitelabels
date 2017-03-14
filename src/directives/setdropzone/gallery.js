@@ -1,11 +1,38 @@
 const folder = require('models/folder.js');
 const folderDropzone = require('./folder.js');
-const fileDropzone = require('./file.js');
-const fileClass = require('models/file.js');
+const imageDropzone = require('./image.js');
+const ImageClass = require('models/image.js');
 const defaultImage = '/img/default/255x153.png'; 
 
 
-class galleryElement extends folderDropzone.folderElement {
+class GalleryElement extends imageDropzone.ImageElement {
+  constructor(file, fieldName, fieldDataName, options={}) {
+    super(file, fieldName, fieldDataName, options);
+    this.files = [];
+    file.data.forEach((el) => {
+      if(Array.isArray(el.urls)) {
+        let temp = Object.assign({}, el);
+        el.urls = {};
+        el.urls.origin = temp.urls[0];
+      }
+      let fileObj = new imageDropzone.ImageElement(
+        new ImageClass('', el),
+        fieldName,
+        fieldDataName
+      );
+      fileObj.getTemplate = this.getTemplate;
+      fileObj.elementSelector = '.' + fieldName + ' .fileContainer' + el.id;
+      this.files.push(fileObj);
+    });
+    // this.file = file;
+    this.fieldName = fieldName;
+    this.fieldDataName = fieldDataName;
+    this.resultHTML = '';
+    this.element = null;
+    this.options = options;
+    return this;
+  }
+
   getTemplate() {
     return require('./templates/gallery.pug');
   }
@@ -16,12 +43,13 @@ class galleryElement extends folderDropzone.folderElement {
 };
 
 
-class galleryDropzone extends folderDropzone.FolderDropzone {
+class GalleryDropzone extends imageDropzone.ImageDropzone {
 
-  constructor(view, fieldName, fieldDataName, imageOptions) {
-    super(view, fieldName, fieldDataName, imageOptions);
+  constructor(view, fieldName, fieldDataName, options={}) {
+    super(view, fieldName, fieldDataName, options);
+    this.options.acceptedFiles = 'image/*,.jpg,.png,.jpeg';
 
-    this.galleryElement = new galleryElement(
+    this.galleryElement = new GalleryElement(
       this.model[fieldName],
       fieldName,
       fieldDataName
@@ -56,6 +84,6 @@ class galleryDropzone extends folderDropzone.FolderDropzone {
 }
 
 module.exports = {
-  galleryElement: galleryElement,
-  galleryDropzone: galleryDropzone
+  GalleryElement: GalleryElement,
+  GalleryDropzone: GalleryDropzone
 };

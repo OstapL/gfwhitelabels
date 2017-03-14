@@ -20,7 +20,9 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
             br
             | only for investments made on this platform.
             br
-            | Other conditions apply, see Terms of Use.
+            | Other conditions apply, see 
+            span
+              a(href="/pg/terms_of_use").link-6 Terms of Use.
       .modal-body
         .container.form-section
           h2.text-xs-center.text-uppercase.dosis.modal-title Sign up
@@ -44,7 +46,7 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
                 .col-lg-12
                   label.p-t-0
                     input(type="checkbox" name="checkbox1" value="1")#agree-rules
-                    span.label-text I agree to the
+                    p.label-text I agree to the
                       a(href="/pg/terms_of_use" target="_blank").link-3  Terms of Use
                       | ,
                       a(href="/pg/privacy_policy" target="_blank").link-3  Privacy Policy

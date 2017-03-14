@@ -622,13 +622,19 @@ module.exports = {
     },
 
     initialize(options) {
+      this.company = options.company;
+      this.model = this.company;
+      this.campaign = options.campaign;
+      this.formc = options.formc;
     },
 
     render() {
       this.$el.html(
         this.template({
-          values: this.model,
-          helpers: helpers,
+          self: this,
+          company: this.company,
+          campaign: this.campaign,
+          formc: this.formc,
         })
       );
 
@@ -658,19 +664,19 @@ module.exports = {
 
     initComments() {
       const View = require('components/comment/views.js');
-      const urlComments = commentsServer + '/company/' + this.model.id;
+      const urlComments = commentsServer + '/company/' + this.company.id;
       let optionsR = api.makeRequest(urlComments, 'OPTIONS');
       let dataR = api.makeRequest(urlComments);
 
       $.when(optionsR, dataR).done((options, data) => {
-        data[0].id = this.model.id;
-        data[0].owner_id = this.model.owner_id;
+        data[0].id = this.company.id;
+        data[0].owner_id = this.company.owner_id;
 
         let comments = new View.comments({
           model: data[0],
           fields: options[0].fields,
           allowQuestion: false,
-          cssClass: 'col-lg-8',
+          cssClass: 'col-xl-8 offset-xl-0',
         });
         comments.render();
 

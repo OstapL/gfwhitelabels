@@ -1,5 +1,5 @@
 section.singup.m-t-85
-  .container
+  .container.p-x-0
     .row
       div.text-center-flex
         .col-xl-4.col-lg-5.col-sm-7.col-xs-12.p-x-0
@@ -16,9 +16,11 @@ section.singup.m-t-85
                 br
                 | only for investments made on this platform.
                 br
-                | Other conditions apply, see Terms of Use.
+                | Other conditions apply, see 
+                span
+                  a(href="/pg/terms_of_use").link-3 Terms of Use.
 
-        .col-xl-4.col-lg-5.col-sm-7.col-xs-12.p-l-0.sign-up-right
+        .col-xl-4.col-lg-5.col-sm-7.col-xs-12.p-x-0.sign-up-right
           .sign-up-right-padding
             h2.text-uppercase.text-sm-center.text-xs-center.m-t-2 Sign Up
               p.small-text Have an Account?
@@ -61,14 +63,17 @@ section.singup.m-t-85
                 .form-group.row.clearfix.required
                   input(type="email"
                   placeholder="E-mail"
+                  data-value-type="email"
                   name="email").form-control
                 .form-group.row.clearfix.required
                   input(type="password"
                   placeholder="Password"
+                  data-value-type="password"
                   name="password1").form-control
                 .form-group.row.clearfix.required
                   input(type="password"
                   placeholder="Re-enter Password"
+                  data-value-type="password"
                   name="password2").form-control
                 
               .col-lg-12.m-t-1
