@@ -38,7 +38,6 @@ class User {
   }
 
   setData(data) {
-    debugger;
     if(data.hasOwnProperty('token') && data.hasOwnProperty('info')) {
       localStorage.setItem('token', data.token);
       delete data.token;
