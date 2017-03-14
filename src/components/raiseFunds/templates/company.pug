@@ -33,7 +33,9 @@ section.create-company.container.m-b-85
               span.color-red *
             .col-xl-9
               .prefix_input_prefix
-                span #{ window.location.host }
+                span
+                  | https://
+                  | #{ window.location.host }/
               .prefix_input_field
                 -
                   pug_html += app.fields.fieldText('slug', {
