@@ -29,7 +29,7 @@
 		.label-text
 			font-size: rem(12)
 		h2
-			margin-bottom: rem(30)
+			margin-bottom: rem(18)
 		.sign-up-right-padding
 			padding-left: rem(20)
 			padding-right: rem(20)
@@ -42,7 +42,40 @@
 			margin-top: rem(25)
 			margin-bottom: 18px
 	@media only screen and (min-width : 992px)
+		.container
+			padding-left: 0
+			padding-right: 0
 		.sign-up-right
 			border-left: none
+	@media only screen and (max-width : 768px)
+		.sign-up-left-banner
+			height: auto
+			background-image: none
+			margin-bottom: rem(20)
+			.wrap-baner
+				background-color: $sign-up-header-bgc
+				color: $white
+				top: 0px
+				.link-3
+					color: $white
+					&:hover
+						color: rgba($white, .7)
+				h1
+					color: $white
+					&.credit
+						color: $white
+				hr
+					background-color: $white
+					margin: 20px auto
+		.sign-up-right
+			border-top: none
+			height: auto
+	@media only screen and (max-width : 320px)
+		.sign-up-right
+			height: auto
+			border: none
+		.wrap-baner
+			h1
+				font-size: rem(26)!important
 
 
