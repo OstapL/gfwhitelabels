@@ -44,5 +44,34 @@
 	@media only screen and (min-width : 992px)
 		.sign-up-right
 			border-left: none
+	@media only screen and (max-width : 768px)
+		.sign-up-left-banner
+			height: auto
+			background-image: none
+			margin-bottom: rem(20)
+			.wrap-baner
+				background-color: $sign-up-header-bgc
+				color: $white
+				.link-3
+					color: $white
+					&:hover
+						color: rgba($white, .7)
+				h1
+					color: $white
+					&.credit
+						color: $white
+				hr
+					background-color: $white
+					margin: 20px auto
+		.sign-up-right
+			border-top: none
+			height: auto
+	@media only screen and (max-width : 320px)
+		.sign-up-right
+			height: auto
+			border: none
+		.wrap-baner
+			h1
+				font-size: rem(26)!important
 
 
