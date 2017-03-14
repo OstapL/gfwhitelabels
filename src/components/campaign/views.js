@@ -381,6 +381,7 @@ module.exports = {
     initialize(options) {
       this.fields = options.fields;
       this.user = options.user;
+      this.user.credit = 25
       this.user.account_number_re = this.user.account_number;
       this.user.routing_number_re = this.user.routing_number;
       this.fields.payment_information_type.validate.choices = {
