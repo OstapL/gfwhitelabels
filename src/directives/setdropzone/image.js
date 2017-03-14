@@ -60,6 +60,7 @@ class ImageDropzone extends file.FileDropzone {
       this.fileElement.render(this.fileElement.element);
       new CropperDropzone(
         this,
+        this.fileElement,
         this.cropperOptions
       ).render('#content');
     });
@@ -75,9 +76,9 @@ const Cropper = require('cropperjs').default;
 
 
 class CropperDropzone {
-  constructor(dropzone, options={}) {
+  constructor(dropzone, file, options={}) {
     this.dropzone = dropzone;
-    this.file = dropzone.fileElement;
+    this.file = file//dropzone.fileElement;
     this.options = options;
 
     this.options.control = Object.assign({}, {
@@ -250,5 +251,6 @@ class CropperDropzone {
 
 module.exports = {
   ImageElement: ImageElement,
-  ImageDropzone: ImageDropzone
+  ImageDropzone: ImageDropzone,
+  CropperDropzone: CropperDropzone
 };

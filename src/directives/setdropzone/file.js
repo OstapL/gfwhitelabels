@@ -54,9 +54,8 @@ class FileElement {
     this.element.querySelectorAll('.deleteFile').forEach((item) => {
       item.addEventListener("click", (event) => {
         api.makeRequest(
-            global.filerUrl,
-            'DELETE',
-            {id: this.file.id}
+            global.filerServer + '/' + this.file.id,
+            'DELETE'
         ).done(() => {
           let data = {};
           data[this.fieldName] = null;
@@ -89,7 +88,6 @@ class FileElement {
   }
 
   save() {
-    debugger;
     return this.file.save(
       this.fieldName,
       this.fieldDataName

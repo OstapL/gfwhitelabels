@@ -329,6 +329,7 @@ module.exports = {
             height: 205,
           },
           cssClass: 'img-crop',
+          template: 'regular'
         },
 
         fn: function checkNotEmpty(name, value, attr, data, computed) { 

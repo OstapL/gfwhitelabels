@@ -27,7 +27,7 @@ div(class=klass data-content=(help_text|| ''))
             p.drop-photo #{text}
             .icon-gallery
               i(class=" fa fa-image")
-        div(class=self.galleryElement.fieldName)
-          div(id=name).col-xl-12.all-gallery.p-l-0.p-r-0
+        div
+          div.col-xl-12.all-gallery.p-l-0.p-r-0(class=self.galleryElement.fieldName)
             each file,index in self.galleryElement.files
               - pug_html += file.render().resultHTML
