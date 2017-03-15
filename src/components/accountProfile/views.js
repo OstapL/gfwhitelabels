@@ -27,7 +27,7 @@ module.exports = {
     doNotExtendModel: true,
     events: _.extend({
       'click #saveAccountInfo': 'saveAccountInfo',
-      'click #saveFinancialInfo': api.submitAction,
+      // 'click #saveFinancialInfo': api.submitAction,
       'change #not-qualify': 'changeQualify',
       'change .investor-item-checkbox': 'changeAccreditedInvestorItem',
       'change #twitter,#facebook,#instagram,#linkedin': 'appendHttpsIfNecessary',
@@ -176,6 +176,8 @@ module.exports = {
           fields: this.fields,
         })
       );
+
+      this.el.querySelector('#saveFinancialInfo').addEventListener('click', (e) => { api.submitAction.call(this, e)});
 
       this._initSliders();
 
