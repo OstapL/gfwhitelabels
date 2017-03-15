@@ -37,8 +37,12 @@ class User {
     this.data.last_name = value;
   }
 
-  setData(data) {
-    debugger;
+  setData(data, next) {
+
+    if(next === undefined) {
+      next = app.getParams().next ? app.getParams().next : '/';
+    }
+
     if(data.hasOwnProperty('token') && data.hasOwnProperty('info')) {
       localStorage.setItem('token', data.token);
       delete data.token;
@@ -51,8 +55,7 @@ class User {
       });
 
       setTimeout(function() {
-        window.location = app.getParams().next ? app.getParams().next : 
-              '/';
+        window.location = next;
       }, 200);
     } else {
       alert('not token or info providet');
