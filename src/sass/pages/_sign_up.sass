@@ -1,6 +1,6 @@
 .singup
 	.sign-up-left-banner
-		background-image: url("/img/sign-up-bg.jpg")
+		background-image: url("/img/sign-up-bg.png")
 		height: 665px
 		width: 100%
 		background-position: center
@@ -28,8 +28,9 @@
 		height: 665px
 		.label-text
 			font-size: rem(12)
-		h2
-			margin-bottom: rem(18)
+		p
+			margin-bottom: rem(25)
+			color: $small-text
 		.sign-up-right-padding
 			padding-left: rem(20)
 			padding-right: rem(20)
@@ -58,6 +59,7 @@
 				top: 0px
 				.link-3
 					color: $white
+					text-decoration: underline
 					&:hover
 						color: rgba($white, .7)
 				h1
@@ -77,5 +79,19 @@
 		.wrap-baner
 			h1
 				font-size: rem(26)!important
-
+.login
+	p
+		margin-bottom: rem(15)
+		color: $small-text
+	.login-padding
+		padding-left: 10px
+		padding-right: 10px
+#sign_up
+	.modal-dialog
+		max-width: 540px
+		.modal-body
+			padding: rem(15) rem(45) 0
+			.label-text
+				line-height: 14px
+				font-size: rem(12)
 
