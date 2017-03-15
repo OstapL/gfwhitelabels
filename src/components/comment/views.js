@@ -68,7 +68,7 @@ module.exports = {
       this.urlRoot = this.urlRoot.replace(':model', 'company').replace(':id', this.model.id);
 
       this.userRole = 0;
-      _.each(app.user.companiesMember.data, (company) => {
+      _.each(app.user.companiesMember, (company) => {
         if (company.company_id == this.model.id)
           this.userRole = company.role;
       });
