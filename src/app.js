@@ -14,10 +14,10 @@ require('js/html5-dataset.js');
 $.serializeJSON.defaultOptions = _.extend($.serializeJSON.defaultOptions, {
   customTypes: {
     decimal(val) {
-      return formatHelper.unformatPrice(val);
+      return app.helpers.format.unformatPrice(val);
     },
     money(val) {
-      return formatHelper.unformatPrice(val);
+      return app.helpers.format.unformatPrice(val);
     },
     url(val) {
       return String(val);
@@ -40,7 +40,9 @@ $.serializeJSON.defaultOptions = _.extend($.serializeJSON.defaultOptions, {
 const validation = require('components/validation/validation.js');
 
 const User = require('components/accountProfile/user.js');
-global.formatHelper = require('helpers/formatHelper');
+// FixMe
+// user app.helpers.format
+global.formatHelper = require('helpers/formatHelper.js');
 
 if (!global.Intl) {
   require('intl');
@@ -356,6 +358,8 @@ const Router = require('./routers.js');
 // app routers
 app.routers = require('routers');//TODO: refactor
 app.fields = require('fields');
+app.helpers = {};
+app.helpers.format = require('helpers/formatHelper.js');
 
 // app.user = new userModel();
 app.user = new User();

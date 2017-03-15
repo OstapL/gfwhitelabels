@@ -642,6 +642,7 @@ module.exports = {
           waived: 0,
           fee: fee,
           remainCredit: 0,
+          credit: 0,
         };
 
       return {
