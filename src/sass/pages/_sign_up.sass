@@ -1,6 +1,6 @@
 .singup
 	.sign-up-left-banner
-		background-image: url("/img/sign-up-bg.jpg")
+		background-image: url("/img/sign-up-bg.png")
 		height: 665px
 		width: 100%
 		background-position: center
@@ -28,8 +28,9 @@
 		height: 665px
 		.label-text
 			font-size: rem(12)
-		h2
-			margin-bottom: rem(30)
+		p
+			margin-bottom: rem(25)
+			color: $small-text
 		.sign-up-right-padding
 			padding-left: rem(20)
 			padding-right: rem(20)
@@ -42,7 +43,55 @@
 			margin-top: rem(25)
 			margin-bottom: 18px
 	@media only screen and (min-width : 992px)
+		.container
+			padding-left: 0
+			padding-right: 0
 		.sign-up-right
 			border-left: none
-
+	@media only screen and (max-width : 768px)
+		.sign-up-left-banner
+			height: auto
+			background-image: none
+			margin-bottom: rem(20)
+			.wrap-baner
+				background-color: $sign-up-header-bgc
+				color: $white
+				top: 0px
+				.link-3
+					color: $white
+					text-decoration: underline
+					&:hover
+						color: rgba($white, .7)
+				h1
+					color: $white
+					&.credit
+						color: $white
+				hr
+					background-color: $white
+					margin: 20px auto
+		.sign-up-right
+			border-top: none
+			height: auto
+	@media only screen and (max-width : 320px)
+		.sign-up-right
+			height: auto
+			border: none
+		.wrap-baner
+			h1
+				font-size: rem(26)!important
+.login
+	p
+		margin-bottom: rem(15)
+		color: $small-text
+	.login-padding
+		padding-left: 10px
+		padding-right: 10px
+#sign_up
+	.modal-dialog
+		max-width: 540px
+		.modal-body
+			padding: rem(15) rem(45) 0
+			.label-text
+				line-height: 14px
+				font-size: rem(12)
 

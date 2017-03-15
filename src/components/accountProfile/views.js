@@ -26,8 +26,8 @@ module.exports = {
     urlRoot: authServer + '/rest-auth/data',
     doNotExtendModel: true,
     events: _.extend({
-      'click #save-account-info': 'saveAccountInfo',
-      'click #save-financial-info': api.submitAction,
+      'click #saveAccountInfo': 'saveAccountInfo',
+      'click #saveFinancialInfo': api.submitAction,
       'change #not-qualify': 'changeQualify',
       'change .investor-item-checkbox': 'changeAccreditedInvestorItem',
       'change #twitter,#facebook,#instagram,#linkedin': 'appendHttpsIfNecessary',
@@ -350,7 +350,8 @@ module.exports = {
     _success(data) {
       this._updateUserInfo();
 
-      app.routers.navigate('/', { trigger: true });
+      app.routers.navigate('/account/profile', { trigger: true });
+      app.hideLoading();
       return 0;
 
       // if ($("#financial_info").hasClass("active")) {

@@ -86,8 +86,7 @@ module.exports = {
         reset_password_code: code,
         domain: window.location.host,
       }).done((data) => {
-        localStorage.setItem('token', data.key);
-        window.location = '/account/password/new';
+        app.user.setData(data,  '/account/password/new');
       }).fail((data) => {
         const template = require('./templates/expiredCode.pug');
         app.hideLoading();
