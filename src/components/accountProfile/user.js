@@ -58,7 +58,7 @@ class User {
         window.location = next;
       }, 200);
     } else {
-      alert('not token or info providet');
+      alert('no token or additional info providet');
     }
   }
 
