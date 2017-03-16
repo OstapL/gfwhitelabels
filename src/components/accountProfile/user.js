@@ -48,7 +48,6 @@ class User {
 
     if(data.hasOwnProperty('token') && data.hasOwnProperty('info')) {
       localStorage.setItem('token', data.token);
-      delete data.token;
       localStorage.setItem('user', JSON.stringify(data));
 
       cookies.set('token', data.token, {
@@ -57,11 +56,12 @@ class User {
         path: '/',
       });
 
+      delete data.token;
       setTimeout(function() {
         window.location = next;
       }, 200);
     } else {
-      alert('not token or info providet');
+      alert('no token or additional info providet');
     }
   }
 
