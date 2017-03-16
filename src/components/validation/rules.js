@@ -30,7 +30,7 @@ module.exports = {
     equalTo: '{0} must be the same as {1}',
     digits: '{0} must only contain digits',
     number: '{0} must be a number',
-    email: '{0} must be a valid email',
+    email: 'Invalid email', // email: '{0} must be a valid email',
     url: '{0} must be a valid url',
     inlinePattern: '{0} is invalid',
   },

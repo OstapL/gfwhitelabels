@@ -1,5 +1,5 @@
 const roleHelper = require('helpers/roleHelper.js');
-const ONE_HOUR = 1000 * 60 * 60;
+const YEAR = 1000 * 60 * 60 * 24 * 30 * 12;
 
 class User {
   constructor() {
@@ -37,41 +37,61 @@ class User {
     this.data.last_name = value;
   }
 
+  setData(data, next) {
+
+    if(next === undefined) {
+      next = app.getParams().next ? app.getParams().next : '/';
+    }
+
+    if(data.hasOwnProperty('token') && data.hasOwnProperty('info')) {
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data));
+
+      cookies.set('token', data.token, {
+        domain: '.' + domainUrl,
+        expires: YEAR,
+        path: '/',
+      });
+
+      delete data.token;
+      setTimeout(function() {
+        window.location = next;
+      }, 200);
+    } else {
+      alert('no token or additional info providet');
+    }
+  }
+
+  emptyLocalStorage() {
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    cookies.expire('token');
+    this.token = null;
+    this.data = {};
+    this.companiesMember = [];
+  }
+
   load() {
-    const token = localStorage.getItem('token');
-    if (token === null)
+    this.token = localStorage.getItem('token');
+    if (this.token === null) {
       return app.trigger('userLoaded', { id: '' });
+    } else {
+      const data = JSON.parse(localStorage.getItem('user')) || {};
+      // Check if user have all required data
+      if(data.hasOwnProperty('info') == false || Array.isArray(data.info) == false) {
+        this.emptyLocalStorage();
+        setTimeout(function() {
+          window.location = '/account/login?next=' + document.location.pathname;
+        }, 100);
+        return;
+      }
 
-    // if we have a token we can get information about user
-    this.token = token;
-    cookies.set('token', token, {
-      domain: '.' + domainUrl,
-      expires: ONE_HOUR,
-      path: '/',
-    });
+      this.companiesMember = data.info;
+      delete data.info;
+      this.data = data;
 
-    // let userData = localStorage.getItem('user');
-    // userData = JSON.parse(userData);
-    // this.set(userData);
-    // app.trigger('userLoaded', userData);
-    // return;
-
-    $.when(
-        api.makeRequest(authServer + '/rest-auth/data-mini', 'GET'),
-        this.getCompaniesMemberR()
-    ).then((data, members) => {
-      this.data = data[0];
-      this.companiesMember = members[0];
-      localStorage.setItem('user', JSON.stringify(this.data));
-      return this.getCompanyR();
-    }).then((company) => {
-      this.data.company = company;
-      app.trigger('userLoaded', this.data);
-    }).fail((xhr, status) => {
-      localStorage.removeItem('token');
-      app.defaultSaveActions.error(app, xhr, status, '');
-    });
-
+      return app.trigger('userLoaded', data);
+    }
   }
 
   is_anonymous() {
@@ -84,12 +104,12 @@ class User {
   }
 
   _initRoles() {
-    if (!this.companiesMember || !this.companiesMember.data || !this.companiesMember.data.length)
+    if (!this.companiesMember || !this.companiesMember.length)
       return;
 
     this.role_data = [];
 
-    _.each(this.companiesMember.data, (data) => {
+    _.each(this.companiesMember, (data) => {
       let roles = roleHelper.extractRoles(data.role);
       this.role_data.push({
         company: {
@@ -135,60 +155,76 @@ class User {
   }
 
   logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    cookies.expire('token');
+    this.emptyLocalStorage();
     app.trigger('userLogout', {});
 
-    window.location = '/';
+    setTimeout(() => { window.location = '/';}, 100);
   }
 
-  passwordChanged(token) {
+  passwordChanged(data) {
     if (!token) {
       console.error('New token is empty');
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
-      cookies.expire('token');
-      this.token = null;
+      this.emptyLocalStorage();
       return;
     }
 
-    localStorage.setItem('token', token);
-    this.token = token;
-    cookies.set('token', token, {
-      domain: '.' + domainUrl,
-      expires: ONE_HOUR,
-      path: '/',
-    });
+    this.setData(data);
   }
 
-  getCompanyR(id, requestMethod='GET') {
-    if(id) 
-      return this.company ? '' : app.makeCacheRequest(raiseCapitalServer + '/company/' + id + '/edit', requestMethod);
-    else
-      return this.company ? '' : app.makeCacheRequest(authServer + '/user/company', requestMethod);
+  getCompanyR(id) {
+    if(id)  {
+      return this.company ? '' : app.makeCacheRequest(raiseCapitalServer + '/company/' + id, 'GET');
+    } else {
+      let formcOwner = this.companiesMember.filter((el) => {
+        return el.owner_id = this.data.id;
+      });
+      if(formcOwner.length == 0) {
+        return '';
+      }
+      else {
+        return this.company ? '' : app.makeCacheRequest(raiseCapitalServer + '/company/' + formcOwner[0].company_id, 'GET');
+      }
+    }
   }
 
   getCompany() {
     return this.company;
   }
 
-  getCampaignR(id, requestMethod='GET') {
-    if(id) 
-      return this.campaign ? '' : app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/edit', requestMethod);
-    else
-      return this.campaign ? '' : app.makeCacheRequest(authServer + '/user/campaign', requestMethod);
+  getCampaignR(id) {
+    if(id)  {
+      return this.campaign ? '' : app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id, 'GET');
+    } else {
+      let formcOwner = this.companiesMember.filter((el) => {
+        return el.owner_id = this.data.id;
+      });
+      if(formcOwner.length == 0) {
+        return '';
+      }
+      else {
+        return this.campaign ? '' : app.makeCacheRequest(raiseCapitalServer + '/campaign/' + formcOwner[0].campaign_id, 'GET');
+      }
+    }
   }
 
   getCampaign() {
     return this.campaign;
   }
 
-  getFormcR(id, requestMethod='GET') {
-    if(id) 
-      return this.formc ? '' : app.makeCacheRequest(formcServer + '/' + id, requestMethod);
-    else
-      return this.formc ? '' : app.makeCacheRequest(authServer + '/user/formc', requestMethod);
+  getFormcR(id) {
+    if(id)  {
+      return this.formc ? '' : app.makeCacheRequest(formcServer + '/' + id, 'GET');
+    } else {
+      let formcOwner = this.companiesMember.filter((el) => {
+        return el.owner_id = this.data.id;
+      });
+      if(formcOwner.length == 0) {
+        return '';
+      }
+      else {
+        return this.formc ? '' : app.makeCacheRequest(formcServer + '/' + formcOwner[0].formc_id, 'GET');
+      }
+    }
   }
 
   getFormc() {

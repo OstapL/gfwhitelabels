@@ -45,7 +45,7 @@ module.exports = {
     },
 
     changePassword() {
-      $('#content').scrollTo();
+      $('body').scrollTo();
       const View = require('components/accountProfile/views.js');
       let i = new View.changePassword({
         el: '#content',
@@ -138,36 +138,44 @@ module.exports = {
     },
 
     issuerDashboard(id) {
-      $('#content').scrollTo();
+
+      $('body').scrollTo();
+      let params = {
+        el: '#content'
+      };
+
+      let companyData = app.user.companiesMember.filter((el) => {
+        return el.formc_id = id;
+      });
+      if(companyData.length == 0) {
+        alert('show 404 that user is not belong to this company');
+        return '';
+      } else {
+        companyData = companyData[0];
+      }
+
       $.when(
-        api.makeCacheRequest(formcServer + '/' + id, 'OPTIONS'),
-        app.user.getFormcR(id),
-      ).then((formcFields, formc) => {
+        app.makeCacheRequest(raiseCapitalServer + '/company/' + companyData.company_id + '?noi=1', 'GET'),
+        app.user.getCampaignR(companyData.campaign_id),
+        app.user.getFormcR(companyData.formc_id)
+      ).done((company, campaign, formc) => {
+      
+        if(company[0]) app.user.company = company[0];
+        if(campaign[0]) app.user.campaign = campaign[0];
+        if(formc[0]) app.user.formc = formc[0];
 
-        if (formc[0]) {
-          app.user.formc = formc[0];
-        }
+        params.company = app.user.company;
+        params.campaign = app.user.campaign;
+        params.formc = app.user.formc;
 
-        // noi=1 means that server should return number_of_investrs for company
-        const companyUrl = `${raiseCapitalServer}/company/${app.user.formc.company_id}/edit?noi=1`;
-        const companyR = app.makeCacheRequest(companyUrl, 'GET');
-        const campaignR = app.user.getCampaignR(app.user.formc.campaign_id, 'GET');
-        $.when(companyR, campaignR).done((company, campaign) => {
-          if (company[0]) app.user.company = company[0];
-          if (campaign[0]) app.user.campaign = campaign[0];
+        // FixMe
+        // Temp fix for socialShare directive
+        params.company.campaign = params.campaign;
 
-          var model = app.user.company;
-          model.campaign = app.user.campaign;
-          model.formc = app.user.formc;
+        const View = require('components/accountProfile/views.js');
+        new View.issuerDashboard(params).render();
+        app.hideLoading();
 
-          const View = require('components/accountProfile/views.js');
-          new View.issuerDashboard({
-            el: '#content',
-            model: model,
-          }).render();
-          app.hideLoading();
-
-        });
       });
     },
 
