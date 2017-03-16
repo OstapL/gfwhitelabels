@@ -393,7 +393,7 @@ module.exports = {
           });
       } else {
         if (this.$('.alert').length) {
-          $('#content').scrollTo();
+          $('body').scrollTo();
         } else {
           this.$el.find('.has-error').scrollTo();
         }
