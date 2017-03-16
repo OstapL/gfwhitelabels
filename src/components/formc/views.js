@@ -1916,7 +1916,7 @@ module.exports = {
 
     addOutstanding(e) {
       e.preventDefault();
-      const data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
+      const data = $(e.target).serializeJSON();
 
       const sectionName = e.target.dataset.section;
       const template = require('./templates/snippets/outstanding_securities.pug');
