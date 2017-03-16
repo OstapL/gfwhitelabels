@@ -802,7 +802,7 @@ module.exports = {
     },
 
     events: _.extend({
-      'submit form': 'submit',
+      'click #submit': api.submitAction,
       'click .submit_formc': submitFormc,
       'change input[type=radio][name=doc_type]': 'changeDocType',
       // 'change .min-expense,.max-expense,.min-use,.max-use': 'calculate',
@@ -887,8 +887,9 @@ module.exports = {
     },
 
     submit(e) {
-      var $target = $(e.target);
-      var data = $target.serializeJSON({ useIntKeysAsArrayIndex: true });
+      debugger;
+      var $target = $(e.target.currentTarget);
+      var data = $target.serializeJSON();
       data.use_of_net_proceeds.forEach(function (elem) {
         elem.min = elem.min.replace(/,/g, '');
         elem.max = elem.max.replace(/,/g, '');
@@ -1920,18 +1921,20 @@ module.exports = {
       const sectionName = e.target.dataset.section;
       const template = require('./templates/snippets/outstanding_securities.pug');
 
-      if(data.amount_authorized.toLocaleLowerCase() == 'n/a' ||
+      if(typeof data.amount_authorized == 'string') {
+        if(data.amount_authorized.toLocaleLowerCase() == 'n/a' ||
           data.amount_authorized.toLocaleLowerCase() == 'not available' ||
           data.amount_authorized.toLocaleLowerCase() == 'na') {
-        data.amount_authorized = null;
-      } else {
-        data.amount_authorized = Math.round(
+            data.amount_authorized = null;
+        } else {
+          data.amount_authorized = Math.round(
             data.amount_authorized.replace(/[\$\,]/g, '') * 100 
-        ) / 100;
+          ) / 100;
+        }
       }
 
       data.amount_outstanding = Math.round(
-          data.amount_outstanding.replace(/[\$\,]/g, '') * 100
+          data.amount_outstanding * 100
       ) / 100;
 
       if (!validation.validate(this.fields.outstanding_securities.schema, data, this)) {
