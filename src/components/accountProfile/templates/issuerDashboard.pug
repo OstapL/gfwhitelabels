@@ -9,11 +9,11 @@ section.issuer-dashbord-top
     .row
       .col-md-4
         .img_under_text
-          img(src=campaignHelpers.getImageCampaign(values.campaign) alt="")
-          h2.text-uppercase.dosis.m-t-0 #{values.name}
-          .timer_day #{campaignHelpers.daysLeft(values.campaign.expiration_date)} Days Left
+          img(src=campaignHelpers.getImageCampaign(campaign) alt="")
+          h2.text-uppercase.dosis.m-t-0 #{company.name}
+          .timer_day #{campaignHelpers.daysLeft(campaign.expiration_date)} Days Left
         .share-block.d-inline-block.share
-          | !{ socialDirective.render(this.model) }
+          | !{ socialDirective.render(this.company) }
 
       .col-md-2.col-sm-6.col-xs-6
         a(href="").dashboard-stat
@@ -23,7 +23,7 @@ section.issuer-dashbord-top
             .number
               span(
                 data-counter="counterup"
-                data-value=values.campaign.amount_raised) $#{ values.campaign.amount_raised }
+                data-value=campaign.amount_raised) $#{ campaign.amount_raised }
             .desc Amount Raised
 
       .col-md-2.col-sm-6.col-xs-6
@@ -34,7 +34,7 @@ section.issuer-dashbord-top
             .number
               span(
                 data-counter="counterup"
-                data-value=values.campaign.number_of_investors) #{values.number_of_investors.toLocaleString('en-US')}
+                data-value=company.number_of_investors) #{company.number_of_investors.toLocaleString('en-US')}
             .desc Number of Investors
 
       .col-md-2.col-sm-6.col-xs-6
@@ -45,7 +45,7 @@ section.issuer-dashbord-top
             .number
               span(
                 data-counter="counterup"
-                data-value=0) 0
+                data-value=0) #{ company.total_views } 
             .desc Page Views
 
       .col-md-2.col-sm-6.col-xs-6
@@ -62,7 +62,7 @@ section.issuer-dashbord-top
       .col-md-7.col-sm-10.p-r-0.col-xs-10.hidden-xs-down
         .tpl-progress
           - 
-            var percentage_raised = campaignHelpers.daysLeftPercentage(values);
+            var percentage_raised = campaignHelpers.daysLeftPercentage(company);
             if(percentage_raised > 100) 
               percentage_raised = 100;
           progress(
@@ -75,25 +75,25 @@ section.issuer-dashbord-top
             - var now = new Date();
             .font-weight-bold
               | #{now.toLocaleString('en-US', { month: "short" })} #{ now.getDate() }
-            | #{ helpers.format.formatAmount(values.campaign.amount_raised) } Raised
+            | #{ app.helpers.format.formatAmount(campaign.amount_raised) } Raised
             //br
-            //| #{ helpers.format.formatAmount(values.campaign.amount_commited) } Approved
+            //| #{ app.helpers.format.formatAmount(campaign.amount_commited) } Approved
             //br
-            //| Chances: #{ Math.round(percentage_raised / (values.campaign.minimum_raise  / values.campaign.amount_commited) * 100) }%
+            //| Chances: #{ Math.round(percentage_raised / (campaign.minimum_raise  / campaign.amount_commited) * 100) }%
         .progress_description
           .pull-left
-            p #{ moment(values.approved_date).format('MM/DD/YYYY') }
+            p #{ moment(company.approved_date).format('MM/DD/YYYY') }
             span Begining of campaign
           .pull-right.text-lg-right
-            p #{ moment(values.campaign.expiration_date).format('MM/DD/YYYY') }
+            p #{ moment(campaign.expiration_date).format('MM/DD/YYYY') }
             span End of campaign
           .clearfix
       .col-md-1.col-sm-2.col-xs-2.hidden-xs-down
         .right_fixed_text.text-lg-center
-          b #{ helpers.format.formatAmount(values.campaign.minimum_raise || values.campaign.maximum_raise)}
+          b #{ app.helpers.format.formatAmount(campaign.minimum_raise || campaign.maximum_raise)}
           span Goal
       .col-md-8.col-sm-12.text-xs-center
-        a(href="/" + values.id).btn-sm.btn.btn-secondary.text-uppercase view Campaign
+        a(href="/" + company.slug).btn-sm.btn.btn-secondary.text-uppercase view Campaign
           i(aria-hidden="true").fa.fa-angle-right
     .col-lg-12.border-bottom-50
 
@@ -102,11 +102,11 @@ section.investors-dashbord-document
     .row
       .col-xl-12
         h2.text-uppercase documents with growthfountain
-        a(href=formcLinks[values.id] target="_blank").link-1
+        a(href=formcLinks[company.id] target="_blank").link-1
           img(src="/img/lrg_US_Department_of_State35.gif").img-document.d-inline-block
           h3.d-inline-block.m-t-0.m-b-0  Form C
         br
-        a(href=global.esignServer + '/pdf-doc/investors/' + values.formc.id + '/' + 3 target="_blank").link-1
+        a(href=global.esignServer + '/pdf-doc/investors/' + formc.id + '/' + 3 target="_blank").link-1
           h2.d-inline-block.m-t-1.m-b-0
             i.fa.fa-file-pdf-o
           h3.d-inline-block.m-t-0.m-b-0  Listing Agreement

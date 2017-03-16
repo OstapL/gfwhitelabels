@@ -1,5 +1,5 @@
-"use strict";
-let hello = require('hellojs');
+const validation = require('components/validation/validation.js');
+const hello = require('hellojs');
 
 hello.init({
     facebook: facebookClientId,
@@ -17,7 +17,7 @@ const SCOPES = {
   google: 'profile,email',
 };
 
-module.exports = {
+let functions = {
 
   // resolves when successful
   // resolves with `true` when canceled
@@ -31,12 +31,12 @@ module.exports = {
       hello(network).login({
         scope: SCOPES[network],
       }).then((data) => {
-        console.log(`${network} logged in, sending token ...`);
         return this.sendToken(network, data.authResponse.access_token);
       }).then((data) => {
-        console.log(`${network} token processed`);
-        localStorage.setItem('token', data.key);
-        return resolve();
+        return resolve({
+          cancelled: false, 
+          data: data
+        });
       }).then(null, (data) => {
         console.log(`${network} error`);
         console.log(data);
@@ -45,7 +45,10 @@ module.exports = {
           return reject(`Authentication with ${network} account failed.`);
 
         if (data.error.code == 'cancelled')
-          return resolve(true);
+          return resolve({
+            cancelled: true, 
+            data: {}
+          });
 
         return reject(data.error.message || `Authentication with ${network} account failed.`);
       });
@@ -53,11 +56,55 @@ module.exports = {
   },
 
   sendToken(network, token) {
-    console.log('sendToken');
     return $.ajax({
       method: 'POST',
       url: `${authServer}/rest-auth/${network}/`,
       data: { access_token: token, domain: window.location.host },
     });
   },
+
+  _ensureAgreedWithRules(view) {
+    let data = {};
+    let cb = view.el.querySelector('#agree-rules');
+
+    if (cb.checked)
+      data.checkbox1 = cb.value;
+
+    if (!validation.validate({ checkbox1: view.fields.checkbox1 }, data, this)) {
+      _(validation.errors).each((errors, key) => {
+        validation.invalidMsg(view, key, errors);
+      });
+
+      return false;
+    }
+
+    return true;
+  },
+
+  loginWithSocialNetwork(e) {
+    e.preventDefault();
+
+    if (!functions._ensureAgreedWithRules(this)) {
+      return false;
+    }
+
+    const network = $(e.target).data('network');
+
+    app.showLoading();
+    functions.login(network).then((data) => {
+      if (data.cancelled) {
+        app.hideLoading();
+        return;
+      }
+
+      app.user.setData(data.data);
+
+      $('#sign_up').modal('hide');
+      $('#sign_in').modal('hide');
+    });
+
+    return false;
+  }
 };
+
+module.exports = functions;

@@ -6,85 +6,37 @@ section.slider-main
       .slider-content.container
         .text-xs-center
           .col-lg-12
-            h1.text-uppercase.big-h1.hidden-sm-down your success is our success
+            h1.big-h1.hidden-sm-down Own a Piece of Your Favorite Company
           .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
-            span.small-text start investing locally
-          .col-lg-12.m-t-1.m-b-3
-            a(href="/pg/education").link-6 Understand the Risks
-          .col-lg-12.hidden-xs-down
-            a(href="/companies").btn.btn-lg.btn-primary.m-r-2 INVEST
-            a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
-          .col-lg-12.hidden-sm-up
-            if app.user.is_anonymous()
-              a(href="/account/signup").btn.btn-lg.btn-primary sign up
-            else
-              a(href="/companies").btn.btn-lg.btn-primary INVEST
+            span.small-text Invest in local businesses and entrepreneurs you believe in, starting at $100
+          .col-lg-12.mt20.mb30
+            a(href="/pg/education").link-6 Learn the Risks
+          if app.user.is_anonymous()
+            .col-lg-12
+              a(href="/account/signup").btn.btn-lg.btn-primary sign up + get $25
+          else
+            .col-lg-12.hidden-xs-down
+              a(href="/companies").btn.btn-lg.btn-primary.m-r-2 INVEST
+              a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
     div
       div(style="background: url(img/slider_2.png)").slide_1.main-slider-item
       //img(src="/img/slide_1.jpg" alt="...")
       .slider-content.container
-        .text-lg-right.text-xs-center
+        .text-xs-center
           .col-lg-12
-            h1.text-uppercase.big-h1.hidden-sm-down your success is our success
-          .col-lg-12
-            span.small-text start investing locally
-          .col-lg-12.m-t-1.m-b-3
-            a(href="/pg/education").link-6 Understand the Risks
-          .col-lg-12.hidden-xs-down
-            a(href="/companies").btn.btn-lg.btn-primary.m-r-2 INVEST
-            a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
-          .col-lg-12.hidden-sm-up
-            if app.user.is_anonymous()
-              a(href="/account/signup").btn.btn-lg.btn-primary sign up
-            else
-              a(href="/companies").btn.btn-lg.btn-primary INVEST
+            h1.big-h1.hidden-sm-down Own a Piece of Your Favorite Company
+          .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
+            span.small-text Invest in local businesses and entrepreneurs you believe in, starting at $100
+          .col-lg-12.mt20.mb30
+            a(href="/pg/education").link-6 Learn the Risks
+          if app.user.is_anonymous()
+            .col-lg-12
+              a(href="/account/signup").btn.btn-lg.btn-primary sign up + get $25
+          else
+            .col-lg-12.hidden-xs-down
+              a(href="/companies").btn.btn-lg.btn-primary.m-r-2 INVEST
+              a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
 
-//.home-section.hidden-sm-down
-  section.main-page-slider
-    div(data-ride="carousel" data-interval="4000")#carousel-main.carousel.carousel-main
-      ol.carousel-indicators
-        li(data-target="#carousel-main" data-slide-to="0").active
-        li(data-target="#carousel-main" data-slide-to="1")
-
-      div(role="listbox").carousel-inner
-        .carousel-item.active.t40
-          img(src="/img/slider_1.png" alt="...").img-fluid
-          .carousel-caption
-            .home-content
-              .home-text-main.text-lg-center
-                .col-lg-12
-                  h1.text-uppercase.font-weight-bold.m-b-2 YOUR SUCCESS IS OUR SUCCESS
-                .col-lg-12.m-b-2.m-t-0
-                  h2.m-t-0.m-b-1.small-text start investing locally
-                  a(href="/pg/education").link-2 Understand the Risks
-                .col-lg-12
-                  a(href="/companies").btn.btn-lg.btn-primary.m-r-3 invest
-                  a(href="/company/create").btn.btn-lg.btn-primary raise capital
-
-        .carousel-item.t40
-          img(src="/img/slider_2.png" alt="...").img-fluid
-          .carousel-caption
-            .home-content
-              .home-text-main.text-lg-right
-                .col-lg-12
-                  h1.text-uppercase.text-lg-right.font-weight-bold.m-b-2.color-black_pearl YOUR SUCCESS IS OUR SUCCESS
-                .col-lg-12.m-b-2.m-t-0
-                  h2.m-t-0.m-b-1.small-text start investing locally
-                  a(href="/pg/education").link-2 Understand the Risks
-                .col-lg-12.text-lg-right
-                  a(href="/companies").btn.btn-lg.btn-primary.m-r-3 invest
-                  a(href="#").btn.btn-lg.btn-primary raise capital
-        
-      a(href="#carousel-main"
-      role="button" 
-      data-slide="prev").left.carousel-control
-        span(aria-hidden="true").icon-prev
-        span.sr-only Previous
-      a(href="#carousel-main"
-      role="button" 
-      data-slide="next").right.carousel-control
-        span(aria-hidden="true").icon-next
-        span.sr-only Next
 
 section.home-wrap-text-block.top-block.m-t-0
   div(style="background: url(/img/main_bg_section.jpg) top center;  background-attachment: fixed; background-size: 120%;").opasity-blocks.hide-bg-fixed
@@ -105,16 +57,17 @@ section.campaing-list.m-t-85
     .col-lg-12.text-lg-center.text-md-center.text-xs-center
       a(href="/companies").link-4 See All
 
-section(style="background: url(/img/cd-depsoite-campaign-hero-size-2.png) bottom center no-repeat; background-size: cover; background-attachment: fixed;").home-wrap-text-block.hide-bg-fixed
+section.home-wrap-text-block.hide-bg-fixed.main-section-invest
   .opasity-block
     .container.text-lg-center.text-xs-center.text-sm-center
-      .col-lg-8.offset-lg-2
-        h2.text-uppercase.font-weight-bold INVEST IN YOUR LOCAL COMMUNITY
-        h3.letter-spacing-normal Find companies in your neighborhood, and help them grow through your investment.
-      .col-lg-12
-        a(href="/account/signup").btn.btn-lg.btn-secondary Sign up to start investing
-        .learn-link
-          a(href="/pg/education").link-2 Understand the Risks
+      .wrap
+        .col-lg-6.offset-lg-3
+          h2.dosis.text-uppercase.m-t-0 NOW ACCESSIBLE TO EVERYBODY
+          h3 It’s the evolution of investing. Receive a financial stake
+            br
+            | in the companies you support.
+        .col-lg-12
+          a(href="/account/signup").btn.btn-lg.btn-secondary.text-uppercase Sign up to start investing
 
 section.home-what-is
   .container
