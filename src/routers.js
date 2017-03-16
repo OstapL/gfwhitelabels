@@ -12,7 +12,18 @@ const componentRoutes = [
   // require('components/blog/route'),
 ];
 
+const checkSafeExtend = (dest={}, src={}) => {
+  let keys = Object.keys(dest);
+  _(keys).each((key) => {
+    if (src[key])
+      console.error(`Method ${key} is already in Router`, src);
+  });
+};
+
 const routesMap = _.reduce(componentRoutes, (dest, route) => {
+  checkSafeExtend(dest.routes, route.routes);
+  checkSafeExtend(dest.methods, route.methods);
+
   dest.routes = _.extend(dest.routes, route.routes);
   dest.methods = _.extend(dest.methods, route.methods);
   if (Array.isArray(route.auth)) {
@@ -39,16 +50,6 @@ const runGoogleAnalytics = (id) => {
   })(window, document, 'script', 'dataLayer', id);
 };
 
-const emitGoogleAnalyticsEvent = () => {
-  //TODO: this will be fixed when we fix facebook/googleTagManager scripts
-  // if (!window.fbq) {
-  //   console.error('Google analytics service is not running');
-  //   return;
-  // }
-  // fbq('track', 'ViewContent');
-  // ga('send', 'pageview', '/' + Backbone.history.getPath());
-};
-
 const notFound = () => {
   errorPageHelper({ status: 404 });
   app.hideLoading();
@@ -58,11 +59,11 @@ const Router = Backbone.Router.extend(_.extend({
   routes: _.extend({}, routesMap.routes, { '*notFound': notFound }),
 
   initialize() {
-    runGoogleAnalytics(googleAnalyticsId);
   },
 
   execute(callback, args, name) {
-    emitGoogleAnalyticsEvent();
+    app.emitFacebookPixelEvent();
+    app.emitGoogleAnalyticsEvent();
 
     if (_.contains(routesMap.auth, name) && !app.user.ensureLoggedIn())
       return false;
@@ -89,7 +90,6 @@ const Router = Backbone.Router.extend(_.extend({
 app.on('userLoaded', function (data) {
 
   app.routers = new Router();
-  app.user.url = serverUrl + Urls['rest_user_details']();
   Backbone.history.start({ pushState: true });
 
   window.addEventListener('popstate', app.routers.back);
