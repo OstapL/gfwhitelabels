@@ -6,19 +6,18 @@ section.slider-main
       .slider-content.container
         .text-xs-center
           .col-lg-12
-            h1.text-uppercase.big-h1.hidden-sm-down your success is our success
+            h1.big-h1.hidden-sm-down Own a Piece of Your Favorite Company
           .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
-            span.small-text Start investing locally
-          .col-lg-12.m-t-1.m-b-3
-            a(href="/pg/education").link-6 Understand the Risks
-          .col-lg-12.hidden-xs-down
-            a(href="/companies").btn.btn-lg.btn-primary.m-r-2 INVEST
-            a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
-          .col-lg-12.hidden-sm-up
-            if app.user.is_anonymous()
-              a(href="/account/signup").btn.btn-lg.btn-primary sign up
-            else
-              a(href="/companies").btn.btn-lg.btn-primary INVEST
+            span.small-text Invest in local businesses and entrepreneurs you believe in, starting at $100
+          .col-lg-12.mt20.mb30
+            a(href="/pg/education").link-6 Learn the Risks
+          if app.user.is_anonymous()
+            .col-lg-12
+              a(href="/account/signup").btn.btn-lg.btn-primary sign up + get $25
+          else
+            .col-lg-12.hidden-xs-down
+              a(href="/companies").btn.btn-lg.btn-primary.m-r-2 INVEST
+              a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
 
 
 //section.home-section.bg-dark-alfa-30.hide-bg-fixed.hidden-md-up(style="background: url(/img/slide_3.jpg) center center no-repeat; background-size: cover;")
@@ -50,14 +49,12 @@ section.home-wrap-text-block.hide-bg-fixed.main-section-invest
     .container.text-lg-center.text-xs-center.text-sm-center
       .wrap
         .col-lg-6.offset-lg-3
-          h2.dosis.text-uppercase.m-t-0 INVEST IN YOUR LOCAL COMMUNITY
-          h3 Find companies in your neighborhood, and help them 
+          h2.dosis.text-uppercase.m-t-0 NOW ACCESSIBLE TO EVERYBODY
+          h3 It’s the evolution of investing. Receive a financial stake
             br
-            | grow through your investment.
+            | in the companies you support.
         .col-lg-12
           a(href="/account/signup").btn.btn-lg.btn-secondary.text-uppercase Sign up to start investing
-          .learn-link.m-b-0
-            a(href="/pg/education").link-6.link-custom Understand the Risks
 
 section.home-what-is
   .container
