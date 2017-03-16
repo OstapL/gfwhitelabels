@@ -2217,12 +2217,12 @@ module.exports = {
 
         fieldName = name.split('company.')[1];
         data[fieldName] = val;
-        url = raiseCapitalServer + '/company/' + app.user.company.id + '/edit';
+        url = raiseCapitalServer + '/company/' + app.user.company.id;
 
       } else if(name.indexOf('campaign.') !== -1) {
         fieldName = name.split('campaign.')[1];
         data[fieldName] = val;
-        url = raiseCapitalServer + '/campaign/' + app.user.campaign.id + '/edit';
+        url = raiseCapitalServer + '/campaign/' + app.user.campaign.id;
         updateModel = app.user.campaign;
 
       } else if(name.indexOf('formc.') !== -1) {
