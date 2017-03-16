@@ -313,6 +313,30 @@
 	background-size: cover!important
 	background-repeat: no-repeat!important
 	background-position: center center!important
+.main-section-invest
+	background: url(/img/JDA-Scenic-1.jpg)
+	background-position: center center
+	background-attachment: fixed
+	height: 340px
+	background-repeat: no-repeat
+	background-size: cover
+	.opasity-block
+		&:before
+			content: " "
+			width: 100%
+			height: 100%
+			position: absolute
+			top: 0
+			left: 0
+			background: rgba(17, 17, 17, .5)
+	.wrap
+		position: absolute 
+		left: 50%
+		top: 50%
+		-ms-transform: translate(-50%,-50%)
+		-webkit-transform: translate(-50%,-50%)
+		transform: translate(-50%,-50%)
+		width: 100%
 footer
 	.home-wrap-text-block
 		position: relative
