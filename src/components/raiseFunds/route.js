@@ -2,87 +2,45 @@
 // move helper into app.js
 const View = require('components/raiseFunds/views.js');
 const raiseHelper = require('./helpers.js');
+const STATUSES = require('consts/raisecapital/companyStatuses.json').STATUS;
+
 
 function getOCCF(optionsR, viewName, params = {}) {
-  $('#content').scrollTo();
+
+  $('body').scrollTo();
   params.el = '#content';
 
-  // $.when(
-  //     app.user.getFormcR(params.id),
-  // ).then((formcFields, formc) => {
-  //   if(formc[0]) {
-  //     app.user.formc = formc[0];
-  //   }
-  //
-  //   $.when(
-  //     api.makeCacheRequest(raiseCapitalServer + '/company/' + app.user.formc.company_id + '/edit', 'OPTIONS'),
-  //     api.makeCacheRequest(raiseCapitalServer + '/campaign/' + app.user.formc.company_id + '/edit', 'OPTIONS'),
-  //     app.user.getCompanyR(app.user.formc.company_id, 'GET'),
-  //     app.user.getCampaignR(app.user.formc.campaign_id, 'GET'),
-  //   ).done((companyFields, campaignFields,  company, campaign) => {
-  //
-  //     const fields = {
-  //       company: companyFields[0].fields,
-  //       campaign: campaignFields[0].fields,
-  //       formc: formcFields[0].fields,
-  //     };
-  //
-  //     if(company[0]) app.user.company = company[0];
-  //     if(campaign[0]) app.user.campaign = campaign[0];
-  //
-  //     var model = app.user.company;
-  //     model.campaign = app.user.campaign;
-  //     model.formc = app.user.formc;
-  //
-  //     const finalReviewView = new View.finalReview({
-  //       el: '#content',
-  //       fields: fields,
-  //       model: model,
-  //       formcId: id,
-  //     });
-  //     finalReviewView.render();
-  //     app.hideLoading();
-  //
-  //   });
-  // })
+  $.when(
+    api.makeCacheRequest(raiseCapitalServer + '/company', 'OPTIONS'),
+    api.makeCacheRequest(raiseCapitalServer + '/campaign', 'OPTIONS'),
+    app.user.getCompanyR(),
+    app.user.getCampaignR(),
+    app.user.getFormcR()
+  ).done((companyFields, campaignFields,  company, campaign, formc) => {
+  
+    params.fields = {
+      company: companyFields[0].fields,
+      campaign: campaignFields[0].fields,
+    };
 
-  $.when(optionsR, app.user.getCompanyR(), app.user.getCampaignR(), app.user.getFormcR())
-  .done((options, company, campaign, formc) => {
+    if(company[0]) app.user.company = company[0];
+    if(campaign[0]) app.user.campaign = campaign[0];
+    if(formc[0]) app.user.formc = formc[0];
 
-    if (options) {
-      params.fields = options[0].fields;
-    }
+    params.company = app.user.company;
+    params.campaign = app.user.campaign;
+    params.formc = app.user.formc;
 
-    // ToDo
-    // This how we can avoid empty response
-    if (company == '') {
-      params.company = app.user.company;
-      params.campaign = app.user.campaign;
-      params.formc = app.user.formc;
-    } else {
-      if (Object.keys(company[0]).length > 0) {
-        params.company = app.user.company = app.user.company || company[0];
-        params.campaign = app.user.campaign = app.user.campaign || campaign[0];
-        params.formc = app.user.formc = app.user.formc || formc[0];
-      } else {
-        params.company = {};
-        params.campaign = {};
-        params.formc = {};
-      }
-    }
-
-    if (typeof viewName == 'string') {
+    if(typeof viewName == 'string') {
       new View[viewName](Object.assign({}, params)).render();
       app.hideLoading();
     } else {
       viewName();
     }
 
-    raiseHelper.updateMenu(raiseHelper.calcProgress(app.user.campaign));
-  }).fail((xhr, response, error) => {
-    api.errorAction.call(this, $('#content'), xhr, response, error);
   });
 };
+
 
 module.exports = {
   routes: {
@@ -90,8 +48,8 @@ module.exports = {
     'company/in-review': 'inReview',
     'campaign/:id/general_information': 'generalInformation',
     'campaign/:id/media': 'media',
-    'campaign/:id/team-members/add/:type/:index': 'teamMembersAdd',
-    'campaign/:id/team-members': 'teamMembers',
+    'campaign/:id/team-members/add/:type/:index': 'teamMembersAdd1',
+    'campaign/:id/team-members': 'teamMembers1',
     'campaign/:id/specifics': 'specifics',
     'campaign/:id/perks': 'perks',
   },
@@ -117,13 +75,13 @@ module.exports = {
       getOCCF(optionsR, 'media', {});
     },
 
-    teamMembers(id) {
+    teamMembers1(id) {
       const optionsUrl = raiseCapitalServer + '/campaign/' + id + '/team-members';
       const optionsR = app.makeCacheRequest(optionsUrl, 'OPTIONS');
       getOCCF(optionsR, 'teamMembers', {});
     },
 
-    teamMembersAdd(id, type, index) {
+    teamMembersAdd1(id, type, index) {
       const optionsUrl = raiseCapitalServer + '/campaign/' + id + '/team-members';
       const optionsR = app.makeCacheRequest(optionsUrl, 'OPTIONS');
       getOCCF(optionsR, 'teamMemberAdd', {
@@ -148,24 +106,27 @@ module.exports = {
       app.showLoading();
 
       $('#company_publish_confirm').modal('hide', 0);
-      const fn = function () {
+      let fn = function() {
         $('body').scrollTo();
         app.hideLoading();
-        if (app.user.company.is_approved == 1) {
+        if(app.user.company.is_approved == STATUSES.PENDING) {
           const i = new View.inReview({
             model: app.user.company,
           });
           i.render();
-        } else if (app.user.company.is_approved == 5) {
-          app.routers.navigate('/formc/' + app.user.formc.id + '/introduction', {
-            trigger: true, replace: false,
-          });
+        } else if(app.user.company.is_approved == STATUSES.APPROVED) {
+          app.routers.navigate(
+            '/formc/' + app.user.formc.id + '/introduction',
+            { trigger: true, replace: false }
+          );
         } else {
-          app.routers.navigate('/company/create', { trigger: true, replace: false });
+          app.routers.navigate(
+            '/company/create',
+            { trigger: true, replace: false }
+          );
         }
       };
 
-      getOCCF('', fn);
     },
   },
   auth: '*',

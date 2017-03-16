@@ -63,7 +63,7 @@ module.exports = {
             $(location.hash).scrollTo(65);
           }, 100);
         } else {
-          $('#content').scrollTo();
+          $('body').scrollTo();
         }
 
         app.hideLoading();
@@ -90,7 +90,7 @@ module.exports = {
             fields: investmentMeta[0].fields,
           });
           i.render();
-          $('#content').scrollTo();
+          $('body').scrollTo();
           app.hideLoading();
         });
       } else {
