@@ -500,7 +500,6 @@ module.exports = {
         t.formc_id = options.formc.id;
         t.campaign_id = options.formc.campaign_id;
         t.company_id = options.formc.company_id;
-        t.progress = options.formc.progress;
         delete t.id;
         this.model = t;
       } else {
@@ -508,7 +507,7 @@ module.exports = {
           formc_id: options.formc.id,
           campaign_id: options.formc.campaign_id,
           company_id: options.formc.company_id,
-          progress: options.formc.progress
+          role: 0
         };
       }
       this.fields = options.fields;
@@ -601,11 +600,13 @@ module.exports = {
     },
 
     submit(e) {
-      let data = $(e.target).closest('form').serializeJSON({ useIntKeysAsArrayIndex: true });
+      let data = $(e.target).closest('form').serializeJSON();
 
       if(data.role) {
-        data.role = data.role.reduce((a,b) => { return parseInt(a)+parseInt(b)}, 0)
-        let newRole = data.role;
+        // data.role = data.role.reduce((a,b) => { return parseInt(a)+parseInt(b)}, 0);
+        // data.role = this.model.role;
+        
+        let newRole = this.model.role;
 
         // delete data['experiences'];
         // delete data['positions'];
@@ -639,7 +640,12 @@ module.exports = {
           delete data.employer_start_date__year;
           delete data.employer_start_date__month;
         }
-        if(data.role != newRole) {
+        data.role.forEach((val,i) => { 
+          if((newRole & val) != val) {
+            newRole += val;
+          }
+        });
+        if(this.model.role != newRole) {
           data.role = newRole;
         }
         else if(this.model.hasOwnProperty('id') == true) {
