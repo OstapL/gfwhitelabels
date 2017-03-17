@@ -1,5 +1,6 @@
 //TODO: move helpers to app.js
 const helpers = require('./helpers.js');
+const COMPANIES_PER_PAGE = 6;
 
 module.exports = {
   routes: {
@@ -27,16 +28,17 @@ module.exports = {
 
     list() {
       const View = require('./views.js');
-      let params = '?limit=6';
+      let params = '?limit=' + COMPANIES_PER_PAGE;
       let page = parseInt(app.getParams().page);
       let offset = ((page > 0) ? page : 1) - 1;
-      if (offset) params += '&offset=' + (offset * 6);
+      if (offset) params += '&offset=' + (offset * COMPANIES_PER_PAGE);
       let orderBy = app.getParams().orderby;
       if (orderBy) params += '&orderby=' + orderBy;
       api.makeCacheRequest(raiseCapitalServer + params).then((data) => {
         let i = new View.list({
           el: '#content',
           collection: data,
+          limit: COMPANIES_PER_PAGE,
         });
         $('body').scrollTo();
         i.render();
