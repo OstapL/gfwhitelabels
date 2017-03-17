@@ -26,7 +26,6 @@ module.exports = {
     },
     initialize(options) {
       this.collection = options.collection;
-      this.limit = options.limit;
     },
 
     render() {
@@ -40,7 +39,6 @@ module.exports = {
         this.template({
           serverUrl: serverUrl,
           collection: this.collection,
-          limit: this.limit,
         })
       );
       this.$el.find('.selectpicker').selectpicker();

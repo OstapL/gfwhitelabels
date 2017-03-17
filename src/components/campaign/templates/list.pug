@@ -122,5 +122,7 @@ section.small-section.filter.p-b-0
 section.campaing-list
   .container#campaignList
     include _list.pug
-- var currentPage = Number(app.getParams().page) || 1;
-+paginator(currentPage, limit, collection.count)
+-
+  var currentPage = Number(app.getParams().page) || 1;
+  var GENERAL = require('consts/general.json');
++paginator(currentPage, GENERAL.COMPANIES_PER_PAGE, collection.count)
