@@ -354,10 +354,11 @@ section
                           if v.college
                             i.fa.fa-graduation-cap
                             |  #{v.college}
-    .col-lg-12.border-bottom.m-t-2.m-b-3
+    .col-lg-12.border-bottom.m-t-3.m-b-3
+  if values.campaign.press && Object.keys(values.campaign.press).length > 0 && values.campaign.press[0].headline != ''
     section.articles
       .container
-        if values.campaign.press && Object.keys(values.campaign.press).length > 0 && values.campaign.press[0].headline != ''
+        
           - var showMore = false;
           h2.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-subheading.m-t-0 Articles and Press
           .row
@@ -401,9 +402,9 @@ section
               div(style="display:" + (showMore ? 'block' : 'none') + ";").row
                 .col-lg-12.text-xs-center
                   a(href="#hidden-article-press" data-toggle="collapse").link-4.see-all-article-press Show More
-          .col-lg-12.border-bottom.m-t-2.m-b-3
+      .col-lg-12.border-bottom.m-t-2.m-b-3
   else
-    .col-lg-12.m-t-2.m-b-3
+    .col-lg-12
 
   section.document.border-bottom
     .container
