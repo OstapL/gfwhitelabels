@@ -19,6 +19,9 @@ $.serializeJSON.defaultOptions = _.extend($.serializeJSON.defaultOptions, {
     money(val) {
       return app.helpers.format.unformatPrice(val);
     },
+    integer(val) {
+      return parseInt(val);
+    },
     url(val) {
       return String(val);
     },
