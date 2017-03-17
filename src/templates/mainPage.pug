@@ -1,3 +1,5 @@
+- var GENERAL = require('consts/general.json');
+
 section.slider-main
   .owl-carousel.owl-theme.carousel-test
     div
@@ -79,6 +81,7 @@ section.campaing-list
       h2.dosis.text-uppercase.text-sm-center.text-xs-center.mt50 What's Popular
     include ../components/campaign/templates/_list.pug
     .col-lg-12.text-lg-center.text-md-center.text-xs-center
+      if collection && collection.count && collection.count > GENERAL.COMPANIES_PER_PAGE
       a(href="/companies").link-4 See All
 
 section.home-wrap-text-block.hide-bg-fixed.main-section-invest
