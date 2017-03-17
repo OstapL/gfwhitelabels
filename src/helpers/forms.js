@@ -290,7 +290,7 @@ module.exports = {
           data[key].forEach((el, i) => {
             let emptyValues = 0;
             _(el).each((val, subkey) => {
-              if(val == '' || val == 0) {
+              if(val == '' || Number.isNaN(val)) {
                 emptyValues ++;
               }
             });
