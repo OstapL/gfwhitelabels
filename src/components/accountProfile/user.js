@@ -6,7 +6,6 @@ class User {
     this.company = null;
     this.campaign = null;
     this.formc = null;
-    this.companiesMember = [];
 
     this.data = { token: '', id: ''};
     this.role_data = null;
@@ -35,6 +34,10 @@ class User {
 
   set last_name(value) {
     this.data.last_name = value;
+  }
+
+  get companiesMember() {
+    return this.data.info || [];
   }
 
   setData(data, next) {
@@ -68,7 +71,6 @@ class User {
     cookies.expire('token');
     this.token = null;
     this.data = {};
-    this.companiesMember = [];
   }
 
   load() {
@@ -86,8 +88,6 @@ class User {
         return;
       }
 
-      this.companiesMember = data.info;
-      delete data.info;
       this.data = data;
 
       return app.trigger('userLoaded', data);
@@ -162,8 +162,8 @@ class User {
   }
 
   passwordChanged(data) {
-    if (!token) {
-      console.error('New token is empty');
+    if (!data) {
+      console.error('New data is empty');
       this.emptyLocalStorage();
       return;
     }
