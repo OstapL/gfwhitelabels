@@ -1,7 +1,6 @@
 - 'use strict';
 
 mixin paginator(currentPage, limit, totalCount)
-  - console.log(curentPage + ', ' + limit + ', ' + totalCount);
   if limit < totalCount
     -
       currentPage = currentPage || 1;
