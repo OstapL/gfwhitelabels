@@ -26,11 +26,14 @@ class SocialNetworks {
   }
 
   __loadScripts() {
-    let script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.src = '//platform.linkedin.com/in.js';
-    script.innerHTML = 'api_key: ' + linkedinClientId;
-    $(document.head).append(script);
+    // let script = document.createElement('script');
+    // script.type = 'text/javascript';
+    // script.src = '//platform.linkedin.com/in.js';
+    // script.innerHTML = `
+    //   api_key: '${linkedinClientId}
+    //   authorize: true
+    // `;
+    // $(document.head).append(script);
   }
 
   attachEvents() {

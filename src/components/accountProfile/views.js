@@ -290,7 +290,7 @@ module.exports = {
           cbInvestor1m.prop('checked', false).change();
         }
 
-        this.model.net_worth = e.value;
+        // this.model.net_worth = e.value;
       });
 
       this.$('.slider-annual-income').bootstrapSlider({
@@ -307,7 +307,7 @@ module.exports = {
           cbInvestor200k.prop('checked', false).change();
         }
 
-        this.model.annual_income = e.value;
+        // this.model.annual_income = e.value;
       });
 
       cbInvestor1m.prop('disabled', this.model.net_worth < 1000);
