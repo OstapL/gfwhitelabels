@@ -445,7 +445,7 @@ module.exports = {
         formcServer + '/' + this.model.id + '/team-members/invitation/' +  e.target.dataset.id,
         'PUT',
       ).then((data) => {
-        e.target.innerHTML = 'sent';
+        e.target.innerHTML = '<i class="fa fa-envelope-open-o" aria-hidden="true"></i> Sent';
         e.target.className = 'link-3 invite';
       });
     },
