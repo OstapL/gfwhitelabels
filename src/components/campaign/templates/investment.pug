@@ -72,10 +72,10 @@ mixin confirmStatement(name, attr)
                         - var cssClass = "commission commission-" + feeInfo.remainingCredit;
                         div(class=cssClass).col-xl-12.p-x-0.input-border
                           input(name="waived" id="waived" value=("$" + feeInfo.waived) disabled).form-control
-                          h4.text-uppercase.waived Waived
+                          h4.text-uppercase.waived Credit Applied
                           .commission-right-block
                             .wrap-commision-credit-amount
-                              span.credit-amount #{ '$' + feeInfo.credit }
+                              span.credit-amount #{ '$' + feeInfo.remainingCredit }
                               span.credit-remains credit left
                             .wrap-commision-credit-text
                               span.credit-text
