@@ -923,6 +923,12 @@ module.exports = {
     },
 
     getSignature () {
+
+      cookies.set('token', app.user.token, {
+        domain: '.' + domainUrl,
+        path: '/',
+      });
+
       const investForm = document.forms.invest_form;
       const inputSignature = investForm.elements['signature[full_name]'];
       const signature = inputSignature.value;

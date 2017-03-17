@@ -208,11 +208,11 @@ module.exports = {
           app.user.formc = formc[0];
         }
 
-        const companyUrl = raiseCapitalServer + '/company/' + app.user.formc.company_id + '/edit';
-        const campaignUrl = raiseCapitalServer + '/campaign/' + app.user.formc.company_id + '/edit';
+        const companyUrl = raiseCapitalServer + '/company/' + app.user.formc.company_id;
+        const campaignUrl = raiseCapitalServer + '/campaign/' + app.user.formc.company_id;
         $.when(
-          api.makeCacheRequest(companyUrl, 'OPTIONS'),
-          api.makeCacheRequest(campaignUrl, 'OPTIONS'),
+          api.makeCacheRequest(raiseCapitalServer + '/company', 'OPTIONS'),
+          api.makeCacheRequest(raiseCapitalServer + '/campaign', 'OPTIONS'),
           app.user.getCompanyR(app.user.formc.company_id, 'GET'),
           app.user.getCampaignR(app.user.formc.campaign_id, 'GET'),
         ).done((companyFields, campaignFields, company, campaign) => {
