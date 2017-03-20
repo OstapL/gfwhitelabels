@@ -102,7 +102,6 @@ module.exports = {
       this.usaStates = require('helpers/usaStates');
       this.$el.html(
         this.template({
-          serverUrl: serverUrl,
           Urls: Urls,
           fields: this.fields,
           values: this.model,
@@ -117,7 +116,7 @@ module.exports = {
       return this;
     },
 
-    _success(data) {
+    _success(data, formData) {
       this.undelegateEvents();
 
       if(data == null) {
@@ -126,6 +125,16 @@ module.exports = {
 
       if (data.hasOwnProperty('campaign_id') == false) {
         data.campaign_id = this.formc.campaign_id;
+      } else {
+        data.company = formData.name;
+        data.is_paid = false;
+        data.role = 0; 
+        data.owner_id = app.user.data.id;
+        data.user_id = app.user.data.id;
+        data.company_id = data.id;
+        delete data.id;
+        app.user.data.info.push(data);
+        localStorage.setItem('user', JSON.stringify(app.user.toJSON()));
       }
 
       app.routers.navigate(
