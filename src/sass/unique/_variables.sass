@@ -27,6 +27,10 @@ $icon-mobile-menu-color: rgba($white, 0.75)
 $menu-font-weight: normal
 $mobile-menu-font-weight: normal
 $sub-menu-box-shadov: none
+$header_bg_image: #{''} // для задаванния картинки бекграунда в хедере(в некоторых сайтах есть кроме цвета еще и картинка)
+$menu_shadows: none
+$navbar_height: 75px
+$navbar_height_mobile: 65px
 //END HEADER
 
 // FOOTER
@@ -86,6 +90,43 @@ $campaign-like-color: $white
 $campaign-like-bgc: rgba(159,211,86, .75)
 $total_sum_progresbar: $puerto_rico
 $progress-bar-color: $wild_willow
+$progress_bar_background: $wild_willow
+$campign_subheading_color: $puerto_rico
+
+
+//CALCULATOR
+$calc_tabs_bg: $alabaster
+$calc_tabs_radius: 0
+$calc_tabs_current_bg: $puerto_rico
+$calculator-finish-icon: $wild_willow
+
+
+// POPOVER
+$popover-bgc: rgba(60,189,185, 0.9)
+$popover-color: $white
+$popover-bgc-arrow: rgba(60,189,185, 0.5)
+
+//Warning-block
+$warning-block-border-color: $sandy-brown
+$warning-block-icon-color: $sandy-brown
+$warning-block-text-color: $small-text
+
+
+//Left menu company campaign
+$menu-icon-color: $puerto_rico
+$jumbotron-bg: #f8f8f8
+$jumbotron-padding: 5px
+$company-campaign-font-family: $brandon-grotesque-medium //font-f for left menu - company/campaign
+
+//notification 
+$bgc-notificatin-bell: $puerto_rico
+$notific_list_title: $puerto_rico
+$notification-title-ff: $brandon-grotesque-medium
+$top-position-notification: 25px
+$height-notification: 50px
+$notification-link-color-hover: $link-2-hover
+$notification-link-color: $wild_willow
+
 
 //modal sign up
 $sign-up-header-bgc: $puerto_rico
@@ -109,14 +150,10 @@ $btstr_slider_nandle_block_bg: $wild_willow
 //bg color bootstrap slider other handle block(class .slider-tick)
 $btstr_slider_other_nandle_block_bg: $white
 
-// color warning block
-$text_warning_block_color: $crimson
 
 // переменные для главного меню 
 // $padding_menu: 14px 0 0 0 
-$menu_shadows: none
-$navbar_height: 75px
-$navbar_height_mobile: 65px
+
 // $navbar-header-padd-top: 8px // паддинг в хедере сверху
 // $menu-profile-padd-top: 11px // для вертиального выравнивания меню логин\регистр. и иконки профиля в хедере
 
@@ -199,9 +236,7 @@ $alert-danger-text: #ed1c24
 
 
 //ostap
-$jumbotron-bg: #f8f8f8
-$jumbotron-padding: 5px
-$company-campaign-font-family: $brandon-grotesque-medium //font-f for left menu - company/campaign
+
 
 $list-group-border-radius: 0
 $list-group-border-radius: 0
@@ -236,19 +271,6 @@ $select-btn-border-width: 2px
 $text-muted: $small-text
 $brand-info: $wild_willow
 
-
-
-
-
-$popover-bgc: rgba(60,189,185, 0.9)
-$popover-color: $white
-$popover-bgc-arrow: rgba(60,189,185, 0.5)
-// цвет для процентов над прогресбаром в ячейке компании
-
-//цвет прогресс - для каждего сайта разный, менять переменную цвета из файла color.sass
-$progress_bar_background: $wild_willow
-// $progress-bar-color: $wild_willow
-
 // радиус для custom-select
 $custom-select-border-radius: 1px
 
@@ -256,29 +278,17 @@ $custom-select-border-radius: 1px
 $dragging-hover-border: $wild_willow
 
 
-
-//для стилизации заголовков на странице кампании(переход к заголовкам возможен с помощью верхнего stiky menu)
-$campign_subheading_color: $puerto_rico
-
 // стилизация заголовков в ячейке кампании
 $one_block_h3_font_family: $brandon-grotesque-medium
 $one_block_h3_letter_space: rem(1.8)
 $one_block_h3_font_weight: 500
 $list-company-bottom-ff: $brandon-grotesque-medium
 
-
-// для задаванния картинки бекграунда в хедере(в некоторых сайтах есть кроме цвета еще и картинка)
-$header_bg_image: #{''}
-
 // для стилизации заголовков на странице education
 $color_heading_education: $puerto_rico
-$heading_education_font_weight: 400
-$heading_education_lett_space: rem(3.6)
 
 // для стилизации табов на страницах калькуляторов
-$calc_tabs_bg: $alabaster
-$calc_tabs_radius: 0
-$calc_tabs_current_bg: $puerto_rico
+
 
 // для стилизации заголовков блогов(на странице списка блогов)
 $blog-item-title-weight: 400
@@ -290,20 +300,6 @@ $blog-item-title-let-space: 2.2px
 $one_drop_border_radius: 1px
 $one_drop_font_weight: 500
 
- 
-// переменная для заливки цвета в странице компании - секция OVERVIEW AND TERMS 
-
-
-
-
-
-// переменная для цвета при наведении  надписи на странице компании секция DOCUMENTS
-
-
-//цвет иконки в шаблонах колькуляторов страница finish
-$calculator-finish-icon: $wild_willow
-// переменная для вывода текста на странице investment for site DCU
-$display_dcu_confirmation: none
 
 
 //color-green -variables
@@ -343,11 +339,3 @@ $dot-margin: 			5px 7px !default;
 $dot-background:		$white !default;
 $dot-background-active:	$puerto_rico !default;
 
-//notification 
-$bgc-notificatin-bell: $puerto_rico
-$notific_list_title: $puerto_rico
-$notification-title-ff: $brandon-grotesque-medium
-$top-position-notification: 25px
-$height-notification: 50px
-$notification-link-color-hover: $link-2-hover
-$notification-link-color: $wild_willow
