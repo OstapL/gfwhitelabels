@@ -18,6 +18,7 @@ module.exports = {
   methods: {
     login(id) {
       let optionsR = api.makeRequest(authServer + '/rest-auth/login', 'OPTIONS');
+      $('body').scrollTo();
       $.when(optionsR).done((metaData) => {
         let loginView = new View.login({
           el: '#content',
@@ -36,6 +37,7 @@ module.exports = {
 
     signup() {
       const optionsR = api.makeRequest(authServer + '/rest-auth/registration', 'OPTIONS');
+      $('body').scrollTo();
       $.when(optionsR).done((metaData) => {
         const signView = new View.signup({
           el: '#content',
