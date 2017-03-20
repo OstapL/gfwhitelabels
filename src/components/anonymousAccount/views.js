@@ -259,7 +259,14 @@ module.exports = {
           domain: window.location.host,
         }
       ).then((data) => {
-        app.user.setData(data);
+        app.user.token = data['token'];
+        localStorage.setItem('token', data['token']);
+        api.makeRequest(
+          authServer + '/info',
+          'GET'
+        ).then((data) => {
+          app.user.setData(data);
+        });
       }).fail((xhr, status, text) => {
         api.errorAction(this, xhr, status, text, this.fields);
       });
