@@ -1,5 +1,6 @@
 //TODO: move helpers to app.js
 const helpers = require('./helpers.js');
+const GENERAL = require('consts/general.json');
 
 module.exports = {
   routes: {
@@ -27,10 +28,10 @@ module.exports = {
 
     list() {
       const View = require('./views.js');
-      let params = '?limit=6';
+      let params = '?limit=' + GENERAL.COMPANIES_PER_PAGE;
       let page = parseInt(app.getParams().page);
       let offset = ((page > 0) ? page : 1) - 1;
-      if (offset) params += '&offset=' + (offset * 6);
+      if (offset) params += '&offset=' + (offset * GENERAL.COMPANIES_PER_PAGE);
       let orderBy = app.getParams().orderby;
       if (orderBy) params += '&orderby=' + orderBy;
       api.makeCacheRequest(raiseCapitalServer + params).then((data) => {
