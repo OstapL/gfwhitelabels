@@ -2,13 +2,7 @@ doctype html
 html
   head
     title #{ htmlWebpackPlugin.options.title }
-    script.
-      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-      })(window,document,'script','dataLayer','GTM-NC9XW5D');
-
+    include ga.script.pug
     meta(
       name="description"
       content="GrowthFountain is an SEC registered Funding Portal and FINRA Member where individuals can come together to support entrepreneurs and small businesses across America. Turn your customers, your social network, your neighbors and community members into owners who can become your brand ambassadors and evangelists. To learn more about GrowthFountain and the risks of crowdfunding, please visit www.growthfountain.com"
@@ -32,8 +26,7 @@ html
 
   body.appear-animate
     //Google Tag Manager (noscript)
-    noscript
-      iframe(src="https://www.googletagmanager.com/ns.html?id=GTM-NC9XW5D" height="0" width="0" style="display:none;visibility:hidden")
+    include ga.noscript.pug
     //End Google Tag Manager (noscript)
 
 

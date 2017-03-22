@@ -36,7 +36,6 @@ module.exports = {
   debug: true,
 
   plugins: [
-    // new ExtractTextPlugin('style.css'),
     new HtmlWebpackPlugin({
       title: 'GrowthFountain | Equity Crowdfunding Platform',
       template: './src/index.pug',
