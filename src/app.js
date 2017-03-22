@@ -119,7 +119,7 @@ let app = {
 
   emitFacebookPixelEvent(eventName='ViewContent', params={}) {
     if (!window.fbq)
-      return console.error('Facebook pixel API is not available');
+      return;// console.error('Facebook pixel API is not available');
 
     const STANDARD_EVENTS = [
       'ViewContent',
@@ -138,11 +138,14 @@ let app = {
       fbq('trackCustom', eventName, params);
   },
 
-  emitGoogleAnalyticsEvent(eventName, params) {
+  emitGoogleAnalyticsEvent(eventName, params={}) {
     //TODO: this will be fixed when we fix facebook/googleTagManager scripts
     if (!window.ga)
-      return console.error('Google analytics API is not available');
-    ga('send', 'pageview', '/' + Backbone.history.getPath());
+      return;// console.error('Google analytics API is not available');
+
+    const page = Backbone.history.getPath();
+    ga('set', 'page', '/' + page);
+    ga('send', 'pageview', params);
   },
 
   /*
