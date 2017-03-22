@@ -33,6 +33,11 @@ section.team-members.container.m-b-85
         schema: fields.email, 
         value: member.email, 
         label: 'Email',})
+      - 
+        pug_html += app.fields.textLabel('order', {
+        schema: fields.order, 
+        value: member.order, 
+        label: 'Order',})
       if type == 'advisor'
         - 
           pug_html += app.fields.textLabel('title', {

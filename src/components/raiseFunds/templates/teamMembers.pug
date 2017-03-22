@@ -26,6 +26,16 @@ section.create-company-team-add.container
 
       if values.team_members
         - counter = 0
+        - 
+          function memberSort(a, b) {
+            if(a.order == null) {
+              return true;
+            }
+            return a.order > b.order;
+          }
+          values.team_members.sort(memberSort);
+
+
         each v,k in values.team_members
           .col-lg-3.m-t-2.p-r-0.p-l-0.m-l-2.m-r-2
             .team-add-item.text-lg-center.text-xs-center
