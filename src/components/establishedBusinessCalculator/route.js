@@ -10,35 +10,35 @@ module.exports = {
     calculatorEstablishedBusinessIntro() {
       const View = require('./views');
       new View.intro().render();
-      $('#content').scrollTo();
       app.hideLoading();
+      $('body').scrollTo();
     },
 
     calculatorEstablishedBusinessStep1() {
       const View = require('./views');
       new View.step1().render();
-      $('#content').scrollTo();
+      $('body').scrollTo();
       app.hideLoading();
     },
 
     calculatorEstablishedBusinessStep2() {
       const View = require('./views');
       new View.step2().render();
-      $('#content').scrollTo();
+      $('body').scrollTo();
       app.hideLoading();
     },
 
     calculatorEstablishedBusinessStep3() {
       const View = require('./views');
       new View.step3().render();
-      $('#content').scrollTo();
+      $('body').scrollTo();
       app.hideLoading();
     },
 
     calculatorEstablishedBusinessFinish() {
       const View = require('./views');
       new View.finish().render();
-      $('#content').scrollTo();
+      $('body').scrollTo();
       app.hideLoading();
     },
   },

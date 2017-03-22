@@ -1,12 +1,3 @@
-//TODO: move this to common router
-// execute: function (callback, args, name) {
-//       if ((name=='calculatorWhatMyBusinessWorthIntro'
-// || name=='selectYourBusiness')  && !app.user.ensureLoggedIn(window.location.pathname)) {
-//     return false;
-//       };
-//       if (callback) callback.apply(this, args)
-//   },
-
 module.exports = {
   routes: {
     'calculator/selectYourBusiness': 'selectYourBusiness',
@@ -72,29 +63,30 @@ module.exports = {
     calculatorWhatMyBusinessWorthIntro() {
       let View = require('./views');
       new View.intro().render();
-      $('#content').scrollTo();
+      $('body').scrollTo();
       app.hideLoading();
     },
 
     calculatorWhatMyBusinessWorthStep1() {
       const View = require('./views');
       new View.step1().render();
-      $('#content').scrollTo();
+      $('body').scrollTo();
       app.hideLoading();
     },
 
     calculatorWhatMyBusinessWorthStep2() {
       const View = require('./views');
       new View.step2().render();
-      $('#content').scrollTo();
+      $('body').scrollTo();
       app.hideLoading();
     },
 
     calculatorWhatMyBusinessWorthFinish() {
       const View = require('./views');
       new View.finish().render();
-      $('#content').scrollTo();
+      $('body').scrollTo();
       app.hideLoading();
     },
   },
+  auth: ['calculatorWhatMyBusinessWorthIntro', 'selectYourBusiness'],
 };

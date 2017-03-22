@@ -445,7 +445,7 @@ module.exports = {
         formcServer + '/' + this.model.id + '/team-members/invitation/' +  e.target.dataset.id,
         'PUT',
       ).then((data) => {
-        e.target.innerHTML = 'sent';
+        e.target.innerHTML = '<i class="fa fa-envelope-open-o" aria-hidden="true"></i> Sent';
         e.target.className = 'link-3 invite';
       });
     },
@@ -500,7 +500,6 @@ module.exports = {
         t.formc_id = options.formc.id;
         t.campaign_id = options.formc.campaign_id;
         t.company_id = options.formc.company_id;
-        t.progress = options.formc.progress;
         delete t.id;
         this.model = t;
       } else {
@@ -508,7 +507,7 @@ module.exports = {
           formc_id: options.formc.id,
           campaign_id: options.formc.campaign_id,
           company_id: options.formc.company_id,
-          progress: options.formc.progress
+          role: 0
         };
       }
       this.fields = options.fields;
@@ -601,11 +600,13 @@ module.exports = {
     },
 
     submit(e) {
-      let data = $(e.target).closest('form').serializeJSON({ useIntKeysAsArrayIndex: true });
+      let data = $(e.target).closest('form').serializeJSON();
 
       if(data.role) {
-        data.role = data.role.reduce((a,b) => { return parseInt(a)+parseInt(b)}, 0)
-        let newRole = data.role;
+        // data.role = data.role.reduce((a,b) => { return parseInt(a)+parseInt(b)}, 0);
+        // data.role = this.model.role;
+        
+        let newRole = this.model.role;
 
         // delete data['experiences'];
         // delete data['positions'];
@@ -639,7 +640,12 @@ module.exports = {
           delete data.employer_start_date__year;
           delete data.employer_start_date__month;
         }
-        if(data.role != newRole) {
+        data.role.forEach((val,i) => { 
+          if((newRole & val) != val) {
+            newRole += val;
+          }
+        });
+        if(this.model.role != newRole) {
           data.role = newRole;
         }
         else if(this.model.hasOwnProperty('id') == true) {
@@ -788,6 +794,10 @@ module.exports = {
         return item.title == 'Commissions and Broker Expenses';
       });
 
+      if(commission == null) {
+        commission = {};
+      }
+
       commission.min = Math.round(this.campaign.minimum_raise * companyFees.trans_percent / 100);
       commission.max = Math.round(this.campaign.maximum_raise * companyFees.trans_percent / 100);
       commission.fee = true;
@@ -798,7 +808,7 @@ module.exports = {
     },
 
     events: _.extend({
-      'submit form': 'submit',
+      'click #submit': api.submitAction,
       'click .submit_formc': submitFormc,
       'change input[type=radio][name=doc_type]': 'changeDocType',
       // 'change .min-expense,.max-expense,.min-use,.max-use': 'calculate',
@@ -883,8 +893,9 @@ module.exports = {
     },
 
     submit(e) {
-      var $target = $(e.target);
-      var data = $target.serializeJSON({ useIntKeysAsArrayIndex: true });
+      debugger;
+      var $target = $(e.target.currentTarget);
+      var data = $target.serializeJSON();
       data.use_of_net_proceeds.forEach(function (elem) {
         elem.min = elem.min.replace(/,/g, '');
         elem.max = elem.max.replace(/,/g, '');
@@ -1911,23 +1922,25 @@ module.exports = {
 
     addOutstanding(e) {
       e.preventDefault();
-      const data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
+      const data = $(e.target).serializeJSON();
 
       const sectionName = e.target.dataset.section;
       const template = require('./templates/snippets/outstanding_securities.pug');
 
-      if(data.amount_authorized.toLocaleLowerCase() == 'n/a' ||
+      if(typeof data.amount_authorized == 'string') {
+        if(data.amount_authorized.toLocaleLowerCase() == 'n/a' ||
           data.amount_authorized.toLocaleLowerCase() == 'not available' ||
           data.amount_authorized.toLocaleLowerCase() == 'na') {
-        data.amount_authorized = null;
-      } else {
-        data.amount_authorized = Math.round(
+            data.amount_authorized = null;
+        } else {
+          data.amount_authorized = Math.round(
             data.amount_authorized.replace(/[\$\,]/g, '') * 100 
-        ) / 100;
+          ) / 100;
+        }
       }
 
       data.amount_outstanding = Math.round(
-          data.amount_outstanding.replace(/[\$\,]/g, '') * 100
+          data.amount_outstanding * 100
       ) / 100;
 
       if (!validation.validate(this.fields.outstanding_securities.schema, data, this)) {
@@ -2063,7 +2076,7 @@ module.exports = {
 
     _success(data) {
       app.hideLoading();
-      $('#content').scrollTo();
+      $('body').scrollTo();
       return false;
     },
 
@@ -2213,12 +2226,12 @@ module.exports = {
 
         fieldName = name.split('company.')[1];
         data[fieldName] = val;
-        url = raiseCapitalServer + '/company/' + app.user.company.id + '/edit';
+        url = raiseCapitalServer + '/company/' + app.user.company.id;
 
       } else if(name.indexOf('campaign.') !== -1) {
         fieldName = name.split('campaign.')[1];
         data[fieldName] = val;
-        url = raiseCapitalServer + '/campaign/' + app.user.campaign.id + '/edit';
+        url = raiseCapitalServer + '/campaign/' + app.user.campaign.id;
         updateModel = app.user.campaign;
 
       } else if(name.indexOf('formc.') !== -1) {

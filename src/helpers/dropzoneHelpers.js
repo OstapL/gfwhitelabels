@@ -43,8 +43,9 @@ module.exports = {
         if (!this['_' + field.type]) {
           return;
         }
-
-        this['_' + field.type](name);
+        if(document.querySelector('.dropzone__' + name)) {
+          this['_' + field.type](name);
+        }
       });
     },
 
@@ -188,6 +189,7 @@ module.exports = {
         acceptedFiles: 'application/pdf,' +
           '.pptx,' +
           '.ppt,' +
+          '.pps,' +
           '.doc,' +
           '.docx'
       };

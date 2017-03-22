@@ -6,34 +6,24 @@ module.exports = {
   },
   methods: {
     calculatorCapitalraiseIntro() {
-      require.ensure([], () => {
-        const View = require('./views');
-        new View.intro().render();
-        $('#content').scrollTo();
-        app.hideLoading();
-      });
+      const View = require('./views');
+      new View.intro().render();
+      $('body').scrollTo();
+      app.hideLoading();
     },
 
     calculatorCapitalraiseStep1() {
-      require.ensure([], () => {
-        const View = require('./views');
-
-        new View.step1().render();
-
-        $('#content').scrollTo();
-        app.hideLoading();
-      });
+      const View = require('./views');
+      new View.step1().render();
+      $('body').scrollTo();
+      app.hideLoading();
     },
 
     calculatorCapitalraiseFinish() {
-      require.ensure([], () => {
-        const View = require('./views');
-
-        new View.finish().render();
-
-        $('#content').scrollTo();
-        app.hideLoading();
-      });
+      const View = require('./views');
+      new View.finish().render();
+      $('body').scrollTo();
+      app.hideLoading();
     },
   },
 };

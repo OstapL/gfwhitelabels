@@ -99,7 +99,8 @@ module.exports = {
       this.companyDocsData = {
         title: 'Financials',
         files: this.model.formc
-          ? _.union(this.model.formc.fiscal_prior_group_data, this.model.formc.fiscal_recent_group_data)
+          ? _.union(this.model.formc.fiscal_prior_group_data,
+                this.model.formc.fiscal_recent_group_data)
           : []
       };
 
@@ -341,7 +342,7 @@ module.exports = {
           // model: commentsModel,
           model: data[0],
           fields: options[0].fields,
-          cssClass: 'col-lg-8 offset-lg-2 col-md-12 offset-md-0 col-sm-12 offset-sm-0 col-xs-12 offset-xs-0 pt50',
+          cssClass: 'offset-xl-2',
         });
         comments.render();
       });
@@ -371,7 +372,7 @@ module.exports = {
       'change #payment_information_type': 'changePaymentType',
       'keyup .typed-name': 'copyToSignature',
       'keyup #annual_income,#net_worth': 'updateLimitInModal',
-      'click button.submit-income-worth': 'updateIncomeWorth',
+      // 'click .submit-income-worth': 'updateIncomeWorth',
       'click': 'hidePopover',
       'hidden.bs.collapse #hidden-article-press' :'onArticlePressCollapse',
       'shown.bs.collapse #hidden-article-press' :'onArticlePressCollapse',
@@ -483,7 +484,7 @@ module.exports = {
         }
 
         if (amount > max) {
-          throw 'Sorry, your amount is too high, please update your income or change amount’';
+          throw 'Sorry, your amount is too high, please update your income or change amount';
         }
 
         return true;
@@ -548,12 +549,12 @@ module.exports = {
           city: 'City',
         },
         payment_information_data: {
-          name_on_bank_account: 'Name On Bank Account',
+          name_on_bank_account: 'Name on Bank Account',
           account_number: 'Account Number',
-          account_number_re: 'Account Number Again',
+          account_number_re: 'Re-enter Account Number',
           routing_number: 'Routing Number',
-          routing_number_re: 'Routing Number Again',
-          ssn: 'Social Security number (SSN) or Tax ID (ITIN/EIN)',
+          routing_number_re: 'Re-enter Routing Number',
+          ssn: 'Social Security Number (SSN) or Tax ID (ITIN/EIN)',
           ssn_re: 'Re-enter',
         },
         payment_information_type: 'I Want to Pay Using',
@@ -585,8 +586,8 @@ module.exports = {
 
       this.assignLabels();
 
-			if(window.location.hostname == 'dcu.growthfountain.com') {
-			//if(window.location.hostname == 'localhost') {
+      if(window.location.hostname == 'dcu.growthfountain.com') {
+      //if(window.location.hostname == 'localhost') {
         this.fields.is_understand_securities_related = Object.assign({}, this.fields.is_reviewed_educational_material);
         this.fields.is_understand_securities_related.label = this.labels.is_understand_securities_related;
       } else {
@@ -597,7 +598,6 @@ module.exports = {
       this.usaStates = usaStates;
 
       this.initMaxAllowedAmount();
-      this.amountTimeout = null;
     },
 
     render() {
@@ -610,18 +610,35 @@ module.exports = {
           values: this.model,
           user: this.user,
           states: this.usaStates,
+          feeInfo: this.calcFeeWithCredit(),
         })
       );
 
       this.initAmountPopover();
 
-      $('#income_worth_modal').on('hidden.bs.modal', () => {
-        this.$amount.keyup();
-      });
+      setTimeout(this.attachUpdateNetWorthModalEvents.bind(this), 100);
 
       $('span.current-limit').text(this._maxAllowedAmount.toLocaleString('en-US'));
 
       return this;
+    },
+
+    attachUpdateNetWorthModalEvents() {
+      let $networthModal = this.$('#income_worth_modal');
+      let $submitButton = $networthModal.find('.submit-income-worth');
+
+      $networthModal.off('shown.bs.modal');
+      $networthModal.off('hidden.bs.modal');
+
+      $networthModal.on('shown.bs.modal', () => {
+        $submitButton.off('click');
+        $submitButton.on('click', this.updateIncomeWorth.bind(this));
+      });
+
+      $('#income_worth_modal').on('hidden.bs.modal', () => {
+        $submitButton.off('click');
+        this.$amount.keyup();
+      });
     },
 
     onArticlePressCollapse(e) {
@@ -630,6 +647,30 @@ module.exports = {
       } else if (e.type == 'shown') {
         this.$('.see-all-perks').text('Show Less')
       }
+    },
+
+    calcFeeWithCredit() {
+      const credit = this.user.credit;
+      const fee = companyFees.fees_to_investor;
+
+      if (credit <= 0)
+        return {
+          waived: 0,
+          fee: fee,
+          remainCredit: 0,
+          credit: 0,
+        };
+
+      return {
+        waived: fee,
+        fee: credit > fee
+          ? 0
+          : fee - credit,
+        remainingCredit: credit >= fee
+          ? credit - fee
+          : 0,
+        credit: credit,
+      };
     },
 
     initAmountPopover() {
@@ -793,8 +834,9 @@ module.exports = {
     },
 
     _updateTotalAmount() {
-      // Here 10 is the flat rate;
-      let totalAmount = this.getInt(this.$amount.val()) + 10;
+      const feeInfo = this.calcFeeWithCredit();
+
+      let totalAmount = this.getInt(this.$amount.val()) + feeInfo.fee;
       let formattedTotalAmount = '$' + this.formatInt(totalAmount)
       this.$el.find('.total-investment-amount').text(formattedTotalAmount);
       this.$el.find('[name=total_amount]').val(formattedTotalAmount);
@@ -830,7 +872,6 @@ module.exports = {
     },
 
     updateIncomeWorth(e) {
-
       let netWorth = $('#net_worth')
         .val()
         .trim()
@@ -897,6 +938,12 @@ module.exports = {
     },
 
     getSignature () {
+
+      cookies.set('token', app.user.token, {
+        domain: '.' + domainUrl,
+        path: '/',
+      });
+
       const investForm = document.forms.invest_form;
       const inputSignature = investForm.elements['signature[full_name]'];
       const signature = inputSignature.value;
@@ -941,9 +988,9 @@ module.exports = {
     submit(e) {
       e.preventDefault();
 
-      let data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
-      data.amount = data.amount.replace(/\,/g, '');
-      if(data['payment_information_type'] == '1' || data['payment_information_type'] == 2) {
+      let data = $(e.target).serializeJSON();
+      // data.amount = data.amount.replace(/\,/g, '');
+      if(data['payment_information_type'] == 1 || data['payment_information_type'] == 2) {
         delete data['payment_information_data'];
         // Temp solution !
         delete this.fields.payment_information_data;
@@ -980,7 +1027,7 @@ module.exports = {
         crossDomain: true,
       })
       .done( () => {
-        $('#content').scrollTo();
+        $('body').scrollTo();
         this.undelegateEvents();
         app.routers.navigate(successRoute, {
             trigger: true,
@@ -1047,9 +1094,9 @@ module.exports = {
       const formData = $('form.invest_form').serializeJSON();
       const issuer_signer = this.model.owner.first_name + ' ' + this.model.owner.last_name;
       const investor_legal_name = formData.personal_information_data.first_name + ' ' + formData.personal_information_data.last_name;
-      const investment_amount = parseInt( formData.amount.replace(/\D/g, '') );
+      const investment_amount = formData.amount;
       const investor_number_purchased = investment_amount / this.model.campaign.price_per_share;
-      const aggregate_inclusive_purchase = formData.total_amount.replace(/\D/g, '');
+      const aggregate_inclusive_purchase = formData.total_amount;
 
       return {
         compaign_id: this.model.id,
@@ -1093,6 +1140,10 @@ module.exports = {
     },
 
     _success(data) {
+      const feeInfo = this.calcFeeWithCredit();
+      this.user.credit = feeInfo.remainingCredit;
+
+      app.emitFacebookPixelEvent('MakeInvestment');
       this.saveEsign(data);
     },
 
