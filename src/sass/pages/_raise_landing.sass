@@ -18,6 +18,8 @@
         line-height: 20px
     img
       width: 145px
+      position: relative
+      top: -10px
   .content-section
     .growth-is
       background-image: url("/img/raise-landing/raise-content-top.jpg")
@@ -33,12 +35,13 @@
         position: absolute
         top: 0
         left: 0
-        background: rgba($elm, .7)
+        background: rgba($growth-is-bgc, .7)
       .content
         position: relative
         z-index: 2
         h1
           color: $white
+          margin-top: rem(3)
         p
           color: $white
     .good-candidate-wrap
@@ -60,14 +63,14 @@
           display: none
         .color-effect
           i
-            background-color: $wild_willow
+            background-color: $color-effect-questions
             padding: rem(2)
             font-size: rem(48)
             border-radius: 50px
             width: 53px
             height: 53px
             color: $white
-          background-color: rgba($wild_willow, .5)
+          background-color: rgba($color-effect-questions, .5)
           display: inline-block
           border-radius: 100px
           padding: 18px
@@ -75,44 +78,44 @@
           -webkit-animation: bg-color 2s infinite
         @-webkit-keyframes bg-color
           0%
-            background-color: rgba($wild_willow, .2)
+            background-color: rgba($color-effect-questions, .25)
           15%
-            background-color: rgba($wild_willow, .3)
+            background-color: rgba($color-effect-questions, .3)
           30%
-            background-color: rgba($wild_willow, .4)
+            background-color: rgba($color-effect-questions, .4)
           450%
-            background-color: rgba($wild_willow, .5)
+            background-color: rgba($color-effect-questions, .5)
           60%
-            background-color: rgba($wild_willow, .5)
+            background-color: rgba($color-effect-questions, .5)
           75%
-            background-color: rgba($wild_willow, .4)
+            background-color: rgba($color-effect-questions, .4)
           85%
-            background-color: rgba($wild_willow, .3)
+            background-color: rgba($color-effect-questions, .3)
           100%
-            background-color: rgba($wild_willow, .2)
+            background-color: rgba($color-effect-questions, .25)
         @keyframes bg-color
           0%
-            background-color: rgba($wild_willow, .2)
+            background-color: rgba($color-effect-questions, .25)
           15%
-            background-color: rgba($wild_willow, .3)
+            background-color: rgba($color-effect-questions, .3)
           30%
-            background-color: rgba($wild_willow, .4)
+            background-color: rgba($color-effect-questions, .4)
           450%
-            background-color: rgba($wild_willow, .5)
+            background-color: rgba($color-effect-questions, .5)
           60%
-            background-color: rgba($wild_willow, .5)
+            background-color: rgba($color-effect-questions, .5)
           75%
-            background-color: rgba($wild_willow, .4)
+            background-color: rgba($color-effect-questions, .4)
           85%
-            background-color: rgba($wild_willow, .3)
+            background-color: rgba($color-effect-questions, .3)
           100%
-            background-color: rgba($wild_willow, .2)
+            background-color: rgba($color-effect-questions, .25)
     .does-not
       display: none
       h2
         padding-top: rem(30)
         position: relative
-        top: 40px
+        top: 20px
         margin-top: 0
       &.active-opasity
         +mt(.9s)
@@ -123,7 +126,7 @@
     .does-not-wrap
       
       padding: rem(65) rem(20) rem(20) rem(20)
-      background-color: $wild_willow
+      background-color: $does-not-wrap-bgc
       position: absolute
       bottom: 0
       &:before
@@ -152,8 +155,13 @@
   .simplify
     h1.big-h1
       font-size: rem(48)
+      position: relative
+      top: -6px
       span
-        color: $puerto_rico
+        color: $simplify-h1
+    h1.small-h1
+      position: relative
+      top: -6px
   .right-menu
     border: solid 1px $gallery
     .nav-tabs
@@ -198,6 +206,7 @@
             top: 50%
             left: 62%
             width: 100%
+            z-index: 2
             -ms-transform: translate(-50%,-50%)
             -webkit-transform: translate(-50%,-50%)
             transform: translate(-50%,-50%)
@@ -212,9 +221,9 @@
             -webkit-transform: translate(-50%,-50%)
             transform: translate(-50%,-50%)
             z-index: 2
-          +mt(.3s)
+          
           &.active
-            background-color: $puerto_rico
+            background-color: $nav-item-raise-landing-bgc
             color: $white
             &:after
               color: $white
@@ -236,9 +245,18 @@
               opacity: .4
               display: block
       @media only screen and (max-width : 1200px)
+        a.nav-link
+          height: 88px!important
+          &.active
+            &:before
+              left: 29px!important
+              top: 44px!important
         .text
           left: 57%!important
           width: 86%!important
+          font-size: rem(14)!important
+        .icon img
+          height: 89px
   .raise-landing-section
     background: url(/img/raise-landing/RS2.png)
     background-position: center center
@@ -256,13 +274,13 @@
           margin-right: rem(5)
     .call-block
       i
-        background-color: $wild_willow
-        padding: 9px
+        background-color: $content-bottom-icon-color
+        padding: 8px
         color: $white
         border-radius: 100px
         font-size: rem(24)
-        width: 39px
-        height: 39px
+        width: 40px
+        height: 40px
         vertical-align: sub
         margin-right: rem(25)
         text-align: center
