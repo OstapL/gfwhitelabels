@@ -1,12 +1,6 @@
+//TODO: move helpers to app.js
 const helpers = require('./helpers.js');
-
-//TODO: move this to common method in main router
-// execute: function (callback, args, name) {
-//   if (callback)
-//     callback.apply(this, args);
-//   else
-//     alert('Not such url');
-// },
+const GENERAL = require('consts/general.json');
 
 module.exports = {
   routes: {
@@ -34,10 +28,10 @@ module.exports = {
 
     list() {
       const View = require('./views.js');
-      let params = '?limit=6';
+      let params = '?limit=' + GENERAL.COMPANIES_PER_PAGE;
       let page = parseInt(app.getParams().page);
       let offset = ((page > 0) ? page : 1) - 1;
-      if (offset) params += '&offset=' + (offset * 6);
+      if (offset) params += '&offset=' + (offset * GENERAL.COMPANIES_PER_PAGE);
       let orderBy = app.getParams().orderby;
       if (orderBy) params += '&orderby=' + orderBy;
       api.makeCacheRequest(raiseCapitalServer + params).then((data) => {
@@ -70,7 +64,7 @@ module.exports = {
             $(location.hash).scrollTo(65);
           }, 100);
         } else {
-          $('#content').scrollTo();
+          $('body').scrollTo();
         }
 
         app.hideLoading();
@@ -97,7 +91,7 @@ module.exports = {
             fields: investmentMeta[0].fields,
           });
           i.render();
-          $('#content').scrollTo();
+          $('body').scrollTo();
           app.hideLoading();
         });
       } else {

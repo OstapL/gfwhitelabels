@@ -1,13 +1,11 @@
-if attr.allowQuestion
-  | !{ snippets.add() }
+.container.p-x-0
+  if attr.allowQuestion
+    | !{ snippets.add() }
+  -
+    var cssClass = 'comments col-xl-8 p-xs-0 ' + (attr.cssClass || '');
 
-div(class=(attr.cssClass || '')).p-xs-0
-  .comments
-    -
-      var options = _.extend({
-        owner_id: owner_id,
-        company_id: company_id,
-      }, attr);
-
-    each c in comments
-      | !{ helpers.fields.comment(c, 0, options, helpers) }
+  div(class=cssClass).comments
+      -
+        var level = 0;
+      each c in comments
+        | !{ snippets.comment({ comment: c , snippets: snippets, attr: attr , level: level }) }

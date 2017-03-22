@@ -1,8 +1,10 @@
+//TODO: rmove view into methods
 const View = require('components/formc/views.js');
 const formcHelpers = require('./helpers.js');
+const STATUSES = require('consts/raisecapital/companyStatuses.json').STATUS;
 
 function getOCCF(optionsR, viewName, params = {}) {
-  $('#content').scrollTo();
+  $('body').scrollTo();
   params.el = '#content';
   $.when(optionsR, app.user.getCompanyR(), app.user.getCampaignR(), app.user.getFormcR(params.id))
   .done((options, company, campaign, formc) => {
@@ -18,19 +20,32 @@ function getOCCF(optionsR, viewName, params = {}) {
       params.campaign = app.user.campaign;
       params.formc = app.user.formc;
     } else {
-      if (Object.keys(company[0]).length > 0) {
-        params.company = app.user.company = app.user.company || company[0];
-        params.campaign = app.user.campaign = app.user.campaign || campaign[0];
-        params.formc = app.user.formc = app.user.formc || formc[0];
-
-      } else {
-        params.company = {};
-        params.campaign = {};
-        params.formc = {};
+      if(options != '') {
+        params.fields = options[0].fields;
       }
+      // ToDo
+      // This how we can avoid empty response
+      if(company == '') {
+        params.company = app.user.company;
+        params.campaign = app.user.campaign;
+        params.formc = app.user.formc;
+      }
+      else {
+        if(Object.keys(company[0]).length > 0) {
+          params.company = app.user.company = app.user.company || company[0];
+          params.campaign = app.user.campaign = app.user.campaign || campaign[0];
+          params.formc = app.user.formc = app.user.formc || formc[0];
+
+        } else {
+          params.company = {};
+          params.campaign = {};
+          params.formc = {};
+        }
+      }
+
     }
 
-    if (params.company.is_approved != 5) {
+    if (params.company.is_approved < STATUSES.APPROVED) {
       alert('Sorry, your campaign is not approved yet. Please wait till we check your campaign');
       app.routers.navigate('/campaign/' + params.campaign.id + '/general_information', {
         trigger: true,
@@ -64,18 +79,6 @@ function getOCCF(optionsR, viewName, params = {}) {
     }
   });
 };
-
-//TODO: move this to main router
-// execute: function (callback, args, name) {
-//   //ga('send', 'pageview', "/" + Backbone.history.getPath());
-//   if (!app.user.ensureLoggedIn(window.location.pathname))
-//     return false;
-//
-//   if (callback)
-//     callback.apply(this, args);
-//   else
-//     alert('Not such url');
-// },
 
 module.exports = {
   routes: {
@@ -198,18 +201,18 @@ module.exports = {
     },
 
     finalReview(id) {
-      $('#content').scrollTo();
+      $('body').scrollTo();
       const formcOptionsR = api.makeCacheRequest(formcServer + '/' + id, 'OPTIONS');
       $.when(formcOptionsR, app.user.getFormcR(id)).then((formcFields, formc) => {
         if (formc[0]) {
           app.user.formc = formc[0];
         }
 
-        const companyUrl = raiseCapitalServer + '/company/' + app.user.formc.company_id + '/edit';
-        const campaignUrl = raiseCapitalServer + '/campaign/' + app.user.formc.company_id + '/edit';
+        const companyUrl = raiseCapitalServer + '/company/' + app.user.formc.company_id;
+        const campaignUrl = raiseCapitalServer + '/campaign/' + app.user.formc.company_id;
         $.when(
-          api.makeCacheRequest(companyUrl, 'OPTIONS'),
-          api.makeCacheRequest(campaignUrl, 'OPTIONS'),
+          api.makeCacheRequest(raiseCapitalServer + '/company', 'OPTIONS'),
+          api.makeCacheRequest(raiseCapitalServer + '/campaign', 'OPTIONS'),
           app.user.getCompanyR(app.user.formc.company_id, 'GET'),
           app.user.getCampaignR(app.user.formc.campaign_id, 'GET'),
         ).done((companyFields, campaignFields, company, campaign) => {
