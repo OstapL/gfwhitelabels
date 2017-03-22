@@ -25,8 +25,13 @@ section.create-company-team-add.container
           |  ADD ADVISOR
 
       if values.team_members
-        - counter = 0
         - 
+          counter = 0;
+          /*
+          for(var k in values.team_members) {
+            values.team_members[k].index = k;
+          }
+
           function memberSort(a, b) {
             if(a.order == null) {
               return true;
@@ -34,6 +39,7 @@ section.create-company-team-add.container
             return a.order > b.order;
           }
           values.team_members.sort(memberSort);
+          */
 
 
         each v,k in values.team_members
@@ -47,8 +53,7 @@ section.create-company-team-add.container
                 i.fa.fa-pencil-square-o
               p.name.text-uppercase #{v.first_name} #{v.last_name}
               p.small #{ v.title }
-              
-          - counter ++
+              - counter ++;
 
       .col-lg-12.pull-lg-right.p-r-0.m-t-3.text-lg-right.text-md-center.text-sm-center.text-xs-center.buttons-row
         a(href="/campaign/" + values.id + "/specifics").btn.btn-primary.text-uppercase save and continue
