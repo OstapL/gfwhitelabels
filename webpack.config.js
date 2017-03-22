@@ -36,11 +36,11 @@ module.exports = {
   debug: true,
 
   plugins: [
-    new ExtractTextPlugin('style.css'),
+    // new ExtractTextPlugin('style.css'),
     new HtmlWebpackPlugin({
       title: 'GrowthFountain | Equity Crowdfunding Platform',
       template: './src/index.pug',
-      filename: './dist/index.html',
+      filename: 'index.html',
       inject: 'body', // Inject all scripts into the body
     }),
     new webpack.ProvidePlugin({
@@ -56,7 +56,7 @@ module.exports = {
   module: {
     loaders: [
       { test: /bootstrap\/js\//, loader: 'imports?jQuery=$' },
-      // { test: /\.html?$/, loader: 'file?name=[name].[ext]' },
+      { test: /\.html?$/, loader: 'file?name=[name].[ext]' },
       { test: /\.pug$/, loader: 'pug-loader' },
       { test: /\.json$/, exclude: /node_modules/, loader: 'json-loader' },
       {
