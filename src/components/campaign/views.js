@@ -373,7 +373,7 @@ module.exports = {
       'change #payment_information_type': 'changePaymentType',
       'keyup .typed-name': 'copyToSignature',
       'keyup #annual_income,#net_worth': 'updateLimitInModal',
-      'click button.submit-income-worth': 'updateIncomeWorth',
+      // 'click .submit-income-worth': 'updateIncomeWorth',
       'click': 'hidePopover',
       'hidden.bs.collapse #hidden-article-press' :'onArticlePressCollapse',
       'shown.bs.collapse #hidden-article-press' :'onArticlePressCollapse',
@@ -627,13 +627,29 @@ module.exports = {
 
       this.initAmountPopover();
 
-      $('#income_worth_modal').on('hidden.bs.modal', () => {
-        this.$amount.keyup();
-      });
+      setTimeout(this.attachUpdateNetWorthModalEvents.bind(this), 100);
 
       $('span.current-limit').text(this._maxAllowedAmount.toLocaleString('en-US'));
 
       return this;
+    },
+
+    attachUpdateNetWorthModalEvents() {
+      let $networthModal = this.$('#income_worth_modal');
+      let $submitButton = $networthModal.find('.submit-income-worth');
+
+      $networthModal.off('shown.bs.modal');
+      $networthModal.off('hidden.bs.modal');
+
+      $networthModal.on('shown.bs.modal', () => {
+        $submitButton.off('click');
+        $submitButton.on('click', this.updateIncomeWorth.bind(this));
+      });
+
+      $('#income_worth_modal').on('hidden.bs.modal', () => {
+        $submitButton.off('click');
+        this.$amount.keyup();
+      });
     },
 
     onArticlePressCollapse(e) {
@@ -867,7 +883,6 @@ module.exports = {
     },
 
     updateIncomeWorth(e) {
-
       let netWorth = $('#net_worth')
         .val()
         .trim()
