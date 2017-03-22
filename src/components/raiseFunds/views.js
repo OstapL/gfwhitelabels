@@ -414,6 +414,7 @@ module.exports = {
 
     initialize(options) {
       this.fields = options.fields.campaign.team_members.schema;
+      this.fields.order.placeholder = 'Put a number if you want to order your members';
       this.fields.photo_image_id = _.extend(this.fields.photo_image_id, {
         crop: {
           control:  {
