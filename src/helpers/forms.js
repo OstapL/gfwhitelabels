@@ -97,10 +97,10 @@ module.exports = {
       method = e.target.dataset.method || 'PATCH';
     }
 
-    newData = newData || $(e.target).closest('form').serializeJSON({ useIntKeysAsArrayIndex: true });
+    newData = newData || $(e.target).closest('form').serializeJSON();
     api.deleteEmptyNested.call(this, this.fields, newData);
     api.fixDateFields.call(this, this.fields, newData);
-    api.fixMoneyFields.call(this, this.fields, newData);
+    // api.fixFieldTypes.call(this, this.fields, newData);
 
     // if view already have some data - extend that info
     if(this.hasOwnProperty('model') && !this.doNotExtendModel && method != 'PATCH') {
@@ -190,7 +190,7 @@ module.exports = {
           } 
           
           if(defaultAction == 1) {
-            $('#content').scrollTo();
+            $('body').scrollTo();
             this.undelegateEvents();
             app.routers.navigate(
               this.getSuccessUrl(responseData),
@@ -290,7 +290,7 @@ module.exports = {
           data[key].forEach((el, i) => {
             let emptyValues = 0;
             _(el).each((val, subkey) => {
-              if(val == '' || val == 0) {
+              if(val == '' || Number.isNaN(val)) {
                 emptyValues ++;
               }
             });
@@ -310,9 +310,13 @@ module.exports = {
     });
   },
 
-  fixMoneyFields(fields, data) {
+  fixFieldsTypes(fields, data) {
     _(fields).each((el, key) => {
-      if(el.type == 'money') {
+      if(el.type == 'string') {
+        if (data && data[key]) {
+          data[key] = formatHelper.unformatPrice(data[key]);
+        }
+      } else if(el.type == 'money') {
         if (data && data[key]) {
           data[key] = formatHelper.unformatPrice(data[key]);
         }

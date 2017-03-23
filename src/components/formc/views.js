@@ -445,7 +445,7 @@ module.exports = {
         formcServer + '/' + this.model.id + '/team-members/invitation/' +  e.target.dataset.id,
         'PUT',
       ).then((data) => {
-        e.target.innerHTML = 'sent';
+        e.target.innerHTML = '<i class="fa fa-envelope-open-o" aria-hidden="true"></i> Sent';
         e.target.className = 'link-3 invite';
       });
     },
@@ -500,7 +500,6 @@ module.exports = {
         t.formc_id = options.formc.id;
         t.campaign_id = options.formc.campaign_id;
         t.company_id = options.formc.company_id;
-        t.progress = options.formc.progress;
         delete t.id;
         this.model = t;
       } else {
@@ -508,7 +507,7 @@ module.exports = {
           formc_id: options.formc.id,
           campaign_id: options.formc.campaign_id,
           company_id: options.formc.company_id,
-          progress: options.formc.progress
+          role: 0
         };
       }
       this.fields = options.fields;
@@ -601,11 +600,13 @@ module.exports = {
     },
 
     submit(e) {
-      let data = $(e.target).closest('form').serializeJSON({ useIntKeysAsArrayIndex: true });
+      let data = $(e.target).closest('form').serializeJSON();
 
       if(data.role) {
-        data.role = data.role.reduce((a,b) => { return parseInt(a)+parseInt(b)}, 0)
-        let newRole = data.role;
+        // data.role = data.role.reduce((a,b) => { return parseInt(a)+parseInt(b)}, 0);
+        // data.role = this.model.role;
+        
+        let newRole = this.model.role;
 
         // delete data['experiences'];
         // delete data['positions'];
@@ -639,7 +640,12 @@ module.exports = {
           delete data.employer_start_date__year;
           delete data.employer_start_date__month;
         }
-        if(data.role != newRole) {
+        data.role.forEach((val,i) => { 
+          if((newRole & val) != val) {
+            newRole += val;
+          }
+        });
+        if(this.model.role != newRole) {
           data.role = newRole;
         }
         else if(this.model.hasOwnProperty('id') == true) {
@@ -788,6 +794,10 @@ module.exports = {
         return item.title == 'Commissions and Broker Expenses';
       });
 
+      if(commission == null) {
+        commission = {};
+      }
+
       commission.min = Math.round(this.campaign.minimum_raise * companyFees.trans_percent / 100);
       commission.max = Math.round(this.campaign.maximum_raise * companyFees.trans_percent / 100);
       commission.fee = true;
@@ -798,7 +808,7 @@ module.exports = {
     },
 
     events: _.extend({
-      'submit form': 'submit',
+      'click #submit': api.submitAction,
       'click .submit_formc': submitFormc,
       'change input[type=radio][name=doc_type]': 'changeDocType',
       // 'change .min-expense,.max-expense,.min-use,.max-use': 'calculate',
@@ -883,8 +893,9 @@ module.exports = {
     },
 
     submit(e) {
-      var $target = $(e.target);
-      var data = $target.serializeJSON({ useIntKeysAsArrayIndex: true });
+      debugger;
+      var $target = $(e.target.currentTarget);
+      var data = $target.serializeJSON();
       data.use_of_net_proceeds.forEach(function (elem) {
         elem.min = elem.min.replace(/,/g, '');
         elem.max = elem.max.replace(/,/g, '');
@@ -985,7 +996,7 @@ module.exports = {
       this.fields.risk = { label: 'Describe Your Risk' };
       this.defaultRisks = {
         0: {
-          title: 'There is a limited market for the Company’s product or services',
+          title: 'There is a limited market for the Company’s product or services.',
           risk: 'Although we have identified what we believe to be a need in the market ' +
                 'for our products and services, there can be no assurance that ' +
                 'demand or a market will develop or that we will be able to create a viable ' +
@@ -1159,7 +1170,7 @@ module.exports = {
           risk: 'In addition to general economic conditions and market fluctuations, significant ' +
                 'operating cost increases could adversely affect us due to numerous factors, ' +
                 'many of which are beyond our control. Increases in operating costs would likely ' +
-                'negatively impact our operating income, and could undermine our ability to grow ' +
+                'negatively impact our operating income and could undermine our ability to grow ' +
                 'our business.Our past operating results may not be accurate indicators of ' +
                 'future performance, and you should not rely on such results to predict our ' +
                 'future performance.',
@@ -1232,7 +1243,7 @@ module.exports = {
                 'services in response to industry trends or developments in technology, or ' +
                 'those new products may not achieve market acceptance. As a result, we could ' +
                 'lose business, be forced to price products and services on less advantageous ' +
-                'terms to retain or attract clients, or be subject to cost increases. ' +
+                'terms to retain or attract clients or be subject to cost increases. ' +
                 'As a result, our business, financial condition or results of operations may ' +
                 'be adversely affected.',
         },
@@ -1369,7 +1380,7 @@ module.exports = {
           risk: 'This may place us at a disadvantage in responding to our competitors\' pricing ' +
                 'strategies, advertising campaigns, strategic alliances and other initiatives. ' +
                 'Consequently, such competitors may be in a better position than the Company ' +
-                'to take advantage of customer acquisition and business opportunities, ' +
+                'to take advantage of customer acquisition and business opportunities ' +
                 'and devote greater resources to marketing and sale of their offerings. ' +
                 'These competitors may limit our opportunity to acquire customers and facilitate ' +
                 'business arrangements.  There is no certainty that the Company will be able ' +
@@ -1380,7 +1391,7 @@ module.exports = {
           title: 'The Company may not be able to create and maintain a competitive advantage.',
           risk: 'The demand for our products or services may change and we may have difficulty ' +
                 'maintaining a competitive advantage within our market.  The Company\'s success ' +
-                'could depend on the ability of management to respond to changingsituations, ' +
+                'could depend on the ability of management to respond to changing situations, ' +
                 'standards and customer needs on a timely and cost-effective basis. In addition, ' +
                 'any failure by the management to anticipate or respond adequately to changes in ' +
                 'customer preferences and demand could have a material adverse effect on our ' +
@@ -1474,7 +1485,7 @@ module.exports = {
                 'individuals. Therefore, in the event that any of the Company\'s employees ' +
                 'die or become disabled, the Company will not receive any insurance proceeds as ' +
                 'compensation for such person\s absence. The loss of such person could ' +
-                'negatively affect the Company and its operations',
+                'negatively affect the Company and its operations.',
         },
         3: {
           title: 'The Company relies on third-parties over which the Company has little control; ' +
@@ -1493,12 +1504,12 @@ module.exports = {
                 'we could experience disruptions.   Such interruptions could result in damage ' +
                 'to our reputation and customer relationships and adversely affect our business. ' +
                 'These events could materially and adversely affect our ability to retain and ' +
-                'attract customers, and have a material negative impact on our operations, ' +
+                'attract customers and have a material negative impact on our operations, ' +
                 'business, financial results and financial condition.',
         },
         5: {
           title: 'The Company may not be able to adequately ensure the loyalty and ' +
-                  'confidentiality of employees and third parties',
+                  'confidentiality of employees and third parties.',
           risk: 'The Company may rely on nondisclosure and noncompetition agreements with ' +
                 'employees, consultants and other parties to protect, in part, trade secrets and ' +
                 'other proprietary rights. There can be no assurance that these agreements will ' +
@@ -1558,7 +1569,7 @@ module.exports = {
           title: 'We rely on various intellectual property rights in order to operate our ' +
                   'business and these rights may be challenged.',
           risk: 'The Company’s intellectual property rights may not be sufficiently broad and ' +
-                'may notprovide a significant competitive advantage. The steps that the Company ' +
+                'may not provide a significant competitive advantage. The steps that the Company ' +
                 'has taken to maintain and protect its intellectual property may not prevent ' +
                 'it from being challenged, invalidated or circumvented. In some circumstances, ' +
                 'enforcement may not be available to us because an infringer has a dominant ' +
@@ -1566,7 +1577,7 @@ module.exports = {
                 'failure to obtain or maintain intellectual property rights that convey ' +
                 'competitive advantage, adequately protect its intellectual property or detect ' +
                 'or prevent circumvention or unauthorized use of such property, could adversely ' +
-                'impact the Company\'s competitive position and results of operations\'.',
+                'impact the Company\'s competitive position and results of operations.',
         },
         1: {
           title: 'From time to time, third parties may claim that one or more of our products ' +
@@ -1586,7 +1597,7 @@ module.exports = {
                 'divert management’s attention from other business concerns. Any public ' +
                 'announcements related to litigation or interference proceedings initiated or ' +
                 'threatened against as could cause our business to be harmed. Our intellectual ' +
-                'property portfolio may not be useful in asserting a counterclaim, or ' +
+                'property portfolio may not be useful in asserting a counterclaim or ' +
                 'negotiating a license, in response to a claim of intellectual property ' +
                 'infringement. In certain of our businesses we rely on third party intellectual ' +
                 'property licenses and we cannot ensure that these licenses will be available to ' +
@@ -1840,7 +1851,7 @@ module.exports = {
           securities_offered: 'Securities Offered',
         },
         business_loans_or_debt: {
-          maturity_date: 'Date of Offering',
+          maturity_date: 'Maturity Date',
           outstanding_amount: 'Outstanding Amount',
           interest_rate: 'Interest Rate',
           other_material_terms: 'Other Material Terms',
@@ -1911,23 +1922,25 @@ module.exports = {
 
     addOutstanding(e) {
       e.preventDefault();
-      const data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
+      const data = $(e.target).serializeJSON();
 
       const sectionName = e.target.dataset.section;
       const template = require('./templates/snippets/outstanding_securities.pug');
 
-      if(data.amount_authorized.toLocaleLowerCase() == 'n/a' ||
+      if(typeof data.amount_authorized == 'string') {
+        if(data.amount_authorized.toLocaleLowerCase() == 'n/a' ||
           data.amount_authorized.toLocaleLowerCase() == 'not available' ||
           data.amount_authorized.toLocaleLowerCase() == 'na') {
-        data.amount_authorized = null;
-      } else {
-        data.amount_authorized = Math.round(
+            data.amount_authorized = null;
+        } else {
+          data.amount_authorized = Math.round(
             data.amount_authorized.replace(/[\$\,]/g, '') * 100 
-        ) / 100;
+          ) / 100;
+        }
       }
 
       data.amount_outstanding = Math.round(
-          data.amount_outstanding.replace(/[\$\,]/g, '') * 100
+          data.amount_outstanding * 100
       ) / 100;
 
       if (!validation.validate(this.fields.outstanding_securities.schema, data, this)) {
@@ -2063,7 +2076,7 @@ module.exports = {
 
     _success(data) {
       app.hideLoading();
-      $('#content').scrollTo();
+      $('body').scrollTo();
       return false;
     },
 
@@ -2213,12 +2226,12 @@ module.exports = {
 
         fieldName = name.split('company.')[1];
         data[fieldName] = val;
-        url = raiseCapitalServer + '/company/' + app.user.company.id + '/edit';
+        url = raiseCapitalServer + '/company/' + app.user.company.id;
 
       } else if(name.indexOf('campaign.') !== -1) {
         fieldName = name.split('campaign.')[1];
         data[fieldName] = val;
-        url = raiseCapitalServer + '/campaign/' + app.user.campaign.id + '/edit';
+        url = raiseCapitalServer + '/campaign/' + app.user.campaign.id;
         updateModel = app.user.campaign;
 
       } else if(name.indexOf('formc.') !== -1) {

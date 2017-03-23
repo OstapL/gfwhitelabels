@@ -225,9 +225,6 @@ header
       @media screen and (min-width: 992px) and (max-width: 1145px )
         padding: 0 8px
 
-        a.btn
-          padding: rem(5) rem(15)
-
     .navbar-brand
       position: relative
       height: $navbar_height
@@ -296,7 +293,11 @@ header
 
       &.user-info
         margin-left: 0
-
+        #user_name
+          max-width: 200px
+          overflow: hidden
+          height: 16px
+          display: inline-block
       .list-container
         display: none
 
@@ -666,7 +667,7 @@ header
     top: 0
     right: 0
     left: 0
-    z-index: 2
+    z-index: 3
 
     display: block
     height: 65px;
@@ -692,7 +693,7 @@ header
     nav
       position: absolute
       top: 0
-      z-index: 2
+      z-index: 3
 
       height: 100%
       padding: 0
@@ -799,7 +800,7 @@ header
         transition: visibility 0s linear 1s
 
         position: relative
-        z-index: 2
+        z-index: 3
 
         height: auto
         float: none!important
@@ -1007,7 +1008,7 @@ header
   .mobile-singup-wrap
     .btn-login-mobile
       display: block
-      width: 145px
+      width: 200px
       font-size: rem(15)
   @media screen and (max-width: 385px)
 

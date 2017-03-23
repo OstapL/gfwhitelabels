@@ -6,20 +6,12 @@ $link-4-hover: rgba(119, 119, 119, .6)
 $link-5-hover: rgba(17, 17, 17, .6)
 $link-6-hover: rgba(255, 255, 255, .6)
 /** End main color **/
-$brandon-grotesque-medium: BrandonGrotesque-Medium
-//переменная цвета footer
-$footer_background: $alabaster
 
-$footer-title-size: 13px // размер заголовка меню в футере
-$footer-title-ls: 1.3px // letter-spacing заголовка меню в футере
-// для стилизации текста надписи компании в футере 
-$footer_logo_font: $brandon-grotesque-medium
-$footer_logo_lett_space: rem(1.3)
-$footer-bottom-bgc: $social_color
-$footer-bottom-link-color: $grey
-$footer-bottom-link-color-hover: #b0afaf
-$footer-company-text-color: $grey
-// Назовем что бы было так что бы было понятно где оно используется
+/** Дополнительный шрифт **/
+$brandon-grotesque-medium: BrandonGrotesque-Medium
+
+$second-font-family: $brandon-grotesque-medium
+// HEADER
 $menu_backgound_from: $cod_gray // цвет для меню если градиент то левая сторона
 $menu_backgound_to: $cod_gray // цвет для меню если градиент то правая сторона
 $logo-width-desktop: 20%
@@ -36,53 +28,135 @@ $icon-mobile-menu-color: rgba($white, 0.75)
 $menu-font-weight: normal
 $mobile-menu-font-weight: normal
 $sub-menu-box-shadov: none
-
-//нужно решить что это все ?
-//active class  for authorization title tab 
-$active_tab_authorization: $mine_shaft
-//text color for authorization title tab 
-$tab_authorization_text: $black
-// color background button submit form
-$authorization_btn_submit_bg: $cod_gray
-
-// bootstrap slider styles 
-//bg color bootstrap slider tick track(class .slider-selection.tick-slider-selection)
-$btstr_slider_track_tick_bg: $scorpion
-//bg color bootstrap slider not tick track(class .slider-track-high)
-$btstr_slider_track_not_tick_bg: $gallery
-//bg color bootstrap slider handle block(class .slider-handle)
-$btstr_slider_nandle_block_bg: $wild_willow
-//bg color bootstrap slider other handle block(class .slider-tick)
-$btstr_slider_other_nandle_block_bg: $white
-
-// color warning block
-$text_warning_block_color: $crimson
-
-// переменные для главного меню 
-// $padding_menu: 14px 0 0 0 
+$header_bg_image: #{''} // для задаванния картинки бекграунда в хедере(в некоторых сайтах есть кроме цвета еще и картинка)
 $menu_shadows: none
 $navbar_height: 75px
 $navbar_height_mobile: 65px
-// $navbar-header-padd-top: 8px // паддинг в хедере сверху
-// $menu-profile-padd-top: 11px // для вертиального выравнивания меню логин\регистр. и иконки профиля в хедере
+$font-size-menu: rem(13)
+$letter-sp-menu: rem(1.3)
+$font-family-menu: $second-font-family
+$font-size-sub-menu: rem(15)
+$menu-icon-color: $puerto_rico // color for menu icon check 
+//END HEADER
 
-// нужно проверить !!!
-$border-radius-lg:       50px
-$border-radius-sm:       50px
+// FOOTER
+$footer_background: $alabaster
+$display_partnres: block
+$footer-title-size: 13px // размер заголовка меню в футере
+$footer-title-ls: 1.3px // letter-spacing заголовка меню в футере
+$footer-title-fw: normal
+$footer-title-color: $footer_text
+$footer-menu-link-size: rem(15)
+$footer-bottom-text-color: $footer_text
+$footer-bottom-text-size: rem(12)
+$footer-company-text-color: $boulder
+
+// для стилизации текста надписи компании в футере 
+$footer_logo_font: $second-font-family
+$footer_logo_lett_space: rem(1.3)
+$footer-bottom-bgc: $cod_gray
+$footer-bottom-link-color: $boulder
+$footer-bottom-link-color-hover: #b0afaf
+$footer-company-text-color: $boulder
+// End FOOTER
+
+// investor-dashboard page
+$name-investor-dashboard-ls: 2.4px
+$name-investor-dashboard-fw: 400
+$name-investor-dashboard-lh: 22px
+$date-investor-dashboard-bgc: rgba(246, 150, 121, 0.8)
+$investor-unsuccessfull-bgc: rgba(237,28,36, 0.8)
+$investor-successfull-bgc: rgba(174,208,124, 0.8)
+//End investor-dashboard page
+
+//Issue dashboard page
+$name-issue-dashboard-fw: 400
+$name-issue-dashboard-lh: 22px
+$issuer-dashboard-bgc: $puerto_rico
+$date-issuer-dashboard-bgc: rgba(246, 150, 121, 0.8)
+$issue-raises-bgc: $wild_willow
+//END Issue dashboard page
+
+//Company page
+$campain_main_name_font_weight: 400
+$detail-skroll-ff: $second-font-family
+$tabs-scroll-border-bottom-active-link: $puerto_rico
+$tabs-scroll-border-bottom-hover-link: $puerto_rico
+$articles-link-name-color: $puerto_rico // цвет ссылки
+$articles-link-name-color-hover: $link-3-hover //
+$articles-icon-color: $wild_willow // цвет иконки
+$articles-icon-color-hover: $link-2-hover
+$document-link-hover-color: $puerto_rico // section DOCUMENT
+$detail-overview-background: $puerto_rico // в таблице заливка
+$perks-money-color: $wild_willow //переменная для цвета суммы на станице компании - секция Perks
+$company-comments-ff: $second-font-family // ff для имени в коментариях
+$company-comments-fw: normal
+$who-is-comment: $sandy-brown
+$campaign-like-color: $white
+$campaign-like-bgc: rgba(159,211,86, .75)
+$total_sum_progresbar: $puerto_rico
+$progress-bar-color: $wild_willow
+$progress_bar_background: $wild_willow
+$campign_subheading_color: $puerto_rico
+
+
+//CALCULATOR
+$calc_tabs_bg: $alabaster
+$calc_tabs_radius: 0
+$calc_tabs_current_bg: $puerto_rico
+$calculator-finish-icon: $wild_willow
+
+
+// POPOVER
+$popover-bgc: rgba(60,189,185, 0.9)
+$popover-color: $white
+$popover-bgc-arrow: rgba(60,189,185, 0.5)
+
+//Warning-block
+$warning-block-border-color: $sandy-brown
+$warning-block-icon-color: $sandy-brown
+$warning-block-text-color: $small-text
+
+
+//Left menu company campaign
+$menu-icon-color: $puerto_rico
+$jumbotron-bg: #f8f8f8
+$jumbotron-padding: 5px
+$company-campaign-font-family: $second-font-family //font-f for left menu - company/campaign
+
+//notification 
+$bgc-notificatin-bell: $puerto_rico
+$notific_list_title: $puerto_rico
+$notification-title-ff: $second-font-family
+$top-position-notification: 25px
+$height-notification: 50px
+$notification-link-color-hover: $link-2-hover
+$notification-link-color: $wild_willow
+
+
+//modal sign up
+$sign-up-header-bgc: $puerto_rico
+$sign-up-credit-color: $puerto_rico // page sign up
+
+$active_tab_authorization: $mine_shaft //active class  for authorization title tab 
+$tab_authorization_text: $black //text color for authorization title tab 
+
+// bootstrap slider styles 
+$btstr_slider_track_tick_bg: $scorpion // цвет слайдера ползунка активный
+$btstr_slider_track_not_tick_bg: $gallery // цвет слайдера ползунка не активный
+$btstr_slider_nandle_block_bg: $wild_willow // цвет кнопки ползунка
+$btstr_slider_other_nandle_block_bg: $white //цвет промежутков на слайдере
+
 // радиус для кнопок 
 $btn-border-radius-lg: 50px
 $btn-border-radius-sm: 50px
 $btn-border-radius: 50px
-//переменная для радиуса инпутов
-$input-border-radius: 1px
+
 //шрифт по умолчанию 
 $font-family-base: 'Open Sans', sans-serif
 
 // переменная размера шрифта для меню которая используется в common/header.sass
-$font-size-menu: rem(13)
-$letter-sp-menu: rem(1.3)
-$font-family-menu: $brandon-grotesque-medium
-$font-size-sub-menu: rem(15)
+
 // размеры шрифтов 
 $font-size-base:             .875rem
 $font-size-lg:               0.875rem!important
@@ -103,20 +177,22 @@ $btn-padding-y-sm: rem(6)
 $btn-padding-y:    rem(10)
 $btn-padding-x:    rem(33)
 
-
-//forms  высота инпутов
-$input-height: 36px
-$input-height-sm: 36px
-$input-height-lg: 36px
-
-$border_color: $gallery
-
-//переменные инпутов радиус
+//Формы
 $border-width: 1px
-$border-radius: 1px
-// цвет текста всех инпутов
-$input-color: $black // почему то не работает 
+$border-radius: 1px // border-radius для всех инпутов
+$input-color: $black // цвет текста всех инпутов
+$input-height: 36px // height всех интупов
+$input-height-sm: 36px // height всех интупов
+$input-height-sm: 36px // height всех интупов
+$input-height-lg: 36px// height всех интупов
 $custom-select-color: $black
+$select_height: 36px
+$select-padding-y: 0
+$select-padding-x: 0.75rem
+$select-btn-border-width: 2px
+$border_color: $gallery
+$custom-select-border-radius: 1px
+$input-border-radius: 1px // border-radius для всех инпутов
 
 // переменные для пагинации
 $pagination-active-color: $grey
@@ -130,32 +206,19 @@ $pagination-hover-border: $grey
 $pagination-hover-bg: transparent
 $pagination-hover-color: $grey
 
-// наверно не здесь 
+//ALERT
 $alert-info-bg: none
 $alert-info-border: $black
 $alert-info-text: $black
-
 $alert-success-bg: none
-
 $alert-warning-bg: none
-
 $alert-danger-bg: none
 $alert-danger-border: #ed1c24
 $alert-danger-text: #ed1c24
 
-
-//ostap
-$jumbotron-bg: #f8f8f8
-$jumbotron-padding: 5px
-$company-campaign-font-family: $brandon-grotesque-medium //font-f for left menu - company/campaign
-
 $list-group-border-radius: 0
 $list-group-border-radius: 0
 $list-group-border-width: 0
-// ToDo
-
-//использую на странице invest 
-// Оставь добавь переменные плиз
 $list-group-active-bg: $puerto_rico
 $list-group-active-color: #f4f4f4
 $list-group-bg: none
@@ -163,134 +226,51 @@ $list-group-hover-bg:  none
 $list-group-link-color:  none
 $list-group-active-text-color: #f4f4f4
 $list-group-link-color: $black_text
+
 //Breadcrumb
-$breadcrumb-divider-color: $black_text
-$breadcrumb-active-color: #777777
+$breadcrumb-divider-color: $black_text 
+$breadcrumb-active-color: #777777 // active element
+$breadcrumb-ff: $second-font-family // шрифт
+$breadcrumb-title-color: $small-text // цвет заголовка
+$breadcrumb-link-color: $black //link color 
 
 $nav-pills-active-link-color: $grey
-
 $link-color: #111
-
-/* випадающие списки _forms.sass */
-
-$select_height: 36px
-$select-padding-y: 0
-$select-padding-x: 0.75rem
-$select-btn-border-width: 2px
 
 // contextual colors
 $text-muted: $small-text
 $brand-info: $wild_willow
 
+$dragging-hover-border: $wild_willow //цвет дроп зоны при перетягивании картинки
 
-
-
-$display_partnres: block
-$popover-bgc: rgba(60,189,185, 0.9)
-$popover-color: $white
-$popover-bgc-arrow: rgba(60,189,185, 0.5)
-// цвет для процентов над прогресбаром в ячейке компании
-$total_sum_progresbar: $puerto_rico
-//цвет прогресс - для каждего сайта разный, менять переменную цвета из файла color.sass
-$progress_bar_background: $wild_willow
-// $progress-bar-color: $wild_willow
-$progress-bar-color: $wild_willow
-// радиус для custom-select
-$custom-select-border-radius: 1px
-
-//цвет дроп зоны при перетягивании картинки
-$dragging-hover-border: $wild_willow
-
-// для стилизации названия компании на странице кампании
-$campain_main_name_font_weight: 400
-
-//для стилизации заголовков на странице кампании(переход к заголовкам возможен с помощью верхнего stiky menu)
-$campign_subheading_color: $puerto_rico
 
 // стилизация заголовков в ячейке кампании
-$one_block_h3_font_family: $brandon-grotesque-medium
+$one_block_h3_font_family: $second-font-family
 $one_block_h3_letter_space: rem(1.8)
 $one_block_h3_font_weight: 500
-$list-company-bottom-ff: $brandon-grotesque-medium
+$list-company-bottom-ff: $second-font-family
 
-
-// для задаванния картинки бекграунда в хедере(в некоторых сайтах есть кроме цвета еще и картинка)
-$header_bg_image: #{''}
-
-// для стилизации заголовков на странице education
-$color_heading_education: $puerto_rico
-$heading_education_font_weight: 400
-$heading_education_lett_space: rem(3.6)
-
-// для стилизации табов на страницах калькуляторов
-$calc_tabs_bg: $alabaster
-$calc_tabs_radius: 0
-$calc_tabs_current_bg: $puerto_rico
+$color_heading_education: $puerto_rico // для стилизации заголовков на странице education
 
 // для стилизации заголовков блогов(на странице списка блогов)
 $blog-item-title-weight: 400
 $blog-item-title-f-size: rem(18)
 $blog-item-title-let-space: 2.2px
-
+//color-green -variables
+$color-green: $wild_willow
 
 // для настройки кнопок с выпадающими списками .one_drop на странице кампании
 $one_drop_border_radius: 1px
 $one_drop_font_weight: 500
 
-$detail-skroll-ff: $brandon-grotesque-medium // font-family link skroll menu
-$company-comments-ff: $brandon-grotesque-medium // 
-// переменная для заливки цвета в странице компании - секция OVERVIEW AND TERMS 
-$detail-overview-background: $puerto_rico
-
-//переменная для цвета суммы на станице компании - секция Perks
-$perks-money-color: $wild_willow
-
-//переменные для меню со скролом на странице компании  
-$tabs-scroll-border-bottom-active-link: $puerto_rico
-$tabs-scroll-border-bottom-hover-link: $puerto_rico
-
-//переменные для цветов на странице компании - секция ARTICLES AND PRESS
-$articles-link-name-color: $puerto_rico // цвет ссылки
-$articles-link-name-color-hover: $link-3-hover //
-$articles-icon-color: $wild_willow // цвет иконки
-$articles-icon-color-hover: $link-2-hover
-
-// переменная для цвета при наведении  надписи на странице компании секция DOCUMENTS
-$document-link-hover-color: $puerto_rico
-
-//цвет иконки в шаблонах колькуляторов страница finish
-$calculator-finish-icon: $wild_willow
-// переменная для вывода текста на странице investment for site DCU
-$display_dcu_confirmation: none
-
-// campaign LIKE color -variabless
-$bgc-like-detail: $puerto_rico // bgc section like page campaign detail
-$campaign-like-color: $white
-$campaign-like-color-h2: $black
-$campaign-like-bgc: rgba(159,211,86, .75)
-$detail-shate-hover-color: $puerto_rico // share hover color
-
-//color-green -variables
-$color-green: $wild_willow
-
-// company investor dashboard name -variables
-$name-investor-dashboard-ls: 5.1px
-$name-investor-dashboard-fw: 400
-$date-investor-dashboard-bgc: $red
-// color for menu icon check 
-$menu-icon-color: $puerto_rico
-// for formc risk -variables
-$active-risk-bgc: $puerto_rico
+$active-risk-bgc: $puerto_rico // for formc risk -variables
 //issuer dashboard
-$issuer-dashboard-bgc: $puerto_rico
-
 
 $color-base:			#869791 !default;
 $color-white:			#FFF !default;
 $color-gray:			#D6D6D6 !default;
 
-//nav
-
+//OWL CAROUSEL VARS
 $nav-color: 			$puerto_rico !default;
 $nav-color-hover:		$white !default;
 $nav-font-size: 		18px !default;
@@ -300,15 +280,13 @@ $nav-margin:			0;
 $nav-background: 		$white !default;
 $nav-background-hover:	$puerto_rico !default;
 $nav-disabled-opacity: 	0.5 !default;
-
-//dots
-
 $dot-width:				10px !default;
 $dot-height:			10px !default;
 $dot-rounded:			30px !default;
 $dot-margin: 			5px 7px !default;
 $dot-background:		$white !default;
 $dot-background-active:	$puerto_rico !default;
+
 
 //notification 
 $bgc-notificatin-bell: $puerto_rico
@@ -318,3 +296,11 @@ $top-position-notification: 25px
 $height-notification: 50px
 $notification-link-color-hover: $link-2-hover
 $notification-link-color: $wild_willow
+
+//raise landing
+$growth-is-bgc: $elm
+$color-effect-questions: $wild_willow
+$does-not-wrap-bgc: $wild_willow
+$simplify-h1: $puerto_rico
+$nav-item-raise-landing-bgc: $puerto_rico
+$content-bottom-icon-color: $wild_willow

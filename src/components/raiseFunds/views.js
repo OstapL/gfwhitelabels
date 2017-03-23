@@ -34,7 +34,7 @@ module.exports = {
     },
 
     initialize(options) {
-      this.fields = options.fields;
+      this.fields = options.fields.company;
       this.formc = options.formc || {};
       this.campaign = options.campaign || {};
       this.model = options.company || {};
@@ -65,7 +65,7 @@ module.exports = {
       };
       this.assignLabels();
       if(this.model.hasOwnProperty('id')) {
-        this.urlRoot += '/:id/edit';
+        this.urlRoot += '/:id';
       }
     },
 
@@ -102,7 +102,6 @@ module.exports = {
       this.usaStates = require('helpers/usaStates');
       this.$el.html(
         this.template({
-          serverUrl: serverUrl,
           Urls: Urls,
           fields: this.fields,
           values: this.model,
@@ -117,7 +116,7 @@ module.exports = {
       return this;
     },
 
-    _success(data) {
+    _success(data, formData) {
       this.undelegateEvents();
 
       if(data == null) {
@@ -126,6 +125,16 @@ module.exports = {
 
       if (data.hasOwnProperty('campaign_id') == false) {
         data.campaign_id = this.formc.campaign_id;
+      } else {
+        data.company = formData.name;
+        data.is_paid = false;
+        data.role = 0; 
+        data.owner_id = app.user.data.id;
+        data.user_id = app.user.data.id;
+        data.company_id = data.id;
+        delete data.id;
+        app.user.data.info.push(data);
+        localStorage.setItem('user', JSON.stringify(app.user.toJSON()));
       }
 
       app.routers.navigate(
@@ -150,7 +159,7 @@ module.exports = {
   })),
 
   generalInformation: Backbone.View.extend(_.extend({
-    urlRoot: raiseCapitalServer + '/campaign/:id/general_information',
+    urlRoot: raiseCapitalServer + '/campaign/:id',
     template: require('./templates/generalInformation.pug'),
     events: _.extend({
         'click #submitForm': api.submitAction,
@@ -178,7 +187,7 @@ module.exports = {
     },
 
     initialize(options) {
-      this.fields = options.fields;
+      this.fields = options.fields.campaign;
       this.model = options.campaign;
       this.formc = options.formc;
       this.labels = {
@@ -224,8 +233,8 @@ module.exports = {
   }, leavingConfirmationHelper.methods, menuHelper.methods, addSectionHelper.methods)),
 
   media: Backbone.View.extend(_.extend({
+    urlRoot: raiseCapitalServer + '/campaign/:id',
     template: require('./templates/media.pug'),
-    urlRoot: raiseCapitalServer + '/campaign/:id/media',
 
     events: _.extend({
         'click #submitForm': api.submitAction,
@@ -265,7 +274,7 @@ module.exports = {
       this.model = options.campaign;
       this.urlRoot = this.urlRoot.replace(':id', this.model.id);
       this.formc = options.formc;
-      this.fields = options.fields;
+      this.fields = options.fields.campaign;
 
       this.fields.header_image_image_id = _.extend(this.fields.header_image_image_id, {
         crop: {
@@ -404,7 +413,8 @@ module.exports = {
     },
 
     initialize(options) {
-      this.fields = options.fields;
+      this.fields = options.fields.campaign.team_members.schema;
+      this.fields.order.placeholder = 'Put a number if you want to order your members';
       this.fields.photo_image_id = _.extend(this.fields.photo_image_id, {
         crop: {
           control:  {
@@ -415,8 +425,8 @@ module.exports = {
             preview: true,
           },
           auto: {
-            width: 800,
-            height: 800,
+            width: 500,
+            height: 500,
           },
         },
       });
@@ -495,7 +505,7 @@ module.exports = {
     },
 
     initialize(options) {
-      this.fields = options.fields;
+      this.fields = options.fields.campaign;
       this.formc = options.formc;
       this.model = options.campaign;
 
@@ -529,10 +539,10 @@ module.exports = {
 
           app.makeRequest(this.urlRoot + '/' + memberId, 'DELETE').
               then((data) => {
-                  this.model.data.splice(memberId, 1);
+                  this.model.team_members.splice(memberId, 1);
 
                   $(e.currentTarget).parent().remove();
-                  if (this.model.data.length < 1) {
+                  if (this.model.team_members.length < 1) {
                     this.$el.find('.notification').show();
                     this.$el.find('.buttons-row').hide();
                   } else {
@@ -546,7 +556,7 @@ module.exports = {
   }, menuHelper.methods)),
 
   specifics: Backbone.View.extend(_.extend({
-      urlRoot: raiseCapitalServer + '/campaign/:id/specifics',
+      urlRoot: raiseCapitalServer + '/campaign/:id',
       events: _.extend({
         'click #submitForm': api.submitAction,
         'change input[name="security_type"]': 'updateSecurityType',
@@ -569,7 +579,7 @@ module.exports = {
       },
 
       initialize(options) {
-        this.fields = options.fields;
+        this.fields = options.fields.campaign;
         this.formc = options.formc;
         this.model = options.campaign;
         this.company = options.company;
@@ -712,7 +722,7 @@ module.exports = {
   }, leavingConfirmationHelper.methods, menuHelper.methods, dropzoneHelpers.methods, addSectionHelper.methods)),
 
   perks: Backbone.View.extend(_.extend({
-    urlRoot: raiseCapitalServer + '/campaign/:id/perks',
+    urlRoot: raiseCapitalServer + '/campaign/:id',
     events: _.extend({
         'click #submitForm': api.submitAction,
         'click .onPreview': raiseHelpers.onPreviewAction,
@@ -729,7 +739,7 @@ module.exports = {
     },
 
     initialize(options) {
-      this.fields = options.fields;
+      this.fields = options.fields.campaign;
       this.formc = options.formc;
       this.model = options.campaign;
       this.labels = {

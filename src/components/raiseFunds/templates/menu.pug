@@ -1,10 +1,12 @@
+- var STATUSES = require('consts/raisecapital/companyStatuses.json').STATUS;
+
 mixin getCompanyUrl(id, section, currentStep, step, name)
   if id || currentStep == step
     -
       var linkHref = '/' + section + '/' + id + '/' + step;
       var linkId = 'menu_' + section.substr(0, 1) + '_' + step;
       var activeClass = currentStep == step ? 'active ' : '',
-          disabledClass = (section == 'formc' && (!app.user.formc.is_paid || app.user.company.is_approved != 5)) ? 'disabled ' : '';
+          disabledClass = (section == 'formc' && !(app.user.formc.is_paid || app.user.company.is_approved == STATUSES.APPROVED)) ? 'disabled ' : '';
       var linkClass = 'list-group-item list-group-item-action ' + activeClass + disabledClass;
 
     a(href=linkHref id=linkId class=linkClass) #{ name }
@@ -33,7 +35,7 @@ mixin getRiskFactorsItem(id, section, currentStep, step, name)
 
 
 mixin menu(currentSection, currentStep)
-    .col-lg-4.col-xl-3.create_compaign
+    .col-lg-4.col-xl-3.left-menu-raise-formc
       .jumbotron.jumbotron-fluid.row
         .raise-funds
           h4.text-uppercase.m-b-0 Raise capital
