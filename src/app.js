@@ -374,7 +374,7 @@ app.helpers.format = require('helpers/formatHelper.js');
 // app.user = new userModel();
 app.user = new User();
 app.user.load();
-app.trigger('userReady');
+// app.trigger('userReady');
 
 //TODO: do we need this template and popover logic?
 const popoverTemplate = '<div class="popover  divPopover"  role="tooltip"><span class="popover-arrow"></span> <h3 class="popover-title"></h3> <span class="icon-popover"><i class="fa fa-info-circle" aria-hidden="true"></i></span> <span class="popover-content"> XXX </span></div>';
@@ -569,14 +569,14 @@ $('body').on('click', 'a', (event) => {
     app.routers.navigate(
       url, {trigger: true, replace: false}
     );
-    app.trigger('userReady');
-    app.trigger('menuReady');
+    // app.trigger('userReady');
+    // app.trigger('menuReady');
   } else {
     $('#content').html(app.cache[url]);
     app.routers.navigate(
       url, {trigger: false, replace: false}
     );
-    app.trigger('userReady');
-    app.trigger('menuReady');
+    // app.trigger('userReady');
+    // app.trigger('menuReady');
   }
 });
