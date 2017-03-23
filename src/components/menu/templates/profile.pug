@@ -40,7 +40,7 @@ if user.token != ""
             each v,k in user.companiesMember
               if v.is_paid == true
                 li
-                  a(href="/dashboard/" + v.formc_id + "/issuer-dashboard" ).nav-link #{v.company}
+                  a(href=app.getIssuerDashboardUrl(v.formc_id)).nav-link #{v.company}
           li
             a(href="/account/investor-dashboard").nav-link Investor Dashboard
           li
