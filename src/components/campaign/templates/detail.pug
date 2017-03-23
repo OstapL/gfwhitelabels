@@ -320,6 +320,14 @@ section
     section#members
       .container
         if Array.isArray(values.campaign.team_members) && values.campaign.team_members.length > 0
+          - 
+            function memberSort(a, b) {
+              if(a.order == null) {
+                return true;
+              }
+              return a.order > b.order;
+            }
+            values.campaign.team_members.sort(memberSort);
           h2#team.dosis.text-uppercase.text-lg-center.text-xs-center.col-lg-12.campaign-subheading Team
           .row
             .col-lg-12.text-center-flex

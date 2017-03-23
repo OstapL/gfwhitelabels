@@ -36,10 +36,9 @@ module.exports = {
   debug: true,
 
   plugins: [
-    new ExtractTextPlugin('style.css'),
     new HtmlWebpackPlugin({
-      title: 'Backbone App',
-      template: './src/index.html',
+      title: 'GrowthFountain | Equity Crowdfunding Platform',
+      template: './src/index.pug',
       filename: 'index.html',
       inject: 'body', // Inject all scripts into the body
     }),
