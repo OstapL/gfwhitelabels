@@ -137,6 +137,7 @@
 							font-weight: bold
 							color: $puerto-rico
 							font-size: rem(38)
+							line-height: 22px
 						.credit-remains
 							position: relative
 							font-weight: bold
@@ -145,6 +146,7 @@
 							font-size: rem(8)
 							text-transform: uppercase
 							text-align: center
+							line-height: 22px
 					.wrap-commision-credit-text
 						position: absolute
 						left: 58%
@@ -228,19 +230,28 @@
 				width: 90%!important
 @media screen and (max-width: 413px)
 	.commission-right-block
-		width: 190px!important
-		height: 45px!important
-		top: -3px!important
+		width: 160px!important
+		height: 40px!important
+		top: 0px!important
 		.wrap-commision-credit-amount
 			width: 50px!important
 			top: 22%!important
+			left: 30%!important
 			.credit-amount
 				font-size: rem(26)!important
+				line-height: 10px!important
 			.credit-remains
 				line-height: 7px
+
 		.wrap-commision-credit-text
-			width: 80px!important
+			width: 70px!important
 			.credit-text
 				line-height: 7px!important
 				font-size: rem(7)!important
-
+	.fee
+		.waived
+			font-size: rem(10)!important
+			top: 12px!important
+		.commission:after
+			top: rem(18)!important
+			width: 40px!important

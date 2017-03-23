@@ -27,7 +27,7 @@ module.exports = {
     doNotExtendModel: true,
     events: _.extend({
       'click #saveAccountInfo': 'saveAccountInfo',
-      'click #saveFinancialInfo': api.submitAction,
+      // 'click #saveFinancialInfo': api.submitAction,
       'change #not-qualify': 'changeQualify',
       'change .investor-item-checkbox': 'changeAccreditedInvestorItem',
       'change #twitter,#facebook,#instagram,#linkedin': 'appendHttpsIfNecessary',
@@ -177,6 +177,8 @@ module.exports = {
         })
       );
 
+      this.el.querySelector('#saveFinancialInfo').addEventListener('click', (e) => { api.submitAction.call(this, e)});
+
       this._initSliders();
 
       setTimeout(() => {
@@ -288,7 +290,7 @@ module.exports = {
           cbInvestor1m.prop('checked', false).change();
         }
 
-        this.model.net_worth = e.value;
+        // this.model.net_worth = e.value;
       });
 
       this.$('.slider-annual-income').bootstrapSlider({
@@ -305,7 +307,7 @@ module.exports = {
           cbInvestor200k.prop('checked', false).change();
         }
 
-        this.model.annual_income = e.value;
+        // this.model.annual_income = e.value;
       });
 
       cbInvestor1m.prop('disabled', this.model.net_worth < 1000);

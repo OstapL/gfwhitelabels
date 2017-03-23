@@ -1,3 +1,5 @@
+//TODO: move view into methods
+// move helper into app.js
 const View = require('components/raiseFunds/views.js');
 const raiseHelper = require('./helpers.js');
 const STATUSES = require('consts/raisecapital/companyStatuses.json').STATUS;
@@ -39,42 +41,49 @@ function getOCCF(optionsR, viewName, params = {}) {
   });
 };
 
+
 module.exports = {
   routes: {
     'company/create': 'company',
     'company/in-review': 'inReview',
     'campaign/:id/general_information': 'generalInformation',
     'campaign/:id/media': 'media',
-    'campaign/:id/team-members/add/:type/:index': 'teamMembersAdd',
-    'campaign/:id/team-members': 'teamMembers',
+    'campaign/:id/team-members/add/:type/:index': 'teamMembersAdd1',
+    'campaign/:id/team-members': 'teamMembers1',
     'campaign/:id/specifics': 'specifics',
     'campaign/:id/perks': 'perks',
   },
-
   methods: {
     company() {
       const optionsR = app.makeCacheRequest(raiseCapitalServer + '/company', 'OPTIONS');
-      $(document.head).append('<meta name="keywords" content="local investing equity crowdfunding Get to work and secure funding with our equity crowdfunding platform. Harness the power of local investing to secure the capital you need by getting started."></meta>');
+      const meta = '<meta name="keywords" content="local investing equity crowdfunding Get to ' +
+        'work and secure funding with our equity crowdfunding platform. Harness the power of ' +
+        'local investing to secure the capital you need by getting started."></meta>';
+      $(document.head).append(meta);
       getOCCF(optionsR, 'company', {});
     },
 
-    generalInformation (id) {
-      const optionsR = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/general_information', 'OPTIONS');
+    generalInformation(id) {
+      const optionsUrl = raiseCapitalServer + '/campaign/' + id + '/general_information';
+      const optionsR = app.makeCacheRequest(optionsUrl, 'OPTIONS');
       getOCCF(optionsR, 'generalInformation', {});
     },
 
     media(id) {
-      const optionsR = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/media', 'OPTIONS');
+      const optionsUrl = raiseCapitalServer + '/campaign/' + id + '/media';
+      const optionsR = app.makeCacheRequest(optionsUrl, 'OPTIONS');
       getOCCF(optionsR, 'media', {});
     },
 
-    teamMembers(id) {
-      const optionsR = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/team-members', 'OPTIONS');
+    teamMembers1(id) {
+      const optionsUrl = raiseCapitalServer + '/campaign/' + id + '/team-members';
+      const optionsR = app.makeCacheRequest(optionsUrl, 'OPTIONS');
       getOCCF(optionsR, 'teamMembers', {});
     },
 
-    teamMembersAdd(id, type, index) {
-      const optionsR = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/team-members', 'OPTIONS');
+    teamMembersAdd1(id, type, index) {
+      const optionsUrl = raiseCapitalServer + '/campaign/' + id + '/team-members';
+      const optionsR = app.makeCacheRequest(optionsUrl, 'OPTIONS');
       getOCCF(optionsR, 'teamMemberAdd', {
         type: type,
         index: index,
@@ -82,20 +91,22 @@ module.exports = {
     },
 
     specifics(id) {
-      const optionsR = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/specifics', 'OPTIONS');
+      const optionsUrl = raiseCapitalServer + '/campaign/' + id + '/specifics';
+      const optionsR = app.makeCacheRequest(optionsUrl, 'OPTIONS');
       getOCCF(optionsR, 'specifics', {});
     },
 
     perks(id) {
-      const optionsR = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/perks', 'OPTIONS');
+      const optionsUrl = raiseCapitalServer + '/campaign/' + id + '/perks';
+      const optionsR = app.makeCacheRequest(optionsUrl, 'OPTIONS');
       getOCCF(optionsR, 'perks', {});
-    },    
+    },
 
     inReview() {
       app.showLoading();
 
       $('#company_publish_confirm').modal('hide', 0);
-      let fn = function() {
+      let view = function() {
         $('body').scrollTo();
         app.hideLoading();
         if(app.user.company.is_approved == STATUSES.PENDING) {
@@ -115,6 +126,7 @@ module.exports = {
           );
         }
       };
+      getOCCF('', view);
 
     },
   },

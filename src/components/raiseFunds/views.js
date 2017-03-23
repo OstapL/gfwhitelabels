@@ -105,7 +105,6 @@ module.exports = {
       this.usaStates = require('helpers/usaStates');
       this.$el.html(
         this.template({
-          serverUrl: serverUrl,
           Urls: Urls,
           fields: this.fields,
           values: this.model,
@@ -120,7 +119,7 @@ module.exports = {
       return this;
     },
 
-    _success(data) {
+    _success(data, formData) {
       this.undelegateEvents();
 
       if(data == null) {
@@ -129,6 +128,16 @@ module.exports = {
 
       if (data.hasOwnProperty('campaign_id') == false) {
         data.campaign_id = this.formc.campaign_id;
+      } else {
+        data.company = formData.name;
+        data.is_paid = false;
+        data.role = 0; 
+        data.owner_id = app.user.data.id;
+        data.user_id = app.user.data.id;
+        data.company_id = data.id;
+        delete data.id;
+        app.user.data.info.push(data);
+        localStorage.setItem('user', JSON.stringify(app.user.toJSON()));
       }
 
       app.routers.navigate(
@@ -422,7 +431,8 @@ module.exports = {
     },
 
     initialize(options) {
-      this.fields = options.fields.campaign;
+      this.fields = options.fields.campaign.team_members.schema;
+      this.fields.order.placeholder = 'Put a number if you want to order your members';
       this.fields.photo_image_id = _.extend(this.fields.photo_image_id, {
         crop: {
           control:  {
@@ -433,8 +443,8 @@ module.exports = {
             preview: true,
           },
           auto: {
-            width: 800,
-            height: 800,
+            width: 500,
+            height: 500,
           },
         },
       });
@@ -547,10 +557,10 @@ module.exports = {
 
           app.makeRequest(this.urlRoot + '/' + memberId, 'DELETE').
               then((data) => {
-                  this.model.data.splice(memberId, 1);
+                  this.model.team_members.splice(memberId, 1);
 
                   $(e.currentTarget).parent().remove();
-                  if (this.model.data.length < 1) {
+                  if (this.model.team_members.length < 1) {
                     this.$el.find('.notification').show();
                     this.$el.find('.buttons-row').hide();
                   } else {
