@@ -350,6 +350,10 @@ let app = {
     google.maps.event.addListener(marker, "click", function(){ infowindow.open(map,marker); });
     infowindow.open(map, marker);
   },
+
+  getIssuerDashboardUrl(companyId) {
+    return `dashboard/${companyId}/issuer-dashboard`;
+  }
 };
 
 // Что-то пахнет говнецом
