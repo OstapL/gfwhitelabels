@@ -39,7 +39,7 @@
     "gulp-sass": "^2.0.4",
     "gulp-uglify": "^1.5.3",
     "hellojs": "^1.13.4",
-    "html-webpack-plugin": "^1.6.1",
+    "html-webpack-plugin": "^2.28.0",
     "intl": "^1.2.5",
     "jquery": "^3.1.0",
     "jquery.inputmask": "^3.3.1",
