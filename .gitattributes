@@ -58,3 +58,7 @@ src/img/slide_2.jpg merge=ours
 src/img/slide_3.jpg merge=ours
 src/img/slide_4.jpg merge=ours
 src/img/favicon.ico merge=ours
+src/sass/config/_colors.sass merge=ours
+src/sass/config/_vars.sass merge=ours
+src/ga.script.pug merge=ours
+src/ga.noscript.pug merge=ours
