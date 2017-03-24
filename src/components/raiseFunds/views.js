@@ -413,7 +413,8 @@ module.exports = {
     },
 
     initialize(options) {
-      this.fields = options.fields.campaign;
+      this.fields = options.fields.campaign.team_members.schema;
+      this.fields.order.placeholder = 'Put a number if you want to order your members';
       this.fields.photo_image_id = _.extend(this.fields.photo_image_id, {
         crop: {
           control:  {
@@ -424,8 +425,8 @@ module.exports = {
             preview: true,
           },
           auto: {
-            width: 800,
-            height: 800,
+            width: 500,
+            height: 500,
           },
         },
       });
@@ -537,10 +538,10 @@ module.exports = {
 
           app.makeRequest(this.urlRoot + '/' + memberId, 'DELETE').
               then((data) => {
-                  this.model.data.splice(memberId, 1);
+                  this.model.team_members.splice(memberId, 1);
 
                   $(e.currentTarget).parent().remove();
-                  if (this.model.data.length < 1) {
+                  if (this.model.team_members.length < 1) {
                     this.$el.find('.notification').show();
                     this.$el.find('.buttons-row').hide();
                   } else {

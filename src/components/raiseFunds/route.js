@@ -106,7 +106,7 @@ module.exports = {
       app.showLoading();
 
       $('#company_publish_confirm').modal('hide', 0);
-      let fn = function() {
+      let view = function() {
         $('body').scrollTo();
         app.hideLoading();
         if(app.user.company.is_approved == STATUSES.PENDING) {
@@ -126,6 +126,7 @@ module.exports = {
           );
         }
       };
+      getOCCF('', view);
 
     },
   },
