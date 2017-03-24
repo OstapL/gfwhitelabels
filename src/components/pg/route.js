@@ -186,8 +186,6 @@ module.exports = {
         };
       })(jQuery);
       
-      $(".does-not h2").animated("fadeInUp");
-      $(".does-not-wrap").animated("zoomIn");
       
     },
   },
