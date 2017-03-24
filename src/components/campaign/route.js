@@ -85,6 +85,7 @@ module.exports = {
         let userR = api.makeCacheRequest(authServer + '/rest-auth/data');
 
         $.when(investmentR, companyR, userR).done((investmentMeta, companyData, userData) => {
+          Object.assign(app.user.data, userData[0]);
           const i = new View.investment({
             model: companyData[0],
             user: userData[0],
