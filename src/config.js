@@ -1,37 +1,44 @@
-global.domainUrl = "growthfountain.com"
-global.serverUrl = "https://django-api-dev.growthfountain.com";
-global.raiseCapitalServer = "https://api-raisecapital-dev.growthfountain.com";
-//global.raiseCapitalServer = "http://localhost:8003";
-global.authServer = "https://api-auth-dev.growthfountain.com";
-//global.authServer = "http://localhost:8002";
-global.formcServer = "https://api-formc-dev.growthfountain.com";
-//global.formcServer = "http://localhost:8001";
-global.investmentServer = "https://api-investment-dev.growthfountain.com";
-//global.investmentServer = "http://localhost:8003";
-global.filerServer = "https://api-filer-dev.growthfountain.com";
-global.esignServer = 'https://api-esign-dev.growthfountain.com';
-// global.esignServer = 'https://api-esign.growthfountain.com';
-global.commentsServer = "https://api-comments-dev.growthfountain.com";
-global.blogServer = "https://api-blog-dev.growthfountain.com";
-global.bucketServer = "https://s3.amazonaws.com/growthfountain-alpha-storage";
-// global.notificationsServer = "https://notifications.growthfountain.com";
-global.notificationsServer = "https://notifications-dev.growthfountain.com/";
-global.teamName = 'Team';
-global.teamTitle = "Meet The Team";
-//global.serverUrl = "http://192.168.99.100:8000";
-//global.serverUrl = "http://gfauth.com:8000";
+let config = {
+  domainUrl: "growthfountain.com",
+  serverUrl: "https://django-api-dev.growthfountain.com",
+  raiseCapitalServer: "https://api-raisecapital-dev.growthfountain.com",
+  //raiseCapitalServer: "http://localhost:8003",
+  authServer: "https://api-auth-dev.growthfountain.com",
+  //authServer: "http://localhost:8002",
+  formcServer: "https://api-formc-dev.growthfountain.com",
+  //formcServer: "http://localhost:8001",
+  investmentServer: "https://api-investment-dev.growthfountain.com",
+  //investmentServer: "http://localhost:8003",
+  filerServer: "https://api-filer-dev.growthfountain.com",
+  esignServer: 'https://api-esign-dev.growthfountain.com',
+  // esignServer: 'https://api-esign.growthfountain.com',
+  commentsServer: "https://api-comments-dev.growthfountain.com",
+  blogServer: "https://api-blog-dev.growthfountain.com",
+  bucketServer: "https://s3.amazonaws.com/growthfountain-alpha-storage",
+  // notificationsServer: "https://notifications.growthfountain.com",
+  notificationsServer: "https://notifications-dev.growthfountain.com/",
+  teamName: 'Team',
+  teamTitle: "Meet The Team",
+  //serverUrl: "http://192.168.99.100:8000",
+  //serverUrl: "http://gfauth.com:8000",
 
+  // Growth Fountain production keys:
+  // facebookClientId: "191471871275050",
+  // googleClientId: "488593151885-87nqfd8gl444a1me0n149otrf37dbahq.apps.googleusercontent.com",
+  // linkedinClientId: "77wzj6tz0yyr33",
+  
+  facebookClientId: "1405768896335643",
+  googleClientId: "805823281871-0sbsf2btjd5j13g5aa7sfo4pfjorn3k2.apps.googleusercontent.com",
+  linkedinClientId: "77wzj6tz0yyr33",
+  
+  
+  googleMapKey: "AIzaSyBpCl9-7bkVISZ0o-AaFCsKzZwGAxalkZU",
+  stripeKey: "pk_test_Z7YAhlyPtnW7bpd8LJUHTSou",
+  googleAnalyticsId: 'GTM-NC9XW5D',
+};
 
-// Growth Fountain production keys:
-// global.facebookClientId = "191471871275050";
-// global.googleClientId = "488593151885-87nqfd8gl444a1me0n149otrf37dbahq.apps.googleusercontent.com";
-// global.linkedinClientId = "77wzj6tz0yyr33";
+//TODO: fix this
+global.config = config;
+_.extend(global, global.config);
 
-global.facebookClientId = "1405768896335643";
-global.googleClientId = "805823281871-0sbsf2btjd5j13g5aa7sfo4pfjorn3k2.apps.googleusercontent.com";
-global.linkedinClientId = "77wzj6tz0yyr33";
-
-
-global.googleMapKey = "AIzaSyBpCl9-7bkVISZ0o-AaFCsKzZwGAxalkZU";
-global.stripeKey = "pk_test_Z7YAhlyPtnW7bpd8LJUHTSou";
-global.googleAnalyticsId = 'GTM-NC9XW5D';
+module.exports = config;
