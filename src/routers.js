@@ -38,18 +38,6 @@ const routesMap = _.reduce(componentRoutes, (dest, route) => {
 //TODO: move into app.js
 const errorPageHelper = require('helpers/errorPageHelper.js');
 
-const runGoogleAnalytics = (id) => {
-  (function (w, d, s, l, i) {
-    w[l] = w[l] || [];
-    w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
-    var f = d.getElementsByTagName(s)[0];
-    var j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
-    j.async = true;
-    j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-    f.parentNode.insertBefore(j, f);
-  })(window, document, 'script', 'dataLayer', id);
-};
-
 const notFound = () => {
   errorPageHelper({ status: 404 });
   app.hideLoading();
@@ -112,7 +100,7 @@ app.on('userLoaded', function (data) {
     el: '#menuProfile',
   });
   app.profile.render();
-  app.trigger('menuReady');
+  // app.trigger('menuReady');
 });
 
 $(document).ready(function () {
