@@ -45,7 +45,7 @@ function getOCCF(optionsR, viewName, params = {}) {
 
     }
 
-    if (params.company.is_approved != STATUSES.APPROVED) {
+    if (params.company.is_approved < STATUSES.APPROVED) {
       alert('Sorry, your campaign is not approved yet. Please wait till we check your campaign');
       app.routers.navigate('/campaign/' + params.campaign.id + '/general_information', {
         trigger: true,
