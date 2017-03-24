@@ -996,7 +996,7 @@ module.exports = {
       this.fields.risk = { label: 'Describe Your Risk' };
       this.defaultRisks = {
         0: {
-          title: 'There is a limited market for the Company’s product or services',
+          title: 'There is a limited market for the Company’s product or services.',
           risk: 'Although we have identified what we believe to be a need in the market ' +
                 'for our products and services, there can be no assurance that ' +
                 'demand or a market will develop or that we will be able to create a viable ' +
@@ -1170,7 +1170,7 @@ module.exports = {
           risk: 'In addition to general economic conditions and market fluctuations, significant ' +
                 'operating cost increases could adversely affect us due to numerous factors, ' +
                 'many of which are beyond our control. Increases in operating costs would likely ' +
-                'negatively impact our operating income, and could undermine our ability to grow ' +
+                'negatively impact our operating income and could undermine our ability to grow ' +
                 'our business.Our past operating results may not be accurate indicators of ' +
                 'future performance, and you should not rely on such results to predict our ' +
                 'future performance.',
@@ -1243,7 +1243,7 @@ module.exports = {
                 'services in response to industry trends or developments in technology, or ' +
                 'those new products may not achieve market acceptance. As a result, we could ' +
                 'lose business, be forced to price products and services on less advantageous ' +
-                'terms to retain or attract clients, or be subject to cost increases. ' +
+                'terms to retain or attract clients or be subject to cost increases. ' +
                 'As a result, our business, financial condition or results of operations may ' +
                 'be adversely affected.',
         },
@@ -1380,7 +1380,7 @@ module.exports = {
           risk: 'This may place us at a disadvantage in responding to our competitors\' pricing ' +
                 'strategies, advertising campaigns, strategic alliances and other initiatives. ' +
                 'Consequently, such competitors may be in a better position than the Company ' +
-                'to take advantage of customer acquisition and business opportunities, ' +
+                'to take advantage of customer acquisition and business opportunities ' +
                 'and devote greater resources to marketing and sale of their offerings. ' +
                 'These competitors may limit our opportunity to acquire customers and facilitate ' +
                 'business arrangements.  There is no certainty that the Company will be able ' +
@@ -1391,7 +1391,7 @@ module.exports = {
           title: 'The Company may not be able to create and maintain a competitive advantage.',
           risk: 'The demand for our products or services may change and we may have difficulty ' +
                 'maintaining a competitive advantage within our market.  The Company\'s success ' +
-                'could depend on the ability of management to respond to changingsituations, ' +
+                'could depend on the ability of management to respond to changing situations, ' +
                 'standards and customer needs on a timely and cost-effective basis. In addition, ' +
                 'any failure by the management to anticipate or respond adequately to changes in ' +
                 'customer preferences and demand could have a material adverse effect on our ' +
@@ -1485,7 +1485,7 @@ module.exports = {
                 'individuals. Therefore, in the event that any of the Company\'s employees ' +
                 'die or become disabled, the Company will not receive any insurance proceeds as ' +
                 'compensation for such person\s absence. The loss of such person could ' +
-                'negatively affect the Company and its operations',
+                'negatively affect the Company and its operations.',
         },
         3: {
           title: 'The Company relies on third-parties over which the Company has little control; ' +
@@ -1504,12 +1504,12 @@ module.exports = {
                 'we could experience disruptions.   Such interruptions could result in damage ' +
                 'to our reputation and customer relationships and adversely affect our business. ' +
                 'These events could materially and adversely affect our ability to retain and ' +
-                'attract customers, and have a material negative impact on our operations, ' +
+                'attract customers and have a material negative impact on our operations, ' +
                 'business, financial results and financial condition.',
         },
         5: {
           title: 'The Company may not be able to adequately ensure the loyalty and ' +
-                  'confidentiality of employees and third parties',
+                  'confidentiality of employees and third parties.',
           risk: 'The Company may rely on nondisclosure and noncompetition agreements with ' +
                 'employees, consultants and other parties to protect, in part, trade secrets and ' +
                 'other proprietary rights. There can be no assurance that these agreements will ' +
@@ -1569,7 +1569,7 @@ module.exports = {
           title: 'We rely on various intellectual property rights in order to operate our ' +
                   'business and these rights may be challenged.',
           risk: 'The Company’s intellectual property rights may not be sufficiently broad and ' +
-                'may notprovide a significant competitive advantage. The steps that the Company ' +
+                'may not provide a significant competitive advantage. The steps that the Company ' +
                 'has taken to maintain and protect its intellectual property may not prevent ' +
                 'it from being challenged, invalidated or circumvented. In some circumstances, ' +
                 'enforcement may not be available to us because an infringer has a dominant ' +
@@ -1577,7 +1577,7 @@ module.exports = {
                 'failure to obtain or maintain intellectual property rights that convey ' +
                 'competitive advantage, adequately protect its intellectual property or detect ' +
                 'or prevent circumvention or unauthorized use of such property, could adversely ' +
-                'impact the Company\'s competitive position and results of operations\'.',
+                'impact the Company\'s competitive position and results of operations.',
         },
         1: {
           title: 'From time to time, third parties may claim that one or more of our products ' +
@@ -1597,7 +1597,7 @@ module.exports = {
                 'divert management’s attention from other business concerns. Any public ' +
                 'announcements related to litigation or interference proceedings initiated or ' +
                 'threatened against as could cause our business to be harmed. Our intellectual ' +
-                'property portfolio may not be useful in asserting a counterclaim, or ' +
+                'property portfolio may not be useful in asserting a counterclaim or ' +
                 'negotiating a license, in response to a claim of intellectual property ' +
                 'infringement. In certain of our businesses we rely on third party intellectual ' +
                 'property licenses and we cannot ensure that these licenses will be available to ' +
@@ -1851,7 +1851,7 @@ module.exports = {
           securities_offered: 'Securities Offered',
         },
         business_loans_or_debt: {
-          maturity_date: 'Date of Offering',
+          maturity_date: 'Maturity Date',
           outstanding_amount: 'Outstanding Amount',
           interest_rate: 'Interest Rate',
           other_material_terms: 'Other Material Terms',

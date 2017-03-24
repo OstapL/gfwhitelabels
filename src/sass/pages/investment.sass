@@ -115,41 +115,43 @@
 					letter-spacing: 1.3px
 				.commission-right-block
 					position: absolute
-					top: -13px
+					top: -17px
 					left: 97%
-					width: 296px
-					height: 68px
+					width: 330px
+					height: 78px
 					background-size: 100%
 					background-repeat: no-repeat
 					z-index: 2
 					background-image: url("/img/comission-bg.png")
 					.wrap-commision-credit-amount
 						position: relative
-						left: 32%
+						left: 46%
 						width: 80px
-						top: 25%
+						top: 77%
 						height: 100%
 						display: block
+						transform: translate(-50%,-50%)
 						.credit-amount
 							position: relative
 							display: block
 							text-align: center
 							font-weight: bold
 							color: $puerto-rico
-							font-size: rem(38)
+							font-size: rem(36)
 							line-height: 22px
 						.credit-remains
 							position: relative
 							font-weight: bold
 							display: block
 							color: $puerto-rico
-							font-size: rem(8)
+							font-size: rem(13)
 							text-transform: uppercase
 							text-align: center
 							line-height: 22px
+
 					.wrap-commision-credit-text
 						position: absolute
-						left: 58%
+						left: 60%
 						width: 120px
 						top: 0
 						height: 100%
@@ -161,11 +163,12 @@
 							width: 100%
 							transform: translate(-50%,-50%)
 							color: $puerto-rico
-							font-size: rem(10)
+							font-size: rem(12)
 							text-align: center
 							font-weight: bold
-							line-height: 11px
+							line-height: 12px
 							display: block
+							border-left: solid 1px $puerto-rico
 					
 	.commission-group
 		position: relative
@@ -207,47 +210,57 @@
 			float: left
 			padding-left: 15px
 			padding-right: 15px
-@media screen and (max-width: 576px)
-	.investment 
-		.list-group-item-heading
-			margin-bottom: rem(5)
-@media screen and (min-width: 414px) and (max-width: 515px)
-	.commission-right-block
-		background-size: 100%!important
-		width: 240px!important
-		height: 55px!important
-		top: -8px!important
-		.wrap-commision-credit-amount
-			width: 70px!important
-			left: 30%!important
-		.wrap-commision-credit-text
-			width: 95px!important
-			
 @media screen and (max-width: 767px)
 	.commission-right-block
 		.wrap-commision-credit-text
 			.credit-text
-				width: 90%!important
+				width: 95%!important
+@media screen and (max-width: 576px)
+	.investment 
+		.list-group-item-heading
+			margin-bottom: rem(5)
+@media screen and (min-width: 414px) and (max-width: 545px)
+	.commission-right-block
+		background-size: 100%!important
+		width: 230px!important
+		height: 55px!important
+		top: -6px!important
+		.wrap-commision-credit-amount
+			width: 70px!important
+			top: 70%!important
+			.credit-amount
+				font-size: rem(30)!important
+			.credit-remains
+				font-size: rem(10)!important
+				line-height: 19px!important
+		.wrap-commision-credit-text
+			width: 95px!important
+			.credit-text
+				width: 80%!important
+				font-size: rem(8)!important
+				line-height: 9px!important
+			
 @media screen and (max-width: 413px)
 	.commission-right-block
-		width: 160px!important
-		height: 40px!important
-		top: 0px!important
+		width: 180px!important
+		height: 43px!important
+		top: -1px!important
 		.wrap-commision-credit-amount
-			width: 50px!important
-			top: 22%!important
-			left: 30%!important
+			width: 55px!important
+			left: 47%!important
 			.credit-amount
-				font-size: rem(26)!important
+				font-size: rem(22)!important
 				line-height: 10px!important
 			.credit-remains
-				line-height: 7px
+				line-height: 15px!important
+				font-size: rem(8)!important
 
 		.wrap-commision-credit-text
 			width: 70px!important
 			.credit-text
 				line-height: 7px!important
 				font-size: rem(7)!important
+				padding-right: rem(1)!important
 	.fee
 		.waived
 			font-size: rem(10)!important

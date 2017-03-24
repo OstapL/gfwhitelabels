@@ -1,5 +1,4 @@
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 const cleanWebpackPlugin = require('clean-webpack-plugin');
@@ -25,10 +24,9 @@ module.exports = {
   debug: false,
 
   plugins: [
-    new ExtractTextPlugin('style.css'),
     new HtmlWebpackPlugin({
-      title: 'Backbone App',
-      template: './src/index.html',
+      title: 'GrowthFountain | Equity Crowdfunding Platform',
+      template: './src/index.pug',
       filename: 'index.html',
       inject: 'body', // Inject all scripts into the body
     }),
@@ -68,8 +66,7 @@ module.exports = {
         query: { presets: ['es2015'] },
       },
       { test: /\.css$/, loaders: ['style-loader', 'css-loader'] },
-      { test: /\.sass$/, loaders: ['style-loader', 'css-loader', 'sass-loader'] },
-      { test: /\.scss$/, loaders: ['style-loader', 'css-loader', 'sass-loader'] },
+      { test: /\.(scss|sass)$/, loaders: ['style-loader', 'css-loader', 'sass-loader'] },
       { test: /\.png$/, loader: 'url?limit=8192&mimetype=image/png' },
       { test: /\.jpe?g$/, loader: 'url?limit=8192&mimetype=image/jpg' },
       { test: /\.gif$/, loader: 'url?limit=8192&mimetype=image/gif' },
