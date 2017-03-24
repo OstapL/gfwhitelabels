@@ -113,6 +113,7 @@ module.exports = {
       );
       disableEnterHelper.disableEnter.call(this);
       this.checkForm();
+      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
 
@@ -226,8 +227,8 @@ module.exports = {
       );
 
       this.checkForm();
-
       disableEnterHelper.disableEnter.call(this);
+      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
   }, leavingConfirmationHelper.methods, menuHelper.methods, addSectionHelper.methods)),
@@ -368,6 +369,7 @@ module.exports = {
       setTimeout(() => { this.createDropzones() } , 1000);
       disableEnterHelper.disableEnter.call(this);
       this.checkForm();
+      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
 
       return this;
     },
@@ -470,6 +472,7 @@ module.exports = {
       //delete this.model.data;
 
       disableEnterHelper.disableEnter.call(this);
+      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
 
@@ -529,6 +532,7 @@ module.exports = {
       disableEnterHelper.disableEnter.call(this);
       this.checkForm();
       this.$el.find('.team-add-item').equalHeights();
+      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
 
@@ -717,6 +721,7 @@ module.exports = {
         $('#description_determine').parent().parent().hide();
 
         disableEnterHelper.disableEnter.call(this);
+        raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
         return this;
       },
   }, leavingConfirmationHelper.methods, menuHelper.methods, dropzoneHelpers.methods, addSectionHelper.methods)),
@@ -767,6 +772,7 @@ module.exports = {
       );
 
       disableEnterHelper.disableEnter.call(this);
+      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
 
