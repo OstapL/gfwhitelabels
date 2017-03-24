@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 module.exports = {
-  entry: './src/app.js',
+  entry: './src/index.js',
   devtool: 'eval-source',
   output: {
     path: __dirname + '/dist',
@@ -43,11 +43,14 @@ module.exports = {
       inject: 'body', // Inject all scripts into the body
     }),
     new webpack.ProvidePlugin({
-      $: 'jquery',
-      jQuery: 'jquery',
-      Tether: 'tether',
+      '$': 'jquery',
+      'jQuery': 'jquery',
+      'window.jQuery': 'jquery',
+      'Tether': 'tether',
       'window.Tether': 'tether',
-      Backbone: 'backbone',
+      '_': 'underscore',
+      'Backbone': 'backbone',
+      'cookies': 'cookies-js',
     }),
     new webpack.HotModuleReplacementPlugin(),
   ],

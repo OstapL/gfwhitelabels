@@ -94,6 +94,28 @@ class User {
     }
   }
 
+  loadWithPromise() {
+    return new Promise((resolve, reject) => {
+      this.token = localStorage.getItem('token');
+      if (this.token === null)
+        return resolve({ id: '' });
+
+      const data = JSON.parse(localStorage.getItem('user')) || {};
+      // Check if user have all required data
+      if (!data.info || !Array.isArray(data.info)) {
+        this.emptyLocalStorage();
+        setTimeout(() => {
+          window.location = '/account/login?next=' + document.location.pathname;
+        }, 100);
+
+        return resolve(false);
+      }
+
+      this.data = data;
+      return resolve(this.data);
+    });
+  }
+
   is_anonymous() {
     return !this.token;
   }
@@ -156,7 +178,8 @@ class User {
 
   logout() {
     this.emptyLocalStorage();
-    app.trigger('userLogout', {});
+    //TODO: looks like unnesessary code
+    // app.trigger('userLogout', {});
 
     setTimeout(() => { window.location = '/';}, 100);
   }

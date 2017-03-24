@@ -1,12 +1,11 @@
-global.cookies = require('cookies-js');
+// global.cookies = require('cookies-js');
 global.config = require('config');
-global.$ = global.jQuery = require('jquery');
+// global.$ = global.jQuery = require('jquery');
 global._ = require('underscore');
-global.Backbone = require('backbone');
-window.Tether = require('tether');
-global.Bootstrap = require('bootstrap/dist/js/bootstrap.js');
-global.OwlCarousel = require('owl.carousel/dist/owl.carousel.min.js');
-// global.userModel = require('components/accountProfile/model.js');
+// global.Backbone = require('backbone');
+// window.Tether = require('tether');
+// global.Bootstrap = require('bootstrap/dist/js/bootstrap.js');
+// global.OwlCarousel = require('owl.carousel/dist/owl.carousel.min.js');
 global.Urls = require('./jsreverse.js');
 require('jquery-serializejson/jquery.serializejson.min.js');
 require('js/html5-dataset.js');
