@@ -372,7 +372,7 @@ module.exports = {
     },
 
     getSuccessUrl(data) {
-      app.user.passwordChanged(data.key);
+      // app.user.passwordChanged(data.key);
       return '/account/profile';
     },
 
