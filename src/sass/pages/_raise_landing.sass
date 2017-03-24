@@ -28,31 +28,56 @@
       top: 0
       content: ''
       left: 0
-      background-image: url("/img/raise-landing/Rectangle.png")
-      width: 49%
+      background-color: $growth-is-bgc
+      width: 41%
       height: 100%
-      background-repeat: no-repeat
-      background-position: right top
+      @media only screen and (max-width : 992px)
+        width: 100%
+    &:after
+      position: absolute
+      top: 0
+      content: ''
+      left: 41%
+      border: 153px solid transparent
+      border-left: 121px solid $growth-is-bgc
+      @media only screen and (max-width : 1200px)
+        border: 184px solid transparent
+        border-left: 110px solid $growth-is-bgc
+      @media only screen and (max-width : 992px)
+        border: none
+
     .growth-is
       position: relative
-      padding-top: 45px
-      padding-bottom: 45px
+      padding-top: rem(50)
+      padding-bottom: rem(50)
       color: $white
+      @media only screen and (max-width : 768px)
+        padding-bottom: 0
       .content
-        padding-right: 110px
+        padding-right: 100px
         position: relative
         z-index: 3
+        @media only screen and (max-width : 992px)
+          padding-right: 0
+
     .good-candidate
       h3
-        margin-bottom: rem(25)
+        margin-bottom: rem(15)
       ul
         list-style-type: none
         margin-top: rem(10)
+      @media only screen and (max-width : 992px)
+        color: $white
+      @media only screen and (max-width : 768px)
+        &.p-l-2
+          padding-left: 0!important
+          padding-bottom: rem(50)
+
   .simplify
     background-color: $alabaster
     position: relative
-    top: -4px
     padding-bottom: rem(60)
+    padding-top: rem(50)
     h2
       margin-bottom: rem(20)
     .one-item
@@ -75,8 +100,13 @@
     background-repeat: no-repeat
     background-size: cover
   .content-bottom
+    h2
+      margin-bottom: rem(20)
     .how-do
-      border-bottom: solid 1px $black
+      .border-bottom
+        border-bottom: solid 1px $black
+        margin-top: rem(10)
+        margin-bottom: rem(30)
       ul
         list-style-type: none
         margin-top: rem(10)
@@ -93,6 +123,10 @@
           span
             width: 87%
             display: inline-block
+    @media only screen and (max-width : 650px)
+      .p-x-0
+        padding-left: 15px!important
+        padding-right: 15px!important
     .call-block
       i
         background-color: $content-bottom-icon-color
@@ -104,4 +138,6 @@
         height: 40px
         vertical-align: sub
         text-align: center
+      p
+        margin-top: rem(10)
 
