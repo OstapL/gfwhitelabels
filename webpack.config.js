@@ -3,20 +3,38 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
+const VENDOR_LIBS = [
+  'jquery',
+  'jquery-serializejson',
+  'jquery.appear',
+  'underscore',
+  'backbone',
+  'bootstrap-select',
+  'cookies-js',
+  'cropperjs',
+  'deep-diff',
+  'dropzone',
+  'hellojs',
+  'moment',
+  'owl.carousel',
+  'socket.io-client',
+];
+
 module.exports = {
-  entry: './src/index.js',
+  entry: {
+    app: './src/index.js',
+    vendor: VENDOR_LIBS,
+  },
   devtool: 'eval-source',
   output: {
     path: __dirname + '/dist',
     publicPath: '/',
-    filename: 'bundle.js',
+    filename: '[name].bundle.js',
   },
 
   devServer: {
     contentBase: './dist/',
     historyApiFallback: true,
-    inline: true,
-    hot: true,
     port: 7070,
     host: '0.0.0.0',
     stats: {
@@ -52,7 +70,13 @@ module.exports = {
       'Backbone': 'backbone',
       'cookies': 'cookies-js',
     }),
-    new webpack.HotModuleReplacementPlugin(),
+    new webpack.optimize.CommonsChunkPlugin({
+      names: ['app', 'vendor'],
+      filename: '[name].bundle.js',
+      children: true,
+      minChunks: 3,
+    }),
+    new webpack.optimize.DedupePlugin(),
   ],
 
   module: {
