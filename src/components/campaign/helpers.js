@@ -11,6 +11,7 @@ let exports = {
     52: 'https://www.sec.gov/Archives/edgar/data/1693726/000166850617000003/0001668506-17-000003-index.htm',
     536: 'https://www.sec.gov/cgi-bin/browse-edgar?company=oma%27s&owner=exclude&action=getcompany',
     564: 'https://www.sec.gov/cgi-bin/browse-edgar?company=have+not&owner=exclude&action=getcompany',
+    606: 'https://s3.amazonaws.com/growthfountain-master-storage/docs/bluehollarformc.pdf',
   },
 
   slugs: {
