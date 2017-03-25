@@ -196,7 +196,7 @@ class User {
 
   getCompanyR(id) {
     if(id)  {
-      return this.company ? '' : app.makeCacheRequest(raiseCapitalServer + '/company/' + id, 'GET');
+      return this.company ? '' : api.makeCacheRequest(raiseCapitalServer + '/company/' + id, 'GET');
     } else {
       let formcOwner = this.companiesMember.filter((el) => {
         return el.owner_id = this.data.id;
@@ -205,7 +205,7 @@ class User {
         return '';
       }
       else {
-        return this.company ? '' : app.makeCacheRequest(raiseCapitalServer + '/company/' + formcOwner[0].company_id, 'GET');
+        return this.company ? '' : api.makeCacheRequest(raiseCapitalServer + '/company/' + formcOwner[0].company_id, 'GET');
       }
     }
   }
@@ -216,7 +216,7 @@ class User {
 
   getCampaignR(id) {
     if(id)  {
-      return this.campaign ? '' : app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id, 'GET');
+      return this.campaign ? '' : api.makeCacheRequest(raiseCapitalServer + '/campaign/' + id, 'GET');
     } else {
       let formcOwner = this.companiesMember.filter((el) => {
         return el.owner_id = this.data.id;
@@ -225,7 +225,7 @@ class User {
         return '';
       }
       else {
-        return this.campaign ? '' : app.makeCacheRequest(raiseCapitalServer + '/campaign/' + formcOwner[0].campaign_id, 'GET');
+        return this.campaign ? '' : api.makeCacheRequest(raiseCapitalServer + '/campaign/' + formcOwner[0].campaign_id, 'GET');
       }
     }
   }
@@ -236,7 +236,7 @@ class User {
 
   getFormcR(id) {
     if(id)  {
-      return this.formc ? '' : app.makeCacheRequest(formcServer + '/' + id, 'GET');
+      return this.formc ? '' : api.makeCacheRequest(formcServer + '/' + id, 'GET');
     } else {
       let formcOwner = this.companiesMember.filter((el) => {
         return el.owner_id = this.data.id;
@@ -245,7 +245,7 @@ class User {
         return '';
       }
       else {
-        return this.formc ? '' : app.makeCacheRequest(formcServer + '/' + formcOwner[0].formc_id, 'GET');
+        return this.formc ? '' : api.makeCacheRequest(formcServer + '/' + formcOwner[0].formc_id, 'GET');
       }
     }
   }
@@ -255,7 +255,7 @@ class User {
   }
 
   getCompaniesMemberR() {
-    return this.companiesMember.length != 0 ? '' : app.makeCacheRequest(raiseCapitalServer + '/info');
+    return this.companiesMember.length != 0 ? '' : api.makeCacheRequest(raiseCapitalServer + '/info');
   }
 
   getCompaniesMember() {

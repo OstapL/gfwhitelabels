@@ -55,7 +55,7 @@ module.exports = {
   },
   methods: {
     company() {
-      const optionsR = app.makeCacheRequest(raiseCapitalServer + '/company', 'OPTIONS');
+      const optionsR = api.makeCacheRequest(raiseCapitalServer + '/company', 'OPTIONS');
       const meta = '<meta name="keywords" content="local investing equity crowdfunding Get to ' +
         'work and secure funding with our equity crowdfunding platform. Harness the power of ' +
         'local investing to secure the capital you need by getting started."></meta>';
@@ -65,25 +65,25 @@ module.exports = {
 
     generalInformation(id) {
       const optionsUrl = raiseCapitalServer + '/campaign/' + id + '/general_information';
-      const optionsR = app.makeCacheRequest(optionsUrl, 'OPTIONS');
+      const optionsR = api.makeCacheRequest(optionsUrl, 'OPTIONS');
       getOCCF(optionsR, 'generalInformation', {});
     },
 
     media(id) {
       const optionsUrl = raiseCapitalServer + '/campaign/' + id + '/media';
-      const optionsR = app.makeCacheRequest(optionsUrl, 'OPTIONS');
+      const optionsR = api.makeCacheRequest(optionsUrl, 'OPTIONS');
       getOCCF(optionsR, 'media', {});
     },
 
     teamMembers1(id) {
       const optionsUrl = raiseCapitalServer + '/campaign/' + id + '/team-members';
-      const optionsR = app.makeCacheRequest(optionsUrl, 'OPTIONS');
+      const optionsR = api.makeCacheRequest(optionsUrl, 'OPTIONS');
       getOCCF(optionsR, 'teamMembers', {});
     },
 
     teamMembersAdd1(id, type, index) {
       const optionsUrl = raiseCapitalServer + '/campaign/' + id + '/team-members';
-      const optionsR = app.makeCacheRequest(optionsUrl, 'OPTIONS');
+      const optionsR = api.makeCacheRequest(optionsUrl, 'OPTIONS');
       getOCCF(optionsR, 'teamMemberAdd', {
         type: type,
         index: index,
@@ -92,13 +92,13 @@ module.exports = {
 
     specifics(id) {
       const optionsUrl = raiseCapitalServer + '/campaign/' + id + '/specifics';
-      const optionsR = app.makeCacheRequest(optionsUrl, 'OPTIONS');
+      const optionsR = api.makeCacheRequest(optionsUrl, 'OPTIONS');
       getOCCF(optionsR, 'specifics', {});
     },
 
     perks(id) {
       const optionsUrl = raiseCapitalServer + '/campaign/' + id + '/perks';
-      const optionsR = app.makeCacheRequest(optionsUrl, 'OPTIONS');
+      const optionsR = api.makeCacheRequest(optionsUrl, 'OPTIONS');
       getOCCF(optionsR, 'perks', {});
     },
 

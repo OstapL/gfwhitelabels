@@ -14,6 +14,7 @@ module.exports = {
     'dashboard/:id/issuer-dashboard': 'issuerDashboard',
   },
   methods: {
+
     accountProfile(activeTab) {
       if (app.user.is_anonymous()) {
         app.routers.navigate('/account/login', { trigger: true, replace: true });
@@ -22,8 +23,8 @@ module.exports = {
 
       require.ensure([], () => {
         const View = require('components/accountProfile/views.js');
-        const fieldsR = app.makeCacheRequest(authServer + '/rest-auth/data', 'OPTIONS');
-        const dataR = app.makeCacheRequest(authServer + '/rest-auth/data');
+        const fieldsR = api.makeCacheRequest(authServer + '/rest-auth/data', 'OPTIONS');
+        const dataR = api.makeCacheRequest(authServer + '/rest-auth/data');
 
         $.when(fieldsR, dataR).done((fields, data) => {
           const i = new View.profile({
@@ -45,137 +46,156 @@ module.exports = {
     },
 
     changePassword() {
-      $('body').scrollTo();
-      const View = require('components/accountProfile/views.js');
-      let i = new View.changePassword({
-        el: '#content',
-        model: {},
-      });
-      i.render();
-      app.hideLoading();
-    },
-
-    setNewPassword() {
-      $('body').scrollTo();
-      const View = require('components/accountProfile/views.js');
-      const i = new View.setNewPassword({
-        el: '#content',
-      });
-      i.render();
-      app.hideLoading();
-    },
-
-    investorDashboard() {
-      const View = require('components/accountProfile/views.js');
-
-      const fieldsR = app.makeCacheRequest(investmentServer, 'OPTIONS');
-      const dataR = app.makeCacheRequest(investmentServer);
-
-      Promise.all([fieldsR, dataR]).then((values) => {
-        let i = new View.InvestorDashboard({
-          fields: values[0].fields,
-          model: values[1],
+      require.ensure([], (require) => {
+        $('body').scrollTo();
+        const View = require('components/accountProfile/views.js');
+        let i = new View.changePassword({
+          el: '#content',
+          model: {},
         });
         i.render();
         app.hideLoading();
-      }).catch((err) => {
-        console.log(err);
+      });
+    },
+
+    setNewPassword() {
+      require.ensure([], () => {
+        $('body').scrollTo();
+        const View = require('components/accountProfile/views.js');
+        const i = new View.setNewPassword({
+          el: '#content',
+        });
+        i.render();
+        app.hideLoading();
+      });
+    },
+
+    investorDashboard() {
+      require.ensure([], () => {
+        const View = require('components/accountProfile/views.js');
+
+        const fieldsR = api.makeCacheRequest(investmentServer, 'OPTIONS');
+        const dataR = api.makeCacheRequest(investmentServer);
+
+        Promise.all([fieldsR, dataR]).then((values) => {
+          let i = new View.InvestorDashboard({
+            fields: values[0].fields,
+            model: values[1],
+          });
+          i.render();
+          app.hideLoading();
+        }).catch((err) => {
+          console.log(err);
+        });
       });
     },
 
     companyDashboard() {
-      const View = require('components/accountProfile/views.js');
-      let i = new View.companyDashboard({
-        el: '#content',
+      require.ensure([], () => {
+        const View = require('components/accountProfile/views.js');
+        let i = new View.companyDashboard({
+          el: '#content',
+        });
+        i.render();
+        app.hideLoading();
       });
-      i.render();
-      app.hideLoading();
     },
 
     companyDashboardFirst() {
-      const View = require('components/accountProfile/views.js');
-      let i = new View.companyDashboardFirst({
-        el: '#content',
+      require.ensure([], () => {
+        const View = require('components/accountProfile/views.js');
+        let i = new View.companyDashboardFirst({
+          el: '#content',
+        });
+        i.render();
+        app.hideLoading();
       });
-      i.render();
-      app.hideLoading();
     },
 
     afterPaymentDashboard() {
-      const View = require('components/accountProfile/views.js');
-      let i = new View.afterPaymentDashboard({
-        el: '#content',
+      require.ensure([], () => {
+        const View = require('components/accountProfile/views.js');
+        let i = new View.afterPaymentDashboard({
+          el: '#content',
+        });
+        i.render();
+        app.hideLoading();
       });
-      i.render();
-      app.hideLoading();
     },
 
     afterCompleteDashboard() {
-      const View = require('components/accountProfile/views.js');
-      let i = new View.afterCompleteDashboard({
-        el: '#content',
+      require.ensure([], () => {
+        const View = require('components/accountProfile/views.js');
+        let i = new View.afterCompleteDashboard({
+          el: '#content',
+        });
+        i.render();
+        app.hideLoading();
       });
-      i.render();
-      app.hideLoading();
     },
 
     afterFinalDashboard() {
-      const View = require('components/accountProfile/views.js');
-      let i = new View.afterFinalDashboard({
-        el: '#content',
+      require.ensure([], () => {
+        const View = require('components/accountProfile/views.js');
+        let i = new View.afterFinalDashboard({
+          el: '#content',
+        });
+        i.render();
+        app.hideLoading();
       });
-      i.render();
-      app.hideLoading();
     },
 
     afterSubmittingGovermentDashboard() {
-      const View = require('components/accountProfile/views.js');
-      let i = new View.afterSubmittingGovermentDashboard({
-        el: '#content',
+      require.ensure([], () => {
+        const View = require('components/accountProfile/views.js');
+        let i = new View.afterSubmittingGovermentDashboard({
+          el: '#content',
+        });
+        i.render();
+        app.hideLoading();
       });
-      i.render();
-      app.hideLoading();
     },
 
     issuerDashboard(id) {
+      require.ensure([],() => {
+        $('body').scrollTo();
+        let params = {
+          el: '#content'
+        };
 
-      $('body').scrollTo();
-      let params = {
-        el: '#content'
-      };
+        let companyData = app.user.companiesMember.filter((el) => {
+          return el.formc_id = id;
+        });
+        if(companyData.length == 0) {
+          alert('show 404 that user is not belong to this company');
+          return '';
+        } else {
+          companyData = companyData[0];
+        }
 
-      let companyData = app.user.companiesMember.filter((el) => {
-        return el.formc_id = id;
-      });
-      if(companyData.length == 0) {
-        alert('show 404 that user is not belong to this company');
-        return '';
-      } else {
-        companyData = companyData[0];
-      }
+        $.when(
+          api.makeCacheRequest(raiseCapitalServer + '/company/' + companyData.company_id + '?noi=1', 'GET'),
+          app.user.getCampaignR(companyData.campaign_id),
+          app.user.getFormcR(companyData.formc_id)
+        ).done((company, campaign, formc) => {
 
-      $.when(
-        app.makeCacheRequest(raiseCapitalServer + '/company/' + companyData.company_id + '?noi=1', 'GET'),
-        app.user.getCampaignR(companyData.campaign_id),
-        app.user.getFormcR(companyData.formc_id)
-      ).done((company, campaign, formc) => {
-      
-        if(company[0]) app.user.company = company[0];
-        if(campaign[0]) app.user.campaign = campaign[0];
-        if(formc[0]) app.user.formc = formc[0];
+          if(company[0]) app.user.company = company[0];
+          if(campaign[0]) app.user.campaign = campaign[0];
+          if(formc[0]) app.user.formc = formc[0];
 
-        params.company = app.user.company;
-        params.campaign = app.user.campaign;
-        params.formc = app.user.formc;
+          params.company = app.user.company;
+          params.campaign = app.user.campaign;
+          params.formc = app.user.formc;
 
-        // FixMe
-        // Temp fix for socialShare directive
-        params.company.campaign = params.campaign;
+          // FixMe
+          // Temp fix for socialShare directive
+          params.company.campaign = params.campaign;
 
-        const View = require('components/accountProfile/views.js');
-        new View.issuerDashboard(params).render();
-        app.hideLoading();
+          const View = require('components/accountProfile/views.js');
+          new View.issuerDashboard(params).render();
+          app.hideLoading();
 
+        });
       });
     },
 
