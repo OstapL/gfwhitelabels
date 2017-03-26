@@ -1,6 +1,3 @@
-const VIEWS = 'components/accountProfile/views.js';
-const dependencies = [VIEWS];
-
 module.exports = {
   routes: {
     'account/profile(?:active_tab)': 'accountProfile',
@@ -23,8 +20,8 @@ module.exports = {
         return;
       }
 
-      require.ensure(dependencies, () => {
-        const View = require(VIEWS);
+      require.ensure([], (require) => {
+        const View = require('components/accountProfile/views.js');
         const fieldsR = api.makeCacheRequest(app.config.authServer + '/rest-auth/data', 'OPTIONS');
         const dataR = api.makeCacheRequest(app.config.authServer + '/rest-auth/data');
 
@@ -48,9 +45,9 @@ module.exports = {
     },
 
     changePassword() {
-      require.ensure(dependencies, (require) => {
+      require.ensure([], (require) => {
         $('body').scrollTo();
-        const View = require(VIEWS);
+        const View = require('components/accountProfile/views.js');
         let i = new View.changePassword({
           el: '#content',
           model: {},
@@ -61,9 +58,9 @@ module.exports = {
     },
 
     setNewPassword() {
-      require.ensure(dependencies, () => {
+      require.ensure([], () => {
         $('body').scrollTo();
-        const View = require(VIEWS);
+        const View = require('components/accountProfile/views.js');
         const i = new View.setNewPassword({
           el: '#content',
         });
@@ -73,8 +70,8 @@ module.exports = {
     },
 
     investorDashboard() {
-      require.ensure(dependencies, () => {
-        const View = require(VIEWS);
+      require.ensure([], () => {
+        const View = require('components/accountProfile/views.js');
 
         const fieldsR = api.makeCacheRequest(app.config.investmentServer, 'OPTIONS');
         const dataR = api.makeCacheRequest(app.config.investmentServer);
@@ -93,8 +90,8 @@ module.exports = {
     },
 
     companyDashboard() {
-      require.ensure(dependencies, () => {
-        const View = require(VIEWS);
+      require.ensure([], () => {
+        const View = require('components/accountProfile/views.js');
         let i = new View.companyDashboard({
           el: '#content',
         });
@@ -104,8 +101,8 @@ module.exports = {
     },
 
     companyDashboardFirst() {
-      require.ensure(dependencies, () => {
-        const View = require(VIEWS);
+      require.ensure([], () => {
+        const View = require('components/accountProfile/views.js');
         let i = new View.companyDashboardFirst({
           el: '#content',
         });
@@ -115,8 +112,8 @@ module.exports = {
     },
 
     afterPaymentDashboard() {
-      require.ensure(dependencies, () => {
-        const View = require(VIEWS);
+      require.ensure([], () => {
+        const View = require('components/accountProfile/views.js');
         let i = new View.afterPaymentDashboard({
           el: '#content',
         });
@@ -126,8 +123,8 @@ module.exports = {
     },
 
     afterCompleteDashboard() {
-      require.ensure(dependencies, () => {
-        const View = require(VIEWS);
+      require.ensure([], () => {
+        const View = require('components/accountProfile/views.js');
         let i = new View.afterCompleteDashboard({
           el: '#content',
         });
@@ -137,8 +134,8 @@ module.exports = {
     },
 
     afterFinalDashboard() {
-      require.ensure(dependencies, () => {
-        const View = require(VIEWS);
+      require.ensure([], () => {
+        const View = require('components/accountProfile/views.js');
         let i = new View.afterFinalDashboard({
           el: '#content',
         });
@@ -148,8 +145,8 @@ module.exports = {
     },
 
     afterSubmittingGovermentDashboard() {
-      require.ensure(dependencies, () => {
-        const View = require(VIEWS);
+      require.ensure([], () => {
+        const View = require('components/accountProfile/views.js');
         let i = new View.afterSubmittingGovermentDashboard({
           el: '#content',
         });
@@ -159,7 +156,7 @@ module.exports = {
     },
 
     issuerDashboard(id) {
-      require.ensure(dependencies,() => {
+      require.ensure([],() => {
         $('body').scrollTo();
         let params = {
           el: '#content'
@@ -193,7 +190,7 @@ module.exports = {
           // Temp fix for socialShare directive
           params.company.campaign = params.campaign;
 
-          const View = require(VIEWS);
+          const View = require('components/accountProfile/views.js');
           new View.issuerDashboard(params).render();
           app.hideLoading();
 
