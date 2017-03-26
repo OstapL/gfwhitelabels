@@ -10,82 +10,96 @@ module.exports = {
   },
   methods: {
     selectYourBusiness() {
-      let View = Backbone.View.extend({
-        el: '#content',
-        initialize() {
-          this.render();
-        },
-        template: require('./templates/selectYourBusiness.pug'),
-        render() {
-          this.$el.html(this.template());
-          return this;
-        },
-      });
+      require.ensure([], () => {
+        let View = Backbone.View.extend({
+          el: '#content',
+          initialize() {
+            this.render();
+          },
+          template: require('./templates/selectYourBusiness.pug'),
+          render() {
+            this.$el.html(this.template());
+            return this;
+          },
+        });
 
-      new View();
-      app.hideLoading();
+        new View();
+        app.hideLoading();
+      });
     },
 
     selectCalculator() {
-      let View = Backbone.View.extend({
-        el: '#content',
-        initialize() {
-          this.render();
-        },
-        template: require('./templates/selectCalculator.pug'),
-        render() {
-          this.$el.html(this.template());
-          return this;
-        },
-      });
+      require.ensure([], () => {
+        let View = Backbone.View.extend({
+          el: '#content',
+          initialize() {
+            this.render();
+          },
+          template: require('./templates/selectCalculator.pug'),
+          render() {
+            this.$el.html(this.template());
+            return this;
+          },
+        });
 
-      new View();
-      app.hideLoading();
+        new View();
+        app.hideLoading();
+      });
     },
 
     selectCalculator2() {
-      let View = Backbone.View.extend({
-        el: '#content',
-        initialize() {
-          this.render();
-        },
-        template: require('./templates/selectCalculator2.pug'),
-        render() {
-          this.$el.html(this.template());
-          return this;
-        },
-      });
+      require.ensure([], () => {
+        let View = Backbone.View.extend({
+          el: '#content',
+          initialize() {
+            this.render();
+          },
+          template: require('./templates/selectCalculator2.pug'),
+          render() {
+            this.$el.html(this.template());
+            return this;
+          },
+        });
 
-      new View();
-      app.hideLoading();
+        new View();
+        app.hideLoading();
+      });
     },
 
     calculatorWhatMyBusinessWorthIntro() {
-      let View = require('./views');
-      new View.intro().render();
-      $('body').scrollTo();
-      app.hideLoading();
+      require.ensure([], () => {
+        let View = require('./views');
+        new View.intro().render();
+        $('body').scrollTo();
+        app.hideLoading();
+      });
     },
 
     calculatorWhatMyBusinessWorthStep1() {
-      const View = require('./views');
-      new View.step1().render();
-      $('body').scrollTo();
-      app.hideLoading();
+      require.ensure([], () => {
+        const View = require('./views');
+        new View.step1().render();
+        $('body').scrollTo();
+        app.hideLoading();
+      });
     },
 
     calculatorWhatMyBusinessWorthStep2() {
-      const View = require('./views');
-      new View.step2().render();
-      $('body').scrollTo();
-      app.hideLoading();
+      require.ensure([], () => {
+        const View = require('./views');
+        new View.step2().render();
+        $('body').scrollTo();
+        app.hideLoading();
+      });
     },
 
     calculatorWhatMyBusinessWorthFinish() {
-      const View = require('./views');
-      new View.finish().render();
-      $('body').scrollTo();
-      app.hideLoading();
+      require.ensure([], () => {
+        const View = require('./views');
+        new View.finish().render();
+        $('body').scrollTo();
+        app.hideLoading();
+      });
     },
   },
   auth: ['calculatorWhatMyBusinessWorthIntro', 'selectYourBusiness'],
