@@ -52,7 +52,7 @@ module.exports = {
     _initializeDropzone(name, options, onSuccess) {
 
       let defaultOptions = {
-        url: filerServer + '/upload',
+        url: app.config.filerServer + '/upload',
         clickable: '.dropzone__' + name + ' .border-dropzone',
         createImageThumbnails: false,
         addRemoveLinks: false,
@@ -215,7 +215,7 @@ module.exports = {
         this.model[dataFieldName] = [];
 
         this._notifyServer(name).then((r) => {
-          return api.makeRequest(filerServer + '/' + fileId, 'DELETE');
+          return api.makeRequest(app.config.filerServer + '/' + fileId, 'DELETE');
         }).then((r) => {
 
           $link.closest('.thumb-file-container')
@@ -301,7 +301,7 @@ module.exports = {
 
         dataArr.splice(dataIdx, 1);
         this._notifyServer(name).then((r) => {
-          return api.makeRequest(filerServer + '/' + fileId, 'DELETE');
+          return api.makeRequest(app.config.filerServer + '/' + fileId, 'DELETE');
         }).then(() => {
           if (!dataArr.length) {
             //add empty file
@@ -413,10 +413,10 @@ module.exports = {
 
         this._notifyServer(name).then((r) => {
 
-          let deleteRequests = [api.makeRequest(filerServer + '/' + data[0].id, 'DELETE')];
+          let deleteRequests = [api.makeRequest(app.config.filerServer + '/' + data[0].id, 'DELETE')];
 
           if(data[1])
-            deleteRequests.push(api.makeRequest(filerServer + '/' + data[1].id, 'DELETE'));
+            deleteRequests.push(api.makeRequest(app.config.filerServer + '/' + data[1].id, 'DELETE'));
 
           return $.when.apply($, deleteRequests);
         }).then((r) => {
@@ -548,7 +548,7 @@ module.exports = {
         }
 
         this._notifyServer(name).then((r) => {
-          return api.makeRequest(filerServer + '/' + imageId, 'DELETE');
+          return api.makeRequest(app.config.filerServer + '/' + imageId, 'DELETE');
         }).then((r) => {
           if (dataIdx >= 0) {
             $link.closest('.one-photo').remove();
@@ -669,7 +669,7 @@ module.exports = {
           contentType: 'application/json; charset=utf-8',
         };
 
-        api.makeRequest(filerServer + '/crop', 'PUT', reqData, reqOptions)
+        api.makeRequest(app.config.filerServer + '/crop', 'PUT', reqData, reqOptions)
           .done(callback)
           .fail((xhr, status) => {
             this._errorAction(name, xhr, status)

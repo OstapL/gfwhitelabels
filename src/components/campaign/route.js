@@ -15,7 +15,7 @@ module.exports = {
       if (!app.user.ensureLoggedIn(window.location.pathname))
         return false;
 
-      api.makeRequest(investmentServer + '/' + id).done((data) => {
+      api.makeRequest(app.config.investmentServer + '/' + id).done((data) => {
         data.id = id;
         const View = require('./views.js');
         let i = new View.investmentThankYou({
@@ -34,7 +34,7 @@ module.exports = {
       if (offset) params += '&offset=' + (offset * GENERAL.COMPANIES_PER_PAGE);
       let orderBy = app.getParams().orderby;
       if (orderBy) params += '&orderby=' + orderBy;
-      api.makeCacheRequest(raiseCapitalServer + params).then((data) => {
+      api.makeCacheRequest(app.config.raiseCapitalServer + params).then((data) => {
         let i = new View.list({
           el: '#content',
           collection: data,
@@ -53,7 +53,7 @@ module.exports = {
     detail(name) {
       const View = require('./views.js');
 
-      api.makeCacheRequest(raiseCapitalServer + '/' + name).
+      api.makeCacheRequest(app.config.raiseCapitalServer + '/' + name).
       then((companyData) => {
         let i = new View.detail({
           model: companyData,
@@ -77,12 +77,12 @@ module.exports = {
 
       if (!app.user.is_anonymous()) {
         const View = require('./views.js');
-        let investmentR = api.makeCacheRequest(investmentServer + '/', 'OPTIONS');
-        let companyR = api.makeCacheRequest(raiseCapitalServer + '/' + name);
+        let investmentR = api.makeCacheRequest(app.config.investmentServer + '/', 'OPTIONS');
+        let companyR = api.makeCacheRequest(app.config.raiseCapitalServer + '/' + name);
 
         // TODO
         // Do we really need this ?
-        let userR = api.makeCacheRequest(authServer + '/rest-auth/data');
+        let userR = api.makeCacheRequest(app.config.authServer + '/rest-auth/data');
 
         $.when(investmentR, companyR, userR).done((investmentMeta, companyData, userData) => {
           Object.assign(app.user.data, userData[0]);

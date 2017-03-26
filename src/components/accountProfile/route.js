@@ -23,8 +23,8 @@ module.exports = {
 
       require.ensure([], () => {
         const View = require('components/accountProfile/views.js');
-        const fieldsR = api.makeCacheRequest(authServer + '/rest-auth/data', 'OPTIONS');
-        const dataR = api.makeCacheRequest(authServer + '/rest-auth/data');
+        const fieldsR = api.makeCacheRequest(app.config.authServer + '/rest-auth/data', 'OPTIONS');
+        const dataR = api.makeCacheRequest(app.config.authServer + '/rest-auth/data');
 
         $.when(fieldsR, dataR).done((fields, data) => {
           const i = new View.profile({
@@ -74,8 +74,8 @@ module.exports = {
       require.ensure([], () => {
         const View = require('components/accountProfile/views.js');
 
-        const fieldsR = api.makeCacheRequest(investmentServer, 'OPTIONS');
-        const dataR = api.makeCacheRequest(investmentServer);
+        const fieldsR = api.makeCacheRequest(app.config.investmentServer, 'OPTIONS');
+        const dataR = api.makeCacheRequest(app.config.investmentServer);
 
         Promise.all([fieldsR, dataR]).then((values) => {
           let i = new View.InvestorDashboard({
@@ -174,7 +174,7 @@ module.exports = {
         }
 
         $.when(
-          api.makeCacheRequest(raiseCapitalServer + '/company/' + companyData.company_id + '?noi=1', 'GET'),
+          api.makeCacheRequest(app.config.raiseCapitalServer + '/company/' + companyData.company_id + '?noi=1', 'GET'),
           app.user.getCampaignR(companyData.campaign_id),
           app.user.getFormcR(companyData.formc_id)
         ).done((company, campaign, formc) => {

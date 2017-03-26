@@ -2,13 +2,15 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
-
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const VENDOR_LIBS = [
   'jquery',
   'jquery-serializejson',
   'jquery.appear',
   'underscore',
   'backbone',
+  'bootstrap',
+  'tether',
   'bootstrap-select',
   'cookies-js',
   'cropperjs',
@@ -17,19 +19,21 @@ const VENDOR_LIBS = [
   'hellojs',
   'moment',
   'owl.carousel',
+  'parseuri',
   'socket.io-client',
 ];
 
 module.exports = {
   entry: {
-    app: './src/index.js',
+    index: './src/index.js',
     vendor: VENDOR_LIBS,
   },
   devtool: 'eval-source',
   output: {
     path: __dirname + '/dist',
     publicPath: '/',
-    filename: '[name].bundle.js',
+    filename: '[name].[id].[hash].js',
+    chunkFilename: '[name].[chunkhash].js',
   },
 
   devServer: {
@@ -58,6 +62,7 @@ module.exports = {
       title: 'GrowthFountain | Equity Crowdfunding Platform',
       template: './src/index.pug',
       filename: 'index.html',
+      chunks: ['index', 'vendor'],
       inject: 'body', // Inject all scripts into the body
     }),
     new webpack.ProvidePlugin({
@@ -71,15 +76,16 @@ module.exports = {
       'cookies': 'cookies-js',
     }),
     new webpack.optimize.CommonsChunkPlugin({
-      names: ['app', 'vendor'],
-      filename: '[name].bundle.js',
-      children: true,
-      minChunks: 3,
+      name: 'vendor',
+      minChunks: 2
     }),
-    new webpack.optimize.DedupePlugin(),
+    // new BundleAnalyzerPlugin(),
   ],
 
   module: {
+    // noParse: VENDOR_LIBS.map(function(name) {
+    //   return path.join(__dirname, "node_modules", name);
+    // }),
     loaders: [
       { test: /bootstrap\/js\//, loader: 'imports?jQuery=$' },
       { test: /\.html?$/, loader: 'file?name=[name].[ext]' },

@@ -5,16 +5,14 @@ module.exports = {
   },
   methods: {
     mainPage(id) {
-      const model = require('components/campaign/models.js');
       const template = require('templates/mainPage.pug');
-      const campaigns = new model.collection();
 
       //TODO: it looks like repeated snippet
       const meta = '<meta name="keywords" content="local investing equity crowdfunding ' +
         'GrowthFountain is changing equity crowdfunding for small businesses. Focused on ' +
         'local investing, they give a whole new meaning to finding investment."></meta>';
       $(document.head).append(meta);
-      api.makeCacheRequest(raiseCapitalServer + '?limit=6').then((data) => {
+      api.makeCacheRequest(app.config.raiseCapitalServer + '?limit=6').then((data) => {
         var html = template({
           collection: data,
           Urls: Urls,
@@ -71,7 +69,6 @@ module.exports = {
       let view = require('templates/' + name + '.pug');
       $('#content').html(view({
           Urls: Urls,
-          serverUrl: serverUrl,
         })
       );
 

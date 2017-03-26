@@ -1,18 +1,17 @@
 //TODO: move view into methods
 // move helper into app.js
-const View = require('components/raiseFunds/views.js');
 const raiseHelper = require('./helpers.js');
 const STATUSES = require('consts/raisecapital/companyStatuses.json').STATUS;
 
 
-function getOCCF(optionsR, viewName, params = {}) {
+function getOCCF(optionsR, viewName, params = {}, View) {
 
   $('body').scrollTo();
   params.el = '#content';
 
   $.when(
-    api.makeCacheRequest(raiseCapitalServer + '/company', 'OPTIONS'),
-    api.makeCacheRequest(raiseCapitalServer + '/campaign', 'OPTIONS'),
+    api.makeCacheRequest(app.config.raiseCapitalServer + '/company', 'OPTIONS'),
+    api.makeCacheRequest(app.config.raiseCapitalServer + '/campaign', 'OPTIONS'),
     app.user.getCompanyR(),
     app.user.getCampaignR(),
     app.user.getFormcR()
@@ -55,51 +54,79 @@ module.exports = {
   },
   methods: {
     company() {
-      const optionsR = api.makeCacheRequest(raiseCapitalServer + '/company', 'OPTIONS');
-      const meta = '<meta name="keywords" content="local investing equity crowdfunding Get to ' +
-        'work and secure funding with our equity crowdfunding platform. Harness the power of ' +
-        'local investing to secure the capital you need by getting started."></meta>';
-      $(document.head).append(meta);
-      getOCCF(optionsR, 'company', {});
+      require.ensure([], () => {
+        const View = require('components/raiseFunds/views.js');
+
+        const optionsR = api.makeCacheRequest(app.config.raiseCapitalServer + '/company', 'OPTIONS');
+        const meta = '<meta name="keywords" content="local investing equity crowdfunding Get to ' +
+          'work and secure funding with our equity crowdfunding platform. Harness the power of ' +
+          'local investing to secure the capital you need by getting started."></meta>';
+        $(document.head).append(meta);
+        getOCCF(optionsR, 'company', {}, View);
+      });
     },
 
     generalInformation(id) {
-      const optionsUrl = raiseCapitalServer + '/campaign/' + id + '/general_information';
-      const optionsR = api.makeCacheRequest(optionsUrl, 'OPTIONS');
-      getOCCF(optionsR, 'generalInformation', {});
+      require.ensure([], () => {
+        const View = require('components/raiseFunds/views.js');
+
+        const optionsUrl = app.config.raiseCapitalServer + '/campaign/' + id + '/general_information';
+        const optionsR = api.makeCacheRequest(optionsUrl, 'OPTIONS');
+        getOCCF(optionsR, 'generalInformation', {}, View);
+      });
     },
 
     media(id) {
-      const optionsUrl = raiseCapitalServer + '/campaign/' + id + '/media';
-      const optionsR = api.makeCacheRequest(optionsUrl, 'OPTIONS');
-      getOCCF(optionsR, 'media', {});
+      require.ensure([], () => {
+        const View = require('components/raiseFunds/views.js');
+
+        const optionsUrl = app.config.raiseCapitalServer + '/campaign/' + id + '/media';
+        const optionsR = api.makeCacheRequest(optionsUrl, 'OPTIONS');
+        getOCCF(optionsR, 'media', {}, View);
+      });
     },
 
     teamMembers1(id) {
-      const optionsUrl = raiseCapitalServer + '/campaign/' + id + '/team-members';
-      const optionsR = api.makeCacheRequest(optionsUrl, 'OPTIONS');
-      getOCCF(optionsR, 'teamMembers', {});
+      require.ensure([], () => {
+        const View = require('components/raiseFunds/views.js');
+
+        const optionsUrl = app.config.raiseCapitalServer + '/campaign/' + id + '/team-members';
+        const optionsR = api.makeCacheRequest(optionsUrl, 'OPTIONS');
+        getOCCF(optionsR, 'teamMembers', {}, View);
+      });
     },
 
     teamMembersAdd1(id, type, index) {
-      const optionsUrl = raiseCapitalServer + '/campaign/' + id + '/team-members';
-      const optionsR = api.makeCacheRequest(optionsUrl, 'OPTIONS');
-      getOCCF(optionsR, 'teamMemberAdd', {
-        type: type,
-        index: index,
+      require.ensure([], () => {
+        const View = require('components/raiseFunds/views.js');
+
+        const optionsUrl = app.config.raiseCapitalServer + '/campaign/' + id + '/team-members';
+        const optionsR = api.makeCacheRequest(optionsUrl, 'OPTIONS');
+        getOCCF(optionsR, 'teamMemberAdd', {
+          type: type,
+          index: index,
+        }, View);
       });
     },
 
     specifics(id) {
-      const optionsUrl = raiseCapitalServer + '/campaign/' + id + '/specifics';
-      const optionsR = api.makeCacheRequest(optionsUrl, 'OPTIONS');
-      getOCCF(optionsR, 'specifics', {});
+      require.ensure([], () => {
+        const View = require('components/raiseFunds/views.js');
+
+        const optionsUrl = app.config.raiseCapitalServer + '/campaign/' + id + '/specifics';
+        const optionsR = api.makeCacheRequest(optionsUrl, 'OPTIONS');
+        getOCCF(optionsR, 'specifics', {}, View);
+      });
     },
 
     perks(id) {
-      const optionsUrl = raiseCapitalServer + '/campaign/' + id + '/perks';
-      const optionsR = api.makeCacheRequest(optionsUrl, 'OPTIONS');
-      getOCCF(optionsR, 'perks', {});
+      require.ensure([], () => {
+        const View = require('components/raiseFunds/views.js');
+
+        const optionsUrl = app.config.raiseCapitalServer + '/campaign/' + id + '/perks';
+        const optionsR = api.makeCacheRequest(optionsUrl, 'OPTIONS');
+        getOCCF(optionsR, 'perks', {}, View);
+      });
     },
 
     inReview() {

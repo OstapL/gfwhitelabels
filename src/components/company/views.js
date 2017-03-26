@@ -16,7 +16,6 @@ module.exports = {
       this.$el.html('');
       this.$el.append(
         this.template({
-          serverUrl: serverUrl,
           campaigns: this.collection.toJSON(),
           collection: this.collection,
         })
@@ -73,7 +72,7 @@ module.exports = {
     submitCampaign(e) {
 
       api.makeRequest(
-        serverUrl + '/api/campaign/general_information/' + this.model.id,
+        app.config.serverUrl + '/api/campaign/general_information/' + this.model.id,
         'GET'
       ).then(function(data) {
         if(
@@ -214,7 +213,6 @@ module.exports = {
 
       this.$el.html(
         this.template({
-          serverUrl: serverUrl,
           Urls: Urls,
           values: this.model,
           formatHelper: formatHelper,
@@ -379,7 +377,7 @@ module.exports = {
       e.preventDefault();
       var data = $(e.target).serializeJSON();
       let model = new Backbone.Model();
-      model.urlRoot = serverUrl + Urls['comment-list']();
+      model.urlRoot = app.config.serverUrl + Urls['comment-list']();
       data['company'] = this.model.company.id;
       model.set(data)
       if (model.isValid(true)) {
@@ -404,7 +402,7 @@ module.exports = {
 
   investment: Backbone.View.extend({
     template: require('./templates/investment.pug'),
-    urlRoot: serverUrl + Urls['investment_list'](),
+    urlRoot: app.config.serverUrl + Urls['investment_list'](),
     events: {
       'submit form': api.submitAction,
       'keyup #amount': 'amountUpdate',
@@ -445,7 +443,6 @@ module.exports = {
       this.usaStates = require("helpers/usaStates");
       this.$el.html(
           this.template({
-            serverUrl: serverUrl,
             Urls: Urls,
             fields: this.fields,
             campaignModel: this.campaignModel,
@@ -499,7 +496,6 @@ module.exports = {
     render() {
       this.$el.html(
         this.template({
-          serverUrl: serverUrl,
           Urls: Urls,
           investment: this.model,
           campaign: this.campaignModel.attributes,

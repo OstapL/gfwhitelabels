@@ -136,7 +136,7 @@ class SocialNetworks {
   //{ app_id, url, description, locale, picture, title }
   getFacebookLink(values) {
     return 'https://www.facebook.com/dialog/share' +
-              '?app_id=' + facebookClientId +
+              '?app_id=' + app.config.facebookClientId +
               '&href=' + values.url + '?r=' + Math.random() +
               '&description=' + (values.description || '') +
               '&locale=en_US' +

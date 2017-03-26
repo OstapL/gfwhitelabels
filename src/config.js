@@ -1,4 +1,4 @@
-let config = {
+module.exports = {
   domainUrl: "growthfountain.com",
   serverUrl: "https://django-api-dev.growthfountain.com",
   raiseCapitalServer: "https://api-raisecapital-dev.growthfountain.com",
@@ -30,15 +30,8 @@ let config = {
   facebookClientId: "1405768896335643",
   googleClientId: "805823281871-0sbsf2btjd5j13g5aa7sfo4pfjorn3k2.apps.googleusercontent.com",
   linkedinClientId: "77wzj6tz0yyr33",
-  
-  
+
   googleMapKey: "AIzaSyBpCl9-7bkVISZ0o-AaFCsKzZwGAxalkZU",
   stripeKey: "pk_test_Z7YAhlyPtnW7bpd8LJUHTSou",
-  googleAnalyticsId: 'GTM-NC9XW5D',
+  // googleAnalyticsId: 'GTM-NC9XW5D',
 };
-
-//TODO: fix this
-global.config = config;
-_.extend(global, global.config);
-
-module.exports = config;

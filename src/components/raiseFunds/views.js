@@ -15,7 +15,7 @@ const valuation_determination = require('consts/raisecapital/valuation_determina
 
 module.exports = {
   company: Backbone.View.extend(_.extend({
-    urlRoot: raiseCapitalServer + '/company',
+    urlRoot: app.config.raiseCapitalServer + '/company',
     template: require('./templates/company.pug'),
     events: _.extend({
       'click #submitForm': api.submitAction,
@@ -159,7 +159,7 @@ module.exports = {
   })),
 
   generalInformation: Backbone.View.extend(_.extend({
-    urlRoot: raiseCapitalServer + '/campaign/:id',
+    urlRoot: app.config.raiseCapitalServer + '/campaign/:id',
     template: require('./templates/generalInformation.pug'),
     events: _.extend({
         'click #submitForm': api.submitAction,
@@ -216,7 +216,6 @@ module.exports = {
     render() {
       this.$el.html(
           this.template({
-            serverUrl: serverUrl,
             Urls: Urls,
             fields: this.fields,
             values: this.model,
@@ -233,7 +232,7 @@ module.exports = {
   }, leavingConfirmationHelper.methods, menuHelper.methods, addSectionHelper.methods)),
 
   media: Backbone.View.extend(_.extend({
-    urlRoot: raiseCapitalServer + '/campaign/:id',
+    urlRoot: app.config.raiseCapitalServer + '/campaign/:id',
     template: require('./templates/media.pug'),
 
     events: _.extend({
@@ -355,7 +354,6 @@ module.exports = {
     render() {
       this.$el.html(
         this.template({
-          serverUrl: serverUrl,
           Urls: Urls,
           fields: this.fields,
           // values: this.model.toJSON(),
@@ -387,7 +385,7 @@ module.exports = {
     dropzoneHelpers.methods, addSectionHelper.methods)),
 
   teamMemberAdd: Backbone.View.extend(_.extend({
-    urlRoot: raiseCapitalServer + '/campaign/:id/team-members',
+    urlRoot: app.config.raiseCapitalServer + '/campaign/:id/team-members',
     template: require('./templates/teamMemberAdd.pug'),
     events: _.extend({
       'click .delete-member': 'deleteMember',
@@ -488,7 +486,7 @@ module.exports = {
   }, leavingConfirmationHelper.methods, menuHelper.methods, dropzoneHelpers.methods)),
 
   teamMembers: Backbone.View.extend(_.extend({
-    urlRoot: raiseCapitalServer + '/campaign/:id/team-members',
+    urlRoot: app.config.raiseCapitalServer + '/campaign/:id/team-members',
     events: _.extend({
       'click .delete-member': 'deleteMember',
       'click .submit_form': raiseHelpers.submitCampaign,
@@ -518,7 +516,6 @@ module.exports = {
 
       this.$el.html(
         template({
-            serverUrl: serverUrl,
             campaign: values,
             Urls: Urls,
             values: values,
@@ -556,7 +553,7 @@ module.exports = {
   }, menuHelper.methods)),
 
   specifics: Backbone.View.extend(_.extend({
-      urlRoot: raiseCapitalServer + '/campaign/:id',
+      urlRoot: app.config.raiseCapitalServer + '/campaign/:id',
       events: _.extend({
         'click #submitForm': api.submitAction,
         'change input[name="security_type"]': 'updateSecurityType',
@@ -693,7 +690,6 @@ module.exports = {
         const template = require('./templates/specifics.pug');
         this.$el.html(
             template({
-                serverUrl: serverUrl,
                 Urls: Urls,
                 fields: this.fields,
                 values: this.model,
@@ -722,7 +718,7 @@ module.exports = {
   }, leavingConfirmationHelper.methods, menuHelper.methods, dropzoneHelpers.methods, addSectionHelper.methods)),
 
   perks: Backbone.View.extend(_.extend({
-    urlRoot: raiseCapitalServer + '/campaign/:id',
+    urlRoot: app.config.raiseCapitalServer + '/campaign/:id',
     events: _.extend({
         'click #submitForm': api.submitAction,
         'click .onPreview': raiseHelpers.onPreviewAction,
@@ -757,7 +753,6 @@ module.exports = {
       let template = require('./templates/perks.pug');
       this.$el.html(
         template({
-            serverUrl: serverUrl,
             Urls: Urls,
             fields: this.fields,
             values: this.model,

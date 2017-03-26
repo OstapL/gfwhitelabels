@@ -9,15 +9,10 @@ class App {
     this.config = require('./config.js');
     this.fields = require('./fields.js');
     this.validation = require('components/validation/validation.js');
-
-    //TODO:remove this
-    _.extend(global, this.config);
-    _.extend(global.config = {}, this.config);
-
     this.user = new User();
 
-    this.routers = new Router();
     setTimeout(() => {
+      this.routers = new Router();
       Backbone.history.start({ pushState: true });
       window.addEventListener('popstate', this.routers.back);
     }, 100);
@@ -240,7 +235,7 @@ class App {
     if (file.startsWith('http://') || file.startsWith('https://') || file.startsWith('/'))
       return file;
 
-    return bucketServer + '/' + file;
+    return app.config.bucketServer + '/' + file;
   }
 
   breadcrumbs(title, subtitle, data) {

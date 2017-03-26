@@ -23,7 +23,7 @@ import 'bootstrap-slider/dist/css/bootstrap-slider.css';
 module.exports = {
   profile: Backbone.View.extend(_.extend({
     template: require('./templates/profile.pug'),
-    urlRoot: authServer + '/rest-auth/data',
+    urlRoot: app.config.authServer + '/rest-auth/data',
     doNotExtendModel: true,
     events: _.extend({
       'click #saveAccountInfo': 'saveAccountInfo',
@@ -170,7 +170,6 @@ module.exports = {
       this.$el.html(
         this.template({
           tab: this.activeTab || 'account_info',
-          serverUrl: serverUrl,
           user: this.model,
           company: app.user.get('company'),
           fields: this.fields,
@@ -366,7 +365,7 @@ module.exports = {
   }, helpers.phone.methods, helpers.dropzone.methods, helpers.yesNo.methods)),
 
   changePassword: Backbone.View.extend({
-    urlRoot: authServer + '/rest-auth/password/change',
+    urlRoot: app.config.authServer + '/rest-auth/password/change',
     events: {
       'submit form': api.submitAction,
     },
@@ -384,7 +383,7 @@ module.exports = {
   }),
 
   setNewPassword: Backbone.View.extend({
-    urlRoot: authServer + '/reset-password/do',
+    urlRoot: app.config.authServer + '/reset-password/do',
     events: {
       'submit form': api.submitAction,
     },
@@ -502,7 +501,7 @@ module.exports = {
       if (!confirm('Are you sure?'))
         return false;
 
-      api.makeRequest(investmentServer + '/' + id + '/decline', 'PUT').done((response) => {
+      api.makeRequest(app.config.investmentServer + '/' + id + '/decline', 'PUT').done((response) => {
         investment.status = FINANCIAL_INFORMATION.INVESTMENT_STATUS.CancelledByUser;
         helpers.campaign.initInvestment(investment);
 
@@ -667,7 +666,7 @@ module.exports = {
 
     initComments() {
       const View = require('components/comment/views.js');
-      const urlComments = commentsServer + '/company/' + this.company.id;
+      const urlComments = app.config.commentsServer + '/company/' + this.company.id;
       let optionsR = api.makeRequest(urlComments, 'OPTIONS');
       let dataR = api.makeRequest(urlComments);
 

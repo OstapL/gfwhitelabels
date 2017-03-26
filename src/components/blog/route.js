@@ -10,7 +10,7 @@ module.exports = {
   },
   methods: {
     list() {
-      api.makeCacheRequest(blogServer + '/', 'GET').then((data) => {
+      api.makeCacheRequest(app.config.blogServer + '/', 'GET').then((data) => {
         new View.list({
           model: data,
         }).render();
@@ -19,7 +19,7 @@ module.exports = {
     },
 
     createEdit(id) {
-      const r = id ? blogServer + '/' + id : '';
+      const r = id ? app.config.blogServer + '/' + id : '';
       $.when(r).then((data) => {
         new View.createEdit({
           model: data,
@@ -29,7 +29,7 @@ module.exports = {
     },
 
     detail(id) {
-      api.makeCacheRequest(blogServer + '/' + id, 'GET').then((data) => {
+      api.makeCacheRequest(app.config.blogServer + '/' + id, 'GET').then((data) => {
         new View.detail({
           model: data,
         }).render();
