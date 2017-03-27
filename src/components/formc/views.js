@@ -19,6 +19,7 @@ const validation = require('components/validation/validation.js');
 const disableEnterHelper = require('helpers/disableEnterHelper.js');
 
 const leavingConfirmationHelper = require('helpers/leavingConfirmationHelper.js');
+const raiseHelpers = require('../raiseFunds/helpers.js');
 
 const labels = {
   title: 'Title for Risk',
@@ -135,6 +136,7 @@ module.exports = {
       this.eSignCompanyName = eSignForm.find('#company-name');
       this.eSignFullName = eSignForm.find('#full_name');
       this.eSignPreview = eSignForm.find('.electronically .name');
+      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
 
       return this;
     },
@@ -467,6 +469,7 @@ module.exports = {
         })
       );
       disableEnterHelper.disableEnter.call(this);
+      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
 
@@ -577,6 +580,7 @@ module.exports = {
       );
       this.$el.find('.selectpicker').selectpicker();
       disableEnterHelper.disableEnter.call(this);
+      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
 
@@ -724,6 +728,7 @@ module.exports = {
         })
       );
       disableEnterHelper.disableEnter.call(this);
+      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
 
@@ -926,6 +931,7 @@ module.exports = {
       this.calculate(null, false);
       setTimeout(() => { this.createDropzones() } , 1000);
       disableEnterHelper.disableEnter.call(this);
+      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     }, 
   }, menuHelper.methods, dropzoneHelpers.methods, addSectionHelper.methods, leavingConfirmationHelper.methods)),
@@ -958,6 +964,7 @@ module.exports = {
           values: this.model,
         })
       );
+      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
   }, menuHelper.methods)),
@@ -1065,6 +1072,7 @@ module.exports = {
         $(this).css({ height: this.scrollHeight + 'px' });
       });
       disableEnterHelper.disableEnter.call(this);
+      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
   }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
@@ -1180,6 +1188,7 @@ module.exports = {
         $(this).css({ height: this.scrollHeight + 'px' });
       });
       disableEnterHelper.disableEnter.call(this);
+      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
   }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
@@ -1323,6 +1332,7 @@ module.exports = {
         $(this).css({ height: this.scrollHeight + 'px' });
       });
       disableEnterHelper.disableEnter.call(this);
+      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
 
@@ -1411,6 +1421,7 @@ module.exports = {
         $(this).css({ height: this.scrollHeight + 'px' });
       });
       disableEnterHelper.disableEnter.call(this);
+      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
 
@@ -1518,6 +1529,7 @@ module.exports = {
         $(this).css({ height: this.scrollHeight + 'px' });
       });
       disableEnterHelper.disableEnter.call(this);
+      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
   }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
@@ -1646,6 +1658,7 @@ module.exports = {
         $(this).css({ height: this.scrollHeight + 'px' });
       });
       disableEnterHelper.disableEnter.call(this);
+      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
   }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
@@ -1688,6 +1701,7 @@ module.exports = {
         $(this).css({ height: this.scrollHeight + 'px' });
       });
       disableEnterHelper.disableEnter.call(this);
+      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
   }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
@@ -1759,6 +1773,7 @@ module.exports = {
       );
       setTimeout(() => { this.createDropzones() } , 1000);
       disableEnterHelper.disableEnter.call(this);
+      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
   }, menuHelper.methods, yesNoHelper.methods, addSectionHelper.methods, dropzoneHelpers.methods, leavingConfirmationHelper.methods)),
@@ -2012,6 +2027,7 @@ module.exports = {
       );
       $('#security_modal #custom_security_type').parent().parent().hide();
       disableEnterHelper.disableEnter.call(this);
+      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
   }, addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods, leavingConfirmationHelper.methods)),
@@ -2064,6 +2080,7 @@ module.exports = {
         })
       );
       disableEnterHelper.disableEnter.call(this);
+      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
   }, menuHelper.methods, yesNoHelper.methods, addSectionHelper.methods, leavingConfirmationHelper.methods)),
