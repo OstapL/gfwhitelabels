@@ -50,7 +50,7 @@ class User {
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data));
 
-      cookies.set('token', data.token, {
+      app.cookies.set('token', data.token, {
         domain: '.' + app.config.domainUrl,
         expires: YEAR,
         path: '/',

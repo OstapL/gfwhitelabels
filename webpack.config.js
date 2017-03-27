@@ -2,7 +2,7 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
-// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const VENDOR_LIBS = [
   'jquery',
   'jquery-serializejson',
@@ -67,25 +67,20 @@ module.exports = {
     }),
     new webpack.ProvidePlugin({
       '$': 'jquery',
-      'jQuery': 'jquery',
-      'window.jQuery': 'jquery',
-      'Tether': 'tether',
+      'window.jQuery': 'jquery',//for owl.carousel
+      'jQuery': 'jquery',//for Bootstrap
       'window.Tether': 'tether',
       '_': 'underscore',
       'Backbone': 'backbone',
-      'cookies': 'cookies-js',
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
       minChunks: 2
     }),
-    // new BundleAnalyzerPlugin(),
+    new BundleAnalyzerPlugin(),
   ],
 
   module: {
-    // noParse: VENDOR_LIBS.map(function(name) {
-    //   return path.join(__dirname, "node_modules", name);
-    // }),
     loaders: [
       { test: /bootstrap\/js\//, loader: 'imports?jQuery=$' },
       { test: /\.html?$/, loader: 'file?name=[name].[ext]' },

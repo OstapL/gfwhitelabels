@@ -7,6 +7,7 @@ class App {
     this.cache = {};
     this.helpers = require('./helpers.js');
     this.config = require('./config.js');
+    this.cookies = require('cookies-js');
     this.fields = require('./fields.js');
     this.validation = require('components/validation/validation.js');
     this.user = new User();
