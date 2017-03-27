@@ -50,6 +50,8 @@ module.exports = Backbone.Router.extend(_.extend({
     app.emitFacebookPixelEvent();
     app.emitGoogleAnalyticsEvent();
 
+    app.clearClasses('#page', ['page']);
+
     if (_.contains(routesMap.auth, name) && !app.user.ensureLoggedIn())
       return false;
 

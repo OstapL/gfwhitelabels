@@ -73,6 +73,7 @@
   "dependencies": {
     "backbone": "git+https://github.com/jashkenas/backbone.git",
     "bootstrap-select": "^1.10.0",
+    "classlist-polyfill": "^1.0.3",
     "cookies-js": "^1.2.3",
     "cropperjs": "^0.8.1",
     "deep-diff": "^0.3.4",
