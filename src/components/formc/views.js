@@ -125,7 +125,6 @@ module.exports = {
 
       this.$el.html(
         template({
-          Urls: Urls,
           fields: this.fields,
           values: this.model,
           fullName: app.user.get('first_name') + ' ' + app.user.get('last_name'),
@@ -454,7 +453,6 @@ module.exports = {
 
       this.$el.html(
         template({
-          Urls: Urls,
           fields: this.fields,
           values: this.model,
           roles: roles,
@@ -572,7 +570,6 @@ module.exports = {
 
       this.$el.html(
         template({
-          Urls: Urls,
           fields: this.fields,
           values: this.model,
           templates: this.jsonTemplates,
@@ -721,7 +718,6 @@ module.exports = {
 
       this.$el.html(
         template({
-          Urls: Urls,
           fields: this.fields,
           values: this.model,
           templates: this.jsonTemplates,
@@ -908,7 +904,6 @@ module.exports = {
 
       this.$el.html(
         template({
-          Urls: Urls,
           fields: this.fields,
           values: this.model,
           templates: this.jsonTemplates,
@@ -959,7 +954,6 @@ module.exports = {
       const template = require('components/formc/templates/riskFactorsInstructions.pug');
       this.$el.html(
         template({
-          Urls: Urls,
           campaignId: this.model.campaign_id,
           values: this.model,
         })
@@ -1062,7 +1056,6 @@ module.exports = {
       let template = require('components/formc/templates/riskFactorsMarket.pug');
       this.$el.html(
         template({
-          Urls: Urls,
           fields: this.fields,
           values: this.model,
           defaultRisks: this.defaultRisks,
@@ -1178,7 +1171,6 @@ module.exports = {
       let template = require('components/formc/templates/riskFactorsFinancial.pug');
       this.$el.html(
         template({
-          Urls: Urls,
           fields: this.fields,
           values: this.model,
           defaultRisks: this.defaultRisks,
@@ -1321,7 +1313,6 @@ module.exports = {
       let template = require('components/formc/templates/riskFactorsOperational.pug');
       this.$el.html(
         template({
-          Urls: Urls,
           fields: this.fields,
           values: this.model,
           defaultRisks: this.defaultRisks,
@@ -1411,7 +1402,6 @@ module.exports = {
       let template = require('components/formc/templates/riskFactorsCompetitive.pug');
       this.$el.html(
         template({
-          Urls: Urls,
           fields: this.fields,
           values: this.model,
           defaultRisks: this.defaultRisks,
@@ -1519,7 +1509,6 @@ module.exports = {
       let template = require('components/formc/templates/riskFactorsPersonnel.pug');
       this.$el.html(
         template({
-          Urls: Urls,
           fields: this.fields,
           values: this.model,
           defaultRisks: this.defaultRisks,
@@ -1648,7 +1637,6 @@ module.exports = {
       let template = require('components/formc/templates/riskFactorsLegal.pug');
       this.$el.html(
         template({
-          Urls: Urls,
           fields: this.fields,
           values: this.model,
           defaultRisks: this.defaultRisks,
@@ -1691,7 +1679,6 @@ module.exports = {
       let template = require('components/formc/templates/riskFactorsMisc.pug');
       this.$el.html(
         template({
-          Urls: Urls,
           fields: this.fields,
           values: this.model,
           defaultRisks: this.defaultRisks,
@@ -1764,7 +1751,6 @@ module.exports = {
 
       this.$el.html(
         template({
-          Urls: Urls,
           fields: this.fields,
           values: this.model,
           campaignId: this.campaign.id,
@@ -2019,7 +2005,6 @@ module.exports = {
 
       this.$el.html(
         template({
-          Urls: Urls,
           fields: this.fields,
           values: this.model,
           templates: this.jsonTemplates,
@@ -2074,7 +2059,6 @@ module.exports = {
       let template = require('./templates/backgroundCheck.pug');
       this.$el.html(
         template({
-          Urls: Urls,
           fields: this.fields,
           values: this.model,
         })
@@ -2338,7 +2322,6 @@ module.exports = {
 
       this.$el.html(
         template({
-          Urls: Urls,
           fields: this.fields,
           formcId: this.formcId,
           values: {

@@ -306,13 +306,9 @@ $.serializeJSON.defaultOptions = _.extend($.serializeJSON.defaultOptions, {
 });
 
 //TODO: remove this on next iteration
-require('./config.js');
-//TODO: remove this on next iteration
 global.api = require('./helpers/forms.js');
-//TODO: remove this on next iteration
-global.Urls = require('./jsreverse.js');
-
 
 const App = require('app.js');
 
 global.app = new App();
+app.start();

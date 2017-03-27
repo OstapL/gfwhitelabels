@@ -10,14 +10,12 @@ class App {
     this.fields = require('./fields.js');
     this.validation = require('components/validation/validation.js');
     this.user = new User();
+  }
 
-    setTimeout(() => {
-      this.routers = new Router();
-      Backbone.history.start({ pushState: true });
-      window.addEventListener('popstate', this.routers.back);
-    }, 100);
-
-    // _.extend(this, Backbone.Events);
+  start() {
+    this.routers = new Router();
+    Backbone.history.start({ pushState: true });
+    window.addEventListener('popstate', this.routers.back);
 
     this.user.loadWithPromise().then(() => {
 

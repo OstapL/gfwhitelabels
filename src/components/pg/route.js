@@ -16,7 +16,6 @@ module.exports = {
         api.makeCacheRequest(app.config.raiseCapitalServer + '?limit=6').then((data) => {
           var html = template({
             collection: data,
-            Urls: Urls,
           });
 
           // app.cache[window.location.pathname] = html;
@@ -70,9 +69,7 @@ module.exports = {
         }
 
         let view = require('templates/' + name + '.pug');
-        $('#content').html(view({
-            Urls: Urls,
-          })
+        $('#content').html(view({})
         );
 
         $('body').scrollTo();

@@ -220,7 +220,6 @@ module.exports = {
 
       this.$el.html(
         this.template({
-          Urls: Urls,
           values: this.model,
           formatHelper: formatHelper,
           edit: this.edit,
@@ -602,7 +601,6 @@ module.exports = {
       this.$el.html(
         this.template({
           snippets: this.snippets,
-          Urls: Urls,
           fields: this.fields,
           values: this.model,
           user: this.user,
@@ -1156,7 +1154,6 @@ module.exports = {
     render() {
       this.$el.html(
         this.template({
-          Urls: Urls,
           investment: this.model,
         })
       );

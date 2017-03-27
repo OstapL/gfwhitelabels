@@ -102,7 +102,6 @@ module.exports = {
       this.usaStates = require('helpers/usaStates');
       this.$el.html(
         this.template({
-          Urls: Urls,
           fields: this.fields,
           values: this.model,
           user: app.user.toJSON(),
@@ -216,7 +215,6 @@ module.exports = {
     render() {
       this.$el.html(
           this.template({
-            Urls: Urls,
             fields: this.fields,
             values: this.model,
             templates: this.jsonTemplates,
@@ -354,7 +352,6 @@ module.exports = {
     render() {
       this.$el.html(
         this.template({
-          Urls: Urls,
           fields: this.fields,
           // values: this.model.toJSON(),
           values: this.model,
@@ -517,7 +514,6 @@ module.exports = {
       this.$el.html(
         template({
             campaign: values,
-            Urls: Urls,
             values: values,
             formc: this.formc,
           })
@@ -690,7 +686,6 @@ module.exports = {
         const template = require('./templates/specifics.pug');
         this.$el.html(
             template({
-                Urls: Urls,
                 fields: this.fields,
                 values: this.model,
                 formc: this.formc,
@@ -753,7 +748,6 @@ module.exports = {
       let template = require('./templates/perks.pug');
       this.$el.html(
         template({
-            Urls: Urls,
             fields: this.fields,
             values: this.model,
             formc: this.formc,
