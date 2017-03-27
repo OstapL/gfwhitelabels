@@ -7,7 +7,7 @@
     background-attachment: fixed
     h1
       color: $white
-      line-height: 48px
+      line-height: rem(60)
       @media only screen and (max-width : 1100px)
         font-size: rem(36)!important
         line-height: 36px
@@ -29,7 +29,7 @@
       content: ''
       left: 0
       background-color: $growth-is-bgc
-      width: 41%
+      width: 40%
       height: 100%
       @media only screen and (max-width : 992px)
         width: 100%
@@ -37,11 +37,11 @@
       position: absolute
       top: 0
       content: ''
-      left: 41%
-      border: 153px solid transparent
+      left: 40%
+      border: 160px solid transparent
       border-left: 121px solid $growth-is-bgc
-      @media only screen and (max-width : 1200px)
-        border: 184px solid transparent
+      @media only screen and (max-width : 1199px)
+        border: 195px solid transparent
         border-left: 110px solid $growth-is-bgc
       @media only screen and (max-width : 992px)
         border: none
@@ -51,6 +51,8 @@
       padding-top: rem(50)
       padding-bottom: rem(50)
       color: $white
+      h3
+        line-height: rem(24)
       @media only screen and (max-width : 768px)
         padding-bottom: 0
       .content
