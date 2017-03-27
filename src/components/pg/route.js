@@ -69,8 +69,10 @@ module.exports = {
         }
 
         let view = require('templates/' + name + '.pug');
-        $('#content').html(view({})
-        );
+
+        app.addClassesTo('#page', [name]);
+
+        $('#content').html(view());
 
         $('body').scrollTo();
         app.hideLoading();
