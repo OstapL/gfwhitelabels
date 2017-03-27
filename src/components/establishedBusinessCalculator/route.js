@@ -8,38 +8,48 @@ module.exports = {
   },
   methods: {
     calculatorEstablishedBusinessIntro() {
-      const View = require('./views');
-      new View.intro().render();
-      app.hideLoading();
-      $('body').scrollTo();
+      require.ensure([], () => {
+        const View = require('./views');
+        new View.intro().render();
+        app.hideLoading();
+        $('body').scrollTo();
+      });
     },
 
     calculatorEstablishedBusinessStep1() {
-      const View = require('./views');
-      new View.step1().render();
-      $('body').scrollTo();
-      app.hideLoading();
+      require.ensure([], () => {
+        const View = require('./views');
+        new View.step1().render();
+        $('body').scrollTo();
+        app.hideLoading();
+      });
     },
 
     calculatorEstablishedBusinessStep2() {
-      const View = require('./views');
-      new View.step2().render();
-      $('body').scrollTo();
-      app.hideLoading();
+      require.ensure([], () => {
+        const View = require('./views');
+        new View.step2().render();
+        $('body').scrollTo();
+        app.hideLoading();
+      });
     },
 
     calculatorEstablishedBusinessStep3() {
-      const View = require('./views');
-      new View.step3().render();
-      $('body').scrollTo();
-      app.hideLoading();
+      require.ensure([], () => {
+        const View = require('./views');
+        new View.step3().render();
+        $('body').scrollTo();
+        app.hideLoading();
+      });
     },
 
     calculatorEstablishedBusinessFinish() {
-      const View = require('./views');
-      new View.finish().render();
-      $('body').scrollTo();
-      app.hideLoading();
+      require.ensure([], () => {
+        const View = require('./views');
+        new View.finish().render();
+        $('body').scrollTo();
+        app.hideLoading();
+      });
     },
   },
 };
