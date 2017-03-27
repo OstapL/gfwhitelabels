@@ -262,7 +262,9 @@ module.exports = {
             }
           }
         });
+      }, 100);
 
+      setTimeout(() => {
         this.$el.find('[data-toggle="sticky-onscroll"]').each(function() {
           var sticky = $(this);
           var stickyWrapper = $('<div>').addClass('sticky-wrapper'); // insert hidden element to maintain actual top offset on page
@@ -280,7 +282,7 @@ module.exports = {
 
         this.initComments();
 
-      }, 100);
+      }, 1200);
 
       this.$el.find('.perks .col-xl-4 p').equalHeights();
       this.$el.find('.team .auto-height').equalHeights();
