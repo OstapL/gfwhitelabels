@@ -37,7 +37,6 @@ module.exports = {
       this.$el.html('');
       this.$el.append(
         this.template({
-          serverUrl: serverUrl,
           collection: this.collection,
         })
       );
@@ -109,7 +108,7 @@ module.exports = {
     submitCampaign(e) {
 
       api.makeRequest(
-        raiseCapitalServer + '/company/' + this.model.id + '/edit',
+        app.config.raiseCapitalServer + '/company/' + this.model.id + '/edit',
         'GET'
       ).then(function(data) {
         if(
@@ -221,8 +220,6 @@ module.exports = {
 
       this.$el.html(
         this.template({
-          serverUrl: serverUrl,
-          Urls: Urls,
           values: this.model,
           formatHelper: formatHelper,
           edit: this.edit,
@@ -330,7 +327,7 @@ module.exports = {
 
     initComments() {
       const View = require('components/comment/views.js');
-      const urlComments = commentsServer + '/company/' + this.model.id;
+      const urlComments = app.config.commentsServer + '/company/' + this.model.id;
       let optionsR = api.makeRequest(urlComments, 'OPTIONS');
       let dataR = api.makeRequest(urlComments);
 
@@ -358,7 +355,7 @@ module.exports = {
   investment: Backbone.View.extend({
     el: '#content',
     template: require('./templates/investment.pug'),
-    urlRoot: investmentServer + '/',
+    urlRoot: app.config.investmentServer + '/',
     doNotExtendModel: true,
     events: {
       'submit form.invest_form': 'submit',
@@ -603,9 +600,7 @@ module.exports = {
     render() {
       this.$el.html(
         this.template({
-          serverUrl: serverUrl,
           snippets: this.snippets,
-          Urls: Urls,
           fields: this.fields,
           values: this.model,
           user: this.user,
@@ -851,7 +846,7 @@ module.exports = {
     },
 
     getSuccessUrl(data) {
-      return investmentServer + '/' + data.id + '/invest-thanks';
+      return app.config.investmentServer + '/' + data.id + '/invest-thanks';
     },
 
     updateLimitInModal(e) {
@@ -920,7 +915,7 @@ module.exports = {
         return false;
       }
 
-      api.makeRequest(authServer + '/rest-auth/data', 'PATCH', data).done((data) => {
+      api.makeRequest(app.config.authServer + '/rest-auth/data', 'PATCH', data).done((data) => {
         this.user.net_worth = netWorth;
         this.user.annual_income = annualIncome;
 
@@ -940,7 +935,7 @@ module.exports = {
     getSignature () {
 
       cookies.set('token', app.user.token, {
-        domain: '.' + domainUrl,
+        domain: '.' + app.config.domainUrl,
         path: '/',
       });
 
@@ -1003,7 +998,7 @@ module.exports = {
     },
 
     saveEsign(responseData) {
-      const reqUrl = global.esignServer + '/pdf-doc';
+      const reqUrl = app.config.esignServer + '/pdf-doc';
       const successRoute = this.getSuccessUrl(responseData);
       const formData = this.getDocMetaData();
       const subscriptionAgreementPath = this.getSubscriptionAgreementPath();
@@ -1043,7 +1038,7 @@ module.exports = {
       const isSubscriptionAgreement = pathToDoc.indexOf('subscription_agreement');
       
       if (isSubscriptionAgreement !== -1) {
-        pathToDoc = global.esignServer + '/pdf-doc/';
+        pathToDoc = app.config.esignServer + '/pdf-doc/';
         pathToDoc += this.getSubscriptionAgreementPath();
       }
       
@@ -1159,8 +1154,6 @@ module.exports = {
     render() {
       this.$el.html(
         this.template({
-          serverUrl: serverUrl,
-          Urls: Urls,
           investment: this.model,
         })
       );

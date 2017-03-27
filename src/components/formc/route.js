@@ -1,48 +1,42 @@
-//TODO: rmove view into methods
-const View = require('components/formc/views.js');
+//TODO: remove view into methods
 const formcHelpers = require('./helpers.js');
 const STATUSES = require('consts/raisecapital/companyStatuses.json').STATUS;
 
-function getOCCF(optionsR, viewName, params = {}) {
+function getOCCF(optionsR, viewName, params = {}, View) {
   $('body').scrollTo();
   params.el = '#content';
-  $.when(optionsR, app.user.getCompanyR(), app.user.getCampaignR(), app.user.getFormcR(params.id))
-  .done((options, company, campaign, formc) => {
+  $.when(
+    optionsR,
+    app.user.getCompanyR(),
+    app.user.getCampaignR(),
+    app.user.getFormcR(params.id)
+  ).done((options, company, campaign, formc) => {
 
-    if (options != '') {
+    if (options) {
       params.fields = options[0].fields;
     }
 
     // ToDo
     // This how we can avoid empty response
-    if (company == '') {
+    if (!company) {
       params.company = app.user.company;
       params.campaign = app.user.campaign;
       params.formc = app.user.formc;
     } else {
-      if(options != '') {
+      if(options) {
         params.fields = options[0].fields;
       }
-      // ToDo
-      // This how we can avoid empty response
-      if(company == '') {
-        params.company = app.user.company;
-        params.campaign = app.user.campaign;
-        params.formc = app.user.formc;
-      }
-      else {
-        if(Object.keys(company[0]).length > 0) {
-          params.company = app.user.company = app.user.company || company[0];
-          params.campaign = app.user.campaign = app.user.campaign || campaign[0];
-          params.formc = app.user.formc = app.user.formc || formc[0];
 
-        } else {
-          params.company = {};
-          params.campaign = {};
-          params.formc = {};
-        }
-      }
+      if(Object.keys(company[0]).length > 0) {
+        params.company = app.user.company = app.user.company || company[0];
+        params.campaign = app.user.campaign = app.user.campaign || campaign[0];
+        params.formc = app.user.formc = app.user.formc || formc[0];
 
+      } else {
+        params.company = {};
+        params.campaign = {};
+        params.formc = {};
+      }
     }
 
     if (params.company.is_approved < STATUSES.APPROVED) {
@@ -106,173 +100,235 @@ module.exports = {
   },
   methods: {
     introduction(id) {
-      const optionsR = api.makeCacheRequest(formcServer + '/' + id + '/introduction', 'OPTIONS');
-      getOCCF(optionsR, 'introduction', { id: id });
+      require.ensure([], () => {
+        const View = require('components/formc/views.js');
+        const optionsR = api.makeCacheRequest(app.config.formcServer + '/' + id + '/introduction', 'OPTIONS');
+        getOCCF(optionsR, 'introduction', { id: id }, View);
+      });
     },
 
     teamMembers(id) {
-      const optionsUrl = formcServer + '/' + id + '/team-members/employers';
-      const optionsR = api.makeCacheRequest(optionsUrl, 'OPTIONS');
-      getOCCF(optionsR, 'teamMembers', { id: id });
+      require.ensure([], () => {
+        const View = require('components/formc/views.js');
+        const optionsUrl = app.config.formcServer + '/' + id + '/team-members/employers';
+        const optionsR = api.makeCacheRequest(optionsUrl, 'OPTIONS');
+        getOCCF(optionsR, 'teamMembers', { id: id }, View);
+      });
     },
 
     teamMemberAdd(id, role, userId) {
-      const optionsUrl = formcServer + '/' + id + '/team-members/' + role;
-      const optionsR = api.makeCacheRequest(optionsUrl, 'OPTIONS');
-      getOCCF(optionsR, 'teamMemberAdd', {
-        role: role,
-        user_id: userId,
-        id: id,
+      require.ensure([], () => {
+        const View = require('components/formc/views.js');
+        const optionsUrl = app.config.formcServer + '/' + id + '/team-members/' + role;
+        const optionsR = api.makeCacheRequest(optionsUrl, 'OPTIONS');
+        getOCCF(optionsR, 'teamMemberAdd', {
+          role: role,
+          user_id: userId,
+          id: id,
+        }, View);
       });
-
     },
 
     relatedParties(id) {
-      const optionsR = api.makeCacheRequest(formcServer + '/' + id + '/related-parties', 'OPTIONS');
-      getOCCF(optionsR, 'relatedParties', { id: id });
+      require.ensure([], () => {
+        const View = require('components/formc/views.js');
+        const optionsR = api.makeCacheRequest(app.config.formcServer + '/' + id + '/related-parties', 'OPTIONS');
+        getOCCF(optionsR, 'relatedParties', { id: id }, View);
+      });
     },
 
     useOfProceeds(id) {
-      const optionsR = api.makeCacheRequest(formcServer + '/' + id + '/use-of-proceeds', 'OPTIONS');
-      getOCCF(optionsR, 'useOfProceeds', { id: id });
+      require.ensure([], () => {
+        const View = require('components/formc/views.js');
+        const optionsR = api.makeCacheRequest(app.config.formcServer + '/' + id + '/use-of-proceeds', 'OPTIONS');
+        getOCCF(optionsR, 'useOfProceeds', { id: id }, View);
+      });
     },
 
     riskFactorsInstruction(id) {
-      getOCCF('', 'riskFactorsInstruction', { id: id });
+      require.ensure([], () => {
+        const View = require('components/formc/views.js');
+        getOCCF('', 'riskFactorsInstruction', { id: id }, View);
+      });
     },
 
     riskFactorsMarket(id) {
-      const optionsUrl = formcServer + '/' + id + '/risk-factors-market';
-      const optionsR = api.makeCacheRequest(optionsUrl, 'OPTIONS');
-      getOCCF(optionsR, 'riskFactorsMarket', { id: id });
+      require.ensure([], () => {
+        const View = require('components/formc/views.js');
+        const optionsUrl = app.config.formcServer + '/' + id + '/risk-factors-market';
+        const optionsR = api.makeCacheRequest(optionsUrl, 'OPTIONS');
+        getOCCF(optionsR, 'riskFactorsMarket', { id: id }, View);
+      });
     },
 
     riskFactorsFinancial(id) {
-      const optionsUrl = formcServer + '/' + id + '/risk-factors-financial';
-      const optionsR = api.makeCacheRequest(optionsUrl, 'OPTIONS');
-      getOCCF(optionsR, 'riskFactorsFinancial', { id: id });
+      require.ensure([], () => {
+        const View = require('components/formc/views.js');
+        const optionsUrl = app.config.formcServer + '/' + id + '/risk-factors-financial';
+        const optionsR = api.makeCacheRequest(optionsUrl, 'OPTIONS');
+        getOCCF(optionsR, 'riskFactorsFinancial', { id: id }, View);
+      });
     },
 
     riskFactorsOperational(id) {
-      const optionsUrl = formcServer + '/' + id + '/risk-factors-operational';
-      const optionsR = api.makeCacheRequest(optionsUrl, 'OPTIONS');
-      getOCCF(optionsR, 'riskFactorsOperational', { id: id });
+      require.ensure([], () => {
+        const View = require('components/formc/views.js');
+        const optionsUrl = app.config.formcServer + '/' + id + '/risk-factors-operational';
+        const optionsR = api.makeCacheRequest(optionsUrl, 'OPTIONS');
+        getOCCF(optionsR, 'riskFactorsOperational', { id: id }, View);
+      });
     },
 
     riskFactorsCompetitive(id) {
-      const optionsUrl = formcServer + '/' + id + '/risk-factors-competitive';
-      const optionsR = api.makeCacheRequest(optionsUrl, 'OPTIONS');
-      getOCCF(optionsR, 'riskFactorsCompetitive', { id: id });
+      require.ensure([], () => {
+        const View = require('components/formc/views.js');
+        const optionsUrl = app.config.formcServer + '/' + id + '/risk-factors-competitive';
+        const optionsR = api.makeCacheRequest(optionsUrl, 'OPTIONS');
+        getOCCF(optionsR, 'riskFactorsCompetitive', { id: id }, View);
+      });
     },
 
     riskFactorsPersonnel(id) {
-      const optionsUrl = formcServer + '/' + id + '/risk-factors-personnel';
-      const optionsR = api.makeCacheRequest(optionsUrl, 'OPTIONS');
-      getOCCF(optionsR, 'riskFactorsPersonnel', { id: id });
+      require.ensure([], () => {
+        const View = require('components/formc/views.js');
+        const optionsUrl = app.config.formcServer + '/' + id + '/risk-factors-personnel';
+        const optionsR = api.makeCacheRequest(optionsUrl, 'OPTIONS');
+        getOCCF(optionsR, 'riskFactorsPersonnel', { id: id }, View);
+      });
     },
 
     riskFactorsLegal(id) {
-      const optionsUrl = formcServer + '/' + id + '/risk-factors-legal';
-      const optionsR = api.makeCacheRequest(optionsUrl, 'OPTIONS');
-      getOCCF(optionsR, 'riskFactorsLegal', { id: id });
+      require.ensure([], () => {
+        const View = require('components/formc/views.js');
+        const optionsUrl = app.config.formcServer + '/' + id + '/risk-factors-legal';
+        const optionsR = api.makeCacheRequest(optionsUrl, 'OPTIONS');
+        getOCCF(optionsR, 'riskFactorsLegal', { id: id }, View);
+      });
     },
 
     riskFactorsMisc(id) {
-      const optionsUrl = formcServer + '/' + id + '/risk-factors-misc';
-      const optionsR = api.makeCacheRequest(optionsUrl, 'OPTIONS');
-      getOCCF(optionsR, 'riskFactorsMisc', { id: id });
+      require.ensure([], () => {
+        const View = require('components/formc/views.js');
+        const optionsUrl = app.config.formcServer + '/' + id + '/risk-factors-misc';
+        const optionsR = api.makeCacheRequest(optionsUrl, 'OPTIONS');
+        getOCCF(optionsR, 'riskFactorsMisc', { id: id }, View);
+      });
     },
 
     financialCondition(id) {
-      const optionsR = api.makeRequest(formcServer + '/' + id + '/financial-condition', 'OPTIONS');
-      getOCCF(optionsR, 'financialCondition', { id: id });
+      require.ensure([], () => {
+        const View = require('components/formc/views.js');
+        const optionsR = api.makeRequest(app.config.formcServer + '/' + id + '/financial-condition', 'OPTIONS');
+        getOCCF(optionsR, 'financialCondition', { id: id }, View);
+      });
     },
 
     outstandingSecurity(id) {
-      const optionsUrl = formcServer + '/' + id + '/outstanding-security';
-      const optionsR = api.makeCacheRequest(optionsUrl, 'OPTIONS');
-      getOCCF(optionsR, 'outstandingSecurity', { id: id });
+      require.ensure([], () => {
+        const View = require('components/formc/views.js');
+        const optionsUrl = app.config.formcServer + '/' + id + '/outstanding-security';
+        const optionsR = api.makeCacheRequest(optionsUrl, 'OPTIONS');
+        getOCCF(optionsR, 'outstandingSecurity', { id: id }, View);
+      });
     },
 
     backgroundCheck(id) {
-      const optionsUrl = formcServer + '/' + id + '/background-check';
-      const optionsR = api.makeCacheRequest(optionsUrl, 'OPTIONS');
-      getOCCF(optionsR, 'backgroundCheck', { id: id });
+      require.ensure([], () => {
+        const View = require('components/formc/views.js');
+        const optionsUrl = app.config.formcServer + '/' + id + '/background-check';
+        const optionsR = api.makeCacheRequest(optionsUrl, 'OPTIONS');
+        getOCCF(optionsR, 'backgroundCheck', { id: id }, View);
+      });
     },
 
     finalReview(id) {
-      $('body').scrollTo();
-      const formcOptionsR = api.makeCacheRequest(formcServer + '/' + id, 'OPTIONS');
-      $.when(formcOptionsR, app.user.getFormcR(id)).then((formcFields, formc) => {
-        if (formc[0]) {
-          app.user.formc = formc[0];
-        }
+      require.ensure([], () => {
+        $('body').scrollTo();
+        const View = require('components/formc/views.js');
+        const formcOptionsR = api.makeCacheRequest(app.config.formcServer + '/' + id, 'OPTIONS');
+        $.when(formcOptionsR, app.user.getFormcR(id)).then((formcFields, formc) => {
+          if (formc[0]) {
+            app.user.formc = formc[0];
+          }
 
-        const companyUrl = raiseCapitalServer + '/company/' + app.user.formc.company_id;
-        const campaignUrl = raiseCapitalServer + '/campaign/' + app.user.formc.company_id;
-        $.when(
-          api.makeCacheRequest(raiseCapitalServer + '/company', 'OPTIONS'),
-          api.makeCacheRequest(raiseCapitalServer + '/campaign', 'OPTIONS'),
-          app.user.getCompanyR(app.user.formc.company_id, 'GET'),
-          app.user.getCampaignR(app.user.formc.campaign_id, 'GET'),
-        ).done((companyFields, campaignFields, company, campaign) => {
+          const companyUrl = app.config.raiseCapitalServer + '/company/' + app.user.formc.company_id;
+          const campaignUrl = app.config.raiseCapitalServer + '/campaign/' + app.user.formc.company_id;
+          $.when(
+            api.makeCacheRequest(app.config.raiseCapitalServer + '/company', 'OPTIONS'),
+            api.makeCacheRequest(app.config.raiseCapitalServer + '/campaign', 'OPTIONS'),
+            app.user.getCompanyR(app.user.formc.company_id, 'GET'),
+            app.user.getCampaignR(app.user.formc.campaign_id, 'GET'),
+          ).done((companyFields, campaignFields, company, campaign) => {
 
-          const fields = {
-            company: companyFields[0].fields,
-            campaign: campaignFields[0].fields,
-            formc: formcFields[0].fields,
-          };
+            const fields = {
+              company: companyFields[0].fields,
+              campaign: campaignFields[0].fields,
+              formc: formcFields[0].fields,
+            };
 
-          if (company[0]) app.user.company = company[0];
-          if (campaign[0]) app.user.campaign = campaign[0];
+            if (company[0]) app.user.company = company[0];
+            if (campaign[0]) app.user.campaign = campaign[0];
 
-          var model = app.user.company;
-          model.campaign = app.user.campaign;
-          model.formc = app.user.formc;
+            var model = app.user.company;
+            model.campaign = app.user.campaign;
+            model.formc = app.user.formc;
 
-          const finalReviewView = new View.finalReview({
-            el: '#content',
-            fields: fields,
-            model: model,
-            formcId: id,
+            const finalReviewView = new View.finalReview({
+              el: '#content',
+              fields: fields,
+              model: model,
+              formcId: id,
+            });
+            finalReviewView.render();
+            app.hideLoading();
+
           });
-          finalReviewView.render();
-          app.hideLoading();
-
         });
       });
     },
 
     electronicSignature(id) {
-      let i = new View.electronicSignature({
-        el: '#content',
+      require.ensure([], () => {
+        const View = require('components/formc/views.js');
+        let i = new View.electronicSignature({
+          el: '#content',
+        });
+        i.render();
+        app.hideLoading();
       });
-      i.render();
-      app.hideLoading();
     },
 
     electronicSignatureCompany(id) {
-      let i = new View.electronicSignatureCompany({
-        el: '#content',
+      require.ensure([], () => {
+        const View = require('components/formc/views.js');
+        let i = new View.electronicSignatureCompany({
+          el: '#content',
+        });
+        i.render();
+        app.hideLoading();
       });
-      i.render();
-      app.hideLoading();
     },
 
     electronicSignatureCik(id) {
-      let i = new View.electronicSignatureCik({
-        el: '#content',
+      require.ensure([], () => {
+        const View = require('components/formc/views.js');
+        let i = new View.electronicSignatureCik({
+          el: '#content',
+        });
+        i.render();
+        app.hideLoading();
       });
-      i.render();
-      app.hideLoading();
     },
 
     electronicSignatureFinancials(id) {
-      let i = new View.electronicSignatureFinancials({
-        el: '#content',
+      require.ensure([], () => {
+        const View = require('components/formc/views.js');
+        let i = new View.electronicSignatureFinancials({
+          el: '#content',
+        });
+        i.render();
+        app.hideLoading();
       });
-      i.render();
-      app.hideLoading();
     },
   },
 };

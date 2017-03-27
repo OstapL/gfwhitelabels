@@ -35,15 +35,12 @@ const routesMap = _.reduce(componentRoutes, (dest, route) => {
   return dest;
 }, { routes: {}, methods: {}, auth: [] });
 
-//TODO: move into app.js
-const errorPageHelper = require('helpers/errorPageHelper.js');
-
 const notFound = () => {
   errorPageHelper({ status: 404 });
   app.hideLoading();
 };
 
-const Router = Backbone.Router.extend(_.extend({
+module.exports = Backbone.Router.extend(_.extend({
   routes: _.extend({}, routesMap.routes, { '*notFound': notFound }),
 
   initialize() {
@@ -73,46 +70,3 @@ const Router = Backbone.Router.extend(_.extend({
   },
 
 }, routesMap.methods));
-
-//TODO: why this code is here
-app.on('userLoaded', function (data) {
-
-  app.routers = new Router();
-  Backbone.history.start({ pushState: true });
-
-  window.addEventListener('popstate', app.routers.back);
-
-  let menu = require('components/menu/views.js');
-  app.menu = new menu.menu({
-    el: '#menuList',
-  });
-  app.menu.render();
-  let i = new menu.footer({
-    el: '.footer_new',
-  });
-  i.render();
-
-  app.notification = new menu.notification({
-    el: '#menuNotification',
-  });
-  app.notification.render();
-  app.profile = new menu.profile({
-    el: '#menuProfile',
-  });
-  app.profile.render();
-  // app.trigger('menuReady');
-});
-
-$(document).ready(function () {
-
-  // show bottom logo while scrolling page
-  $(window).scroll(function () {
-    let $bottomLogo = $('#fade_in_logo');
-    let offsetTopBottomLogo = $bottomLogo.offset().top;
-
-    if (($(window).scrollTop() + $(window).height() >= offsetTopBottomLogo) && !$bottomLogo.hasClass('fade-in')) {
-      $bottomLogo.addClass('fade-in');
-    }
-  });
-
-});
