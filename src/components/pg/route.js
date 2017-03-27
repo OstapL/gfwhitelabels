@@ -185,9 +185,7 @@ module.exports = {
           });
         };
       })(jQuery);
-      $(".simplify img").animated("fadeIn");
-      $(".does-not h2").animated("fadeInUp");
-      $(".does-not-wrap").animated("zoomIn");
+      
       
     },
   },
