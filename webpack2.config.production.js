@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 const HtmlPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 let package1 = require('./package.json');
 const dependencies = Object.keys(package1.dependencies);
@@ -92,7 +93,7 @@ module.exports = {
     new HtmlPlugin({
       title: 'GrowthFountain | Equity Crowdfunding Platform',
       template: './src/index.pug',
-      filename: './dist/index.html',
+      filename: 'index.html',
       inject: 'body',
     }),
     new ExtractTextPlugin({
@@ -112,6 +113,18 @@ module.exports = {
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
       minChunks: 2,
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      mangle: true,
+      compress: {
+        warnings: false,
+      },
+      output: { comments: false },
+    }),
+    new CleanWebpackPlugin(['dist'], {
+      root: __dirname,
+      verbose: true,
+      dry: false,
     }),
   ],
   devtool: 'eval',
