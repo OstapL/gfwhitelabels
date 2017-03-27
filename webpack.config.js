@@ -3,6 +3,8 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
+//TODO: read dependencies from package.json
 const VENDOR_LIBS = [
   'jquery',
   'jquery-serializejson',
@@ -18,9 +20,11 @@ const VENDOR_LIBS = [
   'dropzone',
   'hellojs',
   'moment',
+  'intl',
   'owl.carousel',
   'parseuri',
   'socket.io-client',
+  'babel-polyfill'
 ];
 
 module.exports = {
