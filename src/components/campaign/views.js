@@ -252,16 +252,7 @@ module.exports = {
           }
         };
 
-        /*$('*[data-toggle="lightbox"]').click(function (e) {
-          e.preventDefault();
-          $(this).ekkoLightbox();
-        });*/
-        /*this.$el.delegate('*[data-toggle="lightbox"]', 'click', function(event) {
-          event.preventDefault();
-          // $(this).ekkoLightbox();
-          $(this).fancybox();
-        }); */
-        /*this.$('*[data-toggle="lightbox"]').fancybox({
+        this.$('.fancybox').fancybox({
           openEffect  : 'elastic',
           closeEffect : 'elastic',
 
@@ -270,7 +261,7 @@ module.exports = {
               type : 'inside'
             }
           }
-        });*/
+        });
 
         this.$el.find('[data-toggle="sticky-onscroll"]').each(function() {
           var sticky = $(this);
@@ -296,15 +287,6 @@ module.exports = {
       this.$el.find('.card-inverse p').equalHeights();
       this.$el.find('.modal').on('hidden.bs.modal', function(event) {
         $(event.currentTarget).find('iframe').attr('src', $(event.currentTarget).find('iframe').attr('src'));
-      });
-
-      //this.$('body').on('.click', '.show-more-members', function() {
-      //  $('.hide-more-detail').addClass('.show-more-detail');
-      // });
-      // $('*[data-toggle="lightbox"]').fancybox({
-      $('.fancybox').fancybox({
-        openEffect  : 'none',
-        closeEffect : 'none'
       });
 
       // fetch vimeo
