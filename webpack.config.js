@@ -69,6 +69,7 @@ module.exports = {
       '$': 'jquery',
       'window.jQuery': 'jquery',//for owl.carousel
       'jQuery': 'jquery',//for Bootstrap
+      'Tether': 'tether',
       'window.Tether': 'tether',
       '_': 'underscore',
       'Backbone': 'backbone',

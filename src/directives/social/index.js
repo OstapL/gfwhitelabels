@@ -59,7 +59,7 @@ class SocialNetworks {
 
     const data = {
       url: window.location.origin + '/' + model.id,
-      title: stripHtml(options.titlePrefix + companyName + '\'s ' + corporateStructure + 'on GrowthFountain.com '),
+      title: stripHtml(options.titlePrefix + companyName + '\'s ' + corporateStructure + 'on ' + window.location.host + ' '),
       description: stripHtml(options.descriptionPrefix + (model.description || '')),
       picture: campaignHelper.getImageCampaign(model.campaign),
       text: stripHtml(options.titlePrefix + companyName + '\'s ' + corporateStructure + 'on @growthfountain '),

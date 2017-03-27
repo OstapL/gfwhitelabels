@@ -236,6 +236,20 @@ module.exports = {
       });
 
       setTimeout(() => {
+
+        this.$('.fancybox').fancybox({
+          openEffect  : 'elastic',
+          closeEffect : 'elastic',
+
+          helpers : {
+            title : {
+              type : 'inside'
+            }
+          }
+        });
+      }, 100);
+
+      setTimeout(() => {
         var stickyToggle = function(sticky, stickyWrapper, scrollElement) {
           var stickyHeight = sticky.outerHeight();
           var stickyTop = stickyWrapper.offset().top;
@@ -248,26 +262,6 @@ module.exports = {
             stickyWrapper.height('auto');
           }
         };
-
-        /*$('*[data-toggle="lightbox"]').click(function (e) {
-          e.preventDefault();
-          $(this).ekkoLightbox();
-        });*/
-        /*this.$el.delegate('*[data-toggle="lightbox"]', 'click', function(event) {
-          event.preventDefault();
-          // $(this).ekkoLightbox();
-          $(this).fancybox();
-        }); */
-        /*this.$('*[data-toggle="lightbox"]').fancybox({
-          openEffect  : 'elastic',
-          closeEffect : 'elastic',
-
-          helpers : {
-            title : {
-              type : 'inside'
-            }
-          }
-        });*/
 
         this.$el.find('[data-toggle="sticky-onscroll"]').each(function() {
           var sticky = $(this);
@@ -286,22 +280,13 @@ module.exports = {
 
         this.initComments();
 
-      }, 100);
+      }, 1200);
 
       this.$el.find('.perks .col-xl-4 p').equalHeights();
       this.$el.find('.team .auto-height').equalHeights();
       this.$el.find('.card-inverse p').equalHeights();
       this.$el.find('.modal').on('hidden.bs.modal', function(event) {
         $(event.currentTarget).find('iframe').attr('src', $(event.currentTarget).find('iframe').attr('src'));
-      });
-
-      //this.$('body').on('.click', '.show-more-members', function() {
-      //  $('.hide-more-detail').addClass('.show-more-detail');
-      // });
-      // $('*[data-toggle="lightbox"]').fancybox({
-      $('.fancybox').fancybox({
-        openEffect  : 'none',
-        closeEffect : 'none'
       });
 
       // fetch vimeo

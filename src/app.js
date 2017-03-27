@@ -14,11 +14,11 @@ class App {
   }
 
   start() {
-    this.routers = new Router();
-    Backbone.history.start({ pushState: true });
-    window.addEventListener('popstate', this.routers.back);
-
     this.user.loadWithPromise().then(() => {
+
+      this.routers = new Router();
+      Backbone.history.start({ pushState: true });
+      window.addEventListener('popstate', this.routers.back);
 
       this.menu = new Menu.menu({
         el: '#menuList',
