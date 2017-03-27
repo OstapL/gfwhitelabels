@@ -1,4 +1,5 @@
 .raise-capital-landing
+  position: relative
   .top-baner
     background-image: url("/img/raise-landing/raise-landing-top.jpg")
     height: 70vh
@@ -6,7 +7,7 @@
     background-attachment: fixed
     h1
       color: $white
-      line-height: 48px
+      line-height: rem(60)
       @media only screen and (max-width : 1100px)
         font-size: rem(36)!important
         line-height: 36px
@@ -20,243 +21,79 @@
       width: 145px
       position: relative
       top: -10px
-  .content-section
-    .growth-is
-      background-image: url("/img/raise-landing/raise-content-top.jpg")
-      width: 100%
-      height: 100%
-      padding: rem(45) rem(20) rem(20)
-      min-height: 388px
-      background-size: cover
-      &:before
-        content: " "
-        width: 100%
-        height: 100%
-        position: absolute
-        top: 0
-        left: 0
-        background: rgba($growth-is-bgc, .7)
-      .content
-        position: relative
-        z-index: 2
-        h1
-          color: $white
-          margin-top: rem(3)
-        p
-          color: $white
-    .good-candidate-wrap
-      border: solid 1px $gallery
-      min-height: 388px
-      .good-candidate
-        position: absolute 
-        left: 50%
-        top: 50%
-        z-index: 2
-        -ms-transform: translate(-50%,-50%)
-        -webkit-transform: translate(-50%,-50%)
-        transform: translate(-50%,-50%)
-        width: 100%
-        display: block
-        
-        &.active-opasity-hidden
-          +mt(.2s)
-          display: none
-        .color-effect
-          i
-            background-color: $color-effect-questions
-            padding: rem(2)
-            font-size: rem(48)
-            border-radius: 50px
-            width: 53px
-            height: 53px
-            color: $white
-          background-color: rgba($color-effect-questions, .5)
-          display: inline-block
-          border-radius: 100px
-          padding: 18px
-          animation: bg-color 2s infinite
-          -webkit-animation: bg-color 2s infinite
-        @-webkit-keyframes bg-color
-          0%
-            background-color: rgba($color-effect-questions, .25)
-          15%
-            background-color: rgba($color-effect-questions, .3)
-          30%
-            background-color: rgba($color-effect-questions, .4)
-          450%
-            background-color: rgba($color-effect-questions, .5)
-          60%
-            background-color: rgba($color-effect-questions, .5)
-          75%
-            background-color: rgba($color-effect-questions, .4)
-          85%
-            background-color: rgba($color-effect-questions, .3)
-          100%
-            background-color: rgba($color-effect-questions, .25)
-        @keyframes bg-color
-          0%
-            background-color: rgba($color-effect-questions, .25)
-          15%
-            background-color: rgba($color-effect-questions, .3)
-          30%
-            background-color: rgba($color-effect-questions, .4)
-          450%
-            background-color: rgba($color-effect-questions, .5)
-          60%
-            background-color: rgba($color-effect-questions, .5)
-          75%
-            background-color: rgba($color-effect-questions, .4)
-          85%
-            background-color: rgba($color-effect-questions, .3)
-          100%
-            background-color: rgba($color-effect-questions, .25)
-    .does-not
-      display: none
-      h2
-        padding-top: rem(30)
-        position: relative
-        top: 20px
-        margin-top: 0
-      &.active-opasity
-        +mt(.9s)
-        display: block
-        .does-not-wrap
-          z-index: 2
-
-    .does-not-wrap
-      
-      padding: rem(65) rem(20) rem(20) rem(20)
-      background-color: $does-not-wrap-bgc
+  .top-section
+    position: relative
+    &:before
       position: absolute
-      bottom: 0
-      &:before
-        content: ''
-        border: 44px solid transparent
-        border-top: 43px solid $white
-        position: absolute
-        top: 43px
-        left: 50%
-        -ms-transform: translate(-50%,-50%)
-        -webkit-transform: translate(-50%,-50%)
-        transform: translate(-50%,-50%)
+      top: 0
+      content: ''
+      left: 0
+      background-color: $growth-is-bgc
+      width: 40%
+      height: 100%
+      @media only screen and (max-width : 992px)
+        width: 100%
+    &:after
+      position: absolute
+      top: 0
+      content: ''
+      left: 40%
+      border: 160px solid transparent
+      border-left: 121px solid $growth-is-bgc
+      @media only screen and (max-width : 1199px)
+        border: 195px solid transparent
+        border-left: 110px solid $growth-is-bgc
+      @media only screen and (max-width : 992px)
+        border: none
+
+    .growth-is
+      position: relative
+      padding-top: rem(50)
+      padding-bottom: rem(50)
+      color: $white
       h3
-        color: $white
-        margin-bottom: rem(5)
+        line-height: rem(24)
+      @media only screen and (max-width : 768px)
+        padding-bottom: 0
+      .content
+        padding-right: 100px
+        position: relative
+        z-index: 3
+        @media only screen and (max-width : 992px)
+          padding-right: 0
+
+    .good-candidate
+      h3
+        margin-bottom: rem(15)
       ul
         list-style-type: none
-        padding: 0
-        li
-          color: $white
-  @media only screen and (min-width : 992px)
-    .good-candidate-wrap
-      border: solid 1px $gallery
-      border-left: none!important
-      border-top: none!important
+        margin-top: rem(10)
+      @media only screen and (max-width : 992px)
+        color: $white
+      @media only screen and (max-width : 768px)
+        &.p-l-2
+          padding-left: 0!important
+          padding-bottom: rem(50)
+
   .simplify
-    h1.big-h1
-      font-size: rem(48)
-      position: relative
-      top: -6px
-      span
-        color: $simplify-h1
-    h1.small-h1
-      position: relative
-      top: -6px
-  .right-menu
-    border: solid 1px $gallery
-    .nav-tabs
-      padding-left: 0px
-      list-style-type: none
-      margin-bottom: 0
-      position: relative
-      li.nav-item
-        position: relative
-        border-bottom: solid 1px $gallery
-        background-color: $alabaster
-        margin-bottom: 0
-        margin-right: 0
-        margin-left: 0
-        min-width: auto
-        text-align: left
-        float: none
-        
+    background-color: $alabaster
+    position: relative
+    padding-bottom: rem(60)
+    padding-top: rem(50)
+    h2
+      margin-bottom: rem(20)
+    .one-item
+      margin-bottom: rem(50)
+      .title
+        margin-bottom: rem(10)
+      .text
+        margin-bottom: rem(10)
+      img
+        opacity: .4
+        height: 80px
+        width: 80px
 
-        &:last-child
-          border-bottom: none
-        a.nav-link
-          display: block
-          padding: rem(30) rem(10)
-          padding-left: rem(80)
-          font-size: rem(18)
-          height: 99px
-          color: $small-text
-          text-transform: inherit
-          letter-spacing: normal
-          border: none
-          border-radius: 0
-          position: relative
-          .icon
-            position: absolute
-            right: 0
-            top: 0
-            opacity: .4
-            display: none
-          .text
-            position: absolute
-            top: 50%
-            left: 62%
-            width: 100%
-            z-index: 2
-            -ms-transform: translate(-50%,-50%)
-            -webkit-transform: translate(-50%,-50%)
-            transform: translate(-50%,-50%)
-          &:after
-            content: "•"
-            font-size: rem(30)
-            color: $small-text
-            position: absolute
-            top: 50%
-            left: rem(50)
-            -ms-transform: translate(-50%,-50%)
-            -webkit-transform: translate(-50%,-50%)
-            transform: translate(-50%,-50%)
-            z-index: 2
-          
-          &.active
-            background-color: $nav-item-raise-landing-bgc
-            color: $white
-            &:after
-              color: $white
 
-            &:before
-              content: ''
-              border: 40px solid transparent
-              border-left: 40px solid $white
-              position: absolute
-              top: 50px
-              left: 39px
-              -ms-transform: translate(-50%,-50%)
-              -webkit-transform: translate(-50%,-50%)
-              transform: translate(-50%,-50%)
-            .icon
-              position: absolute
-              right: 0
-              top: 0
-              opacity: .4
-              display: block
-      @media only screen and (max-width : 1200px)
-        a.nav-link
-          height: 88px!important
-          &.active
-            &:before
-              left: 29px!important
-              top: 44px!important
-        .text
-          left: 57%!important
-          width: 86%!important
-          font-size: rem(14)!important
-        .icon img
-          height: 89px
   .raise-landing-section
     background: url(/img/raise-landing/RS2.png)
     background-position: center center
@@ -265,13 +102,33 @@
     background-repeat: no-repeat
     background-size: cover
   .content-bottom
+    h2
+      margin-bottom: rem(20)
     .how-do
+      .border-bottom
+        border-bottom: solid 1px $black
+        margin-top: rem(10)
+        margin-bottom: rem(30)
       ul
         list-style-type: none
         margin-top: rem(10)
-        i
-          color: #747474
-          margin-right: rem(5)
+        li
+          margin-bottom: rem(15)
+          i
+            color: #747474
+            margin-right: rem(10)
+            font-size: rem(30)
+            opacity: .2
+            width: 8%
+            display: inline-block
+            vertical-align: top
+          span
+            width: 87%
+            display: inline-block
+    @media only screen and (max-width : 650px)
+      .p-x-0
+        padding-left: 15px!important
+        padding-right: 15px!important
     .call-block
       i
         background-color: $content-bottom-icon-color
@@ -282,8 +139,7 @@
         width: 40px
         height: 40px
         vertical-align: sub
-        margin-right: rem(25)
         text-align: center
-      span
-        vertical-align: middle
+      p
+        margin-top: rem(10)
 
