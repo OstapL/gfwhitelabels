@@ -1,5 +1,6 @@
 require('jquery-serializejson/jquery.serializejson.min.js');
 require('js/html5-dataset.js');
+require('classlist-polyfill');
 
 if (!global.Intl) {
   require('intl');

@@ -276,6 +276,28 @@ class App {
     return `dashboard/${companyId}/issuer-dashboard`;
   }
 
+  addClassesTo(selector, classes=[]) {
+    var elem = document.querySelector(selector);
+    if (!elem || !classes.length)
+      return;
+
+    classes.forEach((cls) => {
+      if (!elem.classList.contains(cls))
+        elem.classList.add(cls);
+    });
+  }
+
+  clearClasses(selector, except=['page']) {
+    let elem = document.querySelector(selector);
+    if (!elem)
+      return;
+
+    elem.classList.forEach((cls) => {
+      if (!except.includes(cls))
+        elem.classList.remove(cls);
+    });
+  }
+
 }
 
 let __instance = null;
