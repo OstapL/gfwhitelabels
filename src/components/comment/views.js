@@ -37,7 +37,7 @@ function findComment(comments, uid) {
 
 module.exports = {
   comments: Backbone.View.extend(_.extend({
-    urlRoot: commentsServer + '/:model/:id',
+    urlRoot: app.config.commentsServer + '/:model/:id',
     template: require('./templates/comments.pug'),
     el: '.comments-container',
     events: _.extend({
