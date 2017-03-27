@@ -9,7 +9,6 @@ module.exports = {
       this.$el.html(
         this.template({
           user: app.user.toJSON(),
-          Urls: Urls,
         })
       );
       return this;
@@ -34,7 +33,6 @@ module.exports = {
       this.$el.html(
         this.template({
           user: app.user.toJSON(),
-          Urls: Urls,
         })
       );
       return this;
@@ -47,7 +45,6 @@ module.exports = {
       this.$el.html(
         this.template({
           user: app.user.toJSON(),
-          Urls: Urls,
         })
       );
       return this;

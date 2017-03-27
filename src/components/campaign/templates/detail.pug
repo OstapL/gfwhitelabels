@@ -226,7 +226,7 @@ section
         else if values.campaign.gallery_group_data
           each v,k in values.campaign.gallery_group_data
             .col-lg-4.col-sm-12.col-xs-12.col-md-6.no-padding-img
-              a(href=v.urls[v.urls.length - 1] data-size='1440x900' rel="gallery1").fancybox
+              a(href=v.urls[v.urls.length - 1] data-size='1440x900' rel="gallery1" disabled="1").fancybox
                 img(src=v.urls[0] alt=(values.short_name || values.name)).w-100.img-responsive
         else
 
@@ -355,9 +355,9 @@ section
                           a(href="#").show-more-members.link-3 Read More
                       .d-block.text-lg-left.cite_education
                         span.text-lg-left.text-xs-left.pull-left.color-grey
-                          if v.city && v.state
+                          if v.city
                             i.fa.fa-home.p-l-0
-                            |  #{v.city}, #{v.state}
+                            |  #{v.city}
                         span.pull-right.color-grey
                           if v.college
                             i.fa.fa-graduation-cap

@@ -67,7 +67,7 @@ section.slider-main
 section.campaing-list
   .container#campaignList
     .col-lg-12
-      h2.dosis.text-uppercase.text-sm-center.text-xs-center.mt50 What's Popular
+      h2.dosis.text-uppercase.text-sm-center.text-xs-center.mt50 CURRENT CAMPAIGNS
     include ../components/campaign/templates/_list.pug
     .col-lg-12.text-lg-center.text-md-center.text-xs-center
       if collection && collection.count && collection.count > GENERAL.COMPANIES_PER_PAGE
@@ -120,7 +120,10 @@ section.home-wrap-text-block.raise-wrap.hide-bg-fixed.main-section-raise
             br
             | financial capital for your company
         .col-lg-12
-          a(href="/company/create").btn.btn-lg.btn-primary.text-uppercase raise capital
+          if app.user.is_anonymous()
+            a(href="/pg/raise_landing").btn.btn-lg.btn-primary.text-uppercase raise capital
+          else
+            a(href="/company/create").btn.btn-lg.btn-primary.text-uppercase raise capital
           a(href="/pg/entrepreneurquestions").btn.btn-lg.btn-secondary.text-uppercase learn more
 section.home-our-partners
   .container
