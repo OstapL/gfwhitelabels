@@ -1,13 +1,13 @@
 -
   var c = require('consts/campaign/file.json');
-  var backgroundImgUrl = app.getUrl(values.campaign.header_image_data) || '/img/default.png';
+  var backgroundImgUrl = app.getUrl(values.campaign.header_image_data) || '';
   var socialDirective = require('directives/social/index.js');
 
-section(style="background-image: url(" + backgroundImgUrl + ")")#home.home-section.bg-dark-alfa-70.parallax-2.fixed-height-small.hide-bg-fixed
+section(style="background-image: url(" + backgroundImgUrl + ")")#home.home-section.bg-after-company.parallax-2.fixed-height-small.hide-bg-fixed.company-header
   .js-height-parent.container-fluid
     .home-content
       .home-text.text-lg-center
-        h1.hs-line-14.font-alt.margin-bottom-50.mb-xs-30.big-h1.text-uppercase #{ values.short_name || values.name }
+        h1.company-name.mb-xs-30.big-h1.text-uppercase #{ values.short_name || values.name }
         .local-scroll
           if values.campaign.video
             a(data-toggle="modal" href="#videoModal" data-target="#videoModal").big-icon.link-6.youtube_popup
@@ -232,28 +232,28 @@ section
 
           .col-lg-3.col-sm-12.col-xs-12.no-padding-img
             a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-toggle="modal" data-size='1600x900')
-              img(src="/img/default/255x153.png" alt="").img-fluid.w-100
+              img(src=require('images/default/255x153.png') alt="").img-fluid.w-100
           .col-lg-3.col-sm-12.col-xs-12.no-padding-img
             a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-              img(src="/img/default/255x153.png" alt="").img-fluid.w-100
+              img(src=require('images/default/255x153.png') alt="").img-fluid.w-100
           .col-lg-3.col-sm-12.col-xs-12.no-padding-img
             a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-              img(src="/img/default/255x153.png" alt="").img-fluid.w-100
+              img(src=require('images/default/255x153.png') alt="").img-fluid.w-100
           .col-lg-3.col-sm-12.col-xs-12.no-padding-img
             a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-              img(src="/img/default/255x153.png" alt="").img-fluid.w-100
+              img(src=require('images/default/255x153.png') alt="").img-fluid.w-100
           .col-lg-3.col-sm-12.col-xs-12.no-padding-img
             a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-              img(src="/img/default/255x153.png" alt="").img-fluid.w-100
+              img(src=require('images/default/255x153.png') alt="").img-fluid.w-100
           .col-lg-3.col-sm-12.col-xs-12.no-padding-img
             a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-              img(src="/img/default/255x153.png" alt="").img-fluid.w-100
+              img(src=require('images/default/255x153.png') alt="").img-fluid.w-100
           .col-lg-3.col-sm-12.col-xs-12.no-padding-img
             a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-              img(src="/img/default/255x153.png" alt="").img-fluid.w-100
+              img(src=require('images/default/255x153.png') alt="").img-fluid.w-100
           .col-lg-3.col-sm-12.col-xs-12.no-padding-img
             a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-              img(src="/img/default/255x153.png" alt="").img-fluid.w-100
+              img(src=require('images/default/255x153.png') alt="").img-fluid.w-100
     .container
       .col-lg-12.p-sm-0
         h2.dosis.our.text-uppercase.text-lg-center.text-xs-center.campaign-subheading How We Intend to Make Money
@@ -544,7 +544,7 @@ section
                     td
                       p.text-justify.perks-intro #{ v.perk }
 
-  //section(style="display: none").investors-all.border-bottom
+  //-section(style="display: none").investors-all.border-bottom
     .container
       h3.col-lg-12.text-lg-center.text-xs-center Investors
       .col-lg-12.text-center-flex

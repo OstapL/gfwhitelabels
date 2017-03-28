@@ -21,7 +21,7 @@ module.exports = {
       }
 
       require.ensure([], (require) => {
-        const View = require('components/accountProfile/views.js');
+        const View = require('./views.js');
         const fieldsR = api.makeCacheRequest(app.config.authServer + '/rest-auth/data', 'OPTIONS');
         const dataR = api.makeCacheRequest(app.config.authServer + '/rest-auth/data');
 
@@ -45,9 +45,9 @@ module.exports = {
     },
 
     changePassword() {
-      require.ensure([], (require) => {
+      require.ensure([], () => {
         $('body').scrollTo();
-        const View = require('components/accountProfile/views.js');
+        const View = require('./views.js');
         let i = new View.changePassword({
           el: '#content',
           model: {},
@@ -60,7 +60,7 @@ module.exports = {
     setNewPassword() {
       require.ensure([], () => {
         $('body').scrollTo();
-        const View = require('components/accountProfile/views.js');
+        const View = require('./views.js');
         const i = new View.setNewPassword({
           el: '#content',
         });
@@ -71,7 +71,7 @@ module.exports = {
 
     investorDashboard() {
       require.ensure([], () => {
-        const View = require('components/accountProfile/views.js');
+        const View = require('./views.js');
 
         const fieldsR = api.makeCacheRequest(app.config.investmentServer, 'OPTIONS');
         const dataR = api.makeCacheRequest(app.config.investmentServer);

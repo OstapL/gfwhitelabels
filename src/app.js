@@ -14,11 +14,11 @@ class App {
   }
 
   start() {
-    this.routers = new Router();
-    Backbone.history.start({ pushState: true });
-    window.addEventListener('popstate', this.routers.back);
-
     this.user.loadWithPromise().then(() => {
+
+      this.routers = new Router();
+      Backbone.history.start({ pushState: true });
+      window.addEventListener('popstate', this.routers.back);
 
       this.menu = new Menu.menu({
         el: '#menuList',
@@ -215,7 +215,7 @@ class App {
   let thumb = thumbnails.find(function (el) {
     return el.size == size;
   });
-  return (thumb ? thumb.url : _default || '/img/default/default.png')
+  return (thumb ? thumb.url : _default || require('images/default/Default_photo.png'))
 }
 
   getUrl(data) {

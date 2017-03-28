@@ -9,7 +9,7 @@
   //roleBitmap = roleBitmap || comment.user.role;
   var roles = roleHelper.extractRolesByPriority(roleBitmap);
   var passedTime = dateHelper.fromNow(comment.created_date);
-  var avatar = app.getUrl(comment.user.image_data) || '/img/default/Default_photo.png';
+  var avatar = app.getUrl(comment.user.image_data) || require('images/default/Default_photo.png');
 
 div(id=('comment' + comment.uid) data-id=comment.uid data-level=level).single-comment.col-xl-12
   .author-info
