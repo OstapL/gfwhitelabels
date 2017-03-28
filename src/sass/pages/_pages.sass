@@ -1,10 +1,4 @@
 .partner-page
-  .section-partner
-    margin-top: 0
-    margin-bottom: 0
-    padding: 15px 17px
-    background-color: $puerto_rico
-    color: $white
   .partners-bgi
     background: url(/img/partner-section.jpg)
     background-position: center center
@@ -16,3 +10,38 @@
 .team, .raise_landing, .partners, .investor_tutorial, .business_tutorial
   .footer_new
     margin-top: 0
+
+.page.overview
+  .icon-block
+    vertical-align: top
+.pages-left-menu
+  li
+    padding: rem(2) 0
+    padding-left: rem(9)
+    &.active
+      border-left: solid 5px $page-left-menu-color
+      padding-left: rem(3)
+      a
+        color: $page-left-menu-color
+    a
+      &:hover
+        color: $page-left-menu-color
+.section-bg-line
+  margin-top: 0
+  margin-bottom: 0
+  padding: 15px 17px
+  background-color: $section-bg-line
+  color: $white
+
+.page.team
+  @media screen and (max-width: 991px)
+    .team-member-list
+      .name
+        margin-top: rem(20)
+
+.bg-team-wrap
+  position: relative
+  height: rem(340)
+  background: url(/img/team-bg.jpg)
+  background-attachment: fixed
+  background-size: cover
