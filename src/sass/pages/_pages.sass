@@ -1,10 +1,4 @@
 .partner-page
-  .section-partner
-    margin-top: 0
-    margin-bottom: 0
-    padding: 15px 17px
-    background-color: $puerto_rico
-    color: $white
   .partners-bgi
     background: url(/img/partner-section.jpg)
     background-position: center center
@@ -32,3 +26,15 @@
     a
       &:hover
         color: $page-left-menu-color
+.section-bg-line
+  margin-top: 0
+  margin-bottom: 0
+  padding: 15px 17px
+  background-color: $section-bg-line
+  color: $white
+
+.page.team
+  @media screen and (max-width: 991px)
+    .team-member-list
+      .name
+        margin-top: rem(20)
