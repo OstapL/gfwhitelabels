@@ -184,6 +184,10 @@ module.exports = {
             });
           };
         })(jQuery);
+        $(".team-member-list .right-animated").animated("fadeInRight");
+        $(".team-member-list .left-animated").animated("fadeInLeft");
+        $(".team-member-list .one-team").animated("fadeInUp");
+        $(".team-member-list .fade-img").animated("fadeIn");
       });
     },
   },
