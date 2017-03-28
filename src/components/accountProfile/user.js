@@ -68,7 +68,7 @@ class User {
   emptyLocalStorage() {
     localStorage.removeItem('user');
     localStorage.removeItem('token');
-    cookies.expire('token');
+    app.cookies.expire('token');
     this.token = null;
     this.data = {};
   }

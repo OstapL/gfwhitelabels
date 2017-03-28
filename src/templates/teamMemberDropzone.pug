@@ -21,7 +21,7 @@ div(
             .row
               .col-xl-12.one-photo
                 - var id = attr.data.id || 0;
-                - var url = attr.data.urls[0] || "/img/default/255x153.png";
+                - var url = attr.data.urls[0] || require('images/default/255x153.png');
                 if attr.data.urls[0]
                   .delete-image-container
                     a(href="#" data-imageid=id).crop-image

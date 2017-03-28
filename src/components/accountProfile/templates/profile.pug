@@ -14,7 +14,7 @@
         -
           pug_html += app.fields.userProfileDropzone('image_image_id', _.extend({
             thumbSize: '255x135',
-            default: '/img/default/255x153.png',
+            default: require('images/default/255x153.png'),
             icon: 'camera',
             text: 'Drop your profile photo here or click to upload',
             data: user.image_data[0],
