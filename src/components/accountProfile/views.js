@@ -5,7 +5,6 @@ const disableEnterHelper = require('helpers/disableEnterHelper.js');
 
 const helpers = {
   date: require('helpers/dateHelper.js'),
-  format: require('helpers/formatHelper.js'),
   phone: require('helpers/phoneHelper.js'),
   dropzone: require('helpers/dropzoneHelpers.js'),
   yesNo: require('helpers/yesNoHelper.js'),
@@ -238,7 +237,7 @@ module.exports = {
     },
 
     appendHttpsIfNecessary(e) {
-      helpers.format.appendHttpIfNecessary(e, true);
+      app.helpers.format.appendHttpIfNecessary(e, true);
     },
 
     saveAccountInfo(e) {

@@ -12,7 +12,7 @@ section(style="background-image: url(" + backgroundImgUrl + ")")#home.home-secti
           if values.campaign.video
             a(data-toggle="modal" href="#videoModal" data-target="#videoModal").big-icon.link-6.youtube_popup
               i.fa.fa-play-circle-o
-          a(href=values.website target="_blank").link-6.link-campaing-detail.hidden-xs-down #{ formatHelper.getWebsiteUrl(values.website) }
+          a(href=values.website target="_blank").link-6.link-campaing-detail.hidden-xs-down #{ app.helpers.format.getWebsiteUrl(values.website) }
           .row.social-link.hidden-xs-down
             if values.facebook
               a(href=values.facebook target="_blank").link-6.link-campaing-detail
@@ -47,14 +47,14 @@ section(style="background-image: url(" + backgroundImgUrl + ")")#home.home-secti
           if values.campaign.security_type == 0
             .col-xl-2.col-lg-3.col-md-3.col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left
               p Pre-Money Valuation
-              h2.font-weight-bold #{ formatHelper.formatPrice(values.campaign.premoney_valuation) }
+              h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.premoney_valuation) }
           else
             .col-xl-2.col-lg-3.col-md-3.col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left
               p Percentage Revenue
               h2.font-weight-bold #{ values.campaign.percentage_revenue }%
           .col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left.hidden-sm-up
             p Minimum Investment
-            h2.font-weight-bold.no-margin #{ formatHelper.formatPrice(values.campaign.minimum_increment) }
+            h2.font-weight-bold.no-margin #{ app.helpers.format.formatPrice(values.campaign.minimum_increment) }
           .col-xl-2.col-lg-2.col-md-2.col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left
             p Days Left
             h2.font-weight-bold.no-margin #{ helpers.campaign.daysLeft(values.campaign.expiration_date) }
@@ -132,7 +132,7 @@ section.campaigndetail
         .col-lg-6.col-xs-6.text-xs-right.text-lg-left
           .date-detail.pull-md-right.pull-lg-left
             i.fa.fa-calendar-check-o
-            |  Founded #{ formatHelper.formatDate(values.founding_date) }
+            |  Founded #{ app.helpers.format.formatDate(values.founding_date) }
       .row.hidden-xs-down
         .col-lg-12.share
           | !{ socialDirective.render(this.model) }
@@ -142,16 +142,16 @@ section.campaigndetail
           var percentage_raised = helpers.campaign.fundedPercentage(values.campaign, 20);
         span #{ percentage_raised.text }
         span.pull-right Committed 
-          span.committed #{ formatHelper.formatPrice(values.campaign.amount_raised)}
+          span.committed #{ app.helpers.format.formatPrice(values.campaign.amount_raised)}
         .clear
         progress(value=percentage_raised.value max="100").progress
       .mt25
         .row.col-xl-8.col-md-6.text-xs-center.text-sm-center.text-md-left
           p Target
-          h2.font-weight-bold #{ formatHelper.formatPrice(values.campaign.minimum_raise) } - #{ formatHelper.formatPrice(values.campaign.maximum_raise) }
+          h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.minimum_raise) } - #{ app.helpers.format.formatPrice(values.campaign.maximum_raise) }
         .row.col-xl-4.col-md-6.pull-lg-right.text-xs-center.text-sm-center.text-md-left.hidden-sm-down
           p Minimum Investment
-          h2.font-weight-bold #{ formatHelper.formatPrice(values.campaign.minimum_increment) }
+          h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.minimum_increment) }
         div(style="display: none").row.col-lg-12.investors-block
           .col-lg-2.p-l-0
             p Investors
@@ -390,7 +390,7 @@ section
                               i.fa.fa-link
                               p.card-text #{ v.headline }
                               .pos-bottom
-                                .links.d-inline-block.card-text #{ formatHelper.getWebsiteUrl(v.link) }
+                                .links.d-inline-block.card-text #{ app.helpers.format.getWebsiteUrl(v.link) }
                 #hidden-article-press.hidden-article-press.collapse
                   each k in keys
                     if k <= lastArticleIdx
@@ -405,7 +405,7 @@ section
                               i.fa.fa-link
                               p.card-text #{ v.headline }
                               .pos-bottom
-                                .links.d-inline-block.card-text #{ formatHelper.getWebsiteUrl(v.link) }
+                                .links.d-inline-block.card-text #{ app.helpers.format.getWebsiteUrl(v.link) }
 
               div(style="display:" + (showMore ? 'block' : 'none') + ";").row
                 .col-lg-12.text-xs-center
@@ -460,7 +460,7 @@ section
                         div.showPopover.hidden-xs-down(data-content="Equity represents ownership in a Company. As owners, equity investors will generally receive a share of the proceeds upon trade sale or IPO. Alternatively, investors can theoretically sell their ownership interest when the overall value of the Company has increased – though shares of common stock purchased in a crowdfunding transaction would have certain holding restrictions which are described in greater detail in our educational material. <br>The Pre-Money valuation is the valuation prior to this round of financing. Post-Money valuation is based on Pre-Money valuation plus the proceeds from the financing.")
                           i(aria-hidden="true").fa.fa-question-circle.text-muted.detail-security-type-icon
                   td
-                    h2.font-weight-bold #{ formatHelper.formatPrice(values.campaign.premoney_valuation) }
+                    h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.premoney_valuation) }
                 tr.bgc-row-middle
                   td.width-50
                     p Minimum Investment
@@ -468,9 +468,9 @@ section
                     p Price per Share
                 tr
                   td.width-50
-                    h2.font-weight-bold #{ formatHelper.formatPrice(values.campaign.minimum_increment) }
+                    h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.minimum_increment) }
                   td
-                    h2.font-weight-bold #{ formatHelper.formatPrice(values.campaign.price_per_share) }
+                    h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.price_per_share) }
                 tr.bgc-row-middle
                   td.width-50
                     p Minimum # of Shares
@@ -507,9 +507,9 @@ section
                     p Target Maximum Raise Amount
                 tr
                   td.width-50
-                    h2.font-weight-bold #{ formatHelper.formatPrice(values.campaign.minimum_raise) }
+                    h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.minimum_raise) }
                   td
-                    h2.font-weight-bold #{ formatHelper.formatPrice(values.campaign.maximum_raise) }
+                    h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.maximum_raise) }
                 tr.bgc-row-middle
                   td.width-50
                     p Minimum Investment
@@ -517,7 +517,7 @@ section
                     p Cap
                 tr
                   td.width-50
-                    h2.font-weight-bold #{ formatHelper.formatPrice(values.campaign.minimum_increment) }
+                    h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.minimum_increment) }
                   td
                     h2.font-weight-bold #{ values.campaign.cap }X
 
@@ -539,7 +539,7 @@ section
                   tr.perks-invest
                     td.bgc-row-middle.w-35
                       h3 Invest 
-                        span.font-weight-bold #{ formatHelper.formatPrice(v.amount) }
+                        span.font-weight-bold #{ app.helpers.format.formatPrice(v.amount) }
                         |  or more
                     td
                       p.text-justify.perks-intro #{ v.perk }

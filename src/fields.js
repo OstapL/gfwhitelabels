@@ -1,6 +1,5 @@
 const helpers = {
   date: require('./helpers/dateHelper.js'),
-  format: require('./helpers/formatHelper.js'),
   text: require('./helpers/textHelper.js'),
   icons: require('./helpers/iconsHelper.js'),
 };
@@ -152,7 +151,7 @@ let exports = {
 
     attr.type = attr.type || 'text';
     attr.value = attr.type == 'money'
-      ? helpers.format.formatPrice(attr.value)
+      ? app.helpers.format.formatPrice(attr.value)
       : attr.value
 
     attr.class1 = attr.class1 || 'col-xl-3 col-lg-12 text-lg-left text-xl-right';
@@ -223,7 +222,7 @@ let exports = {
     this.prepareField(name, attr);
     attr.type = attr.type || 'text';
     attr.value = attr.type == 'money'
-      ? helpers.format.formatPrice(attr.value)
+      ? app.helpers.format.formatPrice(attr.value)
       : attr.value
 
     const template = require('./templates/fieldTextLabel.pug');

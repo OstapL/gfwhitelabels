@@ -1,6 +1,5 @@
 include fields_final_review.pug
 -
-  var formatHelper = require('helpers/formatHelper.js');
   var roleHelper = require('helpers/roleHelper.js');
   var customFields = require('../fields.js');
   var fees = require('consts/companyFees.json');
@@ -286,7 +285,7 @@ section.formc-review
             | !{' '}
             +frField('company.corporate_structure', 'select')
             |  (the “Company”), is offering up to 
-            b #{ formatHelper.formatNumber(Math.round(values.campaign.maximum_raise / values.campaign.price_per_share)) }
+            b #{ app.helpers.format.formatNumber(Math.round(values.campaign.maximum_raise / values.campaign.price_per_share)) }
             |   shares of 
             +frField('campaign.security_type', 'select')
             |  (the 
@@ -296,7 +295,7 @@ section.formc-review
             |  per Share for a maximum aggregate offering price of 
             +frField('campaign.maximum_raise', 'money').
           p.pb10.text-indent The Company has established a minimum offering of at least 
-            b #{ formatHelper.formatNumber(Math.round(values.campaign.minimum_raise / values.campaign.price_per_share)) }
+            b #{ app.helpers.format.formatNumber(Math.round(values.campaign.minimum_raise / values.campaign.price_per_share)) }
             |  Shares for a minimum aggregate offering price of 
             +frField('campaign.minimum_raise', 'money')
               |  prior to #{ values.campaign.expiration_date }
@@ -874,11 +873,11 @@ section.formc-review
                 td.border-t-n.p-l-r-20
                   .pull-left.font-weight-bold Less: Offering Expenses
                 td.text-xs-center
-                  | #{ formatHelper.formatPrice(minSum) }
+                  | #{ app.helpers.format.formatPrice(minSum) }
                 td.text-xs-center
                   | #{ minP.toFixed(2) }%
                 td.text-xs-center
-                  | #{ formatHelper.formatPrice(maxSum) }
+                  | #{ app.helpers.format.formatPrice(maxSum) }
                 td.text-xs-center
                   | #{ maxP.toFixed(2) }%
 
@@ -903,11 +902,11 @@ section.formc-review
                 td.border-t-n.p-l-r-20
                   .pull-left.font-weight-bold Total Use of Net Proceeds
                 td.text-xs-center
-                  | #{ formatHelper.formatPrice(minSum) }
+                  | #{ app.helpers.format.formatPrice(minSum) }
                 td.text-xs-center
                   | #{ minP.toFixed(2) }%
                 td.text-xs-center
-                  | #{ formatHelper.formatPrice(maxSum) }
+                  | #{ app.helpers.format.formatPrice(maxSum) }
                 td.text-xs-center
                   | #{ maxP.toFixed(2) }%
 

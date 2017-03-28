@@ -3,7 +3,6 @@
 const typeOfDocuments = require('consts/typeOfDocuments.json');
 const companyFees = require('consts/companyFees.json');
 const formcHelpers = require('./helpers.js');
-const formatHelper = require('../../helpers/formatHelper.js');
 const securityTypeConsts = require('consts/formc/security_type.json');
 const yesNoConsts = require('consts/yesNo.json');
 const roles = ['Shareholder', 'Director', 'Officer'];
@@ -840,7 +839,7 @@ module.exports = {
     calculate(e, warning=true) {
       if (e) {
         let $target = $(e.target);
-        // $target.val(formatHelper.formatNumber($target.val()));
+        // $target.val(app.helpers.format.formatNumber($target.val()));
       }
       let minRaise = this.campaign.minimum_raise;
       let maxRaise = this.campaign.maximum_raise;
@@ -848,14 +847,14 @@ module.exports = {
       let minNetProceeds = minRaise - this._getSum('.min-expense');
       let maxNetProceeds = maxRaise - this._getSum('.max-expense');
 
-      this.$('.min-net-proceeds').text('$' + formatHelper.formatNumber(minNetProceeds));
-      this.$('.max-net-proceeds').text('$' + formatHelper.formatNumber(maxNetProceeds));
+      this.$('.min-net-proceeds').text('$' + app.helpers.format.formatNumber(minNetProceeds));
+      this.$('.max-net-proceeds').text('$' + app.helpers.format.formatNumber(maxNetProceeds));
 
       let minTotalUse = this._getSum('.min-use');
       let maxTotalUse = this._getSum('.max-use');
 
-      this.$('.min-total-use').text('$' + formatHelper.formatNumber(minTotalUse));
-      this.$('.max-total-use').text('$' + formatHelper.formatNumber(maxTotalUse));
+      this.$('.min-total-use').text('$' + app.helpers.format.formatNumber(minTotalUse));
+      this.$('.max-total-use').text('$' + app.helpers.format.formatNumber(maxTotalUse));
 
       // return true if the table is valid in terms of the calculation, else return false
       let minEqual = minNetProceeds == minTotalUse;
@@ -914,7 +913,6 @@ module.exports = {
           templates: this.jsonTemplates,
           maxRaise: this.campaign.maximum_raise,
           minRaise: this.campaign.minimum_raise,
-          formatHelper: formatHelper,
           campaignId: this.campaign.id,
         })
       );
@@ -925,7 +923,7 @@ module.exports = {
 
       this.$('.min-expense,.max-expense,.min-use,.max-use').each(function (idx, elem) {
         let $this = $(this);
-        $this.val(formatHelper.formatNumber($this.val()));
+        $this.val(app.helpers.format.formatNumber($this.val()));
       });
 
       this.calculate(null, false);
@@ -2126,7 +2124,7 @@ module.exports = {
         element.name = target.dataset.name;
 
         if(target.dataset.type == 'money') {
-          //element.value = formatHelper.unformatPrice(target.innerHTML);
+          //element.value = app.helpers.format.unformatPrice(target.innerHTML);
           element.value = target.innerHTML;
         } else {
           element.value = target.innerHTML;
@@ -2167,7 +2165,7 @@ module.exports = {
 
     update(e) {
       let val = e.target.value;
-      val = (e.target.dataset.type == 'money') ? formatHelper.unformatPrice(val) : val;
+      val = (e.target.dataset.type == 'money') ? app.helpers.format.unformatPrice(val) : val;
       const name = e.target.name;
       const reloadRequiredFields = [
         'corporate_structure',
@@ -2288,7 +2286,7 @@ module.exports = {
           } else {
             href.dataset.type = 'text';
             if(e.target.dataset.type == 'money') {
-              realVal = formatHelper.formatPrice(realVal);
+              realVal = app.helpers.format.formatPrice(realVal);
             }
           }
 
