@@ -18,6 +18,7 @@
     "babel-core": "^6.24.0",
     "babel-loader": "^6.4.1",
     "babel-preset-env": "^1.2.2",
+    "caniuse-db": "^1.0.30000644",
     "clean-webpack-plugin": "^0.1.16",
     "css-loader": "^0.27.3",
     "extract-text-webpack-plugin": "^2.1.0",
