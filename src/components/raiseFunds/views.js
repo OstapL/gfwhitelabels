@@ -1,11 +1,8 @@
-const addSectionHelper = require('helpers/addSectionHelper.js');
-
 const raiseHelpers = require('./helpers.js');
 const appendHttpIfNecessary = app.helpers.format.appendHttpIfNecessary;
 
 const dropzoneHelpers = require('helpers/dropzoneHelpers.js');
 const leavingConfirmationHelper = require('helpers/leavingConfirmationHelper.js');
-const phoneHelper = require('helpers/phoneHelper.js');
 const validation = require('components/validation/validation.js');
 const menuHelper = require('helpers/menuHelper.js');
 const disableEnterHelper = require('helpers/disableEnterHelper.js');
@@ -26,7 +23,7 @@ module.exports = {
       'change #website': appendHttpIfNecessary,
       'keyup #slug': 'fixSlug',
       'change #website,#twitter,#facebook,#instagram,#linkedin': 'appendHttpsIfNecessary',
-    }, /*leavingConfirmationHelper.events,*/ phoneHelper.events, menuHelper.events),
+    }, /*leavingConfirmationHelper.events,*/ app.helpers.phone.events, menuHelper.events),
 
     appendHttpsIfNecessary(e) {
       appendHttpIfNecessary(e, true);
@@ -141,7 +138,7 @@ module.exports = {
         { trigger: true, replace: false }
       );
     },
-  }, leavingConfirmationHelper.methods, phoneHelper.methods, menuHelper.methods)),
+  }, leavingConfirmationHelper.methods, app.helpers.phone.methods, menuHelper.methods)),
 
   inReview: Backbone.View.extend(_.extend({
     el: '#content',
@@ -165,7 +162,7 @@ module.exports = {
         'click .onPreview': raiseHelpers.onPreviewAction,
         'click .submit_form': raiseHelpers.submitCampaign,
         'click #postForReview': raiseHelpers.postForReview,
-      }, addSectionHelper.events, leavingConfirmationHelper.events, menuHelper.events),
+      }, app.helpers.section.events, leavingConfirmationHelper.events, menuHelper.events),
 
     preinitialize() {
       // ToDo
@@ -227,7 +224,7 @@ module.exports = {
       raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
-  }, leavingConfirmationHelper.methods, menuHelper.methods, addSectionHelper.methods)),
+  }, leavingConfirmationHelper.methods, menuHelper.methods, app.helpers.section.methods)),
 
   media: Backbone.View.extend(_.extend({
     urlRoot: app.config.raiseCapitalServer + '/campaign/:id',
@@ -241,7 +238,7 @@ module.exports = {
         'click #postForReview': raiseHelpers.postForReview,
         'click .onPreview': raiseHelpers.onPreviewAction,
       }, leavingConfirmationHelper.events, menuHelper.events,
-        addSectionHelper.events, dropzoneHelpers.events
+        app.helpers.section.events, dropzoneHelpers.events
     ),
 
     _success(data, newData) {
@@ -380,7 +377,7 @@ module.exports = {
     },
 
   }, leavingConfirmationHelper.methods, menuHelper.methods,
-    dropzoneHelpers.methods, addSectionHelper.methods)),
+    dropzoneHelpers.methods, app.helpers.section.methods)),
 
   teamMemberAdd: Backbone.View.extend(_.extend({
     urlRoot: app.config.raiseCapitalServer + '/campaign/:id/team-members',
@@ -714,7 +711,7 @@ module.exports = {
         raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
         return this;
       },
-  }, leavingConfirmationHelper.methods, menuHelper.methods, dropzoneHelpers.methods, addSectionHelper.methods)),
+  }, leavingConfirmationHelper.methods, menuHelper.methods, dropzoneHelpers.methods, app.helpers.section.methods)),
 
   perks: Backbone.View.extend(_.extend({
     urlRoot: app.config.raiseCapitalServer + '/campaign/:id',
@@ -723,7 +720,7 @@ module.exports = {
         'click .onPreview': raiseHelpers.onPreviewAction,
         'click .submit_form': raiseHelpers.submitCampaign,
         'click #postForReview': raiseHelpers.postForReview,
-    }, leavingConfirmationHelper.events, menuHelper.events, addSectionHelper.events),
+    }, leavingConfirmationHelper.events, menuHelper.events, app.helpers.section.events),
 
     preinitialize() {
       // ToDo
@@ -770,5 +767,5 @@ module.exports = {
       return 0;
     }
 
-  }, leavingConfirmationHelper.methods, menuHelper.methods, addSectionHelper.methods)),
+  }, leavingConfirmationHelper.methods, menuHelper.methods, app.helpers.section.methods)),
 };

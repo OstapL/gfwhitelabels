@@ -1,9 +1,8 @@
 // import './styles/style.sass'
-import calculatorHelper from '../../helpers/calculatorHelpers';
 import flyPriceFormatter from '../../helpers/flyPriceFormatter';
 import lookupData from '../../helpers/capitalraiseCalculatorData';
 
-let formatPrice = calculatorHelper.formatPrice;
+let formatPrice = app.helpers.calculator.formatPrice;
 let industryData = lookupData();
 
 const calculatorValidationHelper = require('helpers/calculatorValidationHelper.js');

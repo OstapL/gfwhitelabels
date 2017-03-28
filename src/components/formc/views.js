@@ -8,7 +8,6 @@ const yesNoConsts = require('consts/yesNo.json');
 const roles = ['Shareholder', 'Director', 'Officer'];
 
 const menuHelper = require('helpers/menuHelper.js');
-const addSectionHelper = require('helpers/addSectionHelper.js');
 const yesNoHelper = require('helpers/yesNoHelper.js');
 
 const dropzoneHelpers = require('helpers/dropzoneHelpers.js');
@@ -472,7 +471,7 @@ module.exports = {
       return this;
     },
 
-  }, menuHelper.methods, addSectionHelper.methods, leavingConfirmationHelper.methods)),
+  }, menuHelper.methods, app.helpers.section.methods, leavingConfirmationHelper.methods)),
 
 	teamMemberAdd: Backbone.View.extend(_.extend({
     urlRoot: app.config.formcServer + '/:id/team-members',
@@ -482,7 +481,7 @@ module.exports = {
       'click #submitForm': 'submit',
       'click .submit_formc': submitFormc,
       'click .team-current-date': 'setCurrentDate',
-    }, addSectionHelper.events, menuHelper.events, yesNoHelper.events, leavingConfirmationHelper.events),
+    }, app.helpers.section.events, menuHelper.events, yesNoHelper.events, leavingConfirmationHelper.events),
 
     preinitialize() {
       // ToDo
@@ -667,7 +666,7 @@ module.exports = {
       yearControl.prop('disabled', isCurrentDate);
     },
 
-  }, addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods, leavingConfirmationHelper.methods)),
+  }, app.helpers.section.methods, menuHelper.methods, yesNoHelper.methods, leavingConfirmationHelper.methods)),
 
 
   relatedParties: Backbone.View.extend(_.extend({
@@ -677,7 +676,7 @@ module.exports = {
     events: _.extend({
       'submit form': 'submit',
       'click .submit_formc': submitFormc,
-    }, addSectionHelper.events, menuHelper.events, yesNoHelper.events, leavingConfirmationHelper.events),
+    }, app.helpers.section.events, menuHelper.events, yesNoHelper.events, leavingConfirmationHelper.events),
 
     preinitialize() {
       // ToDo
@@ -739,7 +738,7 @@ module.exports = {
     getSuccessUrl(data) {
       return '/formc/' + this.model.id + '/use-of-proceeds';
     },
-  }, addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods, leavingConfirmationHelper.methods)),
+  }, app.helpers.section.methods, menuHelper.methods, yesNoHelper.methods, leavingConfirmationHelper.methods)),
 
   useOfProceeds: Backbone.View.extend(_.extend({
     urlRoot: app.config.formcServer + '/:id/use-of-proceeds',
@@ -932,7 +931,7 @@ module.exports = {
       raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     }, 
-  }, menuHelper.methods, dropzoneHelpers.methods, addSectionHelper.methods, leavingConfirmationHelper.methods)),
+  }, menuHelper.methods, dropzoneHelpers.methods, app.helpers.section.methods, leavingConfirmationHelper.methods)),
 
   riskFactorsInstruction: Backbone.View.extend(_.extend({
     initialize(options) {
@@ -1073,7 +1072,7 @@ module.exports = {
       raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
-  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
+  }, menuHelper.methods, app.helpers.section.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
 
   riskFactorsFinancial: Backbone.View.extend(_.extend({
     urlRoot: app.config.formcServer + '/:id' + '/risk-factors-financial/:index',
@@ -1189,7 +1188,7 @@ module.exports = {
       raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
-  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
+  }, menuHelper.methods, app.helpers.section.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
 
   riskFactorsOperational: Backbone.View.extend(_.extend({
     urlRoot: app.config.formcServer + '/:id' + '/risk-factors-operational/:index',
@@ -1334,7 +1333,7 @@ module.exports = {
       return this;
     },
 
-  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
+  }, menuHelper.methods, app.helpers.section.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
 
   riskFactorsCompetitive: Backbone.View.extend(_.extend({
     urlRoot: app.config.formcServer + '/:id' + '/risk-factors-competitive/:index',
@@ -1423,7 +1422,7 @@ module.exports = {
       return this;
     },
 
-  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
+  }, menuHelper.methods, app.helpers.section.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
 
   riskFactorsPersonnel: Backbone.View.extend(_.extend({
     urlRoot: app.config.formcServer + '/:id' + '/risk-factors-personnel/:index',
@@ -1530,7 +1529,7 @@ module.exports = {
       raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
-  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
+  }, menuHelper.methods, app.helpers.section.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
 
   riskFactorsLegal: Backbone.View.extend(_.extend({
     urlRoot: app.config.formcServer + '/:id' + '/risk-factors-legal/:index',
@@ -1659,7 +1658,7 @@ module.exports = {
       raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
-  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
+  }, menuHelper.methods, app.helpers.section.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
 
   riskFactorsMisc: Backbone.View.extend(_.extend({
     urlRoot: app.config.formcServer + '/:id' + '/risk-factors-misc/:index',
@@ -1702,7 +1701,7 @@ module.exports = {
       raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
-  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
+  }, menuHelper.methods, app.helpers.section.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
 
   financialCondition: Backbone.View.extend(_.extend({
     urlRoot: app.config.formcServer + '/:id/financial-condition',
@@ -1710,7 +1709,7 @@ module.exports = {
     events: _.extend({
       'submit form': api.submitAction,
       'click .submit_formc': submitFormc,
-    }, menuHelper.events, yesNoHelper.events, addSectionHelper.events, dropzoneHelpers.events, /*leavingConfirmationHelper.events*/),
+    }, menuHelper.events, yesNoHelper.events, app.helpers.section.events, dropzoneHelpers.events, /*leavingConfirmationHelper.events*/),
 
     preinitialize() {
       // ToDo
@@ -1774,7 +1773,7 @@ module.exports = {
       raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
-  }, menuHelper.methods, yesNoHelper.methods, addSectionHelper.methods, dropzoneHelpers.methods, leavingConfirmationHelper.methods)),
+  }, menuHelper.methods, yesNoHelper.methods, app.helpers.section.methods, dropzoneHelpers.methods, leavingConfirmationHelper.methods)),
 
   outstandingSecurity: Backbone.View.extend(_.extend({
     urlRoot: app.config.formcServer + '/:id/outstanding-security',
@@ -1786,7 +1785,7 @@ module.exports = {
       'click .newOustanding': 'newOustanding',
       'click .editOutstanding': 'editOutstanding',
       'click .delete-outstanding': 'deleteOutstanding',
-    }, addSectionHelper.events, menuHelper.events, yesNoHelper.events, /*leavingConfirmationHelper.events*/),
+    }, app.helpers.section.events, menuHelper.events, yesNoHelper.events, /*leavingConfirmationHelper.events*/),
 
     preinitialize() {
       // ToDo
@@ -2028,7 +2027,7 @@ module.exports = {
       raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
-  }, addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods, leavingConfirmationHelper.methods)),
+  }, app.helpers.section.methods, menuHelper.methods, yesNoHelper.methods, leavingConfirmationHelper.methods)),
 
   backgroundCheck: Backbone.View.extend(_.extend({
     urlRoot: app.config.formcServer + '/:id' + '/background-check',
@@ -2081,7 +2080,7 @@ module.exports = {
       raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
-  }, menuHelper.methods, yesNoHelper.methods, addSectionHelper.methods, leavingConfirmationHelper.methods)),
+  }, menuHelper.methods, yesNoHelper.methods, app.helpers.section.methods, leavingConfirmationHelper.methods)),
 
   finalReview: Backbone.View.extend({
     urlRoot: app.config.formcServer + '/:id/final-review',

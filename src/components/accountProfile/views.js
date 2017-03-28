@@ -5,7 +5,6 @@ const disableEnterHelper = require('helpers/disableEnterHelper.js');
 
 const helpers = {
   date: require('helpers/dateHelper.js'),
-  phone: require('helpers/phoneHelper.js'),
   dropzone: require('helpers/dropzoneHelpers.js'),
   yesNo: require('helpers/yesNoHelper.js'),
   fileList: require('helpers/fileList.js'),
@@ -32,7 +31,7 @@ module.exports = {
       'change #twitter,#facebook,#instagram,#linkedin': 'appendHttpsIfNecessary',
 
       // 'change input[name=accredited_investor]': 'changeAccreditedInvestor',
-    }, helpers.phone.events, helpers.dropzone.events, helpers.yesNo.events),
+    }, app.helpers.phone.events, helpers.dropzone.events, helpers.yesNo.events),
 
     initialize(options) {
       this.activeTab = options.activeTab;
@@ -361,7 +360,7 @@ module.exports = {
 
     },
 
-  }, helpers.phone.methods, helpers.dropzone.methods, helpers.yesNo.methods)),
+  }, app.helpers.phone.methods, helpers.dropzone.methods, helpers.yesNo.methods)),
 
   changePassword: Backbone.View.extend({
     urlRoot: app.config.authServer + '/rest-auth/password/change',

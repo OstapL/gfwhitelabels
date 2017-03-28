@@ -1,5 +1,4 @@
 import './styles/style.sass'
-import calculatorHelper from '../../helpers/calculatorHelpers';
 import flyPriceFormatter from '../../helpers/flyPriceFormatter';
 import lookupData from '../../helpers/capitalraiseCalculatorData';
 import '../../js/graph/graph.js';
@@ -54,7 +53,7 @@ if (!app.cache.establishedBusinessCalculator) {
 }
 
 
-let formatPrice = calculatorHelper.formatPrice;
+let formatPrice = app.helpers.calculator.formatPrice;
 let industryData = lookupData();
 
 module.exports = {
@@ -461,8 +460,8 @@ module.exports = {
             let raiseCash = data.raiseCash;
 
             this.$el.html(this.template({
-                estimate: calculatorHelper.formatPrice(estimate),
-                raise: calculatorHelper.formatPrice(raiseCash),
+                estimate: app.helpers.calculator.formatPrice(estimate),
+                raise: app.helpers.calculator.formatPrice(raiseCash),
                 offer: (raiseCash * 100 / (estimate + raiseCash)).toFixed(2)
             }));
 

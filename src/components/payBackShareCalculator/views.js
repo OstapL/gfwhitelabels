@@ -1,14 +1,13 @@
 import './styles/style.sass'
 //import 'jquery.inputmask/dist/jquery.inputmask.bundle.js';
-import calculatorHelper from '../../helpers/calculatorHelpers';
 import flyPriceFormatter from '../../helpers/flyPriceFormatter';
 import '../../js/graph/graph.js';
 import '../../js/graph/jquery.flot.growraf';
 
-const settings = calculatorHelper.settings;
+const settings = app.helpers.calculator.settings;
 
-const formatPrice = calculatorHelper.formatPrice;
-const formatPercentage = calculatorHelper.formatPercentage;
+const formatPrice = app.helpers.calculator.formatPrice;
+const formatPercentage = app.helpers.calculator.formatPercentage;
 const minPersents = 200;
 
 const calculatorValidationHelper = require('helpers/calculatorValidationHelper.js');
@@ -68,8 +67,8 @@ module.exports = {
             'blur [data-input-mask="percent"]': 'cutZeros',
         }, calculatorValidationHelper.events),
 
-        validate: calculatorHelper.validate,
-        validateForLinks: calculatorHelper.validateForLinks,
+        validate: app.helpers.calculator.validate,
+        validateForLinks: app.helpers.calculator.validateForLinks,
 
         filterKeyCodeForPercentage(e) {
             let value = e.target.value.replace(/\%/g, '');

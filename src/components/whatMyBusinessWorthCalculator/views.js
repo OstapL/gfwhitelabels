@@ -1,12 +1,11 @@
 import './styles/style.sass'
-import calculatorHelper from '../../helpers/calculatorHelpers';
 import flyPriceFormatter from '../../helpers/flyPriceFormatter';
 import 'bootstrap-slider/dist/bootstrap-slider'
 import 'bootstrap-slider/dist/css/bootstrap-slider.css'
 
 const calculatorValidationHelper = require('helpers/calculatorValidationHelper.js');
 
-let formatPrice = calculatorHelper.formatPrice;
+let formatPrice = app.helpers.calculator.formatPrice;
 
 if (!app.cache.whatMyBusinessWorthCalculator) {
     app.cache.whatMyBusinessWorthCalculator = {

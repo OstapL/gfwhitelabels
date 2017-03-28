@@ -1,7 +1,9 @@
 module.exports = {
   format: require('./helpers/formatHelper.js'),
+  phone: require('./helpers/phoneHelper.js'),
   section: require('./helpers/addSectionHelper.js'),
   calculator: require('./helpers/calculatorHelpers.js'),
+
   calculatorValidation: require('./helpers/calculatorValidationHelper.js'),
   capitalraiseData: require('./helpers/capitalraiseCalculatorData.js'),
   crop: require('./helpers/cropHelper.js'),
@@ -15,7 +17,6 @@ module.exports = {
   icon: require('./helpers/iconsHelper.js'),
   confirmOnLeave: require('./helpers/leavingConfirmationHelper.js'),
   menu: require('./helpers/menuHelper.js'),
-  phone: require('./helpers/phoneHelper.js'),
   riskFactors: require('./helpers/riskFactorsHelper.js'),
   role: require('./helpers/roleHelper.js'),
   text: require('./helpers/textHelper.js'),

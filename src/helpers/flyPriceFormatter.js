@@ -1,9 +1,8 @@
-var calculatorHelper = require("./calculatorHelpers");
-var getCaretPosition = calculatorHelper.getCaretPosition;
-var isTextSelected = calculatorHelper.isTextSelected;
-var settings = calculatorHelper.settings;
-var formatPrice = calculatorHelper.formatPrice;
-var setCaretPosition = calculatorHelper.setCaretPosition;
+var getCaretPosition = app.helpers.calculator.getCaretPosition;
+var isTextSelected = app.helpers.calculator.isTextSelected;
+var settings = app.helpers.calculator.settings;
+var formatPrice = app.helpers.calculator.formatPrice;
+var setCaretPosition = app.helpers.calculator.setCaretPosition;
 
 module.exports = function(field, callback) {
     if (!field) return false;
