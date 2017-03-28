@@ -4,6 +4,8 @@ const HtmlPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
+const isAnalyze = process.env.NODE_ENV === 'analyze';
+
 const isProd = process.env.NODE_ENV === 'production';
 
 let plugins = [
@@ -51,6 +53,10 @@ if (isProd) {
   }));
 }
 
+if (isAnalyze) {
+  const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+  plugins.push(new BundleAnalyzerPlugin());
+}
 
 const dependencies = Object.keys(require('./package.json').dependencies);
 
@@ -121,7 +127,7 @@ module.exports = {
           {
             loader: 'image-webpack-loader',
             query: {
-              bypassOnDebug: !isProd,
+              bypassOnDebug: true,
             }
           }
         ],
