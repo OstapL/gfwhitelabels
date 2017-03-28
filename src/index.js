@@ -1,3 +1,4 @@
+require('src/sass/mixins_all.sass');
 require('jquery-serializejson/jquery.serializejson.min.js');
 require('js/html5-dataset.js');
 require('classlist-polyfill');

@@ -16,7 +16,7 @@ div(class=attr.class data-content=(attr.help_text || ''))
           .row
             .col-xl-12.one-photo
               - var id = attr.data.id || 0;
-              - var url = _.first(attr.data.urls) || "/img/default/255x153.png";
+              - var url = _.first(attr.data.urls) || require('images/default/255x153.png');
               if attr.data.urls[0]
                 .delete-image-container
                   a(href="#" data-imageid=id).crop-image

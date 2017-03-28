@@ -198,7 +198,7 @@ let exports = {
   },
 
   userProfileDropzone(name, attr) {
-    let noimg = '/img/default/Default_photo.png';
+    let noimg = require('images/default/Default_photo.png');
     attr.data = attr.data || {};
     attr.data.urls = attr.data.urls || [noimg];
 
@@ -316,7 +316,7 @@ let exports = {
 
     attr.fileIcon = helpers.icons.resolveIconPath(attr.data.mime, 'file');
 
-    attr.default = attr.default || '/img/default/file.png';
+    attr.default = attr.default || require('images/icons/file.png');
     attr.text = attr.text || 'Drop your PDF or DOC here or click to upload';
 
     const template = require('./templates/fileDropzone.pug');
@@ -342,7 +342,7 @@ let exports = {
     return template({
       name: name,
       attr: attr,
-      noimg: '/img/default/Default_photo.png',
+      noimg: require('images/default/Default_photo.png'),
     });
   },
 

@@ -401,7 +401,7 @@ module.exports = {
         $link.off('click');
 
         let dataContainer = $('.dropzone__' + name + ' .data-container');
-        let noimageUrl = dataContainer.data('noimage') || '/img/default/255x153.png';
+        let noimageUrl = dataContainer.data('noimage') || require('images/default/255x153.png');
 
         let fieldDataName = this._getDataFieldName(name);
 
@@ -420,7 +420,7 @@ module.exports = {
 
           return $.when.apply($, deleteRequests);
         }).then((r) => {
-          $link.closest('.one-photo').find('img.img-' + name).attr('src', noimageUrl || '/img/default/255x153.png');
+          $link.closest('.one-photo').find('img.img-' + name).attr('src', noimageUrl || require('images/default/255x153.png'));
           $link.closest('.delete-image-container').remove();
           if (typeof(this.onImageDelete) === 'function') {
             this.onImageDelete(name);
