@@ -40,6 +40,7 @@
     "webpack-dev-server": "^2.4.2"
   },
   "dependencies": {
+    "animate.css": "^3.5.2",
     "babel-polyfill": "^6.23.0",
     "backbone": "git+https://github.com/jashkenas/backbone.git",
     "bootstrap": "^4.0.0-alpha.4",

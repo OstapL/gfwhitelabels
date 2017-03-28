@@ -5,22 +5,22 @@ section.text_block
     .row
       .col-lg-3.hidden-md-down  
         .page_title.border-bottom.mb25
-          h4.text-uppercase.dosis ABOUT US
-        ul.list-unstyled.custom
+          h4.text-uppercase ABOUT US
+        ul.list-unstyled.custom.pages-left-menu
           li
-            a(href='/pg/overview').d-inline-block.w-100.pb10 Overview
+            a(href='/pg/overview').d-inline-block.w-100 Overview
           li
-            a(href='/pg/team').d-inline-block.w-100.pb10 #{app.config.teamName}
+            a(href='/pg/team').d-inline-block.w-100 #{app.config.teamName}
           li.display-partners
-            a(href='/pg/partners').d-inline-block.w-100.pb10 Partners
+            a(href='/pg/partners').d-inline-block.w-100 Partners
           li
-            a(href='/pg/contact').d-inline-block.w-100.pb10 Contact Us
+            a(href='/pg/contact').d-inline-block.w-100 Contact Us
           li
-            a(href='/pg/careers').d-inline-block.w-100.pb10 Careers
+            a(href='/pg/careers').d-inline-block.w-100 Careers
+          li.active
+            a(href='/pg/news').d-inline-block.w-100 In the News
           li
-            a(href='/pg/news').d-inline-block.w-100.pb10 In the News
-          li
-            a(href='/pg/faq').d-inline-block.w-100.pb10 FAQ
+            a(href='/pg/faq').d-inline-block.w-100 FAQ
 
       .col-lg-9
         ul.list-unstyled.m0
@@ -29,7 +29,7 @@ section.text_block
               .col-lg-4
                 .news-img.text-xs-center.mpb50
                   a(href="https://techcrunch.com/2017/01/23/growthfountain/" target="_blank")
-                    img(src="/img/pages/TC.jpg")
+                    img(src=require("img/pages/TC.jpg") alt="techcrunch")
                 
               .col-lg-8
                 h4.open-sans.letter-spacing-0.text-muted.m0
@@ -46,7 +46,7 @@ section.text_block
               .col-lg-4
                 .news-img.text-xs-center.mpb50
                   a(href="https://cheddar.vhx.tv/cheddar-archive/videos/cheddar-closing-bell-s3-e013017-j-full-mezz-hd-en-us" target="_blank")
-                    img(src="/img/pages/cheddar.jpg")
+                    img(src=require("img/pages/cheddar.jpg") alt="cheddar")
                 
               .col-lg-8
                 h4.open-sans.letter-spacing-0.text-muted.m0
@@ -65,7 +65,7 @@ section.text_block
               .col-lg-4
                 .news-img.text-xs-center.mpb50
                   a(href="http://finance.yahoo.com/news/equity-crowdfunding-platform-launches-simplify-184200479.html" target="_blank")
-                    img(src="/img/pages/news-yahoo.jpg")
+                    img(src=require("img/pages/news-yahoo.jpg") alt="finance")
                 
               .col-lg-8
                 h4.open-sans.letter-spacing-0.text-muted.m0
@@ -82,7 +82,7 @@ section.text_block
               .col-lg-4
                 .news-img.text-xs-center.mpb50
                   a(href="http://www.crowdfundinsider.com/2017/01/94999-growthfountain-newest-finra-approved-reg-cf-crowdfunding-platform/" target="_blank")
-                    img(src="/img/pages/news3.png")
+                    img(src=require("img/pages/news3.png") alt="crowdfundinsider")
                 
               .col-lg-8
                 h4.open-sans.letter-spacing-0.text-muted.m0
@@ -98,7 +98,7 @@ section.text_block
               .col-lg-4
                 .news-img.text-xs-center.mpb50
                   a(href="http://news.efinancialcareers.com/us-en/273289/from-hedge-funds-to-kickstarter-meets-goldman-sachs-startup-growthfountain/" target="_blank")
-                    img(src="/img/pages/efinan.jpg")
+                    img(src=require("img/pages/efinan.jpg") alt="efinancialcareers")
                 
               .col-lg-8
                 h4.open-sans.letter-spacing-0.text-muted.m0
@@ -114,7 +114,7 @@ section.text_block
               .col-lg-4
                 .news-img.text-xs-center.mpb50
                   a(href="http://www.builtinnyc.com/2017/01/26/growthfountain-launches-new-york" target="_blank")
-                    img(src="/img/pages/builtinnyclogobothblue.jpg")
+                    img(src=require("img/pages/builtinnyclogobothblue.jpg") alt="builtinnyc")
                 
               .col-lg-8
                 h4.open-sans.letter-spacing-0.text-muted.m0
@@ -130,7 +130,7 @@ section.text_block
               .col-lg-4
                 .news-img.text-xs-center.mpb50
                   a(href="http://www.youngupstarts.com/2017/03/01/from-the-recession-to-riches-the-journey-to-start-a-successful-startup/" target="_blank")
-                    img(src="/img/pages/youngpstarts.jpg")
+                    img(src=require("img/pages/youngpstarts.jpg") alt="youngupstarts")
                 
               .col-lg-8
                 h4.open-sans.letter-spacing-0.text-muted.m0
@@ -146,7 +146,7 @@ section.text_block
               .col-lg-4
                 .news-img.text-xs-center.mpb50
                   a(href="http://www.fa-mag.com/news/small-investprs-invest-in-small-businesses-31094.html?section=43" target="_blank")
-                    img(src="/img/pages/FAM_logo.jpg")
+                    img(src=require("img/pages/FAM_logo.jpg") alt="fa-mag")
                 
               .col-lg-8
                 h4.open-sans.letter-spacing-0.text-muted.m0
@@ -163,7 +163,7 @@ section.text_block
               .col-lg-4
                 .news-img.text-xs-center.mpb50
                   a(href="http://homebusinessmag.com/business-start-up/business-start-up-blog/leveraging-great-recession-make-start-dream-reality/" target="_blank")
-                    img(src="/img/pages/home_business.jpg")
+                    img(src=require("img/pages/home_business.jpg") alt="homebusinessmag")
                 
               .col-lg-8
                 h4.open-sans.letter-spacing-0.text-muted.m0
@@ -180,7 +180,7 @@ section.text_block
               .col-lg-4
                 .news-img.text-xs-center.mpb50
                   a(href="http://fortune.com/2017/02/23/entrepreneurs-career-advice-work-setbacks-confidence/" target="_blank")
-                    img(src="/img/pages/fortume.jpg")
+                    img(src=require("img/pages/fortume.jpg") alt="fortune")
                 
               .col-lg-8
                 h4.open-sans.letter-spacing-0.text-muted.m0
@@ -197,7 +197,7 @@ section.text_block
               .col-lg-4
                 .news-img.text-xs-center.mpb50
                   a(href="http://www.pymnts.com/news/b2b-payments/2017/growthfountain-equity-crowdfunding-sme-small-business-investment-funding-finance-lending-invest-regulation-a-jobs-act/" target="_blank")
-                    img(src="/img/pages/pymnts.jpg")
+                    img(src=require("img/pages/pymnts.jpg") alt="pymnts")
                 
               .col-lg-8
                 h4.open-sans.letter-spacing-0.text-muted.m0
@@ -214,7 +214,7 @@ section.text_block
               .col-lg-4
                 .news-img.text-xs-center.mpb50
                   a(href="https://creator.wework.com/grow-your-business/expert-advice-ken-stauts-4-reasons-equity-crowdfunding-worth/" target="_blank")
-                    img(src="/img/pages/n4.jpg")
+                    img(src=require("img/pages/n4.jpg") alt="creator")
                 
               .col-lg-8
                 h4.open-sans.letter-spacing-0.text-muted.m0
@@ -231,7 +231,7 @@ section.text_block
               .col-lg-4
                 .news-img.text-xs-center.mpb50
                   a(href="http://moneyinc.com/how-to-run-a-successful-crowdfunding-campaign/" target="_blank")
-                    img(src="/img/pages/moneyinc.jpg")
+                    img(src=require("img/pages/moneyinc.jpg") alt="moneyinc")
                 
               .col-lg-8
                 h4.open-sans.letter-spacing-0.text-muted.m0
@@ -248,7 +248,7 @@ section.text_block
               .col-lg-4
                 .news-img.text-xs-center.mpb50
                   a(href="http://www.tsys.com/ngenuity-journal/mastering-a-new-type-of-crowdfunding-with-equity-investments.cfm" target="_blank")
-                    img(src="/img/pages/news1.png")
+                    img(src=require("img/pages/news1.png") alt="tsys")
                 
               .col-lg-8
                 h4.open-sans.letter-spacing-0.text-muted.m0
@@ -265,7 +265,7 @@ section.text_block
               .col-lg-4
                 .news-img.text-xs-center.mpb50
                   a(href="http://www.crowdfundinsider.com/2014/11/54809-callahan-associates-announces-strategic-partnership-growthfountain-opening-crowdfunding-opportunities-millions-credit-union-members/" target="_blank")
-                    img(src="/img/pages/news3.png")
+                    img(src=require("img/pages/news3.png") alt="crowdfundinsider")
                 
               .col-lg-8
                 h4.open-sans.letter-spacing-0.text-muted.m0
@@ -283,7 +283,7 @@ section.text_block
               .col-lg-4
                 .news-img.text-xs-center.mpb50
                   a(href="http://www.cutimes.com/2014/11/21/callahan-pact-creates-crowdfunding-platform" target="_blank")
-                    img(src="/img/pages/news2.png")
+                    img(src=require("img/pages/news2.png") alt="cutimes")
                 
               .col-lg-8
                 h4.open-sans.letter-spacing-0.text-muted.m0
@@ -300,7 +300,7 @@ section.text_block
               .col-lg-4
                 .news-img.text-xs-center.mpb50
                   a(href=app.config.bucketServer + '/docs/CU.Journal.3_4_17.pdf' target="_blank")
-                    img(src="/img/pages/credit-union-journal.jpg")
+                    img(src=require("img/pages/credit-union-journal.jpg"))
                 
               .col-lg-8
                 h4.open-sans.letter-spacing-0.text-muted.m0
@@ -317,7 +317,7 @@ section.text_block
               .col-lg-4
                 .news-img.text-xs-center.mpb50
                   a(href=app.config.bucketServer + '/docs/Financial_Choice_Act_Letter.pdf' target="_blank")
-                    img(src="/img/pages/news4.png")
+                    img(src=require("img/pages/news4.png"))
                 
               .col-lg-8
                 h4.open-sans.letter-spacing-0.text-muted.m0
@@ -334,7 +334,7 @@ section.text_block
               .col-lg-4
                 .news-img.text-xs-center.mpb50
                   a(href=app.config.bucketServer + '/docs/MA_Crowdfunding_Regulation.pdf' target="_blank")
-                    img(src="/img/pages/news4.png")
+                    img(src=require("img/pages/news4.png"))
                 
               .col-lg-8
                 h4.open-sans.letter-spacing-0.text-muted.m0
@@ -351,7 +351,7 @@ section.text_block
               .col-lg-4
                 .news-img.text-xs-center.mpb50
                   a(href=app.config.bucketServer + '/docs/Growthfountain_SEC_Letter.pdf' target="_blank")
-                    img(src="/img/pages/news4.png")
+                    img(src=require("img/pages/news4.png"))
                 
               .col-lg-8
                 h4.open-sans.letter-spacing-0.text-muted.m0
