@@ -576,7 +576,7 @@ module.exports = {
         delete this.fields.is_understand_securities_related;
       }
 
-      this.getCityStateByZipCode = require("helpers/getSityStateByZipCode");
+      this.getCityStateByZipCode = require("helpers/getCityStateByZipCode");
       this.usaStates = usaStates;
 
       this.initMaxAllowedAmount();
