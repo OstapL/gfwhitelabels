@@ -38,7 +38,7 @@
           else if company && company.name
             .profile-type-user
               .user-company
-                a(href="/dashboard/issuer-dashboard").link-3  #{ company.name }
+                a(href="/dashboard/" + company.formc_id + "/issuer-dashboard").link-3  #{ company.name }
                 |  company.
           a(href="/account/change-password").link-3
             i.fa.fa-lock
