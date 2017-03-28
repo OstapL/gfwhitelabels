@@ -35,7 +35,7 @@ mixin getRiskFactorsItem(id, section, currentStep, step, name)
 
 
 mixin menu(currentSection, currentStep)
-    .col-lg-4.col-xl-3.create_compaign
+    .col-lg-4.col-xl-3.left-menu-raise-formc
       .jumbotron.jumbotron-fluid.row
         .raise-funds
           h4.text-uppercase.m-b-0 Raise capital
@@ -136,9 +136,11 @@ mixin menu(currentSection, currentStep)
               if app.user.company.is_approved == 0
                 .row
                   button(type="button").btn.btn-primary.text-uppercase.m-t-2.submit_form submit campaign
-              else if app.user.company.is_approved != 5 
-                .row
-                  button.btn.btn-primary.text-uppercase.m-t-2.disabled Campaign in review
+              else if app.user.company.is_approved == 1 
+                .warning-block.warning-team-add.text-lg-left.m-t-2
+                  span.warning-text
+                    i.fa.fa-info-circle 
+                    | Your campaign in review
               else
                 .row
                   a(href="/formc/" + app.user.formc.id + "/introduction").btn.btn-primary.text-uppercase.m-t-2 Open Form C

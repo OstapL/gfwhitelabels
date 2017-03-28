@@ -1,13 +1,13 @@
 -
   var c = require('consts/campaign/file.json');
-  var backgroundImgUrl = app.getUrl(values.campaign.header_image_data) || '/img/default.png';
+  var backgroundImgUrl = app.getUrl(values.campaign.header_image_data) || '';
   var socialDirective = require('directives/social/index.js');
 
-section(style="background-image: url(" + backgroundImgUrl + ")")#home.home-section.bg-dark-alfa-70.parallax-2.fixed-height-small.hide-bg-fixed
+section(style="background-image: url(" + backgroundImgUrl + ")")#home.home-section.bg-after-company.parallax-2.fixed-height-small.hide-bg-fixed.company-header
   .js-height-parent.container-fluid
     .home-content
       .home-text.text-lg-center
-        h1.hs-line-14.font-alt.margin-bottom-50.mb-xs-30.big-h1.text-uppercase #{ values.short_name || values.name }
+        h1.company-name.mb-xs-30.big-h1.text-uppercase #{ values.short_name || values.name }
         .local-scroll
           if values.campaign.video
             a(data-toggle="modal" href="#videoModal" data-target="#videoModal").big-icon.link-6.youtube_popup
@@ -226,34 +226,34 @@ section
         else if values.campaign.gallery_group_data
           each v,k in values.campaign.gallery_group_data
             .col-lg-4.col-sm-12.col-xs-12.col-md-6.no-padding-img
-              a(href=v.urls[v.urls.length - 1] data-size='1440x900' rel="gallery1").fancybox
+              a(href=v.urls[v.urls.length - 1] data-size='1440x900' rel="gallery1" disabled="1").fancybox
                 img(src=v.urls[0] alt=(values.short_name || values.name)).w-100.img-responsive
         else
 
           .col-lg-3.col-sm-12.col-xs-12.no-padding-img
             a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-toggle="modal" data-size='1600x900')
-              img(src="/img/default/255x153.png" alt="").img-fluid.w-100
+              img(src=require('images/default/255x153.png') alt="").img-fluid.w-100
           .col-lg-3.col-sm-12.col-xs-12.no-padding-img
             a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-              img(src="/img/default/255x153.png" alt="").img-fluid.w-100
+              img(src=require('images/default/255x153.png') alt="").img-fluid.w-100
           .col-lg-3.col-sm-12.col-xs-12.no-padding-img
             a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-              img(src="/img/default/255x153.png" alt="").img-fluid.w-100
+              img(src=require('images/default/255x153.png') alt="").img-fluid.w-100
           .col-lg-3.col-sm-12.col-xs-12.no-padding-img
             a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-              img(src="/img/default/255x153.png" alt="").img-fluid.w-100
+              img(src=require('images/default/255x153.png') alt="").img-fluid.w-100
           .col-lg-3.col-sm-12.col-xs-12.no-padding-img
             a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-              img(src="/img/default/255x153.png" alt="").img-fluid.w-100
+              img(src=require('images/default/255x153.png') alt="").img-fluid.w-100
           .col-lg-3.col-sm-12.col-xs-12.no-padding-img
             a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-              img(src="/img/default/255x153.png" alt="").img-fluid.w-100
+              img(src=require('images/default/255x153.png') alt="").img-fluid.w-100
           .col-lg-3.col-sm-12.col-xs-12.no-padding-img
             a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-              img(src="/img/default/255x153.png" alt="").img-fluid.w-100
+              img(src=require('images/default/255x153.png') alt="").img-fluid.w-100
           .col-lg-3.col-sm-12.col-xs-12.no-padding-img
             a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-              img(src="/img/default/255x153.png" alt="").img-fluid.w-100
+              img(src=require('images/default/255x153.png') alt="").img-fluid.w-100
     .container
       .col-lg-12.p-sm-0
         h2.dosis.our.text-uppercase.text-lg-center.text-xs-center.campaign-subheading How We Intend to Make Money
@@ -320,6 +320,14 @@ section
     section#members
       .container
         if Array.isArray(values.campaign.team_members) && values.campaign.team_members.length > 0
+          - 
+            function memberSort(a, b) {
+              if(a.order == null) {
+                return true;
+              }
+              return a.order > b.order;
+            }
+            values.campaign.team_members.sort(memberSort);
           h2#team.dosis.text-uppercase.text-lg-center.text-xs-center.col-lg-12.campaign-subheading Team
           .row
             .col-lg-12.text-center-flex
@@ -347,9 +355,9 @@ section
                           a(href="#").show-more-members.link-3 Read More
                       .d-block.text-lg-left.cite_education
                         span.text-lg-left.text-xs-left.pull-left.color-grey
-                          if v.city && v.state
+                          if v.city
                             i.fa.fa-home.p-l-0
-                            |  #{v.city}, #{v.state}
+                            |  #{v.city}
                         span.pull-right.color-grey
                           if v.college
                             i.fa.fa-graduation-cap
@@ -536,7 +544,7 @@ section
                     td
                       p.text-justify.perks-intro #{ v.perk }
 
-  //section(style="display: none").investors-all.border-bottom
+  //-section(style="display: none").investors-all.border-bottom
     .container
       h3.col-lg-12.text-lg-center.text-xs-center Investors
       .col-lg-12.text-center-flex

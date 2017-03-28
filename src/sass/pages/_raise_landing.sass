@@ -1,0 +1,152 @@
+.raise-capital-landing
+  position: relative
+  .top-baner
+    background-image: url("/img/raise-landing/raise-landing-top.jpg")
+    height: 70vh
+    background-size: cover
+    background-attachment: fixed
+    h1
+      color: $white
+      line-height: rem(60)
+      @media only screen and (max-width : 1100px)
+        font-size: rem(36)!important
+        line-height: 36px
+      @media only screen and (max-width : 768px)
+        font-size: rem(26)!important
+        line-height: 26px
+      @media only screen and (max-width : 768px)
+        font-size: rem(18)!important
+        line-height: 20px
+    img
+      width: 145px
+      position: relative
+      top: -10px
+  .top-section
+    position: relative
+    &:before
+      position: absolute
+      top: 0
+      content: ''
+      left: 0
+      background-color: $growth-is-bgc
+      width: 40%
+      height: 100%
+      @media only screen and (min-width : 1600px)
+        width: 43%
+      @media screen and (min-width : 1400px) and (max-width : 1600px)
+        width: 42%
+      @media only screen and (max-width : 992px)
+        width: 100%
+    &:after
+      position: absolute
+      top: 0
+      content: ''
+      left: 40%
+      border: 160px solid transparent
+      border-left: 121px solid $growth-is-bgc
+      @media only screen and (min-width : 1600px)
+        left: 43%
+      @media screen and (min-width : 1400px) and (max-width : 1600px)
+        left: 42%
+      @media only screen and (max-width : 1199px)
+        border: 195px solid transparent
+        border-left: 110px solid $growth-is-bgc
+      @media only screen and (max-width : 992px)
+        border: none
+
+    .growth-is
+      position: relative
+      padding-top: rem(50)
+      padding-bottom: rem(50)
+      color: $white
+      h3
+        line-height: rem(24)
+      @media only screen and (max-width : 768px)
+        padding-bottom: 0
+      .content
+        padding-right: 100px
+        position: relative
+        z-index: 3
+        @media only screen and (max-width : 992px)
+          padding-right: 0
+
+    .good-candidate
+      h3
+        margin-bottom: rem(15)
+      ul
+        list-style-type: none
+        margin-top: rem(10)
+      @media only screen and (max-width : 992px)
+        color: $white
+      @media only screen and (max-width : 768px)
+        &.p-l-2
+          padding-left: 0!important
+          padding-bottom: rem(50)
+
+  .simplify
+    background-color: $alabaster
+    position: relative
+    padding-bottom: rem(50)
+    padding-top: rem(50)
+    h2
+      margin-bottom: rem(20)
+    .one-item
+      margin-bottom: rem(50)
+      .title
+        margin-bottom: rem(10)
+      .text
+        margin-bottom: rem(10)
+      img
+        opacity: .4
+        height: 80px
+        width: 80px
+
+
+  .raise-landing-section
+    background: url(/img/raise-landing/RS2.png)
+    background-position: center center
+    background-attachment: fixed
+    height: 340px
+    background-repeat: no-repeat
+    background-size: cover
+  .content-bottom
+    h2
+      margin-bottom: rem(20)
+    .how-do
+      .border-bottom
+        border-bottom: solid 1px $black
+        margin-top: rem(10)
+        margin-bottom: rem(30)
+      ul
+        list-style-type: none
+        margin-top: rem(10)
+        li
+          margin-bottom: rem(15)
+          i
+            color: #747474
+            margin-right: rem(10)
+            font-size: rem(30)
+            opacity: .2
+            width: 8%
+            display: inline-block
+            vertical-align: top
+          span
+            width: 87%
+            display: inline-block
+    @media only screen and (max-width : 650px)
+      .p-x-0
+        padding-left: 15px!important
+        padding-right: 15px!important
+    .call-block
+      i
+        background-color: $content-bottom-icon-color
+        padding: 8px
+        color: $white
+        border-radius: 100px
+        font-size: rem(24)
+        width: 40px
+        height: 40px
+        vertical-align: sub
+        text-align: center
+      p
+        margin-top: rem(10)

@@ -14,7 +14,7 @@
         -
           pug_html += app.fields.userProfileDropzone('image_image_id', _.extend({
             thumbSize: '255x135',
-            default: '/img/default/255x153.png',
+            default: require('images/default/255x153.png'),
             icon: 'camera',
             text: 'Drop your profile photo here or click to upload',
             data: user.image_data[0],
@@ -32,7 +32,7 @@
                     span.user-type #{ role.title }
                   .user-company
                     | in
-                    a(href="/dashboard/issuer-dashboard?id=" + roleInfo.company.id).link-3  #{ roleInfo.company.name }
+                    a(href=app.getIssuerDashboardUrl(roleInfo.company.id)).link-3  #{ roleInfo.company.name }
                     |  company.
                   hr
           else if company && company.name

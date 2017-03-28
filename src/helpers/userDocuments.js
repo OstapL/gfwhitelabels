@@ -11,10 +11,10 @@ const documentTypes = (() => {
 module.exports = {
   getUserDocumentsByName(objectId, docName) {
     const type = typeOfDocuments[docName];
-    return global.esignServer + `/pdf-doc/investors/${objectId}/${type}`;
+    return `${app.config.esignServer}/pdf-doc/investors/${objectId}/${type}`;
   },
   getUserDocumentsByType(objectId, type) {
     // const type = documentTypes[type];
-    return global.esignServer + `/pdf-doc/investors/${objectId}/${type}`;
+    return `${app.config.esignServer}/pdf-doc/investors/${objectId}/${type}`;
   },
 };

@@ -10,7 +10,7 @@ section.text_block
           li
             a(href='/pg/overview').d-inline-block.w-100.pb10 Overview
           li
-            a(href='/pg/team').d-inline-block.w-100.pb10 #{teamName}
+            a(href='/pg/team').d-inline-block.w-100.pb10 #{app.config.teamName}
           li.display-partners
             a(href='/pg/partners').d-inline-block.w-100.pb10 Partners
           li
@@ -299,12 +299,12 @@ section.text_block
             .row
               .col-lg-4
                 .news-img.text-xs-center.mpb50
-                  a(href=bucketServer + '/docs/CU.Journal.3_4_17.pdf' target="_blank")
+                  a(href=app.config.bucketServer + '/docs/CU.Journal.3_4_17.pdf' target="_blank")
                     img(src="/img/pages/credit-union-journal.jpg")
                 
               .col-lg-8
                 h4.open-sans.letter-spacing-0.text-muted.m0
-                  a(href=bucketServer + '/docs/CU.Journal.3_4_17.pdf' target="_blank")
+                  a(href=app.config.bucketServer + '/docs/CU.Journal.3_4_17.pdf' target="_blank")
                     b
                       | With new partnerships, CUs embracing role as the original crowdfunders
                     .small-text
@@ -316,12 +316,12 @@ section.text_block
             .row
               .col-lg-4
                 .news-img.text-xs-center.mpb50
-                  a(href=bucketServer + '/docs/Financial_Choice_Act_Letter.pdf' target="_blank")
+                  a(href=app.config.bucketServer + '/docs/Financial_Choice_Act_Letter.pdf' target="_blank")
                     img(src="/img/pages/news4.png")
                 
               .col-lg-8
                 h4.open-sans.letter-spacing-0.text-muted.m0
-                  a(href=bucketServer + '/docs/Financial_Choice_Act_Letter.pdf' target="_blank")
+                  a(href=app.config.bucketServer + '/docs/Financial_Choice_Act_Letter.pdf' target="_blank")
                     b
                       | GrowthFountain Influences the Financial CHOICE Act
                     .small-text
@@ -333,12 +333,12 @@ section.text_block
             .row
               .col-lg-4
                 .news-img.text-xs-center.mpb50
-                  a(href=bucketServer + '/docs/MA_Crowdfunding_Regulation.pdf' target="_blank")
+                  a(href=app.config.bucketServer + '/docs/MA_Crowdfunding_Regulation.pdf' target="_blank")
                     img(src="/img/pages/news4.png")
                 
               .col-lg-8
                 h4.open-sans.letter-spacing-0.text-muted.m0
-                  a(href=bucketServer + '/docs/MA_Crowdfunding_Regulation.pdf' target="_blank")
+                  a(href=app.config.bucketServer + '/docs/MA_Crowdfunding_Regulation.pdf' target="_blank")
                     b
                       | GrowthFountain Influences MA Intrastate Crowdfunding
                     .small-text
@@ -350,12 +350,12 @@ section.text_block
             .row
               .col-lg-4
                 .news-img.text-xs-center.mpb50
-                  a(href=bucketServer + '/docs/Growthfountain_SEC_Letter.pdf' target="_blank")
+                  a(href=app.config.bucketServer + '/docs/Growthfountain_SEC_Letter.pdf' target="_blank")
                     img(src="/img/pages/news4.png")
                 
               .col-lg-8
                 h4.open-sans.letter-spacing-0.text-muted.m0
-                  a(href=bucketServer + '/docs/Growthfountain_SEC_Letter.pdf' target="_blank")
+                  a(href=app.config.bucketServer + '/docs/Growthfountain_SEC_Letter.pdf' target="_blank")
                     b
                       | GrowthFountain Influences Regulation Crowdfunding
                     .small-text

@@ -3,8 +3,8 @@
 section.slider-main
   .owl-carousel.owl-theme.carousel-test
     div
-      div(style="background: url(/img/slide_1.jpg)").slide_1.main-slider-item
-      //img(src="/img/slide_1.jpg" alt="...")
+      - var styleString = 'background: url(' + require('images/slide_1.jpg') + ')';
+      div(style=styleString).slide_1.main-slider-item
       .slider-content.container
         .text-xs-center
           .col-lg-12
@@ -17,13 +17,15 @@ section.slider-main
             .col-lg-12
               a(href="/account/signup").btn.btn-lg.btn-primary sign up + get $25
           else
-            .col-lg-12.hidden-xs-down
+            .col-lg-12.hidden-sm-down
               a(href="/companies").btn.btn-lg.btn-primary.m-r-2 INVEST
               a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
-
+            .col-lg-12.hidden-md-up
+              a(href="/companies").btn.btn-lg.btn-primary INVEST
 
     div
-      div(style="background: url(/img/slide_2.jpg)").main-slider-item.slide_2
+      - var styleString = 'background: url(' + require('images/slide_2.jpg') + ')';
+      div(style=styleString).main-slider-item.slide_2
       //img(src="/img/slide_2.jpg" alt="...")
       .slider-content.container
         .text-xs-center
@@ -37,11 +39,14 @@ section.slider-main
             .col-lg-12
               a(href="/account/signup").btn.btn-lg.btn-primary sign up + get $25
           else
-            .col-lg-12.hidden-xs-down
+            .col-lg-12.hidden-sm-down
               a(href="/companies").btn.btn-lg.btn-primary.m-r-2 INVEST
               a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
+            .col-lg-12.hidden-md-up
+              a(href="/companies").btn.btn-lg.btn-primary INVEST
     div
-      div(style="background: url(/img/slide_3.jpg)").main-slider-item.slide_3
+      - var styleString = 'background: url(' + require('images/slide_3.jpg') + ')';
+      div(style=styleString).main-slider-item.slide_3
       //img(src="/img/slide_3.jpg" alt="...")
       .slider-content.container
         .text-xs-center
@@ -55,30 +60,16 @@ section.slider-main
             .col-lg-12
               a(href="/account/signup").btn.btn-lg.btn-primary sign up + get $25
           else
-            .col-lg-12.hidden-xs-down
+            .col-lg-12.hidden-sm-down
               a(href="/companies").btn.btn-lg.btn-primary.m-r-2 INVEST
               a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
-
-//section.home-section.bg-dark-alfa-30.hide-bg-fixed.hidden-md-up(style="background: url(/img/slide_3.jpg) center center no-repeat; background-size: cover;")
-  .container
-    .row
-      .js-height-full
-        .home-content
-          .home-text-main.text-lg-center
-            h1.text-uppercase.dosis.m-b-1.hidden-sm-down your success is our success
-            .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
-              span.small-text Invest in your neighbor, your community, or entrepreneurs you believe in
-            .col-lg-12.m-t-1.m-b-2
-              a(href="/pg/education").link-6 Understand the Risks
-            .col-lg-12
+            .col-lg-12.hidden-md-up
               a(href="/companies").btn.btn-lg.btn-primary INVEST
-              span.hidden-xs  
-                a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
 
 section.campaing-list
   .container#campaignList
     .col-lg-12
-      h2.dosis.text-uppercase.text-sm-center.text-xs-center.mt50 What's Popular
+      h2.dosis.text-uppercase.text-sm-center.text-xs-center.mt50 CURRENT CAMPAIGNS
     include ../components/campaign/templates/_list.pug
     .col-lg-12.text-lg-center.text-md-center.text-xs-center
       if collection && collection.count && collection.count > GENERAL.COMPANIES_PER_PAGE
@@ -131,7 +122,10 @@ section.home-wrap-text-block.raise-wrap.hide-bg-fixed.main-section-raise
             br
             | financial capital for your company
         .col-lg-12
-          a(href="/company/create").btn.btn-lg.btn-primary.text-uppercase raise capital
+          if app.user.is_anonymous()
+            a(href="/pg/raise_landing").btn.btn-lg.btn-primary.text-uppercase raise capital
+          else
+            a(href="/company/create").btn.btn-lg.btn-primary.text-uppercase raise capital
           a(href="/pg/entrepreneurquestions").btn.btn-lg.btn-secondary.text-uppercase learn more
 section.home-our-partners
   .container
@@ -141,16 +135,16 @@ section.home-our-partners
     .row.text-center-flex
       .col-lg-4.col-sm-6.col-xs-12.text-xs-center.p-b-3
         a(href="http://www.callahan.com/" target="_blank")
-          img(src="/img/callahan.png").img-fluid.text-lg-right.text-xs-center.m-x-auto
+          img(src=require("images/callahan.png")).img-fluid.text-lg-right.text-xs-center.m-x-auto
       .col-lg-4.col-sm-6.col-xs-12.text-lg-center.text-xs-center.m-x-auto.p-b-3
         a(href="https://www.jdcu.org/" target="_blank")
-          img(src="/img/logo_jd.png").img-fluid.text-xs-center.m-x-auto
+          img(src=require('images/logo_jd.png')).img-fluid.text-xs-center.m-x-auto
       .col-lg-4.col-sm-6.col-xs-12.text-lg-left.m-x-auto.p-b-3
         a(href="https://www.rivermarkcu.org/" target="_blank")
-          img(src="/img/logo_rivermark.png" ).img-fluid.text-xs-center.m-x-auto
+          img(src=require('images/logo_rivermark.png')).img-fluid.text-xs-center.m-x-auto
       .col-lg-3.col-sm-6.col-xs-12.text-xs-center
         a(href="https://www.dcu.org/" target="_blank")
-          img(src="/img/logo_dcu.jpg").img-fluid.text-xs-center.m-x-auto
+          img(src=require('images/logo_dcu.jpg')).img-fluid.text-xs-center.m-x-auto
       .col-lg-3.col-sm-6.col-xs-12.p-l-0.text-xs-center.momentum-img
         a(href="http://momentum3growth.com/" target="_blank")
-          img(src="/img/momentum3growth.png").img-fluid.text-xs-center.m-x-auto
+          img(src=require('images/momentum3growth.png')).img-fluid.text-xs-center.m-x-auto
