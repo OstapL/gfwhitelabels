@@ -10,6 +10,7 @@ class App {
     this.cookies = require('cookies-js');
     this.fields = require('./fields.js');
     this.validation = require('components/validation/validation.js');
+    this.models = require('./models.js');
     this.user = new User();
   }
 

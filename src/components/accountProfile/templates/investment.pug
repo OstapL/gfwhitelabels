@@ -1,7 +1,6 @@
 div(data-investmentid=id).one_table
   -
     var campaignHelper = require('components/campaign/helpers.js');
-    var formatHelper = require('helpers/formatHelper.js');
 
     var url = campaignHelper.getImageCampaign(campaign);
     var background = 'background: url(' + url + ') center center no-repeat; background-size: cover;';
@@ -66,10 +65,10 @@ div(data-investmentid=id).one_table
   .bottom_column
     .top_descript
       .left_text
-        b #{formatHelper.formatAmount(campaign.amount_raised)}
+        b #{app.helpers.format.formatAmount(campaign.amount_raised)}
         span Raised
       .right_text
-        b #{formatHelper.formatAmount((campaign.minimum_raise))}
+        b #{app.helpers.format.formatAmount((campaign.minimum_raise))}
         span Goal
       p.percents #{campaignHelper.percentage(campaign.amount_raised, campaign.minimum_raise) + '% Funded'}
       .clear

@@ -1,14 +1,11 @@
 -
-  var roleHelper = require('helpers/roleHelper.js');
-  var dateHelper = require('helpers/dateHelper.js');
-
   var userName = comment.user.first_name + ' ' + comment.user.last_name;
   //ignore Director/Shareholder role
   // var roleBitmap = 0b1111111100 & comment.user.role;
   var roleBitmap = comment.user.role;
   //roleBitmap = roleBitmap || comment.user.role;
-  var roles = roleHelper.extractRolesByPriority(roleBitmap);
-  var passedTime = dateHelper.fromNow(comment.created_date);
+  var roles = app.helpers.role.extractRolesByPriority(roleBitmap);
+  var passedTime = app.helpers.date.fromNow(comment.created_date);
   var avatar = app.getUrl(comment.user.image_data) || require('images/default/Default_photo.png');
 
 div(id=('comment' + comment.uid) data-id=comment.uid data-level=level).single-comment.col-xl-12

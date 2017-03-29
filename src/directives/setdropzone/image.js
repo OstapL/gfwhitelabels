@@ -114,6 +114,7 @@ class CropperDropzone {
   render(attacheTo) {
     // const template = require('./templates/cropperPopup.pug');
 
+    $('.popover').popover('hide');
     const templates = {
       'withpreview':
       '<div class="row">' +

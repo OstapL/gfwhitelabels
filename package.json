@@ -4,9 +4,10 @@
   "description": "Growth Fontain Single Page Application",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --config ./webpack.config.js --inline --hot",
-    "build": "webpack -p --config ./webpack.config.production.js --profile",
-    "analyze": "webpack --config ./webpack.config.production.js --profile --json >stats.json",
+    "start": "webpack-dev-server --inline --hot",
+    "build": "NODE_ENV=production webpack -p --config ./webpack.config.js",
+    "stats": "webpack --profile --json >stats.json",
+    "analyzer": "NODE_ENV=analyze webpack",
     "webpack_analyzer": "webpack --json | ./node_modules/webpack-bundle-size-analyzer/webpack-bundle-size-analyzer",
     "lint": "jshint src/**/*.js",
     "jscs": "jscs src/**/*.js",
