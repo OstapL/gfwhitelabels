@@ -1,18 +1,5 @@
-const formatHelper = require('helpers/formatHelper');
-const textHelper = require('helpers/textHelper');
 const companyFees = require('consts/companyFees.json');
 const typeOfDocuments = require('consts/typeOfDocuments.json');
-
-const usaStates = require('helpers/usaStates.js');
-
-const helpers = {
-  text: textHelper,
-  icons: require('helpers/iconsHelper.js'),
-  format: formatHelper,
-  fileList: require('helpers/fileList.js'),
-  date: require('helpers/dateHelper.js'),
-  campaign: require('./helpers.js'),
-};
 
 const COUNTRIES = require('consts/countries.json');
 const validation = require('components/validation/validation.js');
@@ -211,7 +198,7 @@ module.exports = {
 
     showDocumentsModal(e) {
       e.preventDefault();
-      helpers.fileList.show(this.companyDocsData);
+      app.helpers.fileList.show(this.companyDocsData);
     },
 
     render() {
@@ -221,12 +208,9 @@ module.exports = {
       this.$el.html(
         this.template({
           values: this.model,
-          formatHelper: formatHelper,
           edit: this.edit,
           previous: this.previous,
           preview: this.preview,
-          textHelper: textHelper,
-          helpers: helpers,
         })
       );
 
@@ -576,9 +560,6 @@ module.exports = {
         delete this.fields.is_understand_securities_related;
       }
 
-      this.getCityStateByZipCode = require("helpers/getSityStateByZipCode");
-      this.usaStates = usaStates;
-
       this.initMaxAllowedAmount();
     },
 
@@ -589,7 +570,7 @@ module.exports = {
           fields: this.fields,
           values: this.model,
           user: this.user,
-          states: this.usaStates,
+          states: app.helpers.usaStates,
           feeInfo: this.calcFeeWithCredit(),
         })
       );
@@ -869,10 +850,10 @@ module.exports = {
 
       const validateRange = (value, min=0, max, prefix) => {
         if (value < min)
-          throw `${prefix || ''} must not be less than ${helpers.format.formatNumber(min)}.`;
+          throw `${prefix || ''} must not be less than ${app.helpers.format.formatNumber(min)}.`;
 
         if (value > max)
-          throw `${prefix || ''} must not be greater than ${helpers.format.formatNumber(max)}.`;
+          throw `${prefix || ''} must not be greater than ${app.helpers.format.formatNumber(max)}.`;
       };
 
       let fields = {
@@ -1054,7 +1035,7 @@ module.exports = {
       if (e.target.value.length < 5) return;
       if (!e.target.value.match(/\d{5}/)) return;
       // else console.log('hello');
-      this.getCityStateByZipCode(e.target.value, ({ success=false, city="", state=""}) => {
+      app.helpers.location(e.target.value, ({ success=false, city="", state=""}) => {
         // this.zipCodeField.closest('div').find('.help-block').remove();
         if (success) {
           this.$('.js-city-state').text(`${city}, ${state}`);
@@ -1095,10 +1076,10 @@ module.exports = {
         zip_code: this.model.zip_code,
         address_1: this.model.address_1,
         address_2: this.model.address_2,
-        jurisdiction_of_organization: usaStates.getFullState(this.model.founding_state),  
-        maximum_raise: formatHelper.formatNumber( this.model.campaign.maximum_raise ),
-        minimum_raise: formatHelper.formatNumber( this.model.campaign.minimum_raise ),
-        price_per_share: formatHelper.formatNumber( this.model.campaign.price_per_share ),
+        jurisdiction_of_organization: app.helpers.usaStates.getFullState(this.model.founding_state),
+        maximum_raise: app.helpers.format.formatNumber( this.model.campaign.maximum_raise ),
+        minimum_raise: app.helpers.format.formatNumber( this.model.campaign.minimum_raise ),
+        price_per_share: app.helpers.format.formatNumber( this.model.campaign.price_per_share ),
         
         // owner of campaign
         issuer_email: this.model.owner.email,
@@ -1107,8 +1088,8 @@ module.exports = {
 
         // investor
         investor_legal_name: investor_legal_name,
-        aggregate_inclusive_purchase: formatHelper.formatNumber( aggregate_inclusive_purchase ),
-        investment_amount: formatHelper.formatNumber( investment_amount ),
+        aggregate_inclusive_purchase: app.helpers.format.formatNumber( aggregate_inclusive_purchase ),
+        investment_amount: app.helpers.format.formatNumber( investment_amount ),
         investor_address: formData.personal_information_data.street_address_1,
         investor_optional_address: formData.personal_information_data.street_address_2,
         investor_code: formData.personal_information_data.zip_code,

@@ -1,9 +1,5 @@
 'use strict';
-
-const formatHelper = require('helpers/formatHelper');
-const validation = require('components/validation/validation.js');
 const deepDiff = require('deep-diff').diff;
-const errorPageHelper = require('helpers/errorPageHelper.js');
 
 module.exports = {
   makeCacheRequest(url, type, data) {
@@ -69,12 +65,12 @@ module.exports = {
       }
       // If we have location in responseJSON
       // do not show error
-      if (xhr.hasOwnProperty('responseJSON') && 
+      if (xhr.hasOwnProperty('responseJSON') &&
           xhr.responseJSON !== undefined &&
           xhr.responseJSON.hasOwnProperty('location')) {
         return;
       }
-      errorPageHelper({
+      app.helpers.errorPage({
         status: xhr.status,
         statusText: xhr.statusText,
       });
@@ -161,9 +157,9 @@ module.exports = {
       fields = patchFields;
     }
 
-    if(!validation.validate(fields, newData, this)) {
-      _(validation.errors).each((errors, key) => {
-        validation.invalidMsg(this, key, errors);
+    if(!app.validation.validate(fields, newData, this)) {
+      _(app.validation.errors).each((errors, key) => {
+        app.validation.invalidMsg(this, key, errors);
       });
       this.$('.help-block').prev().scrollTo(5);
       return false;
@@ -187,8 +183,8 @@ module.exports = {
           let defaultAction  = 1;
           if (typeof this._success == 'function') {
             defaultAction = this._success(responseData, newData);
-          } 
-          
+          }
+
           if(defaultAction == 1) {
             $('body').scrollTo();
             this.undelegateEvents();
@@ -230,12 +226,12 @@ module.exports = {
 
       data = data ? data : { Server: status };
       if (_.isString(data)) {
-        validation.invalidMsg(
+        app.validation.invalidMsg(
           view, 'error', data
         );
       } else {
         for (let key in data)  {
-          validation.invalidMsg(
+          app.validation.invalidMsg(
             view, key, data[key]
           );
         }
@@ -268,15 +264,15 @@ module.exports = {
         var key_month = key + '__month';
         var key_day = key + '__day';
         if(data[key_year]) {
-          data[key] = data[key_year] + '-' + (data[key_month] || '01') + '-' + 
-            (data[key_day] || '01') 
+          data[key] = data[key_year] + '-' + (data[key_month] || '01') + '-' +
+            (data[key_day] || '01')
         }
         delete data[key_year];
         delete data[key_month];
         delete data[key_day];
       } else if(el.type == 'nested' && data[key]) {
         _.each(data[key], (val, index, list) => {
-          api.fixDateFields.call(this, el.schema, data[key][index]);  
+          api.fixDateFields.call(this, el.schema, data[key][index]);
         });
       }
     });
@@ -314,11 +310,11 @@ module.exports = {
     _(fields).each((el, key) => {
       if(el.type == 'string') {
         if (data && data[key]) {
-          data[key] = formatHelper.unformatPrice(data[key]);
+          data[key] = app.helpers.format.unformatPrice(data[key]);
         }
       } else if(el.type == 'money') {
         if (data && data[key]) {
-          data[key] = formatHelper.unformatPrice(data[key]);
+          data[key] = app.helpers.format.unformatPrice(data[key]);
         }
       } else if(el.type == 'nested' && data[key]) {
         _.each(data[key], (val, index, list) => {

@@ -112,7 +112,7 @@ module.exports = {
         loader: 'pug-loader',
       },
       {
-        test: /\.(gif|png|jpe?g|svg)$/i,
+        test: /\.(gif|png|jpe?g|svg|ico)$/i,
         include:[
           path.resolve(__dirname, './node_modules'),
           path.resolve(__dirname, './src'),
