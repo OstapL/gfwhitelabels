@@ -188,6 +188,7 @@ module.exports = {
         $(".team-member-list .left-animated").animated("fadeInLeft");
         $(".team-member-list .one-team").animated("fadeInUp");
         $(".team-member-list .fade-img").animated("fadeIn");
+        $(".fade-in").animated("fadeInUp");
       });
     },
   },
