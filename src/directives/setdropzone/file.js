@@ -54,7 +54,7 @@ class FileElement {
     this.element.querySelectorAll('.deleteFile').forEach((item) => {
       item.addEventListener("click", (event) => {
         api.makeRequest(
-            global.filerServer + '/' + this.file.id,
+            app.config.filerServer + '/' + this.file.id,
             'DELETE'
         ).done(() => {
           let data = {};
@@ -109,7 +109,7 @@ class FileDropzone {
     );
 
     this.options = {
-      url: filerServer + '/upload',
+      url: app.config.filerServer + '/upload',
       clickable: '.dropzone__' + fieldName + ' .border-dropzone',
       createImageThumbnails: false,
       addRemoveLinks: false,
@@ -224,7 +224,7 @@ class FileDropzone {
 
     dropbox.on('error', (file, error, xhr) => {
       $(this.element).find('.uploading').hide().addClass('collapse').css('z-index', '');
-      validation.invalidMsg(
+      app.validation.invalidMsg(
         this.view,
         this.fileElement.fieldName,
         Object.values(error)[0]
@@ -248,7 +248,7 @@ class FileDropzone {
       $(this.element).find('.uploading').hide().addClass('collapse').css('z-index', '');
       // ToDo
       // fix if <field>_data urls error
-      validation.invalidMsg(
+      app.validation.invalidMsg(
         this.view,
         this.fileElement.fieldName,
         Object.values(xhr.responseJSON)

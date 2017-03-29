@@ -3,7 +3,6 @@
   var rolesConsts = require('consts/team_member/roles.json');
   var countryDirective = require('directives/country/index.js');
   var ssnDirective = require('directives/ssn/index.js');
-  var dropzoneDirective = require('directives/setdropzone/file.js');
 
   pug_html += app.breadcrumbs('Profile', '', [ ['Home', '/'], ['Profile', ''],]);
 
@@ -12,22 +11,14 @@
     aside.col-xl-3.col-lg-4.m-b-1
       form(method="post" action="").form.form-section
         h4.m-t-0.m-b-1.profile-user-name.text-xs-center.text-uppercase #{user.first_name + ' ' + user.last_name}
-        #image
-          -
-            pug_html += app.fields.userProfileDropzone('image_image_id', _.extend({
-              thumbSize: '255x135',
-              default: '/img/default/255x153.png',
-              icon: 'camera',
-              text: 'Drop your profile photo here or click to upload',
-              data: user.image_data[0],
-            }, fields.image));
-
-            var self = this;
-            $(window).ready(function() {
-              setTimeout(function() {
-                new dropzoneDirective(self, '.dropzone__image_image_id', 'image_image_id', 'image_data', '.img-image_image_id').render();
-              }, 1200);
-            });
+        -
+          pug_html += app.fields.userProfileDropzone('image_image_id', _.extend({
+            thumbSize: '255x135',
+            default: require('images/default/255x153.png'),
+            icon: 'camera',
+            text: 'Drop your profile photo here or click to upload',
+            data: user.image_data[0],
+          }, fields.image));
       .row.m-t-2.m-b-2
         .col-xl-12.col-lg-12.col-md-6.offset-md-3.col-xs-8.offset-xs-2.offset-xl-0.offset-lg-0.p-l-0.p-r-0
           -
@@ -41,13 +32,13 @@
                     span.user-type #{ role.title }
                   .user-company
                     | in
-                    a(href="/dashboard/issuer-dashboard?id=" + roleInfo.company.id).link-3  #{ roleInfo.company.name }
+                    a(href=app.getIssuerDashboardUrl(roleInfo.company.id)).link-3  #{ roleInfo.company.name }
                     |  company.
                   hr
           else if company && company.name
             .profile-type-user
               .user-company
-                a(href="/dashboard/issuer-dashboard").link-3  #{ company.name }
+                a(href="/dashboard/" + company.formc_id + "/issuer-dashboard").link-3  #{ company.name }
                 |  company.
           a(href="/account/change-password").link-3
             i.fa.fa-lock

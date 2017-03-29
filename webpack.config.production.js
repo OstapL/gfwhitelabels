@@ -1,43 +1,126 @@
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
-const cleanWebpackPlugin = require('clean-webpack-plugin');
+const HtmlPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+
+let package1 = require('./package.json');
+const dependencies = Object.keys(package1.dependencies);
 
 module.exports = {
-  entry: './src/app.js',
-  output: {
-    path: __dirname + '/dist',
-    publicPath: '/',
-    filename: 'bundle.[hash].js',
+  entry: {
+    vendor: dependencies,
+    index: path.resolve(__dirname, './src/index.js'),
   },
-
-  resolve: {
-    extensions: ['', '.js'],
-    modulesDirectories: [
-      './',
-      'js',
-      'src',
-      'node_modules',
+  output: {
+    path: path.resolve(__dirname, './dist'),
+    filename: '[name].bundle.[hash].js',
+    publicPath: '/',
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['env'],
+          },
+        },
+        include: [path.resolve(__dirname, 'src')],
+        exclude: [/\/node_modules\//],
+      },
+      {
+        test: /\.css$/,
+        loaders: ['style-loader', 'css-loader', 'resolve-url-loader'],
+      },
+      {
+        test: /\.(scss|sass)$/i,
+        include: [
+          path.resolve(__dirname, './node_modules'),
+          path.resolve(__dirname, './src'),
+        ],
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            'css-loader',
+            'resolve-url-loader',
+            {
+              loader: 'sass-loader',
+              query: {
+                sourceMap: true,
+              }
+            }],
+        })
+      },
+      {
+        test: /\.pug$/,
+        loader: 'pug-loader',
+      },
+      {
+        test: /\.(gif|png|jpe?g|svg)$/i,
+        include:[
+          path.resolve(__dirname, './node_modules'),
+          path.resolve(__dirname, './src'),
+        ],
+        loaders: [
+          {
+            loader: 'file-loader',
+            query: {
+              name: '[path][name].[ext]',
+            }
+          },
+          {
+            loader: 'image-webpack-loader',
+            query: {
+              bypassOnDebug: true,
+            }
+          }
+        ],
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|svg|otf)$/i,
+        use: 'url-loader?limit=100000',
+      }
     ],
   },
-
-  debug: false,
-
+  resolve: {
+    alias: {
+      components: path.resolve(__dirname, 'src/components'),
+      constants: path.resolve(__dirname, 'consts'),
+      images: path.resolve(__dirname, 'src/img'),
+    },
+    modules: [
+      path.resolve(__dirname, 'src'),
+      path.resolve(__dirname, 'node_modules'),
+      path.resolve(__dirname, ''),
+    ],
+    extensions: ['.js', '.sass', '.scss', '.css'],
+  },
   plugins: [
-    new ExtractTextPlugin('style.css'),
-    new HtmlWebpackPlugin({
-      title: 'Backbone App',
-      template: './src/index.html',
+    new HtmlPlugin({
+      title: 'GrowthFountain | Equity Crowdfunding Platform',
+      template: './src/index.pug',
       filename: 'index.html',
-      inject: 'body', // Inject all scripts into the body
+      inject: 'body',
+    }),
+    new ExtractTextPlugin({
+      filename: '[name].[hash].css',
+      disable: false,
+      allChunks: true,
     }),
     new webpack.ProvidePlugin({
-      $: 'jquery',
-      jQuery: 'jquery',
-      Tether: 'tether',
+      'jQuery': 'jquery',
+      '$': 'jquery',
+      'window.jQuery': 'jquery',
+      'Tether': 'tether',
       'window.Tether': 'tether',
-      Backbone: 'backbone',
+      '_': 'underscore',
+      'Backbone': 'backbone',
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: ['vendor', 'manifest'],
+      minChunks: 2,
     }),
     new webpack.optimize.UglifyJsPlugin({
       mangle: true,
@@ -46,51 +129,18 @@ module.exports = {
       },
       output: { comments: false },
     }),
-    new cleanWebpackPlugin(['dist'], {  //TODO: it looks like mistake
+    new CleanWebpackPlugin(['dist'], {
       root: __dirname,
       verbose: true,
       dry: false,
     }),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurenceOrderPlugin(),
   ],
-
-  module: {
-    loaders: [
-      { test: /bootstrap\/js\//, loader: 'imports?jQuery=$' },
-      { test: /\.html?$/, loader: 'file?name=[name].[ext]' },
-      { test: /\.pug$/, loader: 'pug-loader' },
-      { test: /\.json$/, exclude: /node_modules/, loader: 'json-loader' },
-      {
-        test: /\.js?$/,
-        exclude: /node_modules/,
-        loader: 'babel-loader',
-        query: { presets: ['es2015'] },
-      },
-      { test: /\.css$/, loaders: ['style-loader', 'css-loader'] },
-      { test: /\.sass$/, loaders: ['style-loader', 'css-loader', 'sass-loader'] },
-      { test: /\.scss$/, loaders: ['style-loader', 'css-loader', 'sass-loader'] },
-      { test: /\.png$/, loader: 'url?limit=8192&mimetype=image/png' },
-      { test: /\.jpe?g$/, loader: 'url?limit=8192&mimetype=image/jpg' },
-      { test: /\.gif$/, loader: 'url?limit=8192&mimetype=image/gif' },
-      { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=8192&mimetype=image/svg+xml' },
-      {
-        test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url?limit=8192&mimetype=application/font-woff2',
-      },
-      {
-        test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url?limit=8192&mimetype=application/font-woff',
-      },
-      {
-        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url?limit=8192&mimetype=application/octet-stream',
-      },
-      {
-        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url?limit=8192&mimetype=application/octet-stream',
-      },
-      { test: /\.md$/, loaders: ['html', 'markdown'] },
-    ],
+  devtool: 'eval',
+  devServer: {
+    contentBase: path.resolve(__dirname, 'dist'),
+    port: 7070,
+    host: '0.0.0.0',
+    hot: true,
+    inline: true,
   },
 };

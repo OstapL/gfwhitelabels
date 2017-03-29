@@ -1,15 +1,6 @@
 const validation = require('components/validation/validation.js');
 const hello = require('hellojs');
 
-hello.init({
-    facebook: facebookClientId,
-    google: googleClientId,
-    linkedin: linkedinClientId, 
-}, {
-    redirect_uri: '/account/finish/login/',
-    oauth_proxy: authServer+'/proxy/'
-});
-
 const SUPPORTED_NETWORKS = ['facebook', 'linkedin', 'google'];
 const SCOPES = {
   facebook: 'public_profile,email',
@@ -17,12 +8,25 @@ const SCOPES = {
   google: 'profile,email',
 };
 
-let functions = {
+let __initialized = false;
 
+let functions = {
   // resolves when successful
   // resolves with `true` when canceled
   // rejects with error message otherwise
   login(network) {
+    if (!__initialized) {
+      hello.init({
+        facebook: app.config.facebookClientId,
+        google: app.config.googleClientId,
+        linkedin: app.config.linkedinClientId,
+      }, {
+        redirect_uri: '/account/finish/login/',
+        oauth_proxy: app.config.authServer+'/proxy/'
+      });
+      __initialized = true;
+    }
+
     return new Promise((resolve, reject) => {
       if (!_.contains(SUPPORTED_NETWORKS, network))
         return reject(`Network ${network} is not supported`);
@@ -58,7 +62,7 @@ let functions = {
   sendToken(network, token) {
     return $.ajax({
       method: 'POST',
-      url: `${authServer}/rest-auth/${network}/`,
+      url: `${app.config.authServer}/rest-auth/${network}/`,
       data: { access_token: token, domain: window.location.host },
     });
   },

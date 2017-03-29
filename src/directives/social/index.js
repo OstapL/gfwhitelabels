@@ -59,7 +59,7 @@ class SocialNetworks {
 
     const data = {
       url: window.location.origin + '/' + model.id,
-      title: stripHtml(options.titlePrefix + companyName + '\'s ' + corporateStructure + 'on GrowthFountain.com '),
+      title: stripHtml(options.titlePrefix + companyName + '\'s ' + corporateStructure + 'on ' + window.location.host + ' '),
       description: stripHtml(options.descriptionPrefix + (model.description || '')),
       picture: campaignHelper.getImageCampaign(model.campaign),
       text: stripHtml(options.titlePrefix + companyName + '\'s ' + corporateStructure + 'on @growthfountain '),
@@ -136,7 +136,7 @@ class SocialNetworks {
   //{ app_id, url, description, locale, picture, title }
   getFacebookLink(values) {
     return 'https://www.facebook.com/dialog/share' +
-              '?app_id=' + facebookClientId +
+              '?app_id=' + app.config.facebookClientId +
               '&href=' + values.url + '?r=' + Math.random() +
               '&description=' + (values.description || '') +
               '&locale=en_US' +

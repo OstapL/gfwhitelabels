@@ -222,7 +222,7 @@ class CropperDropzone {
       data.id = this.file.file.id;
 
       api.makeRequest(
-        filerServer + '/crop',
+        app.config.filerServer + '/crop',
         'PUT',
         data
       ).done((responseData) => {

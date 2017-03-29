@@ -5,25 +5,22 @@ section.text_block
     .row
       .col-lg-3.hidden-md-down  
         .page_title.border-bottom.mb25
-          h4.text-uppercase.dosis ABOUT US
-        ul.list-unstyled.custom
+          h4.text-uppercase ABOUT US
+        ul.list-unstyled.custom.pages-left-menu
           li
-            a(href='/pg/overview').d-inline-block.w-100.pb10 Overview
+            a(href='/pg/overview').d-inline-block.w-100 Overview
           li
-            a(href='/pg/team').d-inline-block.w-100.pb10 #{teamName}
+            a(href='/pg/team').d-inline-block.w-100 #{app.config.teamName}
           li.display-partners
-            a(href='/pg/partners').d-inline-block.w-100.pb10 Partners
+            a(href='/pg/partners').d-inline-block.w-100 Partners
+          li.active
+            a(href='/pg/contact').d-inline-block.w-100 Contact Us
           li
-            a(href='/pg/contact').d-inline-block.w-100.pb10 Contact Us
+            a(href='/pg/careers').d-inline-block.w-100 Careers
           li
-            a(href='/pg/careers').d-inline-block.w-100.pb10 Careers
+            a(href='/pg/news').d-inline-block.w-100 In the News
           li
-            a(href='/pg/news').d-inline-block.w-100.pb10 In the News
-          li
-            a(href='/pg/faq').d-inline-block.w-100.pb10 FAQ
-          //- li
-          //-     // у последнего елемента <a> клас pb10 отстутствует
-          //-     a.d-inline-block.w-100(href='/pg/blogs') Blog
+            a(href='/pg/faq').d-inline-block.w-100 FAQ
 
       .col-lg-9
         include map.pug

@@ -293,7 +293,11 @@ header
 
       &.user-info
         margin-left: 0
-
+        #user_name
+          max-width: 200px
+          overflow: hidden
+          height: 16px
+          display: inline-block
       .list-container
         display: none
 
@@ -528,7 +532,7 @@ header
               text-decoration: none
         .nav-link
           border-bottom: solid 1px 
-          border-bottom-color: rgba($small-text, .5)
+          border-bottom-color: $notification-border-bottom-color
           margin-bottom: 0
           
           
@@ -536,18 +540,18 @@ header
             border-bottom: none
           
           &.notification-item
-            background-color: rgba(70,70,70, .5)
+            background-color: $notification-bgc-not-read
             padding-left: 10px
             padding-right: 0
             p
-              color: $white
+              color: $notification-text-color-not-read
               font-weight: normal!important
             &.notification-item-read
               background-color: transparent
               margin-left: rem(10)
               padding-left: 0px
               p
-                color: rgba($menu_text_color, 0.7)
+                color: $notification-text-color-read
                 font-weight: normal!important
       .submenu
         overflow-y: scroll
