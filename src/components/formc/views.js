@@ -1463,7 +1463,7 @@ module.exports = {
                 'insurance policies with respect to the death or disability of those ' +
                 'individuals. Therefore, in the event that any of the Company\'s employees ' +
                 'die or become disabled, the Company will not receive any insurance proceeds as ' +
-                'compensation for such person\s absence. The loss of such person could ' +
+                'compensation for such person\'s absence. The loss of such person could ' +
                 'negatively affect the Company and its operations.',
         },
         3: {
