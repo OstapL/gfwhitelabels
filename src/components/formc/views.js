@@ -147,7 +147,7 @@ module.exports = {
         template: listingAgreement
       }];
 
-      app.makeRequest(reqUrl, 'POST', data, {
+      api.makeRequest(reqUrl, 'POST', data, {
         contentType: 'application/json; charset=utf-8',
         crossDomain: true,
       })
