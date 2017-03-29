@@ -26,7 +26,7 @@ section.slider-main
     div
       - var styleString = 'background: url(' + require('images/slide_2.jpg') + ')';
       div(style=styleString).main-slider-item.slide_2
-      //img(src="/img/slide_2.jpg" alt="...")
+      //img(src=require('images/slide_2.jpg') alt="...")
       .slider-content.container
         .text-xs-center
           .col-lg-12
@@ -47,7 +47,7 @@ section.slider-main
     div
       - var styleString = 'background: url(' + require('images/slide_3.jpg') + ')';
       div(style=styleString).main-slider-item.slide_3
-      //img(src="/img/slide_3.jpg" alt="...")
+      //img(src=require('images/slide_3.jpg') alt="...")
       .slider-content.container
         .text-xs-center
           .col-lg-12

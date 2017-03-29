@@ -3,22 +3,11 @@
 const typeOfDocuments = require('consts/typeOfDocuments.json');
 const companyFees = require('consts/companyFees.json');
 const formcHelpers = require('./helpers.js');
-const formatHelper = require('../../helpers/formatHelper.js');
 const securityTypeConsts = require('consts/formc/security_type.json');
 const yesNoConsts = require('consts/yesNo.json');
 const roles = ['Shareholder', 'Director', 'Officer'];
 
-const menuHelper = require('helpers/menuHelper.js');
-const addSectionHelper = require('helpers/addSectionHelper.js');
-const yesNoHelper = require('helpers/yesNoHelper.js');
-
-const dropzoneHelpers = require('helpers/dropzoneHelpers.js');
-const riskFactorsHelper = require('helpers/riskFactorsHelper.js');
 const validation = require('components/validation/validation.js');
-
-const disableEnterHelper = require('helpers/disableEnterHelper.js');
-
-const leavingConfirmationHelper = require('helpers/leavingConfirmationHelper.js');
 const raiseHelpers = require('../raiseFunds/helpers.js');
 
 const labels = {
@@ -100,7 +89,7 @@ module.exports = {
       'click .link-2': 'openPdf',
       'keyup #full_name': 'changeSign',
       'click #pay-btn': 'stripeSubmit',
-    }, menuHelper.events, yesNoHelper.events, /*leavingConfirmationHelper.events*/),
+    }, app.helpers.menu.events, app.helpers.yesNo.events, /*app.helpers.confirmOnLeave.events*/),
 
     preinitialize() {
       // ToDo
@@ -360,7 +349,7 @@ module.exports = {
       this.eSignPreview.text(this.eSignFullName.val());
     },
 
-  }, menuHelper.methods, yesNoHelper.methods, leavingConfirmationHelper.methods)),
+  }, app.helpers.menu.methods, app.helpers.yesNo.methods, app.helpers.confirmOnLeave.methods)),
 
   teamMembers: Backbone.View.extend(_.extend({
     urlRoot: app.config.formcServer + '/:id/team-members/employers',
@@ -370,7 +359,7 @@ module.exports = {
       'blur #full_time_employers,#part_time_employers': 'updateEmployees',
       'click .submit_formc': submitFormc,
       'click .delete-member': 'deleteMember',
-    }, menuHelper.events, leavingConfirmationHelper.events),
+    }, app.helpers.menu.events, app.helpers.confirmOnLeave.events),
 
     preinitialize() {
       // ToDo
@@ -468,12 +457,12 @@ module.exports = {
           ],
         })
       );
-      disableEnterHelper.disableEnter.call(this);
+      app.helpers.disableEnter.disableEnter.call(this);
       raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
 
-  }, menuHelper.methods, addSectionHelper.methods, leavingConfirmationHelper.methods)),
+  }, app.helpers.menu.methods, app.helpers.section.methods, app.helpers.confirmOnLeave.methods)),
 
 	teamMemberAdd: Backbone.View.extend(_.extend({
     urlRoot: app.config.formcServer + '/:id/team-members',
@@ -483,7 +472,7 @@ module.exports = {
       'click #submitForm': 'submit',
       'click .submit_formc': submitFormc,
       'click .team-current-date': 'setCurrentDate',
-    }, addSectionHelper.events, menuHelper.events, yesNoHelper.events, leavingConfirmationHelper.events),
+    }, app.helpers.section.events, app.helpers.menu.events, app.helpers.yesNo.events, app.helpers.confirmOnLeave.events),
 
     preinitialize() {
       // ToDo
@@ -579,7 +568,7 @@ module.exports = {
         })
       );
       this.$el.find('.selectpicker').selectpicker();
-      disableEnterHelper.disableEnter.call(this);
+      app.helpers.disableEnter.disableEnter.call(this);
       raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
@@ -668,7 +657,7 @@ module.exports = {
       yearControl.prop('disabled', isCurrentDate);
     },
 
-  }, addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods, leavingConfirmationHelper.methods)),
+  }, app.helpers.section.methods, app.helpers.menu.methods, app.helpers.yesNo.methods, app.helpers.confirmOnLeave.methods)),
 
 
   relatedParties: Backbone.View.extend(_.extend({
@@ -678,7 +667,7 @@ module.exports = {
     events: _.extend({
       'submit form': 'submit',
       'click .submit_formc': submitFormc,
-    }, addSectionHelper.events, menuHelper.events, yesNoHelper.events, leavingConfirmationHelper.events),
+    }, app.helpers.section.events, app.helpers.menu.events, app.helpers.yesNo.events, app.helpers.confirmOnLeave.events),
 
     preinitialize() {
       // ToDo
@@ -727,7 +716,7 @@ module.exports = {
           templates: this.jsonTemplates,
         })
       );
-      disableEnterHelper.disableEnter.call(this);
+      app.helpers.disableEnter.disableEnter.call(this);
       raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
@@ -740,7 +729,7 @@ module.exports = {
     getSuccessUrl(data) {
       return '/formc/' + this.model.id + '/use-of-proceeds';
     },
-  }, addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods, leavingConfirmationHelper.methods)),
+  }, app.helpers.section.methods, app.helpers.menu.methods, app.helpers.yesNo.methods, app.helpers.confirmOnLeave.methods)),
 
   useOfProceeds: Backbone.View.extend(_.extend({
     urlRoot: app.config.formcServer + '/:id/use-of-proceeds',
@@ -812,7 +801,7 @@ module.exports = {
       'blur .min-expense,.max-expense,.min-use,.max-use': 'calculate',
       'click .add-sectionnew': 'addSectionNew',
       'click .delete-sectionnew': 'deleteRow',
-    }, menuHelper.events, dropzoneHelpers.events, leavingConfirmationHelper.events),
+    }, app.helpers.menu.events, app.helpers.dropzone.events, app.helpers.confirmOnLeave.events),
 
     deleteRow(e) {
       this.deleteSectionNew(e);
@@ -840,7 +829,7 @@ module.exports = {
     calculate(e, warning=true) {
       if (e) {
         let $target = $(e.target);
-        // $target.val(formatHelper.formatNumber($target.val()));
+        // $target.val(app.helpers.format.formatNumber($target.val()));
       }
       let minRaise = this.campaign.minimum_raise;
       let maxRaise = this.campaign.maximum_raise;
@@ -848,14 +837,14 @@ module.exports = {
       let minNetProceeds = minRaise - this._getSum('.min-expense');
       let maxNetProceeds = maxRaise - this._getSum('.max-expense');
 
-      this.$('.min-net-proceeds').text('$' + formatHelper.formatNumber(minNetProceeds));
-      this.$('.max-net-proceeds').text('$' + formatHelper.formatNumber(maxNetProceeds));
+      this.$('.min-net-proceeds').text('$' + app.helpers.format.formatNumber(minNetProceeds));
+      this.$('.max-net-proceeds').text('$' + app.helpers.format.formatNumber(maxNetProceeds));
 
       let minTotalUse = this._getSum('.min-use');
       let maxTotalUse = this._getSum('.max-use');
 
-      this.$('.min-total-use').text('$' + formatHelper.formatNumber(minTotalUse));
-      this.$('.max-total-use').text('$' + formatHelper.formatNumber(maxTotalUse));
+      this.$('.min-total-use').text('$' + app.helpers.format.formatNumber(minTotalUse));
+      this.$('.max-total-use').text('$' + app.helpers.format.formatNumber(maxTotalUse));
 
       // return true if the table is valid in terms of the calculation, else return false
       let minEqual = minNetProceeds == minTotalUse;
@@ -914,7 +903,6 @@ module.exports = {
           templates: this.jsonTemplates,
           maxRaise: this.campaign.maximum_raise,
           minRaise: this.campaign.minimum_raise,
-          formatHelper: formatHelper,
           campaignId: this.campaign.id,
         })
       );
@@ -925,16 +913,16 @@ module.exports = {
 
       this.$('.min-expense,.max-expense,.min-use,.max-use').each(function (idx, elem) {
         let $this = $(this);
-        $this.val(formatHelper.formatNumber($this.val()));
+        $this.val(app.helpers.format.formatNumber($this.val()));
       });
 
       this.calculate(null, false);
       setTimeout(() => { this.createDropzones() } , 1000);
-      disableEnterHelper.disableEnter.call(this);
+      app.helpers.disableEnter.disableEnter.call(this);
       raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     }, 
-  }, menuHelper.methods, dropzoneHelpers.methods, addSectionHelper.methods, leavingConfirmationHelper.methods)),
+  }, app.helpers.menu.methods, app.helpers.dropzone.methods, app.helpers.section.methods, app.helpers.confirmOnLeave.methods)),
 
   riskFactorsInstruction: Backbone.View.extend(_.extend({
     initialize(options) {
@@ -952,7 +940,7 @@ module.exports = {
     events: _.extend({
       'submit form': 'submit',
       'click .submit_formc': submitFormc,
-    }, menuHelper.events),
+    }, app.helpers.menu.events),
 
     submit: api.submitAction,
 
@@ -967,14 +955,14 @@ module.exports = {
       raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
-  }, menuHelper.methods)),
+  }, app.helpers.menu.methods)),
 
   riskFactorsMarket: Backbone.View.extend(_.extend({
     urlRoot: app.config.formcServer + '/:id' + '/risk-factors-market/:index',
     riskType: 'market_and_customer_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.events),
+    }, app.helpers.menu.events, app.helpers.riskFactors.events, app.helpers.confirmOnLeave.events),
 
     preinitialize() {
       // ToDo
@@ -1071,18 +1059,18 @@ module.exports = {
       this.$('textarea').each(function () {
         $(this).css({ height: this.scrollHeight + 'px' });
       });
-      disableEnterHelper.disableEnter.call(this);
+      app.helpers.disableEnter.disableEnter.call(this);
       raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
-  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
+  }, app.helpers.menu.methods, app.helpers.section.methods, app.helpers.riskFactors.methods, app.helpers.confirmOnLeave.methods)),
 
   riskFactorsFinancial: Backbone.View.extend(_.extend({
     urlRoot: app.config.formcServer + '/:id' + '/risk-factors-financial/:index',
     riskType: 'financial_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.events),
+    }, app.helpers.menu.events, app.helpers.riskFactors.events, app.helpers.confirmOnLeave.events),
 
     preinitialize() {
       // ToDo
@@ -1187,18 +1175,18 @@ module.exports = {
       this.$('textarea').each(function () {
         $(this).css({ height: this.scrollHeight + 'px' });
       });
-      disableEnterHelper.disableEnter.call(this);
+      app.helpers.disableEnter.disableEnter.call(this);
       raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
-  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
+  }, app.helpers.menu.methods, app.helpers.section.methods, app.helpers.riskFactors.methods, app.helpers.confirmOnLeave.methods)),
 
   riskFactorsOperational: Backbone.View.extend(_.extend({
     urlRoot: app.config.formcServer + '/:id' + '/risk-factors-operational/:index',
     riskType: 'operational_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.events),
+    }, app.helpers.menu.events, app.helpers.riskFactors.events, app.helpers.confirmOnLeave.events),
 
     preinitialize() {
       // ToDo
@@ -1331,19 +1319,19 @@ module.exports = {
       this.$('textarea').each(function () {
         $(this).css({ height: this.scrollHeight + 'px' });
       });
-      disableEnterHelper.disableEnter.call(this);
+      app.helpers.disableEnter.disableEnter.call(this);
       raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
 
-  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
+  }, app.helpers.menu.methods, app.helpers.section.methods, app.helpers.riskFactors.methods, app.helpers.confirmOnLeave.methods)),
 
   riskFactorsCompetitive: Backbone.View.extend(_.extend({
     urlRoot: app.config.formcServer + '/:id' + '/risk-factors-competitive/:index',
     riskType: 'competitive_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.methods),
+    }, app.helpers.menu.events, app.helpers.riskFactors.events, app.helpers.confirmOnLeave.methods),
 
     preinitialize() {
       // ToDo
@@ -1420,19 +1408,19 @@ module.exports = {
       this.$('textarea').each(function () {
         $(this).css({ height: this.scrollHeight + 'px' });
       });
-      disableEnterHelper.disableEnter.call(this);
+      app.helpers.disableEnter.disableEnter.call(this);
       raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
 
-  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
+  }, app.helpers.menu.methods, app.helpers.section.methods, app.helpers.riskFactors.methods, app.helpers.confirmOnLeave.methods)),
 
   riskFactorsPersonnel: Backbone.View.extend(_.extend({
     urlRoot: app.config.formcServer + '/:id' + '/risk-factors-personnel/:index',
     riskType: 'personnel_and_third_parties_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.events),
+    }, app.helpers.menu.events, app.helpers.riskFactors.events, app.helpers.confirmOnLeave.events),
 
     preinitialize() {
       // ToDo
@@ -1528,18 +1516,18 @@ module.exports = {
       this.$('textarea').each(function () {
         $(this).css({ height: this.scrollHeight + 'px' });
       });
-      disableEnterHelper.disableEnter.call(this);
+      app.helpers.disableEnter.disableEnter.call(this);
       raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
-  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
+  }, app.helpers.menu.methods, app.helpers.section.methods, app.helpers.riskFactors.methods, app.helpers.confirmOnLeave.methods)),
 
   riskFactorsLegal: Backbone.View.extend(_.extend({
     urlRoot: app.config.formcServer + '/:id' + '/risk-factors-legal/:index',
     riskType: 'legal_and_regulatory_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.events),
+    }, app.helpers.menu.events, app.helpers.riskFactors.events, app.helpers.confirmOnLeave.events),
 
     preinitialize() {
       // ToDo
@@ -1657,18 +1645,18 @@ module.exports = {
       this.$('textarea').each(function () {
         $(this).css({ height: this.scrollHeight + 'px' });
       });
-      disableEnterHelper.disableEnter.call(this);
+      app.helpers.disableEnter.disableEnter.call(this);
       raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
-  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
+  }, app.helpers.menu.methods, app.helpers.section.methods, app.helpers.riskFactors.methods, app.helpers.confirmOnLeave.methods)),
 
   riskFactorsMisc: Backbone.View.extend(_.extend({
     urlRoot: app.config.formcServer + '/:id' + '/risk-factors-misc/:index',
     riskType: 'miscellaneous_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.events),
+    }, app.helpers.menu.events, app.helpers.riskFactors.events, app.helpers.confirmOnLeave.events),
 
     preinitialize() {
       // ToDo
@@ -1700,11 +1688,11 @@ module.exports = {
       this.$('textarea').each(function () {
         $(this).css({ height: this.scrollHeight + 'px' });
       });
-      disableEnterHelper.disableEnter.call(this);
+      app.helpers.disableEnter.disableEnter.call(this);
       raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
-  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
+  }, app.helpers.menu.methods, app.helpers.section.methods, app.helpers.riskFactors.methods, app.helpers.confirmOnLeave.methods)),
 
   financialCondition: Backbone.View.extend(_.extend({
     urlRoot: app.config.formcServer + '/:id/financial-condition',
@@ -1712,7 +1700,7 @@ module.exports = {
     events: _.extend({
       'submit form': api.submitAction,
       'click .submit_formc': submitFormc,
-    }, menuHelper.events, yesNoHelper.events, addSectionHelper.events, dropzoneHelpers.events, /*leavingConfirmationHelper.events*/),
+    }, app.helpers.menu.events, app.helpers.yesNo.events, app.helpers.section.events, app.helpers.dropzone.events, /*app.helpers.confirmOnLeave.events*/),
 
     preinitialize() {
       // ToDo
@@ -1772,11 +1760,11 @@ module.exports = {
         })
       );
       setTimeout(() => { this.createDropzones() } , 1000);
-      disableEnterHelper.disableEnter.call(this);
+      app.helpers.disableEnter.disableEnter.call(this);
       raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
-  }, menuHelper.methods, yesNoHelper.methods, addSectionHelper.methods, dropzoneHelpers.methods, leavingConfirmationHelper.methods)),
+  }, app.helpers.menu.methods, app.helpers.yesNo.methods, app.helpers.section.methods, app.helpers.dropzone.methods, app.helpers.confirmOnLeave.methods)),
 
   outstandingSecurity: Backbone.View.extend(_.extend({
     urlRoot: app.config.formcServer + '/:id/outstanding-security',
@@ -1788,7 +1776,7 @@ module.exports = {
       'click .newOustanding': 'newOustanding',
       'click .editOutstanding': 'editOutstanding',
       'click .delete-outstanding': 'deleteOutstanding',
-    }, addSectionHelper.events, menuHelper.events, yesNoHelper.events, /*leavingConfirmationHelper.events*/),
+    }, app.helpers.section.events, app.helpers.menu.events, app.helpers.yesNo.events, /*app.helpers.confirmOnLeave.events*/),
 
     preinitialize() {
       // ToDo
@@ -2026,11 +2014,11 @@ module.exports = {
         })
       );
       $('#security_modal #custom_security_type').parent().parent().hide();
-      disableEnterHelper.disableEnter.call(this);
+      app.helpers.disableEnter.disableEnter.call(this);
       raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
-  }, addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods, leavingConfirmationHelper.methods)),
+  }, app.helpers.section.methods, app.helpers.menu.methods, app.helpers.yesNo.methods, app.helpers.confirmOnLeave.methods)),
 
   backgroundCheck: Backbone.View.extend(_.extend({
     urlRoot: app.config.formcServer + '/:id' + '/background-check',
@@ -2069,7 +2057,7 @@ module.exports = {
     events: _.extend({
       'submit form': api.submitAction,
       'click .submit_formc': submitFormc,
-    }, menuHelper.events, yesNoHelper.events, leavingConfirmationHelper.events),
+    }, app.helpers.menu.events, app.helpers.yesNo.events, app.helpers.confirmOnLeave.events),
 
     render() {
       let template = require('./templates/backgroundCheck.pug');
@@ -2079,11 +2067,11 @@ module.exports = {
           values: this.model,
         })
       );
-      disableEnterHelper.disableEnter.call(this);
+      app.helpers.disableEnter.disableEnter.call(this);
       raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
-  }, menuHelper.methods, yesNoHelper.methods, addSectionHelper.methods, leavingConfirmationHelper.methods)),
+  }, app.helpers.menu.methods, app.helpers.yesNo.methods, app.helpers.section.methods, app.helpers.confirmOnLeave.methods)),
 
   finalReview: Backbone.View.extend({
     urlRoot: app.config.formcServer + '/:id/final-review',
@@ -2098,7 +2086,7 @@ module.exports = {
     initialize(options) {
       this.formcId = options.formcId;
       this.fields = options.fields;
-      disableEnterHelper.disableEnter.call(this);
+      app.helpers.disableEnter.disableEnter.call(this);
     },
     events: {
       'click .createField': 'createField',
@@ -2126,7 +2114,7 @@ module.exports = {
         element.name = target.dataset.name;
 
         if(target.dataset.type == 'money') {
-          //element.value = formatHelper.unformatPrice(target.innerHTML);
+          //element.value = app.helpers.format.unformatPrice(target.innerHTML);
           element.value = target.innerHTML;
         } else {
           element.value = target.innerHTML;
@@ -2167,7 +2155,7 @@ module.exports = {
 
     update(e) {
       let val = e.target.value;
-      val = (e.target.dataset.type == 'money') ? formatHelper.unformatPrice(val) : val;
+      val = (e.target.dataset.type == 'money') ? app.helpers.format.unformatPrice(val) : val;
       const name = e.target.name;
       const reloadRequiredFields = [
         'corporate_structure',
@@ -2288,7 +2276,7 @@ module.exports = {
           } else {
             href.dataset.type = 'text';
             if(e.target.dataset.type == 'money') {
-              realVal = formatHelper.formatPrice(realVal);
+              realVal = app.helpers.format.formatPrice(realVal);
             }
           }
 

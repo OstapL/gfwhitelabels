@@ -1,12 +1,8 @@
 import './styles/style.sass'
-import calculatorHelper from '../../helpers/calculatorHelpers';
-import flyPriceFormatter from '../../helpers/flyPriceFormatter';
-import lookupData from '../../helpers/capitalraiseCalculatorData';
 import '../../js/graph/graph.js';
 import '../../js/graph/jquery.flot.categories.js';
 import '../../js/graph/jquery.flot.growraf';
 
-const calculatorValidationHelper = require('helpers/calculatorValidationHelper.js');
 
 if (!app.cache.establishedBusinessCalculator) {
     app.cache.establishedBusinessCalculator = {
@@ -54,8 +50,8 @@ if (!app.cache.establishedBusinessCalculator) {
 }
 
 
-let formatPrice = calculatorHelper.formatPrice;
-let industryData = lookupData();
+let formatPrice = app.helpers.calculator.formatPrice;
+let industryData = app.helpers.capitalraiseData();
 
 module.exports = {
     intro: Backbone.View.extend({
@@ -77,7 +73,7 @@ module.exports = {
         events: _.extend({
             'change .js-select': 'saveValue',
             'submit form': 'nextStep',
-        }, calculatorValidationHelper.events),
+        }, app.helpers.calculatorValidation.events),
 
         initialize(options) {
             this.fields = {
@@ -124,7 +120,7 @@ module.exports = {
 
             this.ui();
 
-            flyPriceFormatter(this.inputPrice, ({ modelValue, currentValue }) => {
+            app.helpers.flyPrice(this.inputPrice, ({ modelValue, currentValue }) => {
                 // save value
                 app.cache.establishedBusinessCalculator[modelValue] = +currentValue;
             });
@@ -133,7 +129,7 @@ module.exports = {
 
             return this;
         }
-    }, calculatorValidationHelper.methods)),
+    }, app.helpers.calculatorValidation.methods)),
 
     step2: Backbone.View.extend(_.extend({
         el: '#content',
@@ -142,7 +138,7 @@ module.exports = {
 
         events: _.extend({
             'submit form': 'nextStep',
-        }, calculatorValidationHelper.events),
+        }, app.helpers.calculatorValidation.events),
 
         preinitialize() {
           $('#content').undelegate();
@@ -222,7 +218,7 @@ module.exports = {
 
             this.ui();
 
-            flyPriceFormatter(this.inputPrice, ({ modelValue, currentValue }) => {
+            app.helpers.flyPrice(this.inputPrice, ({ modelValue, currentValue }) => {
                 // save value
                 app.cache.establishedBusinessCalculator[modelValue] = +currentValue;
             });
@@ -237,7 +233,7 @@ module.exports = {
 
             return this;
         }
-    }, calculatorValidationHelper.methods)),
+    }, app.helpers.calculatorValidation.methods)),
 
     step3: Backbone.View.extend(_.extend({
         el: '#content',
@@ -299,7 +295,7 @@ module.exports = {
         events: _.extend({
             // calculate your income
             'submit .js-calc-form': 'doCalculation',
-        }, calculatorValidationHelper.events),
+        }, app.helpers.calculatorValidation.events),
 
         doCalculation(e) {
             e.preventDefault();
@@ -419,7 +415,7 @@ module.exports = {
             // declare ui elements for the view
             this.ui();
 
-            flyPriceFormatter(this.inputPrice, ({ modelValue, currentValue }) => {
+            app.helpers.flyPrice(this.inputPrice, ({ modelValue, currentValue }) => {
                 // save value
                 app.cache.establishedBusinessCalculator[modelValue] = +currentValue;
             });
@@ -432,7 +428,7 @@ module.exports = {
 
             return this;
         }
-    }, calculatorValidationHelper.methods)),
+    }, app.helpers.calculatorValidation.methods)),
 
     finish: Backbone.View.extend({
         el: '#content',
@@ -461,8 +457,8 @@ module.exports = {
             let raiseCash = data.raiseCash;
 
             this.$el.html(this.template({
-                estimate: calculatorHelper.formatPrice(estimate),
-                raise: calculatorHelper.formatPrice(raiseCash),
+                estimate: app.helpers.calculator.formatPrice(estimate),
+                raise: app.helpers.calculator.formatPrice(raiseCash),
                 offer: (raiseCash * 100 / (estimate + raiseCash)).toFixed(2)
             }));
 
