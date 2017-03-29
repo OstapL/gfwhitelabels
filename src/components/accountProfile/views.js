@@ -1,15 +1,6 @@
 const validation = require('components/validation/validation.js');
-const userDocuments = require('helpers/userDocuments.js');
-
-const disableEnterHelper = require('helpers/disableEnterHelper.js');
 
 const helpers = {
-  date: require('helpers/dateHelper.js'),
-  format: require('helpers/formatHelper.js'),
-  phone: require('helpers/phoneHelper.js'),
-  dropzone: require('helpers/dropzoneHelpers.js'),
-  yesNo: require('helpers/yesNoHelper.js'),
-  fileList: require('helpers/fileList.js'),
   campaign: require('components/campaign/helpers.js'),
 };
 
@@ -33,7 +24,7 @@ module.exports = {
       'change #twitter,#facebook,#instagram,#linkedin': 'appendHttpsIfNecessary',
 
       // 'change input[name=accredited_investor]': 'changeAccreditedInvestor',
-    }, helpers.phone.events, helpers.dropzone.events, helpers.yesNo.events),
+    }, app.helpers.phone.events, app.helpers.dropzone.events, app.helpers.yesNo.events),
 
     initialize(options) {
       this.activeTab = options.activeTab;
@@ -189,7 +180,7 @@ module.exports = {
       this.cityStateArea = this.$('.js-city-state');
       this.cityField = this.$('.js-city');
       this.stateField = this.$('.js-state');
-      disableEnterHelper.disableEnter.call(this);
+      app.helpers.disableEnter.disableEnter.call(this);
 
       return this;
     },
@@ -238,7 +229,7 @@ module.exports = {
     },
 
     appendHttpsIfNecessary(e) {
-      helpers.format.appendHttpIfNecessary(e, true);
+      app.helpers.format.appendHttpIfNecessary(e, true);
     },
 
     saveAccountInfo(e) {
@@ -362,7 +353,7 @@ module.exports = {
 
     },
 
-  }, helpers.phone.methods, helpers.dropzone.methods, helpers.yesNo.methods)),
+  }, app.helpers.phone.methods, app.helpers.dropzone.methods, app.helpers.yesNo.methods)),
 
   changePassword: Backbone.View.extend({
     urlRoot: app.config.authServer + '/rest-auth/password/change',
@@ -431,9 +422,9 @@ module.exports = {
       const objectId = e.target.dataset.objectId;
       const securityType = e.target.dataset.securityType;
       const subscriptionAgreementLink =
-        userDocuments.getUserDocumentsByType(objectId, securityType);
+        app.helpers.userDocuments.getUserDocumentsByType(objectId, securityType);
       const participationAgreementLink =
-        userDocuments.getUserDocumentsByType(objectId, PARTICIPATION_AGREEMENT_ID);
+        app.helpers.userDocuments.getUserDocumentsByType(objectId, PARTICIPATION_AGREEMENT_ID);
 
       const data = {
         title: 'Agreements',
@@ -450,7 +441,7 @@ module.exports = {
         ],
       };
 
-      helpers.fileList.show(data);
+      app.helpers.fileList.show(data);
     },
 
     _findInvestment(id) {
@@ -470,7 +461,7 @@ module.exports = {
         files: financialDocs,
       };
 
-      helpers.fileList.show(data);
+      app.helpers.fileList.show(data);
     },
 
     onCancel(investment) {

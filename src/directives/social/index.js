@@ -1,5 +1,4 @@
 const mainContent = '#content';
-const campaignHelper = require('components/campaign/helpers.js');
 const defaultOptions = {
   titlePrefix: 'Check out ',
   descriptionPrefix: '',
@@ -61,7 +60,7 @@ class SocialNetworks {
       url: window.location.origin + '/' + model.id,
       title: stripHtml(options.titlePrefix + companyName + '\'s ' + corporateStructure + 'on ' + window.location.host + ' '),
       description: stripHtml(options.descriptionPrefix + (model.description || '')),
-      picture: campaignHelper.getImageCampaign(model.campaign),
+      picture: model.campaign.getMainImage(),
       text: stripHtml(options.titlePrefix + companyName + '\'s ' + corporateStructure + 'on @growthfountain '),
     };
 

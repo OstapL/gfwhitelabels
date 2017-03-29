@@ -1,6 +1,8 @@
 include ../../raiseFunds/templates/menu.pug
 
-- pug_html += app.breadcrumbs('create form c', '', [ ['Home', '/'], ['Create Form C', '/formc/' + values.id + '/introduction'], ['FINANCIAL CONDITION', ''], ]);
+- 
+  var fileFolderDropzone = require('directives/setdropzone/folder.js'); 
+  pug_html += app.breadcrumbs('create form c', '', [ ['Home', '/'], ['Create Form C', '/formc/' + values.id + '/introduction'], ['FINANCIAL CONDITION', ''], ]);
 
 section.formc-team-members-director.container.m-b-85
   - var campaignId = values.campaign_id;
@@ -116,15 +118,19 @@ section.formc-team-members-director.container.m-b-85
             })
         .img-ppt
           -
-            pug_html += app.fields.fileFolderDropzone('fiscal_recent_group_id',{
-                data: values.fiscal_recent_group_data,
-              }, fields.fiscal_recent_group_id);
+            pug_html += new fileFolderDropzone.FolderDropzone(view,
+              'fiscal_recent_group_id',
+              'fiscal_recent_group_data',
+              view.fields.fiscal_recent_group_id
+            ).render().resultHTML;
 
         .img-ppt
           -
-            pug_html += app.fields.fileFolderDropzone('fiscal_prior_group_id',{
-                data: values.fiscal_prior_group_data,
-              }, fields.fiscal_prior_group_id);
+            pug_html += new fileFolderDropzone.FolderDropzone(view,
+              'fiscal_prior_group_id',
+              'fiscal_prior_group_data',
+              view.fields.fiscal_prior_group_id
+            ).render().resultHTML;
 
       |!{ templates.sold_securities_data }
       .col-lg-12.m-t-2.p-xs-0

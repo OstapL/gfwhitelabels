@@ -1,15 +1,7 @@
-const addSectionHelper = require('helpers/addSectionHelper.js');
-
-import formatHelper from '../../helpers/formatHelper';
 const raiseHelpers = require('./helpers.js');
-const appendHttpIfNecessary = formatHelper.appendHttpIfNecessary;
+const appendHttpIfNecessary = app.helpers.format.appendHttpIfNecessary;
 
-const dropzoneHelpers = require('helpers/dropzoneHelpers.js');
-const leavingConfirmationHelper = require('helpers/leavingConfirmationHelper.js');
-const phoneHelper = require('helpers/phoneHelper.js');
 const validation = require('components/validation/validation.js');
-const menuHelper = require('helpers/menuHelper.js');
-const disableEnterHelper = require('helpers/disableEnterHelper.js');
 
 const valuation_determination = require('consts/raisecapital/valuation_determination.json');
 
@@ -27,7 +19,7 @@ module.exports = {
       'change #website': appendHttpIfNecessary,
       'keyup #slug': 'fixSlug',
       'change #website,#twitter,#facebook,#instagram,#linkedin': 'appendHttpsIfNecessary',
-    }, /*leavingConfirmationHelper.events,*/ phoneHelper.events, menuHelper.events),
+    }, /*app.helpers.confirmOnLeave.events,*/ app.helpers.phone.events, app.helpers.menu.events),
 
     appendHttpsIfNecessary(e) {
       appendHttpIfNecessary(e, true);
@@ -64,6 +56,7 @@ module.exports = {
         slug: 'What would you like your custom URL to be?',
       };
       this.assignLabels();
+
       if(this.model.hasOwnProperty('id')) {
         this.urlRoot += '/:id';
       }
@@ -83,7 +76,7 @@ module.exports = {
       // if not 5 digit, return
       if (e.target.value.length < 5) return;
       if (!e.target.value.match(/\d{5}/)) return;
-      this.getCityStateByZipCode(e.target.value, ({ success=false, city='', state='' }) => {
+      app.helpers.location(e.target.value, ({ success=false, city='', state='' }) => {
         if (success) {
           this.$('.js-city-state').text(`${city}, ${state}`);
           this.$('.js-city').val(city);
@@ -98,8 +91,6 @@ module.exports = {
     },
 
     render() {
-      this.getCityStateByZipCode = require('helpers/getSityStateByZipCode');
-      this.usaStates = require('helpers/usaStates');
       this.$el.html(
         this.template({
           fields: this.fields,
@@ -107,10 +98,9 @@ module.exports = {
           user: app.user.toJSON(),
           formc: this.formc,
           campaign: this.campaign,
-          states: this.usaStates,
         })
       );
-      disableEnterHelper.disableEnter.call(this);
+      app.helpers.disableEnter.disableEnter.call(this);
       this.checkForm();
       raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
@@ -142,7 +132,7 @@ module.exports = {
         { trigger: true, replace: false }
       );
     },
-  }, leavingConfirmationHelper.methods, phoneHelper.methods, menuHelper.methods)),
+  }, app.helpers.confirmOnLeave.methods, app.helpers.phone.methods, app.helpers.menu.methods)),
 
   inReview: Backbone.View.extend(_.extend({
     el: '#content',
@@ -166,7 +156,7 @@ module.exports = {
         'click .onPreview': raiseHelpers.onPreviewAction,
         'click .submit_form': raiseHelpers.submitCampaign,
         'click #postForReview': raiseHelpers.postForReview,
-      }, addSectionHelper.events, leavingConfirmationHelper.events, menuHelper.events),
+      }, app.helpers.section.events, app.helpers.confirmOnLeave.events, app.helpers.menu.events),
 
     preinitialize() {
       // ToDo
@@ -224,11 +214,11 @@ module.exports = {
       );
 
       this.checkForm();
-      disableEnterHelper.disableEnter.call(this);
+      app.helpers.disableEnter.disableEnter.call(this);
       raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
-  }, leavingConfirmationHelper.methods, menuHelper.methods, addSectionHelper.methods)),
+  }, app.helpers.confirmOnLeave.methods, app.helpers.menu.methods, app.helpers.section.methods)),
 
   media: Backbone.View.extend(_.extend({
     urlRoot: app.config.raiseCapitalServer + '/campaign/:id',
@@ -241,8 +231,8 @@ module.exports = {
         'click .submit_form': raiseHelpers.submitCampaign,
         'click #postForReview': raiseHelpers.postForReview,
         'click .onPreview': raiseHelpers.onPreviewAction,
-      }, leavingConfirmationHelper.events, menuHelper.events,
-        addSectionHelper.events, dropzoneHelpers.events
+      }, app.helpers.confirmOnLeave.events, app.helpers.menu.events,
+        app.helpers.section.events, app.helpers.dropzone.events
     ),
 
     _success(data, newData) {
@@ -269,56 +259,72 @@ module.exports = {
     },
 
     initialize(options) {
-      this.model = options.campaign;
+      this.model = new app.models.campaign(
+        this.urlRoot.replace(':id', options.campaign.id),
+        options.campaign,
+        options.fields.campaign
+      );
       this.urlRoot = this.urlRoot.replace(':id', this.model.id);
       this.formc = options.formc;
       this.fields = options.fields.campaign;
 
       this.fields.header_image_image_id = _.extend(this.fields.header_image_image_id, {
+        title: 'Drop your photo here or click to upload',
+        help_text: 'This is the image that will appear at the top of your campaign. A minimum size of 1600х960 is recommended.',
         crop: {
           control: {
             aspectRatio: 1600/960,
           },
-          cropper: {
-            cssClass : 'img-crop',
-            // preview: false,
-          },
           auto: {
             width: 1600,
-            height: 960
-          }
+            height: 960,
+          },
+          resize: {
+            width: 305,
+            height: 205,
+          },
+          cssClass: 'img-crop',
+          template: 'regular'
         },
       });
 
       this.fields.list_image_image_id = _.extend(this.fields.list_image_image_id, {
+        title: 'Drop your photo here or click to upload',
+        help_text: ' This image entices investors to view your campaign. A minimum size of 350x209 is recommended.',
         crop: {
           control:  {
-            aspectRatio: 350 / 209,
-          },
-          cropper: {
-            cssClass: 'img-crop',
-            // preview: false,
+            aspectRatio: 1400 / 960,
           },
           auto: {
-            width: 350,
-            height: 209,
-          }
+            width: 1200,
+            height: 1024,
+          },
+          resize: {
+            width: 305,
+            height: 205,
+          },
+          cssClass: 'img-crop',
+          template: 'regular'
         },
       });
 
       this.fields.gallery_group_id = _.extend(this.fields.gallery_group_id, {
+        title: 'Drop your photo(s) here or click to upload',
+        help_text: 'We recommend uploading 6 images (minimum size of 1200x1024 is recommended) that represent your service of business. These images will be displayed in a gallery format.',
         crop: {
           control: {
-            aspectRatio: 526 / 317,
-          },
-          cropper: {
-            cssClass: 'img-crop',
-            // preview: false,
+            aspectRatio: 1200 / 1024,
           },
           auto: {
-            width: 526,
-            height: 317,
-          }
+            width: 1200,
+            height: 1024,
+          },
+          resize: {
+            width: 305,
+            height: 205,
+          },
+          cssClass: 'img-crop',
+          template: 'regular'
         },
 
         fn: function checkNotEmpty(name, value, attr, data, computed) { 
@@ -354,15 +360,15 @@ module.exports = {
       this.$el.html(
         this.template({
           fields: this.fields,
-          // values: this.model.toJSON(),
           values: this.model,
           formc: this.formc,
+          view: this,
           templates: this.jsonTemplates,
         })
       );
 
-      setTimeout(() => { this.createDropzones() } , 1000);
-      disableEnterHelper.disableEnter.call(this);
+      // setTimeout(() => { this.createDropzones() } , 1000);
+      app.helpers.disableEnter.disableEnter.call(this);
       this.checkForm();
       raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
 
@@ -380,8 +386,8 @@ module.exports = {
       $videoContainer.find('iframe').attr('src', src);
     },
 
-  }, leavingConfirmationHelper.methods, menuHelper.methods,
-    dropzoneHelpers.methods, addSectionHelper.methods)),
+  }, app.helpers.confirmOnLeave.methods, app.helpers.menu.methods,
+    app.helpers.dropzone.methods, app.helpers.section.methods)),
 
   teamMemberAdd: Backbone.View.extend(_.extend({
     urlRoot: app.config.raiseCapitalServer + '/campaign/:id/team-members',
@@ -395,7 +401,7 @@ module.exports = {
       'click .save': api.submitAction,
       'click .onPreview': raiseHelpers.onPreviewAction,
       // 'change #zip_code': 'changeZipCode',
-    }, leavingConfirmationHelper.events, menuHelper.events, dropzoneHelpers.events),
+    }, app.helpers.confirmOnLeave.events, app.helpers.menu.events, app.helpers.dropzone.events),
     
     _success(data) {
       window.location = '/campaign/' + this.model.id + '/team-members';
@@ -466,7 +472,7 @@ module.exports = {
       //delete this.model.progress;
       //delete this.model.data;
 
-      disableEnterHelper.disableEnter.call(this);
+      app.helpers.disableEnter.disableEnter.call(this);
       raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
@@ -483,7 +489,7 @@ module.exports = {
       }
     },
 
-  }, leavingConfirmationHelper.methods, menuHelper.methods, dropzoneHelpers.methods)),
+  }, app.helpers.confirmOnLeave.methods, app.helpers.menu.methods, app.helpers.dropzone.methods)),
 
   teamMembers: Backbone.View.extend(_.extend({
     urlRoot: app.config.raiseCapitalServer + '/campaign/:id/team-members',
@@ -492,7 +498,7 @@ module.exports = {
       'click .submit_form': raiseHelpers.submitCampaign,
       'click #postForReview': raiseHelpers.postForReview,
       'click .onPreview': raiseHelpers.onPreviewAction,
-    }, menuHelper.events),
+    }, app.helpers.menu.events),
 
     preinitialize() {
       // ToDo
@@ -522,7 +528,7 @@ module.exports = {
           })
         );
 
-      disableEnterHelper.disableEnter.call(this);
+      app.helpers.disableEnter.disableEnter.call(this);
       this.checkForm();
       this.$el.find('.team-add-item').equalHeights();
       raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
@@ -550,7 +556,7 @@ module.exports = {
         }
       },
 
-  }, menuHelper.methods)),
+  }, app.helpers.menu.methods)),
 
   specifics: Backbone.View.extend(_.extend({
       urlRoot: app.config.raiseCapitalServer + '/campaign/:id',
@@ -565,7 +571,7 @@ module.exports = {
         'click #postForReview': raiseHelpers.postForReview,
         'click .submit-specifics': 'checkMinMaxRaise',
         'change #valuation_determination': 'valuationDetermine',
-      }, leavingConfirmationHelper.events, menuHelper.events, dropzoneHelpers.events),
+      }, app.helpers.confirmOnLeave.events, app.helpers.menu.events, app.helpers.dropzone.events),
 
       preinitialize() {
         // ToDo
@@ -578,7 +584,11 @@ module.exports = {
       initialize(options) {
         this.fields = options.fields.campaign;
         this.formc = options.formc;
-        this.model = options.campaign;
+        this.model = new app.models.campaign(
+          this.urlRoot.replace(':id', options.campaign.id),
+          options.campaign,
+          options.fields.campaign
+        );
         this.company = options.company;
         this.fields.valuation_determination_other = _.extend(this.fields.valuation_determination_other, {
           dependies: ['valuation_determination'],
@@ -616,6 +626,10 @@ module.exports = {
 
         this.fields.minimum_raise.dependies = ['maximum_raise',];
         this.fields.maximum_raise.dependies = ['minimum_raise',];
+
+        if(this.model.hasOwnProperty('id')) {
+          this.urlRoot = this.urlRoot.replace(':id', this.model.id);
+        }
 
       },
 
@@ -688,16 +702,19 @@ module.exports = {
 
       render() {
         const template = require('./templates/specifics.pug');
+
         this.$el.html(
             template({
                 fields: this.fields,
                 values: this.model,
                 formc: this.formc,
-              })
+                view: this,
+            })
         );
+
         // delete this.model.progress;
 
-        setTimeout(() => { this.createDropzones() } , 1000);
+        // setTimeout(() => { this.createDropzones() } , 1000);
 
         this.calculateNumberOfShares(null);
 
@@ -711,11 +728,11 @@ module.exports = {
         }
         $('#description_determine').parent().parent().hide();
 
-        disableEnterHelper.disableEnter.call(this);
+        app.helpers.disableEnter.disableEnter.call(this);
         raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
         return this;
       },
-  }, leavingConfirmationHelper.methods, menuHelper.methods, dropzoneHelpers.methods, addSectionHelper.methods)),
+  }, app.helpers.confirmOnLeave.methods, app.helpers.menu.methods, app.helpers.dropzone.methods, app.helpers.section.methods)),
 
   perks: Backbone.View.extend(_.extend({
     urlRoot: app.config.raiseCapitalServer + '/campaign/:id',
@@ -724,7 +741,7 @@ module.exports = {
         'click .onPreview': raiseHelpers.onPreviewAction,
         'click .submit_form': raiseHelpers.submitCampaign,
         'click #postForReview': raiseHelpers.postForReview,
-    }, leavingConfirmationHelper.events, menuHelper.events, addSectionHelper.events),
+    }, app.helpers.confirmOnLeave.events, app.helpers.menu.events, app.helpers.section.events),
 
     preinitialize() {
       // ToDo
@@ -760,7 +777,7 @@ module.exports = {
         })
       );
 
-      disableEnterHelper.disableEnter.call(this);
+      app.helpers.disableEnter.disableEnter.call(this);
       raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
@@ -771,5 +788,5 @@ module.exports = {
       return 0;
     }
 
-  }, leavingConfirmationHelper.methods, menuHelper.methods, addSectionHelper.methods)),
+  }, app.helpers.confirmOnLeave.methods, app.helpers.menu.methods, app.helpers.section.methods)),
 };
