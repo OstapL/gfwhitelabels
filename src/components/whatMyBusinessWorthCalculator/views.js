@@ -1,9 +1,6 @@
 import './styles/style.sass'
-import flyPriceFormatter from '../../helpers/flyPriceFormatter';
 import 'bootstrap-slider/dist/bootstrap-slider'
 import 'bootstrap-slider/dist/css/bootstrap-slider.css'
-
-const calculatorValidationHelper = require('helpers/calculatorValidationHelper.js');
 
 let formatPrice = app.helpers.calculator.formatPrice;
 
@@ -80,7 +77,7 @@ module.exports = {
 
         events: _.extend({
             'submit form': 'nextStep',
-        }, calculatorValidationHelper.events),
+        }, app.helpers.calculatorValidation.events),
 
         nextStep(e) {
             e.preventDefault();
@@ -105,7 +102,7 @@ module.exports = {
             // declare ui elements for the view
             this.ui();
 
-            flyPriceFormatter(this.inputPrice, ({ modelValue, currentValue }) => {
+            app.helpers.flyPrice(this.inputPrice, ({ modelValue, currentValue }) => {
                 // save value
                 app.cache.whatMyBusinessWorthCalculator[modelValue] = +currentValue;
             });
@@ -132,7 +129,7 @@ module.exports = {
             
             return this; 
         }
-    }, calculatorValidationHelper.methods)),
+    }, app.helpers.calculatorValidation.methods)),
 
     step2: Backbone.View.extend(_.extend({
         el: '#content',
@@ -142,7 +139,7 @@ module.exports = {
         events: _.extend({
             // calculate your income
             'submit .js-calc-form': 'doCalculation',
-        }, calculatorValidationHelper.events),
+        }, app.helpers.calculatorValidation.events),
 
         preinitialize() {
             $('#content').undelegate();
@@ -314,7 +311,7 @@ module.exports = {
             // declare ui elements for the view
             this.ui();
 
-            flyPriceFormatter(this.inputPrice, ({ modelValue, currentValue }) => {
+            app.helpers.flyPrice(this.inputPrice, ({ modelValue, currentValue }) => {
                 // save value
                 app.cache.whatMyBusinessWorthCalculator[modelValue] = +currentValue;
             });
@@ -343,7 +340,7 @@ module.exports = {
 
             return this;
         }
-    }, calculatorValidationHelper.methods)),
+    }, app.helpers.calculatorValidation.methods)),
 
     finish: Backbone.View.extend({
         el: '#content',

@@ -1,8 +1,3 @@
-const helpers = {
-  date: require('helpers/dateHelper.js'),
-  yesNo: require('helpers/yesNoHelper.js'),
-};
-
 const validation = require('components/validation/validation.js');
 
 function initDates(c) {
@@ -50,7 +45,7 @@ module.exports = {
       'click .link-like': 'likeComment',
       'click .link-edit': 'editComment',
       'click .link-delete': 'deleteComment',
-    }, helpers.yesNo.events),
+    }, app.helpers.yesNo.events),
 
     initialize(options) {
       this.fields = options.fields;
@@ -398,5 +393,5 @@ module.exports = {
         );
     },
 
-  }, helpers.yesNo.methods)),
+  }, app.helpers.yesNo.methods)),
 };

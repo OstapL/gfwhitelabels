@@ -3,7 +3,6 @@ module.exports = {
   phone: require('./helpers/phoneHelper.js'),
   section: require('./helpers/addSectionHelper.js'),
   calculator: require('./helpers/calculatorHelpers.js'),
-
   calculatorValidation: require('./helpers/calculatorValidationHelper.js'),
   capitalraiseData: require('./helpers/capitalraiseCalculatorData.js'),
   crop: require('./helpers/cropHelper.js'),
@@ -14,13 +13,13 @@ module.exports = {
   fileList: require('./helpers/fileList.js'),
   flyPrice: require('./helpers/flyPriceFormatter.js'),
   location: require('./helpers/getCityStateByZipCode.js'),
-  icon: require('./helpers/iconsHelper.js'),
+  icons: require('./helpers/iconsHelper.js'),
   confirmOnLeave: require('./helpers/leavingConfirmationHelper.js'),
   menu: require('./helpers/menuHelper.js'),
   riskFactors: require('./helpers/riskFactorsHelper.js'),
   role: require('./helpers/roleHelper.js'),
   text: require('./helpers/textHelper.js'),
-  documents: require('./helpers/userDocuments.js'),
+  userDocuments: require('./helpers/userDocuments.js'),
   yesNo: require('./helpers/yesNoHelper.js'),
   usaStates: require('./helpers/usaStates.js'),
 };

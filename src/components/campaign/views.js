@@ -1,16 +1,5 @@
-const textHelper = require('helpers/textHelper');
 const companyFees = require('consts/companyFees.json');
 const typeOfDocuments = require('consts/typeOfDocuments.json');
-
-const usaStates = require('helpers/usaStates.js');
-
-const helpers = {
-  text: textHelper,
-  icons: require('helpers/iconsHelper.js'),
-  fileList: require('helpers/fileList.js'),
-  date: require('helpers/dateHelper.js'),
-  campaign: require('./helpers.js'),
-};
 
 const COUNTRIES = require('consts/countries.json');
 const validation = require('components/validation/validation.js');
@@ -222,8 +211,6 @@ module.exports = {
           edit: this.edit,
           previous: this.previous,
           preview: this.preview,
-          textHelper: textHelper,
-          helpers: helpers,
         })
       );
 
@@ -573,9 +560,6 @@ module.exports = {
         delete this.fields.is_understand_securities_related;
       }
 
-      this.getCityStateByZipCode = require("helpers/getCityStateByZipCode");
-      this.usaStates = usaStates;
-
       this.initMaxAllowedAmount();
     },
 
@@ -586,7 +570,7 @@ module.exports = {
           fields: this.fields,
           values: this.model,
           user: this.user,
-          states: this.usaStates,
+          states: app.helpers.usaStates,
           feeInfo: this.calcFeeWithCredit(),
         })
       );
@@ -1051,7 +1035,7 @@ module.exports = {
       if (e.target.value.length < 5) return;
       if (!e.target.value.match(/\d{5}/)) return;
       // else console.log('hello');
-      this.getCityStateByZipCode(e.target.value, ({ success=false, city="", state=""}) => {
+      app.helpers.location(e.target.value, ({ success=false, city="", state=""}) => {
         // this.zipCodeField.closest('div').find('.help-block').remove();
         if (success) {
           this.$('.js-city-state').text(`${city}, ${state}`);
@@ -1092,7 +1076,7 @@ module.exports = {
         zip_code: this.model.zip_code,
         address_1: this.model.address_1,
         address_2: this.model.address_2,
-        jurisdiction_of_organization: usaStates.getFullState(this.model.founding_state),  
+        jurisdiction_of_organization: app.helpers.usaStates.getFullState(this.model.founding_state),
         maximum_raise: app.helpers.format.formatNumber( this.model.campaign.maximum_raise ),
         minimum_raise: app.helpers.format.formatNumber( this.model.campaign.minimum_raise ),
         price_per_share: app.helpers.format.formatNumber( this.model.campaign.price_per_share ),

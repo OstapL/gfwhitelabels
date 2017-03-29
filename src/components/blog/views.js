@@ -1,6 +1,3 @@
-const leavingConfirmationHelper = require('helpers/leavingConfirmationHelper.js');
-const disableEnterHelper = require('helpers/disableEnterHelper.js');
-
 module.exports = {
   list: Backbone.View.extend(_.extend({
     el: '#content',

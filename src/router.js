@@ -36,7 +36,7 @@ const routesMap = _.reduce(componentRoutes, (dest, route) => {
 }, { routes: {}, methods: {}, auth: [] });
 
 const notFound = () => {
-  errorPageHelper({ status: 404 });
+  app.helpers.errorPage({ status: 404 });
   app.hideLoading();
 };
 

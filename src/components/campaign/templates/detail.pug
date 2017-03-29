@@ -1,4 +1,6 @@
 -
+  var campaignHelper = require('../helpers.js');
+
   var c = require('consts/campaign/file.json');
   var backgroundImgUrl = app.getUrl(values.campaign.header_image_data) || '';
   var socialDirective = require('directives/social/index.js');
@@ -57,7 +59,7 @@ section(style="background-image: url(" + backgroundImgUrl + ")")#home.home-secti
             h2.font-weight-bold.no-margin #{ app.helpers.format.formatPrice(values.campaign.minimum_increment) }
           .col-xl-2.col-lg-2.col-md-2.col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left
             p Days Left
-            h2.font-weight-bold.no-margin #{ helpers.campaign.daysLeft(values.campaign.expiration_date) }
+            h2.font-weight-bold.no-margin #{ campaignHelper.daysLeft(values.campaign.expiration_date) }
           .col-xl-4.col-lg-3.col-md-2.hidden-xs-down.p-sm-0.pull-lg-right.text-xs-center
             a(href="/" + values.slug + "/invest").btn.btn-primary.text-uppercase.pull-lg-right Invest
 
@@ -139,7 +141,7 @@ section.campaigndetail
     .col-lg-6.right-block-investors.p-l-0.p-sm-0
       .progress_bar_container
         -
-          var percentage_raised = helpers.campaign.fundedPercentage(values.campaign, 20);
+          var percentage_raised = campaignHelper.fundedPercentage(values.campaign, 20);
         span #{ percentage_raised.text }
         span.pull-right Committed 
           span.committed #{ app.helpers.format.formatPrice(values.campaign.amount_raised)}
@@ -160,19 +162,19 @@ section.campaigndetail
             ul
               li
                 a(href="")
-                  img(src="/img/avatar1.jpg" alt="...").img-circle
+                  img(src=require('images/avatar1.jpg') alt="...").img-circle
               li
                 a(href="")
-                  img(src="/img/avatar6.jpg" alt="...").img-circle
+                  img(src=require('images/avatar6.jpg') alt="...").img-circle
               li
                 a(href="")
-                  img(src="/img/avatar1.jpg" alt="...").img-circle
+                  img(src=require('images/avatar1.jpg') alt="...").img-circle
               li
                 a(href="")
-                  img(src="/img/avatar6.jpg" alt="...").img-circle
+                  img(src=require('images/avatar6.jpg') alt="...").img-circle
               li
                 a(href="")
-                  img(src="/img/avatar1.jpg" alt="...").img-circle
+                  img(src=require('images/avatar1.jpg') alt="...").img-circle
               a(href="#" style="display: none").link-1 see all...
         .col-xl-4.col-lg-3.col-md-2.hidden-sm-up.p-sm-0.pull-lg-right.text-xs-center
             a(href="/" + values.slug + "/invest").btn.btn-primary.text-uppercase.pull-lg-right Invest
@@ -205,10 +207,10 @@ section
     .container
       .col-lg-12.p-sm-0
         h2#about.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-subheading About #{ values.short_name || values.name }
-        p !{ textHelper.restoreLineBreak(values.description) }
+        p !{ app.helpers.text.restoreLineBreak(values.description) }
 
         h2.dosis.our.text-uppercase.text-lg-center.text-xs-center.campaign-subheading Why You Should Invest
-        p !{ textHelper.restoreLineBreak(values.campaign.pitch) }
+        p !{ app.helpers.text.restoreLineBreak(values.campaign.pitch) }
     .container-fluid.p-l-0.p-r-0
       #gallery1.col-lg-12.pt50.photo-gallegy.text-center-flex
         - var gallery_company_film = require('components/campaign/templates/snippets/gallery_company_film.pug')
@@ -231,36 +233,36 @@ section
         else
 
           .col-lg-3.col-sm-12.col-xs-12.no-padding-img
-            a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-toggle="modal" data-size='1600x900')
+            a(href=require('images/smartbe-intelligent-stroller.jpg') data-toggle="modal" data-size='1600x900')
               img(src=require('images/default/255x153.png') alt="").img-fluid.w-100
           .col-lg-3.col-sm-12.col-xs-12.no-padding-img
-            a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+            a(href=require('images/smartbe-intelligent-stroller.jpg') data-size='1600x900')
               img(src=require('images/default/255x153.png') alt="").img-fluid.w-100
           .col-lg-3.col-sm-12.col-xs-12.no-padding-img
-            a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+            a(href=require('images/smartbe-intelligent-stroller.jpg') data-size='1600x900')
               img(src=require('images/default/255x153.png') alt="").img-fluid.w-100
           .col-lg-3.col-sm-12.col-xs-12.no-padding-img
-            a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+            a(href=require('images/smartbe-intelligent-stroller.jpg') data-size='1600x900')
               img(src=require('images/default/255x153.png') alt="").img-fluid.w-100
           .col-lg-3.col-sm-12.col-xs-12.no-padding-img
-            a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+            a(href=require('images/smartbe-intelligent-stroller.jpg') data-size='1600x900')
               img(src=require('images/default/255x153.png') alt="").img-fluid.w-100
           .col-lg-3.col-sm-12.col-xs-12.no-padding-img
-            a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+            a(href=require('images/smartbe-intelligent-stroller.jpg') data-size='1600x900')
               img(src=require('images/default/255x153.png') alt="").img-fluid.w-100
           .col-lg-3.col-sm-12.col-xs-12.no-padding-img
-            a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+            a(href=require('images/smartbe-intelligent-stroller.jpg') data-size='1600x900')
               img(src=require('images/default/255x153.png') alt="").img-fluid.w-100
           .col-lg-3.col-sm-12.col-xs-12.no-padding-img
-            a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+            a(href=require('images/smartbe-intelligent-stroller.jpg') data-size='1600x900')
               img(src=require('images/default/255x153.png') alt="").img-fluid.w-100
     .container
       .col-lg-12.p-sm-0
         h2.dosis.our.text-uppercase.text-lg-center.text-xs-center.campaign-subheading How We Intend to Make Money
-        p !{ textHelper.restoreLineBreak(values.campaign.intended_use_of_proceeds) }
+        p !{ app.helpers.text.restoreLineBreak(values.campaign.intended_use_of_proceeds) }
 
         h2.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-subheading Why We are Raising Capital, and What We’ll Do with It
-        p !{ textHelper.restoreLineBreak(values.campaign.business_model) }
+        p !{ app.helpers.text.restoreLineBreak(values.campaign.business_model) }
     //video    
     .container
       .row
@@ -288,7 +290,7 @@ section
           else
             .col-xl-4.col-md-6.col-xs-12.col-sm-12.p-xs-0
               .card.card-inverse
-                img(src="/img/Smartbe-Intelligent-Stroller-5.jpg" alt="").card-img
+                img(src=require('images/Smartbe-Intelligent-Stroller-5.jpg') alt="").card-img
                 .card-img-overlays
                   .card-title
                     a(data-toggle="modal" href="#videoModal-2" data-target="#videoModal-2").small-icon.link-6.m-t-0
@@ -296,7 +298,7 @@ section
                   h3.card-text.text-lg-center Title for Optional Video 2
             .col-xl-4.col-md-6.col-xs-12.col-sm-12.p-xs-0
               .card.card-inverse
-                img(src="/img/Smartbe-Intelligent-Stroller-5.jpg" alt="").card-img
+                img(src=require('images/Smartbe-Intelligent-Stroller-5.jpg') alt="").card-img
                 .card-img-overlays
                   .card-title
                     a(data-toggle="modal" href="#videoModal-3" data-target="#videoModal-3").small-icon.link-6.m-t-0
@@ -304,7 +306,7 @@ section
                   h3.card-text.text-lg-center Title for Optional Video 3
             .col-xl-4.col-md-6.col-xs-12.col-sm-12.p-xs-0
               .card.card-inverse
-                img(src="/img/Smartbe-Intelligent-Stroller-5.jpg" alt="").card-img
+                img(src=require('images/Smartbe-Intelligent-Stroller-5.jpg') alt="").card-img
                 .card-img-overlays
                   .card-title
                     a(data-toggle="modal" href="#videoModal-3" data-target="#videoModal-3").small-icon.link-6.m-t-0
@@ -315,7 +317,7 @@ section
           if v && v.title && v.body
             .col-lg-12.p-sm-0
               h2.dosis.our.text-uppercase.text-lg-center.text-xs-center.campaign-subheading #{ v.title }
-              p !{ textHelper.restoreLineBreak(v.body) }
+              p !{ app.helpers.text.restoreLineBreak(v.body) }
   if values.campaign.team_members
     section#members
       .container
@@ -350,7 +352,7 @@ section
                         if !v.linkedin && !v.facebook
                           a.linkedin-share-team.link-1(style="visibility:hidden;")
                             i.fa.fa-linkedin-square.more
-                      p.card-text.text-justify.hide-more-detail !{textHelper.restoreLineBreak(v.bio)}
+                      p.card-text.text-justify.hide-more-detail !{app.helpers.text.restoreLineBreak(v.bio)}
                         if v.bio.length > 180
                           a(href="#").show-more-members.link-3 Read More
                       .d-block.text-lg-left.cite_education
@@ -421,8 +423,8 @@ section
         .col-xl-8.offset-xl-2.col-lg-10.offset-lg-1.col-sm-12.offset-sm-0
           .col-lg-4.text-xs-center
             p Official filing on SEC.gov
-            a(href=helpers.campaign.formcLinks[values.id] target="_blank")
-              img(src="/img/lrg_US_Department_of_State35.gif").img-document.d-inline-block
+            a(href=campaignHelper.formcLinks[values.id] target="_blank")
+              img(src=require('images/lrg_US_Department_of_State35.gif')).img-document.d-inline-block
               h3.d-inline-block  Form C
           .col-lg-4.text-xs-center
             p Company documents
@@ -551,7 +553,7 @@ section
         .col-lg-3.text-lg-center
           a(href="")
             .card
-              img(src="/img/values/avatar1.jpg" alt="").img-circle
+              img(src=require('images/values/avatar1.jpg') alt="").img-circle
               .card-block
                 h4.card-title.text-uppercase Jan Mertz
                 p.card-text
@@ -559,7 +561,7 @@ section
         .col-lg-3.text-lg-center
           a(href="")
             .card
-              img(src="/img/values/avatar2.jpg" alt="").img-circle
+              img(src=require('images/values/avatar2.jpg') alt="").img-circle
               .card-block
                 h4.card-title.text-uppercase Jan Mertz
                 p.card-text
@@ -567,7 +569,7 @@ section
         .col-lg-3.text-lg-center
           a(href="")
             .card
-              img(src="/img/values/avatar3.jpg" alt="").img-circle
+              img(src=require('images/values/avatar3.jpg') alt="").img-circle
               .card-block
                 h4.card-title.text-uppercase Lusy Johnson
                 p.card-text
@@ -575,7 +577,7 @@ section
         .col-lg-3.text-lg-center
           a(href="")
             .card
-              img(src="/img/values/avatar4.jpg" alt="").img-circle
+              img(src=require('images/values/avatar4.jpg') alt="").img-circle
               .card-block
                 h4.card-title.text-uppercase Jan Mertz
                 p.card-text
@@ -583,7 +585,7 @@ section
         .col-lg-3.text-lg-center
           a(href="")
             .card
-              img(src="/img/values/avatar1.jpg" alt="").img-circle
+              img(src=require('images/values/avatar1.jpg') alt="").img-circle
               .card-block
                 h4.card-title.text-uppercase Lusy Mertz
                 p.card-text
@@ -591,7 +593,7 @@ section
         .col-lg-3.text-lg-center
           a(href="")
             .card
-              img(src="/img/values/avatar5.jpg" alt="").img-circle
+              img(src=require('images/values/avatar5.jpg') alt="").img-circle
               .card-block
                 h4.card-title.text-uppercase Jan Mertz
                 p.card-text
@@ -599,7 +601,7 @@ section
         .col-lg-3.text-lg-center
           a(href="")
             .card
-              img(src="/img/values/avatar2.jpg" alt="").img-circle
+              img(src=require('images/values/avatar2.jpg') alt="").img-circle
               .card-block
                 h4.card-title.text-uppercase Jan Mertz
                 p.card-text
@@ -607,7 +609,7 @@ section
         .col-lg-3.text-lg-center
           a(href="")
             .card
-              img(src="/img/values/avatar3.jpg" alt="").img-circle
+              img(src=require('images/values/avatar3.jpg') alt="").img-circle
               .card-block
                 h4.card-title.text-uppercase Jan Mertz
                 p.card-text
@@ -639,7 +641,7 @@ section
                   div(id="collapsefaq" + k role="tabpanel"
                   aria-labelledby="faq" + k
                   class=(counter == 0 ? 'in' : '') + ' panel-collapse collapse'
-                  ) !{ textHelper.restoreLineBreak(v.answer) }
+                  ) !{ app.helpers.text.restoreLineBreak(v.answer) }
                   - counter ++;
         
   #comments

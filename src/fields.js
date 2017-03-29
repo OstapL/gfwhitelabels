@@ -1,8 +1,3 @@
-const helpers = {
-  date: require('./helpers/dateHelper.js'),
-  text: require('./helpers/textHelper.js'),
-  icons: require('./helpers/iconsHelper.js'),
-};
 
 let exports = {
   prepareNestedField(nestedName, name, value, index, myAttr, schema) {
@@ -313,7 +308,7 @@ let exports = {
 
     attr.icon = attr.icon || 'file';
 
-    attr.fileIcon = helpers.icons.resolveIconPath(attr.data.mime, 'file');
+    attr.fileIcon = app.helpers.icons.resolveIconPath(attr.data.mime, 'file');
 
     attr.default = attr.default || require('images/icons/file.png');
     attr.text = attr.text || 'Drop your PDF or DOC here or click to upload';
