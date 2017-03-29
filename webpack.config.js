@@ -60,6 +60,7 @@ if (isAnalyze) {
 
 if (isDev) {
   plugins.push(new webpack.HotModuleReplacementPlugin());
+  plugins.push(new webpack.NamedModulesPlugin());
 }
 
 const dependencies = Object.keys(require('./package.json').dependencies);
