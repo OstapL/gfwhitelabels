@@ -1,11 +1,12 @@
-- pug_html += app.breadcrumbs('Congratulations!', '', [  ]);
+- pug_html += app.breadcrumbs('Congratulations!', '', [ ['Home', '/'], ['thank you', ''], ]);
 
 .container
   .row
     .col-sm-8.offset-sm-2
-      h2.text-xs-center.thankyou-title.m0.letter-spacing-normal 
-        i(aria-hidden="true").fa.fa-check-square-o.like-icon-circle
-        |  We need to review you campaign!
+      h2.text-xs-center.thankyou-title.m0.letter-spacing-normal.font-weight-light
+        .icon-in-circle.m-r-1.d-inline-block.align-middle
+          i(aria-hidden="true").fa.fa-check-square-o
+        | We need to review your campaign!
 
   .row
     .col-sm-8.offset-sm-2.mb30.mt30
@@ -13,11 +14,14 @@
   
   .row
     .col-sm-12
-      .result-info-block.m-x-auto.text-xs-center
-        p We need to review you campaign
+      .text-xs-center
+        p Thank you for your submission. We’ll review and get back to you shortly.
           br
-          |  Thank you for submitting a campaign.
+          |  If you have any questions in the meantime, please contact us
           br
-          |  We will review and contact you shortly.
+          |  at 
+          a(href="mailto:info@growthfountain.com").link-3 info@growthfountain.com
+          |  or call
+          strong  646-759-8229 
         .info-btn-block.m-t-3
           a(href="/" + company.id).btn.btn-secondary PREVIEW
