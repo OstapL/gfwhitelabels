@@ -281,7 +281,6 @@ let exports = {
     return template({
       name: name,
       attr: attr,
-      helpers: helpers,
     });
   },
 
@@ -317,7 +316,6 @@ let exports = {
     return template({
       name: name,
       attr: attr,
-      helpers: helpers,
     });
 
   },
