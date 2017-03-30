@@ -25,10 +25,10 @@ module.exports = {
         return app.getThumbnail(
           attr.thumbSize,
           thumbnails,
-          attr.default || '/img/icons/file.png'
+          attr.default || require('images/icons/file.png')
         );
       } else {
-        return attr.default || '/img/icons/file.png';
+        return attr.default || require('images/icons/file.png');
       }
     },
 
