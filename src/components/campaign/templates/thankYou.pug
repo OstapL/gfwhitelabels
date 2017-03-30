@@ -9,7 +9,8 @@
   .row
     .col-sm-8.offset-sm-2
       h2.text-xs-center.m-b-1.font-weight-light.m-t-0
-        i(aria-hidden="true").like-icon-circle.fa.fa-thumbs-o-up.m-r-1
+        .icon-in-circle.m-r-1.d-inline-block.align-middle
+          i(aria-hidden="true").fa.fa-thumbs-o-up
         | Thank you for your investment.
       h2.text-xs-center.m-t-0.m-b-0.font-weight-light #{ investment.company.name } is now $#{ investment.amount } closer to their goal!
 
@@ -27,8 +28,8 @@
         table.table.table-bordered
           tbody
             tr.bgc-row-top
-              td(colspan="2")
-                h3.text-lg-center.text-xs-center.campaign-subheading Here is a summary of your transaction:
+              td(colspan="2").p-x-0.p-y-0
+                h4.text-uppercase.text-xs-center.campaign-subheading.section-bg-line.m-y-0 Here is a summary of your transaction:
             tr.bgc-row-middle
               td.width-50
                 p Transaction ID
@@ -36,9 +37,9 @@
                 p Company
             tr
               td
-                h3.font-weight-bold #{ investment.id }
+                h3.font-weight-bold.m-y-0 #{ investment.id }
               td
-                h3.font-weight-bold #{ investment.company.name }
+                h3.font-weight-bold.m-y-0 #{ investment.company.name }
             case investment.security_type
               when SECURITY_TYPE.RevenueShare
                 tr.bgc-row-middle
@@ -48,16 +49,16 @@
                     p Investment
                 tr
                   td
-                    h3.font-weight-bold #{ investment.percentage_revenue}% Revenue Share Capped at #{investment.cap}x
+                    h3.font-weight-bold.m-y-0 #{ investment.percentage_revenue}% Revenue Share Capped at #{investment.cap}x
                   td
-                    h3.font-weight-bold $#{ investment.amount }
+                    h3.font-weight-bold.m-y-0 $#{ investment.amount }
                 if investment.perk && investment.perk.length
                   tr.bgc-row-middle
                     td(colspan="2") Perk
                 
                   tr
                     td(colspan="2")
-                      h3.font-weight-bold #{ investment.perk }
+                      h3.font-weight-bold.m-y-0 #{ investment.perk }
               when SECURITY_TYPE.CommonEquity
                 tr.bgc-row-middle
                   td.width-50
@@ -66,9 +67,9 @@
                     p Number of Shares
                 tr
                   td
-                    h3.font-weight-bold Nonvoting Common Stock
+                    h3.font-weight-bold.m-y-0 Nonvoting Common Stock
                   td
-                    h3.font-weight-bold #{ investment.number_of_shares }
+                    h3.font-weight-bold.m-y-0 #{ investment.number_of_shares }
                 tr.bgc-row-middle
                   td.width-50
                     p Investment
@@ -76,13 +77,13 @@
                     p Perk
                 tr
                   td
-                    h3.font-weight-bold $#{ investment.amount }
+                    h3.font-weight-bold.m-y-0 $#{ investment.amount }
                   td
-                    h3.font-weight-bold
+                    h3.font-weight-bold.m-y-0
                       if investment.perk && investment.perk.length
-                        h3.font-weight-bold #{ investment.perk }
+                        h3.font-weight-bold.m-y-0 #{ investment.perk }
                       else
-                        h3
+                        h3.m-y-0
                           hr(style="width:40px;")
         h3.m-b-2.m-t-2 You will have the opportunity to track your investments in the Investor Dashboard
         .info-btn-block
