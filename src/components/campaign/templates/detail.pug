@@ -4,6 +4,10 @@
   var c = require('consts/campaign/file.json');
   var backgroundImgUrl = app.getUrl(values.campaign.header_image_data) || '';
   var socialDirective = require('directives/social/index.js');
+  var CampaignInfoProvider = require('directives/social/CampaignInfoProvider.js');
+
+  var infoProvider = new CampaignInfoProvider(this.model);
+  var directiveKey = 'campaign';
 
 section(style="background-image: url(" + backgroundImgUrl + ")")#home.home-section.bg-after-company.parallax-2.fixed-height-small.hide-bg-fixed.company-header
   .js-height-parent.container-fluid
@@ -137,7 +141,7 @@ section.campaigndetail
             |  Founded #{ app.helpers.format.formatDate(values.founding_date) }
       .row.hidden-xs-down
         .col-lg-12.share
-          | !{ socialDirective.render(this.model) }
+          | !{ socialDirective.render(directiveKey, infoProvider) }
     .col-lg-6.right-block-investors.p-l-0.p-sm-0
       .progress_bar_container
         -
@@ -180,7 +184,7 @@ section.campaigndetail
             a(href="/" + values.slug + "/invest").btn.btn-primary.text-uppercase.pull-lg-right Invest
         .row.social-share-mobile
           .col-lg-12.share.hidden-sm-up.text-xs-center
-            | !{ socialDirective.render(this.model) }
+            | !{ socialDirective.render(directiveKey, infoProvider) }
 section.border-bottom-scroll.hidden-lg-down
   .container.tabs-scroll.p-t-2
     nav(data-toggle="sticky-onscroll").navbar.navbar-default.sticky

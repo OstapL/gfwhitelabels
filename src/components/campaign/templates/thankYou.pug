@@ -2,9 +2,16 @@
 -
   var SECURITY_TYPE = require('consts/raisecapital/security_type.json');
   var socialDirective = require('directives/social/index.js');
+  var InvestorInfoProvider = require('directives/social/InvestInfoProvider.js');
+
   var socialShare = _.extend({
     campaign: investment.campaign,
   }, investment.company);
+
+  var infoProvider = new InvestorInfoProvider(socialShare);
+  var directiveKey = 'invest';
+
+
 .container
   .row
     .col-sm-8.offset-sm-2
@@ -21,7 +28,7 @@
     .col-xl-12.text-xs-center
       h2.font-weight-light.m-t-0.m-b-2 “I just invested in #{ investment.company.name }!”
     .col-lg-12.share.p-t-0.text-xs-center.m-b-2
-      | !{ socialDirective.render(socialShare, { titlePrefix: 'I invested in '}) }
+      | !{ socialDirective.render(directiveKey, infoProvider) }
   .row.thank-you-page
     .col-xl-8.offset-xl-2.overview
       .thankyou-page

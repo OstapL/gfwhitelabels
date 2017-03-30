@@ -1,0 +1,13 @@
+div(tabindex="-1" role="dialog" aria-labelledby="confirm-dialog-label" aria-hidden="true").modal.fade#confirm-modal
+  div(role="document").modal-dialog
+    div.modal-content
+      div.modal-header
+        h5.modal-title#confirm-dialog-label #{ title }
+        button(type="button" data-dismiss="modal" aria-label="Close").close
+          span(aria-hidden="true") &times;
+
+      div.modal-body
+        p #{ message }
+      div.modal-footer
+        button(type="button" class="btn btn-secondary" data-dismiss="modal").confirm-yes Yes
+        button(type="button" class="btn btn-primary").confirm-no No
