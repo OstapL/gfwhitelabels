@@ -4,6 +4,8 @@ const typeOfDocuments = require('consts/typeOfDocuments.json');
 const COUNTRIES = require('consts/countries.json');
 const validation = require('components/validation/validation.js');
 
+const CalculatorView = require('./revenueShareCalculator.js');
+
 module.exports = {
   list: Backbone.View.extend({
     el: '#content',
@@ -89,7 +91,6 @@ module.exports = {
                 this.model.formc.fiscal_recent_group_data)
           : []
       };
-
     },
 
     submitCampaign(e) {
@@ -290,7 +291,15 @@ module.exports = {
       });
 
       this.$('#documents-modal').modal('hide');
+      setTimeout(() => {
 
+        this.calculatorViews = {
+          calculator: new CalculatorView.calculator(),
+          result: new CalculatorView.result(),
+        };
+
+        this.calculatorViews.calculator.render();
+      }, 100);
       return this;
     },
 
