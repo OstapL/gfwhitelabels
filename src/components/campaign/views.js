@@ -94,7 +94,6 @@ module.exports = {
     },
 
     submitCampaign(e) {
-
       api.makeRequest(
         app.config.raiseCapitalServer + '/company/' + this.model.id + '/edit',
         'GET'
@@ -221,6 +220,10 @@ module.exports = {
       });
 
       setTimeout(() => {
+        (new CalculatorView.calculator()).render();
+      }, 100);
+
+      setTimeout(() => {
 
         this.$('.fancybox').fancybox({
           openEffect  : 'elastic',
@@ -291,15 +294,7 @@ module.exports = {
       });
 
       this.$('#documents-modal').modal('hide');
-      setTimeout(() => {
 
-        this.calculatorViews = {
-          calculator: new CalculatorView.calculator(),
-          result: new CalculatorView.result(),
-        };
-
-        this.calculatorViews.calculator.render();
-      }, 100);
       return this;
     },
 

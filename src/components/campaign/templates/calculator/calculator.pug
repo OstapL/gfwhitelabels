@@ -1,20 +1,17 @@
 .container.calculator-container
   .row
     .offset-lg-3.col-lg-6
-      .warning-block
-        i.fa.fa-exclamation-triangle 
-        span.warning-text 
-          | This calculator will give you an idea of distributions associated with issuing Revenue Share
+      span.warning-text Want to see some possible scenarios?
+      | *
 
   .row
-    .offset-lg-3.col-lg-6
+    .col-lg-12
       form(method="post" action="").js-calc-form.form-section
-        .form-body.clearfix 
-
-          .form-group.row
-            label(for="raiseMoney").col-lg-12.font-weight-normal How much money do you plan to raise?
-
-            .col-lg-12
+        .form-body.clearfix
+          .form-group
+            .col-lg-4
+              label(for="raiseMoney").col-lg-12.font-weight-normal How much is the company raising?
+              br
               input(
                 value= formatPrice(data.raiseMoney),
                 type='text',
@@ -25,10 +22,8 @@
                 data-current-value= data.raiseMoney
                 name="raiseMoney")#raiseMoney.form-control.js-field
 
-          .form-group.row
-            label(for="nextYearRevenue").col-lg-12.font-weight-normal What do you expect your revenue to be next year?
-
-            .col-lg-12
+            .col-lg-4
+              label(for="nextYearRevenue").col-lg-12.font-weight-normal What do you expect next year's revenue share to be?
               input(
                 value= formatPrice(data.nextYearRevenue),
                 type='text',
@@ -39,10 +34,8 @@
                 name="nextYearRevenue",
                 data-current-value= data.nextYearRevenue)#nextYearRevenue.form-control.js-field
 
-          .form-group.row
-            label(for="growLevel").col-lg-12.font-weight-normal At what rate do you expect your revenue to grow each year?
-
-            .col-lg-12
+            .col-lg-4
+              label(for="growLevel").col-lg-12.font-weight-normal At what rate do you expect revenues to grow each year?
               input(
                 value=(data.growLevel ? data.growLevel + '%' : ''),
                 type='text',
@@ -52,8 +45,13 @@
                 name="growLevel",
                 data-model-value='growLevel')#growLevel.form-control.js-field
 
-          .form-group.row.clearfix.m0
-            .col-xs-6.mt30
-              .controls  
-                button(type="submit").btn.btn-primary.pull-right.text-uppercase go
-                // add class .pointer-events-none to disable all events for this button
+            .row.clearfix.m0
+              .col-xs-6.mt30
+                .controls
+                  button(type="submit").btn.btn-primary.pull-right.text-uppercase go
+  .row
+    #revenue-share-calculator-result
+
+  .row
+    span
+      | The calculations are mathematical based on user inputs and may not reflect actual results. Use ofo this calculator does not constitute investment advice. We are providing this tool to help you evaluate potential revenue sharing scenarios and payback periods. Any determination is your sole responsibility.
