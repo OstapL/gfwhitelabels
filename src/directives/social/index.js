@@ -87,12 +87,7 @@ class SocialNetworks {
     let $linksContainer = $(e.target).closest('.social-links-container');
     let key = $linksContainer.data('key');
 
-    let message = this.data[key].confirmationMessage();
-
-    this.confirm($linksContainer, { title: 'confirm', message: message}).then((res) => {
-      if (res)
-        window.open(e.currentTarget.href, '', 'toolbar=0,status=0,left=45%,top=45%,width=626,height=436');
-    });
+    window.open(e.currentTarget.href, '', 'toolbar=0,status=0,left=45%,top=45%,width=626,height=436');
 
     return false;
   }
