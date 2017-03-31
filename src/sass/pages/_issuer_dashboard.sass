@@ -345,16 +345,19 @@
   select
     &.title
       text-transform: uppercase
-  .table
+  .table-bordered
     th, td
       vertical-align: middle
       padding-left: rem(20)
       padding-right: rem(20)
       border-color: #ececec
+      border-width: 1px
     .w-input
       width: 50px
       .delete-section-container
         text-align: center
+    .w-input-big
+      width: 54px
     .mail
       color: $small-text
     .fa-google-plus-square
@@ -363,7 +366,12 @@
     .fa-linkedin-square
       color: $btn-linkedin-bg
       margin-right: rem(15)
-
+    .name
+      width: 37%
+    .mail
+      width: 33%
+    .source
+      width: 20%
     .footer-table
       td
         padding-top: rem(5)
@@ -393,7 +401,7 @@
       border-color: #ececec
   .filescroll
     .file-scroll
-      max-height: 281px
+      max-height: 400px
       margin: rem(42) auto 0px
     .all-file-scroll
       ::-webkit-scrollbar-thumb
