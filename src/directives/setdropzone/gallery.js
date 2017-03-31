@@ -10,6 +10,10 @@ class GalleryElement extends imageDropzone.ImageElement {
     super(file, fieldName, fieldDataName, options);
     this.files = [];
     file.data.forEach((el) => {
+      if(el == null || el.urls == null) {
+        el = {};
+        el.urls = [];
+      }
       if(Array.isArray(el.urls)) {
         let temp = Object.assign({}, el);
         el.urls = {};
@@ -18,8 +22,10 @@ class GalleryElement extends imageDropzone.ImageElement {
       let fileObj = new imageDropzone.ImageElement(
         new ImageClass('', el),
         fieldName,
-        fieldDataName
+        fieldDataName,
+        options
       );
+      fileObj.delete = () => this.delete.call(this, fileObj.file.id);
       fileObj.getTemplate = this.getTemplate;
       fileObj.elementSelector = '.' + fieldName + ' .fileContainer' + el.id;
       this.files.push(fileObj);
@@ -40,6 +46,21 @@ class GalleryElement extends imageDropzone.ImageElement {
   getDefaultImage() {
     return this.options.defaultImage || defaultImage;
   }
+
+  delete(fileId) {
+    let imageRender = this.files.filter((el) => {return fileId == el.file.id})[0];
+    let index = this.files.indexOf(imageRender);
+    this.files[index].file.delete().done(() => {
+      let indexFile = this.file.data.indexOf(this.file.data.filter((el) => {return fileId == el.id})[0]);
+      this.file.data.splice(indexFile, 1);
+      let patchData = {};
+      debugger;
+      patchData[this.fieldDataName] = this.file.data;
+      api.makeRequest(this.file.urlRoot, 'PATCH', patchData).done(() => {
+        imageRender.element.remove();
+      });
+    });
+  }
 };
 
 
@@ -52,7 +73,8 @@ class GalleryDropzone extends imageDropzone.ImageDropzone {
     this.galleryElement = new GalleryElement(
       this.model[fieldName],
       fieldName,
-      fieldDataName
+      fieldDataName,
+      options.crop
     );
   }
 
@@ -82,14 +104,14 @@ class GalleryDropzone extends imageDropzone.ImageDropzone {
     fileObj.elementSelector = '.' + this.galleryElement.fieldName + ' .fileContainer' + reorgData.id;
     this.galleryElement.files.push(fileObj);
 
-    this.galleryElement.update(this.galleryElement.file.data).done(() => {
-      fileObj.render()
-      this.element.querySelector('.' + this.galleryElement.fieldName).innerHTML += fileObj.resultHTML;
+    this.galleryElement.update(this.galleryElement.file.data, () => {
+      fileObj.render();
+      this.element.querySelector('.' + this.galleryElement.fieldName).insertAdjacentHTML('beforeend', fileObj.resultHTML);
       new imageDropzone.CropperDropzone(
         this,
         fileObj,
         this.cropperOptions
-      ).render('#content');
+      ).render(this.element);
     });
   }
 }

@@ -293,11 +293,11 @@ module.exports = {
         help_text: ' This image entices investors to view your campaign. A minimum size of 350x209 is recommended.',
         crop: {
           control:  {
-            aspectRatio: 1400 / 960,
+            aspectRatio: 305 / 205,
           },
           auto: {
-            width: 1200,
-            height: 1024,
+            width: 305,
+            height: 205,
           },
           resize: {
             width: 305,
@@ -310,14 +310,14 @@ module.exports = {
 
       this.fields.gallery_group_id = _.extend(this.fields.gallery_group_id, {
         title: 'Drop your photo(s) here or click to upload',
-        help_text: 'We recommend uploading 6 images (minimum size of 1200x1024 is recommended) that represent your service of business. These images will be displayed in a gallery format.',
+        help_text: 'We recommend uploading 6 images (minimum size of 1024x800 is recommended) that represent your service of business. These images will be displayed in a gallery format.',
         crop: {
           control: {
-            aspectRatio: 1200 / 1024,
+            aspectRatio: 1024 / 800,
           },
           auto: {
-            width: 1200,
-            height: 1024,
+            width: 1024,
+            height: 800,
           },
           resize: {
             width: 305,

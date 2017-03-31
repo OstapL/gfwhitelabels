@@ -53,38 +53,47 @@ class FileElement {
   attacheEvents() {
     this.element.querySelectorAll('.deleteFile').forEach((item) => {
       item.addEventListener("click", (event) => {
-        api.makeRequest(
-            app.config.filerServer + '/' + this.file.id,
-            'DELETE'
-        ).done(() => {
-          let data = {};
-          data[this.fieldName] = null;
-          api.makeRequest(
-              this.file.urlRoot,
-              'PATCH',
-              data
-          ).done(() => {
-            this.file.updateData({});
-            this.render();
-          })
-        });
+        event.preventDefault();
+        event.stopPropagation();
+        this.delete();
       });
     });
     
-    // ToDo
-    // This should be in the image model
-    this.element.querySelectorAll('.cropImage').forEach((item) => {
-      console.log('cropper');
-    });
   }
 
   getTemplate() {
     return require('./templates/file.pug');
   }
 
-  update(data) {
+  delete(callback) {
+    debugger;
+    this.file.delete().done(() => {
+      if(callback) {
+        callback(this.file);
+      } else {
+        this.update({id: null, urls: {}});
+      }
+    });
+  }
+
+  update(data, callback) {
     this.file.updateData(data);
-    return this.save();
+    return this.save().done(() => {
+      if(callback) {
+        callback(this)
+      } else {
+        this.render(this.element);
+      }
+    }).fail((xhr) => {
+      $(this.element).find('.uploading').hide().addClass('collapse').css('z-index', '');
+      // ToDo
+      // fix if <field>_data urls error
+      app.validation.invalidMsg(
+        this.view,
+        this.fileElement.fieldName,
+        Object.values(xhr.responseJSON)
+      ); 
+    });
   }
 
   save() {
@@ -230,6 +239,7 @@ class FileDropzone {
         Object.values(error)[0]
       ); 
     });
+    this.dropzone = dropbox;
   }
 
   success(file, data) {
@@ -242,18 +252,7 @@ class FileDropzone {
     data.urls = {};
     data.urls.origin = urls[0];
 
-    this.fileElement.update(data).done(() => {
-      this.fileElement.render(this.element.querySelector('.fileContainer'));
-    }).fail((xhr) => {
-      $(this.element).find('.uploading').hide().addClass('collapse').css('z-index', '');
-      // ToDo
-      // fix if <field>_data urls error
-      app.validation.invalidMsg(
-        this.view,
-        this.fileElement.fieldName,
-        Object.values(xhr.responseJSON)
-      ); 
-    });
+    this.fileElement.update(data);
   }
 
 };

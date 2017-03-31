@@ -23,6 +23,13 @@ class File {
     this.mime = data.mime || defaultIcon;
   }
 
+  delete() {
+    return api.makeRequest(
+        app.config.filerServer + '/' + this.id,
+        'DELETE'
+    );
+  }
+
   updateData(data) {
     this.id = data.id;
     this.name = data.name;

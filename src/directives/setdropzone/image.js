@@ -10,6 +10,25 @@ class ImageElement extends file.FileElement {
   getDefaultImage() {
     return this.options.defaultImage || defaultImage;
   }
+
+  attacheEvents() {
+    super.attacheEvents();
+    // ToDo
+    // This should be in the image model
+    this.element.querySelectorAll('.cropImage').forEach((item) => {
+      item.addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        debugger;
+        new CropperDropzone(
+          this,
+          this,
+          this.options,
+        ).render(this.element.parentElement.parentElement.parentElement.parentElement);
+        return false;
+      });
+    });
+  }
 };
 
 
@@ -36,7 +55,8 @@ class ImageDropzone extends file.FileDropzone {
     this.fileElement = new ImageElement(
       this.model[fieldName],
       fieldName,
-      fieldDataName
+      fieldDataName,
+      this.cropperOptions
     );
   }
 
@@ -56,14 +76,12 @@ class ImageDropzone extends file.FileDropzone {
       ] = data[0].urls[0];
     }
 
-    this.fileElement.update(reorgData).done(() => {
-      this.fileElement.render(this.fileElement.element);
-      new CropperDropzone(
-        this,
-        this.fileElement,
-        this.cropperOptions
-      ).render('#content');
-    });
+    this.fileElement.update(reorgData);
+    new CropperDropzone(
+      this,
+      this.fileElement,
+      this.cropperOptions
+    ).render(this.element);
   }
 }
 
@@ -108,7 +126,6 @@ class CropperDropzone {
       //   cropper.enable();
       // }
     }, this.options.control);
-
   }
 
   render(attacheTo) {
@@ -161,6 +178,10 @@ class CropperDropzone {
       '</div>',
     };
 
+    if(this.options.template === null) {
+      console.debug('Cropper template, cssClass, not set, dont know how to render cropper');
+      return false;
+    }
     //todo
     this.element = 
       '<div class="modal fade cropModal modal-dropzone ' + this.options.cssClass + '"' +
@@ -181,7 +202,15 @@ class CropperDropzone {
       '</div>' +
     '</div>';
 
-    document.querySelector(attacheTo).innerHTML += this.element;
+    document.querySelectorAll('.cropModal').forEach((el, i) => {
+      el.remove();
+    });
+    /*
+    if(attacheTo.querySelector('.cropModal') !== null) {
+      attacheTo.querySelector('.cropModal').remove();
+    }
+    */
+    attacheTo.insertAdjacentHTML('beforeend', this.element)
 
     let img = new Image();
     var self = this;
@@ -212,18 +241,27 @@ class CropperDropzone {
       const maxWidth = imageData.naturalWidth,
             maxHeight = imageData.naturalHeight;
 
-      const data = _.pick(this.cropper.getData(true), ['x', 'y', 'width', 'height']);
+      const data = {};
+      const cropData = _.pick(this.cropper.getData(true), ['x', 'y', 'width', 'height']);
 
-      data.x = data.x < 0 ? 0 : data.x;
-      data.y = data.y < 0 ? 0 : data.y;
+      cropData.x = cropData.x < 0 ? 0 : cropData.x;
+      cropData.y = cropData.y < 0 ? 0 : cropData.y;
 
-      data.width = data.width > maxWidth ? maxWidth : data.width;
-      data.height = data.height > maxHeight ? maxHeight : data.height;
-      data.file_name = data.width + 'x' + data.height + '.' + this.file.file.getExtention();
+      cropData.width = cropData.width > maxWidth ? maxWidth : cropData.width;
+      cropData.height = cropData.height > maxHeight ? maxHeight : cropData.height;
+      cropData.name = this.options.auto.width + 'x' + this.options.auto.height + '.' + this.file.file.getExtention(),
+
+      data.file_name = cropData.width + 'x' + cropData.height + '.' + this.file.file.getExtention();
       data.id = this.file.file.id;
+      data.crop = cropData;
+      data.resize = {
+        name: this.options.resize.width + 'x' + this.options.resize.height + '.' + this.file.file.getExtention(),
+        width: this.options.resize.width,
+        height: this.options.resize.height,
+      };
 
       api.makeRequest(
-        app.config.filerServer + '/crop',
+        app.config.filerServer + '/transform_image',
         'PUT',
         data
       ).done((responseData) => {
