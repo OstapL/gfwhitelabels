@@ -1,8 +1,13 @@
 | !{ app.breadcrumbs('issuer dashboard', '', [ ['Home', '/'], ['issuer dashboard', ''],])}
-- var campaignHelpers = require('components/campaign/helpers.js');
-- var formcLinks = require('../../campaign/helpers.js').formcLinks
-- var moment = require('moment');
-- var socialDirective = require('directives/social/index.js');
+-
+  var campaignHelpers = require('components/campaign/helpers.js');
+  var formcLinks = require('../../campaign/helpers.js').formcLinks
+  var moment = require('moment');
+  var socialDirective = require('directives/social/index.js');
+  var CampaignInfoProvider = require('directives/social/CampaignInfoProvider.js');
+
+  var infoProvider = new CampaignInfoProvider(this.company);
+  var directiveKey = 'issuerDashboard';
 
 section.issuer-dashbord-top
   .container
@@ -13,7 +18,7 @@ section.issuer-dashbord-top
           h2.text-uppercase.dosis.m-t-0 #{company.name}
           .timer_day #{campaignHelpers.daysLeft(campaign.expiration_date)} Days Left
         .share-block.d-inline-block.share
-          | !{ socialDirective.render(this.company) }
+          | !{ socialDirective.render(directiveKey, infoProvider) }
 
       .col-md-2.col-sm-6.col-xs-6
         a(href="").dashboard-stat

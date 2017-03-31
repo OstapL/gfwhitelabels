@@ -900,7 +900,7 @@ module.exports = {
 
     getSignature () {
 
-      cookies.set('token', app.user.token, {
+      app.cookies.set('token', app.user.token, {
         domain: '.' + app.config.domainUrl,
         path: '/',
       });
@@ -983,7 +983,7 @@ module.exports = {
         template: subscriptionAgreementPath
       }];
 
-      app.makeRequest(reqUrl, 'POST', data, {
+      api.makeRequest(reqUrl, 'POST', data, {
         contentType: 'application/json; charset=utf-8',
         crossDomain: true,
       })

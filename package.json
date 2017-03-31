@@ -4,7 +4,7 @@
   "description": "Growth Fontain Single Page Application",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --inline --hot",
+    "start": "NODE_ENV=development webpack-dev-server",
     "build": "NODE_ENV=production webpack -p --config ./webpack.config.js",
     "stats": "webpack --profile --json >stats.json",
     "analyzer": "NODE_ENV=analyze webpack",

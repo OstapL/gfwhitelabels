@@ -1,20 +1,16 @@
 span.d-inline-block
   i.fa.fa-share
   |  Share:
-.d-inline-block
-  a(href=links.facebook target="_blank").facebook-share
+div(data-key=key).d-inline-block.social-links-container
+  a(href=info.facebook() target="_blank").facebook-share
     i.fa.fa-facebook-square
-  a(href=links.twitter target="_blank").twitter-share
+  a(href=info.twitter() target="_blank").twitter-share
     i.fa.fa-twitter-square
-  a(href=links.linkedin
+  a(href='#'
     target="_blank"
-    data-title=data.title
-    data-description=data.description
-    data-url=data.url
-    data-picture=data.picture
   ).linkedin-share
     i.fa.fa-linkedin-square
-  a(href=links.mailTo).email-share
+  a(href=info.email()).email-share
     i.fa.fa-envelope-square
-//- a(href=links.google_plus target="_blank").link-1.google-plus-share
+//-a(href=info.google_plus() target="_blank").link-1.google-plus-share
     i(aria-hidden="true").fa.fa-google-plus

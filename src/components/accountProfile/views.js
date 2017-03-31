@@ -634,15 +634,18 @@ module.exports = {
       this.initComments();
 
       try {
-        let script = document.createElement('script');
-        script.type = 'text/javascript';
-        script.src = '/js/graph/graph.js';
-        $(document.head).append(script);
+        require('src/js/graph/graph.js');
+        require('src/js/graph_data.js');
 
-        script = document.createElement('script');
-        script.type = 'text/javascript';
-        script.src = '/js/graph_data.js';
-        $(document.head).append(script);
+        // let script = document.createElement('script');
+        // script.type = 'text/javascript';
+        // script.src = '/js/graph/graph.js';
+        // $(document.head).append(script);
+        //
+        // script = document.createElement('script');
+        // script.type = 'text/javascript';
+        // script.src = '/js/graph_data.js';
+        // $(document.head).append(script);
       } catch (err) {
         console.log(err);
       }

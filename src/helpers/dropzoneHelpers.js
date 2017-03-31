@@ -25,10 +25,10 @@ module.exports = {
         return app.getThumbnail(
           attr.thumbSize,
           thumbnails,
-          attr.default || '/img/icons/file.png'
+          attr.default || require('images/icons/file.png')
         );
       } else {
-        return attr.default || '/img/icons/file.png';
+        return attr.default || require('images/icons/file.png');
       }
     },
 
@@ -170,7 +170,7 @@ module.exports = {
       let data = _.pick(this.model, [name, dataFieldName]);
       data = _.extend(data, extra);
 
-      return app.makeRequest(this.urlRoot.replace(':id', this.model.id), 'PATCH', data);
+      return api.makeRequest(this.urlRoot.replace(':id', this.model.id), 'PATCH', data);
     },
 
     _file(name) {
