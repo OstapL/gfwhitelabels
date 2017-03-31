@@ -47,18 +47,27 @@ class GalleryElement extends imageDropzone.ImageElement {
     return this.options.defaultImage || defaultImage;
   }
 
+  save() {
+    let patchData = {};
+    patchData[this.fieldDataName] = this.file.data;
+    return api.makeRequest(this.file.urlRoot, 'PATCH', patchData);
+  }
+
   delete(fileId) {
     let imageRender = this.files.filter((el) => {return fileId == el.file.id})[0];
     let index = this.files.indexOf(imageRender);
+
     this.files[index].file.delete().done(() => {
       let indexFile = this.file.data.indexOf(this.file.data.filter((el) => {return fileId == el.id})[0]);
       this.file.data.splice(indexFile, 1);
-      let patchData = {};
-      debugger;
-      patchData[this.fieldDataName] = this.file.data;
-      api.makeRequest(this.file.urlRoot, 'PATCH', patchData).done(() => {
-        imageRender.element.remove();
-      });
+      this.save().then(() => imageRender.element.remove());
+    }).fail((xhr, error) => {
+      // If file was already deleted in filer - just update model
+      if(xhr.status == 503) {
+        let indexFile = this.file.data.indexOf(this.file.data.filter((el) => {return fileId == el.id})[0]);
+        this.file.data.splice(indexFile, 1);
+        this.save().then(() => imageRender.element.remove());
+      }
     });
   }
 };
@@ -102,6 +111,7 @@ class GalleryDropzone extends imageDropzone.ImageDropzone {
     );
     fileObj.getTemplate = this.galleryElement.getTemplate;
     fileObj.elementSelector = '.' + this.galleryElement.fieldName + ' .fileContainer' + reorgData.id;
+    fileObj.delete = () => this.galleryElement.delete.call(this.galleryElement, fileObj.file.id);
     this.galleryElement.files.push(fileObj);
 
     this.galleryElement.update(this.galleryElement.file.data, () => {

@@ -19,7 +19,6 @@ class ImageElement extends file.FileElement {
       item.addEventListener("click", (event) => {
         event.preventDefault();
         event.stopPropagation();
-        debugger;
         new CropperDropzone(
           this,
           this,
@@ -65,11 +64,11 @@ class ImageDropzone extends file.FileDropzone {
   }
 
   success(file, data) {
-    const reorgData = data[1];
+    const reorgData = data[2];
     reorgData.urls = {
-      origin: data[1].urls[0]
+      origin: data[2].urls[0]
     };
-    reorgData.urls.main = data[0].urls[0];
+    reorgData.urls.main = data[1].urls[0];
     if(this.cropperOptions.resize) {
       reorgData.urls[
         this.cropperOptions.resize.width + 'x' + this.cropperOptions.resize.height
@@ -133,8 +132,7 @@ class CropperDropzone {
 
     $('.popover').popover('hide');
     const templates = {
-      'withpreview':
-      '<div class="row">' +
+      'withpreview': '<div class="row">' +
         '<div class="col-xl-7 col-lg-7 col-md-7 col-sm-7">' +
           '<div class="crop-image-container "></div>' +
         '</div>' +
@@ -158,11 +156,12 @@ class CropperDropzone {
           '</div>' +
         '</div>' +
       '</div>',
-      'regular':
-      '<div class="form-group">' +
+
+      'regular': '<div class="form-group">' +
         '<div class="row">' +
           '<div class="col-xl-10 offset-xl-1">' +
             '<div class="crop-image-container"></div>' +
+            '<input type="text" name="name" class="m-t-1" value="{name}" />' +
           '</div>' +
         '</div>' +
         '<div class="row">' +
@@ -195,7 +194,7 @@ class CropperDropzone {
               '<h4 class="modal-title" id="exampleModalLabel"></h4>' +
             '</div>' +
           '<div class="modal-body">' +
-            templates[this.options.template]  +
+            templates[this.options.template].replace('{name}', this.file.file.name)  +
           '</div>' +
           '<div class="modal-footer "></div>' +
         '</div>' +
@@ -267,10 +266,10 @@ class CropperDropzone {
       ).done((responseData) => {
 
         let thumbSize = '';
-        this.file.file.urls.main = responseData.urls[0];
+        this.file.file.urls.main = responseData[1].urls[0];
         if(this.options.resize) {
           thumbSize = this.options.resize.width + 'x' + this.options.resize.height;
-          this.file.file.urls[thumbSize] = responseData.urls[0];
+          this.file.file.urls[thumbSize] = responseData[0].urls[0];
         }
 
         this.file.save().done(() => {

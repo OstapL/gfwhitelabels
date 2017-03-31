@@ -540,7 +540,7 @@ module.exports = {
 
         if (confirm('Are you sure you would like to delete this team member?')) {
 
-          app.makeRequest(this.urlRoot + '/' + memberId, 'DELETE').
+          api.makeRequest(this.urlRoot + '/' + memberId, 'DELETE').
               then((data) => {
                   this.model.team_members.splice(memberId, 1);
 
