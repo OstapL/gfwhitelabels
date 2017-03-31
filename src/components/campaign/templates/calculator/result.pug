@@ -1,0 +1,35 @@
+.container.calculator-container
+  .page
+    .row
+      .offset-lg-1.col-xs-10.text-sm-center.mb15
+        h2.dosis.m0.text-uppercase REVENUE GRAPH
+
+    .row
+      .col-xs-12
+        .js-jq-plot-area
+          #chart1
+          p.plot-title Multiple Returned
+
+    //-.row
+      .col-xs-12.text-sm-center.mt45
+        h2.dosis.m0.text-uppercase Your results
+
+        .table-responsive.mt30
+          table.table.table-sm.table-bordered.table-striped
+            thead
+              tr
+                th Time
+                th Fundraise
+                th Revenue
+                th Annual Distributions
+                th Multiple Returned
+                th Total Distributions
+            tbody
+              each val, index in data.outputData
+                tr
+                  th(scope='row')= 'Year ' + index
+                  td= formatPrice(val.fundraise)
+                  td= formatPrice(val.revenue)
+                  td= formatPrice(val.annual)
+                  td= val.multiple
+                  td= formatPrice(val.total)
