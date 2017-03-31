@@ -42,9 +42,9 @@
             i.fa.fa-map-marker
             = company.city + ', ' + company.state
           .clear
-        .description
-          if company.description
-            p= company.description.replace(/(<([^>]+)>)/ig,"").substr(0,250)
+        .description.quote
+          if company.brief
+            p !{company.brief}
 
         .bottom_text
           span.left_desc
