@@ -27,6 +27,7 @@ class GalleryElement extends imageDropzone.ImageElement {
       );
       fileObj.delete = () => this.delete.call(this, fileObj.file.id);
       fileObj.getTemplate = this.getTemplate;
+      fileObj.save = () => this.imageSave(this.file);
       fileObj.elementSelector = '.' + fieldName + ' .fileContainer' + el.id;
       this.files.push(fileObj);
     });
@@ -45,6 +46,26 @@ class GalleryElement extends imageDropzone.ImageElement {
 
   getDefaultImage() {
     return this.options.defaultImage || defaultImage;
+  }
+
+  imageSave(realData) {
+    debugger;
+    let f = realData.data.filter((el) => {
+      debugger;
+      if(el.id == this.file.id) {
+        el.data = this.file;
+      }
+      return el;
+    });
+
+    if(f.length == 0) {
+      realData.data.push(this.file);
+    }
+
+    return realData.save(
+      this.fieldName,
+      this.fieldDataName
+    );
   }
 
   save() {
@@ -93,11 +114,11 @@ class GalleryDropzone extends imageDropzone.ImageDropzone {
 
   success(file, data) {
 
-    const reorgData = data[1];
+    const reorgData = data[2];
     reorgData.urls = {
-      origin: data[1].urls[0]
+      origin: data[2].urls[0]
     };
-    reorgData.urls.main = data[0].urls[0];
+    reorgData.urls.main = data[1].urls[0];
     if(this.cropperOptions.resize) {
       reorgData.urls[
         this.cropperOptions.resize.width + 'x' + this.cropperOptions.resize.height
@@ -111,6 +132,7 @@ class GalleryDropzone extends imageDropzone.ImageDropzone {
     );
     fileObj.getTemplate = this.galleryElement.getTemplate;
     fileObj.elementSelector = '.' + this.galleryElement.fieldName + ' .fileContainer' + reorgData.id;
+    fileObj.save = () => this.galleryElement.imageSave(this.file);
     fileObj.delete = () => this.galleryElement.delete.call(this.galleryElement, fileObj.file.id);
     this.galleryElement.files.push(fileObj);
 

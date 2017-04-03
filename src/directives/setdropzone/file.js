@@ -66,7 +66,6 @@ class FileElement {
   }
 
   delete(callback) {
-    debugger;
     this.file.delete().done(() => {
       if(callback) {
         callback(this.file);
