@@ -3,9 +3,8 @@ const socialAuth = require('./social-auth.js');
 
 
 module.exports = {
-
   popupLogin: Backbone.View.extend({
-    urlRoot: authServer + '/rest-auth/login',
+    urlRoot: app.config.authServer + '/rest-auth/login',
     template: require('./templates/popupLogin.pug'),
     events: {
       'submit #sign-in-form': 'signinSubmit',
@@ -85,13 +84,13 @@ module.exports = {
     },
 
     signupSubmit(e) {
-      this.urlRoot = `${authServer}/rest-auth/registration`;
+      this.urlRoot = `${app.config.authServer}/rest-auth/registration`;
       let data = $(e.target).closest('form').serializeJSON({ useIntKeysAsArrayIndex: true });
       api.submitAction.call(this, e, data);
     },
 
     signinSubmit(e) {
-      this.urlRoot = `${authServer}/rest-auth/login`;
+      this.urlRoot = `${app.config.authServer}/rest-auth/login`;
       let data = $(e.target).closest('form').serializeJSON({ useIntKeysAsArrayIndex: true });
       data.checkbox1 = 1;
       api.submitAction.call(this, e, data);
@@ -111,7 +110,7 @@ module.exports = {
   }),
 
   login: Backbone.View.extend({
-    urlRoot: authServer + '/rest-auth/login',
+    urlRoot: app.config.authServer + '/rest-auth/login',
     template: require('./templates/login.pug'),
     events: {
       'submit .login-form': api.submitAction,
@@ -139,7 +138,7 @@ module.exports = {
   }),
 
   signup: Backbone.View.extend({
-    urlRoot: `${authServer}/rest-auth/registration`,
+    urlRoot: `${app.config.authServer}/rest-auth/registration`,
     template: require('./templates/signup.pug'),
     events: {
       'submit .signup-form': api.submitAction,
@@ -174,7 +173,7 @@ module.exports = {
   }),
 
   reset: Backbone.View.extend({
-    urlRoot: authServer + '/reset-password/send',
+    urlRoot: app.config.authServer + '/reset-password/send',
     el: '#content',
     template: require('./templates/reset.pug'),
     events: {
@@ -215,7 +214,7 @@ module.exports = {
   }),
 
   membershipConfirmation: Backbone.View.extend({
-    urlRoot: formcServer + '/:id/team-members/invitation',
+    urlRoot: app.config.formcServer + '/:id/team-members/invitation',
 
     template: require('./templates/confirmation.pug'),
 
@@ -262,7 +261,7 @@ module.exports = {
         app.user.token = data['token'];
         localStorage.setItem('token', data['token']);
         api.makeRequest(
-          authServer + '/info',
+          app.config.authServer + '/info',
           'GET'
         ).then((data) => {
           app.user.setData(data);
