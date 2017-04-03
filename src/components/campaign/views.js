@@ -775,6 +775,10 @@ module.exports = {
 
     updateAmount(e) {
 
+      if(e.keyCode == 37 || e.keyCode == 39) {
+        return;
+      }
+
       let amount = this.getInt(e.currentTarget.value);
       if (!amount)
         return;

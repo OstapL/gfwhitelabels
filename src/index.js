@@ -97,6 +97,11 @@ $(document).ready(function () {
 
 // Money field auto correction
   $('body').on('keyup', '[type="money"]', function (e) {
+
+    if(e.keyCode == 37 || e.keyCode == 39) {
+      return;
+    }
+
     var valStr = e.target.value.replace(/[\$\,]/g, '');
     var val = parseInt(valStr);
     if (val) {

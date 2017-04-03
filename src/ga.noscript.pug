@@ -1,17 +1,13 @@
-//general.growthfountain.com
-noscript
-  iframe(
-    src="https://www.googletagmanager.com/ns.html?id=GTM-NC9XW5D"
+- var config = require('./config.js');
+
+mixin googleTag(id)
+  noscript
+    iframe(
+    src="https://www.googletagmanager.com/ns.html?id=" + id
     height="0"
     width="0"
     style="display:none;visibility:hidden"
   )
 
-//dcu.growthfountain.com
-noscript
-  iframe(
-    src="https://www.googletagmanager.com/ns.html?id=GTM-TFQMMJB"
-    height="0"
-    width="0"
-    style="display:none;visibility:hidden"
-  )
++googleTag(config.googleTagIdGeneral)
++googleTag(config.googleTagId)
