@@ -1,17 +1,13 @@
 import './styles/style.sass'
 //import 'jquery.inputmask/dist/jquery.inputmask.bundle.js';
-import calculatorHelper from '../../helpers/calculatorHelpers';
-import flyPriceFormatter from '../../helpers/flyPriceFormatter';
 import '../../js/graph/graph.js';
 import '../../js/graph/jquery.flot.growraf';
 
-const settings = calculatorHelper.settings;
+const settings = app.helpers.calculator.settings;
 
-const formatPrice = calculatorHelper.formatPrice;
-const formatPercentage = calculatorHelper.formatPercentage;
+const formatPrice = app.helpers.calculator.formatPrice;
+const formatPercentage = app.helpers.calculator.formatPercentage;
 const minPersents = 200;
-
-const calculatorValidationHelper = require('helpers/calculatorValidationHelper.js');
 
 module.exports = {
     step1: Backbone.View.extend({
@@ -66,10 +62,10 @@ module.exports = {
             'keyup [data-input-mask="percent"]': 'savePercents',
             'keydown [data-input-mask="percent"]': 'filterKeyCodeForPercentage',
             'blur [data-input-mask="percent"]': 'cutZeros',
-        }, calculatorValidationHelper.events),
+        }, app.helpers.calculatorValidation.events),
 
-        validate: calculatorHelper.validate,
-        validateForLinks: calculatorHelper.validateForLinks,
+        validate: app.helpers.calculator.validate,
+        validateForLinks: app.helpers.calculator.validateForLinks,
 
         filterKeyCodeForPercentage(e) {
             let value = e.target.value.replace(/\%/g, '');
@@ -218,7 +214,7 @@ module.exports = {
             // declare ui elements for the view
             this.ui();
 
-            flyPriceFormatter(this.inputPrice, ({ modelValue, currentValue }) => {
+            app.helpers.flyPrice(this.inputPrice, ({ modelValue, currentValue }) => {
                 app.cache.payBackShareCalculator[modelValue] = +currentValue;
             });
 
@@ -231,7 +227,7 @@ module.exports = {
             */
             return this;
         }
-    }, calculatorValidationHelper.methods)),
+    }, app.helpers.calculatorValidation.methods)),
 
     step3: Backbone.View.extend({
         el: '#content',

@@ -1,30 +1,43 @@
-global.domainUrl = "growthfountain.com"
-global.serverUrl = "https://django-api.growthfountain.com";
-global.raiseCapitalServer = "https://api-raisecapital.growthfountain.com";
-//global.raiseCapitalServer = "http://localhost:8003";
-global.authServer = "https://api-auth.growthfountain.com";
-//global.authServer = "http://localhost:8002";
-global.formcServer = "https://api-formc.growthfountain.com";
-//global.formcServer = "http://localhost:8001";
-global.investmentServer = "https://api-investment.growthfountain.com";
-//global.investmentServer = "http://localhost:8003";
-global.filerServer = "https://api-filer.growthfountain.com";
-global.esignServer = 'https://api-esign.growthfountain.com';
-// global.esignServer = 'https://api-esign.growthfountain.com';
-global.commentsServer = "https://api-comments.growthfountain.com";
-global.blogServer = "https://api-blog.growthfountain.com";
-global.bucketServer = "http://growthfountain-rivermarkcu-storage.s3-website-us-west-1.amazonaws.com";
-global.notificationsServer = "https://notifications.growthfountain.com/";
-//var data = 'Crowdfunding | Rivermark Community CU';
-document.title = "Crowdfunding | Rivermark Community CU";
-global.teamName = 'GrowthFountain Team';
-global.teamTitle = "Meet The Growthfountain Team";
 
-global.facebookClientId = "547857385398592";
-global.googleClientId = "372921150-paa9eek64iuo2d5pmg7nraivc72g0sfo.apps.googleusercontent.com";
-global.linkedinClientId = "77hgtbs9rkjk20";
+module.exports = {
+ domainUrl: "growthfountain.com",
+ serverUrl: "https://django-api.growthfountain.com",
+ raiseCapitalServer: "https://api-raisecapital.growthfountain.com",
+// raiseCapitalServer: "http://localhost:8003",
+ authServer: "https://api-auth.growthfountain.com",
+// authServer: "http://localhost:8002",
+ formcServer: "https://api-formc.growthfountain.com",
+// formcServer: "http://localhost:8001",
+ investmentServer: "https://api-investment.growthfountain.com",
+// investmentServer: "http://localhost:8003",
+ filerServer: "https://api-filer.growthfountain.com",
+ esignServer: 'https://api-esign.growthfountain.com',
+//  esignServer: 'https://api-esign.growthfountain.com',
+ commentsServer: "https://api-comments.growthfountain.com",
+ blogServer: "https://api-blog.growthfountain.com",
+ notificationsServer: "https://notifications.growthfountain.com/",
+ bucketServer: "https://s3.amazonaws.com/growthfountain-alpha-storage",
+
+ teamName: 'GrowthFountain Team',
+ teamTitle: "Meet The Team",
+ title: "Crowdfunding | Rivermark Community CU",
+// serverUrl: "http://192.168.99.100:8000",
+// serverUrl: "http://gfauth.com:8000",
 
 
-global.googleMapKey = "AIzaSyBpCl9-7bkVISZ0o-AaFCsKzZwGAxalkZU";
-global.stripeKey = "pk_test_Z7YAhlyPtnW7bpd8LJUHTSou";
-global.googleAnalyticsId = 'GTM-NC9XW5D';
+// Growth Fountain production keys:
+//  facebookClientId: "191471871275050",
+//  googleClientId: "488593151885-87nqfd8gl444a1me0n149otrf37dbahq.apps.googleusercontent.com",
+//  linkedinClientId: "77wzj6tz0yyr33",
+
+ facebookClientId: "547857385398592",
+ googleClientId: "372921150-paa9eek64iuo2d5pmg7nraivc72g0sfo.apps.googleusercontent.com",
+ linkedinClientId: "77hgtbs9rkjk20",
+
+
+ googleMapKey: "AIzaSyBpCl9-7bkVISZ0o-AaFCsKzZwGAxalkZU",
+ stripeKey: "pk_test_Z7YAhlyPtnW7bpd8LJUHTSou",
+ googleTagIdGeneral: 'GTM-NC9XW5D',
+ googleTagId: 'GTM-55SNV9B',
+ yandexMetricaId: 42321779,
+};
