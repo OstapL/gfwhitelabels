@@ -133,7 +133,7 @@ mixin menu(currentSection, currentStep)
             .col-lg-12.text-xs-center
               .row
                 button(type="button").btn.btn-secondary.text-uppercase.m-t-2.onPreview preview
-              if app.user.company.is_approved == STATUSES.NEW  && app.user.data.id == app.user.company.owner_id
+              if app.user.company.is_approved == STATUSES.NEW
                 .row
                   button(type="button").btn.btn-primary.text-uppercase.m-t-2.submit_form submit campaign
               else if app.user.company.is_approved == STATUSES.PENDING 
@@ -141,7 +141,7 @@ mixin menu(currentSection, currentStep)
                   .warning-block.warning-team-add.text-lg-left.m-t-2
                     i.fa.fa-info-circle
                     span.warning-text We are reviewing your campaign
-              else
+              else if app.user.company.is_approved  > STATUSES.PENDING
                 .row
                   a(href="/formc/" + app.user.formc.id + "/introduction").btn.btn-primary.text-uppercase.m-t-2 Open Form C
         
