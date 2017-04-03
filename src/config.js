@@ -36,5 +36,7 @@ module.exports = {
 
  googleMapKey: "AIzaSyBpCl9-7bkVISZ0o-AaFCsKzZwGAxalkZU",
  stripeKey: "pk_test_Z7YAhlyPtnW7bpd8LJUHTSou",
- googleAnalyticsId: 'GTM-TFQMMJB',
+ googleTagIdGeneral: 'GTM-NC9XW5D',
+ googleTagId: 'GTM-TFQMMJB',
+ yandexMetricaId: 42321779,
 };
