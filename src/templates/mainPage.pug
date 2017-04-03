@@ -3,8 +3,8 @@
 section.slider-main
   .owl-carousel.owl-theme.carousel-test
     div
-      div(style="background: url(/img/slide_1.jpg)").slide_1.main-slider-item
-      //img(src="/img/slide_1.jpg" alt="...")
+      - var styleString = 'background: url(' + require('images/slide_5.png') + ')';
+      div(style=styleString + '; background-position: center center !important').slide_1.main-slider-item
       .slider-content.container
         .text-xs-center
           .col-lg-12
@@ -24,8 +24,9 @@ section.slider-main
               a(href="/companies").btn.btn-lg.btn-primary INVEST
 
     div
-      div(style="background: url(/img/slide_2.jpg)").main-slider-item.slide_2
-      //img(src="/img/slide_2.jpg" alt="...")
+      - var styleString = 'background: url(' + require('images/slide_2.jpg') + ')';
+      div(style=styleString).main-slider-item.slide_2
+      //img(src=require('images/slide_2.jpg') alt="...")
       .slider-content.container
         .text-xs-center
           .col-lg-12
@@ -44,8 +45,9 @@ section.slider-main
             .col-lg-12.hidden-md-up
               a(href="/companies").btn.btn-lg.btn-primary INVEST
     div
-      div(style="background: url(/img/slide_3.jpg)").main-slider-item.slide_3
-      //img(src="/img/slide_3.jpg" alt="...")
+      - var styleString = 'background: url(' + require('images/slide_3.jpg') + ')';
+      div(style=styleString).main-slider-item.slide_3
+      //img(src=require('images/slide_3.jpg') alt="...")
       .slider-content.container
         .text-xs-center
           .col-lg-12
@@ -133,16 +135,16 @@ section.home-our-partners
     .row.text-center-flex
       .col-lg-4.col-sm-6.col-xs-12.text-xs-center.p-b-3
         a(href="http://www.callahan.com/" target="_blank")
-          img(src="/img/callahan.png").img-fluid.text-lg-right.text-xs-center.m-x-auto
+          img(src=require("images/callahan.png")).img-fluid.text-lg-right.text-xs-center.m-x-auto
       .col-lg-4.col-sm-6.col-xs-12.text-lg-center.text-xs-center.m-x-auto.p-b-3
         a(href="https://www.jdcu.org/" target="_blank")
-          img(src="/img/logo_jd.png").img-fluid.text-xs-center.m-x-auto
+          img(src=require('images/logo_jd.png')).img-fluid.text-xs-center.m-x-auto
       .col-lg-4.col-sm-6.col-xs-12.text-lg-left.m-x-auto.p-b-3
         a(href="https://www.rivermarkcu.org/" target="_blank")
-          img(src="/img/logo_rivermark.png" ).img-fluid.text-xs-center.m-x-auto
+          img(src=require('images/logo_rivermark.png')).img-fluid.text-xs-center.m-x-auto
       .col-lg-3.col-sm-6.col-xs-12.text-xs-center
         a(href="https://www.dcu.org/" target="_blank")
-          img(src="/img/logo_dcu.jpg").img-fluid.text-xs-center.m-x-auto
+          img(src=require('images/logo_dcu.jpg')).img-fluid.text-xs-center.m-x-auto
       .col-lg-3.col-sm-6.col-xs-12.p-l-0.text-xs-center.momentum-img
         a(href="http://momentum3growth.com/" target="_blank")
-          img(src="/img/momentum3growth.png").img-fluid.text-xs-center.m-x-auto
+          img(src=require('images/momentum3growth.png')).img-fluid.text-xs-center.m-x-auto

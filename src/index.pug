@@ -12,15 +12,10 @@ html
     <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
     meta(name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0")
     <!-- Favicons -->
-    link(rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon")
-    //css
-    script.
-      !function(e){"use strict";function t(e,t,n){e.addEventListener?e.addEventListener(t,n,!1):e.attachEvent&&e.attachEvent("on"+t,n)}function n(t,n){return e.localStorage&&localStorage[t+"_content"]&&localStorage[t+"_file"]===n}function a(t,a){if(e.localStorage&&e.XMLHttpRequest)n(t,a)?o(localStorage[t+"_content"]):l(t,a);else{var s=r.createElement("link");s.href=a,s.id=t,s.rel="stylesheet",s.type="text/css",r.getElementsByTagName("head")[0].appendChild(s),r.cookie=t}}function l(e,t){var n=new XMLHttpRequest;n.open("GET",t,!0),n.onreadystatechange=function(){4===n.readyState&&200===n.status&&(o(n.responseText),localStorage[e+"_content"]=n.responseText,localStorage[e+"_file"]=t)},n.send()}function o(e){var t=r.createElement("style");t.setAttribute("type","text/css"),r.getElementsByTagName("head")[0].appendChild(t),t.styleSheet?t.styleSheet.cssText=e:t.innerHTML=e}var r=e.document;e.loadCSS=function(e,t,n){var a,l=r.createElement("link");if(t)a=t;else{var o;o=r.querySelectorAll?r.querySelectorAll("style,link[rel=stylesheet],script"):(r.body||r.getElementsByTagName("head")[0]).childNodes,a=o[o.length-1]}var s=r.styleSheets;l.rel="stylesheet",l.href=e,l.media="only x",a.parentNode.insertBefore(l,t?a:a.nextSibling);var c=function(e){for(var t=l.href,n=s.length;n--;)if(s[n].href===t)return e();setTimeout(function(){c(e)})};return l.onloadcssdefined=c,c(function(){l.media=n||"all"}),l},e.loadLocalStorageCSS=function(l,o){n(l,o)||r.cookie.indexOf(l)>-1?a(l,o):t(e,"load",function(){a(l,o)})}}(this);
-    script.
-      loadCSS( "/css/main2.min.css", false, "all" );
+    link(rel="shortcut icon" href=require('images/favicon.ico') type="image/x-icon")
     style.
       .loader_overlay{position:fixed;width:100%;height:100%;background:#fff;z-index:9999}.loader_overlay .loader{width:50px;height:50px;position:absolute;top:50%;left:50%;margin:-25px 0 0 -25px;font-size:10px;text-indent:-12345px;border-top:1px solid rgba(0,0,0,.08);border-right:1px solid rgba(0,0,0,.08);border-bottom:1px solid rgba(0,0,0,.08);border-left:1px solid rgba(0,0,0,.5);-webkit-border-radius:50%;-moz-border-radius:50%;border-radius:50%;-webkit-animation:spinner .7s infinite linear;-moz-animation:spinner .7s infinite linear;-ms-animation:spinner .7s infinite linear;-o-animation:spinner .7s infinite linear;animation:spinner .7s infinite linear;z-index:100001}@-webkit-keyframes spinner{0%{-webkit-transform:rotate(0);-moz-transform:rotate(0);-ms-transform:rotate(0);-o-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);-moz-transform:rotate(360deg);-ms-transform:rotate(360deg);-o-transform:rotate(360deg);transform:rotate(360deg)}}@-moz-keyframes spinner{0%{-webkit-transform:rotate(0);-moz-transform:rotate(0);-ms-transform:rotate(0);-o-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);-moz-transform:rotate(360deg);-ms-transform:rotate(360deg);-o-transform:rotate(360deg);transform:rotate(360deg)}}@-o-keyframes spinner{0%{-webkit-transform:rotate(0);-moz-transform:rotate(0);-ms-transform:rotate(0);-o-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);-moz-transform:rotate(360deg);-ms-transform:rotate(360deg);-o-transform:rotate(360deg);transform:rotate(360deg)}}@keyframes spinner{0%{-webkit-transform:rotate(0);-moz-transform:rotate(0);-ms-transform:rotate(0);-o-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);-moz-transform:rotate(360deg);-ms-transform:rotate(360deg);-o-transform:rotate(360deg);transform:rotate(360deg)}}</style>
-    script(type="text/javascript" src="//platform.linkedin.com/in.js").
+    //-script(type="text/javascript" src="//platform.linkedin.com/in.js").
       api_key: 77ibchutnkhnd7
       authorize: true
 
@@ -37,7 +32,7 @@ html
     header.header
       nav.navbar.bg-invere.navbar-dark
         a(href="/").navbar-brand
-          img(src="/img/logo.png" alt="")
+          img(src=require("images/logo.png") alt="")
 
         div.navbar-toggleable-md.pull-right
           div#menuProfile
@@ -68,32 +63,4 @@ html
       {"@context":"http:\/\/schema.org","@type":"LocalBusiness","url":"https:\/\/growthfountain.com\/","name":"Growthfountain","description":"Businesses need resources to help them grow and GrowthFountain makes it easy for both start-up \u0026 established businesses to gain crowdfunding knowledge, and create fundraising campaigns targeted to potential investors. GrowthFountain is a Title III crowd funding platform that connects businesses in need of capital with those who can best provide it, increasing the probability of success for everyone.\r\n","logo":"https:\/\/growthfountain.com\/img\/logo.png","image":"https:\/\/growthfountain.com\/img\/main-bg-section-one.jpg","priceRange":"$$$ - $$$$","hasMap":"https:\/\/goo.gl\/maps\/VND93uBVRYs","email":"info@growthfountain.com","telephone":"646-759-8229","openingHours":["Always Open"],"sameAs":["https:\/\/www.linkedin.com\/company-beta\/9244763\/","https:\/\/www.facebook.com\/GrowthFountain\/","","","",""],"aggregateRating":{"@type":"AggregateRating","ratingValue":"5","ratingCount":"2"},"address":{"@type":"PostalAddress","addressLocality":"New York","addressRegion":"New York","postalCode":"10016","streetAddress":"79 Madison Ave, 5th Flr"},"geo":{"@type":"GeoCoordinates","latitude":"40.7440668","longitude":"-73.98522220000001"}}
 
     //Yandex.Metrika counter
-    script(type="text/javascript").
-      (function (d, w, c) {
-      (w[c] = w[c] || []).push(function() {
-        try {
-          w.yaCounter42321779 = new Ya.Metrika({
-            id:42321779,
-      clickmap:true,
-      trackLinks:true,
-      accurateTrackBounce:true,
-      webvisor:true,
-      trackHash:true
-      });
-      } catch(e) { }
-      });
-
-      var n = d.getElementsByTagName("script")[0],
-      s = d.createElement("script"),
-      f = function () { n.parentNode.insertBefore(s, n); };
-      s.type = "text/javascript";
-      s.async = true;
-      s.src = "https://mc.yandex.ru/metrika/watch.js";
-
-      if (w.opera == "[object Opera]") {
-        d.addEventListener("DOMContentLoaded", f, false);
-      } else { f(); }
-      })(document, window, "yandex_metrika_callbacks");
-    noscript
-      div
-        img(src="https://mc.yandex.ru/watch/42321779" style="position:absolute; left:-9999px;" alt="")
+    include metrica.script.pug

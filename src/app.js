@@ -14,11 +14,11 @@ class App {
   }
 
   start() {
-    this.routers = new Router();
-    Backbone.history.start({ pushState: true });
-    window.addEventListener('popstate', this.routers.back);
-
     this.user.loadWithPromise().then(() => {
+
+      this.routers = new Router();
+      Backbone.history.start({ pushState: true });
+      window.addEventListener('popstate', this.routers.back);
 
       this.menu = new Menu.menu({
         el: '#menuList',
@@ -215,7 +215,7 @@ class App {
   let thumb = thumbnails.find(function (el) {
     return el.size == size;
   });
-  return (thumb ? thumb.url : _default || '/img/default/default.png')
+  return (thumb ? thumb.url : _default || require('images/default/Default_photo.png'))
 }
 
   getUrl(data) {
@@ -274,6 +274,28 @@ class App {
 
   getIssuerDashboardUrl(companyId) {
     return `dashboard/${companyId}/issuer-dashboard`;
+  }
+
+  addClassesTo(selector, classes=[]) {
+    var elem = document.querySelector(selector);
+    if (!elem || !classes.length)
+      return;
+
+    classes.forEach((cls) => {
+      if (!elem.classList.contains(cls))
+        elem.classList.add(cls);
+    });
+  }
+
+  clearClasses(selector, except=['page']) {
+    let elem = document.querySelector(selector);
+    if (!elem)
+      return;
+
+    elem.classList.forEach((cls) => {
+      if (!except.includes(cls))
+        elem.classList.remove(cls);
+    });
   }
 
 }

@@ -1,4 +1,3 @@
-const roleHelper = require('helpers/roleHelper.js');
 const YEAR = 1000 * 60 * 60 * 24 * 30 * 12;
 
 class User {
@@ -68,7 +67,7 @@ class User {
   emptyLocalStorage() {
     localStorage.removeItem('user');
     localStorage.removeItem('token');
-    cookies.expire('token');
+    app.cookies.expire('token');
     this.token = null;
     this.data = {};
   }
@@ -132,7 +131,7 @@ class User {
     this.role_data = [];
 
     _.each(this.companiesMember, (data) => {
-      let roles = roleHelper.extractRoles(data.role);
+      let roles = app.helpers.role.extractRoles(data.role);
       this.role_data.push({
         company: {
           id: data.company_id,

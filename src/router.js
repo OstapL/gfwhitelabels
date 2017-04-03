@@ -36,7 +36,7 @@ const routesMap = _.reduce(componentRoutes, (dest, route) => {
 }, { routes: {}, methods: {}, auth: [] });
 
 const notFound = () => {
-  errorPageHelper({ status: 404 });
+  app.helpers.errorPage({ status: 404 });
   app.hideLoading();
 };
 
@@ -49,6 +49,8 @@ module.exports = Backbone.Router.extend(_.extend({
   execute(callback, args, name) {
     app.emitFacebookPixelEvent();
     app.emitGoogleAnalyticsEvent();
+
+    app.clearClasses('#page', ['page']);
 
     if (_.contains(routesMap.auth, name) && !app.user.ensureLoggedIn())
       return false;
