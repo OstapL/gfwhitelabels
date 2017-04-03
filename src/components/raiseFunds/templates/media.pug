@@ -18,7 +18,7 @@ section.create-company-media.container.media-container
             class1: 'col-xl-3 col-lg-12 text-xs-center text-xl-right',
             class2: 'col-xl-9 col-lg-12 text-xs-center p-sm-0',
             thumbSize: '255x153',
-            default: '/img/default/255x153.png',
+            default: require('images/default/255x153.png'),
             label: 'Header Image',
             help_text: 'This is the image that will appear at the top of your campaign. A minimum size of 1600х960 is recommended.',
             data: values.header_image_data[0],
@@ -28,7 +28,7 @@ section.create-company-media.container.media-container
             class1: 'col-xl-3 col-xs-12 text-xs-center text-xl-right',
             class2: 'col-xl-9 col-xs-12 text-xs-center p-sm-0 p-l-1',
             thumbSize: '255x153',
-            default: '/img/default/255x153.png',
+            default: require('images/default/255x153.png'),
             label: 'Thumbnail Picture',
             help_text: ' This image entices investors to view your campaign. A minimum size of 350x209 is recommended.',
             data: values.list_image_data[0],
@@ -38,7 +38,7 @@ section.create-company-media.container.media-container
             pug_html += app.fields.galleryDropzone("gallery_group_id", {
                 class1: 'col-xl-3 col-lg-12 text-xs-center text-xl-right',
                 class2: 'col-xl-9 col-lg-12 text-xs-center p-sm-0',
-                default: '/img/default/77x45.png',
+                default: require('images/default/77x45.png'),
                 help_text: 'We recommend uploading 6 images (minimum size of 526x317 is recommended) that represent your service of business. These images will be displayed in a gallery format.',
                 data: values.gallery_group_data,
               }, fields.gallery_group_id)

@@ -380,14 +380,14 @@ mixin fieldDropzone(name, attr, type)
             div(class=(attr.class2 + ' dropzone__' + name))
                 div.col-lg-12.border-dropzone.p-r-0
                     div(class="uploading" style="line-height:115px;text-align:center;position:absolute;width:100%;height:100%;left:0;right:0;top:0;bottom:0;z-index:1;display:none;background-color:rgba(255,255,255,0.8);")
-                        img(alt="activity indicator" src="/img/ajax-loader.gif" style="position:absolute;margin:auto;top:0;left:0;right:0;bottom:0;")
+                        img(alt="activity indicator" src=require('images/ajax-loader.gif') style="position:absolute;margin:auto;top:0;left:0;right:0;bottom:0;")
                     span
                         div.col-lg-5.col-md-5.col-sm-5.col-xs-5.text-xs-center.text-md-center.text-lg-center.p-dropzone
                             p(class='link-1' href="#")
                                 p.drop-photo #{attr.text}
                                 i(class="fa fa-" + attr.icon)
                         div.col-lg-7.col-md-7.col-sm-7.col-xs-7.p-r-0.p-l-3.img-dropzone
-                            img(src=dropzoneHelpers.getDropzoneUrl(name, attr, values) alt=fields[name].label class="img-file img-" + name)
+                            img(src=app.helpers.dropzone.getDropzoneUrl(name, attr, values) alt=fields[name].label class="img-file img-" + name)
                             input(name=name id=name value=values[name] type="hidden" data-value-type="null")
 
 
@@ -402,7 +402,7 @@ mixin fieldDropzone(name, attr, type)
         )
             div(class="border-dropzone col-lg-12 p-r-0 gallery")
                 div(class="uploading" style="line-height:115px;text-align:center;position:absolute;width:100%;height:100%;left:0;right:0;top:0;bottom:0;z-index:1;display:none;background-color:rgba(255,255,255,0.8);")
-                    img(alt="activity indicator" src="/img/ajax-loader.gif" style="position:absolute;margin:auto;top:0;left:0;right:0;bottom:0;")
+                    img(alt="activity indicator" src=require('images/ajax-loader.gif') style="position:absolute;margin:auto;top:0;left:0;right:0;bottom:0;")
                 span
                     div(class=attr.class1 + ' text-lg-center text-xs-center text-md-center media-item')
                         p(href="#").link-1
@@ -422,12 +422,12 @@ mixin fieldDropzone(name, attr, type)
       div(class="drop-photo-block dropzone__" + name)
         div.border-dropzone
             div(class="uploading" style="line-height:115px;text-align:center;position:absolute;width:100%;height:100%;left:0;right:0;top:0;bottom:0;z-index:1;display:none;background-color:rgba(255,255,255,0.8);")
-                img(alt="activity indicator" src="/img/ajax-loader.gif" style="position:absolute;margin:auto;top:0;left:0;right:0;bottom:0;")
+                img(alt="activity indicator" src=require('images/ajax-loader.gif') style="position:absolute;margin:auto;top:0;left:0;right:0;bottom:0;")
             span
                 
                 //- div(class='dropzone__' + name)
                 div
-                    img(src=dropzoneHelpers.getDropzoneUrl(name, attr, values) alt=fields[name].label class="img-fluid m-x-auto img-" + name)
+                    img(src=app.helpers.dropzone.getDropzoneUrl(name, attr, values) alt=fields[name].label class="img-fluid m-x-auto img-" + name)
                     .drop-image-title.text-xs-center.p-l-1.p-r-1 
                         p Drop your profile photo here or click to upload
                         div
@@ -450,7 +450,7 @@ mixin fieldFileDropzone(name, attr, type)
         div(class=(attr.class2 + ' dropzone__' + name))
             div(class="border-dropzone col-lg-12 gallery")
                 div(class="uploading" style="line-height:115px;text-align:center;position:absolute;width:100%;height:100%;left:0;right:0;top:0;bottom:0;z-index:1;display:none;background-color: rgba(255,255,255,0.8);")
-                    img(alt="activity indicator" src="/img/ajax-loader.gif" style="position:absolute;margin:auto;top:0;left:0;right:0;bottom:0;")
+                    img(alt="activity indicator" src=require('images/ajax-loader.gif') style="position:absolute;margin:auto;top:0;left:0;right:0;bottom:0;")
                 span
                     div.col-lg-5.col-md-5.col-sm-5.col-xs-5.text-xs-center.text-md-center.text-lg-center.p-dropzone
                         p(class='link-1' href="#")
@@ -458,7 +458,7 @@ mixin fieldFileDropzone(name, attr, type)
                             i(class="fa fa-" + attr.icon)
                     div.col-lg-7.col-md-7.col-sm-7.col-xs-7.p-r-0.p-l-0.p-dropzone.img-dropzone.text-lg-center
                         input(name=name id=name value=values[name] type="hidden" data-value-type="null")
-                        img(src='/img/default' + suffix + '.png' alt=fields[name].label class="img-file img-" + name)
+                        img(src=require('images/default' + suffix + '.png') alt=fields[name].label class="img-file img-" + name)
                         if values[name+'_data']
                           a(class=("a-" + name) href=values[name+'_data'].url) #{ fileName }
                         else

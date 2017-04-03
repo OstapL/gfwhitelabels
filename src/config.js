@@ -1,40 +1,42 @@
-global.domainUrl = "growthfountain.com"
-global.serverUrl = "https://django-api.growthfountain.com";
-global.raiseCapitalServer = "https://api-raisecapital.growthfountain.com";
-//global.raiseCapitalServer = "http://localhost:8003";
-global.authServer = "https://api-auth.growthfountain.com";
-//global.authServer = "http://localhost:8002";
-global.formcServer = "https://api-formc.growthfountain.com";
-//global.formcServer = "http://localhost:8001";
-global.investmentServer = "https://api-investment.growthfountain.com";
-//global.investmentServer = "http://localhost:8003";
-global.filerServer = "https://api-filer.growthfountain.com";
-global.esignServer = 'https://api-esign.growthfountain.com';
-// global.esignServer = 'https://api-esign.growthfountain.com';
-global.commentsServer = "https://api-comments.growthfountain.com";
-global.blogServer = "https://api-blog.growthfountain.com";
-global.bucketServer = "https://s3.amazonaws.com/growthfountain-momentum3-storage";
-// global.notificationsServer = "https://notifications.growthfountain.com";
-global.notificationsServer = "http://notifications.growthfountain.com/";
+module.exports = {
+ domainUrl: "growthfountain.com",
+ serverUrl: "https://django-api.growthfountain.com",
+ raiseCapitalServer: "https://api-raisecapital.growthfountain.com",
+// raiseCapitalServer: "http://localhost:8003",
+ authServer: "https://api-auth.growthfountain.com",
+// authServer: "http://localhost:8002",
+ formcServer: "https://api-formc.growthfountain.com",
+// formcServer: "http://localhost:8001",
+ investmentServer: "https://api-investment.growthfountain.com",
+// investmentServer: "http://localhost:8003",
+ filerServer: "https://api-filer.growthfountain.com",
+ esignServer: 'https://api-esign.growthfountain.com',
+//  esignServer: 'https://api-esign.growthfountain.com',
+ commentsServer: "https://api-comments.growthfountain.com",
+ blogServer: "https://api-blog.growthfountain.com",
+ notificationsServer: "https://notifications.growthfountain.com/",
+ bucketServer: "https://s3.amazonaws.com/growthfountain-alpha-storage",
 
-global.teamName = 'GrowthFountain Team';
-global.teamTitle = "Meet The Team";
-document.title = "Crowdfunding | Momentum3 Growth";
-
-//global.serverUrl = "http://192.168.99.100:8000";
-//global.serverUrl = "http://gfauth.com:8000";
+ teamName: 'GrowthFountain Team',
+ teamTitle: "Meet The Team",
+ title: "Crowdfunding | Momentum3 Growth",
+// serverUrl: "http://192.168.99.100:8000",
+// serverUrl: "http://gfauth.com:8000",
 
 
 // Growth Fountain production keys:
-// global.facebookClientId = "191471871275050";
-// global.googleClientId = "488593151885-87nqfd8gl444a1me0n149otrf37dbahq.apps.googleusercontent.com";
-// global.linkedinClientId = "77wzj6tz0yyr33";
+//  facebookClientId: "191471871275050",
+//  googleClientId: "488593151885-87nqfd8gl444a1me0n149otrf37dbahq.apps.googleusercontent.com",
+//  linkedinClientId: "77wzj6tz0yyr33",
 
-global.facebookClientId = "1405768896335643";                                     
-global.googleClientId = "372921150-paa9eek64iuo2d5pmg7nraivc72g0sfo.apps.googleusercontent.com";
-global.linkedinClientId = "77wzj6tz0yyr33";
+ facebookClientId: "1405768896335643",
+ googleClientId: "372921150-paa9eek64iuo2d5pmg7nraivc72g0sfo.apps.googleusercontent.com",
+ linkedinClientId: "77wzj6tz0yyr33",
 
 
-global.googleMapKey = "AIzaSyBpCl9-7bkVISZ0o-AaFCsKzZwGAxalkZU";                  
-global.stripeKey = "pk_test_Z7YAhlyPtnW7bpd8LJUHTSou";                            
-global.googleAnalyticsId = 'GTM-NC9XW5D';
+ googleMapKey: "AIzaSyBpCl9-7bkVISZ0o-AaFCsKzZwGAxalkZU",
+ stripeKey: "pk_test_Z7YAhlyPtnW7bpd8LJUHTSou",
+ googleTagIdGeneral: 'GTM-NC9XW5D',
+ googleTagId: 'GTM-NCTFX7Z',
+ yandexMetricaId: 42321779,
+};

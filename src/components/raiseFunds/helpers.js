@@ -84,7 +84,7 @@ let exports = {
   postForReview: function postForReview(e) {
     $('#company_publish_confirm').modal('hide', 0);
     if(app.user.company.is_approved < 1) {
-      api.makeRequest(raiseCapitalServer + '/company/' + e.target.dataset.companyid + '/post-for-review', 'PUT')
+      api.makeRequest(app.config.raiseCapitalServer + '/company/' + e.target.dataset.companyid + '/post-for-review', 'PUT')
         .then((data) => {
           app.user.company.is_approved = 1;
           $('#company_publish_confirm').modal('hide');
