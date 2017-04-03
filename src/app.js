@@ -212,11 +212,11 @@ class App {
   }
 
   getThumbnail(size, thumbnails, _default) {
-  let thumb = thumbnails.find(function (el) {
-    return el.size == size;
-  });
-  return (thumb ? thumb.url : _default || require('images/default/Default_photo.png'))
-}
+    let thumb = thumbnails.find(function (el) {
+      return el.size == size;
+    });
+    return (thumb ? thumb.url : _default || require('images/default/Default_photo.png'))
+  }
 
   getUrl(data) {
     data = Array.isArray(data) ? data[0] : data;
