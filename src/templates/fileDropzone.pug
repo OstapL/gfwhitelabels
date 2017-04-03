@@ -19,6 +19,6 @@ div(class=attr.class data-content=(attr.help_text || ''))
                     i.fa.fa-times
                 img(src=attr.fileIcon alt=attr.label class=("img-file img-" + name))
                 div.row
-                  a(class=("a-" + name) href=attr.data.urls[0] title=attr.data.name) #{ helpers.text.shortenFileName(attr.data.name) }
+                  a(class=("a-" + name) href=attr.data.urls[0] title=attr.data.name) #{ app.helpers.text.shortenFileName(attr.data.name) }
               else
                 img(src=attr.fileIcon alt=attr.label class="img-file img-" + name)
