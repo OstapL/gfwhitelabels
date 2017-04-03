@@ -1,12 +1,7 @@
 // import './styles/style.sass'
-import calculatorHelper from '../../helpers/calculatorHelpers';
-import flyPriceFormatter from '../../helpers/flyPriceFormatter';
-import lookupData from '../../helpers/capitalraiseCalculatorData';
 
-let formatPrice = calculatorHelper.formatPrice;
-let industryData = lookupData();
-
-const calculatorValidationHelper = require('helpers/calculatorValidationHelper.js');
+let formatPrice = app.helpers.calculator.formatPrice;
+let industryData = app.helpers.capitalraiseData();
 
 module.exports = {
     intro: Backbone.View.extend({
@@ -142,7 +137,7 @@ module.exports = {
             'submit .js-calc-form': 'doCalculation',
 
             'change .js-select': 'saveValue'
-        }, calculatorValidationHelper.events),
+        }, app.helpers.calculatorValidation.events),
 
         saveValue(e) {
             let selectBox = e.target;
@@ -228,14 +223,14 @@ module.exports = {
             // declare ui elements for the view
             this.ui();
 
-            flyPriceFormatter(this.inputPrice, ({ modelValue, currentValue }) => {
+            app.helpers.flyPrice(this.inputPrice, ({ modelValue, currentValue }) => {
                 // save value
                 app.cache.capitalRaiseCalculator[modelValue] = +currentValue;
             });
 
             return this;
         }
-    }, calculatorValidationHelper.methods)),
+    }, app.helpers.calculatorValidation.methods)),
 
     finish: Backbone.View.extend({
         el: '#content',
