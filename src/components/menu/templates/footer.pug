@@ -5,7 +5,7 @@
         .d-inline-block
           .display-partners
             p.fade-in-logo#fade_in_logo
-              img(src="/img/fade-in-logo.png" alt="")
+              img(src=require("images/fade-in-logo.png") alt="")
         .company.text-lg-left.d-inline-block
           span ©GROWTHFOUNTAIN 2017.
           p Made with heart in NYC
@@ -29,7 +29,7 @@
       .footer_title
         h4.text-uppercase About us
       a(href="/pg/overview") Overview
-      a(href="/pg/team") #{teamName}
+      a(href="/pg/team") #{app.config.teamName}
       a(href="/pg/partners").display-partners Partners
       a(href="/pg/contact") Contact Us
       a(href="/pg/careers") Careers

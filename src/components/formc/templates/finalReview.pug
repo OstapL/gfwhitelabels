@@ -1,7 +1,5 @@
 include fields_final_review.pug
 -
-  var formatHelper = require('helpers/formatHelper.js');
-  var roleHelper = require('helpers/roleHelper.js');
   var customFields = require('../fields.js');
   var fees = require('consts/companyFees.json');
 
@@ -67,7 +65,7 @@ section.formc-review
         a(data-toggle="modal" data-target="#formc_review_popup" href="#formc_review_popup").btn.btn-primary submit Form C
 
       .col-lg-12.text-xs-center.m-t-1.no-print
-        a(href=esignServer + "/final-review/" + formcId).btn.btn-primary export in pdf
+        a(href=app.config.esignServer + "/final-review/" + formcId).btn.btn-primary export in pdf
 
     .col-xl-9
       section.warning-formc-review.m-b-3
@@ -286,7 +284,7 @@ section.formc-review
             | !{' '}
             +frField('company.corporate_structure', 'select')
             |  (the “Company”), is offering up to 
-            b #{ formatHelper.formatNumber(Math.round(values.campaign.maximum_raise / values.campaign.price_per_share)) }
+            b #{ app.helpers.format.formatNumber(Math.round(values.campaign.maximum_raise / values.campaign.price_per_share)) }
             |   shares of 
             +frField('campaign.security_type', 'select')
             |  (the 
@@ -296,7 +294,7 @@ section.formc-review
             |  per Share for a maximum aggregate offering price of 
             +frField('campaign.maximum_raise', 'money').
           p.pb10.text-indent The Company has established a minimum offering of at least 
-            b #{ formatHelper.formatNumber(Math.round(values.campaign.minimum_raise / values.campaign.price_per_share)) }
+            b #{ app.helpers.format.formatNumber(Math.round(values.campaign.minimum_raise / values.campaign.price_per_share)) }
             |  Shares for a minimum aggregate offering price of 
             +frField('campaign.minimum_raise', 'money')
               |  prior to #{ values.campaign.expiration_date }
@@ -467,7 +465,7 @@ section.formc-review
             tbody
               - console.log(values.formc);
               each m, idx in values.formc.team_members
-                - var officerRoles = roleHelper.extractOfficerRoles(m.role);
+                - var officerRoles = app.helpers.role.extractOfficerRoles(m.role);
                 if officerRoles.length > 0
                   tr
                     td.text-xs-center
@@ -495,7 +493,7 @@ section.formc-review
                 th.text-xs-center.w-40 Principal Occupation + Employer & Start Date
             tbody
               each m, mIdx in values.formc.team_members
-                - var directors = roleHelper.extractDirectorRoles(m.role)
+                - var directors = app.helpers.role.extractDirectorRoles(m.role)
                 if directors.length > 0
                   tr
                     td.text-xs-center
@@ -531,7 +529,7 @@ section.formc-review
                 th.text-xs-center % of Voting Power
             tbody
               each m, mIdx in values.formc.team_members
-                - var shareHolders = roleHelper.extractShareHolderRoles(m.role);
+                - var shareHolders = app.helpers.role.extractShareHolderRoles(m.role);
                 if shareHolders.length > 0
                   tr
                     td.text-xs-center
@@ -874,11 +872,11 @@ section.formc-review
                 td.border-t-n.p-l-r-20
                   .pull-left.font-weight-bold Less: Offering Expenses
                 td.text-xs-center
-                  | #{ formatHelper.formatPrice(minSum) }
+                  | #{ app.helpers.format.formatPrice(minSum) }
                 td.text-xs-center
                   | #{ minP.toFixed(2) }%
                 td.text-xs-center
-                  | #{ formatHelper.formatPrice(maxSum) }
+                  | #{ app.helpers.format.formatPrice(maxSum) }
                 td.text-xs-center
                   | #{ maxP.toFixed(2) }%
 
@@ -903,11 +901,11 @@ section.formc-review
                 td.border-t-n.p-l-r-20
                   .pull-left.font-weight-bold Total Use of Net Proceeds
                 td.text-xs-center
-                  | #{ formatHelper.formatPrice(minSum) }
+                  | #{ app.helpers.format.formatPrice(minSum) }
                 td.text-xs-center
                   | #{ minP.toFixed(2) }%
                 td.text-xs-center
-                  | #{ formatHelper.formatPrice(maxSum) }
+                  | #{ app.helpers.format.formatPrice(maxSum) }
                 td.text-xs-center
                   | #{ maxP.toFixed(2) }%
 
@@ -1414,7 +1412,7 @@ section.formc-review
         p.pb10.text-indent Employment information from previous employers over the last three years for each of the Company’s officers is as follows:
         p.pb10
           each v,k in values.formc.team_members
-            if roleHelper.isOfficer(v.role)
+            if app.helpers.role.isOfficer(v.role)
               if v.experiences && v.experiences.length > 0
                 +frField('formc.team_members[' + k + '].first_name', 'text')
                 +frField('formc.team_members[' + k + '].last_name', 'text')
@@ -1463,7 +1461,7 @@ section.formc-review
         p.pb10.text-indent Employment information from previous employers over the last three years for each of the Company’s directors is as follows:
         p.pb10
           each v,k in values.formc.team_members
-            if roleHelper.isDirector(v.role)
+            if app.helpers.role.isDirector(v.role)
               if v.experiences && v.experiences.length > 0
                 +frField('formc.team_members[' + k + '].first_name', 'text')
                 +frField('formc.team_members[' + k + '].last_name', 'text')

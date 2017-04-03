@@ -1,6 +1,6 @@
 #map(style="height:400px;width:100%;")
 if !window.google || !window.google.maps
-  script(async defer src="https://maps.googleapis.com/maps/api/js?key=" + googleMapKey + "&callback=app.initMap")
+  script(async defer src="https://maps.googleapis.com/maps/api/js?key=" + app.config.googleMapKey + "&callback=app.initMap")
 else
   -
     setTimeout(function() {

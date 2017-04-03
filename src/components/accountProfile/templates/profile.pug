@@ -14,7 +14,7 @@
         -
           pug_html += app.fields.userProfileDropzone('image_image_id', _.extend({
             thumbSize: '255x135',
-            default: '/img/default/255x153.png',
+            default: require('images/default/255x153.png'),
             icon: 'camera',
             text: 'Drop your profile photo here or click to upload',
             data: user.image_data[0],
@@ -38,7 +38,7 @@
           else if company && company.name
             .profile-type-user
               .user-company
-                a(href="/dashboard/issuer-dashboard").link-3  #{ company.name }
+                a(href="/dashboard/" + company.formc_id + "/issuer-dashboard").link-3  #{ company.name }
                 |  company.
           a(href="/account/change-password").link-3
             i.fa.fa-lock
@@ -264,26 +264,26 @@
                           }, fields.name_on_bank_account))
 
                         pug_html += app.fields.textLabel('account_number', _.extend({
-                            'help_text': '<img src="/img/routing-number-on-check.png">',
+                            'help_text': '<img src=' + require('images/routing-number-on-check.png') + '>',
                             'type': 'text',
                             'value': user.account_number
                           }, fields.account_number))
 
                         pug_html += app.fields.textLabel('account_number_re', _.extend({
                             'class1': 'col-xl-3 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 m-b-lg-1',
-                            'help_text': '<img src="/img/routing-number-on-check.png">',
+                            'help_text': '<img src=' + require('images/routing-number-on-check.png') + '>',
                             'type': 'text',
                             'value': user.account_number
                           }, fields.account_number_re))
 
                         pug_html += app.fields.textLabel('routing_number', _.extend({
-                            'help_text': '<img src="/img/routing-number-on-check.png">',
+                            'help_text': '<img src=' + require('images/routing-number-on-check.png') + '>',
                             'type': 'text',
                             'value': user.routing_number
                           }, fields.routing_number))
 
                         pug_html += app.fields.textLabel('routing_number_re', _.extend({
-                            'help_text': '<img src="/img/routing-number-on-check.png">',
+                            'help_text': '<img src=' + require('images/routing-number-on-check.png') + '>',
                             'type': 'text',
                             'class1': 'col-xl-3 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 m-b-lg-1',
                             'value': user.routing_number
