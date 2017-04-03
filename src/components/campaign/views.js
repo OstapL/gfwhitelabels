@@ -1,18 +1,5 @@
-const formatHelper = require('helpers/formatHelper');
-const textHelper = require('helpers/textHelper');
 const companyFees = require('consts/companyFees.json');
 const typeOfDocuments = require('consts/typeOfDocuments.json');
-
-const usaStates = require('helpers/usaStates.js');
-
-const helpers = {
-  text: textHelper,
-  icons: require('helpers/iconsHelper.js'),
-  format: formatHelper,
-  fileList: require('helpers/fileList.js'),
-  date: require('helpers/dateHelper.js'),
-  campaign: require('./helpers.js'),
-};
 
 const COUNTRIES = require('consts/countries.json');
 const validation = require('components/validation/validation.js');
@@ -37,7 +24,6 @@ module.exports = {
       this.$el.html('');
       this.$el.append(
         this.template({
-          serverUrl: serverUrl,
           collection: this.collection,
         })
       );
@@ -109,7 +95,7 @@ module.exports = {
     submitCampaign(e) {
 
       api.makeRequest(
-        raiseCapitalServer + '/company/' + this.model.id + '/edit',
+        app.config.raiseCapitalServer + '/company/' + this.model.id + '/edit',
         'GET'
       ).then(function(data) {
         if(
@@ -213,7 +199,7 @@ module.exports = {
 
     showDocumentsModal(e) {
       e.preventDefault();
-      helpers.fileList.show(this.companyDocsData);
+      app.helpers.fileList.show(this.companyDocsData);
     },
 
     render() {
@@ -222,15 +208,10 @@ module.exports = {
 
       this.$el.html(
         this.template({
-          serverUrl: serverUrl,
-          Urls: Urls,
           values: this.model,
-          formatHelper: formatHelper,
           edit: this.edit,
           previous: this.previous,
           preview: this.preview,
-          textHelper: textHelper,
-          helpers: helpers,
         })
       );
 
@@ -238,6 +219,20 @@ module.exports = {
         $('.nav-tabs li').removeClass('active');
         $(this).addClass('active');
       });
+
+      setTimeout(() => {
+
+        this.$('.fancybox').fancybox({
+          openEffect  : 'elastic',
+          closeEffect : 'elastic',
+
+          helpers : {
+            title : {
+              type : 'inside'
+            }
+          }
+        });
+      }, 100);
 
       setTimeout(() => {
         var stickyToggle = function(sticky, stickyWrapper, scrollElement) {
@@ -252,26 +247,6 @@ module.exports = {
             stickyWrapper.height('auto');
           }
         };
-
-        /*$('*[data-toggle="lightbox"]').click(function (e) {
-          e.preventDefault();
-          $(this).ekkoLightbox();
-        });*/
-        /*this.$el.delegate('*[data-toggle="lightbox"]', 'click', function(event) {
-          event.preventDefault();
-          // $(this).ekkoLightbox();
-          $(this).fancybox();
-        }); */
-        /*this.$('*[data-toggle="lightbox"]').fancybox({
-          openEffect  : 'elastic',
-          closeEffect : 'elastic',
-
-          helpers : {
-            title : {
-              type : 'inside'
-            }
-          }
-        });*/
 
         this.$el.find('[data-toggle="sticky-onscroll"]').each(function() {
           var sticky = $(this);
@@ -290,22 +265,13 @@ module.exports = {
 
         this.initComments();
 
-      }, 100);
+      }, 1200);
 
       this.$el.find('.perks .col-xl-4 p').equalHeights();
       this.$el.find('.team .auto-height').equalHeights();
       this.$el.find('.card-inverse p').equalHeights();
       this.$el.find('.modal').on('hidden.bs.modal', function(event) {
         $(event.currentTarget).find('iframe').attr('src', $(event.currentTarget).find('iframe').attr('src'));
-      });
-
-      //this.$('body').on('.click', '.show-more-members', function() {
-      //  $('.hide-more-detail').addClass('.show-more-detail');
-      // });
-      // $('*[data-toggle="lightbox"]').fancybox({
-      $('.fancybox').fancybox({
-        openEffect  : 'none',
-        closeEffect : 'none'
       });
 
       // fetch vimeo
@@ -331,7 +297,7 @@ module.exports = {
 
     initComments() {
       const View = require('components/comment/views.js');
-      const urlComments = commentsServer + '/company/' + this.model.id;
+      const urlComments = app.config.commentsServer + '/company/' + this.model.id;
       let optionsR = api.makeRequest(urlComments, 'OPTIONS');
       let dataR = api.makeRequest(urlComments);
 
@@ -359,7 +325,7 @@ module.exports = {
   investment: Backbone.View.extend({
     el: '#content',
     template: require('./templates/investment.pug'),
-    urlRoot: investmentServer + '/',
+    urlRoot: app.config.investmentServer + '/',
     doNotExtendModel: true,
     events: {
       'submit form.invest_form': 'submit',
@@ -604,9 +570,6 @@ module.exports = {
         delete this.fields.is_understand_securities_related;
       }
 
-      this.getCityStateByZipCode = require("helpers/getSityStateByZipCode");
-      this.usaStates = usaStates;
-
       this.initMaxAllowedAmount();
     },
 
@@ -614,13 +577,11 @@ module.exports = {
 
       this.$el.html(
         this.template({
-          serverUrl: serverUrl,
           snippets: this.snippets,
-          Urls: Urls,
           fields: this.fields,
           values: this.model,
           user: this.user,
-          states: this.usaStates,
+          states: app.helpers.usaStates,
           feeInfo: this.calcFeeWithCredit(),
         })
       );
@@ -862,7 +823,7 @@ module.exports = {
     },
 
     getSuccessUrl(data) {
-      return investmentServer + '/' + data.id + '/invest-thanks';
+      return app.config.investmentServer + '/' + data.id + '/invest-thanks';
     },
 
     updateLimitInModal(e) {
@@ -900,10 +861,10 @@ module.exports = {
 
       const validateRange = (value, min=0, max, prefix) => {
         if (value < min)
-          throw `${prefix || ''} must not be less than ${helpers.format.formatNumber(min)}.`;
+          throw `${prefix || ''} must not be less than ${app.helpers.format.formatNumber(min)}.`;
 
         if (value > max)
-          throw `${prefix || ''} must not be greater than ${helpers.format.formatNumber(max)}.`;
+          throw `${prefix || ''} must not be greater than ${app.helpers.format.formatNumber(max)}.`;
       };
 
       let fields = {
@@ -931,7 +892,7 @@ module.exports = {
         return false;
       }
 
-      api.makeRequest(authServer + '/rest-auth/data', 'PATCH', data).done((data) => {
+      api.makeRequest(app.config.authServer + '/rest-auth/data', 'PATCH', data).done((data) => {
         this.user.net_worth = netWorth;
         this.user.annual_income = annualIncome;
 
@@ -950,8 +911,8 @@ module.exports = {
 
     getSignature () {
 
-      cookies.set('token', app.user.token, {
-        domain: '.' + domainUrl,
+      app.cookies.set('token', app.user.token, {
+        domain: '.' + app.config.domainUrl,
         path: '/',
       });
 
@@ -1014,7 +975,7 @@ module.exports = {
     },
 
     saveEsign(responseData) {
-      const reqUrl = global.esignServer + '/pdf-doc';
+      const reqUrl = app.config.esignServer + '/pdf-doc';
       const successRoute = this.getSuccessUrl(responseData);
       const formData = this.getDocMetaData();
       const subscriptionAgreementPath = this.getSubscriptionAgreementPath();
@@ -1033,7 +994,7 @@ module.exports = {
         template: subscriptionAgreementPath
       }];
 
-      app.makeRequest(reqUrl, 'POST', data, {
+      api.makeRequest(reqUrl, 'POST', data, {
         contentType: 'application/json; charset=utf-8',
         crossDomain: true,
       })
@@ -1054,7 +1015,7 @@ module.exports = {
       const isSubscriptionAgreement = pathToDoc.indexOf('subscription_agreement');
       
       if (isSubscriptionAgreement !== -1) {
-        pathToDoc = global.esignServer + '/pdf-doc/';
+        pathToDoc = app.config.esignServer + '/pdf-doc/';
         pathToDoc += this.getSubscriptionAgreementPath();
       }
       
@@ -1085,7 +1046,7 @@ module.exports = {
       if (e.target.value.length < 5) return;
       if (!e.target.value.match(/\d{5}/)) return;
       // else console.log('hello');
-      this.getCityStateByZipCode(e.target.value, ({ success=false, city="", state=""}) => {
+      app.helpers.location(e.target.value, ({ success=false, city="", state=""}) => {
         // this.zipCodeField.closest('div').find('.help-block').remove();
         if (success) {
           this.$('.js-city-state').text(`${city}, ${state}`);
@@ -1126,10 +1087,10 @@ module.exports = {
         zip_code: this.model.zip_code,
         address_1: this.model.address_1,
         address_2: this.model.address_2,
-        jurisdiction_of_organization: usaStates.getFullState(this.model.founding_state),  
-        maximum_raise: formatHelper.formatNumber( this.model.campaign.maximum_raise ),
-        minimum_raise: formatHelper.formatNumber( this.model.campaign.minimum_raise ),
-        price_per_share: formatHelper.formatNumber( this.model.campaign.price_per_share ),
+        jurisdiction_of_organization: app.helpers.usaStates.getFullState(this.model.founding_state),
+        maximum_raise: app.helpers.format.formatNumber( this.model.campaign.maximum_raise ),
+        minimum_raise: app.helpers.format.formatNumber( this.model.campaign.minimum_raise ),
+        price_per_share: app.helpers.format.formatNumber( this.model.campaign.price_per_share ),
         
         // owner of campaign
         issuer_email: this.model.owner.email,
@@ -1138,8 +1099,8 @@ module.exports = {
 
         // investor
         investor_legal_name: investor_legal_name,
-        aggregate_inclusive_purchase: formatHelper.formatNumber( aggregate_inclusive_purchase ),
-        investment_amount: formatHelper.formatNumber( investment_amount ),
+        aggregate_inclusive_purchase: app.helpers.format.formatNumber( aggregate_inclusive_purchase ),
+        investment_amount: app.helpers.format.formatNumber( investment_amount ),
         investor_address: formData.personal_information_data.street_address_1,
         investor_optional_address: formData.personal_information_data.street_address_2,
         investor_code: formData.personal_information_data.zip_code,
@@ -1170,8 +1131,6 @@ module.exports = {
     render() {
       this.$el.html(
         this.template({
-          serverUrl: serverUrl,
-          Urls: Urls,
           investment: this.model,
         })
       );
