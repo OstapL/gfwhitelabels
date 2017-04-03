@@ -1,9 +1,11 @@
-//-script(type="text/javascript").
+- var config = require('./config.js');
+
+script(type="text/javascript").
   (function (d, w, c) {
     (w[c] = w[c] || []).push(function() {
       try {
-        w.yaCounter42321779 = new Ya.Metrika({
-          id:42321779,
+        w.yaCounter!{ config.yandexMetricaId } = new Ya.Metrika({
+          id: !{ config.yandexMetricaId },
           clickmap:true,
           trackLinks:true,
           accurateTrackBounce:true,
@@ -24,6 +26,9 @@
       d.addEventListener("DOMContentLoaded", f, false);
     } else { f(); }
   })(document, window, "yandex_metrika_callbacks");
-//-noscript
+noscript
   div
-    img(src="https://mc.yandex.ru/watch/42321779" style="position:absolute; left:-9999px;" alt="")
+    img(
+      src="https://mc.yandex.ru/watch/" + config.yandexMetricaId
+      style="position:absolute; left:-9999px;" alt=""
+    )

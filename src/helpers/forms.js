@@ -318,7 +318,7 @@ module.exports = {
         }
       } else if(el.type == 'nested' && data[key]) {
         _.each(data[key], (val, index, list) => {
-          api.fixMoneyFields.call(this, el.schema, data[key][index]);
+          api.fixFieldsTypes.call(this, el.schema, data[key][index]);
        });
       }
     });
