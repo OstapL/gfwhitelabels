@@ -7,7 +7,7 @@ class Notifications {
 
   constructor() {
     _.extend(this, Backbone.Events);
-    this.__socket = io(notificationsServer);
+    this.__socket = io(app.config.notificationsServer);
     this.__socket.on('connect', () => {
       this.__socket.emit('subscribe', {
         jwt: app.user.token,

@@ -1,4 +1,3 @@
-const roleHelper = require('helpers/roleHelper.js');
 const YEAR = 1000 * 60 * 60 * 24 * 30 * 12;
 
 class User {
@@ -50,8 +49,8 @@ class User {
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data));
 
-      cookies.set('token', data.token, {
-        domain: '.' + domainUrl,
+      app.cookies.set('token', data.token, {
+        domain: '.' + app.config.domainUrl,
         expires: YEAR,
         path: '/',
       });
@@ -68,7 +67,7 @@ class User {
   emptyLocalStorage() {
     localStorage.removeItem('user');
     localStorage.removeItem('token');
-    cookies.expire('token');
+    app.cookies.expire('token');
     this.token = null;
     this.data = {};
   }
@@ -94,6 +93,28 @@ class User {
     }
   }
 
+  loadWithPromise() {
+    return new Promise((resolve, reject) => {
+      this.token = localStorage.getItem('token');
+      if (this.token === null)
+        return resolve({ id: '' });
+
+      const data = JSON.parse(localStorage.getItem('user')) || {};
+      // Check if user have all required data
+      if (!data.info || !Array.isArray(data.info)) {
+        this.emptyLocalStorage();
+        setTimeout(() => {
+          window.location = '/account/login?next=' + document.location.pathname;
+        }, 100);
+
+        return resolve(false);
+      }
+
+      this.data = data;
+      return resolve(this.data);
+    });
+  }
+
   is_anonymous() {
     return !this.token;
   }
@@ -110,7 +131,7 @@ class User {
     this.role_data = [];
 
     _.each(this.companiesMember, (data) => {
-      let roles = roleHelper.extractRoles(data.role);
+      let roles = app.helpers.role.extractRoles(data.role);
       this.role_data.push({
         company: {
           id: data.company_id,
@@ -156,7 +177,8 @@ class User {
 
   logout() {
     this.emptyLocalStorage();
-    app.trigger('userLogout', {});
+    //TODO: looks like unnesessary code
+    // app.trigger('userLogout', {});
 
     setTimeout(() => { window.location = '/';}, 100);
   }
@@ -173,7 +195,7 @@ class User {
 
   getCompanyR(id) {
     if(id)  {
-      return this.company ? '' : app.makeCacheRequest(raiseCapitalServer + '/company/' + id, 'GET');
+      return this.company ? '' : api.makeCacheRequest(app.config.raiseCapitalServer + '/company/' + id, 'GET');
     } else {
       let formcOwner = this.companiesMember.filter((el) => {
         return el.owner_id = this.data.id;
@@ -182,7 +204,7 @@ class User {
         return '';
       }
       else {
-        return this.company ? '' : app.makeCacheRequest(raiseCapitalServer + '/company/' + formcOwner[0].company_id, 'GET');
+        return this.company ? '' : api.makeCacheRequest(app.config.raiseCapitalServer + '/company/' + formcOwner[0].company_id, 'GET');
       }
     }
   }
@@ -193,7 +215,7 @@ class User {
 
   getCampaignR(id) {
     if(id)  {
-      return this.campaign ? '' : app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id, 'GET');
+      return this.campaign ? '' : api.makeCacheRequest(app.config.raiseCapitalServer + '/campaign/' + id, 'GET');
     } else {
       let formcOwner = this.companiesMember.filter((el) => {
         return el.owner_id = this.data.id;
@@ -202,7 +224,7 @@ class User {
         return '';
       }
       else {
-        return this.campaign ? '' : app.makeCacheRequest(raiseCapitalServer + '/campaign/' + formcOwner[0].campaign_id, 'GET');
+        return this.campaign ? '' : api.makeCacheRequest(app.config.raiseCapitalServer + '/campaign/' + formcOwner[0].campaign_id, 'GET');
       }
     }
   }
@@ -213,7 +235,7 @@ class User {
 
   getFormcR(id) {
     if(id)  {
-      return this.formc ? '' : app.makeCacheRequest(formcServer + '/' + id, 'GET');
+      return this.formc ? '' : api.makeCacheRequest(app.config.formcServer + '/' + id, 'GET');
     } else {
       let formcOwner = this.companiesMember.filter((el) => {
         return el.owner_id = this.data.id;
@@ -222,7 +244,7 @@ class User {
         return '';
       }
       else {
-        return this.formc ? '' : app.makeCacheRequest(formcServer + '/' + formcOwner[0].formc_id, 'GET');
+        return this.formc ? '' : api.makeCacheRequest(app.config.formcServer + '/' + formcOwner[0].formc_id, 'GET');
       }
     }
   }
@@ -232,7 +254,7 @@ class User {
   }
 
   getCompaniesMemberR() {
-    return this.companiesMember.length != 0 ? '' : app.makeCacheRequest(raiseCapitalServer + '/info');
+    return this.companiesMember.length != 0 ? '' : api.makeCacheRequest(app.config.raiseCapitalServer + '/info');
   }
 
   getCompaniesMember() {

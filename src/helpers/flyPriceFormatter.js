@@ -1,10 +1,3 @@
-var calculatorHelper = require("./calculatorHelpers");
-var getCaretPosition = calculatorHelper.getCaretPosition;
-var isTextSelected = calculatorHelper.isTextSelected;
-var settings = calculatorHelper.settings;
-var formatPrice = calculatorHelper.formatPrice;
-var setCaretPosition = calculatorHelper.setCaretPosition;
-
 module.exports = function(field, callback) {
     if (!field) return false;
     return (function($) {
@@ -31,10 +24,10 @@ module.exports = function(field, callback) {
             currentValue = elem.dataset.currentValue;
 
             // get caret position into the input field
-            cursorPosition = getCaretPosition(e.target);
+            cursorPosition = app.helpers.calculator.getCaretPosition(e.target);
 
             // working with selection
-            selectedText = isTextSelected(elem);
+            selectedText = app.helpers.calculator.isTextSelected(elem);
             if (selectedText.fullSelected) {
                 currentValue = "";
                 value = "";
@@ -51,7 +44,7 @@ module.exports = function(field, callback) {
 
             // set the flag to false, means do price formatting on keypress
             skipActions = false;
-
+            var settings = app.helpers.calculator.settings;
             // allow only numbers
             if ((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105)) {
                 changeAction = 'add';
@@ -124,7 +117,7 @@ module.exports = function(field, callback) {
                 elem.value = '';
             } else {
                 elem.dataset.currentValue = parseFloat(value);
-                elem.value = formatPrice(elem.dataset.currentValue);
+                elem.value = app.helpers.calculator.formatPrice(elem.dataset.currentValue);
             }
         });
         
@@ -139,17 +132,17 @@ module.exports = function(field, callback) {
                 modelValue = elem.dataset.modelValue;
 
             // set formatted value to the input
-            let formattedPrice = formatPrice(currentValue),
+            let formattedPrice = app.helpers.calculator.formatPrice(currentValue),
                 diff = Math.abs(elem.value.length - formattedPrice.length);
             elem.value = formattedPrice;
 
 
             // set caret position to specific one
             if (changeAction == "add") {
-                setCaretPosition(e.target, cursorPosition + diff + 1);
+                app.helpers.calculator.setCaretPosition(e.target, cursorPosition + diff + 1);
             } else if (changeAction == "delete") {
                 let helperCount = selectedText.selected ? 0 : 1;
-                setCaretPosition(e.target, cursorPosition - diff - helperCount);
+                app.helpers.calculator.setCaretPosition(e.target, cursorPosition - diff - helperCount);
             }
 
             callback({ modelValue, currentValue });
