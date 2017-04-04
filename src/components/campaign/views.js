@@ -204,7 +204,6 @@ module.exports = {
     render() {
       const fancybox = require('components/fancybox/js/jquery.fancybox.js');
       const fancyboxCSS = require('components/fancybox/css/jquery.fancybox.css');
-      debugger;
 
       this.$el.html(
         this.template({

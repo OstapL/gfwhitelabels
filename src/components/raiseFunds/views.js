@@ -320,8 +320,8 @@ module.exports = {
             height: 800,
           },
           resize: {
-            width: 305,
-            height: 205,
+            width: 530,
+            height: 356,
           },
           cssClass: 'img-crop',
           template: 'regular'

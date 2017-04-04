@@ -266,10 +266,10 @@ class CropperDropzone {
       ).done((responseData) => {
 
         let thumbSize = '';
-        this.file.file.urls.main = responseData[1].urls[0];
+        this.file.file.urls.main = responseData[0].urls[0];
         if(this.options.resize) {
           thumbSize = this.options.resize.width + 'x' + this.options.resize.height;
-          this.file.file.urls[thumbSize] = responseData[0].urls[0];
+          this.file.file.urls[thumbSize] = responseData[1].urls[0];
         }
 
         this.file.save().done(() => {
