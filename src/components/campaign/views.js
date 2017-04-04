@@ -220,7 +220,9 @@ module.exports = {
       });
 
       setTimeout(() => {
-        (new CalculatorView.calculator()).render();
+        if (this.model.id == 606) { //enable calculator only for bluehollar company
+          (new CalculatorView.calculator()).render();
+        }
       }, 100);
 
       setTimeout(() => {
