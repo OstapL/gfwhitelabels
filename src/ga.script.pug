@@ -9,5 +9,8 @@ mixin googleTag(id)
     })(window,document,'script','dataLayer','!{ id }');
 
 
-+googleTag(config.googleTagIdGeneral)
-+googleTag(config.googleTagId)
+if config.googleTagIdGeneral
+  +googleTag(config.googleTagIdGeneral)
+
+if config.googleTagId
+  +googleTag(config.googleTagId)

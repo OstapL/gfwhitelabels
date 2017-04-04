@@ -70,6 +70,9 @@ class CampaignInfoProvider extends ShareInfoProvider {
                     .replace(':site:', this.data.site) + this.data.url;
   }
 
+  confirmationMessage(network) {
+    return `Do you want to share ${this.data.companyName}'s fundraise with your ${network} network`;
+  }
 }
 
 module.exports = CampaignInfoProvider;

@@ -62,8 +62,8 @@ class InvestorInfoProvider extends ShareInfoProvider {
       '&body=' + (this.data.title +  '%0D%0A') + this.data.url;
   }
 
-  confirmationMessage() {
-    return 'Would you like to share that you invested in ' + this.data.companyName +  ' with your LinkedIn Network?';
+  confirmationMessage(network) {
+    return `Would you like to share that you invested in ${this.data.companyName} with your ${network} Network?`;
   }
 }
 
