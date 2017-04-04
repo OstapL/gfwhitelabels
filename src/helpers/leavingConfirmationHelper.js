@@ -34,7 +34,7 @@ module.exports = {
       }
       api.deleteEmptyNested.call(this, this.fields, newData);
       api.fixDateFields.call(this, this.fields, newData);
-      api.fixMoneyFields.call(this, this.fields, newData);
+      api.fixFieldsTypes.call(this, this.fields, newData);
       let patchData = {};
       let d = deepDiff(this.model, newData);
       _(d).forEach((el, i) => {

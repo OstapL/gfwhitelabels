@@ -20,22 +20,26 @@
 
 .comments
   .single-comment
-    padding: 30px 0 0
-    margin: 30px 0 0
+    padding: rem(30) 0 0
+    margin: rem(30) 0 0
     border-top: 1px solid #eee
     &:nth-child(1)
       border-top: 1px solid #eee
-      margin: 45px 0 0
-      padding: 50px 0 0
+      margin: rem(45) 0 0
+      padding: rem(50) 0 0
     .author-info
       .icon-comment
         color: $small-text
         .p-r-5
-          padding-right: 5px
+          padding-right: rem(5)
+        a
+          margin-right: rem(10)
+          span
+            margin-right: rem(5)
       .reply
-        margin: 0 10px
+        margin: 0 rem(10)
         .reply-right
-          padding-left: 10px
+          padding-left: rem(10)
           color: $small-text
         .reply-left
           padding-right: 10px
@@ -43,10 +47,10 @@
       .responce
         li
           display: inline-block
-          margin-top: 3px
+          margin-top: rem(3)
       .comment-img
         display: inline-block
-        margin-right: 35px
+        margin-right: rem(35)
         img
           width: 65px
           height: 65px
@@ -56,7 +60,7 @@
         .author-mane
           display: inline-block
           font-family: $company-comments-ff
-          margin-bottom: 0
+          margin-bottom: rem(6)
           font-weight: $company-comments-fw
         .kvalificatio-comments
           display: inline-block
@@ -64,7 +68,7 @@
           font-weight: bold
           color: $white
           background-color: $who-is-comment
-          padding: rem(0) rem(20)
+          padding: rem(1) rem(20)
           border-radius: 2px
           margin-left: rem(10)
           text-transform: capitalize
@@ -74,25 +78,23 @@
           position: relative
           top: -5px
       .author-comment
-        margin-top: 10px
+        margin-top: rem(10)
         p
-          font-size: 14px
-          line-height: 18px
           text-align: justify
   .multilevel-comments
     border-top: 1px solid #eee
-    padding: 0 0 0 65px
-    margin: 30px 0 0
+    padding: 0 0 0 rem(65)
+    margin: rem(30) 0 0
     .author-info
       .reply
         margin: 0
     .single-comment
       border-top: 1px solid #eee
-      margin: 30px 0 0
+      margin: rem(30) 0 0
       &:nth-child(1)
         border: 0
         margin: 0
-        padding: 30px 0 0
+        padding: rem(30) 0 0
   .edit-comment
     textarea
       border: solid 1px #ebebeb!important
@@ -121,12 +123,14 @@
       margin-left: rem(5)!important
   .comment-form
     textarea
-      margin-top: 25px
+      margin-top: rem(25)
 @media only screen and (max-width : 360px)
   .comments
     .single-comment
       .author-info
         .comment-img
-          display: block
-          margin-right: 0
+          display: inline-block
+          margin-right: rem(10)
           text-align: center
+        .author-heading
+          width: 70%

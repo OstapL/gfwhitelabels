@@ -1,21 +1,13 @@
-const addSectionHelper = require('helpers/addSectionHelper.js');
-
-import formatHelper from '../../helpers/formatHelper';
 const raiseHelpers = require('./helpers.js');
-const appendHttpIfNecessary = formatHelper.appendHttpIfNecessary;
+const appendHttpIfNecessary = app.helpers.format.appendHttpIfNecessary;
 
-const dropzoneHelpers = require('helpers/dropzoneHelpers.js');
-const leavingConfirmationHelper = require('helpers/leavingConfirmationHelper.js');
-const phoneHelper = require('helpers/phoneHelper.js');
 const validation = require('components/validation/validation.js');
-const menuHelper = require('helpers/menuHelper.js');
-const disableEnterHelper = require('helpers/disableEnterHelper.js');
 
 const valuation_determination = require('consts/raisecapital/valuation_determination.json');
 
 module.exports = {
   company: Backbone.View.extend(_.extend({
-    urlRoot: raiseCapitalServer + '/company',
+    urlRoot: app.config.raiseCapitalServer + '/company',
     template: require('./templates/company.pug'),
     events: _.extend({
       'click #submitForm': api.submitAction,
@@ -27,7 +19,7 @@ module.exports = {
       'change #website': appendHttpIfNecessary,
       'keyup #slug': 'fixSlug',
       'change #website,#twitter,#facebook,#instagram,#linkedin': 'appendHttpsIfNecessary',
-    }, /*leavingConfirmationHelper.events,*/ phoneHelper.events, menuHelper.events),
+    }, /*app.helpers.confirmOnLeave.events,*/ app.helpers.phone.events, app.helpers.menu.events),
 
     appendHttpsIfNecessary(e) {
       appendHttpIfNecessary(e, true);
@@ -83,7 +75,7 @@ module.exports = {
       // if not 5 digit, return
       if (e.target.value.length < 5) return;
       if (!e.target.value.match(/\d{5}/)) return;
-      this.getCityStateByZipCode(e.target.value, ({ success=false, city='', state='' }) => {
+      app.helpers.location(e.target.value, ({ success=false, city='', state='' }) => {
         if (success) {
           this.$('.js-city-state').text(`${city}, ${state}`);
           this.$('.js-city').val(city);
@@ -98,21 +90,19 @@ module.exports = {
     },
 
     render() {
-      this.getCityStateByZipCode = require('helpers/getSityStateByZipCode');
-      this.usaStates = require('helpers/usaStates');
       this.$el.html(
         this.template({
-          Urls: Urls,
           fields: this.fields,
           values: this.model,
           user: app.user.toJSON(),
           formc: this.formc,
           campaign: this.campaign,
-          states: this.usaStates,
+          states: app.helpers.usaStates,
         })
       );
-      disableEnterHelper.disableEnter.call(this);
+      app.helpers.disableEnter.disableEnter.call(this);
       this.checkForm();
+      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
 
@@ -142,7 +132,7 @@ module.exports = {
         { trigger: true, replace: false }
       );
     },
-  }, leavingConfirmationHelper.methods, phoneHelper.methods, menuHelper.methods)),
+  }, app.helpers.confirmOnLeave.methods, app.helpers.phone.methods, app.helpers.menu.methods)),
 
   inReview: Backbone.View.extend(_.extend({
     el: '#content',
@@ -159,14 +149,14 @@ module.exports = {
   })),
 
   generalInformation: Backbone.View.extend(_.extend({
-    urlRoot: raiseCapitalServer + '/campaign/:id',
+    urlRoot: app.config.raiseCapitalServer + '/campaign/:id',
     template: require('./templates/generalInformation.pug'),
     events: _.extend({
         'click #submitForm': api.submitAction,
         'click .onPreview': raiseHelpers.onPreviewAction,
         'click .submit_form': raiseHelpers.submitCampaign,
         'click #postForReview': raiseHelpers.postForReview,
-      }, addSectionHelper.events, leavingConfirmationHelper.events, menuHelper.events),
+      }, app.helpers.section.events, app.helpers.confirmOnLeave.events, app.helpers.menu.events),
 
     preinitialize() {
       // ToDo
@@ -216,8 +206,6 @@ module.exports = {
     render() {
       this.$el.html(
           this.template({
-            serverUrl: serverUrl,
-            Urls: Urls,
             fields: this.fields,
             values: this.model,
             templates: this.jsonTemplates,
@@ -226,14 +214,14 @@ module.exports = {
       );
 
       this.checkForm();
-
-      disableEnterHelper.disableEnter.call(this);
+      app.helpers.disableEnter.disableEnter.call(this);
+      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
-  }, leavingConfirmationHelper.methods, menuHelper.methods, addSectionHelper.methods)),
+  }, app.helpers.confirmOnLeave.methods, app.helpers.menu.methods, app.helpers.section.methods)),
 
   media: Backbone.View.extend(_.extend({
-    urlRoot: raiseCapitalServer + '/campaign/:id',
+    urlRoot: app.config.raiseCapitalServer + '/campaign/:id',
     template: require('./templates/media.pug'),
 
     events: _.extend({
@@ -243,8 +231,8 @@ module.exports = {
         'click .submit_form': raiseHelpers.submitCampaign,
         'click #postForReview': raiseHelpers.postForReview,
         'click .onPreview': raiseHelpers.onPreviewAction,
-      }, leavingConfirmationHelper.events, menuHelper.events,
-        addSectionHelper.events, dropzoneHelpers.events
+      }, app.helpers.confirmOnLeave.events, app.helpers.menu.events,
+        app.helpers.section.events, app.helpers.dropzone.events
     ),
 
     _success(data, newData) {
@@ -355,8 +343,6 @@ module.exports = {
     render() {
       this.$el.html(
         this.template({
-          serverUrl: serverUrl,
-          Urls: Urls,
           fields: this.fields,
           // values: this.model.toJSON(),
           values: this.model,
@@ -366,8 +352,9 @@ module.exports = {
       );
 
       setTimeout(() => { this.createDropzones() } , 1000);
-      disableEnterHelper.disableEnter.call(this);
+      app.helpers.disableEnter.disableEnter.call(this);
       this.checkForm();
+      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
 
       return this;
     },
@@ -383,11 +370,11 @@ module.exports = {
       $videoContainer.find('iframe').attr('src', src);
     },
 
-  }, leavingConfirmationHelper.methods, menuHelper.methods,
-    dropzoneHelpers.methods, addSectionHelper.methods)),
+  }, app.helpers.confirmOnLeave.methods, app.helpers.menu.methods,
+    app.helpers.dropzone.methods, app.helpers.section.methods)),
 
   teamMemberAdd: Backbone.View.extend(_.extend({
-    urlRoot: raiseCapitalServer + '/campaign/:id/team-members',
+    urlRoot: app.config.raiseCapitalServer + '/campaign/:id/team-members',
     template: require('./templates/teamMemberAdd.pug'),
     events: _.extend({
       'click .delete-member': 'deleteMember',
@@ -398,7 +385,7 @@ module.exports = {
       'click .save': api.submitAction,
       'click .onPreview': raiseHelpers.onPreviewAction,
       // 'change #zip_code': 'changeZipCode',
-    }, leavingConfirmationHelper.events, menuHelper.events, dropzoneHelpers.events),
+    }, app.helpers.confirmOnLeave.events, app.helpers.menu.events, app.helpers.dropzone.events),
     
     _success(data) {
       window.location = '/campaign/' + this.model.id + '/team-members';
@@ -469,7 +456,8 @@ module.exports = {
       //delete this.model.progress;
       //delete this.model.data;
 
-      disableEnterHelper.disableEnter.call(this);
+      app.helpers.disableEnter.disableEnter.call(this);
+      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
 
@@ -485,16 +473,16 @@ module.exports = {
       }
     },
 
-  }, leavingConfirmationHelper.methods, menuHelper.methods, dropzoneHelpers.methods)),
+  }, app.helpers.confirmOnLeave.methods, app.helpers.menu.methods, app.helpers.dropzone.methods)),
 
   teamMembers: Backbone.View.extend(_.extend({
-    urlRoot: raiseCapitalServer + '/campaign/:id/team-members',
+    urlRoot: app.config.raiseCapitalServer + '/campaign/:id/team-members',
     events: _.extend({
       'click .delete-member': 'deleteMember',
       'click .submit_form': raiseHelpers.submitCampaign,
       'click #postForReview': raiseHelpers.postForReview,
       'click .onPreview': raiseHelpers.onPreviewAction,
-    }, menuHelper.events),
+    }, app.helpers.menu.events),
 
     preinitialize() {
       // ToDo
@@ -518,17 +506,16 @@ module.exports = {
 
       this.$el.html(
         template({
-            serverUrl: serverUrl,
             campaign: values,
-            Urls: Urls,
             values: values,
             formc: this.formc,
           })
         );
 
-      disableEnterHelper.disableEnter.call(this);
+      app.helpers.disableEnter.disableEnter.call(this);
       this.checkForm();
       this.$el.find('.team-add-item').equalHeights();
+      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
 
@@ -537,7 +524,7 @@ module.exports = {
 
         if (confirm('Are you sure you would like to delete this team member?')) {
 
-          app.makeRequest(this.urlRoot + '/' + memberId, 'DELETE').
+          api.makeRequest(this.urlRoot + '/' + memberId, 'DELETE').
               then((data) => {
                   this.model.team_members.splice(memberId, 1);
 
@@ -553,10 +540,10 @@ module.exports = {
         }
       },
 
-  }, menuHelper.methods)),
+  }, app.helpers.menu.methods)),
 
   specifics: Backbone.View.extend(_.extend({
-      urlRoot: raiseCapitalServer + '/campaign/:id',
+      urlRoot: app.config.raiseCapitalServer + '/campaign/:id',
       events: _.extend({
         'click #submitForm': api.submitAction,
         'change input[name="security_type"]': 'updateSecurityType',
@@ -568,7 +555,7 @@ module.exports = {
         'click #postForReview': raiseHelpers.postForReview,
         'click .submit-specifics': 'checkMinMaxRaise',
         'change #valuation_determination': 'valuationDetermine',
-      }, leavingConfirmationHelper.events, menuHelper.events, dropzoneHelpers.events),
+      }, app.helpers.confirmOnLeave.events, app.helpers.menu.events, app.helpers.dropzone.events),
 
       preinitialize() {
         // ToDo
@@ -693,8 +680,6 @@ module.exports = {
         const template = require('./templates/specifics.pug');
         this.$el.html(
             template({
-                serverUrl: serverUrl,
-                Urls: Urls,
                 fields: this.fields,
                 values: this.model,
                 formc: this.formc,
@@ -716,19 +701,20 @@ module.exports = {
         }
         $('#description_determine').parent().parent().hide();
 
-        disableEnterHelper.disableEnter.call(this);
+        app.helpers.disableEnter.disableEnter.call(this);
+        raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
         return this;
       },
-  }, leavingConfirmationHelper.methods, menuHelper.methods, dropzoneHelpers.methods, addSectionHelper.methods)),
+  }, app.helpers.confirmOnLeave.methods, app.helpers.menu.methods, app.helpers.dropzone.methods, app.helpers.section.methods)),
 
   perks: Backbone.View.extend(_.extend({
-    urlRoot: raiseCapitalServer + '/campaign/:id',
+    urlRoot: app.config.raiseCapitalServer + '/campaign/:id',
     events: _.extend({
         'click #submitForm': api.submitAction,
         'click .onPreview': raiseHelpers.onPreviewAction,
         'click .submit_form': raiseHelpers.submitCampaign,
         'click #postForReview': raiseHelpers.postForReview,
-    }, leavingConfirmationHelper.events, menuHelper.events, addSectionHelper.events),
+    }, app.helpers.confirmOnLeave.events, app.helpers.menu.events, app.helpers.section.events),
 
     preinitialize() {
       // ToDo
@@ -757,8 +743,6 @@ module.exports = {
       let template = require('./templates/perks.pug');
       this.$el.html(
         template({
-            serverUrl: serverUrl,
-            Urls: Urls,
             fields: this.fields,
             values: this.model,
             formc: this.formc,
@@ -766,7 +750,8 @@ module.exports = {
         })
       );
 
-      disableEnterHelper.disableEnter.call(this);
+      app.helpers.disableEnter.disableEnter.call(this);
+      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
 
@@ -776,5 +761,5 @@ module.exports = {
       return 0;
     }
 
-  }, leavingConfirmationHelper.methods, menuHelper.methods, addSectionHelper.methods)),
+  }, app.helpers.confirmOnLeave.methods, app.helpers.menu.methods, app.helpers.section.methods)),
 };

@@ -1,15 +1,6 @@
 const validation = require('components/validation/validation.js');
-const userDocuments = require('helpers/userDocuments.js');
-
-const disableEnterHelper = require('helpers/disableEnterHelper.js');
 
 const helpers = {
-  date: require('helpers/dateHelper.js'),
-  format: require('helpers/formatHelper.js'),
-  phone: require('helpers/phoneHelper.js'),
-  dropzone: require('helpers/dropzoneHelpers.js'),
-  yesNo: require('helpers/yesNoHelper.js'),
-  fileList: require('helpers/fileList.js'),
   campaign: require('components/campaign/helpers.js'),
 };
 
@@ -23,7 +14,7 @@ import 'bootstrap-slider/dist/css/bootstrap-slider.css';
 module.exports = {
   profile: Backbone.View.extend(_.extend({
     template: require('./templates/profile.pug'),
-    urlRoot: authServer + '/rest-auth/data',
+    urlRoot: app.config.authServer + '/rest-auth/data',
     doNotExtendModel: true,
     events: _.extend({
       'click #saveAccountInfo': 'saveAccountInfo',
@@ -33,7 +24,7 @@ module.exports = {
       'change #twitter,#facebook,#instagram,#linkedin': 'appendHttpsIfNecessary',
 
       // 'change input[name=accredited_investor]': 'changeAccreditedInvestor',
-    }, helpers.phone.events, helpers.dropzone.events, helpers.yesNo.events),
+    }, app.helpers.phone.events, app.helpers.dropzone.events, app.helpers.yesNo.events),
 
     initialize(options) {
       this.activeTab = options.activeTab;
@@ -170,7 +161,6 @@ module.exports = {
       this.$el.html(
         this.template({
           tab: this.activeTab || 'account_info',
-          serverUrl: serverUrl,
           user: this.model,
           company: app.user.get('company'),
           fields: this.fields,
@@ -190,7 +180,7 @@ module.exports = {
       this.cityStateArea = this.$('.js-city-state');
       this.cityField = this.$('.js-city');
       this.stateField = this.$('.js-state');
-      disableEnterHelper.disableEnter.call(this);
+      app.helpers.disableEnter.disableEnter.call(this);
 
       return this;
     },
@@ -239,7 +229,7 @@ module.exports = {
     },
 
     appendHttpsIfNecessary(e) {
-      helpers.format.appendHttpIfNecessary(e, true);
+      app.helpers.format.appendHttpIfNecessary(e, true);
     },
 
     saveAccountInfo(e) {
@@ -363,16 +353,16 @@ module.exports = {
 
     },
 
-  }, helpers.phone.methods, helpers.dropzone.methods, helpers.yesNo.methods)),
+  }, app.helpers.phone.methods, app.helpers.dropzone.methods, app.helpers.yesNo.methods)),
 
   changePassword: Backbone.View.extend({
-    urlRoot: authServer + '/rest-auth/password/change',
+    urlRoot: app.config.authServer + '/rest-auth/password/change',
     events: {
       'submit form': api.submitAction,
     },
 
     getSuccessUrl(data) {
-      app.user.passwordChanged(data.key);
+      // app.user.passwordChanged(data.key);
       return '/account/profile';
     },
 
@@ -384,7 +374,7 @@ module.exports = {
   }),
 
   setNewPassword: Backbone.View.extend({
-    urlRoot: authServer + '/reset-password/do',
+    urlRoot: app.config.authServer + '/reset-password/do',
     events: {
       'submit form': api.submitAction,
     },
@@ -432,9 +422,9 @@ module.exports = {
       const objectId = e.target.dataset.objectId;
       const securityType = e.target.dataset.securityType;
       const subscriptionAgreementLink =
-        userDocuments.getUserDocumentsByType(objectId, securityType);
+        app.helpers.userDocuments.getUserDocumentsByType(objectId, securityType);
       const participationAgreementLink =
-        userDocuments.getUserDocumentsByType(objectId, PARTICIPATION_AGREEMENT_ID);
+        app.helpers.userDocuments.getUserDocumentsByType(objectId, PARTICIPATION_AGREEMENT_ID);
 
       const data = {
         title: 'Agreements',
@@ -451,7 +441,7 @@ module.exports = {
         ],
       };
 
-      helpers.fileList.show(data);
+      app.helpers.fileList.show(data);
     },
 
     _findInvestment(id) {
@@ -471,7 +461,7 @@ module.exports = {
         files: financialDocs,
       };
 
-      helpers.fileList.show(data);
+      app.helpers.fileList.show(data);
     },
 
     onCancel(investment) {
@@ -502,7 +492,7 @@ module.exports = {
       if (!confirm('Are you sure?'))
         return false;
 
-      api.makeRequest(investmentServer + '/' + id + '/decline', 'PUT').done((response) => {
+      api.makeRequest(app.config.investmentServer + '/' + id + '/decline', 'PUT').done((response) => {
         investment.status = FINANCIAL_INFORMATION.INVESTMENT_STATUS.CancelledByUser;
         helpers.campaign.initInvestment(investment);
 
@@ -644,15 +634,18 @@ module.exports = {
       this.initComments();
 
       try {
-        let script = document.createElement('script');
-        script.type = 'text/javascript';
-        script.src = '/js/graph/graph.js';
-        $(document.head).append(script);
+        require('src/js/graph/graph.js');
+        require('src/js/graph_data.js');
 
-        script = document.createElement('script');
-        script.type = 'text/javascript';
-        script.src = '/js/graph_data.js';
-        $(document.head).append(script);
+        // let script = document.createElement('script');
+        // script.type = 'text/javascript';
+        // script.src = '/js/graph/graph.js';
+        // $(document.head).append(script);
+        //
+        // script = document.createElement('script');
+        // script.type = 'text/javascript';
+        // script.src = '/js/graph_data.js';
+        // $(document.head).append(script);
       } catch (err) {
         console.log(err);
       }
@@ -667,7 +660,7 @@ module.exports = {
 
     initComments() {
       const View = require('components/comment/views.js');
-      const urlComments = commentsServer + '/company/' + this.company.id;
+      const urlComments = app.config.commentsServer + '/company/' + this.company.id;
       let optionsR = api.makeRequest(urlComments, 'OPTIONS');
       let dataR = api.makeRequest(urlComments);
 

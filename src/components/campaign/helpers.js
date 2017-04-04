@@ -11,6 +11,7 @@ let exports = {
     52: 'https://www.sec.gov/Archives/edgar/data/1693726/000166850617000003/0001668506-17-000003-index.htm',
     536: 'https://www.sec.gov/cgi-bin/browse-edgar?company=oma%27s&owner=exclude&action=getcompany',
     564: 'https://www.sec.gov/cgi-bin/browse-edgar?company=have+not&owner=exclude&action=getcompany',
+    606: 'https://www.sec.gov/cgi-bin/browse-edgar?CIK=0001701418&owner=exclude&action=getcompany&Find=Search',
   },
 
   slugs: {
@@ -58,7 +59,7 @@ let exports = {
 
   getImageCampaign (campaign) {
     const imgObj = campaign.header_image_data && campaign.header_image_data.length ? campaign.header_image_data[0] : {};
-    const link = imgObj.urls && imgObj.urls.length ? imgObj.urls[0] : location.origin + '/img/default/1600x548.png';
+    const link = imgObj.urls && imgObj.urls.length ? imgObj.urls[0] : '';
     return link;
   },
 

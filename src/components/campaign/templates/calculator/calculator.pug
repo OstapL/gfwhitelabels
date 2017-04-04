@@ -1,0 +1,58 @@
+.calculator-container.detail-page-calculator
+  .row
+    .col-xl-12.text-xs-center
+      h4.text-uppercase.m-t-2.m-b-1 Revenue Share Calculator
+      p Want to see some possible return scenarios?
+        sup *
+
+  .row.m-t-1
+    .col-xl-10.offset-xl-1
+      form(method="post" action="").js-calc-form.form-section
+        .form-body.clearfix
+          .col-lg-4.p-xs-0
+            .form-group
+              .col-xl-8.offset-xl-2.text-xs-center
+                label(for="raiseMoney").font-weight-bold How much is the company raising?
+              input(
+                value= formatPrice(data.raiseMoney),
+                type='text',
+                placeholder='$0',
+                autocomplete="off"
+                data-input-mask='price',
+                data-model-value='raiseMoney',
+                data-current-value= data.raiseMoney
+                name="raiseMoney")#raiseMoney.form-control.js-field
+
+          .col-lg-4.p-xs-0
+            .form-group
+              .col-xl-12.text-xs-center
+                label(for="nextYearRevenue").font-weight-bold What do you expect next year's revenue share to be?
+              input(
+                value= formatPrice(data.nextYearRevenue),
+                type='text',
+                placeholder='$0',
+                autocomplete="off"
+                data-input-mask='price',
+                data-model-value='nextYearRevenue',
+                name="nextYearRevenue",
+                data-current-value= data.nextYearRevenue)#nextYearRevenue.form-control.js-field
+
+          .col-lg-4.p-xs-0
+            .form-group
+              .col-xl-12.text-xs-center
+                label(for="growLevel").font-weight-bold At what rate do you expect revenues to grow each year?
+              input(
+                value=(data.growLevel ? data.growLevel + '%' : ''),
+                type='text',
+                placeholder='0%',
+                autocomplete="off"
+                data-input-mask='percent',
+                name="growLevel",
+                data-model-value='growLevel')#growLevel.form-control.js-field
+        .row
+          .col-xl-12.text-xs-center.m-t-10
+            .controls
+              button(type="submit").btn.btn-primary.text-uppercase go
+    .col-xl-12
+      #revenue-share-calculator-result
+      

@@ -35,27 +35,12 @@ const routesMap = _.reduce(componentRoutes, (dest, route) => {
   return dest;
 }, { routes: {}, methods: {}, auth: [] });
 
-//TODO: move into app.js
-const errorPageHelper = require('helpers/errorPageHelper.js');
-
-const runGoogleAnalytics = (id) => {
-  (function (w, d, s, l, i) {
-    w[l] = w[l] || [];
-    w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
-    var f = d.getElementsByTagName(s)[0];
-    var j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
-    j.async = true;
-    j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-    f.parentNode.insertBefore(j, f);
-  })(window, document, 'script', 'dataLayer', id);
-};
-
 const notFound = () => {
-  errorPageHelper({ status: 404 });
+  app.helpers.errorPage({ status: 404 });
   app.hideLoading();
 };
 
-const Router = Backbone.Router.extend(_.extend({
+module.exports = Backbone.Router.extend(_.extend({
   routes: _.extend({}, routesMap.routes, { '*notFound': notFound }),
 
   initialize() {
@@ -64,6 +49,8 @@ const Router = Backbone.Router.extend(_.extend({
   execute(callback, args, name) {
     app.emitFacebookPixelEvent();
     app.emitGoogleAnalyticsEvent();
+
+    app.clearClasses('#page', ['page']);
 
     if (_.contains(routesMap.auth, name) && !app.user.ensureLoggedIn())
       return false;
@@ -85,46 +72,3 @@ const Router = Backbone.Router.extend(_.extend({
   },
 
 }, routesMap.methods));
-
-//TODO: why this code is here
-app.on('userLoaded', function (data) {
-
-  app.routers = new Router();
-  Backbone.history.start({ pushState: true });
-
-  window.addEventListener('popstate', app.routers.back);
-
-  let menu = require('components/menu/views.js');
-  app.menu = new menu.menu({
-    el: '#menuList',
-  });
-  app.menu.render();
-  let i = new menu.footer({
-    el: '.footer_new',
-  });
-  i.render();
-
-  app.notification = new menu.notification({
-    el: '#menuNotification',
-  });
-  app.notification.render();
-  app.profile = new menu.profile({
-    el: '#menuProfile',
-  });
-  app.profile.render();
-  app.trigger('menuReady');
-});
-
-$(document).ready(function () {
-
-  // show bottom logo while scrolling page
-  $(window).scroll(function () {
-    let $bottomLogo = $('#fade_in_logo');
-    let offsetTopBottomLogo = $bottomLogo.offset().top;
-
-    if (($(window).scrollTop() + $(window).height() >= offsetTopBottomLogo) && !$bottomLogo.hasClass('fade-in')) {
-      $bottomLogo.addClass('fade-in');
-    }
-  });
-
-});
