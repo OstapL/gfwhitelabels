@@ -10,8 +10,202 @@
   top: 50%;
   left: 0;
 //======================================
+// show main menu list on mobile devaices
+html.show-menu
+  overflow: hidden !important
+  height: 100% !important
+  overflow-y: scroll !important
 
+  body
+    overflow: hidden !important 
+    height: 100% !important
+
+  header
+    height: 100%
+    -webkit-transition: height 0.35s ease-in 200ms
+    -moz-transition: height 0.35s ease-in 200ms
+    -ms-transition: height 0.35s ease-in 200ms
+    -o-transition: height 0.35s ease-in 200ms
+    transition: height 0.35s ease-in 200ms
+
+    //#menuProfile
+      //-webkit-transition: right 0.45s ease-in 200ms
+      //-moz-transition: right 0.45s ease-in 200ms
+      //-ms-transition: right 0.45s ease-in 200ms
+      //-o-transition: right 0.45s ease-in 200ms
+      //transition: right 0.45s ease-in 200ms
+
+      //right: -90px
+
+    button.navbar-toggler
+      span 
+        background-color: transparent
+
+      span:before 
+        -webkit-transition: rotate(45deg) translate(-1px, 0px)
+        -moz-transition: rotate(45deg) translate(-1px, 0px)
+        -ms-transition: rotate(45deg) translate(-1px, 0px)
+        -o-transition: rotate(45deg) translate(-1px, 0px)
+        transform: rotate(45deg) translate(-1px, 0px)
+
+      span:after 
+        -webkit-transition: rotate(-45deg) translate(5px, -7px)
+        -moz-transition: rotate(-45deg) translate(5px, -7px)
+        -ms-transition: rotate(-45deg) translate(5px, -7px)
+        -o-transition: rotate(-45deg) translate(5px, -7px)
+        transform: rotate(-45deg) translate(5px, -7px)
+
+    #menuList,
+      visibility: visible
+      -webkit-transition-delay: 0s
+      -moz-transition-delay: 0s
+      -ms-transition-delay: 0s
+      -o-transition-delay: 0s
+      transition-delay: 0s
+
+      li
+        -webkit-transition-delay: 300ms, 300ms
+        -moz-transition-delay: 300ms, 300ms
+        -ms-transition-delay: 300ms, 300ms
+        -o-transition-delay: 300ms, 300ms
+        transition-delay: 300ms, 300ms
+
+        -webkit-transition: none
+        -moz-transition: none
+        -ms-transition: none
+        -o-transition: none
+        transform: none
+
+        opacity: 1
+        -webkit-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+        -moz-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+        -ms-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+        -o-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+        transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+
+    form.form-inline
+      -webkit-transition-delay: 200ms, 200ms
+      -moz-transition-delay: 200ms, 200ms
+      -ms-transition-delay: 200ms, 200ms
+      -o-transition-delay: 200ms, 200ms
+      transition-delay: 200ms, 200ms
+
+      -webkit-transition: none
+      -moz-transition: none
+      -ms-transition: none
+      -o-transition: none
+      transform: none
+      opacity: 1
+      -webkit-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+      -moz-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+      -ms-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+      -o-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+      transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+//================================
+//right menu
+header.no-overflow
+  overflow: hidden !important
+  height: 100% !important
+  overflow-y: scroll !important
+
+  body
+    overflow: hidden !important 
+    height: 100% !important
+
+  header
+    height: 100%
+    -webkit-transition: height 0.35s ease-in 200ms
+    -moz-transition: height 0.35s ease-in 200ms
+    -ms-transition: height 0.35s ease-in 200ms
+    -o-transition: height 0.35s ease-in 200ms
+    transition: height 0.35s ease-in 200ms
+  #menuProfile
+    .mobile-profile-menu
+      visibility: visible
+      -webkit-transition-delay: 0s
+      -moz-transition-delay: 0s
+      -ms-transition-delay: 0s
+      -o-transition-delay: 0s
+      transition-delay: 0s
+      opacity: 1
+
+      li
+        -webkit-transition-delay: 300ms, 300ms
+        -moz-transition-delay: 300ms, 300ms
+        -ms-transition-delay: 300ms, 300ms
+        -o-transition-delay: 300ms, 300ms
+        transition-delay: 300ms, 300ms
+
+        -webkit-transition: none
+        -moz-transition: none
+        -ms-transition: none
+        -o-transition: none
+        transform: none
+
+        opacity: 1
+        -webkit-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+        -moz-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+        -ms-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+        -o-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+        transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+
+  form.form-inline
+    -webkit-transition-delay: 200ms, 200ms
+    -moz-transition-delay: 200ms, 200ms
+    -ms-transition-delay: 200ms, 200ms
+    -o-transition-delay: 200ms, 200ms
+    transition-delay: 200ms, 200ms
+
+    -webkit-transition: none
+    -moz-transition: none
+    -ms-transition: none
+    -o-transition: none
+    transform: none
+    opacity: 1
+    -webkit-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+    -moz-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+    -ms-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+    -o-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+//=================================
+// bell menu
+header.no-overflow-bell
+  overflow: visible
+  nav
+    overflow: visible
+
+    // show profile menu on mobile devaices
+    .list-container.bell-drop.notification-container
+      -webkit-transition-delay: 300ms, 300ms
+      -moz-transition-delay: 300ms, 300ms
+      -ms-transition-delay: 300ms, 300ms
+      -o-transition-delay: 300ms, 300ms
+      transition-delay: 300ms, 300ms
+
+      -webkit-transition: height 0.45s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
+      -moz-transition: height 0.45s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
+      -ms-transition: height 0.45s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
+      -o-transition: height 0.45s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
+      transition: height 0.45s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
+      -webkit-transition: none
+      -moz-transition: none
+      -ms-transition: none
+      -o-transition: none
+      transform: none
+  
+      height: 144px
+      opacity: 1
+
+      background: rgba( $menu_backgound_from, .96)
+      &.submenu 
+        li.title
+          width: 230px
+      // show login signin button and set it diff height on mobile devaices
+      &.not-log-in-user
+        height: 66px
 header
+  .navbar-toggleable-md::after
+    clear: none
   position: relative
   z-index: 3
   background-color: $menu_backgound_from
@@ -19,23 +213,44 @@ header
   -webkit-box-shadow: $box-shadow-top-menu 
   -moz-box-shadow: $box-shadow-top-menu    
   box-shadow: $box-shadow-top-menu
-  height: $navbar_height
   .navbar
+    padding-top: 0
+    padding-bottom: 0
+    
     .login-sinup
-      padding: 0 rem(12)
+      display: inline-block
+      padding: 0 12px
+      text-transform: uppercase
+
       @media screen and (min-width: 992px) and (max-width: 1145px )
-        padding: 0 rem(8)
+        padding: 0 8px
+
     .navbar-brand
       position: relative
+      height: $navbar_height
       padding-bottom: 0
       padding-top: 0
       width: $logo-width-desktop
       margin-right: $navbar-brand-margin-right!important
       margin-left: $navbar-brand-margin-left!important
 
+      img
+        +centered
+
+        position: absolute
+
+        max-width: 100%;
+
     .mobile-logo
       display: none
+
   .navbar-nav
+    height: $navbar_height
+    padding: 0
+    .user-info
+      span
+        color: rgba($menu_text_color, 0.7)
+
     @media screen and (min-width: 992px)
       li.nav-item > a.nav-link,
       li.login-sinup > a 
@@ -49,18 +264,15 @@ header
         height: 100%
         a
           display: inline-block
-    .user-info
-      span
-        color: rgba($menu_text_color, 0.7)
-
-
 
     &#menuProfile
       padding-top: 0
 
     .nav-item
+      height: 100%
       position: relative
       margin-left: 20px
+      min-width: 35px
 
       cursor: pointer
 
@@ -75,6 +287,9 @@ header
         font-weight: $menu-font-weight
         &:hover 
           color: rgba($menu_text_color, .7)!important
+
+        &.user-info-name
+          padding-top: 0px
 
       &.user-info
         margin-left: 0
@@ -233,6 +448,7 @@ header
                 margin-top: 42px
 
       &.user-info
+        min-width: 105px
         img
           width: 50px
           height: 50px
@@ -257,7 +473,6 @@ header
                 font-size: 24px
                 line-height: 2
                 letter-spacing: 0
-  //menu for notification - its work
   #menuNotification
     position: relative
     top: $top-position-notification
@@ -464,11 +679,14 @@ header
     background: rgba($menu_backgound_from, .96) $header_bg_image
 
     .navbar .navbar-brand
+      display: inline-block
+      height: $navbar_height_mobile
       width: $logo-width-mobile
       margin-left: $navbar-brand-margin-left-mobile
       margin-right: $navbar-brand-margin-right-mobile
       z-index: 999
-      +transform-center
+      left: -5px
+
     .navbar-nav
       height: $navbar_height_mobile
 
@@ -481,6 +699,64 @@ header
       padding: 0
       overflow: hidden
       width: 100%
+      .notification-bell
+        a
+          position: relative
+          top: 25%
+      .list-container.user-info-drop.notification-container
+        -webkit-transform: scale(1.1) translateY(-10px)
+        -moz-transform: scale(1.1) translateY(-10px)
+        -ms-transform: scale(1.1) translateY(-10px)
+        -o-transform: scale(1.1) translateY(-10px)
+        transform: scale(1.1) translateY(-10px)
+
+        transition-delay: 200ms, 200ms
+        -webkit-transition-delay: 200ms, 200ms 
+        -moz-transition-delay: 200ms, 200ms
+        -ms-transition-delay: 200ms, 200ms
+        -o-transition-delay: 200ms, 200ms
+
+        -webkit-transition: height 0.45s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
+        -moz-transition: height 0.45s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
+        -ms-transition: height 0.45s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
+        -o-transition: height 0.45s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
+        transition: height 0.45s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
+        
+        position: absolute
+        top: 100%
+        
+        display: block
+        height: 0
+        max-height: none
+        opacity: 0
+      .list-container.bell-drop.notification-container
+        -webkit-transform: scale(1.1) translateY(-10px)
+        -moz-transform: scale(1.1) translateY(-10px)
+        -ms-transform: scale(1.1) translateY(-10px)
+        -o-transform: scale(1.1) translateY(-10px)
+        transform: scale(1.1) translateY(-10px)
+
+        transition-delay: 200ms, 200ms
+        -webkit-transition-delay: 200ms, 200ms 
+        -moz-transition-delay: 200ms, 200ms
+        -ms-transition-delay: 200ms, 200ms
+        -o-transition-delay: 200ms, 200ms
+
+        -webkit-transition: height 0.45s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
+        -moz-transition: height 0.45s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
+        -ms-transition: height 0.45s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
+        -o-transition: height 0.45s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
+        transition: height 0.45s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
+          
+        position: absolute
+        top: 100%
+          
+        display: block
+        height: 0
+        max-height: none
+        opacity: 0
+        .submenu li.title
+          width: 230px
       #menuProfile
         -webkit-transition: right 0.35s ease-in 100ms
         -moz-transition: right 0.35s ease-in 100ms

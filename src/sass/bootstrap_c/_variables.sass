@@ -42,6 +42,14 @@ $spacer-y: 11px // что это?
 		@content                                                                      
 	&:-ms-input-placeholder                                                         
 		@content
+=transform-center()
+	top: 50%
+	left: 50%
+	-ms-transform: translate(-50%,-50%)
+	-webkit-transform: translate(-50%,-50%)
+	transform: translate(-50%,-50%)
+	position: absolute
+
 // переменные для шрифтов 
 $dosis: 'Dosis', sans-serif
 $open-sans: 'Open Sans', sans-serif
