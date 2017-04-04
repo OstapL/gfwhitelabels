@@ -5,8 +5,8 @@ if config.yandexMetricaId
     (function (d, w, c) {
       (w[c] = w[c] || []).push(function() {
         try {
-          w.yaCounter!{ config.yandexMetricaId } = new Ya.Metrika({
-            id: !{ config.yandexMetricaId },
+          w.yaCounter!{ metricaId } = new Ya.Metrika({
+            id: !{ metricaId },
             clickmap:true,
             trackLinks:true,
             accurateTrackBounce:true,
@@ -30,6 +30,6 @@ if config.yandexMetricaId
   noscript
     div
       img(
-        src="https://mc.yandex.ru/watch/" + config.yandexMetricaId
+        src="https://mc.yandex.ru/watch/" + metricaId
         style="position:absolute; left:-9999px;" alt=""
       )

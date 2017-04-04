@@ -48,21 +48,9 @@ class GalleryElement extends imageDropzone.ImageElement {
     return this.options.defaultImage || defaultImage;
   }
 
-  imageSave(realData) {
+  imageSave() {
     debugger;
-    let f = realData.data.filter((el) => {
-      debugger;
-      if(el.id == this.file.id) {
-        el.data = this.file;
-      }
-      return el;
-    });
-
-    if(f.length == 0) {
-      realData.data.push(this.file);
-    }
-
-    return realData.save(
+    return this.file.save(
       this.fieldName,
       this.fieldDataName
     );
@@ -132,7 +120,8 @@ class GalleryDropzone extends imageDropzone.ImageDropzone {
     );
     fileObj.getTemplate = this.galleryElement.getTemplate;
     fileObj.elementSelector = '.' + this.galleryElement.fieldName + ' .fileContainer' + reorgData.id;
-    fileObj.save = () => this.galleryElement.imageSave(this.file);
+    debugger;
+    fileObj.save = () => this.galleryElement.imageSave;
     fileObj.delete = () => this.galleryElement.delete.call(this.galleryElement, fileObj.file.id);
     this.galleryElement.files.push(fileObj);
 
