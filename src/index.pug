@@ -3,8 +3,7 @@ doctype html
 html
   head
     title #{ htmlWebpackPlugin.options.title }
-    if process.env.NODE_ENV === 'production'
-      include ga.script.pug
+    include ga.script.pug
     meta(
       name="description"
       content="GrowthFountain is an SEC registered Funding Portal and FINRA Member where individuals can come together to support entrepreneurs and small businesses across America. Turn your customers, your social network, your neighbors and community members into owners who can become your brand ambassadors and evangelists. To learn more about GrowthFountain and the risks of crowdfunding, please visit www.growthfountain.com"
@@ -23,8 +22,7 @@ html
 
   body.appear-animate
     //Google Tag Manager (noscript)
-    if process.env.NODE_ENV === 'production'
-      include ga.noscript.pug
+    include ga.noscript.pug
     //End Google Tag Manager (noscript)
 
 
@@ -66,5 +64,4 @@ html
       {"@context":"http:\/\/schema.org","@type":"LocalBusiness","url":"https:\/\/growthfountain.com\/","name":"Growthfountain","description":"Businesses need resources to help them grow and GrowthFountain makes it easy for both start-up \u0026 established businesses to gain crowdfunding knowledge, and create fundraising campaigns targeted to potential investors. GrowthFountain is a Title III crowd funding platform that connects businesses in need of capital with those who can best provide it, increasing the probability of success for everyone.\r\n","logo":"https:\/\/growthfountain.com\/img\/logo.png","image":"https:\/\/growthfountain.com\/img\/main-bg-section-one.jpg","priceRange":"$$$ - $$$$","hasMap":"https:\/\/goo.gl\/maps\/VND93uBVRYs","email":"info@growthfountain.com","telephone":"646-759-8229","openingHours":["Always Open"],"sameAs":["https:\/\/www.linkedin.com\/company-beta\/9244763\/","https:\/\/www.facebook.com\/GrowthFountain\/","","","",""],"aggregateRating":{"@type":"AggregateRating","ratingValue":"5","ratingCount":"2"},"address":{"@type":"PostalAddress","addressLocality":"New York","addressRegion":"New York","postalCode":"10016","streetAddress":"79 Madison Ave, 5th Flr"},"geo":{"@type":"GeoCoordinates","latitude":"40.7440668","longitude":"-73.98522220000001"}}
 
     //Yandex.Metrika counter
-    if process.env.NODE_ENV === 'production'
-      include metrica.script.pug
+    include metrica.script.pug
