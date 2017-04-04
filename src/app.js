@@ -292,10 +292,12 @@ class App {
     if (!elem)
       return;
 
-    elem.classList.forEach((cls) => {
+    for (let i = 0; i < elem.classList.length; i += 1) {
+      let cls = elem.classList.item(i);
       if (!except.includes(cls))
         elem.classList.remove(cls);
-    });
+    }
+
   }
 
 }
