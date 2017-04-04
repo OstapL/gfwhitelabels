@@ -62,6 +62,10 @@ class CampaignInfoProvider extends ShareInfoProvider {
         '&body=' + ('I thought you might be interested in checking out ' + this.data.companyName +
           ' fundraise on ' + window.location.host + '%0D%0A') + this.data.url;
   }
+
+  confirmationMessage(network) {
+    return `Do you want to share ${this.data.companyName}'s fundraise with your ${network} network`;
+  }
 }
 
 module.exports = CampaignInfoProvider;
