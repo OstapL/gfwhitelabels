@@ -100,7 +100,11 @@ module.exports = {
     },
 
     initialize(options) {
-      this.model = options.formc;
+      this.model = new app.models.Formc(
+          this.urlRoot.replace(':id', options.formc.id),
+          options.formc,
+          options.fields,
+      )
       this.fields = options.fields;
 
       if(this.model.is_paid === false) {
@@ -370,7 +374,11 @@ module.exports = {
     },
 
     initialize(options) {
-      this.model = options.formc;
+      this.model = new app.models.Formc(
+        this.urlRoot.replace(':id', options.formc.id),
+        options.formc,
+        options.fields
+      );
       this.fields = options.fields;
       this.fields.full_time_employers = { label: 'Full Time Employees' };
       this.fields.part_time_employers = { label: 'Part Time Employees' };
@@ -678,7 +686,11 @@ module.exports = {
     },
 
     initialize(options) {
-      this.model = options.formc;
+      this.model = new app.models.Formc(
+        this.urlRoot.replace(':id', options.formc.id),
+        options.formc,
+        options.fields
+      );
       this.fields = options.fields;
 
       this.labels = {
@@ -743,7 +755,11 @@ module.exports = {
     },
 
     initialize(options) {
-      this.model = options.formc;
+      this.model = new app.models.Formc(
+        this.urlRoot.replace(':id', options.formc.id),
+        options.formc,
+        options.fields
+      );
       this.fields = options.fields;
       this.campaign = options.campaign;
 
@@ -879,7 +895,6 @@ module.exports = {
     },
 
     submit(e) {
-      debugger;
       var $target = $(e.target.currentTarget);
       var data = $target.serializeJSON();
       data.use_of_net_proceeds.forEach(function (elem) {
@@ -904,6 +919,7 @@ module.exports = {
           maxRaise: this.campaign.maximum_raise,
           minRaise: this.campaign.minimum_raise,
           campaignId: this.campaign.id,
+          view: this
         })
       );
       this.$('.max-total-use,.min-total-use').popover({
@@ -917,7 +933,6 @@ module.exports = {
       });
 
       this.calculate(null, false);
-      setTimeout(() => { this.createDropzones() } , 1000);
       app.helpers.disableEnter.disableEnter.call(this);
       raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
@@ -926,7 +941,11 @@ module.exports = {
 
   riskFactorsInstruction: Backbone.View.extend(_.extend({
     initialize(options) {
-      this.model = options.formc;
+      this.model = new app.models.Formc(
+        this.urlRoot.replace(':id', options.formc.id),
+        options.formc,
+        options.fields
+      );
     },
 
     preinitialize() {
@@ -973,7 +992,11 @@ module.exports = {
     },
 
     initialize(options) {
-      this.model = options.formc;
+      this.model = new app.models.Formc(
+        this.urlRoot.replace(':id', options.formc.id),
+        options.formc,
+        options.fields
+      );
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
@@ -1081,7 +1104,11 @@ module.exports = {
     },
 
     initialize(options) {
-      this.model = options.formc;
+      this.model = new app.models.Formc(
+        this.urlRoot.replace(':id', options.formc.id),
+        options.formc,
+        options.fields
+      );
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
@@ -1197,7 +1224,11 @@ module.exports = {
     },
 
     initialize(options) {
-      this.model = options.formc;
+      this.model = new app.models.Formc(
+        this.urlRoot.replace(':id', options.formc.id),
+        options.formc,
+        options.fields
+      );
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
@@ -1342,7 +1373,11 @@ module.exports = {
     },
 
     initialize(options) {
-      this.model = options.formc;
+      this.model = new app.models.Formc(
+        this.urlRoot.replace(':id', options.formc.id),
+        options.formc,
+        options.fields
+      );
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
@@ -1431,7 +1466,11 @@ module.exports = {
     },
 
     initialize(options) {
-      this.model = options.formc;
+      this.model = new app.models.Formc(
+        this.urlRoot.replace(':id', options.formc.id),
+        options.formc,
+        options.fields
+      );
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
@@ -1538,7 +1577,11 @@ module.exports = {
     },
 
     initialize(options) {
-      this.model = options.formc;
+      this.model = new app.models.Formc(
+        this.urlRoot.replace(':id', options.formc.id),
+        options.formc,
+        options.fields
+      );
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
@@ -1667,7 +1710,11 @@ module.exports = {
     },
 
     initialize(options) {
-      this.model = options.formc;
+      this.model = new app.models.Formc(
+        this.urlRoot.replace(':id', options.formc.id),
+        options.formc,
+        options.fields
+      );
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
@@ -1711,7 +1758,7 @@ module.exports = {
     },
 
     initialize(options) {
-      this.model = new Formc(
+      this.model = new app.models.Formc(
         this.urlRoot.replace(':id', options.formc.id),
         options.formc,
         options.fields
@@ -1764,7 +1811,7 @@ module.exports = {
           templates: this.jsonTemplates,
         })
       );
-      setTimeout(() => { this.createDropzones() } , 1000);
+      // setTimeout(() => { this.createDropzones() } , 1000);
       app.helpers.disableEnter.disableEnter.call(this);
       raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
@@ -1792,7 +1839,11 @@ module.exports = {
     },
 
     initialize(options) {
-      this.model = options.formc;
+      this.model = new app.models.Formc(
+        this.urlRoot.replace(':id', options.formc.id),
+        options.formc,
+        options.fields
+      );
       this.fields = options.fields;
       this.fields.business_loans_or_debt_choice.validate = {};
       this.fields.business_loans_or_debt_choice.validate.choices = {
@@ -2036,7 +2087,11 @@ module.exports = {
       }
     },
     initialize(options) {
-      this.model = options.formc;
+      this.model = new app.models.Formc(
+        this.urlRoot.replace(':id', options.formc.id),
+        options.formc,
+        options.fields
+      );
       this.fields = options.fields;
       this.labels = {
         company_or_director_subjected_to: 'If Yes, Explain',

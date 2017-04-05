@@ -51,7 +51,20 @@ class Campaign {
   }
 
   toJSON() {
-    return this.data;
+    let data = Object.assign({}, this.data);
+    for(let key in this.schema) {
+      if(this.data.hasOwnProperty(key)) {
+        switch(this.schema[key].type) {
+          case 'file':
+          case 'image':
+          case 'filefolder':
+          case 'imagefolder':
+            data[key] = this.data[key].id;
+            break;
+        }
+      }
+    }
+    return data;
   }
 
   daysLeft(dateTo) {

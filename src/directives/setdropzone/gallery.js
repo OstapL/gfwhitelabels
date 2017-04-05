@@ -29,6 +29,7 @@ class GalleryElement extends imageDropzone.ImageElement {
       fileObj.getTemplate = this.getTemplate;
       fileObj.save = () => this.save.call(this);
       fileObj.elementSelector = '.' + fieldName + ' .fileContainer' + el.id;
+      fileObj.options = this.options;
       this.files.push(fileObj);
     });
     // this.file = file;
@@ -114,10 +115,13 @@ class GalleryDropzone extends imageDropzone.ImageDropzone {
     fileObj.elementSelector = '.' + this.galleryElement.fieldName + ' .fileContainer' + reorgData.id;
     fileObj.save = () => this.galleryElement.save.call(this.galleryElement);
     fileObj.delete = () => this.galleryElement.delete.call(this.galleryElement, fileObj.file.id);
+    fileObj.options = this.galleryElement.options;
+    debugger;
     this.galleryElement.files.push(fileObj);
 
     this.galleryElement.update(this.galleryElement.file.data, () => {
       fileObj.render();
+      debugger;
       this.element.querySelector('.' + this.galleryElement.fieldName).insertAdjacentHTML('beforeend', fileObj.resultHTML);
       new imageDropzone.CropperDropzone(
         this,

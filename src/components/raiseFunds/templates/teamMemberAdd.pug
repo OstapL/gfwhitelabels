@@ -1,7 +1,9 @@
 - var zipCodeDirective = require('directives/zipcode/index.js');
 include menu.pug
 
-- pug_html += app.breadcrumbs('Create Campaign', '', [ ['Home', '/'], ['Create campaign', '/campaign/' + values.id + '/general_information'], ['team member (' + (type == 'advisor' ? 'advisor' : 'team member') + ')', ''],]);
+- 
+  var imageDropzone = require('directives/setdropzone/image.js'); 
+  pug_html += app.breadcrumbs('Create Campaign', '', [ ['Home', '/'], ['Create campaign', '/campaign/' + values.id + '/general_information'], ['team member (' + (type == 'advisor' ? 'advisor' : 'team member') + ')', ''],]);
 
 
 section.team-members.container.m-b-85
@@ -10,8 +12,7 @@ section.team-members.container.m-b-85
   +menu('campaign', 'team-members')
 
   // SPECIAL HACK FOR CROPPER
-  - this.model = this.member;
-  - this.model.id = formc.campaign_id;
+  - view.model = view.member;
 
   //START RIGHT BLOCK
   .col-xl-8.col-lg-8.col-md-12.p-sm-0
@@ -91,10 +92,11 @@ section.team-members.container.m-b-85
             label:  'Your Facebook link', 
             placeholder: 'Your Facebook profile',})
       -
-        pug_html += app.fields.teamMemberDropzone('photo_image_id', {
-            data: member.photo_data[0],
-            help_text: 'This image entices investors to view your campaign. A minimum size of 1600x955 is recommended.',
-          }, fields.photo_image_id);
+        pug_html += new imageDropzone.ImageDropzone(view, 
+          'photo_image_id', 
+          'photo_data', 
+          view.fields.photo_image_id
+        ).render().resultHTML;
 
       .col-lg-12.text-lg-right.p-l-0.p-r-0.p-t-2.text-md-center.text-sm-center.text-xs-center
         button.btn.btn-secondary.text-uppercase.mr30.cancel cancel

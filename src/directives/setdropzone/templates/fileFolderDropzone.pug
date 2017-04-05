@@ -28,6 +28,7 @@ div(class=klass data-content=(options.help_text || ''))
             i(class="fa fa-file")
         div.col-lg-7.col-md-7.col-sm-7.col-xs-7.p-r-0.p-l-0.img-dropzone.text-xs-center.all-file-scroll
           .file-scroll
+            - debugger;
             each file,index in self.folderElement.files
               .thumb-file-container
                 .delete-file-container(style="position: absolute;")
@@ -37,4 +38,4 @@ div(class=klass data-content=(options.help_text || ''))
                 a(class=("link-file a-" + name) target="_blank" href=file.file.original title=file.file.name) #{ file.file.shortenFileName() }
             else
               .thumb-file-container.text-xl-center
-                img(src=self.folderElement.getIconUrl() alt=label class="img-file img-" + self.folderElement.fieldName)
+                img(src="" alt=label class="img-file img-")

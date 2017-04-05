@@ -3,9 +3,8 @@ const Image = require('./image.js');
 const Folder = require('./folder.js');
 const Gallery = require('./gallery.js');
 
-
-class Formc {
-  constructor(url, data={}, schema={}) {
+class TeamMemberCampaign {
+  constructor(urlRoot, data={}, schema={}) {
     //
     // urlRoot - url for update model assosiated with that file
     // data - file data
@@ -13,22 +12,22 @@ class Formc {
 
     this.data = data;
     this.schema = schema;
-    this.url = url;
+    this.urlRoot = urlRoot;
 
     for(let key in this.schema) {
       if(this.data.hasOwnProperty(key)) {
         switch(this.schema[key].type) {
           case 'file':
-            this.data[key] = new File(url, this.data[key.replace('_file_id', '_data')]);
+            this.data[key] = new File(urlRoot, this.data[key.replace('_file_id', '_data')]);
             break;
           case 'image':
-            this.data[key] = new Image(url, this.data[key.replace('_image_id', '_data')]);
+            this.data[key] = new Image(urlRoot, this.data[key.replace('_image_id', '_data')]);
             break;
           case 'filefolder':
-            this.data[key] = new Folder(url, this.data[key], this.data[key.replace('_id', '_data')]);
+            this.data[key] = new Folder(urlRoot, this.data[key], this.data[key.replace('_id', '_data')]);
             break;
           case 'imagefolder':
-            this.data[key] = new Gallery(url, this.data[key], this.data[key.replace('_id', '_data')]);
+            this.data[key] = new Gallery(urlRoot, this.data[key], this.data[key.replace('_id', '_data')]);
             break;
         }
       }
@@ -59,7 +58,6 @@ class Formc {
     }
     return data;
   }
+};
 
-}
-
-module.exports = Formc
+module.exports = TeamMemberCampaign;

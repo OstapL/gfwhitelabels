@@ -88,7 +88,7 @@ module.exports = {
     let url = this.urlRoot || '';
     let method = e.target.dataset.method || 'POST';
 
-    if(this.model && this.model.hasOwnProperty('id')) {
+    if(this.model && this.model.toJSON().hasOwnProperty('id')) {
       url = url.replace(':id', this.model.id);
       method = e.target.dataset.method || 'PATCH';
     }
@@ -100,13 +100,13 @@ module.exports = {
 
     // if view already have some data - extend that info
     if(this.hasOwnProperty('model') && !this.doNotExtendModel && method != 'PATCH') {
-      newData = _.extend({}, this.model, newData);
+      newData = _.extend({}, this.model.toJSON(), newData);
     }
 
     // for PATCH method we will send only difference
     if(method == 'PATCH') {
       let patchData = {};
-      let d = deepDiff(newData, this.model);
+      let d = deepDiff(newData, this.model.toJSON());
       _(d).forEach((el, i) => {
         if(el.kind == 'E' || el.kind == 'A') {
           patchData[el.path[0]] = newData[el.path[0]];

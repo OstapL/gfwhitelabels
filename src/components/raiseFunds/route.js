@@ -67,7 +67,7 @@ module.exports = {
       require.ensure([], () => {
         const View = require('components/raiseFunds/views.js');
 
-        const optionsUrl = app.config.raiseCapitalServer + '/campaign/' + id + '/general_information';
+        const optionsUrl = app.config.raiseCapitalServer + '/campaign/' + id;
         const optionsR = api.makeCacheRequest(optionsUrl, 'OPTIONS');
         getOCCF(optionsR, 'generalInformation', {}, View);
       });
@@ -77,7 +77,7 @@ module.exports = {
       require.ensure([], () => {
         const View = require('components/raiseFunds/views.js');
 
-        const optionsUrl = app.config.raiseCapitalServer + '/campaign/' + id + '/media';
+        const optionsUrl = app.config.raiseCapitalServer + '/campaign/' + id;
         const optionsR = api.makeCacheRequest(optionsUrl, 'OPTIONS');
         getOCCF(optionsR, 'media', {}, View);
       });
@@ -110,7 +110,7 @@ module.exports = {
       require.ensure([], () => {
         const View = require('components/raiseFunds/views.js');
 
-        const optionsUrl = app.config.raiseCapitalServer + '/campaign/' + id + '/specifics';
+        const optionsUrl = app.config.raiseCapitalServer + '/campaign/' + id;
         const optionsR = api.makeCacheRequest(optionsUrl, 'OPTIONS');
         getOCCF(optionsR, 'specifics', {}, View);
       });
@@ -120,7 +120,7 @@ module.exports = {
       require.ensure([], () => {
         const View = require('components/raiseFunds/views.js');
 
-        const optionsUrl = app.config.raiseCapitalServer + '/campaign/' + id + '/perks';
+        const optionsUrl = app.config.raiseCapitalServer + '/campaign/' + id;
         const optionsR = api.makeCacheRequest(optionsUrl, 'OPTIONS');
         getOCCF(optionsR, 'perks', {}, View);
       });
