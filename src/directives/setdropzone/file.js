@@ -1,6 +1,7 @@
 const File = require('models/file.js');
 const Dropzone = require('dropzone');
 
+
 class FileElement {
   constructor(file, fieldName, fieldDataName, options={}) {
     this.file = file
