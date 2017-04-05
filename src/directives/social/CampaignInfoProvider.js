@@ -2,6 +2,10 @@ const CORPORATE_STRUCTURE = require('consts/raisecapital/corporate_structure.jso
 const campaignHelper = require('components/campaign/helpers.js');
 
 const ShareInfoProvider = require('src/directives/social/infoProvider.js');
+const titleTemplate = 'You want a piece of this!? Invest in :company: on :site:';
+const emailBodyTemplate = 'Hi! I think you should check out :company:\'s fundraise on :site:. ' +
+  'You now have the opportunity to own a piece of your favorite company for as little as $100.%0D%0A' +
+  'Come take a look: ';
 
 class CampaignInfoProvider extends ShareInfoProvider {
   constructor(model) {
@@ -13,22 +17,25 @@ class CampaignInfoProvider extends ShareInfoProvider {
     if (this.data)
       return;
 
-    let companyName = model.short_name || model.name || '';
+    const companyName = model.short_name || model.name || '';
+    const site = window.location.host.replace(/growthfountain/i, 'GrowthFountain')
 
     this.data = {
-      title: 'Checkout ' + companyName + '\'s' + ' fundraise on ' + window.location.host,
+      title: titleTemplate.replace(':company:', companyName).replace(':site:', site),
       url: `${window.location.origin}/${model.slug || model.id}`,
       description: model.description,
       companyName: companyName,
       corporateStructure: CORPORATE_STRUCTURE[model.corporate_structure] || '',
       picture: campaignHelper.getImageCampaign(model.campaign),
+      site: site,
     };
   }
 
   twitter() {
     return 'https://twitter.com/share' +
         '?url=' + this.data.url +
-        '&text=' + 'Checkout ' + this.data.companyName + '\'s fundraise on @growthfountain';
+        '&text=' + titleTemplate.replace(':company:', this.data.companyName)
+                    .replace(':site:', '@GrowthFountain') + '%0D%0A';
   }
 
   linkedin() {
@@ -59,8 +66,12 @@ class CampaignInfoProvider extends ShareInfoProvider {
   email() {
     return 'mailto:' +
         '?subject=' + this.data.title +
-        '&body=' + ('I thought you might be interested in checking out ' + this.data.companyName +
-          ' fundraise on ' + window.location.host + '%0D%0A') + this.data.url;
+        '&body=' + emailBodyTemplate.replace(':company:', this.data.companyName)
+                    .replace(':site:', this.data.site) + this.data.url;
+  }
+
+  confirmationMessage(network) {
+    return `Do you want to share ${this.data.companyName}'s fundraise with your ${network} network`;
   }
 }
 

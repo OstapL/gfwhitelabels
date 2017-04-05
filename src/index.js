@@ -3,10 +3,11 @@ require('jquery-serializejson/jquery.serializejson.min.js');
 require('js/html5-dataset.js');
 require('classlist-polyfill');
 
-if (!global.Intl) {
+//fix for safari 9.1
+// if (!global.Intl) {
   require('intl');
   require('intl/locale-data/jsonp/en.js');
-}
+// }
 
 require('bootstrap/dist/js/bootstrap.js');
 require('owl.carousel/dist/owl.carousel.min.js');

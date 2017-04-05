@@ -7,11 +7,8 @@ noscript
     style="display:none;visibility:hidden"
   )
 
-//momentum3.growthfountain.com
-noscript
-  iframe(
-    src="https://www.googletagmanager.com/ns.html?id=GTM-NCTFX7Z"
-    height="0"
-    width="0"
-    style="display:none;visibility:hidden"
-  )
+if config.googleTagIdGeneral
+  +googleTag(config.googleTagIdGeneral)
+
+if config.googleTagId
++googleTag(config.googleTagId)
