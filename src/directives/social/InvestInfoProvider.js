@@ -6,29 +6,41 @@ const ShareInfoProvider = require('src/directives/social/infoProvider.js');
 class InvestorInfoProvider extends ShareInfoProvider {
   constructor(model) {
     super(model);
+
+    this.templates = {
+      emailSubject: 'Everyone’s doing it! I just invested in :company on :siteName',
+      emailBody: 'Hi! I just made an investment in :company and you can too! ' +
+      'You can now invest in local businesses and entrepreneurs you believe in – starting at $100.' +
+      '%0D%0A%0D%0ACome take a look: :siteURL',
+      title: 'Everyone’s doing it! I just invested in :company on :siteName',
+      confirmationMessage: 'Would you like to share that you invested in :company ' +
+      'with your :network Network?',
+    };
+
     this.__initData(model);
   }
 
   __initData(model) {
-    if (this.data)
-      return;
 
     let companyName = model.short_name || model.name || '';
 
-    this.data = {
-      title: 'I invested in ' + companyName + ' on ' + window.location.host,
+    this.data = _.extend(this.data || {}, {
+      title: this._format('title', { company: companyName, siteName: this.data.siteName }),
       url: `${window.location.origin}/${model.slug || model.id}`,
       description: model.description,
       companyName: companyName,
       corporateStructure: CORPORATE_STRUCTURE[model.corporate_structure] || '',
       picture: campaignHelper.getImageCampaign(model.campaign),
-    };
+    });
   }
 
   twitter() {
     return 'https://twitter.com/share' +
       '?url=' + this.data.url +
-      '&text=' + 'I invested in ' + this.data.companyName + ' on @growthfountain';
+      '&text=' + this._format('title', {
+        company: this.data.companyName,
+        siteName: '@GrowthFountain',
+      }) + '%0D%0A';
   }
 
   linkedin() {
@@ -49,7 +61,7 @@ class InvestorInfoProvider extends ShareInfoProvider {
     return 'https://www.facebook.com/dialog/share' +
       '?app_id=' + app.config.facebookClientId +
       '&href=' + this.data.url + '?r=' + Math.random() +
-      '&description=' + this.data.description +
+      '&description=' + this._stripHtml(this.data.description) +
       '&locale=' + 'en_US' +
       '&picture=' + this.data.picture +
       '&title=' + this.data.title +
@@ -58,12 +70,21 @@ class InvestorInfoProvider extends ShareInfoProvider {
 
   email() {
     return 'mailto:' +
-      '?subject=' + this.data.title +
-      '&body=' + (this.data.title +  '%0D%0A') + this.data.url;
+      '?subject=' + this._format('emailSubject', {
+        company:  this.data.companyName,
+        siteName: this.data.siteName,
+      }) +
+      '&body=' + this._format('emailBody', {
+        company: this.data.companyName,
+        siteURL: this.data.siteURL,
+      });
   }
 
   confirmationMessage(network) {
-    return `Would you like to share that you invested in ${this.data.companyName} with your ${network} Network?`;
+    return this._format('confirmationMessage', {
+      company: this.data.companyName,
+      network,
+    });
   }
 }
 

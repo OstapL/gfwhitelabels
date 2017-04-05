@@ -1,10 +1,4 @@
 const mainContent = '#content';
-function stripHtml(content) {
-  if (!_.isString(content))
-    return content;
-
-  return content.replace(/(<([^>]+)>)/ig,"");
-}
 
 class SocialNetworks {
   constructor() {
