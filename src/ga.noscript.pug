@@ -9,6 +9,8 @@ mixin googleTag(id)
     style="display:none;visibility:hidden"
   )
 
+if config.googleTagIdGeneral
+  +googleTag(config.googleTagIdGeneral)
 
-+googleTag(config.googleTagIdGeneral)
+if config.googleTagId
 +googleTag(config.googleTagId)
