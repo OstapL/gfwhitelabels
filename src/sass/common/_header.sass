@@ -35,6 +35,10 @@ header
 
     .mobile-logo
       display: none
+    &.navbar-toggleable-md
+      height: $navbar_height
+      .navbar-nav
+        height: $navbar_height
   .navbar-nav
     @media screen and (min-width: 992px)
       li.nav-item > a.nav-link,
@@ -82,7 +86,6 @@ header
           max-width: 200px
           overflow: hidden
           height: 16px
-          display: inline-block
       .list-container
         display: none
 
@@ -469,6 +472,7 @@ header
       margin-right: $navbar-brand-margin-right-mobile
       z-index: 999
       +transform-center
+      top: 45%!important
     .navbar-nav
       height: $navbar_height_mobile
 
@@ -500,14 +504,7 @@ header
           img
             width: 35px
             height: 35px
-
           a.user-info-name
-            +centered
-
-            padding-bottom: 0
-
-            text-align: right
-            
             i.fa
               font-size: 24px
 
@@ -765,7 +762,7 @@ header
 
 @media screen and (max-width: 991px)
   #menuProfile
-    left: 0!important
+    //left: 0!important
     width: 100%
     .mobile-profile-menu
       padding: 15px 10px 0px 25px !important
@@ -788,3 +785,94 @@ header
   .navbar-brand 
     img
       left: -10px
+html.show-menu
+  overflow: hidden !important
+  height: 100% !important
+  overflow-y: scroll !important
+
+  body
+    overflow: hidden !important 
+    height: 100% !important
+
+  header
+    height: 100%
+    -webkit-transition: height 0.35s ease-in 200ms
+    -moz-transition: height 0.35s ease-in 200ms
+    -ms-transition: height 0.35s ease-in 200ms
+    -o-transition: height 0.35s ease-in 200ms
+    transition: height 0.35s ease-in 200ms
+
+    //#menuProfile
+      //-webkit-transition: right 0.45s ease-in 200ms
+      //-moz-transition: right 0.45s ease-in 200ms
+      //-ms-transition: right 0.45s ease-in 200ms
+      //-o-transition: right 0.45s ease-in 200ms
+      //transition: right 0.45s ease-in 200ms
+
+      //right: -90px
+
+    button.navbar-toggler
+      span 
+        background-color: transparent
+
+      span:before 
+        -webkit-transition: rotate(45deg) translate(-1px, 0px)
+        -moz-transition: rotate(45deg) translate(-1px, 0px)
+        -ms-transition: rotate(45deg) translate(-1px, 0px)
+        -o-transition: rotate(45deg) translate(-1px, 0px)
+        transform: rotate(45deg) translate(-1px, 0px)
+
+      span:after 
+        -webkit-transition: rotate(-45deg) translate(5px, -7px)
+        -moz-transition: rotate(-45deg) translate(5px, -7px)
+        -ms-transition: rotate(-45deg) translate(5px, -7px)
+        -o-transition: rotate(-45deg) translate(5px, -7px)
+        transform: rotate(-45deg) translate(5px, -7px)
+
+    #menuList,
+      visibility: visible
+      -webkit-transition-delay: 0s
+      -moz-transition-delay: 0s
+      -ms-transition-delay: 0s
+      -o-transition-delay: 0s
+      transition-delay: 0s
+
+      li
+        -webkit-transition-delay: 300ms, 300ms
+        -moz-transition-delay: 300ms, 300ms
+        -ms-transition-delay: 300ms, 300ms
+        -o-transition-delay: 300ms, 300ms
+        transition-delay: 300ms, 300ms
+
+        -webkit-transition: none
+        -moz-transition: none
+        -ms-transition: none
+        -o-transition: none
+        transform: none
+
+        opacity: 1
+        -webkit-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+        -moz-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+        -ms-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+        -o-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+        transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+
+    form.form-inline
+      -webkit-transition-delay: 200ms, 200ms
+      -moz-transition-delay: 200ms, 200ms
+      -ms-transition-delay: 200ms, 200ms
+      -o-transition-delay: 200ms, 200ms
+      transition-delay: 200ms, 200ms
+
+      -webkit-transition: none
+      -moz-transition: none
+      -ms-transition: none
+      -o-transition: none
+      transform: none
+      opacity: 1
+      -webkit-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+      -moz-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+      -ms-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+      -o-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+      transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+//================================
