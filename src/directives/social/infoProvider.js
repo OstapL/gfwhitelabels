@@ -23,7 +23,7 @@ class InfoProvider {
     throw 'Not implemented';
   }
 
-  confirmationMessage() {
+  confirmationMessage(network) {
     return '';
   }
 }
