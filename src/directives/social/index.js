@@ -66,7 +66,7 @@ class SocialNetworks {
         return;
       }
 
-      let message = this.data[key].confirmationMessage();
+      let message = this.data[key].confirmationMessage('LinkedIn');
 
       this.confirm($linksContainer, { title: 'confirm', message: message }).then((res) => {
         if (res)

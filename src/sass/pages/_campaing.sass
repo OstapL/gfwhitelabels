@@ -326,13 +326,17 @@
 			margin-bottom: rem(19)
 			h6
 				color: $black_text
+@media only screen and (max-width : 991px)
+	.one_block
+		.description
+			height: 90px
 @media only screen and (max-width : 768px)
 	.create-alert-block
 		.pull-right
 			float: left
 	.one_block
 		.description
-			height: 50px
+			height: 100px
 	
 @media only screen and (max-width : 545px)
 	.create-alert-block
@@ -346,7 +350,7 @@
 			margin-left: 0!important
 	.one_block
 		.description
-			height: 47px
+			height: 120px
 	.block_link
 		&:hover~.one_block
 			.for_img
