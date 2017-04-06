@@ -97,7 +97,9 @@ module.exports = {
     newData = newData || form.serializeJSON();
 
     // issue 348, disable form for double posting
-    form[0].setAttribute('disabled', true);
+    if(form.length > 0) {
+      form[0].setAttribute('disabled', true);
+    }
 
     api.deleteEmptyNested.call(this, this.fields, newData);
     api.fixDateFields.call(this, this.fields, newData);
@@ -167,7 +169,9 @@ module.exports = {
         app.validation.invalidMsg(this, key, errors);
       });
       this.$('.help-block').prev().scrollTo(5);
-      form[0].setAttribute('disabled', true);
+      if(form.length > 0) {
+        form[0].setAttribute('disabled', true);
+      }
       return false;
     } else {
 
@@ -201,7 +205,9 @@ module.exports = {
           }
         }).
         fail((xhr, status, text) => {
-          form[0].setAttribute('disabled', false);
+          if(form.length > 0) {
+            form[0].setAttribute('disabled', false);
+          }
           api.errorAction(this, xhr, status, text, this.fields);
         });
     }
