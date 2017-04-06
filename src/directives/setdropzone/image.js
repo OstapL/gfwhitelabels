@@ -76,7 +76,7 @@ class ImageDropzone extends file.FileDropzone {
     }
 
     this.fileElement.update(reorgData);
-    this.model[this.fileElement.fieldName] = reorgData.id;
+    // this.model[this.fileElement.fieldName] = reorgData.id;
     this.model[this.fileElement.fieldDataName] = reorgData;
     new CropperDropzone(
       this,

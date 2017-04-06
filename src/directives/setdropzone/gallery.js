@@ -116,12 +116,10 @@ class GalleryDropzone extends imageDropzone.ImageDropzone {
     fileObj.save = () => this.galleryElement.save.call(this.galleryElement);
     fileObj.delete = () => this.galleryElement.delete.call(this.galleryElement, fileObj.file.id);
     fileObj.options = this.galleryElement.options;
-    debugger;
     this.galleryElement.files.push(fileObj);
 
     this.galleryElement.update(this.galleryElement.file.data, () => {
       fileObj.render();
-      debugger;
       this.element.querySelector('.' + this.galleryElement.fieldName).insertAdjacentHTML('beforeend', fileObj.resultHTML);
       new imageDropzone.CropperDropzone(
         this,

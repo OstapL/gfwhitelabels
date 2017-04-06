@@ -6,6 +6,28 @@ class Image extends File {
 
   }
 
+  getUrl(name, fallback='') {
+    /*
+     * Will return url for the name 
+     * or will return smallest image from urls
+     */
+    let files = Object.assign({}, this.urls);
+    let smallestSize = '';
+
+    if(name && this.urls.hasOwnProperty(name)) {
+      return this.urls[name];
+    }
+
+    if(Object.keys(files).length > 0) {
+      smallestSize = Object.keys(files).sort((a, b) => {
+        return a.split('x')[0] > b.split('x')[0];
+      })[0];
+      return this.urls[smallestSize];
+    } else {
+      return '/img/default/' + fallback;
+    };
+  }
+
   getDefaultImage() {
     return this.options.defaultImage || defaultImage;
   }
