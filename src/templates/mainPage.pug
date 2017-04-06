@@ -2,14 +2,14 @@
 
 section.slider-main
   .owl-carousel.owl-theme.carousel-test
-    div
+    div.align-items-center
       - var styleString = 'background: url(' + require('images/slide_5.png') + ')';
       div(style=styleString + '; background-position: center center !important').slide_1.main-slider-item
       .slider-content.container
-        .text-xs-center
+        .text-center
           .col-lg-12
             h1.big-h1.hidden-sm-down Own a Piece of Your Favorite Company
-          .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
+          .col-lg-6.offset-lg-3.text-center
             span.small-text Invest in local businesses and entrepreneurs you believe in, starting at $100
           .col-lg-12.mt20.mb30
             a(href="/pg/education").link-6 Learn the Risks
@@ -18,7 +18,7 @@ section.slider-main
               a(href="/account/signup").btn.btn-lg.btn-primary sign up + get $25
           else
             .col-lg-12.hidden-sm-down
-              a(href="/companies").btn.btn-lg.btn-primary.m-r-2 INVEST
+              a(href="/companies").btn.btn-lg.btn-primary.mr-4 INVEST
               a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
             .col-lg-12.hidden-md-up
               a(href="/companies").btn.btn-lg.btn-primary INVEST
@@ -28,10 +28,10 @@ section.slider-main
       div(style=styleString).main-slider-item.slide_2
       //img(src=require('images/slide_2.jpg') alt="...")
       .slider-content.container
-        .text-xs-center
+        .text-center
           .col-lg-12
             h1.big-h1.hidden-sm-down Own a Piece of Your Favorite Company
-          .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
+          .col-lg-6.offset-lg-3.text-center
             span.small-text Invest in local businesses and entrepreneurs you believe in, starting at $100
           .col-lg-12.mt20.mb30
             a(href="/pg/education").link-6 Learn the Risks
@@ -40,7 +40,7 @@ section.slider-main
               a(href="/account/signup").btn.btn-lg.btn-primary sign up + get $25
           else
             .col-lg-12.hidden-sm-down
-              a(href="/companies").btn.btn-lg.btn-primary.m-r-2 INVEST
+              a(href="/companies").btn.btn-lg.btn-primary.mr-4 INVEST
               a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
             .col-lg-12.hidden-md-up
               a(href="/companies").btn.btn-lg.btn-primary INVEST
@@ -49,10 +49,10 @@ section.slider-main
       div(style=styleString).main-slider-item.slide_3
       //img(src=require('images/slide_3.jpg') alt="...")
       .slider-content.container
-        .text-xs-center
+        .text-center
           .col-lg-12
             h1.big-h1.hidden-sm-down Own a Piece of Your Favorite Company
-          .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
+          .col-lg-6.offset-lg-3.text-center
             span.small-text Invest in local businesses and entrepreneurs you believe in, starting at $100
           .col-lg-12.mt20.mb30
             a(href="/pg/education").link-6 Learn the Risks
@@ -61,46 +61,45 @@ section.slider-main
               a(href="/account/signup").btn.btn-lg.btn-primary sign up + get $25
           else
             .col-lg-12.hidden-sm-down
-              a(href="/companies").btn.btn-lg.btn-primary.m-r-2 INVEST
+              a(href="/companies").btn.btn-lg.btn-primary.mr-4 INVEST
               a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
             .col-lg-12.hidden-md-up
               a(href="/companies").btn.btn-lg.btn-primary INVEST
 
 section.campaing-list
   .container#campaignList
-    .col-lg-12
-      h2.dosis.text-uppercase.text-sm-center.text-xs-center.mt50 CURRENT CAMPAIGNS
+    .col-12
+      h2.text-uppercase.text-center.mt50 CURRENT CAMPAIGNS
     include ../components/campaign/templates/_list.pug
-    .col-lg-12.text-lg-center.text-md-center.text-xs-center
+    .col-12.text-center
       if collection && collection.count && collection.count > GENERAL.COMPANIES_PER_PAGE
         a(href="/companies").link-4 See All
 
-section.home-wrap-text-block.hide-bg-fixed.main-section-invest
+section.center-wrap-text-block.hide-bg-fixed.main-section-invest
   .opasity-block
-    .container.text-lg-center.text-xs-center.text-sm-center
-      .wrap
-        .col-lg-6.offset-lg-3
-          h2.dosis.text-uppercase.m-t-0 NOW ACCESSIBLE TO EVERYBODY
+    .container
+      .wrap.d-flex.align-items-center
+        .col-12
+          h2.text-uppercase.mt-0 NOW ACCESSIBLE TO EVERYBODY
           h3 It’s the evolution of investing. Receive a financial stake
             br
             | in the companies you support.
-        .col-lg-12
           a(href="/account/signup").btn.btn-lg.btn-secondary.text-uppercase Sign up to start investing
 
 section.home-what-is
   .container
     .col-lg-8.offset-lg-2.p-xs-0
-      h2.dosis.text-uppercase.text-sm-center.text-xs-center.m-t-3.mb20 WHAT IS GROWTHFOUNTAIN?
+      h2.text-uppercase.text-center.mt-5.mb20 WHAT IS GROWTHFOUNTAIN?
       .row
-        .col-lg-12
-          h3.m-t-0.m-b-1.text-xs-center We banded together with a simple mission: to simplify fundraising
+        .col-12
+          h3.mt-0.mb-3.text-center We banded together with a simple mission: to simplify fundraising
             br
             | and help businesses raise capital.
-          h3.m-t-0.text-xs-center Everybody in the world now has the ability to invest directly
+          h3.mt-0.text-center Everybody in the world now has the ability to invest directly
             br
             | in America’s entrepreneurs!
       .row
-        .col-lg-12
+        .col-12
           .embed-responsive.embed-responsive-16by9.boxshadow
             iframe(
               embed-responsive-item="true" 
@@ -110,36 +109,35 @@ section.home-what-is
               data-allowfullscreen=""
             )
             
-section.home-wrap-text-block.raise-wrap.hide-bg-fixed.main-section-raise
+section.center-wrap-text-block.hide-bg-fixed.main-section-raise
   .opasity-block
-    .container.text-lg-center.text-xs-center
-      .wrap
-        .col-lg-6.offset-lg-3
-          h2.dosis.text-uppercase.m-t-0  Raise capital with us
+    .container
+      .wrap.d-flex.align-items-center
+        .col-12
+          h2.text-uppercase.mt-0  Raise capital with us
           h3 How does investing in Regulation Crowdfunding offerings
             br
             | actually work? Access our investor network to raise
             br
             | financial capital for your company
-        .col-lg-12
           if app.user.is_anonymous()
-            a(href="/pg/raise_landing").btn.btn-lg.btn-primary.text-uppercase raise capital
+            a(href="/pg/raise_landing").btn.btn-lg.btn-primary.text-uppercase.mr-4 raise capital
           else
-            a(href="/company/create").btn.btn-lg.btn-primary.text-uppercase raise capital
+            a(href="/company/create").btn.btn-lg.btn-primary.text-uppercase.mr-4 raise capital
           a(href="/pg/entrepreneurquestions").btn.btn-lg.btn-secondary.text-uppercase learn more
 section.home-our-partners
   .container
     .row
-      .col-lg-12
-        h2.dosis.text-uppercase.text-xs-center OUR PARTNERS
+      .col-12
+        h2.text-uppercase.text-center OUR PARTNERS
     .row.text-center-flex
-      .col-lg-4.col-sm-6.col-xs-12.text-xs-center.p-b-3
+      .col-lg-4.col-sm-6.col-xs-12.text-xs-center.pb-5
         a(href="http://www.callahan.com/" target="_blank")
-          img(src=require("images/callahan.png")).img-fluid.text-lg-right.text-xs-center.m-x-auto
-      .col-lg-4.col-sm-6.col-xs-12.text-lg-center.text-xs-center.m-x-auto.p-b-3
+          img(src=require("images/callahan.png")).img-fluid.text-lg-right.text-xs-center.mx-auto
+      .col-lg-4.col-sm-6.col-xs-12.text-lg-center.text-xs-center.mx-auto.pb-5
         a(href="https://www.jdcu.org/" target="_blank")
-          img(src=require('images/logo_jd.png')).img-fluid.text-xs-center.m-x-auto
-      .col-lg-4.col-sm-6.col-xs-12.text-lg-left.m-x-auto.p-b-3
+          img(src=require('images/logo_jd.png')).img-fluid.text-xs-center.mx-auto
+      .col-lg-4.col-sm-6.col-xs-12.text-lg-right.mx-auto.pb-5
         a(href="https://www.rivermarkcu.org/" target="_blank")
           img(src=require('images/logo_rivermark.png')).img-fluid.text-xs-center.m-x-auto
       .col-lg-3.col-sm-6.col-xs-12.text-xs-center
