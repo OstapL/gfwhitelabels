@@ -88,7 +88,7 @@ module.exports = {
     let url = this.urlRoot || '';
     let method = e.target.dataset.method || 'POST';
 
-    if(this.model && this.model.toJSON().hasOwnProperty('id')) {
+    if(this.model&& Object.keys(this.model).length > 0 && this.model.toJSON().hasOwnProperty('id')) {
       url = url.replace(':id', this.model.id);
       method = e.target.dataset.method || 'PATCH';
     }
@@ -99,7 +99,7 @@ module.exports = {
     // api.fixFieldTypes.call(this, this.fields, newData);
 
     // if view already have some data - extend that info
-    if(this.hasOwnProperty('model') && !this.doNotExtendModel && method != 'PATCH') {
+    if(this.hasOwnProperty('model') && Object.keys(this.model).length > 0 && !this.doNotExtendModel && method != 'PATCH') {
       newData = _.extend({}, this.model.toJSON(), newData);
     }
 

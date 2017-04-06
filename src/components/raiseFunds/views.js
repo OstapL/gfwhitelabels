@@ -43,6 +43,7 @@ module.exports = {
         name: 'Legal Name of Company',
         short_name: 'Doing Business as Another Name?',
         industry: 'Industry',
+        ga_id: 'Google Analytic ID',
         founding_state: 'Jurisdiction of Incorporation / Organization',
         tagline: 'Tagline',
         description: 'About Us',
