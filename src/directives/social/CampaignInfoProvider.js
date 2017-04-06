@@ -9,7 +9,7 @@ class CampaignInfoProvider extends ShareInfoProvider {
     this.templates = {
       title: 'You want a piece of this!? Invest in :company on :siteName',
       emailBody: 'Hi! I think you should check out :company\'s fundraise on :siteName. ' +
-      'You now have the opportunity to own a piece of your favorite company for as little as $100.' +
+      'You now have the opportunity to own a piece of your favorite company for as little as $:invest.' +
       '%0D%0A%0D%0A' +
       'Come take a look: :url',
       confirmationMessage: 'Do you want to share :company\'s fundraise with your :network network?',
@@ -23,6 +23,9 @@ class CampaignInfoProvider extends ShareInfoProvider {
     const companyName = model.short_name || model.name || '';
 
     this.data = {
+      minInvestment: (model && model.campaign && model.campaign.minimum_increment)
+        ? model.campaign.minimum_increment
+        : 100,
       title: this._format('title', { company: companyName, siteName: this.data.siteName }),
       url: `${window.location.origin}/${model.slug || model.id}`,
       description: model.description,
@@ -74,6 +77,7 @@ class CampaignInfoProvider extends ShareInfoProvider {
           company: this.data.companyName,
           siteName: this.data.siteName,
           url: this.data.url,
+          invest: this.data.minInvestment,
         });
   }
 

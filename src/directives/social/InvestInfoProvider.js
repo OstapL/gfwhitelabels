@@ -10,11 +10,12 @@ class InvestorInfoProvider extends ShareInfoProvider {
     this.templates = {
       emailSubject: 'Everyone’s doing it! I just invested in :company on :siteName',
       emailBody: 'Hi! I just made an investment in :company and you can too! ' +
-      'You can now invest in local businesses and entrepreneurs you believe in – starting at $100.' +
-      '%0D%0A%0D%0ACome take a look: :siteURL',
+      'You can now invest in local businesses and entrepreneurs you believe in – starting at ' +
+      '$:invest.' +
+      '%0D%0A%0D%0ACome take a look: :url',
       title: 'Everyone’s doing it! I just invested in :company on :siteName',
       confirmationMessage: 'Would you like to share that you invested in :company ' +
-      'with your :network Network?',
+      'with your :network network?',
     };
 
     this.__initData(model);
@@ -24,14 +25,17 @@ class InvestorInfoProvider extends ShareInfoProvider {
 
     let companyName = model.short_name || model.name || '';
 
-    this.data = _.extend(this.data || {}, {
+    this.data = {
+      minInvestment: (model && model.campaign && model.campaign.minimum_increment)
+        ? model.campaign.minimum_increment
+        : 100,
       title: this._format('title', { company: companyName, siteName: this.data.siteName }),
-      url: `${window.location.origin}/${model.slug || model.id}`,
+      url: window.location.origin + '/' + (model.slug || model.id),
       description: model.description,
       companyName: companyName,
       corporateStructure: CORPORATE_STRUCTURE[model.corporate_structure] || '',
       picture: campaignHelper.getImageCampaign(model.campaign),
-    });
+    };
   }
 
   twitter() {
@@ -76,7 +80,8 @@ class InvestorInfoProvider extends ShareInfoProvider {
       }) +
       '&body=' + this._format('emailBody', {
         company: this.data.companyName,
-        siteURL: this.data.siteURL,
+        url: this.data.url,
+        invest: this.data.minInvestment,
       });
   }
 
