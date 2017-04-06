@@ -17,28 +17,30 @@
               .col-xl-8.offset-xl-2.text-xs-center
                 label(for="raiseMoney").font-weight-bold How much is the company raising?
               input(
-                value= formatPrice(data.raiseMoney),
+                value=(data.raiseMoney ? app.helpers.calculator.formatPrice(data.raiseMoney) : ''),
                 type='text',
                 placeholder='$0',
                 autocomplete="off"
                 data-input-mask='price',
                 data-model-value='raiseMoney',
                 data-current-value= data.raiseMoney
-                name="raiseMoney")#raiseMoney.form-control.js-field
+                name="raiseMoney"
+              )#raiseMoney.form-control.js-field
 
           .col-lg-4.p-xs-0
             .form-group
               .col-xl-12.text-xs-center
                 label(for="nextYearRevenue").font-weight-bold What do you expect next year's revenue share to be?
               input(
-                value= formatPrice(data.nextYearRevenue),
+                value=(data.nextYearRevenue ? app.helpers.calculator.formatPrice(data.nextYearRevenue) : ''),
                 type='text',
                 placeholder='$0',
                 autocomplete="off"
                 data-input-mask='price',
                 data-model-value='nextYearRevenue',
                 name="nextYearRevenue",
-                data-current-value= data.nextYearRevenue)#nextYearRevenue.form-control.js-field
+                data-current-value= data.nextYearRevenue
+              )#nextYearRevenue.form-control.js-field
 
           .col-lg-4.p-xs-0
             .form-group
@@ -51,7 +53,8 @@
                 autocomplete="off"
                 data-input-mask='percent',
                 name="growLevel",
-                data-model-value='growLevel')#growLevel.form-control.js-field
+                data-model-value='growLevel'
+              )#growLevel.form-control.js-field
         .row
           .col-xl-12.text-xs-center.m-t-10
             .controls
