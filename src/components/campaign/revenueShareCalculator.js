@@ -170,10 +170,13 @@ module.exports = {
 
       this.data.outputData = outputData;
 
-      let plotData = this.$plot.getData();
-      plotData[0].data = this.mapToPlot(outputData);
+      this.disposePlot();
+      this.initPlot();
+      // let plotData = this.$plot.getData();
+      // plotData[0].data = this.mapToPlot(outputData);
       // this.$plot.setData(plotData);
-      this.$plot.draw();
+      // this.$plot.setupGrid();
+      // this.$plot.draw();
     },
 
     // get sum of last Annual Distributions
@@ -302,6 +305,16 @@ module.exports = {
       });
 
       return this;
+    },
+
+    disposePlot() {
+      this.$chart
+        .off('growFinished')
+        .off('plothover');
+
+      this.$plot.shutdown();
+
+      this.$chart.empty();
     },
 
     resizeJqPlot: function() {
