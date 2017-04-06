@@ -2146,6 +2146,18 @@ module.exports = {
     initialize(options) {
       this.formcId = options.formcId;
       this.fields = options.fields;
+
+      this.model = new app.models.Company(
+        this.urlRoot.replace(':id', options.model.id),
+        options.model,
+        options.fields.company
+      );
+      this.model.campaign = new app.models.Campaign(
+        app.config.raiseCapitalServer + '/campaign/' + options.model.campaign.id,
+        options.model.campaign,
+        options.fields.campaign
+      );
+
       app.helpers.disableEnter.disableEnter.call(this);
     },
     events: {
@@ -2389,6 +2401,7 @@ module.exports = {
         template({
           fields: this.fields,
           formcId: this.formcId,
+          view: this,
           values: {
             company: app.user.company,
             campaign: app.user.campaign,

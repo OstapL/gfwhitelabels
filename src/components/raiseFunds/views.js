@@ -29,7 +29,7 @@ module.exports = {
       this.fields = options.fields.company;
       this.formc = options.formc || {};
       this.campaign = options.campaign || {};
-      this.model = new app.models.company(
+      this.model = new app.models.Company(
         this.urlRoot.replace(':id', options.company.id),
         options.company,
         options.fields.company

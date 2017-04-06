@@ -11,7 +11,31 @@ class Company {
     this.data = data;
     this.schema = schema;
     this.url = url;
-    this.data['campaign'] = new app.models.Campaign('', this.data['campaign']);
+
+    /*
+    if(schema.campaign) {
+      this.data['campaign'] = new app.models.Campaign('', this.data['campaign'], schema.campaign);
+    }
+    */
+
+    for(let key in this.schema) {
+      if(this.data.hasOwnProperty(key)) {
+        switch(this.schema[key].type) {
+          case 'file':
+            this.data[key] = new File(urlRoot, this.data[key.replace('_file_id', '_data')]);
+            break;
+          case 'image':
+            this.data[key] = new Image(urlRoot, this.data[key.replace('_image_id', '_data')]);
+            break;
+          case 'filefolder':
+            this.data[key] = new Folder(urlRoot, this.data[key], this.data[key.replace('_id', '_data')]);
+            break;
+          case 'imagefolder':
+            this.data[key] = new Gallery(urlRoot, this.data[key], this.data[key.replace('_id', '_data')]);
+            break;
+        }
+      }
+    }
 
     this.data = Object.seal(this.data);
     for(let key in this.data) {
