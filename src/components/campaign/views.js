@@ -72,15 +72,13 @@ module.exports = {
     initialize(options) {
       $(document).off("scroll", this.onScrollListener);
       $(document).on("scroll", this.onScrollListener);
-
-      let params = app.getParams();
-      this.edit = false;
-      if (params.preview == '1' && this.model.owner == app.user.get('id')) {
-        // see if owner match current user
-        this.edit = true;
-        this.previous = params.previous;
-      }
-      this.preview = params.preview ? true : false;
+      /*
+      this.model = new app.models.Company(
+        app.config.raiseCapitalServer + '/company/' + options.model.id,
+        options.model,
+        options.fields
+      );
+      */
 
       this.companyDocsData = {
         title: 'Financials',
@@ -95,7 +93,7 @@ module.exports = {
     submitCampaign(e) {
 
       api.makeRequest(
-        app.config.raiseCapitalServer + '/company/' + this.model.id + '/edit',
+        app.config.raiseCapitalServer + '/company/' + this.model.id,
         'GET'
       ).then(function(data) {
         if(
@@ -262,7 +260,9 @@ module.exports = {
           stickyToggle(sticky, stickyWrapper, $(window));
         });
 
-        this.initComments();
+        if(this.model.is_approved == 6) {
+          this.initComments();
+        };
 
       }, 1200);
 
