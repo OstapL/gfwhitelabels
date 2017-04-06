@@ -28,7 +28,7 @@ class CampaignInfoProvider extends ShareInfoProvider {
         ? model.campaign.minimum_increment
         : 100,
       title: this._format('title', { company: companyName, siteName: this.data.siteName }),
-      url: `${window.location.origin}/${model.slug || model.id}`,
+      url: this.data.siteName + '/' + (model.slug || model.id),
       description: model.description,
       companyName: companyName,
       corporateStructure: CORPORATE_STRUCTURE[model.corporate_structure] || '',
@@ -67,7 +67,7 @@ class CampaignInfoProvider extends ShareInfoProvider {
       '&locale=' + 'en_US' +
       '&picture=' + this.data.picture +
       '&title=' + this.data.title +
-      '&caption=' + window.location.host.toUpperCase();
+      '&caption=' + this.data.siteName.toUpperCase();
   }
 
   email() {
