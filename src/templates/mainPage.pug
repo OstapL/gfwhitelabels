@@ -1,6 +1,6 @@
 - var GENERAL = require('consts/general.json');
 
-section.slider-main
+//section.slider-main
   .owl-carousel.owl-theme.carousel-test
     div
       - var styleString = 'background: url(' + require('images/slide_5.png') + ')';
@@ -65,6 +65,31 @@ section.slider-main
               a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
             .col-lg-12.hidden-md-up
               a(href="/companies").btn.btn-lg.btn-primary INVEST
+section.main-video
+  .homepage-hero-module
+    .video-container
+      .filter
+      video(autoplay loop).fillWidth
+        source(src=require("img/video/Market/MP4/Market.mp4") type="video/mp4")
+        //source(src=require("img/video/Market/WEBM/Market.webm") type="video/webm")
+      .slider-main
+        .slider-content.container
+          .text-xs-center
+            .col-lg-12
+              h1.big-h1.hidden-sm-down Own a Piece of Your Favorite Company
+            .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
+              span.small-text Invest in local businesses and entrepreneurs you believe in, starting at $100
+            .col-lg-12.mt20.mb30
+              a(href="/pg/education").link-6 Learn the Risks
+            if app.user.is_anonymous()
+              .col-lg-12
+                a(href="/account/signup").btn.btn-lg.btn-primary sign up + get $25
+            else
+              .col-lg-12.hidden-sm-down
+                a(href="/companies").btn.btn-lg.btn-primary.m-r-2 INVEST
+                a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
+              .col-lg-12.hidden-md-up
+                a(href="/companies").btn.btn-lg.btn-primary INVEST
 
 section.campaing-list
   .container#campaignList
