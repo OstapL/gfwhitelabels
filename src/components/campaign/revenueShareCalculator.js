@@ -4,9 +4,6 @@ import '../../js/graph/graph.js';
 import '../../js/graph/jquery.flot.growraf';
 
 const settings = app.helpers.calculator.settings;
-
-const formatPrice = app.helpers.calculator.formatPrice;
-const formatPercentage = app.helpers.calculator.formatPercentage;
 const minPersents = 200;
 
 module.exports = {
@@ -16,9 +13,11 @@ module.exports = {
     events: _.extend({
       // calculate your income
       'submit .js-calc-form': 'doCalculation',
-      'keyup [data-input-mask="percent"]': 'savePercents',
-      'keydown [data-input-mask="percent"]': 'filterKeyCodeForPercentage',
-      'blur [data-input-mask="percent"]': 'cutZeros',
+      'keyup [name=growLevel]': 'savePercents',
+      'keydown [name=growLevel]': 'filterKeyCodeForPercentage',
+      'keyup [name=raiseMoney]': app.helpers.format.formatMoneyValue,
+      'keyup [name=nextYearRevenue]': app.helpers.format.formatMoneyValue,
+      // 'blur [data-input-mask="percent"]': 'cutZeros',
     }, app.helpers.calculatorValidation.events),
 
     initialize() {
@@ -35,16 +34,19 @@ module.exports = {
           required: true,
           type: 'integer',
           validate: {},
+          label: 'How much is the company raising?'
         },
         nextYearRevenue: {
           required: true,
           type: 'integer',
           validate: {},
+          label: 'What do you expect next year\'s revenue share to be?',
         },
         growLevel: {
           required: true,
           type: 'integer',
           validate: {},
+          label: 'At what rate do you expect revenues to grow each year?',
         },
       };
     },
@@ -78,27 +80,27 @@ module.exports = {
     },
 
     savePercents(e) {
-      let target = e.target,
-        value = e.target.value.replace(/[\$\%\,]/g, '');
+      let target = e.target;
+      let value = e.target.value.replace(/[\$\%\,]/g, '');
 
       this.data[target.dataset.modelValue] = Number(value);
-      let withDot = false
-      if (e.keyCode == 110 || e.keyCode == 190) {
-        withDot = true;
-      }
-      target.value = formatPercentage(value, withDot);
+
+      let withDot = (e.keyCode == 110 || e.keyCode == 190);
+      target.value = app.helpers.calculator.formatPercentage(value, withDot);
+
+      this.cutZeros(e);
     },
 
     cutZeros(e) {
-      let elem = e.target,
-        value = elem.value.replace('$', '').replace(/,/g, '');
+      let elem = e.target;
+      let value = elem.value.replace('$', '').replace(/,/g, '');
 
       if (!value) {
         elem.dataset.currentValue = 0;
         elem.value = '';
       } else {
         elem.dataset.currentValue = parseFloat(value);
-        elem.value = formatPercentage(elem.dataset.currentValue);
+        elem.value = app.helpers.calculator.formatPercentage(elem.dataset.currentValue);
       }
     },
 
@@ -106,6 +108,10 @@ module.exports = {
       e.preventDefault();
       if (!this.validate(e))
         return;
+
+      this.data.raiseMoney = Number(this.$raiseMoney.val().replace(/[\$\,]/g, ''));
+      this.data.nextYearRevenue = Number(this.$nextYearRevenue.val().replace(/[\$\,]/g, ''));
+      this.data.growLevel = Number(this.$growLevel.val().replace(/[\%\,]/g, ''));
 
       let maxOfMultipleReturned = 0,
         countOfMultipleReturned = 0,
@@ -163,6 +169,7 @@ module.exports = {
       }
 
       this.data.outputData = outputData;
+
       let plotData = this.$plot.getData();
       plotData[0].data = this.mapToPlot(outputData);
       // this.$plot.setData(plotData);
@@ -261,7 +268,7 @@ module.exports = {
         let last = plotData[0].data.pop();
         let o = this.$plot.pointOffset({x: last[0], y: last[1]});
         if (last[1] * 100 >= minPersents) {
-          $('<div class="data-point-label">Congratulations, Payback Share Contract is complete</div>').css( {
+          $('<div class="data-point-label">Congratulations, Payback Share Contract is complete</div>').css({
             position: 'absolute',
             left: o.left - 500,
             top: o.top - 30,
@@ -295,12 +302,6 @@ module.exports = {
       });
 
       return this;
-    },
-
-    ui() {
-      // get inputs by inputmask category
-      this.inputPercent = this.$('[data-input-mask="percent"]');
-      this.inputPrice = this.$('[data-input-mask="price"]');
     },
 
     resizeJqPlot: function() {
@@ -347,15 +348,13 @@ module.exports = {
     render() {
       this.$el.html(this.template({
         data: this.data,
-        formatPrice
       }));
 
-      // declare ui elements for the view
-      this.ui();
       this.initPlot();
-      app.helpers.flyPrice(this.inputPrice, ({ modelValue, currentValue }) => {
-        this.data[modelValue] = +currentValue;
-      });
+
+      this.$raiseMoney = this.$('input[name=raiseMoney]');
+      this.$nextYearRevenue = this.$('input[name=nextYearRevenue]');
+      this.$growLevel = this.$('input[name=growLevel]');
 
       return this;
     },
