@@ -30,7 +30,7 @@ class InvestorInfoProvider extends ShareInfoProvider {
         ? model.campaign.minimum_increment
         : 100,
       title: this._format('title', { company: companyName, siteName: this.data.siteName }),
-      url: this.data.siteURL + '/' + (model.slug || model.id),
+      url: window.location.origin + '/' + (model.slug || model.id),
       description: model.description,
       companyName: companyName,
       corporateStructure: CORPORATE_STRUCTURE[model.corporate_structure] || '',
@@ -69,7 +69,7 @@ class InvestorInfoProvider extends ShareInfoProvider {
       '&locale=' + 'en_US' +
       '&picture=' + this.data.picture +
       '&title=' + this.data.title +
-      '&caption=' + this.data.siteName.toUpperCase();
+      '&caption=' + window.location.host.toUpperCase();
   }
 
   email() {
