@@ -2,10 +2,18 @@ class InfoProvider {
   constructor(model) {
     this.model = model;
     this.templates = {};
-    this.data = {
+    this._data = {
       siteURL: window.location.origin.replace(/growthfountain/i, 'GrowthFountain'),
       siteName: window.location.host.replace(/growthfountain/i, 'GrowthFountain'),
     };
+  }
+
+  get data() {
+    return this._data;
+  }
+
+  set data(newData) {
+    this._data = _.extend(this._data, newData);
   }
 
   _stripHtml(html) {
