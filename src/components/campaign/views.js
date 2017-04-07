@@ -4,6 +4,8 @@ const typeOfDocuments = require('consts/typeOfDocuments.json');
 const COUNTRIES = require('consts/countries.json');
 const validation = require('components/validation/validation.js');
 
+const CalculatorView = require('./revenueShareCalculator.js');
+
 module.exports = {
   list: Backbone.View.extend({
     el: '#content',
@@ -87,11 +89,9 @@ module.exports = {
                 this.model.formc.fiscal_recent_group_data)
           : []
       };
-
     },
 
     submitCampaign(e) {
-
       api.makeRequest(
         app.config.raiseCapitalServer + '/company/' + this.model.id,
         'GET'
@@ -216,6 +216,12 @@ module.exports = {
         $('.nav-tabs li').removeClass('active');
         $(this).addClass('active');
       });
+
+      setTimeout(() => {
+        if (this.model.id == 606) { //enable calculator only for bluehollar company
+          (new CalculatorView.calculator()).render();
+        }
+      }, 100);
 
       setTimeout(() => {
 
