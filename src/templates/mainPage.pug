@@ -65,6 +65,31 @@ section.slider-main
               a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
             .col-lg-12.hidden-md-up
               a(href="/companies").btn.btn-lg.btn-primary INVEST
+//section.main-video
+  .homepage-hero-module
+    .video-container
+      .filter
+      video(autoplay loop).fillWidth
+        source(src=require("img/video/In-And-Out/MP4/In-And-Out.mp4") type="video/mp4")
+        //source(src=require("img/video/In-And-Out/WEBM/In-And-Out.webm") type="video/webm")
+      .slider-main
+        .slider-content.container
+          .text-xs-center
+            .col-lg-12
+              h1.big-h1.hidden-sm-down Own a Piece of Your Favorite Company
+            .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
+              span.small-text Invest in local businesses and entrepreneurs you believe in, starting at $100
+            .col-lg-12.mt20.mb30
+              a(href="/pg/education").link-6 Learn the Risks
+            if app.user.is_anonymous()
+              .col-lg-12
+                a(href="/account/signup").btn.btn-lg.btn-primary sign up + get $25
+            else
+              .col-lg-12.hidden-sm-down
+                a(href="/companies").btn.btn-lg.btn-primary.m-r-2 INVEST
+                a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
+              .col-lg-12.hidden-md-up
+                a(href="/companies").btn.btn-lg.btn-primary INVEST
 
 section.campaing-list
   .container#campaignList
@@ -123,7 +148,7 @@ section.home-wrap-text-block.raise-wrap.hide-bg-fixed.main-section-raise
             | financial capital for your company
         .col-lg-12
           if app.user.is_anonymous()
-            a(href="/pg/raise_landing").btn.btn-lg.btn-primary.text-uppercase raise capital
+            a(href="/pg/raise-landing").btn.btn-lg.btn-primary.text-uppercase raise capital
           else
             a(href="/company/create").btn.btn-lg.btn-primary.text-uppercase raise capital
           a(href="/pg/entrepreneurquestions").btn.btn-lg.btn-secondary.text-uppercase learn more
@@ -135,16 +160,16 @@ section.home-our-partners
     .row.text-center-flex
       .col-lg-4.col-sm-6.col-xs-12.text-xs-center.p-b-3
         a(href="http://www.callahan.com/" target="_blank")
-          img(src=require("images/callahan.png")).img-fluid.text-lg-right.text-xs-center.m-x-auto
+          img(src=require("images/callahan.png") alt="").img-fluid.text-lg-right.text-xs-center.m-x-auto
       .col-lg-4.col-sm-6.col-xs-12.text-lg-center.text-xs-center.m-x-auto.p-b-3
         a(href="https://www.jdcu.org/" target="_blank")
-          img(src=require('images/logo_jd.png')).img-fluid.text-xs-center.m-x-auto
+          img(src=require('images/logo_jd.png') alt="").img-fluid.text-xs-center.m-x-auto
       .col-lg-4.col-sm-6.col-xs-12.text-lg-left.m-x-auto.p-b-3
         a(href="https://www.rivermarkcu.org/" target="_blank")
-          img(src=require('images/logo_rivermark.png')).img-fluid.text-xs-center.m-x-auto
+          img(src=require('images/logo_rivermark.png') alt="").img-fluid.text-xs-center.m-x-auto
       .col-lg-3.col-sm-6.col-xs-12.text-xs-center
         a(href="https://www.dcu.org/" target="_blank")
-          img(src=require('images/logo_dcu.jpg')).img-fluid.text-xs-center.m-x-auto
+          img(src=require('images/logo_dcu.jpg') alt="").img-fluid.text-xs-center.m-x-auto
       .col-lg-3.col-sm-6.col-xs-12.p-l-0.text-xs-center.momentum-img
         a(href="http://momentum3growth.com/" target="_blank")
-          img(src=require('images/momentum3growth.png')).img-fluid.text-xs-center.m-x-auto
+          img(src=require('images/momentum3growth.png') alt="").img-fluid.text-xs-center.m-x-auto
