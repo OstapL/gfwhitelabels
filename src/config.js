@@ -30,13 +30,13 @@ module.exports = {
 //  googleClientId: "488593151885-87nqfd8gl444a1me0n149otrf37dbahq.apps.googleusercontent.com",
 //  linkedinClientId: "77wzj6tz0yyr33",
 
- facebookClientId: "547857385398592",
- googleClientId: "372921150-paa9eek64iuo2d5pmg7nraivc72g0sfo.apps.googleusercontent.com",
- linkedinClientId: "77hgtbs9rkjk20",
+ facebookClientId: "1071081646296574",
+ googleClientId: "805823281871-ve3unmva9aer69papghudk0dnpf8tqr2.apps.googleusercontent.com",
+ linkedinClientId: "77ibchutnkhnd7",
 
 
  googleMapKey: "AIzaSyBpCl9-7bkVISZ0o-AaFCsKzZwGAxalkZU",
- stripeKey: "pk_test_Z7YAhlyPtnW7bpd8LJUHTSou",
+ stripeKey: "pk_live_4ZF2RPjAVJ0tXrDNMauofmgb",
  googleTagIdGeneral: 'GTM-NC9XW5D',
  googleTagId: 'GTM-55SNV9B',
  yandexMetricaId: 42321779,
