@@ -1,3 +1,14 @@
+const templateMap = {
+'annual-privacy': 'annual_privacy',
+'investor-tutorial': 'investor_tutorial',
+'business-tutorial': 'business_tutorial',
+'success-guide': 'success_guide',
+'raise-landing': 'raise_landing',
+'terms-of-use': 'terms_of_use',
+'privacy-policy': 'privacy_policy',
+'annual-privacy': 'annual_privacy',
+'electronic-signature': 'electronic_signature',
+}
 module.exports = {
   routes: {
     '': 'mainPage',
@@ -41,7 +52,69 @@ module.exports = {
               1000: { items: 1 },
             },
           });
+          // video main page
+          $( document ).ready(function() {
 
+            scaleVideoContainer();
+
+            initBannerVideoSize('.video-container .poster img');
+            initBannerVideoSize('.video-container .filter');
+            initBannerVideoSize('.video-container video');
+
+            $(window).on('resize', function() {
+                scaleVideoContainer();
+                scaleBannerVideoSize('.video-container .poster img');
+                scaleBannerVideoSize('.video-container .filter');
+                scaleBannerVideoSize('.video-container video');
+            });
+
+        });
+
+        function scaleVideoContainer() {
+
+        var height = $(window).height() + 5;
+        var unitHeight = parseInt(height) + 'px';
+        $('.homepage-hero-module').css('height',unitHeight);
+
+        };
+
+        function initBannerVideoSize(element){
+
+            $(element).each(function(){
+                $(this).data('height', $(this).height());
+                $(this).data('width', $(this).width());
+            });
+
+            scaleBannerVideoSize(element);
+
+        };
+
+        function scaleBannerVideoSize(element){
+
+            var windowWidth = $(window).width(),
+            windowHeight = $(window).height() + 5,
+            videoWidth,
+            videoHeight;
+
+            // console.log(windowHeight);
+
+            $(element).each(function(){
+                var videoAspectRatio = $(this).data('height')/$(this).data('width');
+
+                $(this).width(windowWidth);
+
+                if(windowWidth < 1000){
+                    videoHeight = windowHeight;
+                    videoWidth = videoHeight / videoAspectRatio;
+                    $(this).css({'margin-top' : 0, 'margin-left' : -(videoWidth - windowWidth) / 2 + 'px'});
+
+                    $(this).width(videoWidth).height(videoHeight);
+                }
+
+                $('.homepage-hero-module .video-container video').addClass('fadeIn animated');
+
+            });
+        };
           $('body').scrollTo();
           app.hideLoading();
         });
@@ -68,7 +141,7 @@ module.exports = {
           $(document.head).append(meta);
         }
 
-        let view = require('templates/' + name + '.pug');
+        let view = require('templates/' + (templateMap[name] || name) + '.pug');
 
         app.addClassesTo('#page', [name]);
 
