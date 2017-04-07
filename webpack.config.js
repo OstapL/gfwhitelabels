@@ -117,6 +117,10 @@ module.exports = {
         loader: 'pug-loader',
       },
       {
+       test: /\.(mp4|webm)$/,
+       loader: 'file-loader',
+     },
+      {
         test: /\.(gif|png|jpe?g|svg|ico)$/i,
         include:[
           path.resolve(__dirname, './node_modules'),
