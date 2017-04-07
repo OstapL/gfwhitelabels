@@ -36,7 +36,7 @@ module.exports = {
 
 
  googleMapKey: "AIzaSyBpCl9-7bkVISZ0o-AaFCsKzZwGAxalkZU",
- stripeKey: "pk_test_Z7YAhlyPtnW7bpd8LJUHTSou",
+ stripeKey: "pk_live_4ZF2RPjAVJ0tXrDNMauofmgb",
  googleTagIdGeneral: 'GTM-NC9XW5D',
  googleTagId: 'GTM-W4XHRL7',
  yandexMetricaId: 42321779,
