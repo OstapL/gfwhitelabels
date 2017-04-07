@@ -10,7 +10,7 @@ module.exports = {
             _(app.validation.errors).each((errors, key) => {
                 app.validation.invalidMsg(this, key, errors);
             });
-            this.$('.help-block').prev().scrollTo(5);
+            // this.$('.help-block').prev().scrollTo(5);
             return false;
         }
         return true;
