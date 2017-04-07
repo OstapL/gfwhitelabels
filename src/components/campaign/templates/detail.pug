@@ -2,7 +2,7 @@
   var campaignHelper = require('../helpers.js');
 
   var c = require('consts/raisecapital/security_type.json');
-  var statuses = require('consts/raisecapital/companyStatuses.json');
+  var STATUSES = require('consts/raisecapital/companyStatuses.json').STATUS;
   var backgroundImgUrl = app.getUrl(values.campaign.header_image_data) || '';
   var socialDirective = require('directives/social/index.js');
   var CampaignInfoProvider = require('directives/social/CampaignInfoProvider.js');
@@ -66,7 +66,7 @@ section(style="background-image: url(" + backgroundImgUrl + ")")#home.home-secti
             p Days Left
             h2.font-weight-bold.no-margin #{ campaignHelper.daysLeft(values.campaign.expiration_date) }
           .col-xl-4.col-lg-3.col-md-2.hidden-xs-down.p-sm-0.pull-lg-right.text-xs-center
-            if values.is_approved == statuses.VERIFIED
+            if values.is_approved == STATUSES.VERIFIED
               a(href="/" + values.slug + "/invest").btn.btn-primary.text-uppercase.pull-lg-right Invest
 
 if app.getParams().preview == '1'
@@ -183,7 +183,7 @@ section.campaigndetail
                   img(src=require('images/avatar1.jpg') alt="...").img-circle
               a(href="#" style="display: none").link-1 see all...
         .col-xl-4.col-lg-3.col-md-2.hidden-sm-up.p-sm-0.pull-lg-right.text-xs-center
-            if values.is_approved == statuses.VERIFIED
+            if values.is_approved == STATUSES.VERIFIED
               a(href="/" + values.slug + "/invest").btn.btn-primary.text-uppercase.pull-lg-right Invest
         .row.social-share-mobile
           .col-lg-12.share.hidden-sm-up.text-xs-center
@@ -204,7 +204,7 @@ section.border-bottom-scroll.hidden-lg-down
           a(href="#faq").nav-link faq
         li.nav-item.text-uppercase
           a(href="#ask").nav-link Ask a Question
-        if values.is_approved == statuses.VERIFIED
+        if values.is_approved == STATUSES.VERIFIED
           a(href="/" + values.slug + "/invest").btn.btn-primary.text-uppercase.pull-xl-right.pull-lg-left invest
 section
   div(data-spy="scroll"
@@ -219,6 +219,9 @@ section
 
         h2.dosis.our.text-uppercase.text-lg-center.text-xs-center.campaign-subheading Why You Should Invest
         p !{ app.helpers.text.restoreLineBreak(values.campaign.pitch) }
+
+      .col-lg-12.p-x-0
+        #revenue-share-calculator
     .container-fluid.p-l-0.p-r-0
       #gallery1.col-lg-12.pt50.photo-gallegy.text-center-flex
         - var gallery_company_film = require('components/campaign/templates/snippets/gallery_company_film.pug')
@@ -665,7 +668,7 @@ section
               .like-detail-icon.d-inline-block
                 i.fa.fa-thumbs-o-up.like-icon-circle
               |  I’d Like to Invest in #{ values.short_name || values.name }!
-            if values.is_approved == statuses.VERIFIED
+            if values.is_approved == STATUSES.VERIFIED
               a(href="/" + values.slug + "/invest").btn.btn-lg.btn-primary.text-uppercase.m-t-2 invest in this company
   
 
