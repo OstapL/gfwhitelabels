@@ -212,11 +212,11 @@ class App {
   }
 
   getThumbnail(size, thumbnails, _default) {
-  let thumb = thumbnails.find(function (el) {
-    return el.size == size;
-  });
-  return (thumb ? thumb.url : _default || require('images/default/Default_photo.png'))
-}
+    let thumb = thumbnails.find(function (el) {
+      return el.size == size;
+    });
+    return (thumb ? thumb.url : _default || require('images/default/Default_photo.png'))
+  }
 
   getUrl(data) {
     data = Array.isArray(data) ? data[0] : data;
@@ -292,10 +292,12 @@ class App {
     if (!elem)
       return;
 
-    elem.classList.forEach((cls) => {
+    for (let i = 0; i < elem.classList.length; i += 1) {
+      let cls = elem.classList.item(i);
       if (!except.includes(cls))
         elem.classList.remove(cls);
-    });
+    }
+
   }
 
 }

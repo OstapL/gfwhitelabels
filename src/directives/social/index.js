@@ -1,10 +1,4 @@
 const mainContent = '#content';
-function stripHtml(content) {
-  if (!_.isString(content))
-    return content;
-
-  return content.replace(/(<([^>]+)>)/ig,"");
-}
 
 class SocialNetworks {
   constructor() {
@@ -66,7 +60,7 @@ class SocialNetworks {
         return;
       }
 
-      let message = this.data[key].confirmationMessage();
+      let message = this.data[key].confirmationMessage('LinkedIn');
 
       this.confirm($linksContainer, { title: 'confirm', message: message }).then((res) => {
         if (res)

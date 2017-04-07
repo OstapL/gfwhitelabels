@@ -6,17 +6,28 @@ const ShareInfoProvider = require('src/directives/social/infoProvider.js');
 class CampaignInfoProvider extends ShareInfoProvider {
   constructor(model) {
     super(model);
+
+    this.templates = {
+      title: 'You want a piece of this!? Invest in :company on :siteName',
+      emailBody: 'Hi! I think you should check out :company\'s fundraise on :siteName. ' +
+      'You now have the opportunity to own a piece of your favorite company for as little as $:invest.' +
+      '%0D%0A%0D%0A' +
+      'Come take a look: :url',
+      confirmationMessage: 'Do you want to share :company\'s fundraise with your :network network?',
+    };
+
     this.__initData(model);
   }
 
   __initData(model) {
-    if (this.data)
-      return;
 
-    let companyName = model.short_name || model.name || '';
+    const companyName = model.short_name || model.name || '';
 
     this.data = {
-      title: 'Checkout ' + companyName + '\'s' + ' fundraise on ' + window.location.host,
+      minInvestment: (model && model.campaign && model.campaign.minimum_increment)
+        ? model.campaign.minimum_increment
+        : 100,
+      title: this._format('title', { company: companyName, siteName: this.data.siteName }),
       url: `${window.location.origin}/${model.slug || model.id}`,
       description: model.description,
       companyName: companyName,
@@ -28,7 +39,10 @@ class CampaignInfoProvider extends ShareInfoProvider {
   twitter() {
     return 'https://twitter.com/share' +
         '?url=' + this.data.url +
-        '&text=' + 'Checkout ' + this.data.companyName + '\'s fundraise on @growthfountain';
+        '&text=' + this._format('title', {
+          company: this.data.companyName,
+          siteName: '@GrowthFountain'
+        }) + '%0D%0A';
   }
 
   linkedin() {
@@ -49,7 +63,7 @@ class CampaignInfoProvider extends ShareInfoProvider {
     return 'https://www.facebook.com/dialog/share' +
       '?app_id=' + app.config.facebookClientId +
       '&href=' + this.data.url + '?r=' + Math.random() +
-      '&description=' + this.data.description +
+      '&description=' + this._stripHtml(this.data.description) +
       '&locale=' + 'en_US' +
       '&picture=' + this.data.picture +
       '&title=' + this.data.title +
@@ -59,8 +73,19 @@ class CampaignInfoProvider extends ShareInfoProvider {
   email() {
     return 'mailto:' +
         '?subject=' + this.data.title +
-        '&body=' + ('I thought you might be interested in checking out ' + this.data.companyName +
-          ' fundraise on ' + window.location.host + '%0D%0A') + this.data.url;
+        '&body=' + this._format('emailBody', {
+          company: this.data.companyName,
+          siteName: this.data.siteName,
+          url: this.data.url,
+          invest: this.data.minInvestment,
+        });
+  }
+
+  confirmationMessage(network) {
+    return this._format('confirmationMessage', {
+      company: this.data.companyName,
+      network,
+    });
   }
 }
 
