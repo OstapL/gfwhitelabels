@@ -6,6 +6,21 @@ import '../../js/graph/jquery.flot.growraf';
 const settings = app.helpers.calculator.settings;
 const minPersents = 200;
 
+const setCaretPosKeyCodes = [
+  48,
+  49,
+  50,
+  51,
+  52,
+  53,
+  54,
+  55,
+  56,
+  57,
+  58,
+  8,
+];
+
 module.exports = {
   calculator: Backbone.View.extend(_.extend({
     el: '#revenue-share-calculator',
@@ -14,7 +29,9 @@ module.exports = {
       // calculate your income
       'submit .js-calc-form': 'doCalculation',
       'keyup [name=growLevel]': 'savePercents',
-      'keydown [name=growLevel]': 'filterKeyCodeForPercentage',
+      // 'keydown [name=growLevel]': 'filterKeyCodeForPercentage',
+      'focusin [name=growLevel]': 'setCaretPosition',
+      'click [name=growLevel]': 'setCaretPosition',
       'keyup [name=raiseMoney]': app.helpers.format.formatMoneyValue,
       'keyup [name=nextYearRevenue]': app.helpers.format.formatMoneyValue,
       // 'blur [data-input-mask="percent"]': 'cutZeros',
@@ -89,6 +106,20 @@ module.exports = {
       target.value = app.helpers.calculator.formatPercentage(value, withDot);
 
       this.cutZeros(e);
+
+      if (_(setCaretPosKeyCodes).contains(e.keyCode))
+        this.setCaretPosition(e);
+    },
+
+    setCaretPosition(e) {
+      let input = e.target;
+
+      if (input.value.endsWith('%')) {
+        if (input.value.length === 1)
+          input.value = '';
+        else if (input.value.length > 1)
+          app.helpers.calculator.setCaretPosition(input, input.value.length - 1);
+      }
     },
 
     cutZeros(e) {
