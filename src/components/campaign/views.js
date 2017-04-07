@@ -218,7 +218,7 @@ module.exports = {
       });
 
       setTimeout(() => {
-        if (this.model.id == 606) { //enable calculator only for bluehollar company
+        if (this.model.campaign.security_type == 1) { //enable calculator only for bluehollar company
           (new CalculatorView.calculator()).render();
         }
       }, 100);
