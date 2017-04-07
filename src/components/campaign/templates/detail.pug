@@ -1,7 +1,7 @@
 -
   var campaignHelper = require('../helpers.js');
 
-  var c = require('consts/campaign/file.json');
+  var SECURITY_TYPE = require('consts/formc/security_type.json');
   var backgroundImgUrl = app.getUrl(values.campaign.header_image_data) || '';
   var socialDirective = require('directives/social/index.js');
   var CampaignInfoProvider = require('directives/social/CampaignInfoProvider.js');
@@ -40,7 +40,7 @@ section(style="background-image: url(" + backgroundImgUrl + ")")#home.home-secti
         .top-info-wrap-item
           .col-xl-3.col-lg-4.col-md-4.col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left
             p Type of Security
-            h2.font-weight-bold #{ values.campaign.security_type == c.security_type.CommonEquity ? 'Common Equity' : 'Revenue Share' }
+            h2.font-weight-bold #{ values.campaign.security_type == SECURITY_TYPE.CommonEquity ? 'Common Equity' : 'Revenue Share' }
               if values.campaign.security_type == 0
                 div.d-inline-block
                   div.showPopover.hidden-xs-down(data-content="Equity represents ownership in a Company. As owners, equity investors will generally receive a share of the proceeds upon trade sale or IPO. Alternatively, investors can theoretically sell their ownership interest when the overall value of the Company has increased – though shares of common stock purchased in a crowdfunding transaction would have certain holding restrictions which are described in greater detail in our educational material. <br>The Pre-Money valuation is the valuation prior to this round of financing. Post-Money valuation is based on Pre-Money valuation plus the proceeds from the financing.")
