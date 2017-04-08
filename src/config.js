@@ -33,5 +33,5 @@ module.exports = {
 
   googleMapKey: "AIzaSyBpCl9-7bkVISZ0o-AaFCsKzZwGAxalkZU",
   stripeKey: "pk_test_Z7YAhlyPtnW7bpd8LJUHTSou",
-  // googleAnalyticsId: 'GTM-NC9XW5D',
+  googleTagId: 'GTM-WP7K455',
 };
