@@ -89,6 +89,9 @@ module.exports = {
                 this.model.formc.fiscal_recent_group_data)
           : []
       };
+
+      if (this.model.ga_id)
+        app.createAnalyticsTracker(this.model.ga_id);
     },
 
     submitCampaign(e) {
@@ -96,7 +99,7 @@ module.exports = {
         app.config.raiseCapitalServer + '/company/' + this.model.id,
         'GET'
       ).then(function(data) {
-        if(
+        if (
             data.progress.general_information == true &&
             data.progress.media == true &&
             data.progress.specifics == true &&
