@@ -42,8 +42,12 @@ section.create-company.container.m-b-85
                   class: '',
                   schema: fields.slug, 
                   placeholder: 'Your Custom URL', 
-                  value: values.slug,})
-
+                  value: values.slug,});
+        -
+          pug_html += app.fields.textLabel('ga_id', {
+            schema: fields.ga_id,
+            placeholder: 'Google Analytic ID: UA-xxxxxx-xx',
+            value: values.ga_id})
         -
           pug_html += app.fields.fieldChoiceLabel('industry', _.extend({
               'empty': { '': 'Choose Industry' },
