@@ -64,16 +64,31 @@ class ImageDropzone extends file.FileDropzone {
   }
 
   success(file, data) {
-    const reorgData = data[2];
-    reorgData.urls = {
-      origin: data[2].urls[0]
+    const reorgData = {};
+    reorgData.id = data[2].id;
+    reorgData.name = data[2].name;
+    reorgData.mime = data[2].mime;
+    reorgData.urls = [];
+    reorgData.urls[0] = {
+      name: 'origin',
+      id: data[2].id,
+      url: data[2].urls[0]
     };
-    reorgData.urls.main = data[1].urls[0];
+    reorgData.urls[1] = {
+      name: 'main',
+      id: data[1].id,
+      url: data[1].urls[0]
+    };
+    debugger;
+
     if(this.cropperOptions.resize) {
-      reorgData.urls[
-        this.cropperOptions.resize.width + 'x' + this.cropperOptions.resize.height
-      ] = data[0].urls[0];
-    }
+      var cropName = this.cropperOptions.resize.width + 'x' + this.cropperOptions.resize.height;
+      reorgData.urls[2] = {
+        name: cropName,
+        id: data[0].id,
+        url: data[0].urls[0],
+      };
+    };
 
     this.fileElement.update(reorgData);
     // this.model[this.fileElement.fieldName] = reorgData.id;

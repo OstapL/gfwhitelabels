@@ -249,8 +249,8 @@ class FileDropzone {
     }
     const urls = data.urls;
 
-    data.urls = {};
-    data.urls.origin = urls[0];
+    data.urls = [];
+    data.urls[0] = {'name': 'origin', 'id': data.id, 'url':  urls[0]};
     this.model.data[this.fileElement.fieldName].id = data.id;
     this.model.data[this.fileElement.fieldDataName] = data;
 

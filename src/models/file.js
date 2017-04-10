@@ -100,8 +100,15 @@ class File {
       id: this.id,
       name: this.name,
       mime: this.mime,
-      urls: this.urls
     };
+
+    let newUrls = [];
+    this.urls.forEach((url) => {
+      if(url.name != 'origin') {
+        newUrls.push(url.id);
+      }
+    });
+    data.urls = newUrls;
 
     return api.makeRequest(
       this.urlRoot,
