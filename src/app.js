@@ -64,6 +64,16 @@ class App {
   }
 
   emitGoogleAnalyticsEvent(eventName, params={}) {
+    //we don't need to send events to ga manually as tag manager script tracks history change events
+
+    // if (!window.ga) return;
+    // ga(() => {
+    //   _(ga.getAll()).each((tracker) => {
+    //     console.log(`${tracker.get('name')}, ${tracker.get('trackingId')}`)
+    //   });
+    // });
+
+    return;
     //TODO: this will be fixed when we fix facebook/googleTagManager scripts
     if (!window.ga)
       return;// console.error('Google analytics API is not available');
@@ -71,6 +81,18 @@ class App {
     const page = Backbone.history.getPath();
     ga('set', 'page', '/' + page);
     ga('send', 'pageview', params);
+  }
+
+  createAnalyticsTracker(id) {
+    ga(() => {
+      let trackers = ga.getAll();
+      let tracker = _(trackers).find((t) => {
+        return t.get('trackingId') == id;
+      });
+
+      if (!tracker)
+        ga('create', id, 'auto');
+    });
   }
 
   showLoading() {

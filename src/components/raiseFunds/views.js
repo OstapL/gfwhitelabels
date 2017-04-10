@@ -49,6 +49,7 @@ module.exports = {
         description: 'About Us',
         corporate_structure: 'Corporate Structure',
         founding_date: 'Founding date',
+        ga_id: 'Google Analytic ID',
         address_1: 'Street Address',
         address_2: 'Optional Address',
         zip_code: 'Zip code',
