@@ -1,0 +1,53 @@
+#carousel-main
+	
+	.carousel-caption
+		top: 0
+		.link-3
+			color: $white
+			text-decoration: underline
+	.carousel-item
+		img
+			height: 65vh
+		&:before
+			content: " "
+			width: 100%
+			height: 100%
+			position: absolute
+			top: 0
+			left: 0
+			background: rgba(17, 17, 17, .3)
+@media screen and (max-width: 992px)
+	#carousel-main
+		.carousel-indicators
+			display: none
+		.carousel-item
+			img
+				height: 40vh
+		.carousel-caption
+			h1
+				font-size: rem(22)!important
+
+@media screen and (max-width: 768px)
+	.btn 
+		font-size: rem(12)!important
+		padding: rem(8) rem(15)!important
+	.carousel-caption
+		h1
+			font-size: rem(16)!important
+		h2
+			font-size: rem(14)!important
+
+@media screen and (max-width: 544px)
+	#carousel-main
+		.carousel-indicators
+			display: none
+		.carousel-item
+			img
+				height: 30vh
+		.carousel-caption
+			h1
+				font-size: rem(14)!important
+			h2
+				font-size: rem(12)!important
+			.m-t-m-10
+				margin-top: rem(10)
