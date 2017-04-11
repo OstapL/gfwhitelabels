@@ -61,7 +61,7 @@ module.exports = {
         api.makeCacheRequest(app.config.raiseCapitalServer + '/' + name).
         then((companyData) => {
           let i = new View.detail({
-            model: new app.models.company('', companyData),
+            model: new app.models.Company('', companyData),
           });
           i.render();
           if (location.hash && $(location.hash).length) {

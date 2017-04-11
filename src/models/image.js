@@ -15,14 +15,14 @@ class Image extends File {
     let smallestSize = '';
 
     if(name && this.urls.hasOwnProperty(name)) {
-      return this.urls[name];
+      return app.sites[this.site_id] + this.urls[name];
     }
 
     if(Object.keys(files).length > 0) {
       smallestSize = Object.keys(files).sort((a, b) => {
         return a.split('x')[0] > b.split('x')[0];
       })[0];
-      return this.urls[smallestSize];
+      return app.sites[this.site_id] + this.urls[smallestSize];
     } else {
       return '/img/default/' + fallback;
     };

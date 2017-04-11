@@ -102,6 +102,11 @@ class FileElement {
       this.fieldDataName
     );
   }
+
+  fixUrl(url) {
+    // Temp function for filer to strip domain from url
+    return '/' + url.split('/').slice(3).join('/');
+  }
 }
 
 class FileDropzone {
@@ -249,8 +254,10 @@ class FileDropzone {
     }
     const urls = data.urls;
 
-    data.urls = [];
-    data.urls[0] = {'name': 'origin', 'id': data.id, 'url':  urls[0]};
+    data.urls = {};
+    data.urls.origin = urls[0];
+    data.site_id = app.sites.getId();
+
     this.model.data[this.fileElement.fieldName].id = data.id;
     this.model.data[this.fileElement.fieldDataName] = data;
 

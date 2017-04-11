@@ -17,10 +17,7 @@ class File {
     // data - file data
     //
     this.urlRoot = urlRoot;
-    this.id = data.id;
-    this.name = data.name;
-    this.urls = data.urls || {};
-    this.mime = data.mime || defaultIcon;
+    this.updateData(data);
   }
 
   delete() {
@@ -33,13 +30,14 @@ class File {
   updateData(data) {
     this.id = data.id;
     this.name = data.name;
+    this.site_id = data.site_id;
     this.urls = data.urls || {};
     this.mime = data.mime || defaultIcon;
   }
 
   getOriginal(fallback) {
     if(this.urls.hasOwnProperty('origin')) {
-      return this.urls.origin;
+      return app.sites[this.site_id] + this.urls.origin;
     }
     return '/img/default/' + fallback;
   }
@@ -83,7 +81,7 @@ class File {
 
   getUrl(name, fallback='') {
     if(this.urls.hasOwnProperty(name)) {
-      return this.urls[name];
+      return app.sites[this.site_id] + this.urls[name];
     }
     return '/img/default/' + fallback;
   }
@@ -100,15 +98,9 @@ class File {
       id: this.id,
       name: this.name,
       mime: this.mime,
+      site_id: this.site_id,
+      urls: this.urls
     };
-
-    let newUrls = [];
-    this.urls.forEach((url) => {
-      if(url.name != 'origin') {
-        newUrls.push(url.id);
-      }
-    });
-    data.urls = newUrls;
 
     return api.makeRequest(
       this.urlRoot,

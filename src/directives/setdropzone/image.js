@@ -68,26 +68,14 @@ class ImageDropzone extends file.FileDropzone {
     reorgData.id = data[2].id;
     reorgData.name = data[2].name;
     reorgData.mime = data[2].mime;
-    reorgData.urls = [];
-    reorgData.urls[0] = {
-      name: 'origin',
-      id: data[2].id,
-      url: data[2].urls[0]
-    };
-    reorgData.urls[1] = {
-      name: 'main',
-      id: data[1].id,
-      url: data[1].urls[0]
-    };
-    debugger;
+    reorgData.site_id = app.sites.getId(),
+    reorgData.urls = {};
+    reorgData.urls.origin = this.fileElement.fixUrl(data[2].urls[0]);
+    reorgData.urls.main = this.fileElement.fixUrl(data[1].urls[0]);
 
     if(this.cropperOptions.resize) {
       var cropName = this.cropperOptions.resize.width + 'x' + this.cropperOptions.resize.height;
-      reorgData.urls[2] = {
-        name: cropName,
-        id: data[0].id,
-        url: data[0].urls[0],
-      };
+      reorgData.urls[cropName] = this.fileElement.fixUrl(data[0].urls[0]);
     };
 
     this.fileElement.update(reorgData);
@@ -245,7 +233,7 @@ class CropperDropzone {
       self.$modal.modal('show');
     }, false);
 
-    img.src = this.file.file.urls.origin;
+    img.src = this.file.file.getOriginal();
     $('.crop-image-container').append(img)
   }
 
@@ -283,17 +271,19 @@ class CropperDropzone {
       ).done((responseData) => {
 
         let thumbSize = '';
-        this.file.file.urls.main = responseData[0].urls[0];
+        this.file.file.urls.main = this.file.fixUrl(responseData[0].urls[0]);
         if(this.options.resize) {
           thumbSize = this.options.resize.width + 'x' + this.options.resize.height;
-          this.file.file.urls[thumbSize] = responseData[1].urls[0];
+          this.file.file.urls[thumbSize] = this.file.fixUrl(responseData[1].urls[0]);
         }
+
+        debugger;
 
         this.file.save().done(() => {
           if(this.options.resize) { 
-            this.file.element.querySelector('img').src = this.file.file.urls[thumbSize];
+            this.file.element.querySelector('img').src = this.file.file.getUrl(thumbSize);
           } else {
-            this.file.element.querySelector('img').src = this.file.file.urls.main;
+            this.file.element.querySelector('img').src = this.file.file.getUrl('main');
           }
           this.$modal.modal('hide');
         });

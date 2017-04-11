@@ -11,6 +11,7 @@ class App {
     this.fields = require('./fields.js');
     this.validation = require('components/validation/validation.js');
     this.models = require('./models.js');
+    this.sites = require('./sites.js');
     this.user = new User();
   }
 
