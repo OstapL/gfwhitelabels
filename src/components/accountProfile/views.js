@@ -11,6 +11,13 @@ const FINANCIAL_INFORMATION = require('consts/financialInformation.json');
 import 'bootstrap-slider/dist/bootstrap-slider';
 import 'bootstrap-slider/dist/css/bootstrap-slider.css';
 
+const socialNetworksMap = {
+  instagram: ['instagram.com'],
+  facebook: ['fb.com', 'facebook.com'],
+  twitter: ['twitter.com'],
+  linkedin: ['linkedin.com'],
+};
+
 module.exports = {
   profile: Backbone.View.extend(_.extend({
     template: require('./templates/profile.pug'),
@@ -21,7 +28,7 @@ module.exports = {
       // 'click #saveFinancialInfo': api.submitAction,
       'change #not-qualify': 'changeQualify',
       'change .investor-item-checkbox': 'changeAccreditedInvestorItem',
-      'change #twitter,#facebook,#instagram,#linkedin': 'appendHttpsIfNecessary',
+      'change #twitter,#facebook,#instagram,#linkedin': 'ensureSocialNetworkLink',
 
       // 'change input[name=accredited_investor]': 'changeAccreditedInvestor',
     }, app.helpers.phone.events, app.helpers.dropzone.events, app.helpers.yesNo.events),
@@ -226,6 +233,19 @@ module.exports = {
     saveInfo(e) {
       let data = _.pick(this.model, ['image_image_id', 'image_data']);
       return api.submitAction.call(this, e, data);
+    },
+
+    ensureSocialNetworkLink(e) {
+      const network = e.target.name;
+      const value = e.target.value;
+      const withPrefix = _(socialNetworksMap[network]).find(link => value.startsWith(link));
+
+      if (withPrefix)
+        return e.target.value = app.helpers.format.ensureLinkProtocol(value, true);
+
+      let linkValue = socialNetworksMap[network][0] + (value.startsWith('/') ? value : '/' + value);
+
+      e.target.value = app.helpers.format.ensureLinkProtocol(linkValue, true);
     },
 
     appendHttpsIfNecessary(e) {
