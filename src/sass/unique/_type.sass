@@ -1,64 +1,46 @@
+@import url(https://fonts.googleapis.com/css?family=Dosis:400,300,500);
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,500,700,300);
-@font-face
-  font-family: 'BrandonGrotesque-Medium'
-  src: url('~fonts/brandon_grotesque/brandon_med.otf')
-  font-weight: normal
-  font-style: normal
-/*Typhography*/
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:600);
+
 body
 	-webkit-font-smoothing: antialiased
-	font-size: 15px
-a
-	color: $small-text
-	+mt(.2s)
-	&:hover
-		text-decoration: none
-		color: $link-1-hover
-	&:focus
-		text-decoration: none
+	color: $black_pearl
+a,a:hover
+	text-decoration: none
 .link-1
 	color: $small-text
 	letter-spacing: .35px
 	+mt(.2s)
-	&:hover
+	&:hover,
+	&:focus
 		color: $link-1-hover
 		outline: none
-	&:focus
-		color: $small-text
-		outline: none
-
 .link-2
-	color: $wild_willow
+	color: $cream_can
 	letter-spacing: .35px
 	text-decoration: underline
 	+mt(.2s)
-	&:hover
+	&:hover,
+	&:focus
 		color: $link-2-hover
 		outline: none
-	&:focus
-		color: $wild_willow
-		outline: none
 .link-3
-	color: $puerto_rico
+	color: $bahama_blue
 	letter-spacing: .35px
 	+mt(.2s)
-	&:hover
+	&:hover,
+	&:focus
 		color: $link-3-hover
 		text-decoration: underline
-		outline: none
-	&:focus
-		color: $puerto_rico
 		outline: none
 .link-4
 	color: $small-text
 	letter-spacing: .35px
 	font-weight: 700
 	+mt(.2s)
-	&:hover
-		color: $link-4-hover
-		outline: none
+	&:hover,
 	&:focus
-		color: $small-text
+		color: $link-4-hover
 		outline: none
 .link-5
 	color: $black_text
@@ -66,121 +48,105 @@ a
 	letter-spacing: .35px
 	font-weight: 700
 	+mt(.2s)
-	&:hover
+	&:hover,
+	&:focus
 		color: $link-4-hover
 		outline: none
-	&:focus
-		color: $black_text
-		outline: none
-
 .link-6
 	color: $white
 	+calc-rem(11)
 	letter-spacing: .35px
 	text-decoration: underline
 	+mt(.2s)
-	&:hover
+	&:hover,
+	&:focus
 		color: $link-6-hover
 		outline: none
-	&:focus
-		color: $white
-		outline: none
+.link-login-singup
+		text-decoration: none
+		text-transform: uppercase
+		font-size: rem(14)
 
 
 h1,h2,h3,h4,h5,h6
 	font-weight: 500
- // line-height: 18px
-
-	@media screen and (max-width:640px)
-		line-height: 1.3!important
-h1,h2,h3,h4,h5,h6
-	font-family: $open-sans
-	letter-spacing: normal
-	&.text-uppercase
-		font-family: BrandonGrotesque-Medium
-		font-weight: bold
+	line-height: 18px
 h1
-	&.text-uppercase
-		letter-spacing: 3px
-	&.big-h1
-		font-size: rem(48)
-		letter-spacing: 4.8px
-h2
-	&.text-uppercase
-		letter-spacing: 2.4px
-h3
-	&.text-uppercase
-		letter-spacing: 1.8px
-h4
-	&.text-uppercase
-		letter-spacing: 1.5px
-h6
-	&.text-uppercase
-		letter-spacing: 1.1px
-h1
-	color: $black
+	letter-spacing: rem(4.8)
 	.small-text
 		font-size: rem(14)
 		letter-spacing: rem(1.4)
 		display: block
 		padding-top: rem(8)
 		line-height: rem(24)
+	&.big-h1
+		font-size: rem(48)
+		letter-spacing: 4.8px
 h2
+	font-size: rem(24)
+	letter-spacing: rem(2.4)
 	margin-top: rem(50)
 	margin-bottom: rem(30)
 	.small-text
-		+calc-rem(12)
-		letter-spacing: .25px
+		font-size: rem(11)
+		letter-spacing: rem(.25)
 		color: $small-text
 		display: block
-		padding-top: 5px
+		padding-top: rem(5)
 		text-transform: initial
-		line-height: 14px
+		line-height: rem(14)
 h3
+	font-size: rem(18)
+	letter-spacing: rem(1.8)
 	margin-top: rem(50)
 	margin-bottom: rem(25)
-	line-height: rem(24)
 	.small-text
-		+calc-rem(11)
-		letter-spacing: .25px
+		font-size: rem(11)
+		letter-spacing: rem(.25)
 		color: $small-text
 		display: block
-		padding-top: 5px
+		padding-top: rem(5)
 		text-transform: initial
-		line-height: 14px
+		line-height: rem(14)
 h4
+	font-size: rem(14)
+	letter-spacing: rem(1.4)
 	.small-text
-		+calc-rem(12)
-		letter-spacing: .25px
+		font-size: rem(11)
+		letter-spacing: rem(.25)
 		color: $small-text
 		display: block
-		padding-top: 5px
+		padding-top: rem(5)
 		text-transform: initial
-		line-height: 14px
-		font-family: $open-sans
+		line-height: rem(14)
 h5
-	letter-spacing: 1px
+	font-size: rem(12)
+	letter-spacing: rem(1)
 p
 	margin-bottom: 0
-	font-size: 15px
-	line-height: 22px
 //дополнительный клас 
-//.dosis
-//	font-family: $dosis
+.dosis
+	font-family: $open-sans
+	font-weight: 700
 .open-sans
 	font-family: $open-sans
 
 .information-page
 	h3
+		letter-spacing: rem(3.6)
 		margin-top: rem(40)
 		margin-bottom: rem(15)
+		line-height: rem(24)
 
 .letter-spacing-0
 	letter-spacing: 0
 .letter-spacing-2
 	letter-spacing: rem(2)
-
+.green-text
+	color: #07152E
 .regular-text
 	font-weight: 400
-.line-height-1
-	line-height: 1!important
+
+@media only screen and (max-width : 1400px)
+	h1
+		line-height: rem(48)

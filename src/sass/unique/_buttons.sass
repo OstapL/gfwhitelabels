@@ -1,28 +1,19 @@
-
-$btn-color: $puerto_rico
-$btn-border: $puerto_rico
+$btn-color: #50c878
+$btn-border: #50c878
 $btn-bg: transparent
-$btn-hover-bg: $puerto_rico
+$btn-hover-bg: #50c878
 $btn-hover-color: #fff
 
-$btn-primary-bg: $puerto_rico
-$btn-primary-hover-bg: rgba(60, 189, 185, 0.6)
-$btn-primary-border: $puerto_rico
-$btn-primary-hover-border: #44d4cf
-$btn-primary-color: $white
-$btn-primary-active-border: $puerto_rico
-$btn-primary-active-bg: $puerto_rico
-
-$btn-primary-bg-bottom: #38a8a5
-$btn-primary-bg-top: $puerto_rico
-$btn-primary-hover-bg: #40c8c4
+$btn-primary-bg-bottom: #4abb72
+$btn-primary-bg-top: #50c878
+$btn-primary-hover-bg: #6ade91
 $btn-primary-color: $white
 
-$btn-secondary-hover-color: #e8e8e8
-$btn-secondary-border: #e8e8e8
-$btn-secondary-bg: #e8e8e8
+$btn-secondary-hover-color: #07152e
+$btn-secondary-border: #e2e2e2
+$btn-secondary-bg-top: #ebebeb
+$btn-secondary-bg-bottom: #e3e4e4
 $btn-secondary-hover-bg: transparent
-$btn-secondary-color: $black
 
 $btn-success-bg: #5cb85c
 $btn-success-border: #5cb85c
@@ -49,29 +40,30 @@ $btn-google-hover-bg: rgba(212,67,48, .6)
 $btn-twitter-bg: #55acee
 $btn-twitter-hover-bg: rgba(93,180,245, .6)
 
-$btn-email-bg: $puerto_rico
-$btn-email-hover-bg: rgba(76,212,208, .6)
+$btn-email-bg: $emerald
+$btn-email-hover-bg: rgba(80,200,120, .6)
+
 .btn
 	background: $btn-bg
-	color: $btn-color
+	letter-spacing: .42px
+	border: 3px solid
 	border-color: $btn-border
-	letter-spacing: 1.3px
-	border: 2px solid $btn-border
-	font-size: rem(13)
-	text-transform: uppercase
-	font-family: $brandon-grotesque-medium
+	color: $btn-color
+	font-size: rem(16)
+	border-radius: 4px
+	font-weight: 600
+	text-transform: capitalize
 	+mt(.2s)
 	
 	&:hover
 		background: $btn-hover-bg
 		color: $btn-hover-color
 		border-color: $btn-border
-			+mt(.2s)
+		+mt(.2s)
 	.fa-angle-right
 		padding-left: 5px
-	&:focus
-		color: #fff
-
+.btn.text-uppercase
+	text-transform: capitalize!important
 .btn-primary
 	background: $btn-primary-bg-top
 	background-image: -webkit-linear-gradient(top, $btn-primary-bg-top,  $btn-primary-bg-bottom)
@@ -80,58 +72,50 @@ $btn-email-hover-bg: rgba(76,212,208, .6)
 	background-image: -o-linear-gradient(top, $btn-primary-bg-top,  $btn-primary-bg-bottom)
 	background-image: linear-gradient(to bottom, $btn-primary-bg-top,  $btn-primary-bg-bottom)
 	color: $btn-primary-color
-	border: none
-	padding-top: rem(12)
-	padding-bottom: rem(12)
-	
-	+mt(.2s)
+	-moz-border-image: -moz-linear-gradient(top, $btn-primary-bg-top 0%, $btn-primary-bg-bottom 100%)
+	-webkit-border-image: -webkit-linear-gradient(top, $btn-primary-bg-top 0%, $btn-primary-bg-bottom 100%)
+	border-image: linear-gradient(to bottom, $btn-primary-bg-top 0%, $btn-primary-bg-bottom 100%)
+	border-image-slice: 1
 	&:hover
-		+mt(.2s)
 		background: $btn-primary-hover-bg
-	+mt(.2s)
+		border-color: $btn-primary-hover-bg
+		border-image-slice: 0
+		border-image: none
+
+
 	&:active,
 	&:focus
-		+mt(.2s)
-		color: $btn-primary-color
-		background: $btn-primary-active-bg
-		+mt(.2s)
+		background: $btn-primary-hover-bg
+		border-color: $btn-primary-hover-bg
+		border-image-slice: 0
+		border-image: none
 		&:focus,
 		&:hover
-			+mt(.2s)
-			color: $btn-primary-color
-			background: $btn-primary-active-bg
-.btn-lg
-	letter-spacing: 1.4px
-	font-weight: bold
-	&.btn-primary
-		border: none
-		padding-top: rem(16)
-		padding-bottom: rem(16)
-.btn-sm
-	&.btn-primary
-		border: none
-		padding-top: rem(8)
-		padding-bottom: rem(8)
-
+			background: $btn-primary-hover-bg
+			border-color: $btn-primary-hover-bg
+			border-image-slice: 0
+			border-image: none
 .btn-secondary
-	background: $btn-secondary-bg
-	color: $btn-secondary-color
-	border-color: $btn-secondary-border
-
+	background: $btn-secondary-bg-bottom
+	color: $btn-secondary-hover-color
+	border-color: $btn-secondary-bg-bottom
 	&:hover
-		background: $btn-secondary-hover-bg
+		background: transparent
+		border-color: $btn-secondary-bg-bottom
 		color: $btn-secondary-hover-color
-		border-color: $btn-secondary-border
-
+	&:active,
+	&:focus
+		background: transparent
+		border-color: $btn-secondary-bg-bottom
+		color: $btn-secondary-hover-color
 	&.inverse
-		background: $btn-secondary-hover-bg
+		background: transparent
+		border-color: $btn-secondary-bg-bottom
 		color: $btn-secondary-hover-color
-		border-color: $btn-secondary-border
-
 		&:hover
-			background: $btn-secondary-bg
-			color: $btn-secondary-color
-			border-color: $btn-secondary-border
+			background: transparent
+			border-color: $btn-secondary-bg-bottom
+			color: $btn-secondary-hover-color
 
 .btn-success
 	background: $btn-success-bg
@@ -155,9 +139,7 @@ $btn-email-hover-bg: rgba(76,212,208, .6)
 	background: $btn-facebook-bg
 	border: none
 	color: $white
-	border-radius: 50px
-	padding-top: 11px
-	padding-bottom: 11px
+	border-radius: 2px
 	&:hover
 		background: $btn-facebook-hover-bg
 
@@ -165,9 +147,7 @@ $btn-email-hover-bg: rgba(76,212,208, .6)
 	background: $btn-linkedin-bg
 	border: none
 	color: $white
-	border-radius: 50px
-	padding-top: 11px
-	padding-bottom: 11px
+	border-radius: 2px
 	&:hover
 		background: $btn-linkedin-hover-bg
 
@@ -175,9 +155,7 @@ $btn-email-hover-bg: rgba(76,212,208, .6)
 	background: $btn-google-bg
 	border: none
 	color: $white
-	border-radius: 50px
-	padding-top: 11px
-	padding-bottom: 11px
+	border-radius: 2px
 	&:hover
 		background: $btn-google-hover-bg
 
@@ -210,11 +188,11 @@ $btn-email-hover-bg: rgba(76,212,208, .6)
 	width: 14%
 	height: rem(35)
 	.dropdown-toggle
-		padding-left: rem(8)
-		padding-right: rem(8)
-		&:after
-			margin-top: 0
-			margin-left: 0
+		 padding-left: rem(8)
+		 padding-right: rem(8)
+		 &:after
+			 margin-top: 0
+			 margin-left: 0
 	&:hover
 		background: none
 		border: 1px solid $light_grey
@@ -243,3 +221,20 @@ $btn-email-hover-bg: rgba(76,212,208, .6)
 	background: $btn-secondary-bg
 	border-color: $btn-secondary-bg
 
+.link-or-button
+	background: transparent
+	border: none
+	padding: rem(10) 0
+	color: $menu_text_color
+	font-weight: $menu-font-weight
+	font-size: $font-size-menu
+	text-transform: uppercase
+	&:hover
+		background: transparent
+		border: none
+		color: rgba($submenu-bgc-hover, 0.7)
+		font-weight: $menu-font-weight
+	&:focus
+		color: $menu_text_color!important
+		background: transparent!important
+		border: none!important
