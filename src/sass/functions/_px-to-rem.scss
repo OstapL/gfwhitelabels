@@ -7,7 +7,7 @@
     $pxval: strip-units($pxval);
   }
 
-  $base: $em-base;
+  $base: 16;
   @if not unitless($base) {
     $base: strip-units($base);
   }
