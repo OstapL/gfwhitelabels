@@ -52,6 +52,7 @@ select.form-control
 				
 		// знак вопроса (есть на странице calculator/capitalraise/step-1)
 		i 
+
 	.border-dropzone
 		border: dashed 1px $small-text
 		display: inline-block
@@ -89,7 +90,6 @@ select.form-control
 		border-bottom: solid 1px $border-color
 		outline: none
 		padding: 0 rem(10)
-
 	
 	// для label где много текста пример на странице создания компании 
 	.big-label-text
@@ -119,6 +119,7 @@ select.form-control
 
 	input[type="text"]
 		@include placeholder
+		
 			color: #a3a3a3
 
 	textarea
@@ -192,12 +193,11 @@ select.form-control
 
 		.change_state_city 
 			position: absolute
-			top: 5px
-			// right: 0
+			top: 6px
+			right: 0
 			cursor: pointer
-			color: $black
+			color: $small-text
 			min-width: rem(150)
-			outline: none
 
 			.input-value
 				@include ellipsis()
@@ -207,7 +207,7 @@ select.form-control
 				text-transform: capitalize
 
 			i
-				margin-left: 8px
+				margin-left: 10px
 				color: $small-text
 				vertical-align: super
 				+mt(.2s)
@@ -243,6 +243,7 @@ select.form-control
 .date
 	.help-block
 		margin-left: 46%
+
 @media screen and (max-width: 568px)
 	.form-control
 		padding: rem(10) rem(12)
@@ -250,4 +251,3 @@ select.form-control
 		margin-bottom: rem(15)
 	.custom-select
 		height: rem(40)!important
-

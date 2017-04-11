@@ -1,5 +1,6 @@
 .display-partners
 	display: $display_partnres!important
+
 // цвет заголовков на странице education.pug
 .heading-education
 	color: $color_heading_education
@@ -27,6 +28,38 @@
 	.circle
 		top: -5px
 
+.pagination
+	width: 100%
+	margin: 0
+
+	.page-item
+		+mt(0.2s)
+
+		a
+			margin-right: 4px
+
+		&:hover a
+			border: 1px solid #a3a3a3
+			color: $grey
+			background: none
+			+mt(0.2s)
+
+	.page-item a:visited,
+	.page-item a:focus
+		text-decoration: none
+		background: none
+	  
+	.page-item.active a,
+	.page-item.active a:focus,
+	.page-item.active a:visited
+		background: none
+
+		&:hover
+			background: none
+
+/* costum pagination end */
+
+/* common styles for pages(faq, overview.. etc..) */
 .text_block
 	.page_title
 		width: 100%
