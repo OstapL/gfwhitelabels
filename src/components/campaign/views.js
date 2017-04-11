@@ -89,6 +89,9 @@ module.exports = {
                 this.model.formc.fiscal_recent_group_data)
           : []
       };
+
+      if (this.model.ga_id)
+        app.createAnalyticsTracker(this.model.ga_id);
     },
 
     submitCampaign(e) {
@@ -96,7 +99,7 @@ module.exports = {
         app.config.raiseCapitalServer + '/company/' + this.model.id,
         'GET'
       ).then(function(data) {
-        if(
+        if (
             data.progress.general_information == true &&
             data.progress.media == true &&
             data.progress.specifics == true &&
@@ -138,6 +141,7 @@ module.exports = {
     //     $elems.css('display', 'none');
     //   }
     // },
+
 
     onArticlePressCollapse(e) {
       if (e.type == 'hidden') {
@@ -218,7 +222,7 @@ module.exports = {
       });
 
       setTimeout(() => {
-        if (this.model.id == 606) { //enable calculator only for bluehollar company
+        if (this.model.campaign.security_type == 1) { //enable calculator only for bluehollar company
           (new CalculatorView.calculator()).render();
         }
       }, 100);
@@ -556,6 +560,15 @@ module.exports = {
         nonUs: require('./templates/snippets/nonUsFields.pug'),
       };
 
+      // For check in localhost
+      // if(window.location.hostname == 'localhost') {
+      if(window.location.hostname == 'dcu.growthfountain.com') {
+        this.fields.is_understand_securities_related = this.fields.is_reviewed_educational_material;
+        this.fields.is_understand_securities_related.label = this.labels.is_understand_securities_related;
+      } else {
+        delete this.fields.is_understand_securities_related;
+      }
+
       this.assignLabels();
 
       if(window.location.hostname == 'dcu.growthfountain.com') {
@@ -570,6 +583,7 @@ module.exports = {
     },
 
     render() {
+
       this.$el.html(
         this.template({
           snippets: this.snippets,
