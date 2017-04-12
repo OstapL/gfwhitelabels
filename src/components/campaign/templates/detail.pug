@@ -20,52 +20,56 @@ section(style="background-image: url(" + backgroundImgUrl + ")")#home.home-secti
               i.fa.fa-play-circle-o
           a(href=values.website target="_blank").link-6.link-campaing-detail.hidden-xs-down #{ app.helpers.format.getWebsiteUrl(values.website) }
           .row.social-link.hidden-xs-down
-            if values.facebook
-              a(href=values.facebook target="_blank").link-6.link-campaing-detail
-                i.fa.fa-facebook
-            if values.twitter
-              a(href=values.twitter target="_blank").link-6.link-campaing-detail
-                i.fa.fa-twitter
-            if values.instagram
-              a(href=values.instagram target="_blank").link-6.link-campaing-detail
-                i.fa.fa-instagram
-            if values.linkedin
-              a(href=values.linkedin target="_blank").link-6.link-campaing-detail
-                i.fa.fa-linkedin
+            .col-xl-12
+              if values.facebook
+                a(href=values.facebook target="_blank").link-6.link-campaing-detail
+                  i.fa.fa-facebook
+              if values.twitter
+                a(href=values.twitter target="_blank").link-6.link-campaing-detail
+                  i.fa.fa-twitter
+              if values.instagram
+                a(href=values.instagram target="_blank").link-6.link-campaing-detail
+                  i.fa.fa-instagram
+              if values.linkedin
+                a(href=values.linkedin target="_blank").link-6.link-campaing-detail
+                  i.fa.fa-linkedin
 
         // End Hero Content
   .top-info
-    .container
-      .top-info-wrap
-        .top-info-wrap-item
-          .col-xl-3.col-lg-4.col-md-4.col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left
-            p Type of Security
-            h2.font-weight-bold #{ values.campaign.security_type == c.security_type.CommonEquity ? 'Common Equity' : 'Revenue Share' }
-              if values.campaign.security_type == 0
-                div.d-inline-block
-                  div.showPopover.hidden-xs-down(data-content="Equity represents ownership in a Company. As owners, equity investors will generally receive a share of the proceeds upon trade sale or IPO. Alternatively, investors can theoretically sell their ownership interest when the overall value of the Company has increased – though shares of common stock purchased in a crowdfunding transaction would have certain holding restrictions which are described in greater detail in our educational material. <br>The Pre-Money valuation is the valuation prior to this round of financing. Post-Money valuation is based on Pre-Money valuation plus the proceeds from the financing.")
-                    i(aria-hidden="true").fa.fa-question-circle.text-muted.detail-security-type-icon
-              else
-                div.d-inline-block
-                  div.showPopover.hidden-xs-down(data-content="A Revenue Share Agreement is a form of investment contract in which the Company shares 5% of its revenue annually with investors.<br> Here’s how it works:<ol class='p-l-1'><li>Investors earn 5% of the company’s revenue annually;</li><li>No distributions are required until the second full calendar year and the company is allowed one year of forbearance as needed;</li><li>Distributions are capped at two times the invested amount (2x);</li><li>In the event of default, investors become general unsecured creditors (senior to equity).</li>")
-                    i(aria-hidden="true").fa.fa-question-circle.text-muted.detail-security-type-icon
+    
+    .top-info-wrap
+      .top-info-wrap-item
+        .container
+          .col-xl-12
+            .row
+              .col-xl-3.col-lg-4.col-md-4.col-6.pr-0.p-sm-0.text-center.text-md-left.text-lg-left.text-xl-left
+                p Type of Security
+                h2.font-weight-bold #{ values.campaign.security_type == c.security_type.CommonEquity ? 'Common Equity' : 'Revenue Share' }
+                  if values.campaign.security_type == 0
+                    div.d-inline-block
+                      div.showPopover.hidden-xs-down(data-content="Equity represents ownership in a Company. As owners, equity investors will generally receive a share of the proceeds upon trade sale or IPO. Alternatively, investors can theoretically sell their ownership interest when the overall value of the Company has increased – though shares of common stock purchased in a crowdfunding transaction would have certain holding restrictions which are described in greater detail in our educational material. <br>The Pre-Money valuation is the valuation prior to this round of financing. Post-Money valuation is based on Pre-Money valuation plus the proceeds from the financing.")
+                        i(aria-hidden="true").fa.fa-question-circle.text-muted.detail-security-type-icon
+                  else
+                    div.d-inline-block
+                      div.showPopover.hidden-xs-down(data-content="A Revenue Share Agreement is a form of investment contract in which the Company shares 5% of its revenue annually with investors.<br> Here’s how it works:<ol class='p-l-1'><li>Investors earn 5% of the company’s revenue annually;</li><li>No distributions are required until the second full calendar year and the company is allowed one year of forbearance as needed;</li><li>Distributions are capped at two times the invested amount (2x);</li><li>In the event of default, investors become general unsecured creditors (senior to equity).</li>")
+                        i(aria-hidden="true").fa.fa-question-circle.text-muted.detail-security-type-icon
 
-          if values.campaign.security_type == 0
-            .col-xl-2.col-lg-3.col-md-3.col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left
-              p Pre-Money Valuation
-              h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.premoney_valuation) }
-          else
-            .col-xl-2.col-lg-3.col-md-3.col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left
-              p Percentage Revenue
-              h2.font-weight-bold #{ values.campaign.percentage_revenue }%
-          .col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left.hidden-sm-up
-            p Minimum Investment
-            h2.font-weight-bold.no-margin #{ app.helpers.format.formatPrice(values.campaign.minimum_increment) }
-          .col-xl-2.col-lg-2.col-md-2.col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left
-            p Days Left
-            h2.font-weight-bold.no-margin #{ campaignHelper.daysLeft(values.campaign.expiration_date) }
-          .col-xl-4.col-lg-3.col-md-2.hidden-xs-down.p-sm-0.pull-lg-right.text-xs-center
-            a(href="/" + values.slug + "/invest").btn.btn-primary.text-uppercase.pull-lg-right Invest
+              if values.campaign.security_type == 0
+                .col-xl-2.col-lg-3.col-md-3.col-6.pr-0.p-sm-0.text-center.text-md-left.text-lg-left.text-xl-left
+                  p Pre-Money Valuation
+                  h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.premoney_valuation) }
+              else
+                .col-xl-2.col-lg-3.col-md-3.col-6.pr-0.p-sm-0.text-center.text-md-left.text-lg-left.text-xl-left
+                  p Percentage Revenue
+                  h2.font-weight-bold #{ values.campaign.percentage_revenue }%
+              .col-xs-6.col-6.p-r-0.p-sm-0.text-center.text-md-left.text-lg-left.text-xl-left.hidden-sm-up
+                p Minimum Investment
+                h2.font-weight-bold.no-margin #{ app.helpers.format.formatPrice(values.campaign.minimum_increment) }
+              .col-xl-2.col-lg-2.col-md-2.col-6.pr-0.p-sm-0.text-center.text-md-left.text-lg-left.text-xl-left
+                p Days Left
+                h2.font-weight-bold.no-margin #{ campaignHelper.daysLeft(values.campaign.expiration_date) }
+              .col-xl-5.col-lg-3.col-md-3.col-6.hidden-xs-down
+                a(href="/" + values.slug + "/invest").btn.btn-primary.text-uppercase.pull-right Invest
 
 if app.getParams().preview == '1'
   div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#company_publish.modal.fade
@@ -127,64 +131,65 @@ if app.getParams().preview == '1'
 
 section.campaigndetail
   .container
-    .col-lg-6.p-md-0
-      if values.tagline.length > 0
-        h1.text-xs-center.text-lg-left.m-t-0.m-b-1 #{ values.tagline }
-      .row
-        .col-lg-4.col-xs-6
-          .sity-detail
-            i.fa.fa-map-marker
-            |  #{ values.city }, #{ values.state }
-        .col-lg-6.col-xs-6.text-xs-right.text-lg-left
-          .date-detail.pull-md-right.pull-lg-left
-            i.fa.fa-calendar-check-o
-            |  Founded #{ app.helpers.format.formatDate(values.founding_date) }
-      .row.hidden-xs-down
-        .col-lg-12.share
-          | !{ socialDirective.render(directiveKey, infoProvider) }
-    .col-lg-6.right-block-investors.p-l-0.p-sm-0
-      .progress_bar_container
-        -
-          var percentage_raised = campaignHelper.fundedPercentage(values.campaign, 20);
-        span #{ percentage_raised.text }
-        span.pull-right Committed 
-          span.committed #{ app.helpers.format.formatPrice(values.campaign.amount_raised)}
-        .clear
-        progress(value=percentage_raised.value max="100").progress
-      .mt25
-        .row.col-xl-8.col-md-6.text-xs-center.text-sm-center.text-md-left
-          p Target
-          h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.minimum_raise) } - #{ app.helpers.format.formatPrice(values.campaign.maximum_raise) }
-        .row.col-xl-4.col-md-6.pull-lg-right.text-xs-center.text-sm-center.text-md-left.hidden-sm-down
-          p Minimum Investment
-          h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.minimum_increment) }
-        div(style="display: none").row.col-lg-12.investors-block
-          .col-lg-2.p-l-0
-            p Investors
-            h2.font-weight-bold 17
-          .col-lg-10.p-l-0
-            ul
-              li
-                a(href="")
-                  img(src=require('images/avatar1.jpg') alt="...").img-circle
-              li
-                a(href="")
-                  img(src=require('images/avatar6.jpg') alt="...").img-circle
-              li
-                a(href="")
-                  img(src=require('images/avatar1.jpg') alt="...").img-circle
-              li
-                a(href="")
-                  img(src=require('images/avatar6.jpg') alt="...").img-circle
-              li
-                a(href="")
-                  img(src=require('images/avatar1.jpg') alt="...").img-circle
-              a(href="#" style="display: none").link-1 see all...
-        .col-xl-4.col-lg-3.col-md-2.hidden-sm-up.p-sm-0.pull-lg-right.text-xs-center
-            a(href="/" + values.slug + "/invest").btn.btn-primary.text-uppercase.pull-lg-right Invest
-        .row.social-share-mobile
-          .col-lg-12.share.hidden-sm-up.text-xs-center
+    .row
+      .col-lg-6.p-md-0
+        if values.tagline.length > 0
+          h1.text-xs-center.text-lg-left.m-t-0.mb-3 #{ values.tagline }
+        .row
+          .col-lg-4.col-xs-6
+            .sity-detail
+              i.fa.fa-map-marker
+              |  #{ values.city }, #{ values.state }
+          .col-lg-6.col-xs-6.text-xs-right.text-lg-left
+            .date-detail.pull-md-right.pull-lg-left
+              i.fa.fa-calendar-check-o
+              |  Founded #{ app.helpers.format.formatDate(values.founding_date) }
+        .row.hidden-xs-down
+          .col-lg-12.share
             | !{ socialDirective.render(directiveKey, infoProvider) }
+      .col-lg-6.right-block-investors.p-l-0.p-sm-0
+        .progress_bar_container
+          -
+            var percentage_raised = campaignHelper.fundedPercentage(values.campaign, 20);
+          span #{ percentage_raised.text }
+          span.pull-right Committed 
+            span.committed #{ app.helpers.format.formatPrice(values.campaign.amount_raised)}
+          .clear
+          progress(value=percentage_raised.value max="100").progress.w-100
+        .mt25
+          .row.col-xl-8.col-md-6.text-xs-center.text-sm-center.text-md-left
+            p Target
+            h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.minimum_raise) } - #{ app.helpers.format.formatPrice(values.campaign.maximum_raise) }
+          .row.col-xl-4.col-md-6.pull-lg-right.text-xs-center.text-sm-center.text-md-left.hidden-sm-down
+            p Minimum Investment
+            h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.minimum_increment) }
+          div(style="display: none").row.col-lg-12.investors-block
+            .col-lg-2.p-l-0
+              p Investors
+              h2.font-weight-bold 17
+            .col-lg-10.p-l-0
+              ul
+                li
+                  a(href="")
+                    img(src=require('images/avatar1.jpg') alt="...").img-circle
+                li
+                  a(href="")
+                    img(src=require('images/avatar6.jpg') alt="...").img-circle
+                li
+                  a(href="")
+                    img(src=require('images/avatar1.jpg') alt="...").img-circle
+                li
+                  a(href="")
+                    img(src=require('images/avatar6.jpg') alt="...").img-circle
+                li
+                  a(href="")
+                    img(src=require('images/avatar1.jpg') alt="...").img-circle
+                a(href="#" style="display: none").link-1 see all...
+          .col-xl-4.col-lg-3.col-md-2.hidden-sm-up.p-sm-0.pull-lg-right.text-xs-center
+              a(href="/" + values.slug + "/invest").btn.btn-primary.text-uppercase.pull-lg-right Invest
+          .row.social-share-mobile
+            .col-lg-12.share.hidden-sm-up.text-xs-center
+              | !{ socialDirective.render(directiveKey, infoProvider) }
 section.border-bottom-scroll.hidden-lg-down
   .container.tabs-scroll.p-t-2
     nav(data-toggle="sticky-onscroll").navbar.navbar-default.sticky
