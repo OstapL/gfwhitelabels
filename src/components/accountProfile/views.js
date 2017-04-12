@@ -28,10 +28,13 @@ module.exports = {
       // 'click #saveFinancialInfo': api.submitAction,
       'change #not-qualify': 'changeQualify',
       'change .investor-item-checkbox': 'changeAccreditedInvestorItem',
-      'change #twitter,#facebook,#instagram,#linkedin': 'ensureSocialNetworkLink',
-
       // 'change input[name=accredited_investor]': 'changeAccreditedInvestor',
-    }, app.helpers.phone.events, app.helpers.dropzone.events, app.helpers.yesNo.events),
+    },
+    app.helpers.phone.events,
+    app.helpers.dropzone.events,
+    app.helpers.yesNo.events,
+    app.helpers.social.events,
+    ),
 
     initialize(options) {
       this.activeTab = options.activeTab;
@@ -235,19 +238,6 @@ module.exports = {
       return api.submitAction.call(this, e, data);
     },
 
-    ensureSocialNetworkLink(e) {
-      const network = e.target.name;
-      const value = e.target.value;
-      const withPrefix = _(socialNetworksMap[network]).find(link => value.startsWith(link));
-
-      if (withPrefix)
-        return e.target.value = app.helpers.format.ensureLinkProtocol(value, true);
-
-      let linkValue = socialNetworksMap[network][0] + (value.startsWith('/') ? value : '/' + value);
-
-      e.target.value = app.helpers.format.ensureLinkProtocol(linkValue, true);
-    },
-
     appendHttpsIfNecessary(e) {
       app.helpers.format.appendHttpIfNecessary(e, true);
     },
@@ -373,7 +363,12 @@ module.exports = {
 
     },
 
-  }, app.helpers.phone.methods, app.helpers.dropzone.methods, app.helpers.yesNo.methods)),
+  },
+    app.helpers.phone.methods,
+    app.helpers.dropzone.methods,
+    app.helpers.yesNo.methods,
+    app.helpers.social.methods,
+  )),
 
   changePassword: Backbone.View.extend({
     urlRoot: app.config.authServer + '/rest-auth/password/change',
