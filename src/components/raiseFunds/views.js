@@ -16,10 +16,14 @@ module.exports = {
       'click .onPreview': raiseHelpers.onPreviewAction,
       'click .submit_form': raiseHelpers.submitCampaign,
       'click #postForReview': raiseHelpers.postForReview,
-      'change #website': appendHttpIfNecessary,
       'keyup #slug': 'fixSlug',
-      'change #website,#twitter,#facebook,#instagram,#linkedin': 'appendHttpsIfNecessary',
-    }, /*app.helpers.confirmOnLeave.events,*/ app.helpers.phone.events, app.helpers.menu.events),
+      'change #website': 'appendHttpIfNecessary',
+    },
+      /*app.helpers.confirmOnLeave.events,*/
+      app.helpers.phone.events,
+      app.helpers.menu.events,
+      app.helpers.social.events,
+    ),
 
     appendHttpsIfNecessary(e) {
       appendHttpIfNecessary(e, true);
@@ -133,7 +137,12 @@ module.exports = {
         { trigger: true, replace: false }
       );
     },
-  }, app.helpers.confirmOnLeave.methods, app.helpers.phone.methods, app.helpers.menu.methods)),
+  },
+    app.helpers.confirmOnLeave.methods,
+    app.helpers.phone.methods,
+    app.helpers.menu.methods,
+    app.helpers.social.methods,
+  )),
 
   inReview: Backbone.View.extend(_.extend({
     el: '#content',
