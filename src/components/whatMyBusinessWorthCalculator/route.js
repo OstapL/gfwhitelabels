@@ -1,6 +1,7 @@
 module.exports = {
   routes: {
     'calculator/selectYourBusiness': 'selectYourBusiness',
+    'calculator/BusinessValuation': 'businessValuation',
     'calculator/selectCalculator': 'selectCalculator',
     'calculator/selectCalculator2': 'selectCalculator2',
     'calculator/whatmybusinessworth/intro': 'calculatorWhatMyBusinessWorthIntro',
@@ -10,6 +11,11 @@ module.exports = {
   },
   methods: {
     selectYourBusiness() {
+      //left just for backward compatibility
+      app.routers.navigate('/calculator/BusinessValuation', { trigger: true });
+    },
+
+    businessValuation() {
       require.ensure([], () => {
         let View = Backbone.View.extend({
           el: '#content',
@@ -102,5 +108,5 @@ module.exports = {
       });
     },
   },
-  auth: ['calculatorWhatMyBusinessWorthIntro', 'selectYourBusiness'],
+  auth: ['calculatorWhatMyBusinessWorthIntro', 'BusinessValuation'],
 };
