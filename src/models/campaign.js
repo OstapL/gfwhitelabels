@@ -12,7 +12,7 @@ const CANCELLED_STATUSES = FINANCIAL_INFO.INVESTMENT_STATUS_CANCELLED;
 
 
 class Campaign {
-  constructor(urlRoot, data={}, schema={}) {
+  constructor(data={}, schema={}, url=null) {
     //
     // urlRoot - url for update model assosiated with that file
     // data - file data
@@ -20,26 +20,25 @@ class Campaign {
 
     this.data = data;
     this.schema = schema;
-    this.urlRoot = urlRoot;
+    this.url = url || app.config.raiseCapitalServer + '/campaign/' + data.id;
 
-    for(let key in this.schema) {
-      if(this.data.hasOwnProperty(key)) {
-        switch(this.schema[key].type) {
-          case 'file':
-            this.data[key] = new File(urlRoot, this.data[key.replace('_file_id', '_data')]);
-            break;
-          case 'image':
-            this.data[key] = new Image(urlRoot, this.data[key.replace('_image_id', '_data')]);
-            break;
-          case 'filefolder':
-            this.data[key] = new Folder(urlRoot, this.data[key], this.data[key.replace('_id', '_data')]);
-            break;
-          case 'imagefolder':
-            this.data[key] = new Gallery(urlRoot, this.data[key], this.data[key.replace('_id', '_data')]);
-            break;
-        }
-      }
-    }
+		this.data['investor_presentation_file_id'] = new File(
+			this.urlRoot,
+			this.data.investor_presentation_data
+		);
+		this.data['list_image_image_id'] = new Image(
+			this.urlRoot,
+			this.data.list_image_data
+		);
+		this.data['header_image_image_id'] = new Image(
+			this.urlRoot,
+			this.data.header_image_data
+		);
+		this.data['gallery_group_id'] = new Gallery(
+			this.urlRoot,
+			this.data.gallery_group_id,	
+			this.data.gallery_group_data
+		);
 
     this.data = Object.seal(this.data);
     for(let key in this.data) {
@@ -52,18 +51,18 @@ class Campaign {
 
   toJSON() {
     let data = Object.assign({}, this.data);
-    for(let key in this.schema) {
-      if(this.data.hasOwnProperty(key)) {
-        switch(this.schema[key].type) {
-          case 'file':
-          case 'image':
-          case 'filefolder':
-          case 'imagefolder':
-            data[key] = this.data[key].id;
-            break;
-        }
-      }
-    }
+		if (data.investor_presentation_file_id) {
+			data['investor_presentation_file_id'] = this.data.investor_presentation_file_id.id;
+		}
+		if (data.list_image_image_id) {
+			data['list_image_image_id'] = data.list_image_image_id.id;
+		}
+		if (this.data.header_image_image_id) {
+			data['header_image_image_id'] = data.header_image_image_id.id;
+		}
+		if (this.data.gallery_group_id) {
+			data['gallery_group_id'] = data.gallery_group_id.id;
+		}
     return data;
   }
 

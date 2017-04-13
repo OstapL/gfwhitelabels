@@ -4,7 +4,7 @@ const Folder = require('./folder.js');
 const Gallery = require('./gallery.js');
 
 class TeamMemberCampaign {
-  constructor(urlRoot, data={}, schema={}) {
+  constructor(data={}, schema={}, url=null) {
     //
     // urlRoot - url for update model assosiated with that file
     // data - file data
@@ -12,7 +12,7 @@ class TeamMemberCampaign {
 
     this.data = data;
     this.schema = schema;
-    this.urlRoot = urlRoot;
+    this.url = url || app.config.raiseCapitalServer + '/team-members';
 
     for(let key in this.schema) {
       if(this.data.hasOwnProperty(key)) {

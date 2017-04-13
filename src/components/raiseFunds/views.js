@@ -33,11 +33,7 @@ module.exports = {
       this.fields = options.fields.company;
       this.formc = options.formc || {};
       this.campaign = options.campaign || {};
-      this.model = new app.models.Company(
-        this.urlRoot.replace(':id', options.company.id),
-        options.company,
-        options.fields.company
-      );
+      this.model = options.company;
 
       this.fields.industry.validate.choices = require('consts/raisecapital/industry.json');
       this.fields.founding_state.validate.choices = require('consts/usaStatesChoices.json');
@@ -193,11 +189,7 @@ module.exports = {
 
     initialize(options) {
       this.fields = options.fields.campaign;
-      this.model = new app.models.Campaign(
-        this.urlRoot.replace(':id', options.campaign.id),
-        options.campaign,
-        options.fields.campaign
-      );
+      this.model = options.campaign;
       this.formc = options.formc;
       this.labels = {
         pitch: 'Why Should People Invest?',
@@ -278,11 +270,7 @@ module.exports = {
     },
 
     initialize(options) {
-      this.model = new app.models.Campaign(
-        this.urlRoot.replace(':id', options.campaign.id),
-        options.campaign,
-        options.fields.campaign
-      );
+      this.model = options.campaign;
       this.urlRoot = this.urlRoot.replace(':id', this.model.id);
       this.formc = options.formc;
       this.fields = options.fields.campaign;
@@ -456,11 +444,7 @@ module.exports = {
         },
       });
 
-      this.model = new app.models.Campaign(
-        this.urlRoot.replace(':id', options.campaign.id),
-        options.campaign,
-        this.fields
-      );
+      this.model = options.campaign;
       this.formc = options.formc;
       this.type = options.type;
       this.index = options.index;
@@ -470,7 +454,6 @@ module.exports = {
       this.campaignId = this.model.id;
       if (this.index != 'new') {
         this.member = new app.models.TeamMemberCampaign(
-          this.urlRoot.replace(':id', options.campaign.id),
           this.model.team_members[this.index],
           this.fields
         )
@@ -478,7 +461,6 @@ module.exports = {
         this.submitMethod = 'PUT';
       } else {
         this.member = new app.models.TeamMemberCampaign(
-          this.urlRoot.replace(':id', options.campaign.id),
           {
             photo_image_id: null,
             photo_data: [],
@@ -545,11 +527,7 @@ module.exports = {
     initialize(options) {
       this.fields = options.fields.campaign;
       this.formc = options.formc;
-      this.model = new app.models.Campaign(
-        this.urlRoot.replace(':id', options.campaign.id),
-        options.campaign,
-        options.fields.campaign
-      );
+      this.model = options.campaign;
 
       this.urlRoot = this.urlRoot.replace(':id', this.model.id);
     },
@@ -620,11 +598,7 @@ module.exports = {
     initialize(options) {
       this.fields = options.fields.campaign;
       this.formc = options.formc;
-      this.model = new app.models.Campaign(
-        this.urlRoot.replace(':id', options.campaign.id),
-        options.campaign,
-        options.fields.campaign
-      );
+      this.model = options.campaign;
       this.company = options.company;
       this.fields.valuation_determination_other = _.extend(this.fields.valuation_determination_other, {
         dependies: ['valuation_determination'],
@@ -790,11 +764,7 @@ module.exports = {
     initialize(options) {
       this.fields = options.fields.campaign;
       this.formc = options.formc;
-      this.model = new app.models.Campaign(
-        this.urlRoot.replace(':id', options.campaign.id),
-        options.campaign,
-        options.fields.campaign
-      );
+      this.model = options.campaign
       this.labels = {
         perks: {
           amount: 'If an Investor Invests Over',

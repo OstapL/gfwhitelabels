@@ -23,9 +23,9 @@ function getOCCF(optionsR, viewName, params = {}, View) {
     if(campaign[0]) app.user.campaign = campaign[0];
     if(formc[0]) app.user.formc = formc[0];
 
-    params.company = app.user.company || {};
-    params.campaign = app.user.campaign;
-    params.formc = app.user.formc;
+    params.company = new app.models.Company(app.user.company) || {};
+    params.campaign = new app.models.Campaign(app.user.campaign);
+    params.formc = new app.models.Formc(app.user.formc);
 
     if(typeof viewName == 'string') {
       new View[viewName](Object.assign({}, params)).render();

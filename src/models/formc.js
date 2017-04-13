@@ -5,7 +5,7 @@ const Gallery = require('./gallery.js');
 
 
 class Formc {
-  constructor(url, data={}, schema={}) {
+  constructor(data={}, schema={}, url=null) {
     //
     // urlRoot - url for update model assosiated with that file
     // data - file data
@@ -13,26 +13,24 @@ class Formc {
 
     this.data = data;
     this.schema = schema;
-    this.url = url;
+    this.url = url || app.config.formcServer + '/' + data.id;
 
-    for(let key in this.schema) {
-      if(this.data.hasOwnProperty(key)) {
-        switch(this.schema[key].type) {
-          case 'file':
-            this.data[key] = new File(url, this.data[key.replace('_file_id', '_data')]);
-            break;
-          case 'image':
-            this.data[key] = new Image(url, this.data[key.replace('_image_id', '_data')]);
-            break;
-          case 'filefolder':
-            this.data[key] = new Folder(url, this.data[key], this.data[key.replace('_id', '_data')]);
-            break;
-          case 'imagefolder':
-            this.data[key] = new Gallery(url, this.data[key], this.data[key.replace('_id', '_data')]);
-            break;
-        }
-      }
-    }
+    this.data.business_plan_file_id = new File(
+      this.url,
+      this.data.business_plan_data
+    );
+
+    this.data.fiscal_recent_group_id = new Folder(
+      this.url,
+      this.data.fiscal_recent_group_id,
+      this.data.business_plan_data
+    );
+
+    this.data.fiscal_prior_group_id = new Folder(
+      this.url,
+      this.data.fiscal_prior_group_id,
+      this.data.fiscal_prior_group_data
+    );
 
     this.data = Object.seal(this.data);
     for(let key in this.data) {
@@ -45,21 +43,11 @@ class Formc {
 
   toJSON() {
     let data = Object.assign({}, this.data);
-    for(let key in this.schema) {
-      if(this.data.hasOwnProperty(key)) {
-        switch(this.schema[key].type) {
-          case 'file':
-          case 'image':
-          case 'filefolder':
-          case 'imagefolder':
-            data[key] = this.data[key].id;
-            break;
-        }
-      }
-    }
+    data.business_plan_file_id = data.business_plan_file_id.id;
+    data.fiscal_recent_group_id = data.fiscal_recent_group_id.id;
+    data.fiscal_prior_group_id = data.fiscal_prior_group_id.id;
     return data;
   }
-
 }
 
 module.exports = Formc

@@ -1,7 +1,7 @@
 const File = require('./file.js');
 
 
-class Company {
+class Investment {
   constructor(data={}, schema={}, url=null) {
     //
     // urlRoot - url for update model assosiated with that file
@@ -10,13 +10,13 @@ class Company {
 
     this.data = data;
     this.schema = schema;
-    this.url = url || app.config.raiseCapitalServer + '/company/' + data.id;
+    this.url = url || app.config.investmentServer + '/' + data.id;
 
-    if(this.data.campaign) {
+    if (this.data.campaign) {
       this.data.campaign = new app.models.Campaign(this.data.campaign);
     }
 
-    if(this.data.formc) {
+    if (this.data.formc) {
       this.data.formc = new app.models.Formc(this.data.formc);
     }
 
@@ -35,4 +35,4 @@ class Company {
   }
 }
 
-module.exports = Company
+module.exports = Investment

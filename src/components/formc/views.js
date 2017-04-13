@@ -101,7 +101,6 @@ module.exports = {
 
     initialize(options) {
       this.model = new app.models.Formc(
-          this.urlRoot.replace(':id', options.formc.id),
           options.formc,
           options.fields,
       )
@@ -375,7 +374,6 @@ module.exports = {
 
     initialize(options) {
       this.model = new app.models.Formc(
-        this.urlRoot.replace(':id', options.formc.id),
         options.formc,
         options.fields
       );
@@ -687,7 +685,6 @@ module.exports = {
 
     initialize(options) {
       this.model = new app.models.Formc(
-        this.urlRoot.replace(':id', options.formc.id),
         options.formc,
         options.fields
       );
@@ -756,7 +753,6 @@ module.exports = {
 
     initialize(options) {
       this.model = new app.models.Formc(
-        this.urlRoot.replace(':id', options.formc.id),
         options.formc,
         options.fields
       );
@@ -942,7 +938,6 @@ module.exports = {
   riskFactorsInstruction: Backbone.View.extend(_.extend({
     initialize(options) {
       this.model = new app.models.Formc(
-        this.urlRoot.replace(':id', options.formc.id),
         options.formc,
         options.fields
       );
@@ -993,7 +988,6 @@ module.exports = {
 
     initialize(options) {
       this.model = new app.models.Formc(
-        this.urlRoot.replace(':id', options.formc.id),
         options.formc,
         options.fields
       );
@@ -1105,7 +1099,6 @@ module.exports = {
 
     initialize(options) {
       this.model = new app.models.Formc(
-        this.urlRoot.replace(':id', options.formc.id),
         options.formc,
         options.fields
       );
@@ -1225,7 +1218,6 @@ module.exports = {
 
     initialize(options) {
       this.model = new app.models.Formc(
-        this.urlRoot.replace(':id', options.formc.id),
         options.formc,
         options.fields
       );
@@ -1374,7 +1366,6 @@ module.exports = {
 
     initialize(options) {
       this.model = new app.models.Formc(
-        this.urlRoot.replace(':id', options.formc.id),
         options.formc,
         options.fields
       );
@@ -1467,7 +1458,6 @@ module.exports = {
 
     initialize(options) {
       this.model = new app.models.Formc(
-        this.urlRoot.replace(':id', options.formc.id),
         options.formc,
         options.fields
       );
@@ -1578,7 +1568,6 @@ module.exports = {
 
     initialize(options) {
       this.model = new app.models.Formc(
-        this.urlRoot.replace(':id', options.formc.id),
         options.formc,
         options.fields
       );
@@ -1711,7 +1700,6 @@ module.exports = {
 
     initialize(options) {
       this.model = new app.models.Formc(
-        this.urlRoot.replace(':id', options.formc.id),
         options.formc,
         options.fields
       );
@@ -1759,7 +1747,6 @@ module.exports = {
 
     initialize(options) {
       this.model = new app.models.Formc(
-        this.urlRoot.replace(':id', options.formc.id),
         options.formc,
         options.fields
       );
@@ -1840,7 +1827,6 @@ module.exports = {
 
     initialize(options) {
       this.model = new app.models.Formc(
-        this.urlRoot.replace(':id', options.formc.id),
         options.formc,
         options.fields
       );
@@ -2088,7 +2074,6 @@ module.exports = {
     },
     initialize(options) {
       this.model = new app.models.Formc(
-        this.urlRoot.replace(':id', options.formc.id),
         options.formc,
         options.fields
       );
@@ -2148,12 +2133,10 @@ module.exports = {
       this.fields = options.fields;
 
       this.model = new app.models.Company(
-        this.urlRoot.replace(':id', options.model.id),
         options.model,
         options.fields.company
       );
       this.model.campaign = new app.models.Campaign(
-        app.config.raiseCapitalServer + '/campaign/' + options.model.campaign.id,
         options.model.campaign,
         options.fields.campaign
       );
