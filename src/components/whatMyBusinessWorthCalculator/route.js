@@ -108,5 +108,5 @@ module.exports = {
       });
     },
   },
-  auth: ['calculatorWhatMyBusinessWorthIntro', 'BusinessValuation'],
+  auth: ['calculatorWhatMyBusinessWorthIntro', 'businessValuation'],
 };
