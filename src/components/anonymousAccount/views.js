@@ -1,6 +1,4 @@
-
 const socialAuth = require('./social-auth.js');
-
 
 module.exports = {
   popupLogin: Backbone.View.extend({
@@ -73,7 +71,7 @@ module.exports = {
       if (this.urlRoot.indexOf('registration') >= 0)
         app.emitFacebookPixelEvent('CompleteRegistration');
 
-      app.user.setData(data);
+      app.user.setData(data, this.next);
 
       this.$signIn.modal('hide');
       this.$signUp.modal('hide');
@@ -117,22 +115,20 @@ module.exports = {
     },
 
     initialize(options) {
-      this.fields = options.fields;
+      this.next = options.next;
     },
 
     render() {
       $('body').scrollTo();
 
       this.$el.html(
-        this.template({
-          fields: this.fields,
-        })
+        this.template()
       );
       return this;
     },
 
     _success(data) {
-      app.user.setData(data);
+      app.user.setData(data, this.next);
     },
 
   }),
