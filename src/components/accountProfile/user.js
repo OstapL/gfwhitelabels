@@ -160,11 +160,9 @@ class User {
 
   ensureLoggedIn(next) {
     if (this.is_anonymous()) {
-      let $content = $('#content');
-
       const pView = require('components/anonymousAccount/views.js');
 
-      let v = $content.is(':empty')
+      let v = $('#content').is(':empty')
         ? new pView.login({
             el: '#content',
             next: next || window.location.pathname,
