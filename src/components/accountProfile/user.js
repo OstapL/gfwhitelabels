@@ -169,7 +169,7 @@ class User {
       const pView = require('components/anonymousAccount/views.js');
 
       let v = $('#content').is(':empty')
-        ? new pView.login({
+        ? new pView.signup({
             el: '#content',
             model: {},
           })
