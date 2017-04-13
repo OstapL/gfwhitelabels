@@ -30,7 +30,6 @@ module.exports = {
           messageRequired: 'You must agree to the terms before creating an account',
         },
       };
-      this.next = options.next || window.location.pathname;
     },
 
     render() {
@@ -44,7 +43,7 @@ module.exports = {
       this.$signIn = $('#sign_in');
       this.$signUp = $('#sign_up');
 
-      this.$signIn.modal('show');
+      this.$signUp.modal('show');
 
       return this;
     },
@@ -71,7 +70,7 @@ module.exports = {
       if (this.urlRoot.indexOf('registration') >= 0)
         app.emitFacebookPixelEvent('CompleteRegistration');
 
-      app.user.setData(data, this.next);
+      app.user.setData(data);
 
       this.$signIn.modal('hide');
       this.$signUp.modal('hide');
@@ -115,7 +114,6 @@ module.exports = {
     },
 
     initialize(options) {
-      this.next = options.next;
     },
 
     render() {
@@ -128,7 +126,7 @@ module.exports = {
     },
 
     _success(data) {
-      app.user.setData(data, this.next);
+      app.user.setData(data);
     },
 
   }),
