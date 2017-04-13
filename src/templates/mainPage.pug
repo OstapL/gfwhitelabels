@@ -110,7 +110,10 @@ section.home-wrap-text-block.hide-bg-fixed.main-section-invest
             br
             | in the companies you support.
         .col-lg-12
-          a(href="/account/signup").btn.btn-lg.btn-secondary.text-uppercase Sign up to start investing
+          if app.user.is_anonymous()
+            a(href="/account/signup").btn.btn-lg.btn-secondary.text-uppercase Sign up to start investing
+          else
+            a(href="/companies").btn.btn-lg.btn-secondary.text-uppercase Start investing
 
 section.home-what-is
   .container
