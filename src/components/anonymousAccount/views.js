@@ -44,7 +44,7 @@ module.exports = {
       this.$signIn = $('#sign_in');
       this.$signUp = $('#sign_up');
 
-      this.$signIn.modal('show');
+      this.$signUp.modal('show');
 
       return this;
     },
