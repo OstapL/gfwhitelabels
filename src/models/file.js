@@ -81,6 +81,7 @@ class File {
 
   getUrl(name, fallback='') {
     if(this.urls.hasOwnProperty(name)) {
+      debugger;
       return app.sites[this.site_id] + this.urls[name];
     }
     return '/img/default/' + fallback;

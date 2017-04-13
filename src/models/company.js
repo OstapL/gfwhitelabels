@@ -12,11 +12,9 @@ class Company {
     this.schema = schema;
     this.url = url;
 
-    /*
-    if(schema.campaign) {
-      this.data['campaign'] = new app.models.Campaign('', this.data['campaign'], schema.campaign);
+    if(this.data.campaign) {
+      this.data.campaign = new app.models.Campaign('', this.data.campaign, '');
     }
-    */
 
     for(let key in this.schema) {
       if(this.data.hasOwnProperty(key)) {

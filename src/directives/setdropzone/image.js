@@ -40,9 +40,14 @@ class ImageDropzone extends file.FileDropzone {
     this.cropperOptions = imageOptions.crop;
 
     if(this.cropperOptions.hasOwnProperty('auto')) {
+      /*
       this.options.params.crop = true;
       this.options.params.width = this.cropperOptions.auto.width;
       this.options.params.height = this.cropperOptions.auto.height;
+      */
+      this.options.params.initialResize = true;
+      this.options.params.initialResizeWidth = this.cropperOptions.auto.width;
+      this.options.params.initialResizeHeight = this.cropperOptions.auto.height;
     }
 
     if(this.cropperOptions.hasOwnProperty('resize')) {
@@ -276,8 +281,6 @@ class CropperDropzone {
           thumbSize = this.options.resize.width + 'x' + this.options.resize.height;
           this.file.file.urls[thumbSize] = this.file.fixUrl(responseData[1].urls[0]);
         }
-
-        debugger;
 
         this.file.save().done(() => {
           if(this.options.resize) { 

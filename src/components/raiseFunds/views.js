@@ -290,8 +290,8 @@ module.exports = {
             height: 960,
           },
           resize: {
-            width: 305,
-            height: 205,
+            width: 565,
+            height: 356,
           },
           cssClass: 'img-crop',
           template: 'regular'
@@ -303,15 +303,15 @@ module.exports = {
         help_text: ' This image entices investors to view your campaign. A minimum size of 350x209 is recommended.',
         crop: {
           control:  {
-            aspectRatio: 305 / 205,
+            aspectRatio: 350 / 209,
           },
           auto: {
-            width: 305,
-            height: 205,
+            width: 350,
+            height: 209,
           },
           resize: {
-            width: 305,
-            height: 205,
+            width: 350,
+            height: 209,
           },
           cssClass: 'img-crop',
           template: 'regular'
@@ -331,7 +331,7 @@ module.exports = {
           },
           resize: {
             width: 530,
-            height: 356,
+            height: 441,
           },
           cssClass: 'img-crop',
           template: 'regular'

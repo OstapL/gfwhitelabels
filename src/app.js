@@ -245,20 +245,23 @@ class App {
   getUrl(data) {
     data = Array.isArray(data) ? data[0] : data;
 
-    if (!data || !data.urls || !data.urls.length || !data.urls[0])
+    if (!data || !data.urls)
       return null;
 
-    return this.getFilerUrl(data.urls[0]);
+    return this.getFilerUrl(data.urls);
   }
 
   getFilerUrl(file) {
-    if (!file || !_.isString(file))
+    if (!file.origin || !_.isString(file.origin))
       return null;
 
-    if (file.startsWith('http://') || file.startsWith('https://') || file.startsWith('/'))
-      return file;
+    if (file.origin.startsWith('http://') || file.origin.startsWith('https://') )
+      return file.origin;
 
-    return app.config.bucketServer + '/' + file;
+    // ToDo
+    // get bucket server base on the site_id of the file
+    // i.e. app.sites[file.site_id] + file.origin;
+    return app.config.bucketServer + file.origin;
   }
 
   breadcrumbs(title, subtitle, data) {

@@ -74,13 +74,6 @@ module.exports = {
     initialize(options) {
       $(document).off("scroll", this.onScrollListener);
       $(document).on("scroll", this.onScrollListener);
-      /*
-      this.model = new app.models.Company(
-        app.config.raiseCapitalServer + '/company/' + options.model.id,
-        options.model,
-        options.fields
-      );
-      */
 
       this.companyDocsData = {
         title: 'Financials',
@@ -90,8 +83,9 @@ module.exports = {
           : []
       };
 
-      if (this.model.ga_id)
+      if (this.model.ga_id) {
         app.createAnalyticsTracker(this.model.ga_id);
+      }
     },
 
     submitCampaign(e) {

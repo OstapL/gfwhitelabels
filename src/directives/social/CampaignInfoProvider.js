@@ -31,8 +31,7 @@ class CampaignInfoProvider extends ShareInfoProvider {
       description: model.description,
       companyName: companyName,
       corporateStructure: CORPORATE_STRUCTURE[model.corporate_structure] || '',
-      picture: model.campaign.getMainImage(),
-      site: site
+      picture: model.campaign.getMainImage()
     };
   }
 

@@ -58,16 +58,18 @@ module.exports = {
       require.ensure([], () => {
         const View = require('./views.js');
 
-        api.makeCacheRequest(app.config.raiseCapitalServer + '/' + name).
-        then((companyData) => {
+        $.when(
+          api.makeCacheRequest(app.config.raiseCapitalServer + '/company', 'OPTIONS'),
+          api.makeCacheRequest(app.config.raiseCapitalServer + '/' + name)
+        ).done((companyFields, companyData) => {
           let i = new View.detail({
-            model: new app.models.Company('', companyData),
+            model: new app.models.Company('', companyData[0], companyFields[0]),
           });
           i.render();
           if (location.hash && $(location.hash).length) {
             setTimeout(() => {
               $(location.hash).scrollTo(65);
-            }, 100);
+            }, 300);
           } else {
             $('body').scrollTo();
           }

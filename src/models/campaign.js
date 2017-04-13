@@ -95,7 +95,8 @@ class Campaign {
   }
 
   getMainImage () {
-    const link = this.header_image_data && this.header_image_data.urls ? this.header_image_data.urls.main : '';
+    const link = this.header_image_data && this.header_image_data.urls ? 
+      app.sites[this.site_id] + this.header_image_data.urls.main : '';
     return link;
   }
 

@@ -2,6 +2,7 @@
   var socialDirective = require('directives/social/index.js');
   var STATUSES = require('consts/raisecapital/companyStatuses.json').STATUS;
   var CampaignInfoProvider = require('directives/social/CampaignInfoProvider.js');
+  var SECURITY = require('consts/raisecapital/security_type.json');
 
   var infoProvider = new CampaignInfoProvider(this.model);
   var directiveKey = 'campaign';
@@ -37,7 +38,7 @@ section(style="background-image: url(" + values.campaign.getMainImage() + ")")#h
         .top-info-wrap-item
           .col-xl-3.col-lg-4.col-md-4.col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left
             p Type of Security
-            h2.font-weight-bold #{ values.campaign.security_type == c.CommonEquity ? 'Common Equity' : 'Revenue Share' }
+            h2.font-weight-bold #{ values.campaign.security_type == SECURITY.CommonEquity ? 'Common Equity' : 'Revenue Share' }
               if values.campaign.security_type == 0
                 div.d-inline-block
                   div.showPopover.hidden-xs-down(data-content="Equity represents ownership in a Company. As owners, equity investors will generally receive a share of the proceeds upon trade sale or IPO. Alternatively, investors can theoretically sell their ownership interest when the overall value of the Company has increased – though shares of common stock purchased in a crowdfunding transaction would have certain holding restrictions which are described in greater detail in our educational material. <br>The Pre-Money valuation is the valuation prior to this round of financing. Post-Money valuation is based on Pre-Money valuation plus the proceeds from the financing.")
@@ -119,10 +120,9 @@ if app.getParams().preview == '1'
   section.edit-campaign.hidden-sm-down
     .edit-campaign-wrap
       if values.campaign.list_image_image_id
-        img(src=values.campaign.list_image_data.urls['305x205'] style="width: 305px" class="m-b-2")
+        img(src=values.campaign.list_image_data.urls['350x209'] style="width: 305px" class="m-b-2")
       .row
         a(href=app.getParams().previous).btn.btn-secondary.text-uppercase.m-b-2 Edit campaign
-<<<<<<< HEAD
       .row
         if values.is_approved == STATUSES.NEW  && app.user.data.id == values.owner_id
           .row(style='display:none')
@@ -245,8 +245,8 @@ section
         else if values.campaign.gallery_group_data
           each v,k in values.campaign.gallery_group_data
             .col-lg-4.col-sm-12.col-xs-12.col-md-6.no-padding-img
-              a(href=v.urls.main data-size='1440x900' rel="gallery1" disabled="1").fancybox
-                img(src=v.urls['530x356'] alt=(values.short_name || values.name)).w-100.img-responsive
+              a(href=(app.sites[v.site_id] + v.urls.main) data-size='1440x900' rel="gallery1" disabled="1").fancybox
+                img(src=(app.sites[v.site_id] + v.urls['530x441']) alt=(values.short_name || values.name)).w-100.img-responsive
     .container
       .col-lg-12.p-sm-0
         h2.dosis.our.text-uppercase.text-lg-center.text-xs-center.campaign-subheading How We Intend to Make Money
