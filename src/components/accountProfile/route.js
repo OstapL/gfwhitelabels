@@ -166,7 +166,7 @@ module.exports = {
           return el.formc_id = id;
         });
         if(companyData.length == 0) {
-          alert('show 404 that user is not belong to this company');
+          document.getElementById('#content').innerHTML = 'Sorry, but you are not belong to this company';
           return '';
         } else {
           companyData = companyData[0];
@@ -182,9 +182,18 @@ module.exports = {
           if(campaign[0]) app.user.campaign = campaign[0];
           if(formc[0]) app.user.formc = formc[0];
 
-          params.company = app.user.company;
-          params.campaign = app.user.campaign;
-          params.formc = app.user.formc;
+          params.company = new app.models.Company(
+            '',
+            app.user.company
+          );
+          params.campaign = new app.models.Campaign(
+            '',
+            app.user.campaign
+          );
+          params.formc = new app.models.Formc(
+            '',
+            app.user.formc
+          );
 
           // FixMe
           // Temp fix for socialShare directive

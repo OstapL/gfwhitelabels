@@ -1,12 +1,14 @@
-const validation = require('components/validation/validation.js');
-
-const helpers = {
-  campaign: require('components/campaign/helpers.js'),
-};
-
+// ToDo
+// Refactor, moment shouden't be here
 const moment = require('moment');
+const today = moment.utc();
 
+// ToDo
+// Refactor, this consts shouden't be here
 const FINANCIAL_INFORMATION = require('consts/financialInformation.json');
+const FINANCIAL_INFO = require('consts/financialInformation.json');                
+const ACTIVE_STATUSES = FINANCIAL_INFO.INVESTMENT_STATUS_ACTIVE;                   
+const CANCELLED_STATUSES = FINANCIAL_INFO.INVESTMENT_STATUS_CANCELLED;   
 
 import 'bootstrap-slider/dist/bootstrap-slider';
 import 'bootstrap-slider/dist/css/bootstrap-slider.css';
@@ -17,6 +19,21 @@ const socialNetworksMap = {
   twitter: ['twitter.com'],
   linkedin: ['linkedin.com'],
 };
+
+function initInvestment(i) {
+	i.created_date = moment.isMoment(i.created_date)
+		? i.created_date
+		: moment.parseZone(i.created_date);
+
+	i.campaign.expiration_date = moment.isMoment(i.campaign.expiration_date)
+		? i.campaign.expiration_date
+		: moment(i.campaign.expiration_date);
+
+	i.expired = i.campaign.expiration_date.isBefore(today);
+	i.cancelled = _.contains(CANCELLED_STATUSES, i.status);
+	i.historical = i.expired || i.cancelled;
+	i.active = !i.historical  && _.contains(ACTIVE_STATUSES, i.status);
+}
 
 module.exports = {
   profile: Backbone.View.extend(_.extend({
@@ -256,10 +273,10 @@ module.exports = {
         }
       });
       this.$('.help-block').remove();
-      if (!validation.validate(fields, data)) {
+      if (!app.validation.validate(fields, data)) {
         e.preventDefault();
 
-        _(validation.errors).each((errors, key) => {
+        _(app.validation.errors).each((errors, key) => {
           validation.invalidMsg(this, key, errors);
         });
 
@@ -327,7 +344,7 @@ module.exports = {
       this.cityStateArea.text('City/State');
       this.cityField.val('');
       this.stateField.val('');
-      validation.invalidMsg(this, 'zip_code', 'Sorry your zip code is not found');
+      app.validation.invalidMsg(this, 'zip_code', 'Sorry your zip code is not found');
     },
 
     _updateUserInfo() {
@@ -417,7 +434,10 @@ module.exports = {
     initialize(options) {
       this.fields = options.fields;
 
-      _.each(this.model.data, helpers.campaign.initInvestment);
+      _.each(this.model.data, initInvestment);
+      this.model.data.forEach((el, i) => {
+        this.model.data[i].campaign = new app.models.Campaign('', el.campaign, this.fields);
+      });
 
       this.snippets = {
         investment: require('./templates/investment.pug'),

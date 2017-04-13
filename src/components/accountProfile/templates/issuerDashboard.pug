@@ -1,6 +1,5 @@
 | !{ app.breadcrumbs('issuer dashboard', '', [ ['Home', '/'], ['issuer dashboard', ''],])}
 -
-  var campaignHelpers = require('components/campaign/helpers.js');
   var formcLinks = require('../../campaign/helpers.js').formcLinks
   var moment = require('moment');
   var socialDirective = require('directives/social/index.js');
@@ -14,9 +13,9 @@ section.issuer-dashbord-top
     .row
       .col-md-4
         .img_under_text
-          img(src=campaignHelpers.getImageCampaign(campaign) alt="")
+          img(src=campaign.getMainImage() alt="")
           h2.text-uppercase.dosis.m-t-0 #{company.name}
-          .timer_day #{campaignHelpers.daysLeft(campaign.expiration_date)} Days Left
+          .timer_day #{campaign.daysLeft(company.approved_date)} Days Left
         .share-block.d-inline-block.share
           | !{ socialDirective.render(directiveKey, infoProvider) }
 
@@ -67,7 +66,7 @@ section.issuer-dashbord-top
       .col-md-7.col-sm-10.p-r-0.col-xs-10.hidden-xs-down
         .tpl-progress
           - 
-            var percentage_raised = campaignHelpers.daysLeftPercentage(company);
+            var percentage_raised = campaign.daysLeftPercentage(company.approved_date);
             if(percentage_raised > 100) 
               percentage_raised = 100;
           progress(
@@ -107,7 +106,7 @@ section.investors-dashbord-document
     .row
       .col-xl-12
         h2.text-uppercase documents with growthfountain
-        a(href=formcLinks[company.id] target="_blank").link-1
+        a(href=formc.link_to_formc target="_blank").link-1
           img(src=require('images/lrg_US_Department_of_State35.gif')).img-document.d-inline-block
           h3.d-inline-block.m-t-0.m-b-0  Form C
         br
@@ -222,4 +221,3 @@ section.danger-zone-dashboard
     .row
       .col-lg-12.m-t-1
         a(href="#").btn.danger-cancel.text-uppercase.cancel-campaign Material change
-

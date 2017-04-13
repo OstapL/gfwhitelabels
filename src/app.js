@@ -356,6 +356,41 @@ class App {
 
   }
 
+  confirm(container, data) {
+    return new Promise((resolve, reject) => {
+      if (!data || !data.message)
+        return resolve(true);
+
+      let template = require('./templates/confirmPopup.pug');
+      let $container = $(container);
+
+      let $modal = $(template(data));
+
+      $modal.on('shown.bs.modal', () => {
+        $modal.on('click', '.confirm-yes', () => {
+          $modal.modal('hide');
+          resolve(true);
+        });
+
+        $modal.on('click', '.confirm-no', () => {
+          $modal.modal('hide');
+          resolve(false)
+        });
+      });
+
+      $modal.on('hidden.bs.modal', () => {
+        $modal.off('hidden.bs.modal');
+        $modal.off('show.bs.modal');
+        $modal.off('click');
+        $modal.remove();
+      });
+
+      $container.append($modal);
+
+      $modal.modal('show');
+    });
+  }
+
 }
 
 let __instance = null;

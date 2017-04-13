@@ -71,10 +71,10 @@ class Campaign {
     return moment(this.expiration_date).diff(moment(), 'days');
   }
 
-  daysLeftPercentage(data) {
-    let daysToExpirate = moment(data.campaign.expiration_date).diff(moment(), 'days');
+  daysLeftPercentage(approved_date) {
+    let daysToExpirate = moment(this.expiration_date).diff(moment(), 'days');
     return Math.round(
-      (moment(data.campaign.expiration_date).diff(data.approved_date, 'days') - daysToExpirate) * 100 / daysToExpirate
+      (moment(this.expiration_date).diff(approved_date, 'days') - daysToExpirate) * 100 / daysToExpirate
     );
   }
 

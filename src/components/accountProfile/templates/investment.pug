@@ -1,13 +1,11 @@
 div(data-investmentid=id).one_table
   -
-    var campaignHelper = require('components/campaign/helpers.js');
-
-    var url = campaignHelper.getImageCampaign(campaign);
+    var url = campaign.getMainImage();
     var background = 'background: url(' + url + ') center center no-repeat; background-size: cover;';
   .img_column.text-lg-center.text-sm-center(style=background)
 
     if active
-      span.img_tab #{campaignHelper.daysLeft(campaign.expiration_date) + ' Days Left'}
+      span.img_tab #{campaign.daysLeft() + ' Days Left'}
     if cancelled
       span.successfull.unsuccessfull  Cancelled
     if expired
@@ -55,7 +53,7 @@ div(data-investmentid=id).one_table
       li
         a(href=presentationUrl target="_blank").link-3 Investor Presentation
       li
-        a(href=campaignHelper.formcLinks[company_id] data-id=id target="_blank").link-3.formc-docs-link Form C
+        a(href=company_id data-id=id target="_blank").link-3.formc-docs-link Form C
       li
         a(href="#" data-id=id target="_blank").link-3.financial-docs-link Financials
       li
@@ -73,7 +71,7 @@ div(data-investmentid=id).one_table
       .right_text
         b #{app.helpers.format.formatAmount((campaign.minimum_raise))}
         span Goal
-      p.percents #{campaignHelper.percentage(campaign.amount_raised, campaign.minimum_raise) + '% Funded'}
+      p.percents #{campaign.percentage() + '% Funded'}
       .clear
     .progress_line_container
       progress(value=campaign.amount_raised max=(campaign.minimum_raise || campaign.maximum_raise)).progress

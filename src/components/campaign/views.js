@@ -6,6 +6,7 @@ const validation = require('components/validation/validation.js');
 
 const CalculatorView = require('./revenueShareCalculator.js');
 
+
 module.exports = {
   list: Backbone.View.extend({
     el: '#content',
