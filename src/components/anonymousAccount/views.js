@@ -1,6 +1,4 @@
-
 const socialAuth = require('./social-auth.js');
-
 
 module.exports = {
   popupLogin: Backbone.View.extend({
@@ -32,7 +30,6 @@ module.exports = {
           messageRequired: 'You must agree to the terms before creating an account',
         },
       };
-      this.next = options.next || window.location.pathname;
     },
 
     render() {
@@ -46,7 +43,7 @@ module.exports = {
       this.$signIn = $('#sign_in');
       this.$signUp = $('#sign_up');
 
-      this.$signIn.modal('show');
+      this.$signUp.modal('show');
 
       return this;
     },
@@ -117,16 +114,13 @@ module.exports = {
     },
 
     initialize(options) {
-      this.fields = options.fields;
     },
 
     render() {
       $('body').scrollTo();
 
       this.$el.html(
-        this.template({
-          fields: this.fields,
-        })
+        this.template()
       );
       return this;
     },

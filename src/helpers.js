@@ -22,4 +22,5 @@ module.exports = {
   userDocuments: require('./helpers/userDocuments.js'),
   yesNo: require('./helpers/yesNoHelper.js'),
   usaStates: require('./helpers/usaStates.js'),
+  social: require('./helpers/socialLinks.js'),
 };

@@ -11,6 +11,13 @@ const FINANCIAL_INFORMATION = require('consts/financialInformation.json');
 import 'bootstrap-slider/dist/bootstrap-slider';
 import 'bootstrap-slider/dist/css/bootstrap-slider.css';
 
+const socialNetworksMap = {
+  instagram: ['instagram.com'],
+  facebook: ['fb.com', 'facebook.com'],
+  twitter: ['twitter.com'],
+  linkedin: ['linkedin.com'],
+};
+
 module.exports = {
   profile: Backbone.View.extend(_.extend({
     template: require('./templates/profile.pug'),
@@ -21,10 +28,13 @@ module.exports = {
       // 'click #saveFinancialInfo': api.submitAction,
       'change #not-qualify': 'changeQualify',
       'change .investor-item-checkbox': 'changeAccreditedInvestorItem',
-      'change #twitter,#facebook,#instagram,#linkedin': 'appendHttpsIfNecessary',
-
       // 'change input[name=accredited_investor]': 'changeAccreditedInvestor',
-    }, app.helpers.phone.events, app.helpers.dropzone.events, app.helpers.yesNo.events),
+    },
+    app.helpers.phone.events,
+    app.helpers.dropzone.events,
+    app.helpers.yesNo.events,
+    app.helpers.social.events,
+    ),
 
     initialize(options) {
       this.activeTab = options.activeTab;
@@ -353,7 +363,12 @@ module.exports = {
 
     },
 
-  }, app.helpers.phone.methods, app.helpers.dropzone.methods, app.helpers.yesNo.methods)),
+  },
+    app.helpers.phone.methods,
+    app.helpers.dropzone.methods,
+    app.helpers.yesNo.methods,
+    app.helpers.social.methods,
+  )),
 
   changePassword: Backbone.View.extend({
     urlRoot: app.config.authServer + '/rest-auth/password/change',
