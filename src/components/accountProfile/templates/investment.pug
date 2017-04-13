@@ -13,7 +13,9 @@ div(data-investmentid=id).one_table
     if expired
       span.end-date  #{campaign.expiration_date.format('MM/DD/YYYY')}
     if add_deposit_to_csv
-      span Investment Processed
+      span.investment-processed
+        i.fa.fa-check.like-icon-circle
+        | Investment Processed
     h2.text-uppercase #{company.name}
   .right-columns
     .one_line
