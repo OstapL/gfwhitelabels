@@ -17,22 +17,13 @@ module.exports = {
     login(id) {
       require.ensure([], () => {
         const View = require('./views.js');
-        let optionsR = api.makeRequest(app.config.authServer + '/rest-auth/login', 'OPTIONS');
         $('body').scrollTo();
-        $.when(optionsR).done((metaData) => {
-          let loginView = new View.login({
-            el: '#content',
-            fields: metaData.fields,
-            model: {},
-          });
-          loginView.render();
-          app.hideLoading();
-        }).fail((xhr, error) => {
-          // ToDo
-          // Show global error message
-          console.log(xhr, error);
-          app.hideLoading();
+        let loginView = new View.login({
+          el: '#content',
+          model: {},
         });
+        loginView.render();
+        app.hideLoading();
       });
     },
 
