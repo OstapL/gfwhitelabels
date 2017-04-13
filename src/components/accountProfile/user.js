@@ -9,6 +9,8 @@ class User {
     this.data = { token: '', id: ''};
     this.role_data = null;
     this.token = null;
+
+    this.next = null;
   }
 
   get(key) {
@@ -41,7 +43,9 @@ class User {
 
   setData(data, next) {
 
-    next = next || app.getParams().next || '/';
+    next = next || this.next || app.getParams().next || '/';
+
+    this.next = null;
 
     if(data.hasOwnProperty('token') && data.hasOwnProperty('info')) {
       localStorage.setItem('token', data.token);
@@ -160,17 +164,16 @@ class User {
 
   ensureLoggedIn(next) {
     if (this.is_anonymous()) {
+      this.next = next || window.location.pathname;
+
       const pView = require('components/anonymousAccount/views.js');
 
       let v = $('#content').is(':empty')
         ? new pView.login({
             el: '#content',
-            next: next || window.location.pathname,
             model: {},
           })
-        : new pView.popupLogin({
-          next: next || window.location.pathname,
-        });
+        : new pView.popupLogin({});
 
       v.render();
       app.hideLoading();
