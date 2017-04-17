@@ -37,6 +37,8 @@ section.team-members.container.m-b-85
         pug_html += app.fields.textLabel('order', {
         schema: fields.order, 
         value: member.order, 
+        placeholder: "Order",
+        help_text: 'Enter a number. Team members will be displayed in ascending order.',
         label: 'Order',})
       if type == 'advisor'
         - 
