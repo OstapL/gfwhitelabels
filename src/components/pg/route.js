@@ -148,6 +148,31 @@ module.exports = {
         app.addClassesTo('#page', [name]);
 
         $('#content').html(view());
+        // investor and busines tutorial
+        $('.carousel-tutorial').owlCarousel({
+            loop: true,
+            nav: true,
+            autoplay: true,
+            autoplayTimeout: 9000,
+            smartSpeed: 2000,
+            responsiveClass: true,
+            animateOut: 'fadeOuts',
+            items: 1,
+            navText: [
+              '<i class="fa fa-angle-left" aria-hidden="true"></i>',
+              '<i class="fa fa-angle-right" aria-hidden="true"></i>',
+            ],
+            responsive: {
+              0: { items: 1 },
+              600: { items: 1 },
+              1000: { items: 1 },
+            },
+          });
+        var owl = $('.owl-carousel');
+        owl.owlCarousel();
+        $('.customNextBtn').click(function() {
+        owl.trigger('next.owl.carousel');
+        });
 
         $('body').scrollTo();
         app.hideLoading();
