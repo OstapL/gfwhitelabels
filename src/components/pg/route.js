@@ -173,7 +173,10 @@ module.exports = {
 
           $input.fadeIn().focus();
         });
-
+        // pause for modal on page news
+        $('#audio-modal').on('hidden.bs.modal', function (e) {
+            document.getElementById('news_audio').pause()
+        });
         $('body').on('focusout', '.text-input', (event) => {
           let $this = $(event.target);
           let value = $this.val();
