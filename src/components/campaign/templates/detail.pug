@@ -120,7 +120,7 @@ if app.getParams().preview == '1'
   section.edit-campaign.hidden-sm-down
     .edit-campaign-wrap
       if values.campaign.list_image_image_id
-        img(src=values.campaign.list_image_data.urls['350x209'] style="width: 305px" class="m-b-2")
+        img(src=values.campaign.list_image_image_id.getUrl('350x209') style="width: 305px" class="m-b-2")
       .row
         a(href=app.getParams().previous).btn.btn-secondary.text-uppercase.m-b-2 Edit campaign
       .row
@@ -242,11 +242,11 @@ section
           | !{ gallery_company_venue()}
         else if values.id == 536
           | !{ gallery_company_oma()}
-        else if values.campaign.gallery_group_data
-          each v,k in values.campaign.gallery_group_data
+        else if values.campaign.gallery_group_id.data.length
+          each v,k in values.campaign.gallery_group_id.data
             .col-lg-4.col-sm-12.col-xs-12.col-md-6.no-padding-img
-              a(href=(app.sites[v.site_id] + v.urls.main) data-size='1440x900' rel="gallery1" disabled="1").fancybox
-                img(src=(app.sites[v.site_id] + v.urls['530x441']) alt=(values.short_name || values.name)).w-100.img-responsive
+              a(href=(v.getUrl('main')) data-size='1440x900' rel="gallery1" disabled="1").fancybox
+                img(src=(v.getUrl('530x441')) alt=(v.name)).w-100.img-responsive
     .container
       .col-lg-12.p-sm-0
         h2.dosis.our.text-uppercase.text-lg-center.text-xs-center.campaign-subheading How We Intend to Make Money

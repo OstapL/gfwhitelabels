@@ -36,7 +36,7 @@ class Campaign {
 		);
 		this.data['gallery_group_id'] = new Gallery(
 			this.url,
-			this.data.gallery_group_id,	
+			this.data.gallery_group_id,
 			this.data.gallery_group_data
 		);
 
@@ -95,7 +95,7 @@ class Campaign {
 
   getMainImage () {
     const link = this.header_image_data && this.header_image_data.urls ? 
-      app.sites[this.site_id] + this.header_image_data.urls.main : '';
+      this.header_image_image_id.getUrl('main') : '';
     return link;
   }
 

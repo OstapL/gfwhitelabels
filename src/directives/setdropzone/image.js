@@ -265,8 +265,8 @@ class CropperDropzone {
       data.crop = cropData;
       data.resize = {
         name: this.options.resize.width + 'x' + this.options.resize.height + '.' + this.file.file.getExtention(),
-        width: this.options.resize.width,
-        height: this.options.resize.height,
+        width: this.options.resize.width - 1,
+        height: this.options.resize.height - 1,
       };
 
       api.makeRequest(
