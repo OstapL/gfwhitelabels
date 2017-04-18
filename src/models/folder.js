@@ -30,7 +30,7 @@ class Folder {
     return `/img/icons/${icon}.png`;
   }
 
-  getUrl(name, fallback='fileFolder.png') {
+  getUrl(name, fallback='folder.png') {
 
     if(this.urls.hasOwnProperty(name)) {
       return this.urls[name];

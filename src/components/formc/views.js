@@ -1,5 +1,3 @@
-'use strict';
-
 const typeOfDocuments = require('consts/typeOfDocuments.json');
 const companyFees = require('consts/companyFees.json');
 const formcHelpers = require('./helpers.js');
@@ -100,10 +98,7 @@ module.exports = {
     },
 
     initialize(options) {
-      this.model = new app.models.Formc(
-          options.formc,
-          options.fields,
-      )
+      this.model = options.formc;
       this.fields = options.fields;
 
       if(this.model.is_paid === false) {
@@ -373,10 +368,7 @@ module.exports = {
     },
 
     initialize(options) {
-      this.model = new app.models.Formc(
-        options.formc,
-        options.fields
-      );
+      this.model = options.formc;
       this.fields = options.fields;
       this.fields.full_time_employers = { label: 'Full Time Employees' };
       this.fields.part_time_employers = { label: 'Part Time Employees' };
@@ -684,10 +676,7 @@ module.exports = {
     },
 
     initialize(options) {
-      this.model = new app.models.Formc(
-        options.formc,
-        options.fields
-      );
+      this.model = options.formc;
       this.fields = options.fields;
 
       this.labels = {
@@ -752,10 +741,7 @@ module.exports = {
     },
 
     initialize(options) {
-      this.model = new app.models.Formc(
-        options.formc,
-        options.fields
-      );
+      this.model = options.formc;
       this.fields = options.fields;
       this.campaign = options.campaign;
 
@@ -937,10 +923,7 @@ module.exports = {
 
   riskFactorsInstruction: Backbone.View.extend(_.extend({
     initialize(options) {
-      this.model = new app.models.Formc(
-        options.formc,
-        options.fields
-      );
+      this.model = options.formc;
     },
 
     preinitialize() {
@@ -987,10 +970,7 @@ module.exports = {
     },
 
     initialize(options) {
-      this.model = new app.models.Formc(
-        options.formc,
-        options.fields
-      );
+      this.model = options.formc;
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
@@ -1098,10 +1078,7 @@ module.exports = {
     },
 
     initialize(options) {
-      this.model = new app.models.Formc(
-        options.formc,
-        options.fields
-      );
+      this.model = options.formc;
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
@@ -1217,10 +1194,7 @@ module.exports = {
     },
 
     initialize(options) {
-      this.model = new app.models.Formc(
-        options.formc,
-        options.fields
-      );
+      this.model = options.formc;
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
@@ -1365,10 +1339,7 @@ module.exports = {
     },
 
     initialize(options) {
-      this.model = new app.models.Formc(
-        options.formc,
-        options.fields
-      );
+      this.model = options.formc;
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
@@ -1457,10 +1428,7 @@ module.exports = {
     },
 
     initialize(options) {
-      this.model = new app.models.Formc(
-        options.formc,
-        options.fields
-      );
+      this.model = options.formc;
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
@@ -1567,10 +1535,7 @@ module.exports = {
     },
 
     initialize(options) {
-      this.model = new app.models.Formc(
-        options.formc,
-        options.fields
-      );
+      this.model = options.formc;
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
@@ -1699,10 +1664,7 @@ module.exports = {
     },
 
     initialize(options) {
-      this.model = new app.models.Formc(
-        options.formc,
-        options.fields
-      );
+      this.model = options.formc;
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
@@ -1746,10 +1708,7 @@ module.exports = {
     },
 
     initialize(options) {
-      this.model = new app.models.Formc(
-        options.formc,
-        options.fields
-      );
+      this.model = options.formc;
       this.fields = options.fields;
       this.campaign = options.campaign;
       this.labels = {
@@ -1826,10 +1785,7 @@ module.exports = {
     },
 
     initialize(options) {
-      this.model = new app.models.Formc(
-        options.formc,
-        options.fields
-      );
+      this.model = options.formc;
       this.fields = options.fields;
       this.fields.business_loans_or_debt_choice.validate = {};
       this.fields.business_loans_or_debt_choice.validate.choices = {
@@ -2073,10 +2029,7 @@ module.exports = {
       }
     },
     initialize(options) {
-      this.model = new app.models.Formc(
-        options.formc,
-        options.fields
-      );
+      this.model = options.formc;
       this.fields = options.fields;
       this.labels = {
         company_or_director_subjected_to: 'If Yes, Explain',
@@ -2132,14 +2085,8 @@ module.exports = {
       this.formcId = options.formcId;
       this.fields = options.fields;
 
-      this.model = new app.models.Company(
-        options.model,
-        options.fields.company
-      );
-      this.model.campaign = new app.models.Campaign(
-        options.model.campaign,
-        options.fields.campaign
-      );
+      // this.model = options.formc;
+      // this.model.campaign = options.campaign;
 
       app.helpers.disableEnter.disableEnter.call(this);
     },

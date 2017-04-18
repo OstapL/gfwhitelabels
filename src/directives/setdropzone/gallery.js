@@ -94,7 +94,6 @@ class GalleryDropzone extends imageDropzone.ImageDropzone {
   }
 
   success(file, data) {
-
     const reorgData = data[2];
     reorgData.urls = {
       origin: this.galleryElement.fixUrl(data[2].urls[0])
@@ -121,12 +120,12 @@ class GalleryDropzone extends imageDropzone.ImageDropzone {
 
     this.galleryElement.update(this.galleryElement.file.data, () => {
       fileObj.render();
-      this.element.querySelector('.' + this.galleryElement.fieldName).insertAdjacentHTML('beforeend', fileObj.resultHTML);
+      this.element.querySelector('.fileHolder').insertAdjacentHTML('beforeend', fileObj.resultHTML);
       new imageDropzone.CropperDropzone(
         this,
         fileObj,
         this.cropperOptions
-      ).render(this.element);
+      ).render(this.element.parentElement.parentElement.parentElement);
     });
   }
 }

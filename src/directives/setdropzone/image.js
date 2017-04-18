@@ -23,7 +23,7 @@ class ImageElement extends file.FileElement {
           this,
           this,
           this.options,
-        ).render(this.element.parentElement.parentElement.parentElement.parentElement);
+        ).render($(this.element).parents('.dropzoneContainer')[0]);
         return false;
       });
     });

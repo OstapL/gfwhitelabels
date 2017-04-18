@@ -436,7 +436,7 @@ module.exports = {
 
       _.each(this.model.data, initInvestment);
       this.model.data.forEach((el, i) => {
-        this.model.data[i].campaign = new app.models.Campaign('', el.campaign, this.fields);
+        this.model.data[i].campaign = new app.models.Campaign(el.campaign, this.fields);
       });
 
       this.snippets = {
@@ -476,6 +476,11 @@ module.exports = {
         ],
       };
 
+      app.cookies.set('token', app.user.data.token, {
+        domain: '.' + app.config.domainUrl,
+        expires: YEAR,
+        path: '/',
+      });
       app.helpers.fileList.show(data);
     },
 

@@ -135,8 +135,10 @@ let exports = {
     if(attr.placeholder == null || attr.placeholder == "") {
       attr.placeholder = attr.label || '';
     }
-    if(attr.required == true) {
-      attr.label += '<span class="color-red">*</span>';
+    if (attr.required == true) {
+      if (attr.label && attr.label[attr.label.length-8] != '*') {
+        attr.label += '<span class="color-red">*</span>';
+      }
     }
   },
 

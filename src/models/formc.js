@@ -23,7 +23,7 @@ class Formc {
     this.data.fiscal_recent_group_id = new Folder(
       this.url,
       this.data.fiscal_recent_group_id,
-      this.data.business_plan_data
+      this.data.fiscal_recent_group_data
     );
 
     this.data.fiscal_prior_group_id = new Folder(

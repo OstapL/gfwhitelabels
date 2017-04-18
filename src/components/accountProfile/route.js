@@ -88,8 +88,6 @@ module.exports = {
           });
           i.render();
           app.hideLoading();
-        }).catch((err) => {
-          console.log(err);
         });
       });
     },

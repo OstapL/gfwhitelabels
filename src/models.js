@@ -3,6 +3,6 @@ module.exports = {
   Campaign: require('models/campaign.js'),
   TeamMemberCampaign: require('models/teammembercampaign.js'),
   Formc: require('models/formc.js'),
-  Formc: require('models/investment.js'),
+  Investment: require('models/investment.js'),
   User: require('components/accountProfile/user.js'),
 };

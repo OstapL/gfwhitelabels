@@ -3,6 +3,7 @@ include fields_final_review.pug
   var customFields = require('../fields.js');
   var fees = require('consts/companyFees.json');
   var fileDropzone = require('directives/setdropzone/file.js'); 
+  var fileFolderDropzone = require('directives/setdropzone/folder.js'); 
 
 - pug_html += app.breadcrumbs('Form C Review', '', [ ['Home', '/'], ['Form C Review', '']]);
 
@@ -1382,10 +1383,10 @@ section.formc-review
         h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3#business_plan EXHIBIT A: BUSINESS PLAN
 
         -
-          pug_html += fileDropzone.getInstance({model: view.model.campaign}, 
-            'investor_presentation_file_id', 
-            'investor_presentation_data', 
-            view.fields.campaign.investor_presentation_file_id
+          pug_html += fileDropzone.getInstance({model: view.model.formc}, 
+            'business_plan_file_id',
+            'business_plan_data',
+            view.fields.formc.business_plan_file_id
           ).render().resultHTML;
 
       // page 32
@@ -1396,11 +1397,19 @@ section.formc-review
             +frField('company.name', 'text')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3#financial_statements EXHIBIT B: FINANCIAL STATEMENTS for most recent fiscal year
-        if values.formc.fiscal_recent_group_data.length > 0
-          | !{ app.fields.fileFolderDropzone('fiscal_recent_group_id', { data: values.formc.fiscal_recent_group_data, value: values.formc.fiscal_recent_group_id, label: "Upload financials for most recent fiscal year", schema: fields.formc.fiscal_recent_group_id}) }
+        -
+          pug_html += new fileFolderDropzone.FolderDropzone({model: view.model.formc}, 
+            'fiscal_recent_group_id',
+            'fiscal_recent_group_data',
+            view.fields.formc.fiscal_recent_group_id
+          ).render().resultHTML;
         h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 EXHIBIT B: FINANCIAL STATEMENTS for prior fiscal year
-        if values.formc.fiscal_prior_group_data.length > 0
-          | !{ app.fields.fileFolderDropzone('fiscal_prior_group_id', { data: values.formc.fiscal_prior_group_data, value: values.formc.fiscal_prior_group_id, label: "Upload financials for most prior fiscal year", schema: fields.formc.fiscal_prior_group_id}) }
+        -
+          pug_html += new fileFolderDropzone.FolderDropzone({model: view.model.formc}, 
+            'fiscal_prior_group_id',
+            'fiscal_prior_group_data',
+            view.fields.formc.fiscal_prior_group_id
+          ).render().resultHTML;
 
       // page 33
       section.page-formc-review.m-t-1

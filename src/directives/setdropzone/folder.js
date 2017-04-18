@@ -9,6 +9,10 @@ class FolderElement extends fileDropzone.FileElement {
     super(file, fieldName, fieldDataName, options);
     this.files = [];
     file.data.forEach((el) => {
+      if(el == null || el.urls == null) {
+        el = {};
+        el.urls = [];
+      }
       if(Array.isArray(el.urls)) {
         let temp = Object.assign({}, el);
         el.urls = {};
@@ -17,10 +21,14 @@ class FolderElement extends fileDropzone.FileElement {
       let fileObj = new fileDropzone.FileElement(
         new fileClass('', el),
         fieldName,
-        fieldDataName
+        fieldDataName,
+        options
       );
+      fileObj.delete = () => this.delete.call(this, fileObj.file.id);
       fileObj.getTemplate = this.getTemplate;
+      fileObj.save = () => this.save.call(this);
       fileObj.elementSelector = '.' + fieldName + ' .fileContainer' + el.id;
+      fileObj.options = this.options;
       this.files.push(fileObj);
     });
     // this.file = file;
@@ -40,6 +48,30 @@ class FolderElement extends fileDropzone.FileElement {
     return this.options.defaultImage || defaultImage;
   }
 
+  save() {
+    let patchData = {};
+    patchData[this.fieldDataName] = this.file.data;
+    return api.makeRequest(this.file.urlRoot, 'PATCH', patchData);
+  }
+
+  delete(fileId) {
+    let imageRender = this.files.filter((el) => {return fileId == el.file.id})[0];
+    let index = this.files.indexOf(imageRender);
+
+    this.files[index].file.delete().done(() => {
+      let indexFile = this.file.data.indexOf(this.file.data.filter((el) => {return fileId == el.id})[0]);
+      this.file.data.splice(indexFile, 1);
+      this.save().then(() => imageRender.element.remove());
+    }).fail((xhr, error) => {
+      // If file was already deleted in filer - just update model
+      if(xhr.status == 503) {
+        let indexFile = this.file.data.indexOf(this.file.data.filter((el) => {return fileId == el.id})[0]);
+        this.file.data.splice(indexFile, 1);
+        this.save().then(() => imageRender.element.remove());
+      }
+    });
+  }
+
 };
 
 
@@ -56,18 +88,31 @@ class FolderDropzone extends fileDropzone.FileDropzone {
   }
 
   getTemplate() {
-    return require('./templates/fileFolderDropzone.pug');
+    return require('./templates/folderDropzone.pug');
   }
 
   success(file, data) {
+    const reorgData = data;
+    reorgData.urls = {
+      origin: this.folderElement.fixUrl(data.urls[0])
+    };
+    reorgData.site_id = app.sites.getId();
+    this.folderElement.file.data.push(reorgData);
+    let fileObj = new fileDropzone.FileElement(
+      new fileClass('', reorgData),
+      this.folderElement.fieldName,
+      this.folderElement.fieldDataName
+    );
+    fileObj.getTemplate = this.folderElement.getTemplate;
+    fileObj.elementSelector = '.' + this.folderElement.fieldName + ' .fileContainer' + reorgData.id;
+    fileObj.save = () => this.folderElement.save.call(this.galleryElement);
+    fileObj.delete = () => this.folderElement.delete.call(this.folderElement, fileObj.file.id);
+    fileObj.options = this.folderElement.options;
+    this.folderElement.files.push(fileObj);
 
-    const reorgData = Object.assign({}, data);
-    reorgData.urls = {};
-    reorgData.urls.origin = data.urls[0];
-
-    this.fileElement.file.data.push(reorgData);
-    this.fileElement.save().done(() => {
-      this.fileElement.render(this.fileElement.element);
+    this.folderElement.update(this.folderElement.file.data, () => {
+      fileObj.render();
+      this.element.querySelector('.fileHolder').insertAdjacentHTML('beforeend', fileObj.resultHTML);
     });
   }
 }

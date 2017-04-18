@@ -23,19 +23,19 @@ class Campaign {
     this.url = url || app.config.raiseCapitalServer + '/campaign/' + data.id;
 
 		this.data['investor_presentation_file_id'] = new File(
-			this.urlRoot,
+			this.url,
 			this.data.investor_presentation_data
 		);
 		this.data['list_image_image_id'] = new Image(
-			this.urlRoot,
+			this.url,
 			this.data.list_image_data
 		);
 		this.data['header_image_image_id'] = new Image(
-			this.urlRoot,
+			this.url,
 			this.data.header_image_data
 		);
 		this.data['gallery_group_id'] = new Gallery(
-			this.urlRoot,
+			this.url,
 			this.data.gallery_group_id,	
 			this.data.gallery_group_data
 		);
