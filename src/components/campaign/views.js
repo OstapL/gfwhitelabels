@@ -6,6 +6,7 @@ const validation = require('components/validation/validation.js');
 
 const CalculatorView = require('./revenueShareCalculator.js');
 
+
 module.exports = {
   list: Backbone.View.extend({
     el: '#content',
@@ -75,15 +76,6 @@ module.exports = {
       $(document).off("scroll", this.onScrollListener);
       $(document).on("scroll", this.onScrollListener);
 
-      let params = app.getParams();
-      this.edit = false;
-      if (params.preview == '1' && this.model.owner == app.user.get('id')) {
-        // see if owner match current user
-        this.edit = true;
-        this.previous = params.previous;
-      }
-      this.preview = params.preview ? true : false;
-
       this.companyDocsData = {
         title: 'Financials',
         files: this.model.formc
@@ -91,14 +83,18 @@ module.exports = {
                 this.model.formc.fiscal_recent_group_data)
           : []
       };
+
+      if (this.model.ga_id) {
+        app.createAnalyticsTracker(this.model.ga_id);
+      }
     },
 
     submitCampaign(e) {
       api.makeRequest(
-        app.config.raiseCapitalServer + '/company/' + this.model.id + '/edit',
+        app.config.raiseCapitalServer + '/company/' + this.model.id,
         'GET'
       ).then(function(data) {
-        if(
+        if (
             data.progress.general_information == true &&
             data.progress.media == true &&
             data.progress.specifics == true &&
@@ -220,7 +216,7 @@ module.exports = {
       });
 
       setTimeout(() => {
-        if (this.model.id == 580) { //enable calculator only for bluehollar company
+        if (this.model.campaign.security_type == 1) { //enable calculator only for bluehollar company
           (new CalculatorView.calculator()).render();
         }
       }, 100);
@@ -268,7 +264,9 @@ module.exports = {
           stickyToggle(sticky, stickyWrapper, $(window));
         });
 
-        this.initComments();
+        if(this.model.is_approved == 6) {
+          this.initComments();
+        };
 
       }, 1200);
 

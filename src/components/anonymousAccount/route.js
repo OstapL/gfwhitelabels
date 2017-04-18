@@ -16,45 +16,29 @@ module.exports = {
   methods: {
     login(id) {
       require.ensure([], () => {
-        const View = require('./views.js');
-        let optionsR = api.makeRequest(app.config.authServer + '/rest-auth/login', 'OPTIONS');
         $('body').scrollTo();
-        $.when(optionsR).done((metaData) => {
-          let loginView = new View.login({
-            el: '#content',
-            fields: metaData.fields,
-            model: {},
-          });
-          loginView.render();
-          app.hideLoading();
-        }).fail((xhr, error) => {
-          // ToDo
-          // Show global error message
-          console.log(xhr, error);
-          app.hideLoading();
+
+        const View = require('./views.js');
+        let loginView = new View.login({
+          el: '#content',
+          model: {},
         });
+        loginView.render();
+        app.hideLoading();
       });
     },
 
     signup() {
       require.ensure([], () => {
-        const View = require('./views.js');
-        const optionsR = api.makeRequest(app.config.authServer + '/rest-auth/registration', 'OPTIONS');
         $('body').scrollTo();
-        $.when(optionsR).done((metaData) => {
-          const signView = new View.signup({
-            el: '#content',
-            fields: metaData.fields,
-            model: {},
-          });
-          signView.render();
-          app.hideLoading();
-        }).fail((xhr, error) => {
-          // ToDo
-          // Show global error message
-          console.log(xhr, error);
-          app.hideLoading();
+
+        const View = require('./views.js');
+        const signView = new View.signup({
+          el: '#content',
+          model: {},
         });
+        signView.render();
+        app.hideLoading();
       });
     },
 

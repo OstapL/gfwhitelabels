@@ -1,6 +1,6 @@
 - var config = require('./config.js');
 doctype html
-html
+html(lang="en")
   head
     title #{ htmlWebpackPlugin.options.title }
     include ga.script.pug
@@ -22,7 +22,7 @@ html
 
   body.appear-animate
     //Google Tag Manager (noscript)
-    include ga.noscript.pug
+    //include ga.noscript.pug
     //End Google Tag Manager (noscript)
 
 

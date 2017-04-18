@@ -1,18 +1,16 @@
 -
   var security_type = require('consts/raisecapital/security_type.json');
   var industry = require('consts/raisecapital/industry.json');
-  var campaignHelper = require('../helpers.js');
 
 .row
   for company in collection.data
-    - var percentage_raised = campaignHelper.fundedPercentage(company.campaign, 20);
     .col-xl-4.col-lg-6.col-md-6.col-xs-12.col-sm-12
       a(href="/" + company.slug).block_link
       .one_block
         .for_img
           -
             var url = app.getUrl(company.campaign.list_image_data);
-            url = url ? (url + '?v=2') : require('images/default/255x153.png');
+            url = url ? url : require('images/default/255x153.png');
             var alternate = company.short_name || company.name;
 
           img(src=url alt=alternate)

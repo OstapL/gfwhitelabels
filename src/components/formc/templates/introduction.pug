@@ -10,6 +10,10 @@ section.formc.introduction.create-company-media.container
     h2.text-uppercase.text-lg-center.text-xs-center.m-t-0 introduction
     .col-lg-12.p-xs-0
       .welcome-text
+        if app.getParams().notPaid == '1'
+          .warning-block.warning-team-add.text-lg-left.m-t-2
+            i.fa.fa-info-circle
+            span.warning-text Sorry, you have to pay to proceed
         h3.m-t-0 Welcome!
         p.pb10 Congratulations on taking your first step toward fundraising in a way that brings you closer to the most important people of all: your potential customers. 
         p.pb10 As you shift from Campaign to Form C, you are now populating your legal offering document. This requires a change in tone from marketing to disclosure. In fact, this document requires 

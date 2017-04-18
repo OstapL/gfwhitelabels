@@ -54,6 +54,7 @@ section.investor-dashboard
             )
               .active-investor-dashboard.investor_table
                 - var hasHistoricalInvestments = false;
+                - debugger;
                 each i in investments
                   if i.historical
                     - hasHistoricalInvestments = true;

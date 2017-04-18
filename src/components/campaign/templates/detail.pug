@@ -1,15 +1,13 @@
 -
-  var campaignHelper = require('../helpers.js');
-
-  var SECURITY_TYPE = require('consts/formc/security_type.json');
-  var backgroundImgUrl = app.getUrl(values.campaign.header_image_data) || '';
   var socialDirective = require('directives/social/index.js');
+  var STATUSES = require('consts/raisecapital/companyStatuses.json').STATUS;
   var CampaignInfoProvider = require('directives/social/CampaignInfoProvider.js');
+  var SECURITY = require('consts/raisecapital/security_type.json');
 
   var infoProvider = new CampaignInfoProvider(this.model);
   var directiveKey = 'campaign';
 
-section(style="background-image: url(" + backgroundImgUrl + ")")#home.home-section.bg-after-company.parallax-2.fixed-height-small.hide-bg-fixed.company-header
+section(style="background-image: url(" + values.campaign.getMainImage() + ")")#home.home-section.bg-after-company.parallax-2.fixed-height-small.hide-bg-fixed.company-header
   .js-height-parent.container-fluid
     .home-content
       .home-text.text-lg-center
@@ -40,7 +38,7 @@ section(style="background-image: url(" + backgroundImgUrl + ")")#home.home-secti
         .top-info-wrap-item
           .col-xl-3.col-lg-4.col-md-4.col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left
             p Type of Security
-            h2.font-weight-bold #{ values.campaign.security_type == SECURITY_TYPE.CommonEquity ? 'Common Equity' : 'Revenue Share' }
+            h2.font-weight-bold #{ values.campaign.security_type == SECURITY.CommonEquity ? 'Common Equity' : 'Revenue Share' }
               if values.campaign.security_type == 0
                 div.d-inline-block
                   div.showPopover.hidden-xs-down(data-content="Equity represents ownership in a Company. As owners, equity investors will generally receive a share of the proceeds upon trade sale or IPO. Alternatively, investors can theoretically sell their ownership interest when the overall value of the Company has increased – though shares of common stock purchased in a crowdfunding transaction would have certain holding restrictions which are described in greater detail in our educational material. <br>The Pre-Money valuation is the valuation prior to this round of financing. Post-Money valuation is based on Pre-Money valuation plus the proceeds from the financing.")
@@ -63,9 +61,10 @@ section(style="background-image: url(" + backgroundImgUrl + ")")#home.home-secti
             h2.font-weight-bold.no-margin #{ app.helpers.format.formatPrice(values.campaign.minimum_increment) }
           .col-xl-2.col-lg-2.col-md-2.col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left
             p Days Left
-            h2.font-weight-bold.no-margin #{ campaignHelper.daysLeft(values.campaign.expiration_date) }
+            h2.font-weight-bold.no-margin #{ values.campaign.daysLeft() }
           .col-xl-4.col-lg-3.col-md-2.hidden-xs-down.p-sm-0.pull-lg-right.text-xs-center
-            a(href="/" + values.slug + "/invest").btn.btn-primary.text-uppercase.pull-lg-right Invest
+            if values.is_approved == STATUSES.VERIFIED
+              a(href="/" + values.slug + "/invest").btn.btn-primary.text-uppercase.pull-lg-right Invest
 
 if app.getParams().preview == '1'
   div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#company_publish.modal.fade
@@ -120,10 +119,19 @@ if app.getParams().preview == '1'
 
   section.edit-campaign.hidden-sm-down
     .edit-campaign-wrap
+      if values.campaign.list_image_image_id
+        img(src=values.campaign.list_image_data.urls['350x209'] style="width: 305px" class="m-b-2")
       .row
         a(href=app.getParams().previous).btn.btn-secondary.text-uppercase.m-b-2 Edit campaign
       .row
-        button(type="button").btn.btn-primary.text-uppercase.submit_form Submit campaign
+        if values.is_approved == STATUSES.NEW  && app.user.data.id == values.owner_id
+          .row(style='display:none')
+            button(type="button").btn.btn-primary.text-uppercase.m-t-2.submit_form submit campaign
+        else if values.is_approved == STATUSES.PENDING 
+          .warning-block.warning-team-add.text-lg-left.m-t-2
+            span.warning-text
+              i.fa.fa-info-circle 
+              | Your campaign in review
 
 section.campaigndetail
   .container
@@ -145,7 +153,7 @@ section.campaigndetail
     .col-lg-6.right-block-investors.p-l-0.p-sm-0
       .progress_bar_container
         -
-          var percentage_raised = campaignHelper.fundedPercentage(values.campaign, 20);
+          var percentage_raised = values.campaign.fundedPercentage();
         span #{ percentage_raised.text }
         span.pull-right Committed 
           span.committed #{ app.helpers.format.formatPrice(values.campaign.amount_raised)}
@@ -181,7 +189,8 @@ section.campaigndetail
                   img(src=require('images/avatar1.jpg') alt="...").img-circle
               a(href="#" style="display: none").link-1 see all...
         .col-xl-4.col-lg-3.col-md-2.hidden-sm-up.p-sm-0.pull-lg-right.text-xs-center
-            a(href="/" + values.slug + "/invest").btn.btn-primary.text-uppercase.pull-lg-right Invest
+            if values.is_approved == STATUSES.VERIFIED
+              a(href="/" + values.slug + "/invest").btn.btn-primary.text-uppercase.pull-lg-right Invest
         .row.social-share-mobile
           .col-lg-12.share.hidden-sm-up.text-xs-center
             | !{ socialDirective.render(directiveKey, infoProvider) }
@@ -201,7 +210,8 @@ section.border-bottom-scroll.hidden-lg-down
           a(href="#faq").nav-link faq
         li.nav-item.text-uppercase
           a(href="#ask").nav-link Ask a Question
-        a(href="/" + values.slug + "/invest").btn.btn-primary.text-uppercase.pull-xl-right.pull-lg-left invest
+        if values.is_approved == STATUSES.VERIFIED
+          a(href="/" + values.slug + "/invest").btn.btn-primary.text-uppercase.pull-xl-right.pull-lg-left invest
 section
   div(data-spy="scroll"
   data-target="#navbar-example2"
@@ -215,7 +225,7 @@ section
 
         h2.dosis.our.text-uppercase.text-lg-center.text-xs-center.campaign-subheading Why You Should Invest
         p !{ app.helpers.text.restoreLineBreak(values.campaign.pitch) }
-      
+
       .col-lg-12.p-x-0
         #revenue-share-calculator
     .container-fluid.p-l-0.p-r-0
@@ -235,34 +245,8 @@ section
         else if values.campaign.gallery_group_data
           each v,k in values.campaign.gallery_group_data
             .col-lg-4.col-sm-12.col-xs-12.col-md-6.no-padding-img
-              a(href=v.urls[v.urls.length - 1] data-size='1440x900' rel="gallery1" disabled="1").fancybox
-                img(src=v.urls[0] alt=(values.short_name || values.name)).w-100.img-responsive
-        else
-
-          .col-lg-3.col-sm-12.col-xs-12.no-padding-img
-            a(href=require('images/smartbe-intelligent-stroller.jpg') data-toggle="modal" data-size='1600x900')
-              img(src=require('images/default/255x153.png') alt="").img-fluid.w-100
-          .col-lg-3.col-sm-12.col-xs-12.no-padding-img
-            a(href=require('images/smartbe-intelligent-stroller.jpg') data-size='1600x900')
-              img(src=require('images/default/255x153.png') alt="").img-fluid.w-100
-          .col-lg-3.col-sm-12.col-xs-12.no-padding-img
-            a(href=require('images/smartbe-intelligent-stroller.jpg') data-size='1600x900')
-              img(src=require('images/default/255x153.png') alt="").img-fluid.w-100
-          .col-lg-3.col-sm-12.col-xs-12.no-padding-img
-            a(href=require('images/smartbe-intelligent-stroller.jpg') data-size='1600x900')
-              img(src=require('images/default/255x153.png') alt="").img-fluid.w-100
-          .col-lg-3.col-sm-12.col-xs-12.no-padding-img
-            a(href=require('images/smartbe-intelligent-stroller.jpg') data-size='1600x900')
-              img(src=require('images/default/255x153.png') alt="").img-fluid.w-100
-          .col-lg-3.col-sm-12.col-xs-12.no-padding-img
-            a(href=require('images/smartbe-intelligent-stroller.jpg') data-size='1600x900')
-              img(src=require('images/default/255x153.png') alt="").img-fluid.w-100
-          .col-lg-3.col-sm-12.col-xs-12.no-padding-img
-            a(href=require('images/smartbe-intelligent-stroller.jpg') data-size='1600x900')
-              img(src=require('images/default/255x153.png') alt="").img-fluid.w-100
-          .col-lg-3.col-sm-12.col-xs-12.no-padding-img
-            a(href=require('images/smartbe-intelligent-stroller.jpg') data-size='1600x900')
-              img(src=require('images/default/255x153.png') alt="").img-fluid.w-100
+              a(href=(app.sites[v.site_id] + v.urls.main) data-size='1440x900' rel="gallery1" disabled="1").fancybox
+                img(src=(app.sites[v.site_id] + v.urls['530x441']) alt=(values.short_name || values.name)).w-100.img-responsive
     .container
       .col-lg-12.p-sm-0
         h2.dosis.our.text-uppercase.text-lg-center.text-xs-center.campaign-subheading How We Intend to Make Money
@@ -430,7 +414,7 @@ section
         .col-xl-8.offset-xl-2.col-lg-10.offset-lg-1.col-sm-12.offset-sm-0
           .col-lg-4.text-xs-center
             p Official filing on SEC.gov
-            a(href=campaignHelper.formcLinks[values.id] target="_blank")
+            a(href=values.formc.link_to_formc target="_blank")
               img(src=require('images/lrg_US_Department_of_State35.gif')).img-document.d-inline-block
               h3.d-inline-block  Form C
           .col-lg-4.text-xs-center
@@ -439,11 +423,10 @@ section
               i.fa.fa-file-pdf-o.d-inline-block
               h3.d-inline-block Financials
 
-          - var url = app.getUrl(values.campaign.investor_presentation_data)
-          if url
+          if values.campaign.investor_presentation_data.urls
             .col-lg-4.row.text-xs-center
               p Company documents
-              a(href=url target="_blank")
+              a(href=values.campaign.investor_presentation_data.urls.origin target="_blank")
                 i.fa.fa-file-powerpoint-o.d-inline-block
                 h3.d-inline-block Investor Presentation
   section.overview
@@ -664,7 +647,8 @@ section
               .like-detail-icon.d-inline-block
                 i.fa.fa-thumbs-o-up.like-icon-circle
               |  I’d Like to Invest in #{ values.short_name || values.name }!
-            a(href="/" + values.slug + "/invest").btn.btn-lg.btn-primary.text-uppercase.m-t-2 invest in this company
+            if values.is_approved == STATUSES.VERIFIED
+              a(href="/" + values.slug + "/invest").btn.btn-lg.btn-primary.text-uppercase.m-t-2 invest in this company
   
 
 div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#videoModal.modal.fade.video-modal

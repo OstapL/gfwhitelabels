@@ -10,6 +10,8 @@ class App {
     this.cookies = require('cookies-js');
     this.fields = require('./fields.js');
     this.validation = require('components/validation/validation.js');
+    this.models = require('./models.js');
+    this.sites = require('./sites.js');
     this.user = new User();
   }
 
@@ -63,6 +65,16 @@ class App {
   }
 
   emitGoogleAnalyticsEvent(eventName, params={}) {
+    //we don't need to send events to ga manually as tag manager script tracks history change events
+
+    // if (!window.ga) return;
+    // ga(() => {
+    //   _(ga.getAll()).each((tracker) => {
+    //     console.log(`${tracker.get('name')}, ${tracker.get('trackingId')}`)
+    //   });
+    // });
+
+    return;
     //TODO: this will be fixed when we fix facebook/googleTagManager scripts
     if (!window.ga)
       return;// console.error('Google analytics API is not available');
@@ -70,6 +82,47 @@ class App {
     const page = Backbone.history.getPath();
     ga('set', 'page', '/' + page);
     ga('send', 'pageview', params);
+  }
+
+  createAnalyticsTracker(id) {
+    const TIMEOUT = 30 * 1000;
+    let start = (new Date()).valueOf();
+
+    function checkGA(resolve, reject) {
+      console.log('waiting for ga...');
+      let now = (new Date()).valueOf();
+
+      if (window.ga) {
+        console.log('ga is ready in :' + ((now - start) / 1000) + ' seconds');
+        return resolve(true);
+      }
+
+
+      if (now - start >= TIMEOUT)
+        return reject('Google analytics API is not available');
+
+      setTimeout(() => { checkGA(resolve, reject)}, 500);
+    }
+
+    const waitForAPI = () => {
+      return new Promise((resolve, reject) => {
+        checkGA(resolve, reject);
+      });
+    };
+
+    waitForAPI().then(() => {
+      ga(() => {
+        let trackers = ga.getAll();
+        let tracker = _(trackers).find((t) => {
+          return t.get('trackingId') == id;
+        });
+
+        if (!tracker)
+          ga('create', id, 'auto');
+      });
+    }, (err) => {
+      console.error(err);
+    });
   }
 
   showLoading() {
@@ -221,20 +274,23 @@ class App {
   getUrl(data) {
     data = Array.isArray(data) ? data[0] : data;
 
-    if (!data || !data.urls || !data.urls.length || !data.urls[0])
+    if (!data || !data.urls)
       return null;
 
-    return this.getFilerUrl(data.urls[0]);
+    return this.getFilerUrl(data.urls);
   }
 
   getFilerUrl(file) {
-    if (!file || !_.isString(file))
+    if (!file.origin || !_.isString(file.origin))
       return null;
 
-    if (file.startsWith('http://') || file.startsWith('https://') || file.startsWith('/'))
-      return file;
+    if (file.origin.startsWith('http://') || file.origin.startsWith('https://') )
+      return file.origin;
 
-    return app.config.bucketServer + '/' + file;
+    // ToDo
+    // get bucket server base on the site_id of the file
+    // i.e. app.sites[file.site_id] + file.origin;
+    return app.config.bucketServer + file.origin;
   }
 
   breadcrumbs(title, subtitle, data) {
@@ -298,6 +354,41 @@ class App {
         elem.classList.remove(cls);
     }
 
+  }
+
+  confirm(container, data) {
+    return new Promise((resolve, reject) => {
+      if (!data || !data.message)
+        return resolve(true);
+
+      let template = require('./templates/confirmPopup.pug');
+      let $container = $(container);
+
+      let $modal = $(template(data));
+
+      $modal.on('shown.bs.modal', () => {
+        $modal.on('click', '.confirm-yes', () => {
+          $modal.modal('hide');
+          resolve(true);
+        });
+
+        $modal.on('click', '.confirm-no', () => {
+          $modal.modal('hide');
+          resolve(false)
+        });
+      });
+
+      $modal.on('hidden.bs.modal', () => {
+        $modal.off('hidden.bs.modal');
+        $modal.off('show.bs.modal');
+        $modal.off('click');
+        $modal.remove();
+      });
+
+      $container.append($modal);
+
+      $modal.modal('show');
+    });
   }
 
 }

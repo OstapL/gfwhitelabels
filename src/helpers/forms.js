@@ -87,26 +87,33 @@ module.exports = {
 
     let url = this.urlRoot || '';
     let method = e.target.dataset.method || 'POST';
+    let form = $(e.target).closest('form');
 
-    if(this.model && this.model.hasOwnProperty('id')) {
+    if(this.model&& Object.keys(this.model).length > 0 && this.model.toJSON().hasOwnProperty('id')) {
       url = url.replace(':id', this.model.id);
       method = e.target.dataset.method || 'PATCH';
     }
 
-    newData = newData || $(e.target).closest('form').serializeJSON();
+    newData = newData || form.serializeJSON();
+
+    // issue 348, disable form for double posting
+    if(form.length > 0) {
+      form[0].setAttribute('disabled', true);
+    }
+
     api.deleteEmptyNested.call(this, this.fields, newData);
     api.fixDateFields.call(this, this.fields, newData);
     // api.fixFieldTypes.call(this, this.fields, newData);
 
     // if view already have some data - extend that info
-    if(this.hasOwnProperty('model') && !this.doNotExtendModel && method != 'PATCH') {
-      newData = _.extend({}, this.model, newData);
+    if(this.hasOwnProperty('model') && Object.keys(this.model).length > 0 && !this.doNotExtendModel && method != 'PATCH') {
+      newData = _.extend({}, this.model.toJSON(), newData);
     }
 
     // for PATCH method we will send only difference
     if(method == 'PATCH') {
       let patchData = {};
-      let d = deepDiff(newData, this.model);
+      let d = deepDiff(newData, this.model.toJSON());
       _(d).forEach((el, i) => {
         if(el.kind == 'E' || el.kind == 'A') {
           patchData[el.path[0]] = newData[el.path[0]];
@@ -162,6 +169,9 @@ module.exports = {
         app.validation.invalidMsg(this, key, errors);
       });
       this.$('.help-block').prev().scrollTo(5);
+      if(form.length > 0) {
+        form[0].setAttribute('disabled', true);
+      }
       return false;
     } else {
 
@@ -195,6 +205,9 @@ module.exports = {
           }
         }).
         fail((xhr, status, text) => {
+          if(form.length > 0) {
+            form[0].setAttribute('disabled', false);
+          }
           api.errorAction(this, xhr, status, text, this.fields);
         });
     }

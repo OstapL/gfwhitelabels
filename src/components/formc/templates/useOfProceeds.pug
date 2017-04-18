@@ -1,12 +1,9 @@
 - 'use strict'
 include ../../raiseFunds/templates/menu.pug
 
-style.
-  .red {
-    color: red;
-  }
-
-- pug_html += app.breadcrumbs('create form c', '', [ ['Home', '/'], ['Create Form C', '/formc/' + values.id + '/introduction'], ['Use Of Proceeds', ''], ]);
+- 
+  var fileDropzone = require('directives/setdropzone/file.js'); 
+  pug_html += app.breadcrumbs('create form c', '', [ ['Home', '/'], ['Create Form C', '/formc/' + values.id + '/introduction'], ['Use Of Proceeds', ''], ]);
 
 section.formc.use_of_proceeds.create-company-media.container
   +menu('formc', 'use-of-proceeds')
@@ -58,9 +55,11 @@ section.formc.use_of_proceeds.create-company-media.container
       .col-lg-12.create-perks.doc.p-xs-0
         .img-ppt
           -
-            pug_html += app.fields.fileDropzone('business_plan_file_id',{
-            data: values.business_plan_data[0] || [],
-            }, fields.business_plan_file_id);
+            pug_html += fileDropzone.getInstance(view, 
+              'business_plan_file_id', 
+              'business_plan_data', 
+              view.fields.business_plan_data
+            ).render().resultHTML;
       
       .col-lg-12.text-lg-right.m-t-2.text-xs-center.text-sm-center.p-xs-0
         //- a(href="#").btn.btn-primary.text-uppercase save

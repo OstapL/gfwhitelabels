@@ -1,3 +1,15 @@
+const templateMap = {
+  'annual-privacy': 'annual_privacy',
+  'investor-tutorial': 'investor_tutorial',
+  'business-tutorial': 'business_tutorial',
+  'success-guide': 'success_guide',
+  'raise-landing': 'raise_landing',
+  'terms-of-use': 'terms_of_use',
+  'privacy-policy': 'privacy_policy',
+  'annual-privacy': 'annual_privacy',
+  'electronic-signature': 'electronic_signature',
+};
+
 module.exports = {
   routes: {
     '': 'mainPage',
@@ -111,9 +123,10 @@ module.exports = {
     },
 
     pagePG: function (name) {
+
       require.ensure([], () => {
         //TODO: move this to common router ensure logged in
-        if ((name == 'success_guide' || name == 'advertising') &&
+        if ((name == 'success-guide' || name == 'advertising') &&
           !app.user.ensureLoggedIn(window.location.pathname)) {
           return false;
         }
@@ -130,7 +143,7 @@ module.exports = {
           $(document.head).append(meta);
         }
 
-        let view = require('templates/' + name + '.pug');
+        let view = require('templates/' + (templateMap[name] || name) + '.pug');
 
         app.addClassesTo('#page', [name]);
 

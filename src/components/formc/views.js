@@ -1,5 +1,3 @@
-'use strict';
-
 const typeOfDocuments = require('consts/typeOfDocuments.json');
 const companyFees = require('consts/companyFees.json');
 const formcHelpers = require('./helpers.js');
@@ -879,7 +877,6 @@ module.exports = {
     },
 
     submit(e) {
-      debugger;
       var $target = $(e.target.currentTarget);
       var data = $target.serializeJSON();
       data.use_of_net_proceeds.forEach(function (elem) {
@@ -904,6 +901,7 @@ module.exports = {
           maxRaise: this.campaign.maximum_raise,
           minRaise: this.campaign.minimum_raise,
           campaignId: this.campaign.id,
+          view: this
         })
       );
       this.$('.max-total-use,.min-total-use').popover({
@@ -917,7 +915,6 @@ module.exports = {
       });
 
       this.calculate(null, false);
-      setTimeout(() => { this.createDropzones() } , 1000);
       app.helpers.disableEnter.disableEnter.call(this);
       raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
@@ -1753,13 +1750,14 @@ module.exports = {
 
       this.$el.html(
         template({
+          view: this,
           fields: this.fields,
           values: this.model,
           campaignId: this.campaign.id,
           templates: this.jsonTemplates,
         })
       );
-      setTimeout(() => { this.createDropzones() } , 1000);
+      // setTimeout(() => { this.createDropzones() } , 1000);
       app.helpers.disableEnter.disableEnter.call(this);
       raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
@@ -2086,6 +2084,10 @@ module.exports = {
     initialize(options) {
       this.formcId = options.formcId;
       this.fields = options.fields;
+
+      // this.model = options.formc;
+      // this.model.campaign = options.campaign;
+
       app.helpers.disableEnter.disableEnter.call(this);
     },
     events: {
@@ -2329,6 +2331,7 @@ module.exports = {
         template({
           fields: this.fields,
           formcId: this.formcId,
+          view: this,
           values: {
             company: app.user.company,
             campaign: app.user.campaign,

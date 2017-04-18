@@ -15,10 +15,14 @@ module.exports = {
   },
   methods: {
     accountProfile(activeTab) {
+      /*
+       * Do we need this?
+       * Vlad
       if (app.user.is_anonymous()) {
         app.routers.navigate('/account/login', { trigger: true, replace: true });
         return;
       }
+      */
 
       require.ensure([], (require) => {
         const View = require('./views.js');
@@ -26,9 +30,10 @@ module.exports = {
         const dataR = api.makeCacheRequest(app.config.authServer + '/rest-auth/data');
 
         $.when(fieldsR, dataR).done((fields, data) => {
+          _.extend(app.user.data, data[0]);
           const i = new View.profile({
             el: '#content',
-            model: data[0],
+            model: app.user,
             fields: fields[0].fields,
             activeTab: activeTab,
           });
@@ -83,8 +88,6 @@ module.exports = {
           });
           i.render();
           app.hideLoading();
-        }).catch((err) => {
-          console.log(err);
         });
       });
     },
@@ -166,7 +169,7 @@ module.exports = {
           return el.formc_id = id;
         });
         if(companyData.length == 0) {
-          alert('show 404 that user is not belong to this company');
+          document.getElementById('#content').innerHTML = 'Sorry, but you are not belong to this company';
           return '';
         } else {
           companyData = companyData[0];
@@ -182,9 +185,15 @@ module.exports = {
           if(campaign[0]) app.user.campaign = campaign[0];
           if(formc[0]) app.user.formc = formc[0];
 
-          params.company = app.user.company;
-          params.campaign = app.user.campaign;
-          params.formc = app.user.formc;
+          params.company = new app.models.Company(
+            app.user.company
+          );
+          params.campaign = new app.models.Campaign(
+            app.user.campaign
+          );
+          params.formc = new app.models.Formc(
+            app.user.formc
+          );
 
           // FixMe
           // Temp fix for socialShare directive
