@@ -281,6 +281,19 @@ module.exports = {
         crop: {
           control: {
             aspectRatio: 1600/960,
+            crop: function(e) {
+              /*
+              debugger;
+              if(event.detail.height < 1600) {
+                console.log('too small area ', event.detail.height);
+                throw('too small');
+              }
+              if(event.detail.width < 960) {
+                console.log('too small area ', event.detail.width);
+                throw('too small');
+              }
+              */
+            }
           },
           auto: {
             width: 1600,
