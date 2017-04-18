@@ -333,7 +333,8 @@ module.exports = {
           url: 'Gallery',
         },
         press: {
-          headline: 'Headline',
+          headline: 'Quote from Article',
+          name: 'Name of Publication',
           link: 'Article Link',
         },
         additional_video: {
