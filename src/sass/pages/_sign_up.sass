@@ -1,31 +1,54 @@
 .singup
-  .sign-up-left-banner
-    background-image: url("/img/sign-up-bg.png")
-    height: 665px
-    width: 100%
+  .sign-up-left-banner-img
+    background-image: url("img/sign-up-bg.png")
+    height: 100%
+    width: 390px
     background-position: center
-    .wrap-baner
+    background-size: cover
+    background-repeat: no-repeat
+    position: absolute
+    top: 0
+    left: 16.7%
+    @media only screen and (max-width : 1200px)
+      left: 9%
+      width: 398px
+    @media only screen and (max-width : 991px)
+      left: 0
+      width: 375px
+
+  .position-relative
+    position: relative
+
+  .sign-up-left-banner
+    .block-top-section
       background-color: rgba($white, .9)
+      padding: 10px 0
       position: relative
       top: 20px
-      padding: 10px 25px
-      h1
-        display: inline-block
-        text-align: center
-        font-size: rem(34)
-        &.credit
-          font-size: rem(52)
-          color: $sign-up-credit-color
-      hr
-        width: 260px
-        background-color: $black
-        margin: 20px 0px
-      p
-        font-size: rem(12)
-        line-height: 16px
+      .wrap-baner-title
+        padding: 0 10px
+        h1
+          display: inline-block
+          text-align: center
+          font-size: rem(34)
+          &.credit
+            font-size: rem(52)
+            color: $sign-up-credit-color
+        @media only screen and (min-width : 768px)
+          padding: 0
+          padding-left: 25px
+          text-align: left
+      .wrap-baner
+        padding: 0 25px
+        hr
+          width: 260px
+          background-color: $black
+          margin: 20px 0px
+        p
+          font-size: rem(12)
+          line-height: 16px
   .sign-up-right
     border: solid 1px $light_grey
-    height: 665px
     .label-text
       font-size: rem(12)
     p
@@ -42,18 +65,20 @@
     .or
       margin-top: rem(25)
       margin-bottom: 18px
-  @media only screen and (min-width : 992px)
+  @media only screen and (min-width : 768px)
     .container
       padding-left: 0
       padding-right: 0
     .sign-up-right
       border-left: none
   @media only screen and (max-width : 768px)
+    .sign-up-left-banner-img
+      display: none
     .sign-up-left-banner
       height: auto
       background-image: none
       margin-bottom: rem(20)
-      .wrap-baner
+      .block-top-section
         background-color: $sign-up-header-bgc
         color: $white
         top: 0px
@@ -62,13 +87,15 @@
           text-decoration: underline
           &:hover
             color: rgba($white, .7)
-        h1
-          color: $white
-          &.credit
+        .wrap-baner-title
+          h1
             color: $white
-        hr
-          background-color: $white
-          margin: 20px auto
+            &.credit
+              color: $white
+        .wrap-baner
+          hr
+            background-color: $white
+            margin: 20px auto
     .sign-up-right
       border-top: none
       height: auto
