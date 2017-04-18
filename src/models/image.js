@@ -29,7 +29,7 @@ class Image extends File {
 
       return app.sites[this.site_id] + this.urls[smallestSize];
     } else {
-      return '/img/default/' + fallback;
+      return '/img/default/' + (fallback || name) + '.png';
     };
   }
 

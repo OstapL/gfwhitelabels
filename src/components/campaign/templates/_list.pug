@@ -9,11 +9,9 @@
       .one_block
         .for_img
           -
-            var url = app.getUrl(company.campaign.list_image_data);
-            url = url ? url : require('images/default/255x153.png');
             var alternate = company.short_name || company.name;
 
-          img(src=url alt=alternate)
+          img(src=company.campaign.list_image_image_id.getUrl('350x209') alt=alternate)
 
           .more_inform
             .title.text-center
