@@ -209,9 +209,19 @@ p.drop-photo
   margin: auto
 .imageDropzone
   .p-dropzone
-    top: 45px!important
+    margin-top: 45px
+    top: 0!important
+    margin-bottom: 30px
+    &.header-media
+      margin-top: 30px
+      top: 0!important
+      margin-bottom: 30px
   .border-dropzone
     width: 100%
+  @media screen and (max-width: 768px)
+    .p-sm-0
+      padding-left: 0 !important
+      padding-left: 0 !important
   .one-photo
     .delete-image-container
       position: absolute
@@ -375,3 +385,11 @@ p.drop-photo
 @media screen and (max-width: 1200px)
   .hide-bg-fixed
     background-attachment: initial!important
+
+//fancybox
+.fancybox-title
+  font-family: $open-sans!important
+  font-size: rem(15)!important
+  text-align: center!important
+.fancybox-title-inside-wrap
+  padding: 5px!important
