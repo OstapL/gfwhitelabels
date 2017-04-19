@@ -22,7 +22,7 @@ let exports = {
           data.length_days >= 60 &&
           data.investor_presentation_file_id != null &&
           isBoolean(data.security_type),
-        'team-members': data.team_members.length > 0,
+        'team-members': data.team_members.members.length > 0,
         'perks': data.perks.length > 0
       }
     } catch(e) {
