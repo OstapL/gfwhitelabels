@@ -18,6 +18,8 @@ class App {
   start() {
     this.user.loadWithPromise().then(() => {
 
+      this.initFacebookPixel();
+
       this.routers = new Router();
       Backbone.history.start({ pushState: true });
       window.addEventListener('popstate', this.routers.back);
@@ -43,10 +45,13 @@ class App {
     });
   }
 
-  emitFacebookPixelEvent(eventName='ViewContent', params={}) {
-    if (!window.fbq)
-      return;// console.error('Facebook pixel API is not available');
+  initFacebookPixel() {
+    dataLayer.push({
+      event: 'fb-pixel-init'
+    });
+  }
 
+  emitFacebookPixelEvent(eventName='ViewContent', params={}) {
     const STANDARD_EVENTS = [
       'ViewContent',
       'Search',
@@ -58,10 +63,15 @@ class App {
       'Lead',
       'CompleteRegistration',
     ];
-    if (_.contains(STANDARD_EVENTS))
-      fbq('track', eventName, params);
-    else
-      fbq('trackCustom', eventName, params);
+
+    let trackType = (_.contains(STANDARD_EVENTS, eventName)) ? 'track' : 'trackCustom';
+
+    dataLayer.push({
+      event: 'fb-pixel-event',
+      trackType,
+      eventName,
+    });
+
   }
 
   emitGoogleAnalyticsEvent(eventName, params={}) {
@@ -77,6 +87,10 @@ class App {
   }
 
   createAnalyticsTracker(id) {
+    dataLayer.push({
+      event: 'createTracker',
+    });
+
     const TIMEOUT = 30 * 1000;
     let start = (new Date()).valueOf();
 
