@@ -277,7 +277,7 @@ module.exports = {
 
       this.fields.header_image_image_id = _.extend(this.fields.header_image_image_id, {
         title: 'Drop your photo here or click to upload',
-        help_text: 'This is the image that will appear at the top of your campaign. A minimum size of 1600х960 is recommended.',
+        help_text: 'This is the image that will appear at the top of your campaign. A minimum size of 1600x800 is recommended.',
         templateDropzone: 'headerMedia.pug',
         crop: {
           control: {
@@ -331,7 +331,7 @@ module.exports = {
 
       this.fields.gallery_group_id = _.extend(this.fields.gallery_group_id, {
         title: 'Drop your photo(s) here or click to upload',
-        help_text: 'We recommend uploading 6 images (minimum size of 1024x800 is recommended) that represent your service of business. These images will be displayed in a gallery format.',
+        help_text: 'We recommend uploading 6 images (minimum size of 530х317 is recommended) that represent your service of business. These images will be displayed in a gallery format.',
         crop: {
           control: {
             aspectRatio: 1024 / 612,
