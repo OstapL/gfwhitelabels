@@ -1,3 +1,4 @@
+const Image = require('models/image.js');
 const YEAR = 1000 * 60 * 60 * 24 * 30 * 12;
 
 class User {
@@ -89,6 +90,10 @@ class User {
         return;
       }
 
+      data.image_image_id = new Image(
+        app.config.authServer + '/rest-auth/data',
+        data.image_data
+      );
       this.data = data;
 
       return app.trigger('userLoaded', data);
@@ -112,6 +117,10 @@ class User {
         return resolve(false);
       }
 
+      data.image_image_id = new Image(
+        app.config.authServer + '/rest-auth/data',
+        data.image_data
+      );
       this.data = data;
       return resolve(this.data);
     });
@@ -123,6 +132,7 @@ class User {
 
   toJSON() {
     const data = Object.assign({}, this.data, {'companiesMember': this.companiesMember});
+    data.image_image_id = data.image_image_id.id;
     return data;
   }
 
@@ -149,8 +159,9 @@ class User {
     if (!this.role_data)
       this._initRoles();
 
-    if (!_.isNumber(company_id))
+    if (!_.isNumber(company_id)) {
       return;
+    }
 
     return _(this.role_data).find((data) => { return data.company.id == company_id; });
   }

@@ -43,7 +43,7 @@ class TeamMemberFactory {
       data.forEach((el, i) => {
         this.members.push(new TeamMember(el, schema, url + '/' + i));
       });
-    } else {
+    } else if(data && data.members) {
       this.members = data.members;
     }
   }

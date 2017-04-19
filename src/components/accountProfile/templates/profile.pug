@@ -3,6 +3,7 @@
   var rolesConsts = require('consts/team_member/roles.json');
   var countryDirective = require('directives/country/index.js');
   var ssnDirective = require('directives/ssn/index.js');
+  var imageDropzone = require('directives/setdropzone/image.js'); 
 
   pug_html += app.breadcrumbs('Profile', '', [ ['Home', '/'], ['Profile', ''],]);
 
@@ -12,13 +13,11 @@
       form(method="post" action="").form.form-section
         h4.m-t-0.m-b-1.profile-user-name.text-xs-center.text-uppercase #{user.first_name + ' ' + user.last_name}
         -
-          pug_html += app.fields.userProfileDropzone('image_image_id', _.extend({
-            thumbSize: '255x135',
-            default: require('images/default/255x153.png'),
-            icon: 'camera',
-            text: 'Drop your profile photo here or click to upload',
-            data: user.image_data[0],
-          }, fields.image));
+          pug_html += new imageDropzone.ImageDropzone({model: user.data}, 
+            'image_image_id', 
+            'image_data', 
+            view.fields.image_image_id
+          ).render().resultHTML;
       .row.m-t-2.m-b-2
         .col-xl-12.col-lg-12.col-md-6.offset-md-3.col-xs-8.offset-xs-2.offset-xl-0.offset-lg-0.p-l-0.p-r-0
           -

@@ -63,18 +63,21 @@ module.exports = {
       });
 
       this.fields.image_image_id = _.extend(this.fields.image_image_id, {
+        templateDropzone: 'profileDropzone.pug',
         crop: {
-          control: {
+          control:  {
             aspectRatio: 1 / 1,
           },
-          cropper: {
-            cssClass: 'img-profile-crop',
-            preview: true,
-          },
           auto: {
-            width: 600,
-            height: 600,
+            width: 300,
+            height: 300,
           },
+          resize: {
+            width: 50,
+            height: 50,
+          },
+          cssClass: 'img-profile-crop',
+          template: 'withpreview'
         },
       });
 
@@ -191,16 +194,13 @@ module.exports = {
           user: this.model,
           company: app.user.get('company'),
           fields: this.fields,
+          view: this
         })
       );
 
       this.el.querySelector('#saveFinancialInfo').addEventListener('click', (e) => { api.submitAction.call(this, e)});
 
       this._initSliders();
-
-      setTimeout(() => {
-        this.createDropzones();
-      }, 1000);
 
       this.onImageCrop();
 
@@ -235,9 +235,7 @@ module.exports = {
 
     onImageCrop(name) {
       name = name || 'image_image_id';
-      let dataFieldName = this._getDataFieldName(name);
-      let data = this.model[dataFieldName][0];
-      let url = data && data.urls ? data.urls[0] : null;
+      let url = this.model.data.image_image_id.getUrl();
       if (url) {
         $('.user-info-name > span')
           .empty()

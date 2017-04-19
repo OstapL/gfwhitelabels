@@ -31,6 +31,10 @@ module.exports = {
 
         $.when(fieldsR, dataR).done((fields, data) => {
           _.extend(app.user.data, data[0]);
+          app.user.data.image_image_id = new app.models.Image(
+            app.config.authServer + '/rest-auth/data',
+            data[0].image_data
+          );
           const i = new View.profile({
             el: '#content',
             model: app.user,
