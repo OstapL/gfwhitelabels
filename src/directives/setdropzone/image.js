@@ -65,7 +65,11 @@ class ImageDropzone extends file.FileDropzone {
   }
 
   getTemplate() {
-    return require('./templates/imageDropzone.pug');
+    if(this.fileOptions.templateDropzone) {
+      return require('./templates/' + this.fileOptions.templateDropzone);
+    } else {
+      return require('./templates/imageDropzone.pug');
+    }
   }
 
   success(file, data) {

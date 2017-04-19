@@ -278,6 +278,7 @@ module.exports = {
       this.fields.header_image_image_id = _.extend(this.fields.header_image_image_id, {
         title: 'Drop your photo here or click to upload',
         help_text: 'This is the image that will appear at the top of your campaign. A minimum size of 1600х960 is recommended.',
+        templateDropzone: 'headerMedia.pug',
         crop: {
           control: {
             aspectRatio: 1600/800,
