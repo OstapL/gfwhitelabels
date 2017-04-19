@@ -17,7 +17,14 @@ section(style="background-image: url(" + backgroundImgUrl + ")")#home.home-secti
         h1.company-name.mb-xs-30.big-h1.text-uppercase #{ values.short_name || values.name }
         .local-scroll
           if values.campaign.video
-            a(data-toggle="modal" href="#videoModal" data-target="#videoModal").big-icon.link-6.youtube_popup
+            -
+              var videoInfo = app.getVideoInfo(values.campaign.video);
+            a(
+              href='#'
+              data-provider=videoInfo.provider
+              data-id=videoInfo.id
+              data-url=videoInfo.url
+            ).big-icon.link-6.youtube_popup.show-video-modal
               i.fa.fa-play-circle-o
           a(href=values.website target="_blank").link-6.link-campaing-detail.hidden-xs-down #{ app.helpers.format.getWebsiteUrl(values.website) }
           .row.social-link.hidden-xs-down
@@ -284,21 +291,26 @@ section
                 .col-xl-4.col-md-6.col-xs-12.col-sm-12.p-xs-0
                   .card.card-inverse
                     -
-                      var additionalVideo = app.getVideoId(v.link);
-                    if additionalVideo && additionalVideo.provider == 'youtube'
-                      div(style="background-image: url(http://img.youtube.com/vi/" + additionalVideo.id + "/0.jpg)").additional-video
-                      //img(src="http://img.youtube.com/vi/" + additionalVideo.id + "/0.jpg" alt="" style="width: 338px").card-img.w-100
-                    else if additionalVideo && additionalVideo.provider == 'vimeo'
-                      img(src="" alt="" style="width: 338px;" data-vimeo-id=additionalVideo.id).card-img.w-100.vimeo-thumbnail
+                      var videoInfo = app.getVideoInfo(v.link);
+
+                    if videoInfo.provider === 'youtube'
+                      div(style="background-image: url(http://img.youtube.com/vi/" + videoInfo.id + "/0.jpg)").additional-video
+                    else if videoInfo.provider === 'vimeo'
+                      img(src="" alt="" style="width: 338px;" data-vimeo-id=videoInfo.id).card-img.w-100.vimeo-thumbnail
                     else
-                      //img(src="http://img.youtube.com/vi/" + "/0.jpg" alt="" style="width: 338px").card-img.w-100
                       div(style="background-image: url(http://img.youtube.com/vi/" + "/0.jpg)").additional-video
                     .card-img-overlays
                       .card-title
-                        a(data-toggle="modal" href="#videoModal-" + k data-target="#videoModal-" + k).small-icon.link-6.m-t-0
+                        a(
+                          href='#'
+                          data-provider=videoInfo.provider
+                          data-url=videoInfo.url
+                          data-id=videoInfo.id
+                        ).small-icon.link-6.m-t-0.show-video-modal
                           i.fa.fa-play-circle-o
-                      h3.card-text.text-lg-center #{ v.headline }
-          else
+                    h3.card-text.text-lg-center #{ v.headline }
+
+          //-else
             .col-xl-4.col-md-6.col-xs-12.col-sm-12.p-xs-0
               .card.card-inverse
                 img(src=require('images/Smartbe-Intelligent-Stroller-5.jpg') alt="").card-img
@@ -673,29 +685,4 @@ section
               |  I’d Like to Invest in #{ values.short_name || values.name }!
             if values.is_approved == STATUSES.VERIFIED
               a(href="/" + values.slug + "/invest").btn.btn-lg.btn-primary.text-uppercase.m-t-2 invest in this company
-  
 
-div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#videoModal.modal.fade.video-modal
-  div(role="document").modal-dialog.modal-lg
-    button(type="button", data-dismiss="modal", aria-label="Close").close
-      span(aria-hidden="true") &times;
-    .modal-content
-      .embed-responsive.embed-responsive-16by9
-        -
-          var mainVideo = app.getVideoId(values.campaign.video);
-          var videoUrl = app.getVideoUrl(mainVideo);
-        iframe.embed-responsive-item(src=videoUrl allowfullscreen="true")
-
-each v,k in values.campaign.additional_video
-  if v
-    div(id="videoModal-" + k tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true").modal.fade.video-modal
-
-      div(role="document").modal-dialog.modal-lg
-        button(type="button", data-dismiss="modal", aria-label="Close").close
-          span(aria-hidden="true") &times;
-        .modal-content
-          .embed-responsive.embed-responsive-16by9
-            -
-              var additionalVideo = app.getVideoId(v.link);
-              var additionalVideoUrl = app.getVideoUrl(additionalVideo);
-            iframe(src=additionalVideoUrl allowfullscreen="true").embed-responsive-item
