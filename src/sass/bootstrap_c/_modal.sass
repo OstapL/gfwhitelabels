@@ -118,6 +118,7 @@
 	.modal-dialog	
 		.modal-body
 			padding: rem(10) rem(0)!important
+@media only screen and (max-width : 991px)
 	[id^="videoModal"]
 		top: 5%!important
 		.modal-dialog
@@ -128,9 +129,12 @@
 				top: -50!important
 				font-size: rem(40)
 [id^="videoModal"]
-	top: 10%
+	top: 15%
 	.modal-dialog
-		max-width: rem(700)
+		max-width: rem(940)
+		.modal-content
+			padding: 0
+			margin: 0
 		.close
 			position: absolute
 			right: -40px
