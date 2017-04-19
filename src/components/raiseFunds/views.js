@@ -280,7 +280,7 @@ module.exports = {
         help_text: 'This is the image that will appear at the top of your campaign. A minimum size of 1600х960 is recommended.',
         crop: {
           control: {
-            aspectRatio: 1600/960,
+            aspectRatio: 1600/800,
             crop: function(e) {
               /*
               debugger;
@@ -297,11 +297,11 @@ module.exports = {
           },
           auto: {
             width: 1600,
-            height: 960,
+            height: 800,
           },
           resize: {
-            width: 565,
-            height: 356,
+            width: 530,
+            height: 272,
           },
           cssClass: 'img-crop',
           template: 'regular'
@@ -333,15 +333,15 @@ module.exports = {
         help_text: 'We recommend uploading 6 images (minimum size of 1024x800 is recommended) that represent your service of business. These images will be displayed in a gallery format.',
         crop: {
           control: {
-            aspectRatio: 1024 / 800,
+            aspectRatio: 1024 / 612,
           },
           auto: {
             width: 1024,
-            height: 800,
+            height: 612,
           },
           resize: {
             width: 530,
-            height: 441,
+            height: 317,
           },
           cssClass: 'img-crop',
           template: 'regular'
@@ -445,12 +445,12 @@ module.exports = {
             aspectRatio: 1 / 1,
           },
           auto: {
-            width: 500,
-            height: 500,
+            width: 300,
+            height: 300,
           },
           resize: {
-            width: 500,
-            height: 500,
+            width: 300,
+            height: 300,
           },
           cssClass: 'img-profile-crop',
           template: 'withpreview'
