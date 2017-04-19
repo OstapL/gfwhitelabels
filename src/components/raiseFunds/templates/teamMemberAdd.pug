@@ -3,16 +3,14 @@ include menu.pug
 
 - 
   var imageDropzone = require('directives/setdropzone/image.js'); 
-  pug_html += app.breadcrumbs('Create Campaign', '', [ ['Home', '/'], ['Create campaign', '/campaign/' + values.id + '/general_information'], ['team member (' + (type == 'advisor' ? 'advisor' : 'team member') + ')', ''],]);
+  pug_html += app.breadcrumbs('Create Campaign', '', [ ['Home', '/'], ['Create campaign', '/campaign/' + campaign.id + '/general_information'], ['team member (' + (type == 'advisor' ? 'advisor' : 'team member') + ')', ''],]);
 
 
 section.team-members.container.m-b-85
-  - var campaignId = values.id;
+  - var campaignId = campaign.id;
   - var formcId = formc.id;
+  - var values = campaign;
   +menu('campaign', 'team-members')
-
-  // SPECIAL HACK FOR CROPPER
-  - view.model = view.member;
 
   //START RIGHT BLOCK
   .col-xl-8.col-lg-8.col-md-12.p-sm-0
@@ -22,22 +20,22 @@ section.team-members.container.m-b-85
       - 
         pug_html += app.fields.textLabel('first_name', {
         schema: fields.first_name, 
-        value: member.first_name, 
+        value: model.first_name, 
         label: 'First name',})
       - 
         pug_html += app.fields.textLabel('last_name', {
         schema: fields.last_name, 
-        value: member.last_name, 
+        value: model.last_name, 
         label: 'Last name',})
       - 
         pug_html += app.fields.textLabel('email', {
         schema: fields.email, 
-        value: member.email, 
+        value: model.email, 
         label: 'Email',})
       - 
         pug_html += app.fields.textLabel('order', {
         schema: fields.order, 
-        value: member.order, 
+        value: model.order, 
         label: 'Order',})
       if type == 'advisor'
         - 
@@ -50,18 +48,18 @@ section.team-members.container.m-b-85
         - 
           pug_html += app.fields.textLabel('title', {
           schema: fields.title, 
-          value: member.title, 
+          value: model.title, 
           label: 'Title',})
       - 
         pug_html += app.fields.textareaLabel('bio', {
         class2: 'col-xl-9 col-lg-12 big-textarea', 
         schema: fields.bio, 
-        placeholder: 'At least 150 characters', value: member.bio, label: 'Bio',})
+        placeholder: 'At least 150 characters', value: model.bio, label: 'Bio',})
       - 
         pug_html += app.fields.textLabel('city', {
         class1: 'col-xl-3 col-lg-12 p-t-0 text-lg-left text-xl-right m-b-0 m-b-lg-1', 
         schema: fields.city, 
-        value: member.city, 
+        value: model.city, 
         label:  'Where did you grow up?',
         help_text: 'Why do we ask? These affinity based questions can help us share your campaign with potential  investors with similar backgrounds.', 
         placeholder: 'Name of Hometown',})
@@ -69,7 +67,7 @@ section.team-members.container.m-b-85
         pug_html += app.fields.textLabel('college', {
         class1: 'col-xl-3 col-lg-12 p-t-0 text-lg-left text-xl-right m-b-0 m-b-lg-1', 
         schema: fields.college, 
-        value: member.college, 
+        value: model.college, 
         label:  'Where did you attend college?', 
         placeholder: 'Name of college or university',})
       .row
@@ -79,7 +77,7 @@ section.team-members.container.m-b-85
             class1:'col-xl-6 col-lg-12 text-lg-left text-xl-right p-l-3 p-t-0 m-b-0 p-l-lg-1 m-b-lg-1', 
             class2:'col-xl-6 col-lg-12', 
             schema: fields.linkedin, 
-            value: member.linkedin, 
+            value: model.linkedin, 
             label:  'Your LinkedIn link', 
             placeholder: 'Your LinkedIn profile',})
         .col-lg-6
@@ -88,7 +86,7 @@ section.team-members.container.m-b-85
             class1:'col-xl-5 col-lg-12 text-lg-left text-xl-right p-t-0 m-b-0 m-b-lg-1', 
             class2:'col-xl-7 col-lg-12', 
             schema: fields.facebook, 
-            value: member.facebook, 
+            value: model.facebook, 
             label:  'Your Facebook link', 
             placeholder: 'Your Facebook profile',})
       -

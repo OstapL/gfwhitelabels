@@ -192,7 +192,7 @@ module.exports = {
 
           let defaultAction  = 1;
           if (typeof this._success == 'function') {
-            defaultAction = this._success(responseData, newData);
+            defaultAction = this._success(responseData, newData, method);
           }
 
           if(defaultAction == 1) {

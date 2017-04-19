@@ -2,6 +2,7 @@ const File = require('./file.js');
 const Image = require('./image.js');
 const Folder = require('./folder.js');
 const Gallery = require('./gallery.js');
+const TeamMember = require('./teammembercampaign.js');
 
 const moment = require('moment');
 const today = moment.utc();
@@ -39,6 +40,11 @@ class Campaign {
 			this.data.gallery_group_id,
 			this.data.gallery_group_data
 		);
+		this.data.team_members = new TeamMember.TeamMemberFactory(
+			this.data.team_members,
+      this.schema.team_members,
+			this.url + '/team-members'
+		);
 
     this.data = Object.seal(this.data);
     for(let key in this.data) {
@@ -62,6 +68,9 @@ class Campaign {
 		}
 		if (this.data.gallery_group_id) {
 			data['gallery_group_id'] = data.gallery_group_id.id;
+		}
+		if (this.data.team_members.members.length > 0) {
+			data.team_members = this.data.team_members.toJSON();
 		}
     return data;
   }

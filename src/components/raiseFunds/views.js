@@ -424,8 +424,23 @@ module.exports = {
       // 'change #zip_code': 'changeZipCode',
     }, app.helpers.confirmOnLeave.events, app.helpers.menu.events, app.helpers.dropzone.events),
     
-    _success(data) {
-      window.location = '/campaign/' + this.campaignId + '/team-members';
+    _success(data, postData, method) {
+      if (method == 'POST') {
+        let TeamMember = require('models/teammembercampaign.js');
+        this.campaign.team_members.members.push(
+          new TeamMember.TeamMember(
+            postData,
+            this.campaign.schema.team_members.schema,
+            this.campaign.url + '/team_members/' + this.campaign.team_members.members.length)
+        )
+      }
+      this.undelegateEvents();
+      app.routers.navigate(
+        '/campaign/' + this.campaign.id + '/team-members',
+        { trigger: true, replace: false }
+      );
+      return false;
+      // window.location = '/campaign/' + this.campaign.id + '/team-members';
     },
 
     preinitialize() {
@@ -437,6 +452,7 @@ module.exports = {
     },
 
     initialize(options) {
+      let TeamMember = require('models/teammembercampaign.js');
       this.fields = options.fields.campaign.team_members.schema;
       this.fields.order.placeholder = 'Enter a number. Team members will be displayed in ascending order.';
       this.fields.photo_image_id = _.extend(this.fields.photo_image_id, {
@@ -458,29 +474,25 @@ module.exports = {
         },
       });
 
-      this.model = options.campaign;
+      this.campaign = options.campaign;
       this.formc = options.formc;
       this.type = options.type;
       this.index = options.index;
 
-      this.urlRoot = this.urlRoot.replace(':id', this.model.id);
-
-      this.campaignId = this.model.id;
+      this.urlRoot = this.urlRoot.replace(':id', this.campaign.id);
       if (this.index != 'new') {
-        this.member = new app.models.TeamMemberCampaign(
-          this.model.team_members[this.index],
-          this.fields
-        )
+        this.model = this.campaign.team_members.members[this.index];
         this.urlRoot  += '/' + this.index;
         this.submitMethod = 'PUT';
       } else {
-        this.member = new app.models.TeamMemberCampaign(
+        this.model = new TeamMember.TeamMember(
           {
             photo_image_id: null,
             photo_data: [],
             type: this.type
           },
-          this.fields
+          this.fields,
+          this.campaign.url + '/team-members'
         )
         this.submitMethod = 'POST';
       }
@@ -491,8 +503,8 @@ module.exports = {
         this.template({
           formc: this.formc,
           fields: this.fields,
-          member: this.member,
-          values: this.model,
+          model: this.model,
+          campaign: this.campaign,
           type: this.type,
           view: this,
           index: this.index
@@ -513,7 +525,7 @@ module.exports = {
       this.undelegateEvents();
       if (confirm("Do you really want to leave?")) {
         app.routers.navigate(
-          '/campaign/' + this.model.id + '/team-members',
+          '/campaign/' + this.campaign.id + '/team-members',
           { trigger: true, replace: false }
         );
       }
@@ -548,15 +560,13 @@ module.exports = {
 
     render() {
       let template = require('./templates/teamMembers.pug');
-      let values = this.model;
 
       this.$el.html(
         template({
-            campaign: values,
-            values: values,
-            formc: this.formc,
-          })
-        );
+          values: this.model,
+          formc: this.formc,
+        })
+      );
 
       app.helpers.disableEnter.disableEnter.call(this);
       this.checkForm();
@@ -566,25 +576,25 @@ module.exports = {
     },
 
     deleteMember: function (e) {
-        let memberId = e.currentTarget.dataset.id;
+      let memberId = e.currentTarget.dataset.id;
 
-        if (confirm('Are you sure you would like to delete this team member?')) {
+      if (confirm('Are you sure you would like to delete this team member?')) {
 
-          api.makeRequest(this.urlRoot + '/' + memberId, 'DELETE').
-              then((data) => {
-                  this.model.team_members.splice(memberId, 1);
+        api.makeRequest(this.urlRoot + '/' + memberId, 'DELETE').
+          then((data) => {
+            this.model.team_members.members.splice(memberId, 1);
 
-                  $(e.currentTarget).parent().remove();
-                  if (this.model.team_members.length < 1) {
-                    this.$el.find('.notification').show();
-                    this.$el.find('.buttons-row').hide();
-                  } else {
-                    this.$el.find('.notification').hide();
-                    this.$el.find('.buttons-row').show();
-                  }
-                });
-        }
-      },
+            $(e.currentTarget).parent().remove();
+            if (this.model.team_members.members.length < 1) {
+              this.$el.find('.notification').show();
+              this.$el.find('.buttons-row').hide();
+            } else {
+              this.$el.find('.notification').hide();
+              this.$el.find('.buttons-row').show();
+            }
+          });
+      }
+    },
 
   }, app.helpers.menu.methods)),
 

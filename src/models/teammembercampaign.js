@@ -1,9 +1,6 @@
-const File = require('./file.js');
 const Image = require('./image.js');
-const Folder = require('./folder.js');
-const Gallery = require('./gallery.js');
 
-class TeamMemberCampaign {
+class TeamMember {
   constructor(data={}, schema={}, url=null) {
     //
     // urlRoot - url for update model assosiated with that file
@@ -12,26 +9,12 @@ class TeamMemberCampaign {
 
     this.data = data;
     this.schema = schema;
-    this.url = url || app.config.raiseCapitalServer + '/team-members';
+    this.url = url;
 
-    for(let key in this.schema) {
-      if(this.data.hasOwnProperty(key)) {
-        switch(this.schema[key].type) {
-          case 'file':
-            this.data[key] = new File(urlRoot, this.data[key.replace('_file_id', '_data')]);
-            break;
-          case 'image':
-            this.data[key] = new Image(urlRoot, this.data[key.replace('_image_id', '_data')]);
-            break;
-          case 'filefolder':
-            this.data[key] = new Folder(urlRoot, this.data[key], this.data[key.replace('_id', '_data')]);
-            break;
-          case 'imagefolder':
-            this.data[key] = new Gallery(urlRoot, this.data[key], this.data[key.replace('_id', '_data')]);
-            break;
-        }
-      }
-    }
+    this.data['photo_image_id'] = new Image(
+      this.url,
+      this.data.photo_data
+    );
 
     this.data = Object.seal(this.data);
     for(let key in this.data) {
@@ -44,20 +27,40 @@ class TeamMemberCampaign {
 
   toJSON() {
     let data = Object.assign({}, this.data);
-    for(let key in this.schema) {
-      if(this.data.hasOwnProperty(key)) {
-        switch(this.schema[key].type) {
-          case 'file':
-          case 'image':
-          case 'filefolder':
-          case 'imagefolder':
-            data[key] = this.data[key].id;
-            break;
-        }
-      }
+    if (data.photo_image_id) {
+      data['photo_image_id'] = this.data.photo_image_id.id;
     }
     return data;
   }
 };
 
-module.exports = TeamMemberCampaign;
+
+class TeamMemberFactory {
+  constructor(data, schema={}, url=null) {
+    this.members = [];
+
+    if(Array.isArray(data)) {
+      data.forEach((el, i) => {
+        this.members.push(new TeamMember(el, schema, url + '/' + i));
+      });
+    } else {
+      this.members = data.members;
+    }
+  }
+
+  reorder() {
+  }
+
+  toJSON() {
+    let data = [];
+    this.members.forEach((el) => {
+      data.push(el.toJSON());
+    });
+    return data;
+  }
+}
+
+module.exports = {
+  TeamMember: TeamMember,
+  TeamMemberFactory: TeamMemberFactory,
+}
