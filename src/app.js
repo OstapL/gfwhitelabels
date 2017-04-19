@@ -11,6 +11,8 @@ class App {
     this.fields = require('./fields.js');
     this.validation = require('components/validation/validation.js');
     this.user = new User();
+    _.extend(this, Backbone.Events);
+    return this;
   }
 
   start() {
@@ -63,23 +65,15 @@ class App {
   }
 
   emitGoogleAnalyticsEvent(eventName, params={}) {
-    //we don't need to send events to ga manually as tag manager script tracks history change events
+    if (!eventName)
+      return console.error('eventName is not set');
 
-    // if (!window.ga) return;
-    // ga(() => {
-    //   _(ga.getAll()).each((tracker) => {
-    //     console.log(`${tracker.get('name')}, ${tracker.get('trackingId')}`)
-    //   });
-    // });
-
-    return;
-    //TODO: this will be fixed when we fix facebook/googleTagManager scripts
-    if (!window.ga)
-      return;// console.error('Google analytics API is not available');
-
-    const page = Backbone.history.getPath();
-    ga('set', 'page', '/' + page);
-    ga('send', 'pageview', params);
+    let hasRequiredParams = ['eventAction', 'eventCategory'].every(paramName => !!params[paramName]);
+    if (!hasRequiredParams)
+      return console.error('Required params are not set');
+    
+    params.event = eventName;
+    dataLayer.push(params);
   }
 
   createAnalyticsTracker(id) {
@@ -254,12 +248,43 @@ class App {
     var provider = videoInfo && videoInfo.provider ? videoInfo.provider : '';
 
     if (provider === 'youtube')
-      return '//www.youtube.com/embed/' + videoInfo.id + '?rel=0';
+      return '//www.youtube.com/embed/' + videoInfo.id + '?rel=0&enablejsapi=1';
 
     if (provider === 'vimeo')
       return '//player.vimeo.com/video/' + videoInfo.id;
 
     return '//www.youtube.com/embed/?rel=0';
+  }
+
+  getVideoInfo(url) {
+    try {
+      let provider = url.match(/https:\/\/(:?www.)?(\w*)/)[2];
+      provider = provider.toLowerCase();
+      let id;
+      if (provider === 'youtube') {
+        id = url.match(/https:\/\/(?:www.)?(\w*).com\/.*v=([^\&]*)/)[2];
+      } else if (provider === 'youtu') {
+        provider = 'youtube';
+        id = url.match(/https:\/\/(?:www.)?(\w*).be\/(.*)/)[2];
+      } else if (provider === 'vimeo') {
+        id = url.match(/https:\/\/(?:www.)?(\w*).com\/(\d*)/)[2];
+      } else {
+        console.log(url, 'Takes a YouTube or Vimeo URL');
+      }
+
+      let resUrl = (provider === 'youtube')
+        ? `//www.youtube.com/embed/${id}?rel=0&enablejsapi=1`
+        : (provider === 'vimeo')
+          ? `//player.vimeo.com/video/${id}`
+          : '//www.youtube.com/embed/?rel=0';
+
+      return { id: id, provider: provider, url: resUrl };
+
+    } catch (err) {
+      console.log(url, 'Takes a YouTube or Vimeo URL');
+    }
+
+    return {};
   }
 
   getThumbnail(size, thumbnails, _default) {
@@ -348,7 +373,38 @@ class App {
       if (!except.includes(cls))
         elem.classList.remove(cls);
     }
+  }
 
+  loadYoutubePlayerAPI() {
+    return new Promise((resolve, reject) => {
+      if (app.youtubeAPIReady)
+        return resolve();
+
+      let tag = document.createElement('script');
+
+      tag.src = "https://www.youtube.com/iframe_api";
+      let firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+      this.on('youtube-api-ready', () => {
+        resolve()
+      });
+    });
+  }
+
+  loadVimeoPlayerAPI() {
+    return new Promise((resolve, reject) => {
+      if (window.Vimeo)
+        return resolve();
+
+      let tag = document.createElement('script');
+
+      tag.src = "https://player.vimeo.com/api/player.js";
+      let firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+      tag.onload = resolve;
+      tag.onerror = reject;
+    });
   }
 
 }
