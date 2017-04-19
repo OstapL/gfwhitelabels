@@ -175,7 +175,7 @@ class CropperDropzone {
         '<div class="row">' +
           '<div class="col-xl-10 offset-xl-1">' +
             '<div class="crop-image-container"></div>' +
-            '<input type="text" name="name" class="m-t-0 w-100 form-control" value="{name}" />' +
+            '<input type="text" placeholder="Add image’s title here..." name="name" class="m-t-0 w-100 form-control" value="{name}" />' +
           '</div>' +
         '</div>' +
         '<div class="row">' +
