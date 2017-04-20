@@ -97,6 +97,7 @@ class FileElement {
   }
 
   save() {
+    debugger;
     return this.file.save(
       this.fieldName,
       this.fieldDataName

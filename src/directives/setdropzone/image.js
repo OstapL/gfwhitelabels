@@ -295,8 +295,9 @@ class CropperDropzone {
           this.file.file.urls[thumbSize] = this.file.fixUrl(responseData[1].urls[0]);
         }
 
-        debugger;
-        this.file.file.name = this.element.querySelector('#name').value;
+        if (this.element.querySelector('#name')) {
+          this.file.file.name = this.element.querySelector('#name').value;
+        }
 
         this.file.save().done(() => {
           if(this.options.resize) { 
