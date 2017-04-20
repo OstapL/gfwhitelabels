@@ -109,7 +109,7 @@ const Cropper = require('cropperjs').default;
 class CropperDropzone {
   constructor(dropzone, file, options={}) {
     this.dropzone = dropzone;
-    this.file = file//dropzone.fileElement;
+    this.file = file; //dropzone.fileElement;
     this.options = options;
 
     this.options.control = Object.assign({}, {
@@ -175,7 +175,7 @@ class CropperDropzone {
         '<div class="row">' +
           '<div class="col-xl-10 offset-xl-1">' +
             '<div class="crop-image-container"></div>' +
-            '<input type="text" placeholder="Add image’s title here..." name="name" class="m-t-0 w-100 form-control" value="{name}" />' +
+            '<input type="text" placeholder="Add image’s title here..." name="name" id="name" class="m-t-0 w-100 form-control" value="{name}" />' +
           '</div>' +
         '</div>' +
         '<div class="row">' +
@@ -214,6 +214,7 @@ class CropperDropzone {
         '</div>' +
       '</div>' +
     '</div>';
+    this.element = document.createRange().createContextualFragment(this.element).firstChild;
 
     document.querySelectorAll('.cropModal').forEach((el, i) => {
       el.remove();
@@ -223,11 +224,19 @@ class CropperDropzone {
       attacheTo.querySelector('.cropModal').remove();
     }
     */
-    attacheTo.insertAdjacentHTML('beforeend', this.element)
+    attacheTo.appendChild(this.element)
 
     let img = new Image();
     var self = this;
     this.$modal = $('.cropModal');
+    this.$modal.modal({
+      backdrop: 'static',
+      keyboard: false
+    });
+
+    this.$modal.on('hidden.bs.modal', function (e) {
+      return false;
+    });
 
     img.addEventListener("load", function() {
       self.$modal.on('shown.bs.modal', () => {
@@ -285,6 +294,9 @@ class CropperDropzone {
           thumbSize = this.options.resize.width + 'x' + this.options.resize.height;
           this.file.file.urls[thumbSize] = this.file.fixUrl(responseData[1].urls[0]);
         }
+
+        debugger;
+        this.file.file.name = this.element.querySelector('#name').value;
 
         this.file.save().done(() => {
           if(this.options.resize) { 

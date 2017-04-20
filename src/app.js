@@ -48,11 +48,9 @@ class App {
   }
 
   initFacebookPixel() {
-    /*
     dataLayer.push({
       event: 'fb-pixel-init'
     });
-    */
   }
 
   emitFacebookPixelEvent(eventName='ViewContent', params={}) {
@@ -70,14 +68,11 @@ class App {
 
     let trackType = (_.contains(STANDARD_EVENTS, eventName)) ? 'track' : 'trackCustom';
 
-    /*
     dataLayer.push({
       event: 'fb-pixel-event',
       trackType,
       eventName,
     });
-    */
-
   }
 
   emitGoogleAnalyticsEvent(eventName, params={}) {
