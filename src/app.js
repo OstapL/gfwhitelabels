@@ -20,7 +20,9 @@ class App {
   start() {
     this.user.loadWithPromise().then(() => {
 
-      this.initFacebookPixel();
+      if(app.config.googleTagIdGeneral || app.config.googleTagId) {
+       this.initFacebookPixel();
+      }
 
       this.routers = new Router();
       Backbone.history.start({ pushState: true });

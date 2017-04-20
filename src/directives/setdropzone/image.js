@@ -62,6 +62,10 @@ class ImageDropzone extends file.FileDropzone {
       fieldDataName,
       this.cropperOptions
     );
+
+    if(imageOptions.onSaved) {
+      this.fileElement.options.onSaved = imageOptions.onSaved;
+    }
   }
 
   getTemplate() {
@@ -234,20 +238,21 @@ class CropperDropzone {
       keyboard: false
     });
 
-    this.$modal.on('hidden.bs.modal', function (e) {
-      return false;
-    });
-
     img.addEventListener("load", function() {
-      self.$modal.on('shown.bs.modal', () => {
+      //self.$modal.on('shown.bs.modal', () => {
         self.cropper = new Cropper(this, self.options.control);
         const cropData = self.options.auto ? _.extend({x: 0, y: 0}, self.options.auto) : null;
         self.$modal.modal('show');
         if (cropData) {
           self.cropper.setData(cropData);
         }
+
+        self.$modal.on('hidden.bs.modal', function (e) {
+          return false;
+        });
+
         self.attacheEvents();
-      });
+      //});
       self.$modal.modal('show');
     }, false);
 

@@ -47,7 +47,9 @@ module.exports = Backbone.Router.extend(_.extend({
   },
 
   execute(callback, args, name) {
-    app.emitFacebookPixelEvent();
+    if(app.config.googleTagIdGeneral || app.config.googleTagId) {
+      app.emitFacebookPixelEvent();
+    }
 
     app.clearClasses('#page', ['page']);
 

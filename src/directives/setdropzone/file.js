@@ -97,11 +97,14 @@ class FileElement {
   }
 
   save() {
-    debugger;
     return this.file.save(
       this.fieldName,
       this.fieldDataName
-    );
+    ).then((response) => {
+      if(this.options.onSaved) {
+        this.options.onSaved(this);
+      }
+    });
   }
 
   fixUrl(url) {
@@ -122,6 +125,10 @@ class FileDropzone {
       fieldName,
       fieldDataName
     );
+
+    if(fileOptions.onSaved) {
+      this.fileElement.options.onSaved = fileOptions.onSaved;
+    }
 
     this.options = {
       url: app.config.filerServer + '/upload',
