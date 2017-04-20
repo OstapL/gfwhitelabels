@@ -360,7 +360,8 @@ module.exports = {
           url: 'Gallery',
         },
         press: {
-          headline: 'Headline',
+          headline: 'Quote from Article',
+          name: 'Name of Publication',
           link: 'Article Link',
         },
         additional_video: {
@@ -454,7 +455,6 @@ module.exports = {
     initialize(options) {
       let TeamMember = require('models/teammembercampaign.js');
       this.fields = options.fields.campaign.team_members.schema;
-      this.fields.order.placeholder = 'Enter a number. Team members will be displayed in ascending order.';
       this.fields.photo_image_id = _.extend(this.fields.photo_image_id, {
         help_text: 'This image entices investors to view your campaign. A minimum size of 1600x955 is recommended.',
         crop: {

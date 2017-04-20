@@ -48,7 +48,6 @@ module.exports = Backbone.Router.extend(_.extend({
 
   execute(callback, args, name) {
     app.emitFacebookPixelEvent();
-    app.emitGoogleAnalyticsEvent();
 
     app.clearClasses('#page', ['page']);
 
