@@ -92,7 +92,7 @@ module.exports = {
       };
 
       if (this.model.ga_id)
-        app.createAnalyticsTracker(this.model.ga_id);
+        app.emitCompanyAnalyticsEvent(this.model.ga_id);
     },
 
     submitCampaign(e) {
@@ -668,6 +668,9 @@ module.exports = {
       }
 
       this.initMaxAllowedAmount();
+
+      if (this.model.ga_id)
+        app.emitCompanyAnalyticsEvent(this.model.ga_id);
     },
 
     render() {
@@ -1225,7 +1228,8 @@ module.exports = {
     template: require('./templates/thankYou.pug'),
     el: '#content',
     initialize(options) {
-      // this.render();
+      if (this.model.company.ga_id)
+        app.emitCompanyAnalyticsEvent(this.model.ga_id);
     },
 
     render() {

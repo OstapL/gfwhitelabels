@@ -86,48 +86,15 @@ class App {
     dataLayer.push(params);
   }
 
-  createAnalyticsTracker(id) {
+  emitCompanyAnalyticsEvent(trackerId) {
+    if (!trackerId)
+      return;
+
     dataLayer.push({
-      event: 'createTracker',
-    });
-
-    const TIMEOUT = 30 * 1000;
-    let start = (new Date()).valueOf();
-
-    function checkGA(resolve, reject) {
-      console.log('waiting for ga...');
-      let now = (new Date()).valueOf();
-
-      if (window.ga) {
-        console.log('ga is ready in :' + ((now - start) / 1000) + ' seconds');
-        return resolve(true);
-      }
-
-
-      if (now - start >= TIMEOUT)
-        return reject('Google analytics API is not available');
-
-      setTimeout(() => { checkGA(resolve, reject)}, 500);
-    }
-
-    const waitForAPI = () => {
-      return new Promise((resolve, reject) => {
-        checkGA(resolve, reject);
-      });
-    };
-
-    waitForAPI().then(() => {
-      ga(() => {
-        let trackers = ga.getAll();
-        let tracker = _(trackers).find((t) => {
-          return t.get('trackingId') == id;
-        });
-
-        if (!tracker)
-          ga('create', id, 'auto');
-      });
-    }, (err) => {
-      console.error(err);
+      event: 'company-custom-event',
+      eventCategory: 'Company',
+      eventAction: 'ViewPage',
+      trackerId,
     });
   }
 
