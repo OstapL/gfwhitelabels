@@ -100,6 +100,7 @@ module.exports = {
     if(form.length > 0) {
       form[0].setAttribute('disabled', true);
     }
+    e.target.setAttribute('disabled', true);
 
     api.deleteEmptyNested.call(this, this.fields, newData);
     api.fixDateFields.call(this, this.fields, newData);
@@ -170,8 +171,9 @@ module.exports = {
       });
       this.$('.help-block').prev().scrollTo(5);
       if(form.length > 0) {
-        form[0].setAttribute('disabled', true);
+        form[0].removeAttribute('disabled');
       }
+      e.target.removeAttribute('disabled');
       return false;
     } else {
 
@@ -206,8 +208,9 @@ module.exports = {
         }).
         fail((xhr, status, text) => {
           if(form.length > 0) {
-            form[0].setAttribute('disabled', false);
+            form[0].removeAttribute('disabled');
           }
+          e.target.removeAttribute('disabled');
           api.errorAction(this, xhr, status, text, this.fields);
         });
     }

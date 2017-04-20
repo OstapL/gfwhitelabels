@@ -11,8 +11,10 @@
   klass2 = klass2 || 'col-xl-9 col-lg-12 p-l-1 p-r-1';
   klass2 += ' dropzone__' + fileElement.fieldName;
 
-  label = options.label
   text = options.text || 'Drop your PDF or DOC here or click to upload';
+  if(options.required && options.required == true) {
+    options.label += '<span class="color-red">*</span>' 
+  }
 
 div(class=klass)
   div(data-content=(options.help_text || '') class=popoverklass).dropzoneContainer

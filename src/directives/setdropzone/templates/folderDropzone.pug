@@ -12,11 +12,14 @@
   klass2 += ' dropzone__' + fileElement.fieldName;
 
   text = options.text || 'Drop your PDF or DOC here or click to upload';
-  label = options.label
+  if(options.required && options.required == true) {
+    options.label += '<span class="color-red">*</span>' 
+  }
+
 div(class=klass)
   div(data-content=(options.help_text || '') class=popoverklass).dropzoneContainer
     div(class=klass1)
-      label(for=(this.folderElement.file.id || this.folderElement.name))!= label
+      label(for=(this.folderElement.file.id || this.folderElement.name))!= options.label
 
     div(class=klass2 id=(this.folderElement.file.id))
       div(class=" col-lg-12 border-dropzone p-r-0")
