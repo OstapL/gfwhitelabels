@@ -11,7 +11,8 @@
   klass2 = klass2 || 'col-xl-9 col-lg-12 p-l-1 p-r-1';
   klass2 += ' dropzone__' + fileElement.fieldName;
 
-  label = options.label || 'Drop your PDF or DOC here or click to upload';
+  label = options.label
+  text = options.text || 'Drop your PDF or DOC here or click to upload';
 
 div(class=klass)
   div(data-content=(options.help_text || '') class=popoverklass).dropzoneContainer
@@ -25,7 +26,7 @@ div(class=klass)
           div.col-lg-5.col-md-5.col-sm-5.col-xs-5.text-xs-center.text-md-center.text-lg-center.p-dropzone
             .row(id=fileElement.fieldName)
               a(class='link-1' href="#" onclick="return false")
-                p.drop-photo #{label}
+                p.drop-photo #{text}
                 i(class="fa fa-file")
           div(id=name).col-lg-7.col-md-7.col-sm-7.col-xs-12.p-r-0.p-xs-0.img-dropzone.text-lg-center.fileContainer
             - pug_html += fileElement.render().resultHTML
