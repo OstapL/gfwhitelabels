@@ -132,7 +132,9 @@ class User {
 
   toJSON() {
     const data = Object.assign({}, this.data, {'companiesMember': this.companiesMember});
-    data.image_image_id = data.image_image_id.id;
+    if(this.data.image_image_id) {
+      data.image_image_id = data.image_image_id.id;
+    }
     return data;
   }
 
