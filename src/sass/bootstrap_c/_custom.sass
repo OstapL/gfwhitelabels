@@ -405,6 +405,48 @@ p.drop-photo
 .fancybox-title
   font-family: $open-sans!important
   font-size: rem(15)!important
-  text-align: center!important
+  text-align: left!important
+  background-color: $fancy-nav-color!important
+  color: $white
 .fancybox-title-inside-wrap
   padding: 5px!important
+.fancybox-next, .fancybox-prev
+  span
+    background-image: none!important
+    width: 30px!important
+    height: 30px!important
+    -webkit-box-shadow: 0px 0px 8px 1px rgba(0,0,0,0.75)
+    -moz-box-shadow: 0px 0px 8px 1px rgba(0,0,0,0.75)
+    box-shadow: 0px 0px 8px 1px rgba(0,0,0,0.75)
+    background-color: #fff
+    border-radius: 100px
+
+    &:before
+      content: '\f138'
+      position: absolute
+      font: normal normal normal 30px/1 FontAwesome
+      top: 0px
+      left: 2px
+      color: $fancy-nav-color
+.fancybox-prev
+  span
+    &:before
+      content: '\f137'!important
+.fancybox-skin
+  .fancybox-close
+    background-image: none!important
+    background-image: none!important
+    width: 30px!important
+    height: 30px!important
+    -webkit-box-shadow: 0px 0px 8px 1px rgba(0,0,0,0.75)
+    -moz-box-shadow: 0px 0px 8px 1px rgba(0,0,0,0.75)
+    box-shadow: 0px 0px 8px 1px rgba(0,0,0,0.75)
+    background-color: #fff
+    border-radius: 100px
+    &:before
+      content: '\f057'
+      position: absolute
+      font: normal normal normal 30px/1 FontAwesome
+      top: 0px
+      left: 2px
+      color: $fancy-nav-color
