@@ -13,6 +13,9 @@
 
   label = options.label || ' ';
   text = options.text || 'Drop your photo(s) here or click to upload';
+  if(options.required && options.required == true) {
+    label += '<span class="color-red">*</span>' 
+  }
 
 div(class=klass)
   div(data-content=(options.help_text || '') class=popoverklass).dropzoneContainer

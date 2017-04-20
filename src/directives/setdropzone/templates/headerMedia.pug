@@ -12,6 +12,9 @@
   klass2 += ' dropzone__' + fileElement.fieldName;
 
   var title = options.title || 'Drop photo or click to upload';
+  if(options.required && options.required == true) {
+    options.label += '<span class="color-red">*</span>' 
+  }
 
 div(class=klass)
   div(data-content=(options.help_text || '') class=popoverklass).dropzoneContainer
