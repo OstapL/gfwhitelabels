@@ -40,10 +40,20 @@
               .user-company
                 a(href="/dashboard/" + company.formc_id + "/issuer-dashboard").link-3  #{ company.name }
                 |  company.
+          if user.credit > 0
+            .profile-type-user.credit-all.m-t-2
+              
+              h3.text-uppercase.m-t-0 your credit
+                .small-text Credit valid for #{user.days_left} days.
+              .profile-comission
+                .wrap
+                  h2.m-t-0.m-b-0 $#{user.credit}
+              .text-xs-center
+                a(href="/companies").btn.btn-secondary invest
+              hr.m-t-2
           a(href="/account/change-password").link-3
             i.fa.fa-lock
             |  Need to change your password?
-
     .col-xl-8.col-lg-8
       ul.nav.nav-tabs.profile-tabs
         li(aria-expanded="false").nav-item
