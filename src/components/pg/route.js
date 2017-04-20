@@ -26,6 +26,11 @@ module.exports = {
           'local investing, they give a whole new meaning to finding investment."></meta>';
         $(document.head).append(meta);
         api.makeCacheRequest(app.config.raiseCapitalServer + '?limit=6').then((data) => {
+          let dataClass = [];
+          data.data.forEach((el) => {
+            dataClass.push(new app.models.Company(el));
+          });
+          data.data = dataClass;
           var html = template({
             collection: data,
           });

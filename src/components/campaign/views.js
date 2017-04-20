@@ -15,14 +15,12 @@ module.exports = {
       'change select.orderby': 'orderby',
     },
     initialize(options) {
-      let data = {
-        count: options.collection.count,
-        data: options.collection.data
-      };
+      let dataClass = [];
       options.collection.data.forEach((el) => {
-        data.data.push(new app.models.Company(el));
+        dataClass.push(new app.models.Company(el));
       });
-      this.collection = data;
+      options.collection.data = dataClass;
+      this.collection = options.collection;
     },
 
     render() {
