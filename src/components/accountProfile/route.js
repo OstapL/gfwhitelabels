@@ -83,9 +83,11 @@ module.exports = {
         const View = require('./views.js');
 
         const fieldsR = api.makeCacheRequest(app.config.investmentServer, 'OPTIONS');
+        const userDataR = api.makeCacheRequest(app.config.authServer + '/rest-auth/data');
         const dataR = api.makeCacheRequest(app.config.investmentServer);
 
-        Promise.all([fieldsR, dataR]).then((values) => {
+        Promise.all([fieldsR, dataR, userDataR]).then((values) => {
+          _.extend(app.user.data, values[2]);
           let i = new View.InvestorDashboard({
             fields: values[0].fields,
             model: values[1],
