@@ -297,6 +297,8 @@ p.drop-photo
 .userProfileDropzone
   .p-dropzone
     margin-top: 30px!important
+  .dropzone-profile.border-dropzone
+    min-height: auto!important
   .one-photo
     .delete-image-container
       position: absolute
@@ -328,6 +330,7 @@ p.drop-photo
 
   .border-dropzone
     min-height: 150px
+    border: none
 .team-members
   .p-dropzone
     top: 0px!important
@@ -351,6 +354,9 @@ p.drop-photo
   @media screen and (max-width: 540px)
     .p-dropzone
       margin-bottom: rem(35)
+.crop-image-container
+  max-width: 100%!important
+  max-height: 400px!important
 //custom
 .campaign-specifics
   .btn-dropdown
