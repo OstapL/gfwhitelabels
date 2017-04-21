@@ -1,3 +1,8 @@
+-
+  var socialDirective = require('directives/social/index.js');
+  var HeartlandInfoProvider = require('directives/social/heartlandTourInfoProvider.js');
+  var infoProvider = new HeartlandInfoProvider();
+  var directiveKey = 'heartland-tour';
 
 section.heartland-tour
   .top-baner
@@ -50,21 +55,23 @@ section.heartland-tour
       .row
         .col-xl-12
           .share.text-xs-center
-            h2.font-weight-light.m-t-1.m-b-2 Share the Heartland Tour!
-            span.d-inline-block
-              i.fa.fa-share
-              |  Share:
-            div(data-key=key).d-inline-block.social-links-container
-              a(href="#" target="_blank").facebook-share
-                i.fa.fa-facebook-square
-              a(href="#" target="_blank").twitter-share
-                i.fa.fa-twitter-square
-              a(href='#'
-                target="_blank"
-              ).linkedin-share
-                i.fa.fa-linkedin-square
-              a(href="#").email-share
-                i.fa.fa-envelope-square
+            | !{ socialDirective.render(directiveKey, infoProvider) }
+
+            //h2.font-weight-light.m-t-1.m-b-2 Share the Heartland Tour!
+            //span.d-inline-block
+            //  i.fa.fa-share
+            //  |  Share:
+            //div(data-key=key).d-inline-block.social-links-container
+            //  a(href="#" target="_blank").facebook-share
+            //    i.fa.fa-facebook-square
+            //  a(href="#" target="_blank").twitter-share
+            //    i.fa.fa-twitter-square
+            //  a(href='#'
+            //    target="_blank"
+            //  ).linkedin-share
+            //    i.fa.fa-linkedin-square
+            //  a(href="#").email-share
+            //    i.fa.fa-envelope-square
   .sities
     section.home-wrap-text-block.raise-wrap.hide-bg-fixed.sities-section
       .opasity-block
