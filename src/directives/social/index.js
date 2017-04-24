@@ -43,7 +43,14 @@ class SocialNetworks {
         return resolve(false);
       }
 
-      IN.User.authorize(resolve);
+      IN.User.authorize(() => {
+        if (IN.User.isAuthorized())
+          return resolve();
+
+        IN.User.logout(() => {
+          IN.User.authorize(resolve);
+        });
+      });
     });
   }
 
