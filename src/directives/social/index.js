@@ -79,10 +79,16 @@ class SocialNetworks {
               .result(() => {alert('You\'ve just shared the page to LinkedIn')})
               .error((err) => {
                 if (retryWithLogout) {
-                  return console.error('LinkedIn error: ' + err);
+                  console.error('LinkedIn error: ');
+                  console.dir(err);
+                  return;
                 }
-                share();
-                retryWithLogout = true;
+
+                IN.User.logout(() => {
+                  share();
+                  retryWithLogout = true;
+                });
+
               });
         });
       }).catch((err) => {
