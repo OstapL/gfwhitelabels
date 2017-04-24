@@ -205,9 +205,9 @@ class CropperDropzone {
           'tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">' +
         '<div class="modal-dialog" role="document">' +
           '<div class="modal-content">' +
-            '<div class="modal-header p-t-0">' +
+            '<div class="modal-header">' +
               '<button type="button" class="close" data-dismiss="modal" aria-label="Close">' +
-                '<span aria-hidden="true">&times;</span> ' +
+                '<span aria-hidden="true"><i class="fa fa-times"> </i></span> ' +
               '</button>' +
               '<h4 class="modal-title" id="exampleModalLabel"></h4>' +
             '</div>' +
