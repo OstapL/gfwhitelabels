@@ -2,6 +2,15 @@ const Router = require('./router.js');
 const User = require('components/accountProfile/user.js');
 const Menu = require('components/menu/views.js');
 
+const safeDataLayerPush = (...args) => {
+  if (!window.dataLayer) {
+    console.warn('No data layer found! It looks like GTM scripts blocked');
+    return;
+  }
+
+  dataLayer.push(...args);
+};
+
 class App {
   constructor() {
     this.cache = {};
@@ -50,7 +59,7 @@ class App {
   }
 
   initFacebookPixel() {
-    dataLayer.push({
+    safeDataLayerPush({
       event: 'fb-pixel-init'
     });
   }
@@ -70,7 +79,7 @@ class App {
 
     let trackType = (_.contains(STANDARD_EVENTS, eventName)) ? 'track' : 'trackCustom';
 
-    dataLayer.push({
+    safeDataLayerPush({
       event: 'fb-pixel-event',
       trackType,
       eventName,
@@ -86,14 +95,14 @@ class App {
       return console.error('Required params are not set');
     
     params.event = eventName;
-    dataLayer.push(params);
+    safeDataLayerPush(params);
   }
 
   emitCompanyAnalyticsEvent(trackerId) {
     if (!trackerId)
       return;
 
-    dataLayer.push({
+    safeDataLayerPush({
       event: 'company-custom-event',
       eventCategory: 'Company',
       eventAction: 'ViewPage',

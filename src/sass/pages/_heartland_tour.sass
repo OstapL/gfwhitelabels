@@ -1,0 +1,120 @@
+.heartland-tour
+  .top-baner
+    background-image: url("img/heartland-tour.jpg")
+    background-repeat: no-repeat
+    background-size: cover
+    width: 100%
+    height: 60vh
+    .top-baner-text
+      position: relative
+      top: 70px
+      h1, h3
+        color: $white
+      h1
+        margin-bottom: rem(15)
+  .how-it-works
+    background-color: $alabaster
+    padding: rem(45) 0
+    .circle
+      margin-right: rem(6)
+      height: 13px
+      width: 13px
+      padding: 0px
+      border-radius: 100px
+      border: solid 1px #000
+      vertical-align: middle
+      display: inline-block
+      margin-top: -3px
+
+
+      &.red-circle
+        background-color: #d44330
+      &.white-circle
+        background-color: $white
+      &.blue-circle 
+        background-color: #0072bc
+  .map-apply
+    margin-top: rem(50)
+    .block-links
+      position: relative
+      width: 100%
+      float: left
+      height: 100%
+      .liks
+        
+        width: 49.9%
+        a
+          display: block
+          padding: rem(16)
+          font-size: rem(18)
+          font-weight: lighter
+          border: solid 1px $gallery
+          color: #000
+          +mt(.3s)
+          &:hover
+            +mt(.3s)
+            color: $white
+            
+
+
+      .link-left
+        float: left
+        a
+          border-top-right-radius: 13px
+          +mt(.3s)
+          &:hover
+            +mt(.3s)
+            background-color: $heartland-tour-bgc-link-left
+            border-color: $heartland-tour-bgc-link-left
+      .link-right
+        float: right
+        a
+          border-top-left-radius: 13px
+          +mt(.3s)
+          &:hover
+            +mt(.3s)
+            background-color: $heartland-tour-bgc-link-right
+            border-color: $heartland-tour-bgc-link-right
+    .center-logo
+      position: absolute
+      top: 46%
+      left: 50%
+      -ms-transform: translate(-50%, -50%)
+      -webkit-transform: translate(-50%, -50%)
+      transform: translate(-50%, -50%)
+      z-index: -1
+      img
+        width: 85px
+        height: 84px
+    .map-center
+      position: relative
+      text-align: center
+      margin-top: rem(50)
+      img
+        max-width: 640px
+        opacity: 0.3
+      h1
+        position: absolute
+        top: 46%
+        left: 50%
+        -ms-transform: translate(-50%, -50%)
+        -webkit-transform: translate(-50%, -50%)
+        transform: translate(-50%, -50%)
+        width: 100%
+      .small
+        font-size: rem(12)
+        color: $small-text
+        margin-top: rem(25)
+  .sities
+    .sities-section
+      background-image: url("img/cities.jpg")
+      background-position: center center
+      height: 340px
+      background-repeat: no-repeat
+      background-size: cover
+      h1
+        color: $white
+      .opasity-block
+        &:before
+          background: rgba(17, 17, 17, 0.2)
+        

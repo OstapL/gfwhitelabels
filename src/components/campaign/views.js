@@ -1229,7 +1229,7 @@ module.exports = {
     el: '#content',
     initialize(options) {
       if (this.model.company.ga_id)
-        app.emitCompanyAnalyticsEvent(this.model.ga_id);
+        app.emitCompanyAnalyticsEvent(this.model.company.ga_id);
     },
 
     render() {
