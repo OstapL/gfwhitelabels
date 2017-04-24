@@ -64,14 +64,6 @@ module.exports = {
 
       this.fields.image_image_id = _.extend(this.fields.image_image_id, {
         templateDropzone: 'profileDropzone.pug',
-        onSaved: (r) => {
-          this.el.querySelector('.img-image_image_id').src = r.file.getUrl('main');
-          document.getElementById('user-thumbnail').src = r.file.getUrl();
-          let userCache = JSON.parse(localStorage.getItem('user'));
-          userCache['image_data'] = app.user.data.image_data;
-          localStorage.setItem('user', JSON.stringify(userCache));
-          return true;
-        },
         crop: {
           control:  {
             aspectRatio: 1 / 1,
@@ -85,7 +77,8 @@ module.exports = {
             height: 50,
           },
           cssClass: 'img-profile-crop',
-          template: 'withpreview'
+          template: 'withpreview',
+          templateImage: 'profileImage.pug'
         },
       });
 

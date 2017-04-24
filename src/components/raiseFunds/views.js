@@ -301,7 +301,7 @@ module.exports = {
             height: 800,
           },
           resize: {
-            width: 530,
+            width: 538,
             height: 272,
           },
           cssClass: 'img-crop',
@@ -432,13 +432,13 @@ module.exports = {
           new TeamMember.TeamMember(
             postData,
             this.campaign.schema.team_members.schema,
-            this.campaign.url + '/team_members/' + this.campaign.team_members.members.length)
+            this.campaign.url + '/team-members/' + this.campaign.team_members.members.length)
         )
       }
       this.undelegateEvents();
       app.routers.navigate(
         '/campaign/' + this.campaign.id + '/team-members',
-        { trigger: true, replace: false }
+        {trigger: true, replace: false}
       );
       return false;
       // window.location = '/campaign/' + this.campaign.id + '/team-members';

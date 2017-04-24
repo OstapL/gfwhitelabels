@@ -324,7 +324,7 @@ section
   if values.campaign.team_members
     section#members
       .container
-        if Array.isArray(values.campaign.team_members) && values.campaign.team_members.length > 0
+        if Array.isArray(values.campaign.team_members.members) && values.campaign.team_members.members.length > 0
           - 
             function memberSort(a, b) {
               if(a.order == null) {
@@ -332,15 +332,14 @@ section
               }
               return a.order > b.order;
             }
-            values.campaign.team_members.sort(memberSort);
+            values.campaign.team_members.members.sort(memberSort);
           h2#team.dosis.text-uppercase.text-lg-center.text-xs-center.col-lg-12.campaign-subheading Team
           .row
             .col-lg-12.text-center-flex
-              each v,k in values.campaign.team_members
+              each v in values.campaign.team_members.members
                 .col-xl-4.col-lg-4.col-md-6.col-sm-12.col-xs-12.team.team-detail.p-xs-0
                   .card.text-lg-center.text-xs-center
-                    - var url = app.getUrl(v.photo_data) || ''
-                    img(src=url alt="").img-circle
+                    img(src=v.photo_image_id.getUrl() alt="").img-circle
                     .card-block
                       h4.text-xs-center.card-title.text-uppercase #{v.first_name} #{v.last_name }
                       p.card-text

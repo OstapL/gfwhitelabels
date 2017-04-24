@@ -4,7 +4,7 @@ let sites = [{
 	name: "growthfountain",
 	bucket_name: "growthfountain-localhost",
 	url: "http://growthfountain-localhost.s3-website-us-east-1.amazonaws.com",
-	frontend_bucket: "https://d2ncibef8spfcn.cloudfront.net",
+	frontend_bucket: "",
 }, {
 	id: 21,
 	domain: "growthfountain-investment-admin.s3-website-us-east-1.amazonaws.com",

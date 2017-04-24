@@ -4,7 +4,11 @@ const defaultImage = '/img/default/255x153.png';
 
 class ImageElement extends file.FileElement {
   getTemplate() {
-    return require('./templates/image.pug');
+    if(this.options.templateImage) {
+      return require('./templates/' + this.options.templateImage);
+    } else {
+      return require('./templates/image.pug');
+    }
   }
 
   getDefaultImage() {
@@ -233,13 +237,20 @@ class CropperDropzone {
     let img = new Image();
     var self = this;
     this.$modal = $('.cropModal');
-    this.$modal.modal({
+    
+    self.$modal.modal({
       backdrop: 'static',
       keyboard: false
     });
 
+    self.$modal.on('hidden.bs.modal', function (e) {
+      return false;
+    });
+
     img.addEventListener("load", function() {
-      //self.$modal.on('shown.bs.modal', () => {
+      setTimeout(() => {
+      // self.$modal.on('shown.bs.modal', () => {
+
         self.cropper = new Cropper(this, self.options.control);
         const cropData = self.options.auto ? _.extend({x: 0, y: 0}, self.options.auto) : null;
         self.$modal.modal('show');
@@ -247,12 +258,9 @@ class CropperDropzone {
           self.cropper.setData(cropData);
         }
 
-        self.$modal.on('hidden.bs.modal', function (e) {
-          return false;
-        });
-
         self.attacheEvents();
-      //});
+      // });
+      }, 400);
       self.$modal.modal('show');
     }, false);
 
