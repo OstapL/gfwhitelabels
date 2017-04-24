@@ -5,17 +5,17 @@ class HeartlandInfoProvider extends ShareInfoProvider {
     super(model);
 
     this.templates = {
-      subject: 'I thought you\'d be interested in :siteName\'s Heartland Tour',
+      subject: 'I thought you\'d be interested in GrowthFountain\'s Heartland Tour',
       title: 'Calling all successful entrepreneurs, startups and small businesses',
-      emailBody: 'Hi! I think you should check out :siteName\'s Heartland Tour. They\'re traveling ' +
+      emailBody: 'Hi! I think you should check out GrowthFountain\'s Heartland Tour. They\'re traveling ' +
         'across country on a quest for exciting companies that need to raise money to grow; ' +
         'from tech startups to the restaurants, bars and bricks %26 mortar locations across America.' +
         '%0D%0A%0D%0A' +
         ' I thought you might be interested in raising money or attending one of their live events!' +
         '%0D%0A%0D%0A' +
         'Come take a look: :url',
-      description: 'Companies can join :siteName\'s Heartland Tour by pitching their ' +
-        'product or service to thousands of people. Apply now for your chance to participate',
+      description: 'Companies can join GrowthFountain\'s Heartland Tour by pitching their ' +
+        'product or service to thousands of people. Apply now for your chance to participate!',
       confirmationMessage: 'Do you want to share heartland page with your :network network?',
     };
 
@@ -27,7 +27,7 @@ class HeartlandInfoProvider extends ShareInfoProvider {
     this.data = {
       title: this._format('title'),
       url: window.location.href,
-      picture: window.location.origin + require('images/heartland-tour.jpg'),
+      picture: window.location.origin + require('images/cities.jpg'),
     };
   }
 
@@ -57,7 +57,7 @@ class HeartlandInfoProvider extends ShareInfoProvider {
       '&href=' + this.data.url + '?r=' + Math.random() +
       '&description=' + this._stripHtml(
         this._format('description', {
-          siteName: this.data.siteName,
+          // siteName: this.data.siteName,
         })) +
       '&locale=' + 'en_US' +
       '&picture=' + this.data.picture +
@@ -68,10 +68,10 @@ class HeartlandInfoProvider extends ShareInfoProvider {
   email() {
     return 'mailto:' +
       '?subject=' + this._format('subject', {
-        siteName: this.data.siteName,
+        // siteName: this.data.siteName,
       }) +
       '&body=' + this._format('description', {
-        siteName: this.data.siteName,
+        // siteName: this.data.siteName,
       }) + '%0D%0A%0D%0A' + this.data.url;
   }
 
