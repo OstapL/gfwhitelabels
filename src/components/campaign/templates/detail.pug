@@ -395,8 +395,10 @@ section
                           .text-block
                             p 
                               em “#{ v.headline }”
-                            span - 
-                            a(href=v.link target="_blank").link-3 #{ v.name }
+                            span -
+                            
+                            a(href=v.link target="_blank").link-3 #{ v.name ? v.name : 'Read more' }
+
                 #hidden-article-press.hidden-article-press.collapse
                   each k in keys
                     if k <= lastArticleIdx
