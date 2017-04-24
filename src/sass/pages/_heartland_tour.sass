@@ -10,19 +10,22 @@
       top: 70px
       h1, h3
         color: $white
+      h1
+        margin-bottom: rem(15)
   .how-it-works
     background-color: $alabaster
     padding: rem(45) 0
-    i
+    .circle
       margin-right: rem(6)
       height: 13px
       width: 13px
       padding: 0px
       border-radius: 100px
-      &:before
-        padding: 0px
-        position: relative
-        top: -1px
+      border: solid 1px #000
+      vertical-align: middle
+      display: inline-block
+      margin-top: -3px
+
 
       &.red-circle
         background-color: #d44330
@@ -46,22 +49,32 @@
           font-size: rem(18)
           font-weight: lighter
           border: solid 1px $gallery
+          color: #000
           +mt(.3s)
           &:hover
             +mt(.3s)
-            background-color: $heartland-tour-bgc-link
             color: $white
-            border-color: $heartland-tour-bgc-link$puerto_rico
+            
 
 
       .link-left
         float: left
         a
           border-top-right-radius: 13px
+          +mt(.3s)
+          &:hover
+            +mt(.3s)
+            background-color: $heartland-tour-bgc-link-left
+            border-color: $heartland-tour-bgc-link-left
       .link-right
         float: right
         a
           border-top-left-radius: 13px
+          +mt(.3s)
+          &:hover
+            +mt(.3s)
+            background-color: $heartland-tour-bgc-link-right
+            border-color: $heartland-tour-bgc-link-right
     .center-logo
       position: absolute
       top: 46%
@@ -82,7 +95,7 @@
         opacity: 0.3
       h1
         position: absolute
-        top: 50%
+        top: 46%
         left: 50%
         -ms-transform: translate(-50%, -50%)
         -webkit-transform: translate(-50%, -50%)
@@ -101,4 +114,7 @@
       background-size: cover
       h1
         color: $white
+      .opasity-block
+        &:before
+          background: rgba(17, 17, 17, 0.2)
         
