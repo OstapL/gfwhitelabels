@@ -89,7 +89,7 @@ module.exports = {
     let method = e.target.dataset.method || 'POST';
     let form = $(e.target).closest('form');
 
-    if(this.model&& Object.keys(this.model).length > 0 && this.model.toJSON().hasOwnProperty('id')) {
+    if(this.model&& Object.keys(this.model).length > 0 && this.model.id) {
       url = url.replace(':id', this.model.id);
       method = e.target.dataset.method || 'PATCH';
     }
