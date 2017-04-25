@@ -71,7 +71,7 @@ div(data-investmentid=id).one_table
       .right_text
         b #{app.helpers.format.formatAmount((campaign.minimum_raise))}
         span Goal
-      p.percents #{campaign.percentage() + '% Funded'}
+      p.percents #{ campaign.fundedPercentage().text }
       .clear
     .progress_line_container
       progress(value=campaign.amount_raised max=(campaign.minimum_raise || campaign.maximum_raise)).progress
