@@ -221,8 +221,8 @@ module.exports = {
           $span.fadeIn();
         });
         const names = ['education',
-          'terms_of_use',
-          'privacy_policy',
+          'terms-of-use',
+          'privacy-policy',
           'advertising',
           'formc_review_first',
         ];
