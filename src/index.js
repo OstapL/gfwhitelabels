@@ -191,8 +191,17 @@ $(document).ready(function () {
       return false;
     }
 
+    //process click on menu item
+    if (href.startsWith('#')) {
+      let $target = $(event.currentTarget);
+      let $activeItem = $target.closest('li');
+      let $menuItems = $activeItem.siblings();
+      $menuItems.each((_, elem) => $(elem).removeClass('active'));
+      $activeItem.addClass('active');
+      return;
+    }
+
     if (!href ||
-      href.startsWith('#') ||
       href.startsWith('http') ||
       href.startsWith('ftp') ||
       href.startsWith('javascript:') ||
