@@ -21,18 +21,18 @@ const socialNetworksMap = {
 };
 
 function initInvestment(i) {
-	i.created_date = moment.isMoment(i.created_date)
-		? i.created_date
-		: moment.parseZone(i.created_date);
+  i.created_date = moment.isMoment(i.created_date)
+    ? i.created_date
+    : moment.parseZone(i.created_date);
 
-	i.campaign.expiration_date = moment.isMoment(i.campaign.expiration_date)
-		? i.campaign.expiration_date
-		: moment(i.campaign.expiration_date);
+  i.campaign.expiration_date = moment.isMoment(i.campaign.expiration_date)
+    ? i.campaign.expiration_date
+    : moment(i.campaign.expiration_date);
 
-	i.expired = i.campaign.expiration_date.isBefore(today);
-	i.cancelled = _.contains(CANCELLED_STATUSES, i.status);
-	i.historical = i.expired || i.cancelled;
-	i.active = !i.historical  && _.contains(ACTIVE_STATUSES, i.status);
+  i.expired = i.campaign.expiration_date.isBefore(today);
+  i.cancelled = _.contains(CANCELLED_STATUSES, i.status);
+  i.historical = i.expired || i.cancelled;
+  i.active = !i.historical && _.contains(ACTIVE_STATUSES, i.status);
 }
 
 module.exports = {
@@ -533,7 +533,7 @@ module.exports = {
 
       api.makeRequest(app.config.investmentServer + '/' + id + '/decline', 'PUT').done((response) => {
         investment.status = FINANCIAL_INFORMATION.INVESTMENT_STATUS.CancelledByUser;
-        helpers.campaign.initInvestment(investment);
+        initInvestment(investment);
 
         $target.closest('.one_table').remove();
 
