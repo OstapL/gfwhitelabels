@@ -1,6 +1,22 @@
 const Image = require('models/image.js');
 const YEAR = 1000 * 60 * 60 * 24 * 30 * 12;
 
+const fixImageData = (data) => {
+  if (!Array.isArray(data.image_data))
+    return;
+  let originData = data.image_data[0];
+  let croppedData = data.image_data[1] || originData;
+
+  data.image_data = originData;
+  data.image_data.urls = {
+    origin: originData.urls ? (originData.urls[0] || '') : '',
+    main: croppedData.urls ? (croppedData.urls[0] || '') : '',
+    '50x50': croppedData.urls ? (croppedData.urls[0] || '') : '',
+  }
+
+  return data;
+};
+
 class User {
   constructor() {
     this.company = null;
@@ -106,7 +122,7 @@ class User {
       if (this.token === null)
         return resolve({ id: '' });
 
-      const data = JSON.parse(localStorage.getItem('user')) || {};
+       const data = fixImageData(JSON.parse(localStorage.getItem('user')) || {});
       // Check if user have all required data
       if (!data.info || !Array.isArray(data.info)) {
         this.emptyLocalStorage();
