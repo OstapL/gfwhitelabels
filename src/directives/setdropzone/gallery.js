@@ -98,12 +98,21 @@ class GalleryDropzone extends imageDropzone.ImageDropzone {
     reorgData.urls = {
       origin: this.galleryElement.fixUrl(data[2].urls[0])
     };
-    reorgData.urls.main = this.galleryElement.fixUrl(data[1].urls[0]);
+    if(data[1].name.indexOf('_c') != -1) {
+      reorgData.urls.main = this.fileElement.fixUrl(data[1].urls[0]);
+    } else if(data[2] && data[2].name.indexOf('_c') != -1) {
+      reorgData.urls.main = this.fileElement.fixUrl(data[2].urls[0]);
+    }
+
     if(this.cropperOptions.resize) {
-      reorgData.urls[
-        this.cropperOptions.resize.width + 'x' + this.cropperOptions.resize.height
-      ] = this.galleryElement.fixUrl(data[0].urls[0]);
+      var cropName = this.cropperOptions.resize.width + 'x' + this.cropperOptions.resize.height;
+      if(data[2] && data[2].name.indexOf('_r') != -1) {
+        reorgData.urls[cropName] = this.fileElement.fixUrl(data[2].urls[0]);
+      } else if(data[2] && data[2].name.indexOf('_r') != -1) {
+        reorgData.urls[cropName] = this.fileElement.fixUrl(data[2].urls[0]);
+      }
     };
+
     reorgData.site_id = app.sites.getId();
     this.galleryElement.file.data.push(reorgData);
     let fileObj = new imageDropzone.ImageElement(

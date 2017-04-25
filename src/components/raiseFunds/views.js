@@ -456,7 +456,13 @@ module.exports = {
       let TeamMember = require('models/teammembercampaign.js');
       this.fields = options.fields.campaign.team_members.schema;
       this.fields.photo_image_id = _.extend(this.fields.photo_image_id, {
+        label: 'Photo',
         help_text: 'A minimum size of 300x300 is recommended.',
+        onSaved: (data) => {
+          debugger;
+          // delete newData.urlRoot;
+          api.makeRequest(this.urlRoot, 'PUT', this.model.toJSON());
+        },
         crop: {
           control:  {
             aspectRatio: 1 / 1,

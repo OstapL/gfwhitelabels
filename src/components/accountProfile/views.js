@@ -64,6 +64,9 @@ module.exports = {
 
       this.fields.image_image_id = _.extend(this.fields.image_image_id, {
         templateDropzone: 'profileDropzone.pug',
+        onSaved: (data) => {
+          app.user.updateImage(data.file);
+        },
         crop: {
           control:  {
             aspectRatio: 1 / 1,
