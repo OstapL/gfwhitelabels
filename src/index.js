@@ -230,6 +230,10 @@ $(document).ready(function () {
     //process click on menu item
     if (href && href.startsWith('#')) {
       let $target = $(event.currentTarget);
+      let $leftMenu = $(' .pages-left-menu');
+      if (!$leftMenu.length)
+        return;
+
       let $activeItem = $target.closest('li');
       let $menuItems = $activeItem.siblings();
       $menuItems.each((_, elem) => $(elem).removeClass('active'));
