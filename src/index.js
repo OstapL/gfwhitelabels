@@ -320,9 +320,9 @@ Backbone.View.prototype.assignLabels = function () {
 
 Backbone.View.prototype.checkForm = function () {
   if (app.getParams().check == '1') {
-    if (!validation.validate(this.fields, this.model, this)) {
-      _(validation.errors).each((errors, key) => {
-        validation.invalidMsg(this, key, errors);
+    if (!app.validation.validate(this.fields, this.model, this)) {
+      _(app.validation.errors).each((errors, key) => {
+        app.validation.invalidMsg(this, key, errors);
       });
       this.$('.help-block').prev().scrollTo(5);
     }
