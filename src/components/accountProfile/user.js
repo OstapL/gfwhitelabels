@@ -2,8 +2,10 @@ const Image = require('models/image.js');
 const YEAR = 1000 * 60 * 60 * 24 * 30 * 12;
 
 const fixImageData = (data) => {
-  if (!Array.isArray(data.image_data))
-    return;
+  if (data.image_data == null ||  !Array.isArray(data.image_data)) {
+    return {};
+  }
+
   let originData = data.image_data[0];
   let croppedData = data.image_data[1] || originData;
 
