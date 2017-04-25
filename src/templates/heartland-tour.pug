@@ -37,21 +37,28 @@ section.heartland-tour
     .container
       .row
         .col-xl-12.block-links
-          .col-xl-6.liks.link-left.text-xs-center.p-x-0
-            a(href=infoProvider.nominateEmail()) NOMINATE your favorite business!
-
-          .col-xl-6.liks.link-right.text-xs-center.p-x-0
-            a(href="/pg/raise-landing") RSVP to attend in person!
-          .center-logo
-            img(src=require("img/gf_icon.png") alt="")
+          .col-xl-4.offset-xl-1.col-lg-5.offset-lg-0.col-md-12.text-xs-center.p-r-0
+            a(href=infoProvider.nominateEmail()).btn.btn-block nominate your favorite business!
+          .col-xl-2.col-lg-2.wrap-logo.hidden-md-down
+            .center-logo
+              img(src=require("img/gf_icon.png") alt="")
+          .col-xl-4.col-lg-5.col-md-12.text-xs-center.p-l-0
+            a(href="mailto:info@growthfountain.com").btn.btn-block RSVP to attend in person!
+          
+            
       .row
         .col-xl-12
           .map-center
             img(src=require("img/USA5.png") alt="")
-            h1.text-uppercase Apply Today and we May
-              br
-              | Choose Your Town!
-            p.small.m-b-1 *Companies interested in participate must have a completed campaign and Form C. Call us with any questions: 646-759-8229
+            .text-wrap
+              h2.m-b-1.m-t-0 We’re finalizing our schedule.
+              h1.text-uppercase Apply today and we’ll fly you
+                br
+                | to one of our great events!*
+        .col-xl-8.offset-xl-2
+          p.small.m-b-1.text-xs-left *Companies interested in participate must have a completed campaign and Form C. Call us with any questions: 646-759-8229.
+            br
+            | One presenter or more per location may receive an honorarium to cover travel expenses, up to $1,000.
       .row
         .col-xl-12
           h2.font-weight-light.m-t-2.m-b-0.text-xs-center Share the Heartland Tour!
