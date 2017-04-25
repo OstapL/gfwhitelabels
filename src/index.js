@@ -12,16 +12,52 @@ require('classlist-polyfill');
 require('bootstrap/dist/js/bootstrap.js');
 require('owl.carousel/dist/owl.carousel.min.js');
 
+function scrollLogoHandler() {
+  let $bottomLogo = $('#fade_in_logo');
+  let offsetTopBottomLogo = $bottomLogo.offset().top;
+  let $window = $(window);
+  if (($window.scrollTop() + $window.height() >= offsetTopBottomLogo)
+    && !$bottomLogo.hasClass('fade-in')) {
+    $bottomLogo.addClass('fade-in');
+  }
+}
+
+function scrollMenuItemsHandler() {
+  let lastId = '';
+  let topMenu = $(".pages-left-menu");
+  if (!topMenu.length)
+    return;
+
+  let topMenuHeight = topMenu.outerHeight();
+  let menuItems = topMenu.find("a");
+  let scrollItems = menuItems.map(function() {
+    let item = $($(this).attr("href"));
+    if (item.length) {
+      return item;
+    }
+  });
+
+  let fromTop = $(window).scrollTop() + topMenuHeight;
+  let cur = scrollItems.map(function() {
+    if ($(this).offset().top < fromTop)
+      return this;
+  });
+  cur = cur[cur.length - 1];
+  let id = cur && cur.length ? cur[0].id : "";
+  if (lastId !== id) {
+    lastId = id;
+    menuItems
+      .parent().removeClass("active")
+      .end().filter("[href='#" + id + "']").parent().addClass("active");
+  }
+}
+
+
 $(document).ready(function () {
   // show bottom logo while scrolling page
-  $(window).scroll(() => {
-    let $bottomLogo = $('#fade_in_logo');
-    let offsetTopBottomLogo = $bottomLogo.offset().top;
-    let $window = $(window);
-    if (($window.scrollTop() + $window.height() >= offsetTopBottomLogo)
-        && !$bottomLogo.hasClass('fade-in')) {
-      $bottomLogo.addClass('fade-in');
-    }
+  $(window).scroll((e) => {
+    scrollLogoHandler(e);
+    scrollMenuItemsHandler(e);
   });
 
   //attach global event handlers
@@ -191,8 +227,17 @@ $(document).ready(function () {
       return false;
     }
 
+    //process click on menu item
+    if (href && href.startsWith('#')) {
+      let $target = $(event.currentTarget);
+      let $activeItem = $target.closest('li');
+      let $menuItems = $activeItem.siblings();
+      $menuItems.each((_, elem) => $(elem).removeClass('active'));
+      $activeItem.addClass('active');
+      return;
+    }
+
     if (!href ||
-      href.startsWith('#') ||
       href.startsWith('http') ||
       href.startsWith('ftp') ||
       href.startsWith('javascript:') ||

@@ -122,6 +122,16 @@ class Campaign {
     i.historical = i.expired || i.cancelled;
     i.active = !i.historical  && _.contains(ACTIVE_STATUSES, i.status);
   }
+
+  getInvestorPresentationURL() {
+    if (!this.investor_presentation_data ||
+        !this.investor_presentation_data.urls ||
+        !this.investor_presentation_data.urls.origin
+    )
+      return '';
+
+    return app.getFilerUrl(this.investor_presentation_data.urls);
+  }
 }
 
 module.exports = Campaign

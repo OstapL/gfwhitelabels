@@ -34,66 +34,36 @@
       &.blue-circle 
         background-color: #0072bc
   .map-apply
-    margin-top: rem(50)
+    margin-top: rem(60)
+    
     .block-links
+      @media only screen and (max-width : 992px)
+        .col-md-12
+          padding: 0
+          .btn
+            &:first-child
+              margin-bottom: 30px
+
+    .wrap-logo
       position: relative
-      width: 100%
-      float: left
-      height: 100%
-      .liks
-        
-        width: 49.9%
-        a
-          display: block
-          padding: rem(16)
-          font-size: rem(18)
-          font-weight: lighter
-          border: solid 1px $gallery
-          color: #000
-          +mt(.3s)
-          &:hover
-            +mt(.3s)
-            color: $white
-            
-
-
-      .link-left
-        float: left
-        a
-          border-top-right-radius: 13px
-          +mt(.3s)
-          &:hover
-            +mt(.3s)
-            background-color: $heartland-tour-bgc-link-left
-            border-color: $heartland-tour-bgc-link-left
-      .link-right
-        float: right
-        a
-          border-top-left-radius: 13px
-          +mt(.3s)
-          &:hover
-            +mt(.3s)
-            background-color: $heartland-tour-bgc-link-right
-            border-color: $heartland-tour-bgc-link-right
-    .center-logo
-      position: absolute
-      top: 46%
-      left: 50%
-      -ms-transform: translate(-50%, -50%)
-      -webkit-transform: translate(-50%, -50%)
-      transform: translate(-50%, -50%)
-      z-index: -1
-      img
-        width: 85px
-        height: 84px
+      .center-logo
+        position: absolute
+        top: 50%
+        left: 50%
+        -ms-transform: translate(-50%, -30%)
+        -webkit-transform: translate(-50%, -30%)
+        transform: translate(-50%, -30%)
+        z-index: -1
+        img
+          width: 130px
     .map-center
       position: relative
       text-align: center
       margin-top: rem(50)
       img
-        max-width: 640px
+        max-width: 100%
         opacity: 0.3
-      h1
+      .text-wrap
         position: absolute
         top: 46%
         left: 50%
@@ -101,10 +71,16 @@
         -webkit-transform: translate(-50%, -50%)
         transform: translate(-50%, -50%)
         width: 100%
-      .small
-        font-size: rem(12)
-        color: $small-text
-        margin-top: rem(25)
+        h1
+          @media only screen and (max-width : 768px)
+            font-size: rem(24)
+          @media only screen and (max-width : 360px)
+            font-size: rem(18)
+    .small
+      font-size: rem(12)
+      color: $small-text
+      margin-top: rem(25)
+      line-height: 15px
   .sities
     .sities-section
       background-image: url("img/cities.jpg")
@@ -114,6 +90,8 @@
       background-size: cover
       h1
         color: $white
+        @media only screen and (max-width : 360px)
+          font-size: rem(24)
       .opasity-block
         &:before
           background: rgba(17, 17, 17, 0.2)

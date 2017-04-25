@@ -21,18 +21,18 @@ const socialNetworksMap = {
 };
 
 function initInvestment(i) {
-	i.created_date = moment.isMoment(i.created_date)
-		? i.created_date
-		: moment.parseZone(i.created_date);
+  i.created_date = moment.isMoment(i.created_date)
+    ? i.created_date
+    : moment.parseZone(i.created_date);
 
-	i.campaign.expiration_date = moment.isMoment(i.campaign.expiration_date)
-		? i.campaign.expiration_date
-		: moment(i.campaign.expiration_date);
+  i.campaign.expiration_date = moment.isMoment(i.campaign.expiration_date)
+    ? i.campaign.expiration_date
+    : moment(i.campaign.expiration_date);
 
-	i.expired = i.campaign.expiration_date.isBefore(today);
-	i.cancelled = _.contains(CANCELLED_STATUSES, i.status);
-	i.historical = i.expired || i.cancelled;
-	i.active = !i.historical  && _.contains(ACTIVE_STATUSES, i.status);
+  i.expired = i.campaign.expiration_date.isBefore(today);
+  i.cancelled = _.contains(CANCELLED_STATUSES, i.status);
+  i.historical = i.expired || i.cancelled;
+  i.active = !i.historical && _.contains(ACTIVE_STATUSES, i.status);
 }
 
 module.exports = {
@@ -444,6 +444,13 @@ module.exports = {
       this.snippets = {
         investment: require('./templates/investment.pug'),
       };
+
+      //this is auth cookie for downloadable files
+      app.cookies.set('token', app.user.data.token, {
+        domain: '.' + app.config.domainUrl,
+        expires: 1000 * 60 * 60 * 24 * 30 * 12,
+        path: '/',
+      });
     },
 
     render() {
@@ -469,20 +476,15 @@ module.exports = {
           {
             mime: 'application/pdf',
             name: 'Subscription Agreement.pdf',
-            urls: [subscriptionAgreementLink],
+            urls: { origin: subscriptionAgreementLink },
           }, {
             mime: 'application/pdf',
             name: 'Participation Agreement.pdf',
-            urls: [participationAgreementLink],
+            urls: { origin: participationAgreementLink },
           },
         ],
       };
 
-      app.cookies.set('token', app.user.data.token, {
-        domain: '.' + app.config.domainUrl,
-        expires: YEAR,
-        path: '/',
-      });
       app.helpers.fileList.show(data);
     },
 
@@ -536,7 +538,7 @@ module.exports = {
 
       api.makeRequest(app.config.investmentServer + '/' + id + '/decline', 'PUT').done((response) => {
         investment.status = FINANCIAL_INFORMATION.INVESTMENT_STATUS.CancelledByUser;
-        helpers.campaign.initInvestment(investment);
+        initInvestment(investment);
 
         $target.closest('.one_table').remove();
 
