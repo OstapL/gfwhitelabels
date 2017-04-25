@@ -21,6 +21,12 @@ section.create-company.container.m-b-85
           value: values.name,
           })
 
+        -
+          pug_html += app.fields.fieldChoiceLabel('tour', _.extend({
+              'empty': { '': 'Choose Hot Tour' },
+              'value': values.tour,
+            }, fields.tour));
+
         - 
           pug_html += app.fields.textLabel('short_name', {
           class1: 'col-xl-3 col-lg-12 p-t-0 text-lg-left text-xl-right m-b-0 m-b-lg-1', 

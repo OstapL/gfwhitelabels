@@ -38,6 +38,7 @@ module.exports = {
       this.fields.industry.validate.choices = require('consts/raisecapital/industry.json');
       this.fields.founding_state.validate.choices = require('consts/usaStatesChoices.json');
       this.fields.corporate_structure.validate.choices = require('consts/raisecapital/corporate_structure.json');
+      this.fields.tour.validate.choices = require('consts/raisecapital/tour.json').TOUR;
 
       this.labels = {
         name: 'Legal Name of Company',

@@ -19,9 +19,14 @@ class Campaign {
     // data - file data
     //
 
-    this.data = data;
+    this.data = data || {};
     this.schema = schema;
-    this.url = url || app.config.raiseCapitalServer + '/campaign/' + data.id;
+
+    if(data && data.id) {
+      this.url = url || app.config.raiseCapitalServer + '/campaign/' + data.id;
+    } else {
+      this.url = url || app.config.raiseCapitalServer + '/campaign';
+    }
 
 		this.data['investor_presentation_file_id'] = new File(
 			this.url,
