@@ -459,7 +459,6 @@ module.exports = {
         label: 'Photo',
         help_text: 'A minimum size of 300x300 is recommended.',
         onSaved: (data) => {
-          debugger;
           // delete newData.urlRoot;
           api.makeRequest(this.urlRoot, 'PUT', this.model.toJSON());
         },

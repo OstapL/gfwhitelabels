@@ -39,7 +39,7 @@ class FileElement {
           document.createRange().createContextualFragment(this.resultHTML),
           this.element
         );
-      } else {
+      } else if(container != 'REPLACE') {
         container.innerHTML = this.resultHTML;
       }
     }

@@ -81,29 +81,24 @@ class ImageDropzone extends file.FileDropzone {
   }
 
   success(file, data) {
-    const reorgData = {};
-    reorgData.id = data[2].id;
-    reorgData.name = data[2].name;
-    reorgData.mime = data[2].mime;
-    reorgData.site_id = app.sites.getId(),
-    reorgData.urls = {};
-    reorgData.urls.origin = this.fileElement.fixUrl(data[2].urls[0]);
-
-    if(data[1].name.indexOf('_c') != -1) {
-      reorgData.urls.main = this.fileElement.fixUrl(data[1].urls[0]);
-    } else if(data[2] && data[2].name.indexOf('_c') != -1) {
-      reorgData.urls.main = this.fileElement.fixUrl(data[2].urls[0]);
-    }
-
-    if(this.cropperOptions.resize) {
-      var cropName = this.cropperOptions.resize.width + 'x' + this.cropperOptions.resize.height;
-      if(data[2] && data[2].name.indexOf('_r') != -1) {
-        reorgData.urls[cropName] = this.fileElement.fixUrl(data[2].urls[0]);
-      } else if(data[2] && data[2].name.indexOf('_r') != -1) {
-        reorgData.urls[cropName] = this.fileElement.fixUrl(data[2].urls[0]);
-      }
+    const reorgData = {
+      urls: {}
     };
+    data.forEach((image) => {
+      if(image.name.indexOf('_c_') != -1) {
+        reorgData.urls.main = this.fileElement.fixUrl(image.urls[0]);
+      } else if(image.name.indexOf('_r_') != -1) {
+        var cropName = this.cropperOptions.resize.width + 'x' + this.cropperOptions.resize.height;
+        reorgData.urls[cropName] = this.fileElement.fixUrl(image.urls[0]);
+      } else {
+        reorgData.id = image.id;
+        reorgData.name = image.name;
+        reorgData.mime = image.mime;
+        reorgData.urls.origin = this.fileElement.fixUrl(image.urls[0]);
+      }
+    });
 
+    reorgData.site_id = app.sites.getId(),
     this.fileElement.update(reorgData);
     // this.model[this.fileElement.fieldName] = reorgData.id;
     this.model[this.fileElement.fieldDataName] = reorgData;

@@ -64,6 +64,7 @@ class User {
     this.next = null;
 
     if(data.hasOwnProperty('token') && data.hasOwnProperty('info')) {
+      this.data = data;
       this.updateLocalStorage();
 
       app.cookies.set('token', data.token, {
