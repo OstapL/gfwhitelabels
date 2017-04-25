@@ -441,6 +441,13 @@ module.exports = {
       this.snippets = {
         investment: require('./templates/investment.pug'),
       };
+
+      //this is auth cookie for downloadable files
+      app.cookies.set('token', app.user.data.token, {
+        domain: '.' + app.config.domainUrl,
+        expires: 1000 * 60 * 60 * 24 * 30 * 12,
+        path: '/',
+      });
     },
 
     render() {
@@ -466,20 +473,15 @@ module.exports = {
           {
             mime: 'application/pdf',
             name: 'Subscription Agreement.pdf',
-            urls: [subscriptionAgreementLink],
+            urls: { origin: subscriptionAgreementLink },
           }, {
             mime: 'application/pdf',
             name: 'Participation Agreement.pdf',
-            urls: [participationAgreementLink],
+            urls: { origin: participationAgreementLink },
           },
         ],
       };
 
-      app.cookies.set('token', app.user.data.token, {
-        domain: '.' + app.config.domainUrl,
-        expires: YEAR,
-        path: '/',
-      });
       app.helpers.fileList.show(data);
     },
 

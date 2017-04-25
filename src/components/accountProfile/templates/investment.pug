@@ -43,15 +43,9 @@ div(data-investmentid=id).one_table
         span.dark_grey #{perk}
   .right_buttons
     h4 Downloadable Files
-    -
-      var investor_presentation = campaign.investor_presentation_data;
-      var presentationUrl = investor_presentation && investor_presentation.length ?
-            investor_presentation[0].urls && investor_presentation[0].urls.length ? 
-            investor_presentation[0].urls[0] : '#'
-            :'#';
     ul
       li
-        a(href=presentationUrl target="_blank").link-3 Investor Presentation
+        a(href=campaign.getInvestorPresentationURL() target="_blank").link-3 Investor Presentation
       li
         a(href=company_id data-id=id target="_blank").link-3.formc-docs-link Form C
       li
