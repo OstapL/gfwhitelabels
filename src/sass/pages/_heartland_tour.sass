@@ -61,7 +61,7 @@
       text-align: center
       margin-top: rem(50)
       img
-        max-width: 640px
+        max-width: 100%
         opacity: 0.3
       .text-wrap
         position: absolute
@@ -71,6 +71,11 @@
         -webkit-transform: translate(-50%, -50%)
         transform: translate(-50%, -50%)
         width: 100%
+        h1
+          @media only screen and (max-width : 768px)
+            font-size: rem(24)
+          @media only screen and (max-width : 360px)
+            font-size: rem(18)
     .small
       font-size: rem(12)
       color: $small-text
@@ -85,6 +90,8 @@
       background-size: cover
       h1
         color: $white
+        @media only screen and (max-width : 360px)
+          font-size: rem(24)
       .opasity-block
         &:before
           background: rgba(17, 17, 17, 0.2)
