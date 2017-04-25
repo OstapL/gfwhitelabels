@@ -2,8 +2,14 @@ const Image = require('models/image.js');
 const YEAR = 1000 * 60 * 60 * 24 * 30 * 12;
 
 const fixImageData = (data) => {
-  if (data.image_data == null ||  !Array.isArray(data.image_data)) {
-    return {};
+  if (data.image_data == null ||
+      !Array.isArray(data.image_data)) {
+    return data;
+  }
+
+  if(data.image_data.length == 0) {
+    data.image_data = {};
+    return data;
   }
 
   let originData = data.image_data[0];
