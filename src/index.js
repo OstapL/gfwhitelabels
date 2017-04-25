@@ -228,7 +228,7 @@ $(document).ready(function () {
     }
 
     //process click on menu item
-    if (href.startsWith('#')) {
+    if (href && href.startsWith('#')) {
       let $target = $(event.currentTarget);
       let $activeItem = $target.closest('li');
       let $menuItems = $activeItem.siblings();
