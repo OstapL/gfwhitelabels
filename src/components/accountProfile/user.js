@@ -58,6 +58,21 @@ class User {
     return this.data.info || [];
   }
 
+  updateImage(imageData) {
+    this.data.image_data = imageData;
+    this.data.image_image_id = new Image(
+      app.config.authServer + '/rest-auth/data',
+      this.data.image_data
+    );
+    document.getElementById('user-thumbnail').src = this.data.image_image_id.getUrl('50x50');
+    this.updateLocalStorage();
+  }
+
+  updateLocalStorage() {
+      localStorage.setItem('token', this.data.token);
+      localStorage.setItem('user', JSON.stringify(this.data));
+  }
+
   setData(data, next) {
 
     next = next || this.next || app.getParams().next || '/';
@@ -65,8 +80,7 @@ class User {
     this.next = null;
 
     if(data.hasOwnProperty('token') && data.hasOwnProperty('info')) {
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('user', JSON.stringify(data));
+      this.updateLocalStorage();
 
       app.cookies.set('token', data.token, {
         domain: '.' + app.config.domainUrl,

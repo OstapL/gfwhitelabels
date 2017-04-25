@@ -27,7 +27,7 @@ class ImageElement extends file.FileElement {
           this,
           this,
           this.options,
-        ).render($(this.element).parents('.dropzoneContainer')[0].parentElement);
+        ).render(this.element);
         return false;
       });
     });
@@ -88,11 +88,20 @@ class ImageDropzone extends file.FileDropzone {
     reorgData.site_id = app.sites.getId(),
     reorgData.urls = {};
     reorgData.urls.origin = this.fileElement.fixUrl(data[2].urls[0]);
-    reorgData.urls.main = this.fileElement.fixUrl(data[1].urls[0]);
+
+    if(data[1].name.indexOf('_c') != -1) {
+      reorgData.urls.main = this.fileElement.fixUrl(data[1].urls[0]);
+    } else if(data[2] && data[2].name.indexOf('_c') != -1) {
+      reorgData.urls.main = this.fileElement.fixUrl(data[2].urls[0]);
+    }
 
     if(this.cropperOptions.resize) {
       var cropName = this.cropperOptions.resize.width + 'x' + this.cropperOptions.resize.height;
-      reorgData.urls[cropName] = this.fileElement.fixUrl(data[0].urls[0]);
+      if(data[2] && data[2].name.indexOf('_r') != -1) {
+        reorgData.urls[cropName] = this.fileElement.fixUrl(data[2].urls[0]);
+      } else if(data[2] && data[2].name.indexOf('_r') != -1) {
+        reorgData.urls[cropName] = this.fileElement.fixUrl(data[2].urls[0]);
+      }
     };
 
     this.fileElement.update(reorgData);
@@ -312,13 +321,11 @@ class CropperDropzone {
           this.file.file.name = this.element.querySelector('#name').value;
         }
 
-        this.file.save().done(() => {
-          if(this.options.resize) { 
-            this.file.element.querySelector('img').src = this.file.file.getUrl(thumbSize);
-          } else {
-            this.file.element.querySelector('img').src = this.file.file.getUrl('main');
-          }
+        this.file.update(this.file.file).done(() => {
           this.$modal.modal('hide');
+          setTimeout(() => {
+            this.$modal.remove();
+          }, 400);
         });
       });
 
