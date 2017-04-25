@@ -29,6 +29,12 @@ class App {
   start() {
     this.user.loadWithPromise().then(() => {
 
+      if (app.config.googleTagID) {
+        this.initFacebookPixel();
+        this.initYandexMetrica();
+        this.initGoogleAnalytics();
+      }
+
       if(app.config.googleTagIdGeneral || app.config.googleTagId) {
        this.initFacebookPixel();
       }
@@ -55,6 +61,31 @@ class App {
         el: '#menuProfile',
       });
       this.profile.render();
+    });
+  }
+
+  initGoogleAnalytics() {
+    safeDataLayerPush({
+      event: 'google-analytics-init',
+      gaID: app.config.googleAnalyticsID,
+      gaIDGeneral: app.config.googleAnalyticsIDGeneral,
+    });
+  }
+
+  initYandexMetrica() {
+    safeDataLayerPush({
+      event: 'yandex-metrica-init',
+      yandexMetricaID: app.config.yandexMetricaID,
+    })
+  }
+
+  emitYandexMetricaEvent() {
+    safeDataLayerPush({
+      event: 'yandex-metrica-hit',
+      eventCategory: '',
+      eventAction: '',
+      eventLabel: '',
+      eventValue: '',
     });
   }
 
