@@ -55,6 +55,7 @@ module.exports = {
 
     initialize(options) {
       this.activeTab = options.activeTab;
+      this.model = options.model.data;
 
       this.fields = options.fields;
 
@@ -239,11 +240,9 @@ module.exports = {
 
     onImageCrop(name) {
       name = name || 'image_image_id';
-      let url = this.model.data.image_image_id.getUrl();
+      let url = this.model.image_image_id.getUrl();
       if (url) {
-        $('.user-info-name > span')
-          .empty()
-          .append('<img src="' + url + '" id="user-thumbnail"' + ' class="img-fluid img-circle">');
+        document.getElementById('user-thumbnail').src = url;
       }
 
     },
