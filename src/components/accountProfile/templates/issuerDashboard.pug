@@ -18,7 +18,6 @@ section.issuer-dashbord-top
           .timer_day #{campaign.daysLeft(company.approved_date)} Days Left
         .share-block.d-inline-block.share
           | !{ socialDirective.render(directiveKey, infoProvider) }
-
       .col-md-2.col-sm-6.col-xs-6
         a(href="").dashboard-stat
           .visual
@@ -65,17 +64,15 @@ section.issuer-dashbord-top
 
       .col-md-7.col-sm-10.p-r-0.col-xs-10.hidden-xs-down
         .tpl-progress
-          - 
-            var percentage_raised = campaign.daysLeftPercentage(company.approved_date);
-            if(percentage_raised > 100) 
-              percentage_raised = 100;
+          -
+            var daysPassedPercents = campaign.daysPassedPercentage();
           progress(
-            value=percentage_raised
-            max="100").progress.big_prog #{ percentage_raised }%
+            value=daysPassedPercents
+            max="100").progress.big_prog #{ daysPassedPercents }%
           span(
-            style="width:" + percentage_raised + "%").circle_progress
+            style="width:" + daysPassedPercents + "%").circle_progress
             i.fa.fa-circle-o
-          span(style="left:" + percentage_raised + "%").text_position
+          span(style="left:" + daysPassedPercents + "%").text_position
             - var now = new Date();
             .font-weight-bold
               | #{now.toLocaleString('en-US', { month: "short" })} #{ now.getDate() }
