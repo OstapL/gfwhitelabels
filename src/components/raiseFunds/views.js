@@ -38,8 +38,10 @@ module.exports = {
       this.fields.industry.validate.choices = require('consts/raisecapital/industry.json');
       this.fields.founding_state.validate.choices = require('consts/usaStatesChoices.json');
       this.fields.corporate_structure.validate.choices = require('consts/raisecapital/corporate_structure.json');
+      this.fields.tour.validate.choices = require('consts/raisecapital/tour.json').TOUR;
 
       this.labels = {
+        tour: 'Would You Like to Participate in The <a class="link-2" href="/pg/heartland-tour">Heartland Tour</a>',
         name: 'Legal Name of Company',
         short_name: 'Doing Business as Another Name?',
         industry: 'Industry',
@@ -331,7 +333,7 @@ module.exports = {
 
       this.fields.gallery_group_id = _.extend(this.fields.gallery_group_id, {
         title: 'Drop your photo(s) here or click to upload',
-        help_text: 'We recommend uploading 6 images (minimum size of 530х317 is recommended) that represent your service of business. These images will be displayed in a gallery format.',
+        help_text: 'We recommend uploading 6 images (minimum size of 1024x612 is recommended) that represent your service of business. These images will be displayed in a gallery format.',
         crop: {
           control: {
             aspectRatio: 1024 / 612,
@@ -456,7 +458,12 @@ module.exports = {
       let TeamMember = require('models/teammembercampaign.js');
       this.fields = options.fields.campaign.team_members.schema;
       this.fields.photo_image_id = _.extend(this.fields.photo_image_id, {
+        label: 'Photo',
         help_text: 'A minimum size of 300x300 is recommended.',
+        onSaved: (data) => {
+          // delete newData.urlRoot;
+          api.makeRequest(this.urlRoot, 'PUT', this.model.toJSON());
+        },
         crop: {
           control:  {
             aspectRatio: 1 / 1,

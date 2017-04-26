@@ -8,9 +8,13 @@ class Company {
     // data - file data
     //
 
-    this.data = data;
+    this.data = data || {};
     this.schema = schema;
-    this.url = url || app.config.raiseCapitalServer + '/company/' + data.id;
+    if(data && data.id) {
+      this.url = url || app.config.raiseCapitalServer + '/company/' + data.id;
+    } else {
+      this.url = url || app.config.raiseCapitalServer + '/company';
+    }
 
     if(this.data.campaign) {
       this.data.campaign = new app.models.Campaign(this.data.campaign);

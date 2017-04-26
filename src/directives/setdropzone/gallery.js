@@ -94,16 +94,24 @@ class GalleryDropzone extends imageDropzone.ImageDropzone {
   }
 
   success(file, data) {
-    const reorgData = data[2];
-    reorgData.urls = {
-      origin: this.galleryElement.fixUrl(data[2].urls[0])
+    const reorgData = {
+      urls: {}
     };
-    reorgData.urls.main = this.galleryElement.fixUrl(data[1].urls[0]);
-    if(this.cropperOptions.resize) {
-      reorgData.urls[
-        this.cropperOptions.resize.width + 'x' + this.cropperOptions.resize.height
-      ] = this.galleryElement.fixUrl(data[0].urls[0]);
-    };
+
+    data.forEach((image) => {
+      if(image.name.indexOf('_c_') != -1) {
+        reorgData.urls.main = this.fileElement.fixUrl(image.urls[0]);
+      } else if(image.name.indexOf('_r_') != -1) {
+        var cropName = this.cropperOptions.resize.width + 'x' + this.cropperOptions.resize.height;
+        reorgData.urls[cropName] = this.fileElement.fixUrl(image.urls[0]);
+      } else {
+        reorgData.id = image.id;
+        reorgData.name = image.name;
+        reorgData.mime = image.mime;
+        reorgData.urls.origin = this.fileElement.fixUrl(image.urls[0]);
+      }
+    });
+
     reorgData.site_id = app.sites.getId();
     this.galleryElement.file.data.push(reorgData);
     let fileObj = new imageDropzone.ImageElement(
@@ -125,7 +133,7 @@ class GalleryDropzone extends imageDropzone.ImageDropzone {
         this,
         fileObj,
         this.cropperOptions
-      ).render(this.element.parentElement.parentElement.parentElement);
+      ).render($(this.element).closest('.dropzone')[0]);
     });
   }
 }

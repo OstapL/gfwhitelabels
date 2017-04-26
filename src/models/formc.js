@@ -11,9 +11,13 @@ class Formc {
     // data - file data
     //
 
-    this.data = data;
+    this.data = data || {};
     this.schema = schema;
-    this.url = url || app.config.formcServer + '/' + data.id;
+    if(data && data.id) {
+      this.url = url || app.config.formcServer + '/' + data.id;
+    } else {
+      this.url = url || app.config.formcServer;
+    }
 
     this.data.business_plan_file_id = new File(
       this.url,

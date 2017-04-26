@@ -27,7 +27,7 @@ class ImageElement extends file.FileElement {
           this,
           this,
           this.options,
-        ).render($(this.element).parents('.dropzoneContainer')[0].parentElement);
+        ).render($(this.element).closest('.dropzone')[0]);
         return false;
       });
     });
@@ -81,20 +81,24 @@ class ImageDropzone extends file.FileDropzone {
   }
 
   success(file, data) {
-    const reorgData = {};
-    reorgData.id = data[2].id;
-    reorgData.name = data[2].name;
-    reorgData.mime = data[2].mime;
-    reorgData.site_id = app.sites.getId(),
-    reorgData.urls = {};
-    reorgData.urls.origin = this.fileElement.fixUrl(data[2].urls[0]);
-    reorgData.urls.main = this.fileElement.fixUrl(data[1].urls[0]);
-
-    if(this.cropperOptions.resize) {
-      var cropName = this.cropperOptions.resize.width + 'x' + this.cropperOptions.resize.height;
-      reorgData.urls[cropName] = this.fileElement.fixUrl(data[0].urls[0]);
+    const reorgData = {
+      urls: {}
     };
+    data.forEach((image) => {
+      if(image.name.indexOf('_c_') != -1) {
+        reorgData.urls.main = this.fileElement.fixUrl(image.urls[0]);
+      } else if(image.name.indexOf('_r_') != -1) {
+        var cropName = this.cropperOptions.resize.width + 'x' + this.cropperOptions.resize.height;
+        reorgData.urls[cropName] = this.fileElement.fixUrl(image.urls[0]);
+      } else {
+        reorgData.id = image.id;
+        reorgData.name = image.name;
+        reorgData.mime = image.mime;
+        reorgData.urls.origin = this.fileElement.fixUrl(image.urls[0]);
+      }
+    });
 
+    reorgData.site_id = app.sites.getId(),
     this.fileElement.update(reorgData);
     // this.model[this.fileElement.fieldName] = reorgData.id;
     this.model[this.fileElement.fieldDataName] = reorgData;
@@ -102,7 +106,7 @@ class ImageDropzone extends file.FileDropzone {
       this,
       this.fileElement,
       this.cropperOptions
-    ).render(this.element);
+    ).render($(this.element).closest('.dropzone')[0]);
   }
 }
 
@@ -312,13 +316,11 @@ class CropperDropzone {
           this.file.file.name = this.element.querySelector('#name').value;
         }
 
-        this.file.save().done(() => {
-          if(this.options.resize) { 
-            this.file.element.querySelector('img').src = this.file.file.getUrl(thumbSize);
-          } else {
-            this.file.element.querySelector('img').src = this.file.file.getUrl('main');
-          }
+        this.file.update(this.file.file).done(() => {
           this.$modal.modal('hide');
+          setTimeout(() => {
+            this.$modal.remove();
+          }, 400);
         });
       });
 

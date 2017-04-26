@@ -126,7 +126,7 @@ if app.getParams().preview == '1'
 
   section.edit-campaign.hidden-sm-down
     .edit-campaign-wrap
-      if values.campaign.list_image_image_id
+      // if values.campaign.list_image_image_id
         img(src=values.campaign.list_image_image_id.getUrl('350x209') style="width: 305px" class="m-b-2")
       .row
         a(href=app.getParams().previous).btn.btn-secondary.text-uppercase.m-b-2 Edit campaign
@@ -286,9 +286,9 @@ section
                           data-provider=videoInfo.provider
                           data-url=videoInfo.url
                           data-id=videoInfo.id
-                        ).small-icon.link-6.m-t-0.show-video-modal
+                        ).small-icon.link-6.m-y-0.show-video-modal
                           i.fa.fa-play-circle-o
-                    h3.card-text.text-lg-center #{ v.headline }
+                        h3.card-text.text-lg-center #{ v.headline }
 
           //-else
             .col-xl-4.col-md-6.col-xs-12.col-sm-12.p-xs-0
@@ -394,7 +394,7 @@ section
                           .text-block
                             p 
                               em “#{ v.headline }”
-                            span -
+                            span - 
                             
                             a(href=v.link target="_blank").link-3 #{ v.name ? v.name : 'Read more' }
 

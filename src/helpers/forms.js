@@ -108,13 +108,13 @@ module.exports = {
 
     // if view already have some data - extend that info
     if(this.hasOwnProperty('model') && Object.keys(this.model).length > 0 && !this.doNotExtendModel && method != 'PATCH') {
-      newData = _.extend({}, this.model.toJSON(), newData);
+      newData = _.extend({}, this.model.toJSON ? this.model.toJSON() : this.model, newData);
     }
 
     // for PATCH method we will send only difference
     if(method == 'PATCH') {
       let patchData = {};
-      let d = deepDiff(newData, this.model.toJSON());
+      let d = deepDiff(newData, this.model.toJSON ? this.model.toJSON() : this.model);
       _(d).forEach((el, i) => {
         if(el.kind == 'E' || el.kind == 'A') {
           patchData[el.path[0]] = newData[el.path[0]];
