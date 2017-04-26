@@ -442,8 +442,8 @@ module.exports = {
       });
 
       this.snippets = {
-        investment: require('./templates/investment.pug'),
-        creditSection: require('./templates/creditSection.pug'),
+        investment: require('./templates/snippets/investment.pug'),
+        creditSection: require('./templates/snippets/creditSection.pug'),
       };
 
       //this is auth cookie for downloadable files
