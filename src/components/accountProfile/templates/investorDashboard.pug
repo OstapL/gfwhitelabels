@@ -1,32 +1,12 @@
 
 -
   pug_html += app.breadcrumbs('investor dashboard', '', [ ['Home', '/'], ['investor dashboard', ''],]);
-  console.log(app.user.data);
+  pug_html += snippets.creditSection();
 
-section.credit-investor
-  .container
-    if app.user.get('credit') > 0 && app.user.get('days_left') > 0
-      .row
-        .col-xl-12
-          .col-xl-4.p-x-0
-            .profile-type-user.credit-all.m-t-2
-              h2.text-uppercase.m-t-0 your credit
-                .small-text Credit valid for #{ app.user.get('days_left') } days.
-              .profile-comission
-                .wrap
-                  h2.m-t-0.m-b-0 $#{ app.user.get('credit') }
-
-          .col-xl-2.p-x-0
-            .text-xs-left
-              a(href="/companies").btn.btn-primary.m-t-2 invest
-      .row
-        .col-xl-12
-          hr.m-t-1.m-b-3
-    .rwo
-      .col-xl-12.p-x-0
-        h2.text-uppercase.m-t-0 Your investments
 section.investor-dashboard
   .container
+    .col-xl-12.p-x-0
+      h2.text-uppercase.m-t-0 Your investments
     .col-lg-12
       if (!investments && !investments.length)
         div(role="alert").alert.alert-warning

@@ -84,11 +84,19 @@ class Campaign {
     return moment(this.expiration_date).diff(moment(), 'days');
   }
 
-  daysLeftPercentage(approved_date) {
-    let daysToExpirate = moment(this.expiration_date).diff(moment(), 'days');
-    return Math.round(
-      (moment(this.expiration_date).diff(approved_date, 'days') - daysToExpirate) * 100 / daysToExpirate
-    );
+  daysPassedPercentage(approved_date) {
+    let now = moment();
+    let expirationDate = moment.isMoment(this.expiration_date)
+      ? this.expiration_data
+      : moment(this.expiration_date);
+    let approvedDate = moment.isMoment(approved_date)
+      ? approved_date
+      : moment.utc(approved_date);
+
+    let daysPassedPercents = Math.round(now.diff(approvedDate, 'days') / expirationDate.diff(approvedDate) * 100);
+    if (daysPassedPercents < 0) daysPassedPercents = 0;
+    if (daysPassedPercents > 100) daysPassedPercents = 100;
+    return daysPassedPercents;
   }
 
   percentage(n, total) {

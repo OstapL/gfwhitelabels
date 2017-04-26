@@ -6,7 +6,8 @@ const today = moment.utc();
 // ToDo
 // Refactor, this consts shouden't be here
 const FINANCIAL_INFORMATION = require('consts/financialInformation.json');
-const FINANCIAL_INFO = require('consts/financialInformation.json');                
+const FINANCIAL_INFO = require('consts/financialInformation.json');
+const FEES = require('consts/raisecapital/companyFees.json');
 const ACTIVE_STATUSES = FINANCIAL_INFO.INVESTMENT_STATUS_ACTIVE;                   
 const CANCELLED_STATUSES = FINANCIAL_INFO.INVESTMENT_STATUS_CANCELLED;   
 
@@ -441,7 +442,8 @@ module.exports = {
       });
 
       this.snippets = {
-        investment: require('./templates/investment.pug'),
+        investment: require('./templates/snippets/investment.pug'),
+        creditSection: require('./templates/snippets/creditSection.pug'),
       };
 
       //this is auth cookie for downloadable files
@@ -515,6 +517,19 @@ module.exports = {
         i.campaign.amount_raised -= investment.amount;
         this.$('[data-investmentid=' + i.id + ']').replaceWith(this.snippets.investment(i));
       });
+
+      //update available credit section
+      if (app.user.get('days_left') > 0 && investment.comission < FEES.fees_to_investor) {
+        let credit = app.user.get('credit');
+        let creditReturn = FEES.fees_to_investor - investment.comission;
+        credit += creditReturn;
+        app.user.set('credit', credit)
+        let $creditSection = this.$('.credit-investor');
+        if ($creditSection.length)
+          $creditSection.html(this.snippets.creditSection());
+        else
+          this.$('.investor-dashboard').before(this.snippets.creditSection());
+      }
     },
 
     //TODO: sort investments in dom on historical tab after cancel investment
