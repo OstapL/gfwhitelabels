@@ -460,7 +460,7 @@ module.exports = {
       let TeamMember = require('models/teammembercampaign.js');
       this.fields = options.fields.campaign.team_members.schema;
       this.fields.photo_image_id = _.extend(this.fields.photo_image_id, {
-        label: 'Photo',
+        label: 'Profile Picture',
         help_text: 'A minimum size of 300x300 is recommended.',
         onSaved: (data) => {
           // delete newData.urlRoot;

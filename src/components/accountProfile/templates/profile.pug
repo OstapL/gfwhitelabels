@@ -13,7 +13,7 @@
       form(method="post" action="").form.form-section
         h4.m-t-0.m-b-1.profile-user-name.text-xs-center.text-uppercase #{user.first_name + ' ' + user.last_name}
         -
-          pug_html += new imageDropzone.ImageDropzone({model: user}, 
+          pug_html += new imageDropzone.ImageDropzone(view, 
             'image_image_id', 
             'image_data', 
             view.fields.image_image_id

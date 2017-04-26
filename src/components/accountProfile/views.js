@@ -208,7 +208,7 @@ module.exports = {
 
       this._initSliders();
 
-      this.onImageCrop();
+      // this.onImageCrop();
 
       this.cityStateArea = this.$('.js-city-state');
       this.cityField = this.$('.js-city');
