@@ -37,7 +37,11 @@ class File {
 
   getOriginal(fallback) {
     if(this.urls.hasOwnProperty('origin')) {
-      return app.sites[this.site_id] + this.urls.origin;
+      if(this.urls.origin.indexOf('http://') == -1 && this.urls.origin.indexOf('https://') == -1) {
+        return app.sites[this.site_id] + this.urls.origin;
+      } else {
+        return this.urls.origin;
+      }
     }
     return '/img/default/' + fallback;
   }

@@ -283,6 +283,9 @@ module.exports = {
         title: 'Drop your photo here or click to upload',
         help_text: 'This is the image that will appear at the top of your campaign. A minimum size of 1600x800 is recommended.',
         templateDropzone: 'headerMedia.pug',
+        onSaved: (data) => {
+          raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+        },
         crop: {
           control: {
             aspectRatio: 1600/800,
@@ -316,6 +319,9 @@ module.exports = {
       this.fields.list_image_image_id = _.extend(this.fields.list_image_image_id, {
         title: 'Drop your photo here or click to upload',
         help_text: ' This image entices investors to view your campaign. A minimum size of 350x209 is recommended.',
+        onSaved: (data) => {
+          raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+        },
         crop: {
           control:  {
             aspectRatio: 350 / 209,
@@ -336,6 +342,9 @@ module.exports = {
       this.fields.gallery_group_id = _.extend(this.fields.gallery_group_id, {
         title: 'Drop your photo(s) here or click to upload',
         help_text: 'We recommend uploading 6 images (minimum size of 1024x612 is recommended) that represent your service of business. These images will be displayed in a gallery format.',
+        onSaved: (data) => {
+          raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+        },
         crop: {
           control: {
             aspectRatio: 1024 / 612,
@@ -650,6 +659,13 @@ module.exports = {
       this.fields.length_days.validate.choices = require('consts/raisecapital/length_days.json');
       this.fields.security_type.validate.choices = require('consts/raisecapital/security_type_options.json');
       this.fields.valuation_determination.validate.choices = require('consts/raisecapital/valuation_determination_options.json');
+      this.fields.investor_presentation_file_id = _.extend(this.fields.investor_presentation_file_id, {
+        label: 'Upload an Investor Presentation',
+        onSaved: (data) => {
+          raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+        },
+      });
+
       this.labels = {
         minimum_raise: 'Our Minimum Total Raise is',
         maximum_raise: 'Our Maximum Total Raise is',
