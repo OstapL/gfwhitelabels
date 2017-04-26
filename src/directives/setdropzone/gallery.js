@@ -133,7 +133,7 @@ class GalleryDropzone extends imageDropzone.ImageDropzone {
         this,
         fileObj,
         this.cropperOptions
-      ).render(this.element.parentElement.parentElement.parentElement);
+      ).render($(this.element).closest('.dropzone')[0]);
     });
   }
 }

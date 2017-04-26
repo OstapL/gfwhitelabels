@@ -27,7 +27,7 @@ class ImageElement extends file.FileElement {
           this,
           this,
           this.options,
-        ).render(this.element);
+        ).render($(this.element).closest('.dropzone')[0]);
         return false;
       });
     });
@@ -106,7 +106,7 @@ class ImageDropzone extends file.FileDropzone {
       this,
       this.fileElement,
       this.cropperOptions
-    ).render(this.element);
+    ).render($(this.element).closest('.dropzone')[0]);
   }
 }
 

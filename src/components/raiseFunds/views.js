@@ -332,7 +332,7 @@ module.exports = {
 
       this.fields.gallery_group_id = _.extend(this.fields.gallery_group_id, {
         title: 'Drop your photo(s) here or click to upload',
-        help_text: 'We recommend uploading 6 images (minimum size of 530х317 is recommended) that represent your service of business. These images will be displayed in a gallery format.',
+        help_text: 'We recommend uploading 6 images (minimum size of 1024x612 is recommended) that represent your service of business. These images will be displayed in a gallery format.',
         crop: {
           control: {
             aspectRatio: 1024 / 612,
