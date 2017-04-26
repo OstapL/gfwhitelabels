@@ -430,13 +430,15 @@ module.exports = {
     }, app.helpers.confirmOnLeave.events, app.helpers.menu.events, app.helpers.dropzone.events),
     
     _success(data, postData, method) {
+      /*
       if (method == 'POST') {
         let TeamMember = require('models/teammembercampaign.js');
         this.campaign.team_members.members.push(
           new TeamMember.TeamMember(
             postData,
             this.campaign.schema.team_members.schema,
-            this.campaign.url + '/team-members/' + this.campaign.team_members.members.length)
+            this.campaign.url + '/team-members/' + this.campaign.team_members.members.length
+          )
         )
       }
       this.undelegateEvents();
@@ -444,8 +446,9 @@ module.exports = {
         '/campaign/' + this.campaign.id + '/team-members',
         {trigger: true, replace: false}
       );
+      */
+      window.location = '/campaign/' + this.campaign.id + '/team-members';
       return false;
-      // window.location = '/campaign/' + this.campaign.id + '/team-members';
     },
 
     preinitialize() {
