@@ -71,7 +71,9 @@ module.exports = {
     },
 
     fixSlug(e) {
-      e.currentTarget.value = e.currentTarget.value.replace(/\s+/g,'-').replace(/[^a-zA-Z0-9\-]/g,'').toLowerCase();
+      if(e.currentTarget.value) {
+        e.currentTarget.value = e.currentTarget.value.replace(/\s+/g,'-').replace(/[^a-zA-Z0-9\-]/g,'').toLowerCase();
+      }
     },
 
     updateLocation(e) {

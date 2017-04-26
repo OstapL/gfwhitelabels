@@ -13,7 +13,7 @@ section.issuer-dashbord-top
     .row
       .col-md-4
         .img_under_text
-          img(src=campaign.getMainImage() alt="")
+          img(src=campaign.list_image_image_id.getUrl() alt="")
           h2.text-uppercase.dosis.m-t-0 #{company.name}
           .timer_day #{campaign.daysLeft(company.approved_date)} Days Left
         .share-block.d-inline-block.share
