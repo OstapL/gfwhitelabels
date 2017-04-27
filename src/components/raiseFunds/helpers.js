@@ -12,17 +12,17 @@ let exports = {
           data.business_model.length > 5,
         'media':
           data.video != '' &&
-          data.header_image_image_id != null &&
-          data.list_image_image_id != null &&
+          data.header_image_image_id.id != null &&
+          data.list_image_image_id.id != null &&
           data.gallery_group_data.length > 0,
         'specifics': 
           data.minimum_raise >= 25000 &&
           data.maximum_raise <= 1000000 &&
           data.minimum_increment >= 100 &&
           data.length_days >= 60 &&
-          data.investor_presentation_file_id != null &&
+          data.investor_presentation_file_id.id != null &&
           isBoolean(data.security_type),
-        'team-members': data.team_members.length > 0,
+        'team-members': data.team_members.members.length > 0,
         'perks': data.perks.length > 0
       }
     } catch(e) {

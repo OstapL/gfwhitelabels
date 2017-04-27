@@ -6,6 +6,7 @@ const validation = require('components/validation/validation.js');
 
 const CalculatorView = require('./revenueShareCalculator.js');
 
+
 module.exports = {
   list: Backbone.View.extend({
     el: '#content',
@@ -14,6 +15,11 @@ module.exports = {
       'change select.orderby': 'orderby',
     },
     initialize(options) {
+      let dataClass = [];
+      options.collection.data.forEach((el) => {
+        dataClass.push(new app.models.Company(el));
+      });
+      options.collection.data = dataClass;
       this.collection = options.collection;
     },
 
@@ -56,6 +62,7 @@ module.exports = {
       'shown.bs.collapse #hidden-article-press' :'onArticlePressCollapse',
       'click .submit_form': 'submitCampaign',
       'click .company-documents': 'showDocumentsModal',
+      'click .show-video-modal': 'showVideoModal',
     },
 
     onCollapse (e) {
@@ -74,13 +81,6 @@ module.exports = {
     initialize(options) {
       $(document).off("scroll", this.onScrollListener);
       $(document).on("scroll", this.onScrollListener);
-      /*
-      this.model = new app.models.Company(
-        app.config.raiseCapitalServer + '/company/' + options.model.id,
-        options.model,
-        options.fields
-      );
-      */
 
       this.companyDocsData = {
         title: 'Financials',
@@ -90,8 +90,9 @@ module.exports = {
           : []
       };
 
-      if (this.model.ga_id)
-        app.createAnalyticsTracker(this.model.ga_id);
+      if (this.model.ga_id) {
+        app.emitCompanyAnalyticsEvent(this.model.ga_id);
+      }
     },
 
     submitCampaign(e) {
@@ -326,6 +327,103 @@ module.exports = {
     readMore(e) {
       e.preventDefault();
       $(e.target).parent().addClass('show-more-detail');
+    },
+
+    showVideoModal(e) {
+
+      const attachYoutubeEvents = ($modal, callback) => {
+        let player = null;
+        let eventSent = false;
+
+        $modal.on('show.bs.modal', () => {
+          player = new YT.Player('video-iframe-container', {
+            // videoId: videoInfo.id,
+            events: {
+              onReady(e){},
+              onStateChange(e) {
+                if (e.data == YT.PlayerState.PLAYING && !eventSent) {
+                  eventSent = true;
+                  callback();
+                }
+              },
+              onError(err) {
+                console.error(err);
+              },
+            }
+          });
+        });
+
+        $modal.on('hidden.bs.modal', () => {
+          player.stopVideo();
+          player.destroy();
+          player = null;
+          $modal.empty();
+          $modal.remove();
+        });
+      };
+
+      const attachVimeoEvents = ($modal, callback) => {
+        let player = null;
+        let eventSent = false;
+        $modal.on('show.bs.modal', () => {
+          player = new Vimeo.Player('video-iframe-container');
+          player.on('play', () => {
+            if (!eventSent) {
+              eventSent = true;
+              callback();
+            }
+          });
+        });
+        $modal.on('hidden.bs.modal', () => {
+          player.off('play');
+          player.unload();
+          player = null;
+          $modal.empty();
+          $modal.remove();
+        });
+      };
+
+      const loadPlayer = (provider) => {
+        if (provider == 'youtube')
+          return app.loadYoutubePlayerAPI();
+
+        if (provider == 'vimeo')
+          return app.loadVimeoPlayerAPI();
+      };
+
+      let $target = $(e.target).closest('a');
+
+      const provider = $target.data('provider');
+      const id = $target.data('id');
+      const url = $target.data('url');
+
+      loadPlayer(provider).then((Player) => {
+        let $content = $('#content');
+        const template = require('templates/videoModal.pug');
+
+        $content.append(template({
+          provider,
+          id,
+          url,
+        }));
+
+        const sendVideoPlayEvent = () => {
+          app.emitGoogleAnalyticsEvent('company-video-play', {
+            eventCategory: 'Video',
+            eventAction: 'play',
+            //eventLabel: 'Youtube Video',
+            eventValue: url,
+          });
+        };
+
+        let $modal = $('#videoModal');
+
+        if (provider === 'youtube')
+          attachYoutubeEvents($modal, sendVideoPlayEvent);
+        else if (provider === 'vimeo')
+          attachVimeoEvents($modal, sendVideoPlayEvent)
+        $modal.modal('show');
+      });
     },
 
   }),
@@ -570,6 +668,9 @@ module.exports = {
       }
 
       this.initMaxAllowedAmount();
+
+      if (this.model.ga_id)
+        app.emitCompanyAnalyticsEvent(this.model.ga_id);
     },
 
     render() {
@@ -1127,7 +1228,8 @@ module.exports = {
     template: require('./templates/thankYou.pug'),
     el: '#content',
     initialize(options) {
-      // this.render();
+      if (this.model.company.ga_id)
+        app.emitCompanyAnalyticsEvent(this.model.company.ga_id);
     },
 
     render() {

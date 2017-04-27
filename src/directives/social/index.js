@@ -43,36 +43,62 @@ class SocialNetworks {
         return resolve(false);
       }
 
-      IN.User.authorize(resolve);
+      IN.User.authorize(() => {
+        if (IN.User.isAuthorized())
+          return resolve();
+
+        IN.User.logout(() => {
+          IN.User.authorize(resolve);
+        });
+      });
     });
   }
 
   shareLinkedin (e) {
-    e.preventDefault();
-
+    let retryWithLogout = false;
     let $linksContainer = $(e.target).closest('.social-links-container');
     let key = $linksContainer.data('key');
 
-    const data = this.data[key].linkedin();
+    let self = this;
 
-    this.loginLinkedin().then((res) => {
-      if (res === false) {
-        return;
-      }
+    function share() {
 
-      let message = this.data[key].confirmationMessage('LinkedIn');
+      const data = self.data[key].linkedin();
+      self.loginLinkedin().then((res) => {
+        if (res === false) {
+          return;
+        }
 
-      this.confirm($linksContainer, { title: 'confirm', message: message }).then((res) => {
-        if (res)
-          IN.API.Raw('/people/~/shares?format=json')
-            .method('POST')
-            .body(JSON.stringify(data))
-            .result(() => {alert('You\'ve just shared the page to LinkedIn')})
-            .error( console.log.bind(console, 'linkedin error: ') );
+        let message = self.data[key].confirmationMessage('LinkedIn');
+
+        self.confirm($linksContainer, { title: 'confirm', message: message }).then((res) => {
+          if (res)
+            IN.API.Raw('/people/~/shares?format=json')
+              .method('POST')
+              .body(JSON.stringify(data))
+              .result(() => {alert('You\'ve just shared the page to LinkedIn')})
+              .error((err) => {
+                if (retryWithLogout) {
+                  console.error('LinkedIn error: ');
+                  console.dir(err);
+                  return;
+                }
+
+                IN.User.logout(() => {
+                  share();
+                  retryWithLogout = true;
+                });
+
+              });
+        });
+      }).catch((err) => {
+        console.log(err);
       });
-    }).catch((err) => {
-      console.log(err);
-    });
+    };
+
+    e.preventDefault();
+
+    share();
   }
 
   socialPopup(e) {
