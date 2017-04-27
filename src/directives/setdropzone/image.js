@@ -286,17 +286,17 @@ class CropperDropzone {
       cropData.x = cropData.x < 0 ? 0 : cropData.x;
       cropData.y = cropData.y < 0 ? 0 : cropData.y;
 
-      cropData.width = cropData.width > maxWidth ? maxWidth : cropData.width;
-      cropData.height = cropData.height > maxHeight ? maxHeight : cropData.height;
-      cropData.name = this.options.auto.width + 'x' + this.options.auto.height + '.' + this.file.file.getExtention(),
+      cropData.width = cropData.width + cropData.x > maxWidth ? maxWidth-cropData.x : cropData.width;
+      cropData.height = cropData.height + cropData.y > maxHeight ? maxHeight-cropData.y : cropData.height;
+      cropData.name = this.options.auto.width + 'x' + this.options.auto.height + '.' + this.file.file.getExtention();
 
       data.file_name = cropData.width + 'x' + cropData.height + '.' + this.file.file.getExtention();
       data.id = this.file.file.id;
       data.crop = cropData;
       data.resize = {
         name: this.options.resize.width + 'x' + this.options.resize.height + '.' + this.file.file.getExtention(),
-        width: this.options.resize.width - 1,
-        height: this.options.resize.height - 1,
+        width: this.options.resize.width,
+        height: this.options.resize.height,
       };
 
       api.makeRequest(

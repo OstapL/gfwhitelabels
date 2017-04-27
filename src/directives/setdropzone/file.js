@@ -67,7 +67,13 @@ class FileElement {
         this.delete();
       });
     });
-    
+    this.element.querySelectorAll('.link-file').forEach((item) => {
+      item.addEventListener("click", (event) => {
+        // event.preventDefault();
+        event.stopPropagation();
+        // return false;
+      });
+    });
   }
 
   getTemplate() {
