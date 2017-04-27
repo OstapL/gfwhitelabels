@@ -1,12 +1,14 @@
-- var config = require('./config.js');
+-
+  var config = require('./config.js');
+  var metricaID = config.yandexMetricaId;
 
 if config.yandexMetricaId
   script(type="text/javascript").
     (function (d, w, c) {
       (w[c] = w[c] || []).push(function() {
         try {
-          w.yaCounter!{ metricaId } = new Ya.Metrika({
-            id: !{ metricaId },
+          w.yaCounter!{ metricaID } = new Ya.Metrika({
+            id: !{ metricaID },
             clickmap:true,
             trackLinks:true,
             accurateTrackBounce:true,
@@ -30,6 +32,6 @@ if config.yandexMetricaId
   noscript
     div
       img(
-        src="https://mc.yandex.ru/watch/" + metricaId
+        src="https://mc.yandex.ru/watch/" + metricaID
         style="position:absolute; left:-9999px;" alt=""
       )
