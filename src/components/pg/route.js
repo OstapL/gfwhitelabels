@@ -26,6 +26,11 @@ module.exports = {
           'local investing, they give a whole new meaning to finding investment."></meta>';
         $(document.head).append(meta);
         api.makeCacheRequest(app.config.raiseCapitalServer + '?limit=6').then((data) => {
+          let dataClass = [];
+          data.data.forEach((el) => {
+            dataClass.push(new app.models.Company(el));
+          });
+          data.data = dataClass;
           var html = template({
             collection: data,
           });
@@ -148,6 +153,31 @@ module.exports = {
         app.addClassesTo('#page', [name]);
 
         $('#content').html(view());
+        // investor and busines tutorial
+        $('.carousel-tutorial').owlCarousel({
+            loop: true,
+            nav: true,
+            autoplay: true,
+            autoplayTimeout: 9000,
+            smartSpeed: 2000,
+            responsiveClass: true,
+            animateOut: 'fadeOuts',
+            items: 1,
+            navText: [
+              '<i class="fa fa-angle-left" aria-hidden="true"></i>',
+              '<i class="fa fa-angle-right" aria-hidden="true"></i>',
+            ],
+            responsive: {
+              0: { items: 1 },
+              600: { items: 1 },
+              1000: { items: 1 },
+            },
+          });
+        var owl = $('.owl-carousel');
+        owl.owlCarousel();
+        $('.customNextBtn').click(function() {
+        owl.trigger('next.owl.carousel');
+        });
 
         $('body').scrollTo();
         app.hideLoading();
@@ -173,7 +203,10 @@ module.exports = {
 
           $input.fadeIn().focus();
         });
-
+        // pause for modal on page news
+        $('#audio-modal').on('hidden.bs.modal', function (e) {
+            document.getElementById('news_audio').pause()
+        });
         $('body').on('focusout', '.text-input', (event) => {
           let $this = $(event.target);
           let value = $this.val();
@@ -188,8 +221,8 @@ module.exports = {
           $span.fadeIn();
         });
         const names = ['education',
-          'terms_of_use',
-          'privacy_policy',
+          'terms-of-use',
+          'privacy-policy',
           'advertising',
           'formc_review_first',
         ];

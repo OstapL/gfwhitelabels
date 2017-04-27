@@ -89,7 +89,7 @@ module.exports = {
     let method = e.target.dataset.method || 'POST';
     let form = $(e.target).closest('form');
 
-    if(this.model && this.model.hasOwnProperty('id')) {
+    if(this.model&& Object.keys(this.model).length > 0 && this.model.id) {
       url = url.replace(':id', this.model.id);
       method = e.target.dataset.method || 'PATCH';
     }
@@ -100,20 +100,21 @@ module.exports = {
     if(form.length > 0) {
       form[0].setAttribute('disabled', true);
     }
+    e.target.setAttribute('disabled', true);
 
     api.deleteEmptyNested.call(this, this.fields, newData);
     api.fixDateFields.call(this, this.fields, newData);
     // api.fixFieldTypes.call(this, this.fields, newData);
 
     // if view already have some data - extend that info
-    if(this.hasOwnProperty('model') && !this.doNotExtendModel && method != 'PATCH') {
-      newData = _.extend({}, this.model, newData);
+    if(this.hasOwnProperty('model') && Object.keys(this.model).length > 0 && !this.doNotExtendModel && method != 'PATCH') {
+      newData = _.extend({}, this.model.toJSON ? this.model.toJSON() : this.model, newData);
     }
 
     // for PATCH method we will send only difference
     if(method == 'PATCH') {
       let patchData = {};
-      let d = deepDiff(newData, this.model);
+      let d = deepDiff(newData, this.model.toJSON ? this.model.toJSON() : this.model);
       _(d).forEach((el, i) => {
         if(el.kind == 'E' || el.kind == 'A') {
           patchData[el.path[0]] = newData[el.path[0]];
@@ -170,8 +171,9 @@ module.exports = {
       });
       this.$('.help-block').prev().scrollTo(5);
       if(form.length > 0) {
-        form[0].setAttribute('disabled', true);
+        form[0].removeAttribute('disabled');
       }
+      e.target.removeAttribute('disabled');
       return false;
     } else {
 
@@ -192,7 +194,7 @@ module.exports = {
 
           let defaultAction  = 1;
           if (typeof this._success == 'function') {
-            defaultAction = this._success(responseData, newData);
+            defaultAction = this._success(responseData, newData, method);
           }
 
           if(defaultAction == 1) {
@@ -206,8 +208,9 @@ module.exports = {
         }).
         fail((xhr, status, text) => {
           if(form.length > 0) {
-            form[0].setAttribute('disabled', false);
+            form[0].removeAttribute('disabled');
           }
+          e.target.removeAttribute('disabled');
           api.errorAction(this, xhr, status, text, this.fields);
         });
     }
