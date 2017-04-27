@@ -19,7 +19,7 @@ section.issuer-dashbord-top
         .share-block.d-inline-block.share
           | !{ socialDirective.render(directiveKey, infoProvider) }
       .col-md-2.col-sm-6.col-xs-6
-        a(href="").dashboard-stat
+        .dashboard-stat
           .visual
             i.fa.fa-bar-chart
           .details
@@ -30,7 +30,7 @@ section.issuer-dashbord-top
             .desc Amount Raised
 
       .col-md-2.col-sm-6.col-xs-6
-        a(href="").dashboard-stat.dashboard-stat-v2.grey
+        .dashboard-stat.dashboard-stat-v2.grey
           .visual
             i.fa.fa-briefcase
           .details
@@ -41,7 +41,7 @@ section.issuer-dashbord-top
             .desc Number of Investments
 
       .col-md-2.col-sm-6.col-xs-6
-        a(href="").dashboard-stat.dashboard-stat-v2.grey
+        .dashboard-stat.dashboard-stat-v2.grey
           .visual
             i.fa.fa-users
           .details
@@ -52,7 +52,7 @@ section.issuer-dashbord-top
             .desc Page Views
 
       .col-md-2.col-sm-6.col-xs-6
-        a(href="").dashboard-stat.dashboard-stat-v2.grey
+        .dashboard-stat.dashboard-stat-v2.grey
           .visual
             i.fa.fa-comments
           .details
@@ -72,7 +72,7 @@ section.issuer-dashbord-top
           span(
             style="width:" + daysPassedPercents + "%").circle_progress
             i.fa.fa-circle-o
-          span(style="left:" + daysPassedPercents + "%").text_position
+          span(style="left:" +  (daysPassedPercents < 1 ? 1 : daysPassedPercents) + "%").text_position
             - var now = new Date();
             .font-weight-bold
               | #{now.toLocaleString('en-US', { month: "short" })} #{ now.getDate() }
