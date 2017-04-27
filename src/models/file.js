@@ -85,8 +85,8 @@ class File {
 
   getUrl(name, fallback='') {
     if(this.urls.hasOwnProperty(name)) {
-      if(this.urls.origin.indexOf('http://') == -1 && this.urls.origin.indexOf('https://') == -1) {
-        return app.sites[this.site_id] + this.urls.origin;
+      if(this.urls[name].indexOf('http://') == -1 && this.urls[name].indexOf('https://') == -1) {
+        return app.sites[this.site_id] + this.urls[name];
       } else {
         return this.urls.origin;
       }
