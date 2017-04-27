@@ -189,6 +189,7 @@ class User {
         company: {
           id: data.company_id,
           name: data.company,
+          is_paid: data.is_paid,
         },
         roles: roles,
       });
