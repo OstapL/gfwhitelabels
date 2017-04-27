@@ -179,6 +179,11 @@ module.exports = {
 
       api.makeRequest(url, method, newData).
         then((responseData) => {
+          if(form.length > 0) {
+            form[0].removeAttribute('disabled');
+          }
+          e.target.removeAttribute('disabled');
+
           // ToDo
           // Do we really need this ?!
           if(method != 'POST') {
