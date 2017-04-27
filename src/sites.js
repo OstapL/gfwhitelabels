@@ -2,8 +2,8 @@ let sites = [{
 	id: 4,
 	domain: "localhost",
 	name: "growthfountain",
-	bucket_name: "growthfountain-localhost",
-	url: "http://growthfountain-localhost.s3-website-us-east-1.amazonaws.com",
+	bucket_name: "growthfountain-master-storage",
+	url: "http://growthfountain-master-storage.s3-website-us-east-1.amazonaws.com",
 	frontend_bucket: "",
 }, {
 	id: 21,
