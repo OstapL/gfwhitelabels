@@ -93,7 +93,7 @@ class Campaign {
       ? approved_date
       : moment.utc(approved_date);
 
-    let daysPassedPercents = Math.round(now.diff(approvedDate, 'days') / expirationDate.diff(approvedDate) * 100);
+    let daysPassedPercents = Math.round(now.diff(approvedDate, 'days') / expirationDate.diff(approvedDate, 'days') * 100);
     if (daysPassedPercents < 0) daysPassedPercents = 0;
     if (daysPassedPercents > 100) daysPassedPercents = 100;
     return daysPassedPercents;
