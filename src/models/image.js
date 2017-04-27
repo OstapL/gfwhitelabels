@@ -1,5 +1,4 @@
 const File = require('./file.js');
-const defaultImage = '/img/default/255x153.png';
 
 class Image extends File {
   createCrop(idName, dataName, size) {
@@ -33,13 +32,11 @@ class Image extends File {
 
       return app.sites[this.site_id] + this.urls[smallestSize];
     } else {
-      return '/img/default/' + (fallback || name) + '.png';
+      let defaultImg = '/img/default/' + (fallback || name) + '.png';
+      return require(defaultImg);
     };
   }
 
-  getDefaultImage() {
-    return this.options.defaultImage || defaultImage;
-  }
 };
 
 module.exports = Image;
