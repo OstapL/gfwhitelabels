@@ -26,7 +26,7 @@
           if roles && roles.length
             each roleInfo, idx in roles
               .profile-type-user
-                if roleInfo.roles && roleInfo.roles.length
+                if roleInfo.roles && roleInfo.roles.length && roleInfo.company.is_paid
                   each role in roleInfo.roles
                     span.user-type #{ role.title }
                   .user-company
@@ -34,7 +34,7 @@
                     a(href=app.getIssuerDashboardUrl(roleInfo.company.id)).link-3  #{ roleInfo.company.name }
                     |  company.
                   hr
-          else if company && company.name
+          else if company && company.name && company.is_paid
             .profile-type-user
               .user-company
                 a(href="/dashboard/" + company.formc_id + "/issuer-dashboard").link-3  #{ company.name }
