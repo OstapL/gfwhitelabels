@@ -23,7 +23,7 @@ module.exports = {
 
   facebookClientId: "1405768896335643",
   googleClientId: "805823281871-0sbsf2btjd5j13g5aa7sfo4pfjorn3k2.apps.googleusercontent.com",
-  linkedinClientId: "77wzj6tz0yyr33",
+  linkedinClientId: "77rg2wrcb8utfq",
 
   googleMapKey: "AIzaSyBpCl9-7bkVISZ0o-AaFCsKzZwGAxalkZU",
   stripeKey: "pk_test_Z7YAhlyPtnW7bpd8LJUHTSou",
