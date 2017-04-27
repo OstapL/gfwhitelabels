@@ -373,3 +373,12 @@ const App = require('app.js');
 
 global.app = new App();
 app.start();
+
+$(window).scroll(function() {
+
+  var st = $(this).scrollTop() /50;
+
+  $(".scroll-tesr img").css({
+    "transform" : "translate3d(0px, " + st /2 + "%, .01px)"
+  });
+});
