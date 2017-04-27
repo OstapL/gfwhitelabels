@@ -135,8 +135,10 @@ let exports = {
     if(attr.placeholder == null || attr.placeholder == "") {
       attr.placeholder = attr.label || '';
     }
-    if(attr.required == true) {
-      attr.label += '<span class="color-red">*</span>';
+    if (attr.required == true) {
+      if (attr.label && attr.label[attr.label.length-8] != '*') {
+        attr.label += '<span class="color-red">*</span>';
+      }
     }
   },
 
@@ -261,21 +263,6 @@ let exports = {
 
     this.prepareField(name, attr);
 
-    attr.class = attr.class || '';
-    let nameClass = attr.id || name,
-      requiredClass = attr.required ? 'required' : '',
-      popoverClass = attr.help_text ? 'showPopover' : '';
-
-    attr.class = `row media-item ${attr.class} ${nameClass} ${requiredClass} fileFolderDropzone ${popoverClass}`;
-
-    attr.class1 = attr.class1 || 'col-xl-3 col-lg-12 text-xl-right text-lg-left';
-    attr.class1 += ` ${requiredClass}`;
-
-    attr.class2 = attr.class2 || 'col-xl-9 col-lg-12 p-l-1 p-r-1';
-    attr.class2 += ` dropzone__${name}`;
-
-    attr.icon = attr.icon || 'file';
-    attr.text = attr.text || 'Drop your PDF or DOC here or click to upload';
 
     const template = require('./templates/fileFolderDropzone.pug');
     return template({

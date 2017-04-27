@@ -24,6 +24,9 @@ class InfoProvider {
   }
 
   _format(template, data) {
+    if (!data)
+      return this.templates[template];
+
     return _.reduce(data, (tmpl, val, key) => {
       return tmpl.replace(':' + key, val);
     }, this.templates[template]);

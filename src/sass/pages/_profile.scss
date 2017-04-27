@@ -23,9 +23,48 @@
 	}
 }
 
-
-
+.profile-type-user.credit-all {
+		position: relative;
+		h3 {
+			.small-text {
+				font-size: rem(12);
+				font-weight: normal;
+				font-family: $open-sans;
+			}
+		}
+		.profile-comission {
+			background-image: url("img/empty_small.png");
+			position: absolute;
+		    top: -6px;
+		    left: 126px;
+		    width: 129px;
+		    background-repeat: no-repeat;
+		    height: 48px;
+		    @media screen and (max-width: 640px) {
+		    	top: -10px;
+    			left: 113px;
+		    }
+		    .wrap {
+		    	width: 75px;
+		    	height: 48px;
+		    	position: relative;
+		    	float: right;
+			    h2 {
+			    	top: 50%;
+				    left: 50%;
+				    -ms-transform: translate(-50%, -50%);
+				    -webkit-transform: translate(-50%, -50%);
+				    transform: translate(-50%, -50%);
+				    position: absolute;
+				    color: $puerto-rico;
+				    font-weight: bold;
+					
+			    }
+		    }
+		}
+	}
 .profile {
+
 	.profile-type-user {
 		span.user-type {
 			font-size: rem(11);
