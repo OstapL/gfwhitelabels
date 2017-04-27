@@ -137,8 +137,16 @@ module.exports = {
 
     doCalculation(e) {
       e.preventDefault();
+
       if (!this.validate(e))
         return;
+
+      app.emitGoogleAnalyticsEvent('calculate-revenue-share', {
+        eventCategory: 'Calculator',
+        eventAction: 'calculate',
+        eventLabel: 'Company',
+        eventValue: window.location.pathname,
+      });
 
       this.data.raiseMoney = Number(this.$raiseMoney.val().replace(/[\$\,]/g, ''));
       this.data.nextYearRevenue = Number(this.$nextYearRevenue.val().replace(/[\$\,]/g, ''));
