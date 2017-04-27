@@ -1,6 +1,6 @@
 - var config = require('./config.js');
 
-mixin metrica(metricaId)
+if config.yandexMetricaId
   script(type="text/javascript").
     (function (d, w, c) {
       (w[c] = w[c] || []).push(function() {
@@ -33,7 +33,3 @@ mixin metrica(metricaId)
         src="https://mc.yandex.ru/watch/" + metricaId
         style="position:absolute; left:-9999px;" alt=""
       )
-
-
-if config.yandexMetricaId
-  +metrica(config.yandexMetricaId)

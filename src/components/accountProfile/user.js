@@ -1,4 +1,29 @@
+const Image = require('models/image.js');
 const YEAR = 1000 * 60 * 60 * 24 * 30 * 12;
+
+const fixImageData = (data) => {
+  if (data.image_data == null ||
+      !Array.isArray(data.image_data)) {
+    return data;
+  }
+
+  if(data.image_data.length == 0) {
+    data.image_data = {};
+    return data;
+  }
+
+  let originData = data.image_data[0];
+  let croppedData = data.image_data[1] || originData;
+
+  data.image_data = originData;
+  data.image_data.urls = {
+    origin: originData.urls ? (originData.urls[0] || '') : '',
+    main: croppedData.urls ? (croppedData.urls[0] || '') : '',
+    '50x50': croppedData.urls ? (croppedData.urls[0] || '') : '',
+  }
+
+  return data;
+};
 
 class User {
   constructor() {
@@ -41,6 +66,21 @@ class User {
     return this.data.info || [];
   }
 
+  updateImage(imageData) {
+    this.data.image_data = imageData;
+    this.data.image_image_id = new Image(
+      app.config.authServer + '/rest-auth/data',
+      this.data.image_data
+    );
+    document.getElementById('user-thumbnail').src = this.data.image_image_id.getUrl('50x50');
+    this.updateLocalStorage();
+  }
+
+  updateLocalStorage() {
+      localStorage.setItem('token', this.data.token);
+      localStorage.setItem('user', JSON.stringify(this.data));
+  }
+
   setData(data, next) {
 
     next = next || this.next || app.getParams().next || '/';
@@ -48,8 +88,8 @@ class User {
     this.next = null;
 
     if(data.hasOwnProperty('token') && data.hasOwnProperty('info')) {
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('user', JSON.stringify(data));
+      this.data = data;
+      this.updateLocalStorage();
 
       app.cookies.set('token', data.token, {
         domain: '.' + app.config.domainUrl,
@@ -89,6 +129,10 @@ class User {
         return;
       }
 
+      data.image_image_id = new Image(
+        app.config.authServer + '/rest-auth/data',
+        data.image_data
+      );
       this.data = data;
 
       return app.trigger('userLoaded', data);
@@ -101,7 +145,7 @@ class User {
       if (this.token === null)
         return resolve({ id: '' });
 
-      const data = JSON.parse(localStorage.getItem('user')) || {};
+       const data = fixImageData(JSON.parse(localStorage.getItem('user')) || {});
       // Check if user have all required data
       if (!data.info || !Array.isArray(data.info)) {
         this.emptyLocalStorage();
@@ -112,6 +156,10 @@ class User {
         return resolve(false);
       }
 
+      data.image_image_id = new Image(
+        app.config.authServer + '/rest-auth/data',
+        data.image_data
+      );
       this.data = data;
       return resolve(this.data);
     });
@@ -123,6 +171,9 @@ class User {
 
   toJSON() {
     const data = Object.assign({}, this.data, {'companiesMember': this.companiesMember});
+    if(this.data.image_image_id) {
+      data.image_image_id = data.image_image_id.id;
+    }
     return data;
   }
 
@@ -138,6 +189,7 @@ class User {
         company: {
           id: data.company_id,
           name: data.company,
+          is_paid: data.is_paid,
         },
         roles: roles,
       });
@@ -149,8 +201,9 @@ class User {
     if (!this.role_data)
       this._initRoles();
 
-    if (!_.isNumber(company_id))
+    if (!_.isNumber(company_id)) {
       return;
+    }
 
     return _(this.role_data).find((data) => { return data.company.id == company_id; });
   }

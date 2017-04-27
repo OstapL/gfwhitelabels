@@ -20,7 +20,7 @@ module.exports = {
           data.id = id;
           const View = require('./views.js');
           let i = new View.investmentThankYou({
-            model: data,
+            model: new app.models.Company(data),
           });
           i.render();
           app.hideLoading();
@@ -58,16 +58,18 @@ module.exports = {
       require.ensure([], () => {
         const View = require('./views.js');
 
-        api.makeCacheRequest(app.config.raiseCapitalServer + '/' + name).
-        then((companyData) => {
+        $.when(
+          api.makeCacheRequest(app.config.raiseCapitalServer + '/company', 'OPTIONS'),
+          api.makeCacheRequest(app.config.raiseCapitalServer + '/' + name)
+        ).done((companyFields, companyData) => {
           let i = new View.detail({
-            model: companyData,
+            model: new app.models.Company(companyData[0], companyFields[0]),
           });
           i.render();
           if (location.hash && $(location.hash).length) {
             setTimeout(() => {
               $(location.hash).scrollTo(65);
-            }, 100);
+            }, 300);
           } else {
             $('body').scrollTo();
           }
@@ -94,7 +96,7 @@ module.exports = {
           $.when(investmentR, companyR, userR).done((investmentMeta, companyData, userData) => {
             Object.assign(app.user.data, userData[0]);
             const i = new View.investment({
-              model: companyData[0],
+              model: new app.models.Company(companyData[0], investmentMeta[0].fields),
               user: userData[0],
               fields: investmentMeta[0].fields,
             });

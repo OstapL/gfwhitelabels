@@ -1,5 +1,4 @@
 const CORPORATE_STRUCTURE = require('consts/raisecapital/corporate_structure.json');
-const campaignHelper = require('components/campaign/helpers.js');
 
 const ShareInfoProvider = require('src/directives/social/infoProvider.js');
 
@@ -34,7 +33,7 @@ class InvestorInfoProvider extends ShareInfoProvider {
       description: model.description,
       companyName: companyName,
       corporateStructure: CORPORATE_STRUCTURE[model.corporate_structure] || '',
-      picture: campaignHelper.getImageCampaign(model.campaign),
+      picture: model.campaign.getMainImage(),
     };
   }
 

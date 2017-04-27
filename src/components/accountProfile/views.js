@@ -1,12 +1,15 @@
-const validation = require('components/validation/validation.js');
-
-const helpers = {
-  campaign: require('components/campaign/helpers.js'),
-};
-
+// ToDo
+// Refactor, moment shouden't be here
 const moment = require('moment');
+const today = moment.utc();
 
+// ToDo
+// Refactor, this consts shouden't be here
 const FINANCIAL_INFORMATION = require('consts/financialInformation.json');
+const FINANCIAL_INFO = require('consts/financialInformation.json');
+const FEES = require('consts/raisecapital/companyFees.json');
+const ACTIVE_STATUSES = FINANCIAL_INFO.INVESTMENT_STATUS_ACTIVE;                   
+const CANCELLED_STATUSES = FINANCIAL_INFO.INVESTMENT_STATUS_CANCELLED;   
 
 import 'bootstrap-slider/dist/bootstrap-slider';
 import 'bootstrap-slider/dist/css/bootstrap-slider.css';
@@ -17,6 +20,21 @@ const socialNetworksMap = {
   twitter: ['twitter.com'],
   linkedin: ['linkedin.com'],
 };
+
+function initInvestment(i) {
+  i.created_date = moment.isMoment(i.created_date)
+    ? i.created_date
+    : moment.parseZone(i.created_date);
+
+  i.campaign.expiration_date = moment.isMoment(i.campaign.expiration_date)
+    ? i.campaign.expiration_date
+    : moment(i.campaign.expiration_date);
+
+  i.expired = i.campaign.expiration_date.isBefore(today);
+  i.cancelled = _.contains(CANCELLED_STATUSES, i.status);
+  i.historical = i.expired || i.cancelled;
+  i.active = !i.historical && _.contains(ACTIVE_STATUSES, i.status);
+}
 
 module.exports = {
   profile: Backbone.View.extend(_.extend({
@@ -38,6 +56,7 @@ module.exports = {
 
     initialize(options) {
       this.activeTab = options.activeTab;
+      this.model = options.model.data;
 
       this.fields = options.fields;
 
@@ -46,18 +65,25 @@ module.exports = {
       });
 
       this.fields.image_image_id = _.extend(this.fields.image_image_id, {
+        templateDropzone: 'profileDropzone.pug',
+        onSaved: (data) => {
+          app.user.updateImage(data.file);
+        },
         crop: {
-          control: {
+          control:  {
             aspectRatio: 1 / 1,
           },
-          cropper: {
-            cssClass: 'img-profile-crop',
-            preview: true,
-          },
           auto: {
-            width: 600,
-            height: 600,
+            width: 300,
+            height: 300,
           },
+          resize: {
+            width: 50,
+            height: 50,
+          },
+          cssClass: 'img-profile-crop',
+          template: 'withpreview',
+          templateImage: 'profileImage.pug'
         },
       });
 
@@ -174,6 +200,7 @@ module.exports = {
           user: this.model,
           company: app.user.get('company'),
           fields: this.fields,
+          view: this
         })
       );
 
@@ -181,11 +208,7 @@ module.exports = {
 
       this._initSliders();
 
-      setTimeout(() => {
-        this.createDropzones();
-      }, 1000);
-
-      this.onImageCrop();
+      // this.onImageCrop();
 
       this.cityStateArea = this.$('.js-city-state');
       this.cityField = this.$('.js-city');
@@ -218,13 +241,9 @@ module.exports = {
 
     onImageCrop(name) {
       name = name || 'image_image_id';
-      let dataFieldName = this._getDataFieldName(name);
-      let data = this.model[dataFieldName][0];
-      let url = data && data.urls ? data.urls[0] : null;
+      let url = this.model.image_image_id.getUrl();
       if (url) {
-        $('.user-info-name > span')
-          .empty()
-          .append('<img src="' + url + '" id="user-thumbnail"' + ' class="img-fluid img-circle">');
+        document.getElementById('user-thumbnail').src = url;
       }
 
     },
@@ -256,10 +275,10 @@ module.exports = {
         }
       });
       this.$('.help-block').remove();
-      if (!validation.validate(fields, data)) {
+      if (!app.validation.validate(fields, data)) {
         e.preventDefault();
 
-        _(validation.errors).each((errors, key) => {
+        _(app.validation.errors).each((errors, key) => {
           validation.invalidMsg(this, key, errors);
         });
 
@@ -327,7 +346,7 @@ module.exports = {
       this.cityStateArea.text('City/State');
       this.cityField.val('');
       this.stateField.val('');
-      validation.invalidMsg(this, 'zip_code', 'Sorry your zip code is not found');
+      app.validation.invalidMsg(this, 'zip_code', 'Sorry your zip code is not found');
     },
 
     _updateUserInfo() {
@@ -417,11 +436,22 @@ module.exports = {
     initialize(options) {
       this.fields = options.fields;
 
-      _.each(this.model.data, helpers.campaign.initInvestment);
+      _.each(this.model.data, initInvestment);
+      this.model.data.forEach((el, i) => {
+        this.model.data[i].campaign = new app.models.Campaign(el.campaign, this.fields);
+      });
 
       this.snippets = {
-        investment: require('./templates/investment.pug'),
+        investment: require('./templates/snippets/investment.pug'),
+        creditSection: require('./templates/snippets/creditSection.pug'),
       };
+
+      //this is auth cookie for downloadable files
+      app.cookies.set('token', app.user.data.token, {
+        domain: '.' + app.config.domainUrl,
+        expires: 1000 * 60 * 60 * 24 * 30 * 12,
+        path: '/',
+      });
     },
 
     render() {
@@ -447,11 +477,11 @@ module.exports = {
           {
             mime: 'application/pdf',
             name: 'Subscription Agreement.pdf',
-            urls: [subscriptionAgreementLink],
+            urls: { origin: subscriptionAgreementLink },
           }, {
             mime: 'application/pdf',
             name: 'Participation Agreement.pdf',
-            urls: [participationAgreementLink],
+            urls: { origin: participationAgreementLink },
           },
         ],
       };
@@ -487,6 +517,19 @@ module.exports = {
         i.campaign.amount_raised -= investment.amount;
         this.$('[data-investmentid=' + i.id + ']').replaceWith(this.snippets.investment(i));
       });
+
+      //update available credit section
+      if (app.user.get('days_left') > 0 && investment.comission < FEES.fees_to_investor) {
+        let credit = app.user.get('credit');
+        let creditReturn = FEES.fees_to_investor - investment.comission;
+        credit += creditReturn;
+        app.user.set('credit', credit)
+        let $creditSection = this.$('.credit-investor');
+        if ($creditSection.length)
+          $creditSection.html(this.snippets.creditSection());
+        else
+          this.$('.investor-dashboard').before(this.snippets.creditSection());
+      }
     },
 
     //TODO: sort investments in dom on historical tab after cancel investment
@@ -509,7 +552,7 @@ module.exports = {
 
       api.makeRequest(app.config.investmentServer + '/' + id + '/decline', 'PUT').done((response) => {
         investment.status = FINANCIAL_INFORMATION.INVESTMENT_STATUS.CancelledByUser;
-        helpers.campaign.initInvestment(investment);
+        initInvestment(investment);
 
         $target.closest('.one_table').remove();
 
