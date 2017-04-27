@@ -15,7 +15,11 @@ class Image extends File {
     let smallestSize = '';
 
     if (name && this.urls.hasOwnProperty(name)) {
-      return app.sites[this.site_id] + this.urls[name];
+      if(this.urls[name].startsWith('http')) {
+        return this.urls[name];
+      } else {
+        return app.sites[this.site_id] + this.urls[name];
+      }
     }
 
     if (Object.keys(files).length > 0) {

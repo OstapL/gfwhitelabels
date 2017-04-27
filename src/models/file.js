@@ -84,11 +84,14 @@ class File {
   }
 
   getUrl(name, fallback='') {
+    console.log(name, this);
     if(this.urls.hasOwnProperty(name)) {
+      console.log(name, this);
       if(this.urls[name].indexOf('http://') == -1 && this.urls[name].indexOf('https://') == -1) {
+        console.log(name, this, app.sites[this.site_id]);
         return app.sites[this.site_id] + this.urls[name];
       } else {
-        return this.urls.origin;
+        return this.urls[name];
       }
     }
     return '/img/default/' + fallback;
