@@ -65,7 +65,7 @@ section.issuer-dashbord-top
       .col-md-7.col-sm-10.p-r-0.col-xs-10.hidden-xs-down
         .tpl-progress
           -
-            var daysPassedPercents = campaign.daysPassedPercentage();
+            var daysPassedPercents = campaign.daysPassedPercentage(company.approved_date);
           progress(
             value=daysPassedPercents
             max="100").progress.big_prog #{ daysPassedPercents }%
