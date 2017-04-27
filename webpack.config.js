@@ -5,8 +5,8 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const isAnalyze = process.env.NODE_ENV === 'analyze';
-
 const isProd = process.env.NODE_ENV === 'production';
+const isDev = process.env.NODE_ENV === 'development';
 
 let plugins = [
   new HtmlPlugin({
@@ -56,6 +56,11 @@ if (isProd) {
 if (isAnalyze) {
   const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
   plugins.push(new BundleAnalyzerPlugin());
+}
+
+if (isDev) {
+  plugins.push(new webpack.HotModuleReplacementPlugin());
+  plugins.push(new webpack.NamedModulesPlugin());
 }
 
 const dependencies = Object.keys(require('./package.json').dependencies);
@@ -112,6 +117,14 @@ module.exports = {
         loader: 'pug-loader',
       },
       {
+       test: /\.(mp4|webm)$/,
+       loader: 'file-loader',
+     },
+     {
+       test: /\.(mp3|mp4)$/,
+       loader: 'file-loader',
+     },
+      {
         test: /\.(gif|png|jpe?g|svg|ico)$/i,
         include:[
           path.resolve(__dirname, './node_modules'),
@@ -158,6 +171,7 @@ module.exports = {
   },
   plugins: plugins,
   devtool: isProd ? false :'eval',
+  watch: isDev,
   devServer: {
     historyApiFallback: true,
     port: 7070,

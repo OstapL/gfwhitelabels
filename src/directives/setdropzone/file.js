@@ -1,6 +1,7 @@
 const File = require('models/file.js');
 const Dropzone = require('dropzone');
 
+
 class FileElement {
   constructor(file, fieldName, fieldDataName, options={}) {
     this.file = file
@@ -33,9 +34,17 @@ class FileElement {
     });
 
     if(container !== null) {
-      container.innerHTML = this.resultHTML;
+      if(container == 'REPLACE' && this.element) {
+        this.element.parentNode.replaceChild(
+          document.createRange().createContextualFragment(this.resultHTML),
+          this.element
+        );
+      } else if(container != 'REPLACE') {
+        container.innerHTML = this.resultHTML;
+      }
     }
 
+    this.element = document.createRange().createContextualFragment(this.resultHTML);
     setTimeout(() => {
       // Fix
       // this.element = $(this.resultHTML)[0];
@@ -45,7 +54,7 @@ class FileElement {
       } else {
         console.debug('cannot find element ', this.elementSelector, this);
       }
-    }, 600);
+    }, 300);
 
     return this;
   }
@@ -53,28 +62,17 @@ class FileElement {
   attacheEvents() {
     this.element.querySelectorAll('.deleteFile').forEach((item) => {
       item.addEventListener("click", (event) => {
-        api.makeRequest(
-            app.config.filerServer + '/' + this.file.id,
-            'DELETE'
-        ).done(() => {
-          let data = {};
-          data[this.fieldName] = null;
-          api.makeRequest(
-              this.file.urlRoot,
-              'PATCH',
-              data
-          ).done(() => {
-            this.file.updateData({});
-            this.render();
-          })
-        });
+        event.preventDefault();
+        event.stopPropagation();
+        this.delete();
       });
     });
-    
-    // ToDo
-    // This should be in the image model
-    this.element.querySelectorAll('.cropImage').forEach((item) => {
-      console.log('cropper');
+    this.element.querySelectorAll('.link-file').forEach((item) => {
+      item.addEventListener("click", (event) => {
+        // event.preventDefault();
+        event.stopPropagation();
+        // return false;
+      });
     });
   }
 
@@ -82,16 +80,51 @@ class FileElement {
     return require('./templates/file.pug');
   }
 
-  update(data) {
+  delete(callback) {
+    this.file.delete().done(() => {
+      if(callback) {
+        callback(this.file);
+      } else {
+        this.update({id: null, urls: {}});
+      }
+    });
+  }
+
+  update(data, callback) {
     this.file.updateData(data);
-    return this.save();
+    return this.save().done(() => {
+      if(callback) {
+        callback(this)
+      } else {
+        // REPLACE
+        this.render('REPLACE');
+      }
+    }).fail((xhr) => {
+      $(this.element).find('.uploading').hide().addClass('collapse').css('z-index', '');
+      // ToDo
+      // fix if <field>_data urls error
+      app.validation.invalidMsg(
+        this.view,
+        this.fileElement.fieldName,
+        Object.values(xhr.responseJSON)
+      ); 
+    });
   }
 
   save() {
     return this.file.save(
       this.fieldName,
       this.fieldDataName
-    );
+    ).then((response) => {
+      if(this.options.onSaved) {
+        this.options.onSaved(this);
+      }
+    });
+  }
+
+  fixUrl(url) {
+    // Temp function for filer to strip domain from url
+    return '/' + url.split('/').slice(3).join('/');
   }
 }
 
@@ -107,6 +140,10 @@ class FileDropzone {
       fieldName,
       fieldDataName
     );
+
+    if(fileOptions.onSaved) {
+      this.fileElement.options.onSaved = fileOptions.onSaved;
+    }
 
     this.options = {
       url: app.config.filerServer + '/upload',
@@ -230,6 +267,7 @@ class FileDropzone {
         Object.values(error)[0]
       ); 
     });
+    this.dropzone = dropbox;
   }
 
   success(file, data) {
@@ -241,19 +279,12 @@ class FileDropzone {
 
     data.urls = {};
     data.urls.origin = urls[0];
+    data.site_id = app.sites.getId();
 
-    this.fileElement.update(data).done(() => {
-      this.fileElement.render(this.element.querySelector('.fileContainer'));
-    }).fail((xhr) => {
-      $(this.element).find('.uploading').hide().addClass('collapse').css('z-index', '');
-      // ToDo
-      // fix if <field>_data urls error
-      app.validation.invalidMsg(
-        this.view,
-        this.fileElement.fieldName,
-        Object.values(xhr.responseJSON)
-      ); 
-    });
+    this.model.data[this.fileElement.fieldName].id = data.id;
+    this.model.data[this.fileElement.fieldDataName] = data;
+
+    this.fileElement.update(data);
   }
 
 };

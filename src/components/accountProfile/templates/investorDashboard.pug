@@ -1,8 +1,12 @@
 
-- pug_html += app.breadcrumbs('investor dashboard', '', [ ['Home', '/'], ['investor dashboard', ''],]);
+-
+  pug_html += app.breadcrumbs('investor dashboard', '', [ ['Home', '/'], ['investor dashboard', ''],]);
+  pug_html += snippets.creditSection();
 
 section.investor-dashboard
   .container
+    .col-xl-12.p-x-0
+      h2.text-uppercase.m-t-0 Your investments
     .col-lg-12
       if (!investments && !investments.length)
         div(role="alert").alert.alert-warning

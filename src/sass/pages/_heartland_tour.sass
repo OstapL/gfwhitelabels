@@ -1,0 +1,98 @@
+.heartland-tour
+  .top-baner
+    background-image: url("img/heartland-tour.jpg")
+    background-repeat: no-repeat
+    background-size: cover
+    width: 100%
+    height: 60vh
+    .top-baner-text
+      position: relative
+      top: 70px
+      h1, h3
+        color: $white
+      h1
+        margin-bottom: rem(15)
+  .how-it-works
+    background-color: $alabaster
+    padding: rem(45) 0
+    .circle
+      margin-right: rem(6)
+      height: 13px
+      width: 13px
+      padding: 0px
+      border-radius: 100px
+      border: solid 1px #000
+      vertical-align: middle
+      display: inline-block
+      margin-top: -3px
+
+
+      &.red-circle
+        background-color: #d44330
+      &.white-circle
+        background-color: $white
+      &.blue-circle 
+        background-color: #0072bc
+  .map-apply
+    margin-top: rem(60)
+    
+    .block-links
+      @media only screen and (max-width : 992px)
+        .col-md-12
+          padding: 0
+          .btn
+            &:first-child
+              margin-bottom: 30px
+
+    .wrap-logo
+      position: relative
+      .center-logo
+        position: absolute
+        top: 50%
+        left: 50%
+        -ms-transform: translate(-50%, -30%)
+        -webkit-transform: translate(-50%, -30%)
+        transform: translate(-50%, -30%)
+        z-index: -1
+        img
+          width: 130px
+    .map-center
+      position: relative
+      text-align: center
+      margin-top: rem(50)
+      img
+        max-width: 100%
+        opacity: 0.3
+      .text-wrap
+        position: absolute
+        top: 46%
+        left: 50%
+        -ms-transform: translate(-50%, -50%)
+        -webkit-transform: translate(-50%, -50%)
+        transform: translate(-50%, -50%)
+        width: 100%
+        h1
+          @media only screen and (max-width : 768px)
+            font-size: rem(24)
+          @media only screen and (max-width : 360px)
+            font-size: rem(18)
+    .small
+      font-size: rem(12)
+      color: $small-text
+      margin-top: rem(25)
+      line-height: 15px
+  .sities
+    .sities-section
+      background-image: url("img/cities.jpg")
+      background-position: center center
+      height: 340px
+      background-repeat: no-repeat
+      background-size: cover
+      h1
+        color: $white
+        @media only screen and (max-width : 360px)
+          font-size: rem(24)
+      .opasity-block
+        &:before
+          background: rgba(17, 17, 17, 0.2)
+        

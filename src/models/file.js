@@ -17,22 +17,31 @@ class File {
     // data - file data
     //
     this.urlRoot = urlRoot;
-    this.id = data.id;
-    this.name = data.name;
-    this.urls = data.urls || {};
-    this.mime = data.mime || defaultIcon;
+    this.updateData(data);
+  }
+
+  delete() {
+    return api.makeRequest(
+        app.config.filerServer + '/' + this.id,
+        'DELETE'
+    );
   }
 
   updateData(data) {
     this.id = data.id;
     this.name = data.name;
+    this.site_id = data.site_id;
     this.urls = data.urls || {};
     this.mime = data.mime || defaultIcon;
   }
 
   getOriginal(fallback) {
     if(this.urls.hasOwnProperty('origin')) {
-      return this.urls.origin;
+      if(this.urls.origin.indexOf('http://') == -1 && this.urls.origin.indexOf('https://') == -1) {
+        return app.sites[this.site_id] + this.urls.origin;
+      } else {
+        return this.urls.origin;
+      }
     }
     return '/img/default/' + fallback;
   }
@@ -76,7 +85,11 @@ class File {
 
   getUrl(name, fallback='') {
     if(this.urls.hasOwnProperty(name)) {
-      return this.urls[name];
+      if(this.urls[name].startsWith('http')) {
+        return this.urls[name];
+      } else {
+        return app.sites[this.site_id] + this.urls[name];
+      }
     }
     return '/img/default/' + fallback;
   }
@@ -93,6 +106,7 @@ class File {
       id: this.id,
       name: this.name,
       mime: this.mime,
+      site_id: this.site_id,
       urls: this.urls
     };
 

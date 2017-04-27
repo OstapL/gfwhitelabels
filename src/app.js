@@ -2,6 +2,15 @@ const Router = require('./router.js');
 const User = require('components/accountProfile/user.js');
 const Menu = require('components/menu/views.js');
 
+const safeDataLayerPush = (...args) => {
+  if (!window.dataLayer) {
+    console.warn('No data layer found! It looks like GTM scripts blocked');
+    return;
+  }
+
+  dataLayer.push(...args);
+};
+
 class App {
   constructor() {
     this.cache = {};
@@ -11,11 +20,18 @@ class App {
     this.fields = require('./fields.js');
     this.validation = require('components/validation/validation.js');
     this.models = require('./models.js');
+    this.sites = require('./sites.js');
     this.user = new User();
+    _.extend(this, Backbone.Events);
+    return this;
   }
 
   start() {
     this.user.loadWithPromise().then(() => {
+
+      if(app.config.googleTagIdGeneral || app.config.googleTagId) {
+       this.initFacebookPixel();
+      }
 
       this.routers = new Router();
       Backbone.history.start({ pushState: true });
@@ -42,10 +58,13 @@ class App {
     });
   }
 
-  emitFacebookPixelEvent(eventName='ViewContent', params={}) {
-    if (!window.fbq)
-      return;// console.error('Facebook pixel API is not available');
+  initFacebookPixel() {
+    safeDataLayerPush({
+      event: 'fb-pixel-init'
+    });
+  }
 
+  emitFacebookPixelEvent(eventName='ViewContent', params={}) {
     const STANDARD_EVENTS = [
       'ViewContent',
       'Search',
@@ -57,20 +76,38 @@ class App {
       'Lead',
       'CompleteRegistration',
     ];
-    if (_.contains(STANDARD_EVENTS))
-      fbq('track', eventName, params);
-    else
-      fbq('trackCustom', eventName, params);
+
+    let trackType = (_.contains(STANDARD_EVENTS, eventName)) ? 'track' : 'trackCustom';
+
+    safeDataLayerPush({
+      event: 'fb-pixel-event',
+      trackType,
+      eventName,
+    });
   }
 
   emitGoogleAnalyticsEvent(eventName, params={}) {
-    //TODO: this will be fixed when we fix facebook/googleTagManager scripts
-    if (!window.ga)
-      return;// console.error('Google analytics API is not available');
+    if (!eventName)
+      return console.error('eventName is not set');
 
-    const page = Backbone.history.getPath();
-    ga('set', 'page', '/' + page);
-    ga('send', 'pageview', params);
+    let hasRequiredParams = ['eventAction', 'eventCategory'].every(paramName => !!params[paramName]);
+    if (!hasRequiredParams)
+      return console.error('Required params are not set');
+    
+    params.event = eventName;
+    safeDataLayerPush(params);
+  }
+
+  emitCompanyAnalyticsEvent(trackerId) {
+    if (!trackerId)
+      return;
+
+    safeDataLayerPush({
+      event: 'company-custom-event',
+      eventCategory: 'Company',
+      eventAction: 'ViewPage',
+      trackerId,
+    });
   }
 
   showLoading() {
@@ -204,7 +241,7 @@ class App {
     var provider = videoInfo && videoInfo.provider ? videoInfo.provider : '';
 
     if (provider === 'youtube')
-      return '//www.youtube.com/embed/' + videoInfo.id + '?rel=0';
+      return '//www.youtube.com/embed/' + videoInfo.id + '?rel=0&enablejsapi=1';
 
     if (provider === 'vimeo')
       return '//player.vimeo.com/video/' + videoInfo.id;
@@ -212,30 +249,64 @@ class App {
     return '//www.youtube.com/embed/?rel=0';
   }
 
+  getVideoInfo(url) {
+    try {
+      let provider = url.match(/https:\/\/(:?www.)?(\w*)/)[2];
+      provider = provider.toLowerCase();
+      let id;
+      if (provider === 'youtube') {
+        id = url.match(/https:\/\/(?:www.)?(\w*).com\/.*v=([^\&]*)/)[2];
+      } else if (provider === 'youtu') {
+        provider = 'youtube';
+        id = url.match(/https:\/\/(?:www.)?(\w*).be\/(.*)/)[2];
+      } else if (provider === 'vimeo') {
+        id = url.match(/https:\/\/(?:www.)?(\w*).com\/(\d*)/)[2];
+      } else {
+        console.log(url, 'Takes a YouTube or Vimeo URL');
+      }
+
+      let resUrl = (provider === 'youtube')
+        ? `//www.youtube.com/embed/${id}?rel=0&enablejsapi=1`
+        : (provider === 'vimeo')
+          ? `//player.vimeo.com/video/${id}`
+          : '//www.youtube.com/embed/?rel=0';
+
+      return { id: id, provider: provider, url: resUrl };
+
+    } catch (err) {
+      console.log(url, 'Takes a YouTube or Vimeo URL');
+    }
+
+    return {};
+  }
+
   getThumbnail(size, thumbnails, _default) {
-  let thumb = thumbnails.find(function (el) {
-    return el.size == size;
-  });
-  return (thumb ? thumb.url : _default || require('images/default/Default_photo.png'))
-}
+    let thumb = thumbnails.find(function (el) {
+      return el.size == size;
+    });
+    return (thumb ? thumb.url : _default || require('images/default/Default_photo.png'))
+  }
 
   getUrl(data) {
     data = Array.isArray(data) ? data[0] : data;
 
-    if (!data || !data.urls || !data.urls.length || !data.urls[0])
+    if (!data || !data.urls)
       return null;
 
-    return this.getFilerUrl(data.urls[0]);
+    return this.getFilerUrl(data.urls);
   }
 
   getFilerUrl(file) {
-    if (!file || !_.isString(file))
+    if (!file.origin || !_.isString(file.origin))
       return null;
 
-    if (file.startsWith('http://') || file.startsWith('https://') || file.startsWith('/'))
-      return file;
+    if (file.origin.startsWith('http://') || file.origin.startsWith('https://') )
+      return file.origin;
 
-    return app.config.bucketServer + '/' + file;
+    // ToDo
+    // get bucket server base on the site_id of the file
+    // i.e. app.sites[file.site_id] + file.origin;
+    return app.config.bucketServer + file.origin;
   }
 
   breadcrumbs(title, subtitle, data) {
@@ -293,9 +364,77 @@ class App {
     if (!elem)
       return;
 
-    elem.classList.forEach((cls) => {
+    for (let i = 0; i < elem.classList.length; i += 1) {
+      let cls = elem.classList.item(i);
       if (!except.includes(cls))
         elem.classList.remove(cls);
+    }
+  }
+
+  loadYoutubePlayerAPI() {
+    return new Promise((resolve, reject) => {
+      if (app.youtubeAPIReady)
+        return resolve();
+
+      let tag = document.createElement('script');
+
+      tag.src = "https://www.youtube.com/iframe_api";
+      let firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+      this.on('youtube-api-ready', () => {
+        resolve()
+      });
+    });
+  }
+
+  loadVimeoPlayerAPI() {
+    return new Promise((resolve, reject) => {
+      if (window.Vimeo)
+        return resolve();
+
+      let tag = document.createElement('script');
+
+      tag.src = "https://player.vimeo.com/api/player.js";
+      let firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+      tag.onload = resolve;
+      tag.onerror = reject;
+    });
+  }
+
+  confirm(container, data) {
+    return new Promise((resolve, reject) => {
+      if (!data || !data.message)
+        return resolve(true);
+
+      let template = require('./templates/confirmPopup.pug');
+      let $container = $(container);
+
+      let $modal = $(template(data));
+
+      $modal.on('shown.bs.modal', () => {
+        $modal.on('click', '.confirm-yes', () => {
+          $modal.modal('hide');
+          resolve(true);
+        });
+
+        $modal.on('click', '.confirm-no', () => {
+          $modal.modal('hide');
+          resolve(false)
+        });
+      });
+
+      $modal.on('hidden.bs.modal', () => {
+        $modal.off('hidden.bs.modal');
+        $modal.off('show.bs.modal');
+        $modal.off('click');
+        $modal.remove();
+      });
+
+      $container.append($modal);
+
+      $modal.modal('show');
     });
   }
 

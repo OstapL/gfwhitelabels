@@ -2,16 +2,27 @@ const File = require('./file.js');
 
 
 class Company {
-  constructor(url, data={}, schema={}) {
+  constructor(data={}, schema={}, url=null) {
     //
     // urlRoot - url for update model assosiated with that file
     // data - file data
     //
 
-    this.data = data;
+    this.data = data || {};
     this.schema = schema;
-    this.url = url;
-    this.data['campaign'] = new app.models.campaign('', this.data['campaign']);
+    if(data && data.id) {
+      this.url = url || app.config.raiseCapitalServer + '/company/' + data.id;
+    } else {
+      this.url = url || app.config.raiseCapitalServer + '/company';
+    }
+
+    if(this.data.campaign) {
+      this.data.campaign = new app.models.Campaign(this.data.campaign);
+    }
+
+    if(this.data.formc) {
+      this.data.formc = new app.models.Formc(this.data.formc);
+    }
 
     this.data = Object.seal(this.data);
     for(let key in this.data) {
@@ -23,9 +34,9 @@ class Company {
   }
 
   toJSON() {
-    return this.data;
+    let data = Object.assign({}, this.data);
+    return data;
   }
-
 }
 
 module.exports = Company

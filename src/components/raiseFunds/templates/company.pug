@@ -13,6 +13,11 @@ section.create-company.container.m-b-85
     h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis Company
     form.form-section
       .col-xl-12.p-sm-0
+        -
+          pug_html += app.fields.fieldChoiceLabel('tour', _.extend({
+              'empty': { '': 'Choose option' },
+              'value': values.tour,
+            }, fields.tour));
         - 
           pug_html += app.fields.textLabel('name', {
           class1:'col-xl-3 col-lg-12 p-t-0 text-lg-left text-xl-right m-b-0 m-b-lg-1', 
@@ -43,6 +48,12 @@ section.create-company.container.m-b-85
                   schema: fields.slug, 
                   placeholder: 'Your Custom URL', 
                   value: values.slug,})
+
+        -
+          pug_html += app.fields.textLabel('ga_id', {
+            schema: fields.ga_id,
+            placeholder: 'Google Analytic ID: UA-xxxxxx-xx',
+            value: values.ga_id})
 
         -
           pug_html += app.fields.fieldChoiceLabel('industry', _.extend({

@@ -4,6 +4,9 @@ const typeOfDocuments = require('consts/typeOfDocuments.json');
 const COUNTRIES = require('consts/countries.json');
 const validation = require('components/validation/validation.js');
 
+const CalculatorView = require('./revenueShareCalculator.js');
+
+
 module.exports = {
   list: Backbone.View.extend({
     el: '#content',
@@ -12,6 +15,11 @@ module.exports = {
       'change select.orderby': 'orderby',
     },
     initialize(options) {
+      let dataClass = [];
+      options.collection.data.forEach((el) => {
+        dataClass.push(new app.models.Company(el));
+      });
+      options.collection.data = dataClass;
       this.collection = options.collection;
     },
 
@@ -54,6 +62,7 @@ module.exports = {
       'shown.bs.collapse #hidden-article-press' :'onArticlePressCollapse',
       'click .submit_form': 'submitCampaign',
       'click .company-documents': 'showDocumentsModal',
+      'click .show-video-modal': 'showVideoModal',
     },
 
     onCollapse (e) {
@@ -73,15 +82,6 @@ module.exports = {
       $(document).off("scroll", this.onScrollListener);
       $(document).on("scroll", this.onScrollListener);
 
-      let params = app.getParams();
-      this.edit = false;
-      if (params.preview == '1' && this.model.owner == app.user.get('id')) {
-        // see if owner match current user
-        this.edit = true;
-        this.previous = params.previous;
-      }
-      this.preview = params.preview ? true : false;
-
       this.companyDocsData = {
         title: 'Financials',
         files: this.model.formc
@@ -90,15 +90,17 @@ module.exports = {
           : []
       };
 
+      if (this.model.ga_id) {
+        app.emitCompanyAnalyticsEvent(this.model.ga_id);
+      }
     },
 
     submitCampaign(e) {
-
       api.makeRequest(
-        app.config.raiseCapitalServer + '/company/' + this.model.id + '/edit',
+        app.config.raiseCapitalServer + '/company/' + this.model.id,
         'GET'
       ).then(function(data) {
-        if(
+        if (
             data.progress.general_information == true &&
             data.progress.media == true &&
             data.progress.specifics == true &&
@@ -204,7 +206,6 @@ module.exports = {
     render() {
       const fancybox = require('components/fancybox/js/jquery.fancybox.js');
       const fancyboxCSS = require('components/fancybox/css/jquery.fancybox.css');
-      debugger;
 
       this.$el.html(
         this.template({
@@ -219,6 +220,12 @@ module.exports = {
         $('.nav-tabs li').removeClass('active');
         $(this).addClass('active');
       });
+
+      setTimeout(() => {
+        if (this.model.campaign.security_type == 1) { //enable calculator only for bluehollar company
+          (new CalculatorView.calculator()).render();
+        }
+      }, 100);
 
       setTimeout(() => {
 
@@ -263,7 +270,9 @@ module.exports = {
           stickyToggle(sticky, stickyWrapper, $(window));
         });
 
-        this.initComments();
+        if(this.model.is_approved == 6) {
+          this.initComments();
+        };
 
       }, 1200);
 
@@ -318,6 +327,103 @@ module.exports = {
     readMore(e) {
       e.preventDefault();
       $(e.target).parent().addClass('show-more-detail');
+    },
+
+    showVideoModal(e) {
+
+      const attachYoutubeEvents = ($modal, callback) => {
+        let player = null;
+        let eventSent = false;
+
+        $modal.on('show.bs.modal', () => {
+          player = new YT.Player('video-iframe-container', {
+            // videoId: videoInfo.id,
+            events: {
+              onReady(e){},
+              onStateChange(e) {
+                if (e.data == YT.PlayerState.PLAYING && !eventSent) {
+                  eventSent = true;
+                  callback();
+                }
+              },
+              onError(err) {
+                console.error(err);
+              },
+            }
+          });
+        });
+
+        $modal.on('hidden.bs.modal', () => {
+          player.stopVideo();
+          player.destroy();
+          player = null;
+          $modal.empty();
+          $modal.remove();
+        });
+      };
+
+      const attachVimeoEvents = ($modal, callback) => {
+        let player = null;
+        let eventSent = false;
+        $modal.on('show.bs.modal', () => {
+          player = new Vimeo.Player('video-iframe-container');
+          player.on('play', () => {
+            if (!eventSent) {
+              eventSent = true;
+              callback();
+            }
+          });
+        });
+        $modal.on('hidden.bs.modal', () => {
+          player.off('play');
+          player.unload();
+          player = null;
+          $modal.empty();
+          $modal.remove();
+        });
+      };
+
+      const loadPlayer = (provider) => {
+        if (provider == 'youtube')
+          return app.loadYoutubePlayerAPI();
+
+        if (provider == 'vimeo')
+          return app.loadVimeoPlayerAPI();
+      };
+
+      let $target = $(e.target).closest('a');
+
+      const provider = $target.data('provider');
+      const id = $target.data('id');
+      const url = $target.data('url');
+
+      loadPlayer(provider).then((Player) => {
+        let $content = $('#content');
+        const template = require('templates/videoModal.pug');
+
+        $content.append(template({
+          provider,
+          id,
+          url,
+        }));
+
+        const sendVideoPlayEvent = () => {
+          app.emitGoogleAnalyticsEvent('company-video-play', {
+            eventCategory: 'Video',
+            eventAction: 'play',
+            //eventLabel: 'Youtube Video',
+            eventValue: url,
+          });
+        };
+
+        let $modal = $('#videoModal');
+
+        if (provider === 'youtube')
+          attachYoutubeEvents($modal, sendVideoPlayEvent);
+        else if (provider === 'vimeo')
+          attachVimeoEvents($modal, sendVideoPlayEvent)
+        $modal.modal('show');
+      });
     },
 
   }),
@@ -562,6 +668,9 @@ module.exports = {
       }
 
       this.initMaxAllowedAmount();
+
+      if (this.model.ga_id)
+        app.emitCompanyAnalyticsEvent(this.model.ga_id);
     },
 
     render() {
@@ -765,6 +874,10 @@ module.exports = {
 
     updateAmount(e) {
 
+      if(e.keyCode == 37 || e.keyCode == 39) {
+        return;
+      }
+
       let amount = this.getInt(e.currentTarget.value);
       if (!amount)
         return;
@@ -901,7 +1014,7 @@ module.exports = {
 
     getSignature () {
 
-      cookies.set('token', app.user.token, {
+      app.cookies.set('token', app.user.token, {
         domain: '.' + app.config.domainUrl,
         path: '/',
       });
@@ -984,7 +1097,7 @@ module.exports = {
         template: subscriptionAgreementPath
       }];
 
-      app.makeRequest(reqUrl, 'POST', data, {
+      api.makeRequest(reqUrl, 'POST', data, {
         contentType: 'application/json; charset=utf-8',
         crossDomain: true,
       })
@@ -1115,7 +1228,8 @@ module.exports = {
     template: require('./templates/thankYou.pug'),
     el: '#content',
     initialize(options) {
-      // this.render();
+      if (this.model.company.ga_id)
+        app.emitCompanyAnalyticsEvent(this.model.company.ga_id);
     },
 
     render() {

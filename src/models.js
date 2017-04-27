@@ -1,5 +1,9 @@
 module.exports = {
-  company: require('models/company.js'),
-  campaign: require('models/campaign.js'),
-  formc: require('models/formc.js'),
+  File: require('models/file.js'),
+  Image: require('models/image.js'),
+  Company: require('models/company.js'),
+  Campaign: require('models/campaign.js'),
+  Formc: require('models/formc.js'),
+  Investment: require('models/investment.js'),
+  User: require('components/accountProfile/user.js'),
 };

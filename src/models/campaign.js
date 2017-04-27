@@ -2,6 +2,7 @@ const File = require('./file.js');
 const Image = require('./image.js');
 const Folder = require('./folder.js');
 const Gallery = require('./gallery.js');
+const TeamMember = require('./teammembercampaign.js');
 
 const moment = require('moment');
 const today = moment.utc();
@@ -12,34 +13,43 @@ const CANCELLED_STATUSES = FINANCIAL_INFO.INVESTMENT_STATUS_CANCELLED;
 
 
 class Campaign {
-  constructor(urlRoot, data={}, schema={}) {
+  constructor(data={}, schema={}, url=null) {
     //
     // urlRoot - url for update model assosiated with that file
     // data - file data
     //
 
-    this.data = data;
+    this.data = data || {};
     this.schema = schema;
-    this.urlRoot = urlRoot;
 
-    for(let key in this.schema) {
-      if(this.data.hasOwnProperty(key)) {
-        switch(this.schema[key].type) {
-          case 'file':
-            this.data[key] = new File(urlRoot, this.data[key.replace('_file_id', '_data')]);
-            break;
-          case 'image':
-            this.data[key] = new Image(urlRoot, this.data[key.replace('_image_id', '_data')]);
-            break;
-          case 'filefolder':
-            this.data[key] = new Folder(urlRoot, this.data[key], this.data[key.replace('_id', '_data')]);
-            break;
-          case 'imagefolder':
-            this.data[key] = new Gallery(urlRoot, this.data[key], this.data[key.replace('_id', '_data')]);
-            break;
-        }
-      }
+    if(data && data.id) {
+      this.url = url || app.config.raiseCapitalServer + '/campaign/' + data.id;
+    } else {
+      this.url = url || app.config.raiseCapitalServer + '/campaign';
     }
+
+		this.data['investor_presentation_file_id'] = new File(
+			this.url,
+			this.data.investor_presentation_data
+		);
+		this.data['list_image_image_id'] = new Image(
+			this.url,
+			this.data.list_image_data
+		);
+		this.data['header_image_image_id'] = new Image(
+			this.url,
+			this.data.header_image_data
+		);
+		this.data['gallery_group_id'] = new Gallery(
+			this.url,
+			this.data.gallery_group_id,
+			this.data.gallery_group_data
+		);
+		this.data.team_members = new TeamMember.TeamMemberFactory(
+			this.data.team_members,
+      this.schema.team_members,
+			this.url + '/team-members'
+		);
 
     this.data = Object.seal(this.data);
     for(let key in this.data) {
@@ -51,18 +61,42 @@ class Campaign {
   }
 
   toJSON() {
-    return this.data;
+    let data = Object.assign({}, this.data);
+		if (data.investor_presentation_file_id) {
+			data['investor_presentation_file_id'] = this.data.investor_presentation_file_id.id;
+		}
+		if (data.list_image_image_id) {
+			data['list_image_image_id'] = data.list_image_image_id.id;
+		}
+		if (this.data.header_image_image_id) {
+			data['header_image_image_id'] = data.header_image_image_id.id;
+		}
+		if (this.data.gallery_group_id) {
+			data['gallery_group_id'] = data.gallery_group_id.id;
+		}
+		if (this.data.team_members.members.length > 0) {
+			data.team_members = this.data.team_members.toJSON();
+		}
+    return data;
   }
 
   daysLeft(dateTo) {
     return moment(this.expiration_date).diff(moment(), 'days');
   }
 
-  daysLeftPercentage(data) {
-    let daysToExpirate = moment(data.campaign.expiration_date).diff(moment(), 'days');
-    return Math.round(
-      (moment(data.campaign.expiration_date).diff(data.approved_date, 'days') - daysToExpirate) * 100 / daysToExpirate
-    );
+  daysPassedPercentage(approved_date) {
+    let now = moment();
+    let expirationDate = moment.isMoment(this.expiration_date)
+      ? this.expiration_data
+      : moment(this.expiration_date);
+    let approvedDate = moment.isMoment(approved_date)
+      ? approved_date
+      : moment.utc(approved_date);
+
+    let daysPassedPercents = Math.round(now.diff(approvedDate, 'days') / expirationDate.diff(approvedDate, 'days') * 100);
+    if (daysPassedPercents < 0) daysPassedPercents = 0;
+    if (daysPassedPercents > 100) daysPassedPercents = 100;
+    return daysPassedPercents;
   }
 
   percentage(n, total) {
@@ -82,7 +116,8 @@ class Campaign {
   }
 
   getMainImage () {
-    const link = this.header_image_data && this.header_image_data.urls ? this.header_image_data.urls.main : '';
+    const link = this.header_image_data && this.header_image_data.urls ? 
+      this.header_image_image_id.getUrl('main') : '';
     return link;
   }
 
@@ -99,6 +134,16 @@ class Campaign {
     i.cancelled = _.contains(CANCELLED_STATUSES, i.status);
     i.historical = i.expired || i.cancelled;
     i.active = !i.historical  && _.contains(ACTIVE_STATUSES, i.status);
+  }
+
+  getInvestorPresentationURL() {
+    if (!this.investor_presentation_data ||
+        !this.investor_presentation_data.urls ||
+        !this.investor_presentation_data.urls.origin
+    )
+      return '';
+
+    return app.getFilerUrl(this.investor_presentation_data.urls);
   }
 }
 

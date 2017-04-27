@@ -1,4 +1,4 @@
-.row
+.row.fileContainer
   .col-xl-12.one-photo
     if file.file.id
       .delete-image-container
@@ -6,6 +6,6 @@
           i.fa.fa-crop
         a(href="#").delete-image.deleteFile
           i.fa.fa-times
-      img(class=("w-100 img-" + name) src=file.file.getUrl('305x205', '255x153.png'))
+      img(class=("w-100 img-" + file.fieldName) src=file.file.getUrl())
     else
-      img(class=("w-100 img-" + name) src=file.getDefaultImage())
+      img(class=("w-100 img-" + file.fieldName) src=file.getDefaultImage())

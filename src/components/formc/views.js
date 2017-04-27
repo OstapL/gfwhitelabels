@@ -1,5 +1,3 @@
-'use strict';
-
 const typeOfDocuments = require('consts/typeOfDocuments.json');
 const companyFees = require('consts/companyFees.json');
 const formcHelpers = require('./helpers.js');
@@ -147,7 +145,7 @@ module.exports = {
         template: listingAgreement
       }];
 
-      app.makeRequest(reqUrl, 'POST', data, {
+      api.makeRequest(reqUrl, 'POST', data, {
         contentType: 'application/json; charset=utf-8',
         crossDomain: true,
       })
@@ -879,7 +877,6 @@ module.exports = {
     },
 
     submit(e) {
-      debugger;
       var $target = $(e.target.currentTarget);
       var data = $target.serializeJSON();
       data.use_of_net_proceeds.forEach(function (elem) {
@@ -904,11 +901,12 @@ module.exports = {
           maxRaise: this.campaign.maximum_raise,
           minRaise: this.campaign.minimum_raise,
           campaignId: this.campaign.id,
+          view: this
         })
       );
       this.$('.max-total-use,.min-total-use').popover({
         html: true,
-        template: '<div class="popover" role="tooltip" style="border-color:red;width:170px;"><div class="popover-arrow" style="border-right-color:red;"></div><h3 class="popover-title"></h3><div class="popover-content" style="color:red;"></div></div>'
+        template: '<div class="popover  divPopover"  role="tooltip"><span class="popover-arrow"></span> <h3 class="popover-title"></h3> <span class="icon-popover"><i class="fa fa-info-circle" aria-hidden="true"></i></span> <span class="popover-content"> XXX </span></div>'
       });
 
       this.$('.min-expense,.max-expense,.min-use,.max-use').each(function (idx, elem) {
@@ -917,7 +915,6 @@ module.exports = {
       });
 
       this.calculate(null, false);
-      setTimeout(() => { this.createDropzones() } , 1000);
       app.helpers.disableEnter.disableEnter.call(this);
       raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
@@ -1463,7 +1460,7 @@ module.exports = {
                 'insurance policies with respect to the death or disability of those ' +
                 'individuals. Therefore, in the event that any of the Company\'s employees ' +
                 'die or become disabled, the Company will not receive any insurance proceeds as ' +
-                'compensation for such person\s absence. The loss of such person could ' +
+                'compensation for such person\'s absence. The loss of such person could ' +
                 'negatively affect the Company and its operations.',
         },
         3: {
@@ -1711,11 +1708,7 @@ module.exports = {
     },
 
     initialize(options) {
-      this.model = new Formc(
-        this.urlRoot.replace(':id', options.formc.id),
-        options.formc,
-        options.fields
-      );
+      this.model = options.formc;
       this.fields = options.fields;
       this.campaign = options.campaign;
       this.labels = {
@@ -1764,7 +1757,7 @@ module.exports = {
           templates: this.jsonTemplates,
         })
       );
-      setTimeout(() => { this.createDropzones() } , 1000);
+      // setTimeout(() => { this.createDropzones() } , 1000);
       app.helpers.disableEnter.disableEnter.call(this);
       raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
@@ -2091,6 +2084,10 @@ module.exports = {
     initialize(options) {
       this.formcId = options.formcId;
       this.fields = options.fields;
+
+      // this.model = options.formc;
+      // this.model.campaign = options.campaign;
+
       app.helpers.disableEnter.disableEnter.call(this);
     },
     events: {
@@ -2334,6 +2331,7 @@ module.exports = {
         template({
           fields: this.fields,
           formcId: this.formcId,
+          view: this,
           values: {
             company: app.user.company,
             campaign: app.user.campaign,
