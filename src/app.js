@@ -32,11 +32,6 @@ class App {
       if (app.config.googleTagID) {
         this.initFacebookPixel();
         this.initYandexMetrica();
-        this.initGoogleAnalytics();
-      }
-
-      if(app.config.googleTagIdGeneral || app.config.googleTagId) {
-       this.initFacebookPixel();
       }
 
       this.routers = new Router();
@@ -64,38 +59,37 @@ class App {
     });
   }
 
-  initGoogleAnalytics() {
-    safeDataLayerPush({
-      event: 'google-analytics-init',
-      gaID: app.config.googleAnalyticsID,
-      gaIDGeneral: app.config.googleAnalyticsIDGeneral,
-    });
-  }
-
   initYandexMetrica() {
+    if (!app.config.googleTagID || !app.config.yandexMetricaID)
+      return;
+
     safeDataLayerPush({
       event: 'yandex-metrica-init',
-      yandexMetricaID: app.config.yandexMetricaID,
     })
   }
 
   emitYandexMetricaEvent() {
+    if (!app.config.googleTagID || !app.config.yandexMetricaID)
+      return;
+
     safeDataLayerPush({
       event: 'yandex-metrica-hit',
-      eventCategory: '',
-      eventAction: '',
-      eventLabel: '',
-      eventValue: '',
     });
   }
 
   initFacebookPixel() {
+    if (!app.config.googleTagID || !app.config.facebookPixelID)
+      return;
+
     safeDataLayerPush({
       event: 'fb-pixel-init'
     });
   }
 
   emitFacebookPixelEvent(eventName='ViewContent', params={}) {
+    if (!app.config.googleTagID || !app.config.facebookPixelID)
+      return;
+
     const STANDARD_EVENTS = [
       'ViewContent',
       'Search',
@@ -118,6 +112,9 @@ class App {
   }
 
   emitGoogleAnalyticsEvent(eventName, params={}) {
+    if (!app.config.googleTagID)
+      return;
+
     if (!eventName)
       return console.error('eventName is not set');
 
@@ -130,6 +127,9 @@ class App {
   }
 
   emitCompanyAnalyticsEvent(trackerId) {
+    if (app.config.googleTagID)
+      return;
+
     if (!trackerId)
       return;
 
