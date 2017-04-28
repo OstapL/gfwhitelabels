@@ -27,5 +27,11 @@ module.exports = {
 
   googleMapKey: "AIzaSyBpCl9-7bkVISZ0o-AaFCsKzZwGAxalkZU",
   stripeKey: "pk_test_Z7YAhlyPtnW7bpd8LJUHTSou",
-  googleTagId: 'GTM-WP7K455',
+
+  //analytics services settings
+  googleTagID: 'GTM-WP7K455',
+  googleAnalyticsID: 'UA-97185485-1',
+  googleAnalyticsIDGeneral: 'UA-97185485-3',
+  facebookPixelID: 1020185798119090,
+  yandexMetricaID: 44164214,
 };

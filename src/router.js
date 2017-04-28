@@ -47,9 +47,10 @@ module.exports = Backbone.Router.extend(_.extend({
   },
 
   execute(callback, args, name) {
-    if(app.config.googleTagIdGeneral || app.config.googleTagId) {
-      app.emitFacebookPixelEvent();
-    }
+    //as we send custom events to pixel default events we will sent explicitly
+    app.emitFacebookPixelEvent();
+    //metrica stats are tracked in GTM
+    // app.emitYandexMetricaEvent();
 
     app.clearClasses('#page', ['page']);
 
