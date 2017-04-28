@@ -85,8 +85,11 @@ class File {
 
   getUrl(name, fallback='') {
     if(this.urls.hasOwnProperty(name)) {
-      debugger;
-      return app.sites[this.site_id] + this.urls[name];
+      if(this.urls[name].startsWith('http')) {
+        return this.urls[name];
+      } else {
+        return app.sites[this.site_id] + this.urls[name];
+      }
     }
     return '/img/default/' + fallback;
   }
