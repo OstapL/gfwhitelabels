@@ -46,6 +46,7 @@ function getOCCF(optionsR, viewName, params = {}, View) {
 
 module.exports = {
   routes: {
+    'raise-capital': 'landing',
     'company/create': 'company',
     'company/in-review': 'inReview',
     'campaign/:id/general_information': 'generalInformation',
@@ -56,7 +57,21 @@ module.exports = {
     'campaign/:id/perks': 'perks',
   },
   methods: {
+    landing() {
+      let view = require('./templates/landing.pug');
+      document.getElementById('content').innerHTML = view();
+      app.hideLoading();
+    },
+
     company() {
+
+      if(app.user.data.info.length == 0 &&
+          app.getParams().nolanding != 1 &&
+          window.location.pathname != '/raise-capital') {
+        app.routers.navigate('/raise-capital', {trigger: true, replace: false});
+        return false;
+      }
+
       require.ensure([], () => {
         const View = require('components/raiseFunds/views.js');
 
@@ -163,5 +178,15 @@ module.exports = {
       });
     },
   },
-  auth: '*',
+  auth: [
+    'company',
+    'inReview,',
+    'inReview',
+    'generalInformation',
+    'media',
+    'teamMembersAdd1',
+    'teamMembers1',
+    'specifics',
+    'perks',
+  ]
 };

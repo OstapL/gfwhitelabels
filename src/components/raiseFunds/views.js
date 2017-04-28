@@ -25,8 +25,8 @@ module.exports = {
       app.helpers.social.events,
     ),
 
-    appendHttpsIfNecessary(e) {
-      appendHttpIfNecessary(e, true);
+    appendHttpIfNecessary(e) {
+      appendHttpIfNecessary(e, false);
     },
 
     initialize(options) {

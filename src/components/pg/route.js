@@ -3,7 +3,6 @@ const templateMap = {
   'investor-tutorial': 'investor_tutorial',
   'business-tutorial': 'business_tutorial',
   'success-guide': 'success_guide',
-  'raise-landing': 'raise_landing',
   'terms-of-use': 'terms_of_use',
   'privacy-policy': 'privacy_policy',
   'annual-privacy': 'annual_privacy',
@@ -261,11 +260,6 @@ module.exports = {
           }
 
           $elem.toggleClass('active');
-        });
-        // page raise- landing
-        $('#content').on('click', '.good-candidate a', function (event) {
-          $('#content').find('.good-candidate').addClass('active-opasity-hidden');
-          $('#content').find('.does-not').addClass('active-opasity');
         });
       });
     },
