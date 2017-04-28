@@ -164,9 +164,24 @@ section.home-what-is
   .height-block.cover-img.main-section-raise.object
     h1.trans-center aldjlakwjdlakw
 
-section.height-block.posr.scroll-tesr
-  img(src=require("images/main-bg-section-one.jpg") alt="awd")
-  h1.trans-center aldjlakwjdlakw
+section.height-block-banner.scroll-paralax
+  - var styleString = 'background: url(' + require('images/main-bg-section-raise.jpg') + ')';
+  div(style=styleString + '; height:500px').background
+  .center-wrap
+    .col-xl-12
+      h2.dosis.text-uppercase.m-t-0  Raise capital with us
+      h3 Now you can turn your customers
+        br
+        | into owners, who can become your brand
+        br
+        | ambassadors and evangelists
+    .col-xl-12
+      if app.user.is_anonymous()
+        a(href="/pg/raise-landing").btn.btn-lg.btn-primary.text-uppercase raise capital
+      else
+        a(href="/company/create").btn.btn-lg.btn-primary.text-uppercase raise capital
+      a(href="/pg/entrepreneurquestions").btn.btn-lg.btn-secondary.text-uppercase learn more
+
 section.home-our-partners
   .container
     .row

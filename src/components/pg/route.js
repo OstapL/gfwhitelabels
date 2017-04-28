@@ -58,6 +58,14 @@ module.exports = {
               1000: { items: 1 },
             },
           });
+          
+          $(window).scroll(function() {
+            var st = $(this).scrollTop() /20;
+
+            $(".scroll-paralax .background").css({
+              "transform" : "translate3d(0px, -" + st /2 + "%, .01px)"
+            });
+          });
           // video main page
           $( document ).ready(function() {
 

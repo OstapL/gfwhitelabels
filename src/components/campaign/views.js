@@ -275,7 +275,13 @@ module.exports = {
         };
 
       }, 1200);
+      $(window).scroll(function() {
+            var st = $(this).scrollTop() /20;
 
+            $(".scroll-paralax .background").css({
+              "transform" : "translate3d(0px, " + st /2 + "%, .01px)"
+            });
+          });
       this.$el.find('.perks .col-xl-4 p').equalHeights();
       this.$el.find('.team .auto-height').equalHeights();
       this.$el.find('.card-inverse p').equalHeights();
