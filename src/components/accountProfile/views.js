@@ -42,7 +42,7 @@ module.exports = {
     urlRoot: app.config.authServer + '/rest-auth/data',
     doNotExtendModel: true,
     events: _.extend({
-      'click #saveAccountInfo': 'saveAccountInfo',
+      'click #saveAccountInfo': api.submitAction,
       // 'click #saveFinancialInfo': api.submitAction,
       'change #not-qualify': 'changeQualify',
       'change .investor-item-checkbox': 'changeAccreditedInvestorItem',
@@ -208,8 +208,6 @@ module.exports = {
 
       this._initSliders();
 
-      // this.onImageCrop();
-
       this.cityStateArea = this.$('.js-city-state');
       this.cityField = this.$('.js-city');
       this.stateField = this.$('.js-state');
@@ -237,24 +235,6 @@ module.exports = {
       } else {
         this.$('input[name=accredited_investor_choice]').val(true);
       }
-    },
-
-    onImageCrop(name) {
-      name = name || 'image_image_id';
-      let url = this.model.image_image_id.getUrl();
-      if (url) {
-        document.getElementById('user-thumbnail').src = url;
-      }
-
-    },
-
-    onImageDelete(name) {
-      $('.user-info-name > span').empty().append('<i class="fa fa-user">');
-    },
-
-    saveInfo(e) {
-      let data = _.pick(this.model, ['image_image_id', 'image_data']);
-      return api.submitAction.call(this, e, data);
     },
 
     appendHttpsIfNecessary(e) {
