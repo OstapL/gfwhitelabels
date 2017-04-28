@@ -87,20 +87,31 @@ class User {
 
     this.next = null;
 
-    if(data.hasOwnProperty('token') && data.hasOwnProperty('info')) {
-      this.data = data;
-      this.updateLocalStorage();
+    if(data.hasOwnProperty('token')) {
+      let a = '';
+      if(data.hasOwnProperty('info') == false) {
+        a = api.makeRequest(app.config.authServer + '/info',  'GET'); //.done(() => {
+      }
+      $.when(a).done((responseData) => {
+        if(responseData) {
+          // we need to rerender menu
+          this.data = responseData;
+        } else {
+          this.data = data;
+        }
+        this.updateLocalStorage();
 
-      app.cookies.set('token', data.token, {
-        domain: '.' + app.config.domainUrl,
-        expires: YEAR,
-        path: '/',
+        app.cookies.set('token', data.token, {
+          domain: '.' + app.config.domainUrl,
+          expires: YEAR,
+          path: '/',
+        });
+
+        delete data.token;
+        setTimeout(function() {
+          window.location = next;
+        }, 200);
       });
-
-      delete data.token;
-      setTimeout(function() {
-        window.location = next;
-      }, 200);
     } else {
       alert('no token or additional info providet');
     }
