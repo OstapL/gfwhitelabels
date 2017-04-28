@@ -1,6 +1,10 @@
 - var GENERAL = require('consts/general.json');
 
 section.slider-main
+  .heartland-tour-in-main(style="display:none")
+    p GrowthFountain is coming to your town. 
+      a(href="/pg/heartland-tour") Apply Now
+      |  to present your fundraise live!
   .owl-carousel.owl-theme.carousel-test
     div
       - var styleString = 'background: url(' + require('images/slide_5.png') + ')';
@@ -138,8 +142,8 @@ section.home-what-is
               data-allowfullscreen=""
             )
             
-section.home-wrap-text-block.raise-wrap.hide-bg-fixed.main-section-raise
-  .opasity-block
+//section.home-wrap-text-block.raise-wrap.hide-bg-fixed.main-section-raise
+  .opasity-block.object
     .container.text-lg-center.text-xs-center
       .wrap
         .col-lg-6.offset-lg-3
@@ -155,6 +159,29 @@ section.home-wrap-text-block.raise-wrap.hide-bg-fixed.main-section-raise
           else
             a(href="/company/create").btn.btn-lg.btn-primary.text-uppercase raise capital
           a(href="/pg/entrepreneurquestions").btn.btn-lg.btn-secondary.text-uppercase learn more
+
+//section.posr
+  .height-block.cover-img.main-section-raise.object
+    h1.trans-center aldjlakwjdlakw
+
+section.height-block-banner.scroll-paralax
+  - var styleString = 'background: url(' + require('images/main-bg-section-raise.jpg') + ')';
+  div(style=styleString + '; height:500px').background
+  .center-wrap
+    .col-xl-12
+      h2.dosis.text-uppercase.m-t-0  Raise capital with us
+      h3 Now you can turn your customers
+        br
+        | into owners, who can become your brand
+        br
+        | ambassadors and evangelists
+    .col-xl-12
+      if app.user.is_anonymous()
+        a(href="/pg/raise-landing").btn.btn-lg.btn-primary.text-uppercase raise capital
+      else
+        a(href="/company/create").btn.btn-lg.btn-primary.text-uppercase raise capital
+      a(href="/pg/entrepreneurquestions").btn.btn-lg.btn-secondary.text-uppercase learn more
+
 section.home-our-partners
   .container
     .row

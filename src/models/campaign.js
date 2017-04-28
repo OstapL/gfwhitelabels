@@ -19,9 +19,14 @@ class Campaign {
     // data - file data
     //
 
-    this.data = data;
+    this.data = data || {};
     this.schema = schema;
-    this.url = url || app.config.raiseCapitalServer + '/campaign/' + data.id;
+
+    if(data && data.id) {
+      this.url = url || app.config.raiseCapitalServer + '/campaign/' + data.id;
+    } else {
+      this.url = url || app.config.raiseCapitalServer + '/campaign';
+    }
 
 		this.data['investor_presentation_file_id'] = new File(
 			this.url,
@@ -79,11 +84,19 @@ class Campaign {
     return moment(this.expiration_date).diff(moment(), 'days');
   }
 
-  daysLeftPercentage(approved_date) {
-    let daysToExpirate = moment(this.expiration_date).diff(moment(), 'days');
-    return Math.round(
-      (moment(this.expiration_date).diff(approved_date, 'days') - daysToExpirate) * 100 / daysToExpirate
-    );
+  daysPassedPercentage(approved_date) {
+    let now = moment();
+    let expirationDate = moment.isMoment(this.expiration_date)
+      ? this.expiration_data
+      : moment(this.expiration_date);
+    let approvedDate = moment.isMoment(approved_date)
+      ? approved_date
+      : moment.utc(approved_date);
+
+    let daysPassedPercents = Math.round(now.diff(approvedDate, 'days') / expirationDate.diff(approvedDate, 'days') * 100);
+    if (daysPassedPercents < 0) daysPassedPercents = 0;
+    if (daysPassedPercents > 100) daysPassedPercents = 100;
+    return daysPassedPercents;
   }
 
   percentage(n, total) {
@@ -121,6 +134,16 @@ class Campaign {
     i.cancelled = _.contains(CANCELLED_STATUSES, i.status);
     i.historical = i.expired || i.cancelled;
     i.active = !i.historical  && _.contains(ACTIVE_STATUSES, i.status);
+  }
+
+  getInvestorPresentationURL() {
+    if (!this.investor_presentation_data ||
+        !this.investor_presentation_data.urls ||
+        !this.investor_presentation_data.urls.origin
+    )
+      return '';
+
+    return app.getFilerUrl(this.investor_presentation_data.urls);
   }
 }
 

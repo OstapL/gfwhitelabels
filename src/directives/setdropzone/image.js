@@ -4,7 +4,11 @@ const defaultImage = '/img/default/255x153.png';
 
 class ImageElement extends file.FileElement {
   getTemplate() {
-    return require('./templates/image.pug');
+    if(this.options.templateImage) {
+      return require('./templates/' + this.options.templateImage);
+    } else {
+      return require('./templates/image.pug');
+    }
   }
 
   getDefaultImage() {
@@ -23,7 +27,7 @@ class ImageElement extends file.FileElement {
           this,
           this,
           this.options,
-        ).render($(this.element).parents('.dropzoneContainer')[0].parentElement);
+        ).render($(this.element).closest('.dropzone')[0]);
         return false;
       });
     });
@@ -77,20 +81,24 @@ class ImageDropzone extends file.FileDropzone {
   }
 
   success(file, data) {
-    const reorgData = {};
-    reorgData.id = data[2].id;
-    reorgData.name = data[2].name;
-    reorgData.mime = data[2].mime;
-    reorgData.site_id = app.sites.getId(),
-    reorgData.urls = {};
-    reorgData.urls.origin = this.fileElement.fixUrl(data[2].urls[0]);
-    reorgData.urls.main = this.fileElement.fixUrl(data[1].urls[0]);
-
-    if(this.cropperOptions.resize) {
-      var cropName = this.cropperOptions.resize.width + 'x' + this.cropperOptions.resize.height;
-      reorgData.urls[cropName] = this.fileElement.fixUrl(data[0].urls[0]);
+    const reorgData = {
+      urls: {}
     };
+    data.forEach((image) => {
+      if(image.name.indexOf('_c_') != -1) {
+        reorgData.urls.main = this.fileElement.fixUrl(image.urls[0]);
+      } else if(image.name.indexOf('_r_') != -1) {
+        var cropName = this.cropperOptions.resize.width + 'x' + this.cropperOptions.resize.height;
+        reorgData.urls[cropName] = this.fileElement.fixUrl(image.urls[0]);
+      } else {
+        reorgData.id = image.id;
+        reorgData.name = image.name;
+        reorgData.mime = image.mime;
+        reorgData.urls.origin = this.fileElement.fixUrl(image.urls[0]);
+      }
+    });
 
+    reorgData.site_id = app.sites.getId(),
     this.fileElement.update(reorgData);
     // this.model[this.fileElement.fieldName] = reorgData.id;
     this.model[this.fileElement.fieldDataName] = reorgData;
@@ -98,7 +106,7 @@ class ImageDropzone extends file.FileDropzone {
       this,
       this.fileElement,
       this.cropperOptions
-    ).render(this.element);
+    ).render($(this.element).closest('.dropzone')[0]);
   }
 }
 
@@ -205,9 +213,9 @@ class CropperDropzone {
           'tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">' +
         '<div class="modal-dialog" role="document">' +
           '<div class="modal-content">' +
-            '<div class="modal-header p-t-0">' +
+            '<div class="modal-header">' +
               '<button type="button" class="close" data-dismiss="modal" aria-label="Close">' +
-                '<span aria-hidden="true">&times;</span> ' +
+                '<span aria-hidden="true"><i class="fa fa-times"> </i></span> ' +
               '</button>' +
               '<h4 class="modal-title" id="exampleModalLabel"></h4>' +
             '</div>' +
@@ -233,13 +241,20 @@ class CropperDropzone {
     let img = new Image();
     var self = this;
     this.$modal = $('.cropModal');
-    this.$modal.modal({
+    
+    self.$modal.modal({
       backdrop: 'static',
       keyboard: false
     });
 
+    self.$modal.on('hidden.bs.modal', function (e) {
+      return false;
+    });
+
     img.addEventListener("load", function() {
-      //self.$modal.on('shown.bs.modal', () => {
+      setTimeout(() => {
+      // self.$modal.on('shown.bs.modal', () => {
+
         self.cropper = new Cropper(this, self.options.control);
         const cropData = self.options.auto ? _.extend({x: 0, y: 0}, self.options.auto) : null;
         self.$modal.modal('show');
@@ -247,12 +262,9 @@ class CropperDropzone {
           self.cropper.setData(cropData);
         }
 
-        self.$modal.on('hidden.bs.modal', function (e) {
-          return false;
-        });
-
         self.attacheEvents();
-      //});
+      // });
+      }, 400);
       self.$modal.modal('show');
     }, false);
 
@@ -274,17 +286,17 @@ class CropperDropzone {
       cropData.x = cropData.x < 0 ? 0 : cropData.x;
       cropData.y = cropData.y < 0 ? 0 : cropData.y;
 
-      cropData.width = cropData.width > maxWidth ? maxWidth : cropData.width;
-      cropData.height = cropData.height > maxHeight ? maxHeight : cropData.height;
-      cropData.name = this.options.auto.width + 'x' + this.options.auto.height + '.' + this.file.file.getExtention(),
+      cropData.width = cropData.width + cropData.x > maxWidth ? maxWidth-cropData.x : cropData.width;
+      cropData.height = cropData.height + cropData.y > maxHeight ? maxHeight-cropData.y : cropData.height;
+      cropData.name = this.options.auto.width + 'x' + this.options.auto.height + '.' + this.file.file.getExtention();
 
       data.file_name = cropData.width + 'x' + cropData.height + '.' + this.file.file.getExtention();
       data.id = this.file.file.id;
       data.crop = cropData;
       data.resize = {
         name: this.options.resize.width + 'x' + this.options.resize.height + '.' + this.file.file.getExtention(),
-        width: this.options.resize.width - 1,
-        height: this.options.resize.height - 1,
+        width: this.options.resize.width,
+        height: this.options.resize.height,
       };
 
       api.makeRequest(
@@ -294,23 +306,24 @@ class CropperDropzone {
       ).done((responseData) => {
 
         let thumbSize = '';
-        this.file.file.urls.main = this.file.fixUrl(responseData[0].urls[0]);
-        if(this.options.resize) {
-          thumbSize = this.options.resize.width + 'x' + this.options.resize.height;
-          this.file.file.urls[thumbSize] = this.file.fixUrl(responseData[1].urls[0]);
-        }
+        responseData.forEach((image) => {
+          if(image.name.indexOf(this.options.auto.width + 'x' + this.options.auto.height) != -1) {
+            this.file.file.urls.main = this.file.fixUrl(image.urls[0]);
+          } else if(this.options.resize && image.name.indexOf(this.options.resize.width + 'x' + this.options.resize.height) != -1) {
+            thumbSize = this.options.resize.width + 'x' + this.options.resize.height;
+            this.file.file.urls[thumbSize] = this.file.fixUrl(image.urls[0]);
+          }
+        });
 
         if (this.element.querySelector('#name')) {
           this.file.file.name = this.element.querySelector('#name').value;
         }
 
-        this.file.save().done(() => {
-          if(this.options.resize) { 
-            this.file.element.querySelector('img').src = this.file.file.getUrl(thumbSize);
-          } else {
-            this.file.element.querySelector('img').src = this.file.file.getUrl('main');
-          }
+        this.file.update(this.file.file).done(() => {
           this.$modal.modal('hide');
+          setTimeout(() => {
+            this.$modal.remove();
+          }, 400);
         });
       });
 

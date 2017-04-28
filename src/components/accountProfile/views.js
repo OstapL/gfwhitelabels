@@ -6,7 +6,8 @@ const today = moment.utc();
 // ToDo
 // Refactor, this consts shouden't be here
 const FINANCIAL_INFORMATION = require('consts/financialInformation.json');
-const FINANCIAL_INFO = require('consts/financialInformation.json');                
+const FINANCIAL_INFO = require('consts/financialInformation.json');
+const FEES = require('consts/raisecapital/companyFees.json');
 const ACTIVE_STATUSES = FINANCIAL_INFO.INVESTMENT_STATUS_ACTIVE;                   
 const CANCELLED_STATUSES = FINANCIAL_INFO.INVESTMENT_STATUS_CANCELLED;   
 
@@ -21,18 +22,18 @@ const socialNetworksMap = {
 };
 
 function initInvestment(i) {
-	i.created_date = moment.isMoment(i.created_date)
-		? i.created_date
-		: moment.parseZone(i.created_date);
+  i.created_date = moment.isMoment(i.created_date)
+    ? i.created_date
+    : moment.parseZone(i.created_date);
 
-	i.campaign.expiration_date = moment.isMoment(i.campaign.expiration_date)
-		? i.campaign.expiration_date
-		: moment(i.campaign.expiration_date);
+  i.campaign.expiration_date = moment.isMoment(i.campaign.expiration_date)
+    ? i.campaign.expiration_date
+    : moment(i.campaign.expiration_date);
 
-	i.expired = i.campaign.expiration_date.isBefore(today);
-	i.cancelled = _.contains(CANCELLED_STATUSES, i.status);
-	i.historical = i.expired || i.cancelled;
-	i.active = !i.historical  && _.contains(ACTIVE_STATUSES, i.status);
+  i.expired = i.campaign.expiration_date.isBefore(today);
+  i.cancelled = _.contains(CANCELLED_STATUSES, i.status);
+  i.historical = i.expired || i.cancelled;
+  i.active = !i.historical && _.contains(ACTIVE_STATUSES, i.status);
 }
 
 module.exports = {
@@ -41,7 +42,7 @@ module.exports = {
     urlRoot: app.config.authServer + '/rest-auth/data',
     doNotExtendModel: true,
     events: _.extend({
-      'click #saveAccountInfo': 'saveAccountInfo',
+      'click #saveAccountInfo': api.submitAction,
       // 'click #saveFinancialInfo': api.submitAction,
       'change #not-qualify': 'changeQualify',
       'change .investor-item-checkbox': 'changeAccreditedInvestorItem',
@@ -55,6 +56,7 @@ module.exports = {
 
     initialize(options) {
       this.activeTab = options.activeTab;
+      this.model = options.model.data;
 
       this.fields = options.fields;
 
@@ -64,13 +66,8 @@ module.exports = {
 
       this.fields.image_image_id = _.extend(this.fields.image_image_id, {
         templateDropzone: 'profileDropzone.pug',
-        onSaved: (r) => {
-          this.el.querySelector('.img-image_image_id').src = r.file.getUrl('main');
-          document.getElementById('user-thumbnail').src = r.file.getUrl();
-          let userCache = JSON.parse(localStorage.getItem('user'));
-          userCache['image_data'] = app.user.data.image_data;
-          localStorage.setItem('user', JSON.stringify(userCache));
-          return true;
+        onSaved: (data) => {
+          app.user.updateImage(data.file);
         },
         crop: {
           control:  {
@@ -85,7 +82,8 @@ module.exports = {
             height: 50,
           },
           cssClass: 'img-profile-crop',
-          template: 'withpreview'
+          template: 'withpreview',
+          templateImage: 'profileImage.pug'
         },
       });
 
@@ -210,8 +208,6 @@ module.exports = {
 
       this._initSliders();
 
-      this.onImageCrop();
-
       this.cityStateArea = this.$('.js-city-state');
       this.cityField = this.$('.js-city');
       this.stateField = this.$('.js-state');
@@ -239,26 +235,6 @@ module.exports = {
       } else {
         this.$('input[name=accredited_investor_choice]').val(true);
       }
-    },
-
-    onImageCrop(name) {
-      name = name || 'image_image_id';
-      let url = this.model.data.image_image_id.getUrl();
-      if (url) {
-        $('.user-info-name > span')
-          .empty()
-          .append('<img src="' + url + '" id="user-thumbnail"' + ' class="img-fluid img-circle">');
-      }
-
-    },
-
-    onImageDelete(name) {
-      $('.user-info-name > span').empty().append('<i class="fa fa-user">');
-    },
-
-    saveInfo(e) {
-      let data = _.pick(this.model, ['image_image_id', 'image_data']);
-      return api.submitAction.call(this, e, data);
     },
 
     appendHttpsIfNecessary(e) {
@@ -446,8 +422,16 @@ module.exports = {
       });
 
       this.snippets = {
-        investment: require('./templates/investment.pug'),
+        investment: require('./templates/snippets/investment.pug'),
+        creditSection: require('./templates/snippets/creditSection.pug'),
       };
+
+      //this is auth cookie for downloadable files
+      app.cookies.set('token', app.user.data.token, {
+        domain: '.' + app.config.domainUrl,
+        expires: 1000 * 60 * 60 * 24 * 30 * 12,
+        path: '/',
+      });
     },
 
     render() {
@@ -473,20 +457,15 @@ module.exports = {
           {
             mime: 'application/pdf',
             name: 'Subscription Agreement.pdf',
-            urls: [subscriptionAgreementLink],
+            urls: { origin: subscriptionAgreementLink },
           }, {
             mime: 'application/pdf',
             name: 'Participation Agreement.pdf',
-            urls: [participationAgreementLink],
+            urls: { origin: participationAgreementLink },
           },
         ],
       };
 
-      app.cookies.set('token', app.user.data.token, {
-        domain: '.' + app.config.domainUrl,
-        expires: YEAR,
-        path: '/',
-      });
       app.helpers.fileList.show(data);
     },
 
@@ -518,6 +497,19 @@ module.exports = {
         i.campaign.amount_raised -= investment.amount;
         this.$('[data-investmentid=' + i.id + ']').replaceWith(this.snippets.investment(i));
       });
+
+      //update available credit section
+      if (app.user.get('days_left') > 0 && investment.comission < FEES.fees_to_investor) {
+        let credit = app.user.get('credit');
+        let creditReturn = FEES.fees_to_investor - investment.comission;
+        credit += creditReturn;
+        app.user.set('credit', credit)
+        let $creditSection = this.$('.credit-investor');
+        if ($creditSection.length)
+          $creditSection.html(this.snippets.creditSection());
+        else
+          this.$('.investor-dashboard').before(this.snippets.creditSection());
+      }
     },
 
     //TODO: sort investments in dom on historical tab after cancel investment
@@ -540,7 +532,7 @@ module.exports = {
 
       api.makeRequest(app.config.investmentServer + '/' + id + '/decline', 'PUT').done((response) => {
         investment.status = FINANCIAL_INFORMATION.INVESTMENT_STATUS.CancelledByUser;
-        helpers.campaign.initInvestment(investment);
+        initInvestment(investment);
 
         $target.closest('.one_table').remove();
 

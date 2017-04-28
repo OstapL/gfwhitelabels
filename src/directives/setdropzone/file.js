@@ -34,9 +34,17 @@ class FileElement {
     });
 
     if(container !== null) {
-      container.innerHTML = this.resultHTML;
+      if(container == 'REPLACE' && this.element) {
+        this.element.parentNode.replaceChild(
+          document.createRange().createContextualFragment(this.resultHTML),
+          this.element
+        );
+      } else if(container != 'REPLACE') {
+        container.innerHTML = this.resultHTML;
+      }
     }
 
+    this.element = document.createRange().createContextualFragment(this.resultHTML);
     setTimeout(() => {
       // Fix
       // this.element = $(this.resultHTML)[0];
@@ -46,7 +54,7 @@ class FileElement {
       } else {
         console.debug('cannot find element ', this.elementSelector, this);
       }
-    }, 600);
+    }, 300);
 
     return this;
   }
@@ -59,7 +67,13 @@ class FileElement {
         this.delete();
       });
     });
-    
+    this.element.querySelectorAll('.link-file').forEach((item) => {
+      item.addEventListener("click", (event) => {
+        // event.preventDefault();
+        event.stopPropagation();
+        // return false;
+      });
+    });
   }
 
   getTemplate() {
@@ -82,7 +96,8 @@ class FileElement {
       if(callback) {
         callback(this)
       } else {
-        this.render(this.element);
+        // REPLACE
+        this.render('REPLACE');
       }
     }).fail((xhr) => {
       $(this.element).find('.uploading').hide().addClass('collapse').css('z-index', '');

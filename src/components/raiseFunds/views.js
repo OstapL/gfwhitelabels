@@ -38,8 +38,10 @@ module.exports = {
       this.fields.industry.validate.choices = require('consts/raisecapital/industry.json');
       this.fields.founding_state.validate.choices = require('consts/usaStatesChoices.json');
       this.fields.corporate_structure.validate.choices = require('consts/raisecapital/corporate_structure.json');
+      this.fields.tour.validate.choices = require('consts/raisecapital/tour.json').TOUR;
 
       this.labels = {
+        tour: 'Would You Like to Participate in The <a class="link-2" href="/pg/heartland-tour">Heartland Tour</a>',
         name: 'Legal Name of Company',
         short_name: 'Doing Business as Another Name?',
         industry: 'Industry',
@@ -69,7 +71,9 @@ module.exports = {
     },
 
     fixSlug(e) {
-      e.currentTarget.value = e.currentTarget.value.replace(/\s+/g,'-').replace(/[^a-zA-Z0-9\-]/g,'').toLowerCase();
+      if(e.currentTarget.value) {
+        e.currentTarget.value = e.currentTarget.value.replace(/\s+/g,'-').replace(/[^a-zA-Z0-9\-]/g,'').toLowerCase();
+      }
     },
 
     updateLocation(e) {
@@ -279,6 +283,9 @@ module.exports = {
         title: 'Drop your photo here or click to upload',
         help_text: 'This is the image that will appear at the top of your campaign. A minimum size of 1600x800 is recommended.',
         templateDropzone: 'headerMedia.pug',
+        onSaved: (data) => {
+          raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+        },
         crop: {
           control: {
             aspectRatio: 1600/800,
@@ -301,7 +308,7 @@ module.exports = {
             height: 800,
           },
           resize: {
-            width: 530,
+            width: 538,
             height: 272,
           },
           cssClass: 'img-crop',
@@ -312,6 +319,9 @@ module.exports = {
       this.fields.list_image_image_id = _.extend(this.fields.list_image_image_id, {
         title: 'Drop your photo here or click to upload',
         help_text: ' This image entices investors to view your campaign. A minimum size of 350x209 is recommended.',
+        onSaved: (data) => {
+          raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+        },
         crop: {
           control:  {
             aspectRatio: 350 / 209,
@@ -331,7 +341,10 @@ module.exports = {
 
       this.fields.gallery_group_id = _.extend(this.fields.gallery_group_id, {
         title: 'Drop your photo(s) here or click to upload',
-        help_text: 'We recommend uploading 6 images (minimum size of 530х317 is recommended) that represent your service of business. These images will be displayed in a gallery format.',
+        help_text: 'We recommend uploading 6 images (minimum size of 1024x612 is recommended) that represent your service of business. These images will be displayed in a gallery format.',
+        onSaved: (data) => {
+          raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+        },
         crop: {
           control: {
             aspectRatio: 1024 / 612,
@@ -426,22 +439,25 @@ module.exports = {
     }, app.helpers.confirmOnLeave.events, app.helpers.menu.events, app.helpers.dropzone.events),
     
     _success(data, postData, method) {
+      /*
       if (method == 'POST') {
         let TeamMember = require('models/teammembercampaign.js');
         this.campaign.team_members.members.push(
           new TeamMember.TeamMember(
             postData,
             this.campaign.schema.team_members.schema,
-            this.campaign.url + '/team_members/' + this.campaign.team_members.members.length)
+            this.campaign.url + '/team-members/' + this.campaign.team_members.members.length
+          )
         )
       }
       this.undelegateEvents();
       app.routers.navigate(
         '/campaign/' + this.campaign.id + '/team-members',
-        { trigger: true, replace: false }
+        {trigger: true, replace: false}
       );
+      */
+      window.location = '/campaign/' + this.campaign.id + '/team-members';
       return false;
-      // window.location = '/campaign/' + this.campaign.id + '/team-members';
     },
 
     preinitialize() {
@@ -456,7 +472,12 @@ module.exports = {
       let TeamMember = require('models/teammembercampaign.js');
       this.fields = options.fields.campaign.team_members.schema;
       this.fields.photo_image_id = _.extend(this.fields.photo_image_id, {
+        label: 'Profile Picture',
         help_text: 'A minimum size of 300x300 is recommended.',
+        onSaved: (data) => {
+          // delete newData.urlRoot;
+          api.makeRequest(this.urlRoot, 'PUT', this.model.toJSON());
+        },
         crop: {
           control:  {
             aspectRatio: 1 / 1,
@@ -638,6 +659,13 @@ module.exports = {
       this.fields.length_days.validate.choices = require('consts/raisecapital/length_days.json');
       this.fields.security_type.validate.choices = require('consts/raisecapital/security_type_options.json');
       this.fields.valuation_determination.validate.choices = require('consts/raisecapital/valuation_determination_options.json');
+      this.fields.investor_presentation_file_id = _.extend(this.fields.investor_presentation_file_id, {
+        label: 'Upload an Investor Presentation',
+        onSaved: (data) => {
+          raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+        },
+      });
+
       this.labels = {
         minimum_raise: 'Our Minimum Total Raise is',
         maximum_raise: 'Our Maximum Total Raise is',

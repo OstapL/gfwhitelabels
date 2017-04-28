@@ -13,14 +13,13 @@ section.issuer-dashbord-top
     .row
       .col-md-4
         .img_under_text
-          img(src=campaign.getMainImage() alt="")
+          img(src=campaign.list_image_image_id.getUrl() alt="")
           h2.text-uppercase.dosis.m-t-0 #{company.name}
           .timer_day #{campaign.daysLeft(company.approved_date)} Days Left
         .share-block.d-inline-block.share
           | !{ socialDirective.render(directiveKey, infoProvider) }
-
       .col-md-2.col-sm-6.col-xs-6
-        a(href="").dashboard-stat
+        .dashboard-stat
           .visual
             i.fa.fa-bar-chart
           .details
@@ -31,7 +30,7 @@ section.issuer-dashbord-top
             .desc Amount Raised
 
       .col-md-2.col-sm-6.col-xs-6
-        a(href="").dashboard-stat.dashboard-stat-v2.grey
+        .dashboard-stat.dashboard-stat-v2.grey
           .visual
             i.fa.fa-briefcase
           .details
@@ -39,10 +38,10 @@ section.issuer-dashbord-top
               span(
                 data-counter="counterup"
                 data-value=company.number_of_investors) #{company.number_of_investors.toLocaleString('en-US')}
-            .desc Number of Investors
+            .desc Number of Investments
 
       .col-md-2.col-sm-6.col-xs-6
-        a(href="").dashboard-stat.dashboard-stat-v2.grey
+        .dashboard-stat.dashboard-stat-v2.grey
           .visual
             i.fa.fa-users
           .details
@@ -53,7 +52,7 @@ section.issuer-dashbord-top
             .desc Page Views
 
       .col-md-2.col-sm-6.col-xs-6
-        a(href="").dashboard-stat.dashboard-stat-v2.grey
+        .dashboard-stat.dashboard-stat-v2.grey
           .visual
             i.fa.fa-comments
           .details
@@ -65,17 +64,15 @@ section.issuer-dashbord-top
 
       .col-md-7.col-sm-10.p-r-0.col-xs-10.hidden-xs-down
         .tpl-progress
-          - 
-            var percentage_raised = campaign.daysLeftPercentage(company.approved_date);
-            if(percentage_raised > 100) 
-              percentage_raised = 100;
+          -
+            var daysPassedPercents = campaign.daysPassedPercentage(company.approved_date);
           progress(
-            value=percentage_raised
-            max="100").progress.big_prog #{ percentage_raised }%
+            value=daysPassedPercents
+            max="100").progress.big_prog #{ daysPassedPercents }%
           span(
-            style="width:" + percentage_raised + "%").circle_progress
+            style="width:" + daysPassedPercents + "%").circle_progress
             i.fa.fa-circle-o
-          span(style="left:" + percentage_raised + "%").text_position
+          span(style="left:" +  (daysPassedPercents < 1 ? 1 : daysPassedPercents) + "%").text_position
             - var now = new Date();
             .font-weight-bold
               | #{now.toLocaleString('en-US', { month: "short" })} #{ now.getDate() }

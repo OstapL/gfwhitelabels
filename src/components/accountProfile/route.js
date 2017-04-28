@@ -69,12 +69,17 @@ module.exports = {
     setNewPassword() {
       require.ensure([], () => {
         $('body').scrollTo();
-        const View = require('./views.js');
-        const i = new View.setNewPassword({
-          el: '#content',
+        const fieldsR = api.makeCacheRequest(app.config.authServer + '/rest-auth/password/change', 'OPTIONS');
+        $.when(fieldsR).done((data) => {
+          const View = require('./views.js');
+          const i = new View.setNewPassword({
+            el: '#content',
+            //TODO: add fields from response
+            // fields: data[0].fields,
+          });
+          i.render();
+          app.hideLoading();
         });
-        i.render();
-        app.hideLoading();
       });
     },
 
@@ -83,9 +88,11 @@ module.exports = {
         const View = require('./views.js');
 
         const fieldsR = api.makeCacheRequest(app.config.investmentServer, 'OPTIONS');
+        const userDataR = api.makeCacheRequest(app.config.authServer + '/rest-auth/data');
         const dataR = api.makeCacheRequest(app.config.investmentServer);
 
-        Promise.all([fieldsR, dataR]).then((values) => {
+        Promise.all([fieldsR, dataR, userDataR]).then((values) => {
+          _.extend(app.user.data, values[2]);
           let i = new View.InvestorDashboard({
             fields: values[0].fields,
             model: values[1],
