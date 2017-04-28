@@ -19,10 +19,14 @@ module.exports = {
   googleClientId: '805823281871-ve3unmva9aer69papghudk0dnpf8tqr2.apps.googleusercontent.com',
   linkedinClientId: "77rg2wrcb8utfq",
 
+  googleMapKey: "AIzaSyBpCl9-7bkVISZ0o-AaFCsKzZwGAxalkZU",
+  stripeKey: "pk_test_Z7YAhlyPtnW7bpd8LJUHTSou",
 
-  googleMapKey: 'AIzaSyBpCl9-7bkVISZ0o-AaFCsKzZwGAxalkZU',
-  stripeKey: 'pk_live_4ZF2RPjAVJ0tXrDNMauofmgb',
-  googleTagIdGeneral: 'GTM-NC9XW5D',
-  googleTagId: 'GTM-56J4SSP',
-  yandexMetricaId: 42321779,
+  //analytics services settings
+  googleTagID: 'GTM-NC9XW5D',
+  googleAnalyticsID: 'UA-47199302-4',
+  googleAnalyticsIDGeneral: 'UA-47199302-1',
+  facebookPixelID: 172026009946228,
+  yandexMetricaID: 42321779,
+
 };
