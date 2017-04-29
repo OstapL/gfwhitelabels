@@ -14,9 +14,5 @@ mixin googleTag(id)
       'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','!{ id }');
 
-
-if config.googleTagIdGeneral
-  +googleTag(config.googleTagIdGeneral)
-
-if config.googleTagId
-  +googleTag(config.googleTagId)
+if config.googleTagID
+  +googleTag(config.googleTagID)

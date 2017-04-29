@@ -29,8 +29,9 @@ class App {
   start() {
     this.user.loadWithPromise().then(() => {
 
-      if(app.config.googleTagIdGeneral || app.config.googleTagId) {
-       this.initFacebookPixel();
+      if (app.config.googleTagID) {
+        this.initFacebookPixel();
+        this.initYandexMetrica();
       }
 
       this.routers = new Router();
@@ -58,13 +59,37 @@ class App {
     });
   }
 
+  initYandexMetrica() {
+    if (!app.config.googleTagID || !app.config.yandexMetricaID)
+      return;
+
+    safeDataLayerPush({
+      event: 'yandex-metrica-init',
+    })
+  }
+
+  emitYandexMetricaEvent() {
+    if (!app.config.googleTagID || !app.config.yandexMetricaID)
+      return;
+
+    safeDataLayerPush({
+      event: 'yandex-metrica-hit',
+    });
+  }
+
   initFacebookPixel() {
+    if (!app.config.googleTagID || !app.config.facebookPixelID)
+      return;
+
     safeDataLayerPush({
       event: 'fb-pixel-init'
     });
   }
 
   emitFacebookPixelEvent(eventName='ViewContent', params={}) {
+    if (!app.config.googleTagID || !app.config.facebookPixelID)
+      return;
+
     const STANDARD_EVENTS = [
       'ViewContent',
       'Search',
@@ -87,6 +112,9 @@ class App {
   }
 
   emitGoogleAnalyticsEvent(eventName, params={}) {
+    if (!app.config.googleTagID)
+      return;
+
     if (!eventName)
       return console.error('eventName is not set');
 
@@ -99,6 +127,9 @@ class App {
   }
 
   emitCompanyAnalyticsEvent(trackerId) {
+    if (app.config.googleTagID)
+      return;
+
     if (!trackerId)
       return;
 
