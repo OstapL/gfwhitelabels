@@ -29,7 +29,7 @@ class GeoCoder {
     if(!window.google || !window.google.maps) {
       let p = document.createElement("script");
       p.type = "text/javascript";
-      p.src = window.location.protocol + "//maps.google.com/maps/api/js?language=en&key=" + global.googleMapKey;
+      p.src = window.location.protocol + "//maps.google.com/maps/api/js?language=en&key=" + app.config.googleMapKey;
       $("head").append(p);
     }
 
@@ -48,7 +48,6 @@ class GeoCoder {
     this.resultHtml = this.template({
       fields: this.fields,
       values: this.values,
-      googleMapKey: global.googleMapKey
     });
     this.$resultHtml = $(this.resultHtml);
     this.attacheEvents();
@@ -105,8 +104,8 @@ class GeoCoder {
       if (cityStateElem)
         cityStateElem.innerHTML = city + ', ' + state;
 
-      this.view.model.city = city;
-      this.view.model.state = state;
+      // this.view.model.city = city;
+      // this.view.model.state = state;
       document.querySelector('#city').value = city;
       document.querySelector('#state').value = state;
     });

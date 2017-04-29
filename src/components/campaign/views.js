@@ -1,21 +1,11 @@
-const formatHelper = require('helpers/formatHelper');
-const textHelper = require('helpers/textHelper');
 const companyFees = require('consts/companyFees.json');
 const typeOfDocuments = require('consts/typeOfDocuments.json');
 
-const usaStates = require('helpers/usaStates.js');
-
-const helpers = {
-  text: textHelper,
-  icons: require('helpers/iconsHelper.js'),
-  format: formatHelper,
-  fileList: require('helpers/fileList.js'),
-  date: require('helpers/dateHelper.js'),
-  campaign: require('./helpers.js'),
-};
-
 const COUNTRIES = require('consts/countries.json');
 const validation = require('components/validation/validation.js');
+
+const CalculatorView = require('./revenueShareCalculator.js');
+
 
 module.exports = {
   list: Backbone.View.extend({
@@ -25,6 +15,11 @@ module.exports = {
       'change select.orderby': 'orderby',
     },
     initialize(options) {
+      let dataClass = [];
+      options.collection.data.forEach((el) => {
+        dataClass.push(new app.models.Company(el));
+      });
+      options.collection.data = dataClass;
       this.collection = options.collection;
     },
 
@@ -37,7 +32,6 @@ module.exports = {
       this.$el.html('');
       this.$el.append(
         this.template({
-          serverUrl: serverUrl,
           collection: this.collection,
         })
       );
@@ -68,6 +62,7 @@ module.exports = {
       'shown.bs.collapse #hidden-article-press' :'onArticlePressCollapse',
       'click .submit_form': 'submitCampaign',
       'click .company-documents': 'showDocumentsModal',
+      'click .show-video-modal': 'showVideoModal',
     },
 
     onCollapse (e) {
@@ -87,15 +82,6 @@ module.exports = {
       $(document).off("scroll", this.onScrollListener);
       $(document).on("scroll", this.onScrollListener);
 
-      let params = app.getParams();
-      this.edit = false;
-      if (params.preview == '1' && this.model.owner == app.user.get('id')) {
-        // see if owner match current user
-        this.edit = true;
-        this.previous = params.previous;
-      }
-      this.preview = params.preview ? true : false;
-
       this.companyDocsData = {
         title: 'Financials',
         files: this.model.formc
@@ -104,15 +90,17 @@ module.exports = {
           : []
       };
 
+      if (this.model.ga_id) {
+        app.emitCompanyAnalyticsEvent(this.model.ga_id);
+      }
     },
 
     submitCampaign(e) {
-
       api.makeRequest(
-        raiseCapitalServer + '/company/' + this.model.id + '/edit',
+        app.config.raiseCapitalServer + '/company/' + this.model.id,
         'GET'
       ).then(function(data) {
-        if(
+        if (
             data.progress.general_information == true &&
             data.progress.media == true &&
             data.progress.specifics == true &&
@@ -213,7 +201,7 @@ module.exports = {
 
     showDocumentsModal(e) {
       e.preventDefault();
-      helpers.fileList.show(this.companyDocsData);
+      app.helpers.fileList.show(this.companyDocsData);
     },
 
     render() {
@@ -222,15 +210,10 @@ module.exports = {
 
       this.$el.html(
         this.template({
-          serverUrl: serverUrl,
-          Urls: Urls,
           values: this.model,
-          formatHelper: formatHelper,
           edit: this.edit,
           previous: this.previous,
           preview: this.preview,
-          textHelper: textHelper,
-          helpers: helpers,
         })
       );
 
@@ -238,6 +221,26 @@ module.exports = {
         $('.nav-tabs li').removeClass('active');
         $(this).addClass('active');
       });
+
+      setTimeout(() => {
+        if (this.model.campaign.security_type == 1) { //enable calculator only for bluehollar company
+          (new CalculatorView.calculator()).render();
+        }
+      }, 100);
+
+      setTimeout(() => {
+
+        this.$('.fancybox').fancybox({
+          openEffect  : 'elastic',
+          closeEffect : 'elastic',
+
+          helpers : {
+            title : {
+              type : 'inside'
+            }
+          }
+        });
+      }, 100);
 
       setTimeout(() => {
         var stickyToggle = function(sticky, stickyWrapper, scrollElement) {
@@ -252,26 +255,6 @@ module.exports = {
             stickyWrapper.height('auto');
           }
         };
-
-        /*$('*[data-toggle="lightbox"]').click(function (e) {
-          e.preventDefault();
-          $(this).ekkoLightbox();
-        });*/
-        /*this.$el.delegate('*[data-toggle="lightbox"]', 'click', function(event) {
-          event.preventDefault();
-          // $(this).ekkoLightbox();
-          $(this).fancybox();
-        }); */
-        /*this.$('*[data-toggle="lightbox"]').fancybox({
-          openEffect  : 'elastic',
-          closeEffect : 'elastic',
-
-          helpers : {
-            title : {
-              type : 'inside'
-            }
-          }
-        });*/
 
         this.$el.find('[data-toggle="sticky-onscroll"]').each(function() {
           var sticky = $(this);
@@ -288,24 +271,17 @@ module.exports = {
           stickyToggle(sticky, stickyWrapper, $(window));
         });
 
-        this.initComments();
+        if(this.model.is_approved == 6) {
+          this.initComments();
+        };
 
-      }, 100);
+      }, 1200);
 
       this.$el.find('.perks .col-xl-4 p').equalHeights();
       this.$el.find('.team .auto-height').equalHeights();
       this.$el.find('.card-inverse p').equalHeights();
       this.$el.find('.modal').on('hidden.bs.modal', function(event) {
         $(event.currentTarget).find('iframe').attr('src', $(event.currentTarget).find('iframe').attr('src'));
-      });
-
-      //this.$('body').on('.click', '.show-more-members', function() {
-      //  $('.hide-more-detail').addClass('.show-more-detail');
-      // });
-      // $('*[data-toggle="lightbox"]').fancybox({
-      $('.fancybox').fancybox({
-        openEffect  : 'none',
-        closeEffect : 'none'
       });
 
       // fetch vimeo
@@ -331,7 +307,7 @@ module.exports = {
 
     initComments() {
       const View = require('components/comment/views.js');
-      const urlComments = commentsServer + '/company/' + this.model.id;
+      const urlComments = app.config.commentsServer + '/company/' + this.model.id;
       let optionsR = api.makeRequest(urlComments, 'OPTIONS');
       let dataR = api.makeRequest(urlComments);
 
@@ -354,12 +330,109 @@ module.exports = {
       $(e.target).parent().addClass('show-more-detail');
     },
 
+    showVideoModal(e) {
+
+      const attachYoutubeEvents = ($modal, callback) => {
+        let player = null;
+        let eventSent = false;
+
+        $modal.on('show.bs.modal', () => {
+          player = new YT.Player('video-iframe-container', {
+            // videoId: videoInfo.id,
+            events: {
+              onReady(e){},
+              onStateChange(e) {
+                if (e.data == YT.PlayerState.PLAYING && !eventSent) {
+                  eventSent = true;
+                  callback();
+                }
+              },
+              onError(err) {
+                console.error(err);
+              },
+            }
+          });
+        });
+
+        $modal.on('hidden.bs.modal', () => {
+          player.stopVideo();
+          player.destroy();
+          player = null;
+          $modal.empty();
+          $modal.remove();
+        });
+      };
+
+      const attachVimeoEvents = ($modal, callback) => {
+        let player = null;
+        let eventSent = false;
+        $modal.on('show.bs.modal', () => {
+          player = new Vimeo.Player('video-iframe-container');
+          player.on('play', () => {
+            if (!eventSent) {
+              eventSent = true;
+              callback();
+            }
+          });
+        });
+        $modal.on('hidden.bs.modal', () => {
+          player.off('play');
+          player.unload();
+          player = null;
+          $modal.empty();
+          $modal.remove();
+        });
+      };
+
+      const loadPlayer = (provider) => {
+        if (provider == 'youtube')
+          return app.loadYoutubePlayerAPI();
+
+        if (provider == 'vimeo')
+          return app.loadVimeoPlayerAPI();
+      };
+
+      let $target = $(e.target).closest('a');
+
+      const provider = $target.data('provider');
+      const id = $target.data('id');
+      const url = $target.data('url');
+
+      loadPlayer(provider).then((Player) => {
+        let $content = $('#content');
+        const template = require('templates/videoModal.pug');
+
+        $content.append(template({
+          provider,
+          id,
+          url,
+        }));
+
+        const sendVideoPlayEvent = () => {
+          app.emitGoogleAnalyticsEvent('company-video-play', {
+            eventCategory: 'Video',
+            eventAction: 'play',
+            //eventLabel: 'Youtube Video',
+            eventValue: url,
+          });
+        };
+
+        let $modal = $('#videoModal');
+
+        if (provider === 'youtube')
+          attachYoutubeEvents($modal, sendVideoPlayEvent);
+        else if (provider === 'vimeo')
+          attachVimeoEvents($modal, sendVideoPlayEvent)
+        $modal.modal('show');
+      });
+    },
+
   }),
 
   investment: Backbone.View.extend({
     el: '#content',
     template: require('./templates/investment.pug'),
-    urlRoot: investmentServer + '/',
+    urlRoot: app.config.investmentServer + '/',
     doNotExtendModel: true,
     events: {
       'submit form.invest_form': 'submit',
@@ -604,23 +677,21 @@ module.exports = {
         delete this.fields.is_understand_securities_related;
       }
 
-      this.getCityStateByZipCode = require("helpers/getSityStateByZipCode");
-      this.usaStates = usaStates;
-
       this.initMaxAllowedAmount();
+
+      if (this.model.ga_id)
+        app.emitCompanyAnalyticsEvent(this.model.ga_id);
     },
 
     render() {
 
       this.$el.html(
         this.template({
-          serverUrl: serverUrl,
           snippets: this.snippets,
-          Urls: Urls,
           fields: this.fields,
           values: this.model,
           user: this.user,
-          states: this.usaStates,
+          states: app.helpers.usaStates,
           feeInfo: this.calcFeeWithCredit(),
         })
       );
@@ -814,6 +885,10 @@ module.exports = {
 
     updateAmount(e) {
 
+      if(e.keyCode == 37 || e.keyCode == 39) {
+        return;
+      }
+
       let amount = this.getInt(e.currentTarget.value);
       if (!amount)
         return;
@@ -862,7 +937,7 @@ module.exports = {
     },
 
     getSuccessUrl(data) {
-      return investmentServer + '/' + data.id + '/invest-thanks';
+      return app.config.investmentServer + '/' + data.id + '/invest-thanks';
     },
 
     updateLimitInModal(e) {
@@ -900,10 +975,10 @@ module.exports = {
 
       const validateRange = (value, min=0, max, prefix) => {
         if (value < min)
-          throw `${prefix || ''} must not be less than ${helpers.format.formatNumber(min)}.`;
+          throw `${prefix || ''} must not be less than ${app.helpers.format.formatNumber(min)}.`;
 
         if (value > max)
-          throw `${prefix || ''} must not be greater than ${helpers.format.formatNumber(max)}.`;
+          throw `${prefix || ''} must not be greater than ${app.helpers.format.formatNumber(max)}.`;
       };
 
       let fields = {
@@ -931,7 +1006,7 @@ module.exports = {
         return false;
       }
 
-      api.makeRequest(authServer + '/rest-auth/data', 'PATCH', data).done((data) => {
+      api.makeRequest(app.config.authServer + '/rest-auth/data', 'PATCH', data).done((data) => {
         this.user.net_worth = netWorth;
         this.user.annual_income = annualIncome;
 
@@ -950,8 +1025,8 @@ module.exports = {
 
     getSignature () {
 
-      cookies.set('token', app.user.token, {
-        domain: '.' + domainUrl,
+      app.cookies.set('token', app.user.token, {
+        domain: '.' + app.config.domainUrl,
         path: '/',
       });
 
@@ -1014,7 +1089,7 @@ module.exports = {
     },
 
     saveEsign(responseData) {
-      const reqUrl = global.esignServer + '/pdf-doc';
+      const reqUrl = app.config.esignServer + '/pdf-doc';
       const successRoute = this.getSuccessUrl(responseData);
       const formData = this.getDocMetaData();
       const subscriptionAgreementPath = this.getSubscriptionAgreementPath();
@@ -1033,7 +1108,7 @@ module.exports = {
         template: subscriptionAgreementPath
       }];
 
-      app.makeRequest(reqUrl, 'POST', data, {
+      api.makeRequest(reqUrl, 'POST', data, {
         contentType: 'application/json; charset=utf-8',
         crossDomain: true,
       })
@@ -1054,7 +1129,7 @@ module.exports = {
       const isSubscriptionAgreement = pathToDoc.indexOf('subscription_agreement');
       
       if (isSubscriptionAgreement !== -1) {
-        pathToDoc = global.esignServer + '/pdf-doc/';
+        pathToDoc = app.config.esignServer + '/pdf-doc/';
         pathToDoc += this.getSubscriptionAgreementPath();
       }
       
@@ -1085,7 +1160,7 @@ module.exports = {
       if (e.target.value.length < 5) return;
       if (!e.target.value.match(/\d{5}/)) return;
       // else console.log('hello');
-      this.getCityStateByZipCode(e.target.value, ({ success=false, city="", state=""}) => {
+      app.helpers.location(e.target.value, ({ success=false, city="", state=""}) => {
         // this.zipCodeField.closest('div').find('.help-block').remove();
         if (success) {
           this.$('.js-city-state').text(`${city}, ${state}`);
@@ -1126,10 +1201,10 @@ module.exports = {
         zip_code: this.model.zip_code,
         address_1: this.model.address_1,
         address_2: this.model.address_2,
-        jurisdiction_of_organization: usaStates.getFullState(this.model.founding_state),  
-        maximum_raise: formatHelper.formatNumber( this.model.campaign.maximum_raise ),
-        minimum_raise: formatHelper.formatNumber( this.model.campaign.minimum_raise ),
-        price_per_share: formatHelper.formatNumber( this.model.campaign.price_per_share ),
+        jurisdiction_of_organization: app.helpers.usaStates.getFullState(this.model.founding_state),
+        maximum_raise: app.helpers.format.formatNumber( this.model.campaign.maximum_raise ),
+        minimum_raise: app.helpers.format.formatNumber( this.model.campaign.minimum_raise ),
+        price_per_share: app.helpers.format.formatNumber( this.model.campaign.price_per_share ),
         
         // owner of campaign
         issuer_email: this.model.owner.email,
@@ -1138,8 +1213,8 @@ module.exports = {
 
         // investor
         investor_legal_name: investor_legal_name,
-        aggregate_inclusive_purchase: formatHelper.formatNumber( aggregate_inclusive_purchase ),
-        investment_amount: formatHelper.formatNumber( investment_amount ),
+        aggregate_inclusive_purchase: app.helpers.format.formatNumber( aggregate_inclusive_purchase ),
+        investment_amount: app.helpers.format.formatNumber( investment_amount ),
         investor_address: formData.personal_information_data.street_address_1,
         investor_optional_address: formData.personal_information_data.street_address_2,
         investor_code: formData.personal_information_data.zip_code,
@@ -1164,14 +1239,13 @@ module.exports = {
     template: require('./templates/thankYou.pug'),
     el: '#content',
     initialize(options) {
-      // this.render();
+      if (this.model.company.ga_id)
+        app.emitCompanyAnalyticsEvent(this.model.company.ga_id);
     },
 
     render() {
       this.$el.html(
         this.template({
-          serverUrl: serverUrl,
-          Urls: Urls,
           investment: this.model,
         })
       );

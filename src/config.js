@@ -1,40 +1,42 @@
-global.domainUrl = "growthfountain.com"
-global.serverUrl = "https://django-api.growthfountain.com";
-global.raiseCapitalServer = "https://api-raisecapital.growthfountain.com";
-//global.raiseCapitalServer = "http://localhost:8003";
-global.authServer = "https://api-auth.growthfountain.com";
-//global.authServer = "http://localhost:8002";
-global.formcServer = "https://api-formc.growthfountain.com";
-//global.formcServer = "http://localhost:8001";
-global.investmentServer = "https://api-investment.growthfountain.com";
-//global.investmentServer = "http://localhost:8003";
-global.filerServer = "https://api-filer.growthfountain.com";
-global.esignServer = 'https://api-esign.growthfountain.com';
-global.commentsServer = "https://api-comments.growthfountain.com";
-global.blogServer = "https://api-blog.growthfountain.com";
-global.bucketServer = "https://s3.amazonaws.com/growthfountain-alpha-storage";
-global.notificationsServer = "https://notifications.growthfountain.com/";
-global.teamName = 'GrowthFountain Team';
-global.teamTitle = "Meet The Team";
-document.title = "Crowdfunding | Digital Federal Credit Union";
-//global.serverUrl = "http://192.168.99.100:8000";
-//global.serverUrl = "http://gfauth.com:8000";
+module.exports = {
+ domainUrl: "growthfountain.com",
+ serverUrl: "https://django-api.growthfountain.com",
+ raiseCapitalServer: "https://api-raisecapital.growthfountain.com",
+// raiseCapitalServer: "http://localhost:8003",
+ authServer: "https://api-auth.growthfountain.com",
+// authServer: "http://localhost:8002",
+ formcServer: "https://api-formc.growthfountain.com",
+// formcServer: "http://localhost:8001",
+ investmentServer: "https://api-investment.growthfountain.com",
+// investmentServer: "http://localhost:8003",
+ filerServer: "https://api-filer.growthfountain.com",
+ esignServer: 'https://api-esign.growthfountain.com',
+//  esignServer: 'https://api-esign.growthfountain.com',
+ commentsServer: "https://api-comments.growthfountain.com",
+ blogServer: "https://api-blog.growthfountain.com",
+ notificationsServer: "https://notifications.growthfountain.com/",
+ bucketServer: "https://s3.amazonaws.com/growthfountain-alpha-storage",
+
+ teamName: 'GrowthFountain Team',
+ teamTitle: "Meet The Team",
+ title: "Crowdfunding | Digital Federal Credit Union",
+// serverUrl: "http://192.168.99.100:8000",
+// serverUrl: "http://gfauth.com:8000",
 
 
 // Growth Fountain production keys:
-// global.facebookClientId = "191471871275050";
-// global.googleClientId = "488593151885-87nqfd8gl444a1me0n149otrf37dbahq.apps.googleusercontent.com";
-// global.linkedinClientId = "77wzj6tz0yyr33";
+//  facebookClientId: "191471871275050",
+//  googleClientId: "488593151885-87nqfd8gl444a1me0n149otrf37dbahq.apps.googleusercontent.com",
+//  linkedinClientId: "77wzj6tz0yyr33",
 
-global.facebookClientId = "1071081646296574";
-global.googleClientId = "805823281871-ve3unmva9aer69papghudk0dnpf8tqr2.apps.googleusercontent.com";
-global.linkedinClientId = "77ibchutnkhnd7";
+ facebookClientId: "1071081646296574",
+ googleClientId: "805823281871-ve3unmva9aer69papghudk0dnpf8tqr2.apps.googleusercontent.com",
+ linkedinClientId: "77rg2wrcb8utfq",
 
 
-global.googleMapKey = "AIzaSyBpCl9-7bkVISZ0o-AaFCsKzZwGAxalkZU";
-global.stripeKey = "pk_test_Z7YAhlyPtnW7bpd8LJUHTSou";
-global.googleAnalyticsId = 'GTM-NC9XW5D';
-
-// comming soon text
-global.commingSoon = 0;
-global.googleAnalyticsId = 'GTM-TFQMMJB';
+ googleMapKey: "AIzaSyBpCl9-7bkVISZ0o-AaFCsKzZwGAxalkZU",
+ stripeKey: "pk_live_4ZF2RPjAVJ0tXrDNMauofmgb",
+ googleTagIdGeneral: 'GTM-NC9XW5D',
+ googleTagId: 'GTM-TFQMMJB',
+ yandexMetricaId: 42321779,
+};

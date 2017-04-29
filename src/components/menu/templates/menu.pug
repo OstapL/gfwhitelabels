@@ -17,7 +17,7 @@ li.nav-item.hidden-md-down
       li
         a(href="/pg/overview").nav-link Overview
       li
-        a(href="/pg/team").nav-link #{teamName}
+        a(href="/pg/team").nav-link #{app.config.teamName}
       li.display-partners
         a(href="/pg/partners").nav-link Partners
       li
@@ -38,7 +38,7 @@ li.nav-item.hidden-md-down
         li.nav-link-sm
           p For Investors
         li
-          a(href="/pg/investor_tutorial").nav-link Investor Tutorial
+          a(href="/pg/investor-tutorial").nav-link Investor Tutorial
         li
           a(href="/pg/education").nav-link Education
         li
@@ -47,11 +47,11 @@ li.nav-item.hidden-md-down
         li.nav-link-sm
           p For Businesses
         li
-          a(href="/pg/business_tutorial").nav-link Business Tutorial
+          a(href="/pg/business-tutorial").nav-link Business Tutorial
         //- li
         //-     a.nav-link(href=Urls['campaign-list']()) Campaign Material
         li
-          a(href="/pg/success_guide").nav-link Success Guide
+          a(href="/pg/success-guide").nav-link Success Guide
             if app.user.is_anonymous() 
               i.fa.fa-lock.pull-right.align-middle
         li
@@ -67,15 +67,18 @@ li.nav-item.hidden-md-down
             if app.user.is_anonymous() 
               i.fa.fa-lock.pull-right
         li
-          a(href="/calculator/selectYourBusiness").nav-link What's My Business Worth?
+          a(href="/calculator/BusinessValuation").nav-link What's My Business Worth?
             if app.user.is_anonymous() 
               i.fa.fa-lock.pull-right
         li
           a(href="/pg/entrepreneurquestions").nav-link FAQ
 
-
-  li.nav-item.hidden-md-down
-    a(href="/company/create").nav-link Raise Capital
+  if app.user.is_anonymous()
+    li.nav-item.hidden-md-down
+      a(href="/raise-capital").nav-link Raise Capital
+  else
+    li.nav-item.hidden-md-down
+      a(href="/company/create").nav-link Raise Capital
 if app.user.is_anonymous()
   .mobile-signup.mobile-singup-wrap.hidden-lg-up.text-xs-left
     a(href="/account/login").btn.m-b-2.m-t-2.btn-login-mobile Log in

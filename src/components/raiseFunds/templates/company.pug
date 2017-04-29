@@ -13,6 +13,11 @@ section.create-company.container.m-b-85
     h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis Company
     form.form-section
       .col-xl-12.p-sm-0
+        -
+          pug_html += app.fields.fieldChoiceLabel('tour', _.extend({
+              'empty': { '': 'Choose option' },
+              'value': values.tour,
+            }, fields.tour));
         - 
           pug_html += app.fields.textLabel('name', {
           class1:'col-xl-3 col-lg-12 p-t-0 text-lg-left text-xl-right m-b-0 m-b-lg-1', 
@@ -43,6 +48,12 @@ section.create-company.container.m-b-85
                   schema: fields.slug, 
                   placeholder: 'Your Custom URL', 
                   value: values.slug,})
+
+        -
+          pug_html += app.fields.textLabel('ga_id', {
+            schema: fields.ga_id,
+            placeholder: 'Google Analytic ID: UA-xxxxxx-xx',
+            value: values.ga_id})
 
         -
           pug_html += app.fields.fieldChoiceLabel('industry', _.extend({
@@ -221,6 +232,7 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
               button(data-companyId=formc.company_id)#postForReview.btn.m-t-2.btn-primary.text-uppercase Yes
       .modal-footer
 //MODAL
+- var states = require('consts/usaStatesChoices.json');
 div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#city_state_modal.modal.fade
   div(role="document").modal-dialog
     .modal-content
@@ -238,11 +250,11 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
             .form-group.row.clearfix.required
               select(name='state' value=values.state).js-state.form-control.custom-select
                 option(checked='checked', value="") State
-                each state in states
-                  if state.abbreviation == values.state
-                    option(value=state.abbreviation selected)= state.name
+                each name,abbreviation in states
+                  if abbreviation == state
+                    option(value=abbreviation selected)= name
                   else
-                    option(value=state.abbreviation)= state.name
+                    option(value=abbreviation)= name
             .form-group.row.clearfix.required.m0
               .row
                 .col-lg-12
@@ -253,4 +265,4 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
 
 
 if !window.google || !window.google.maps
-  script(src= window.location.protocol + "//maps.google.com/maps/api/js?language=en&key=" + googleMapKey)
+  script(src= window.location.protocol + "//maps.google.com/maps/api/js?language=en&key=" + app.config.googleMapKey)
