@@ -147,10 +147,10 @@ let sites = [{
 	frontend_bucket: "" 
 }, {
 	id: 29,
-	domain: "localhost",
-	name:  "",
-	bucket_name: "",
-	url: "",
+	domain: "momentum3.growthfountain.com",
+	name:  "momentum3",
+	bucket_name: "growthfountain-momentum3-storage",
+	url: "http://growthfountain-momentum3-storage.s3-website-us-east-1.amazonaws.com",
 	frontend_bucket: "" 
 }, {
 	id: 30,

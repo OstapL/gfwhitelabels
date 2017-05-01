@@ -33,7 +33,10 @@ class Image extends File {
       return app.sites[this.site_id] + this.urls[smallestSize];
     } else {
       let defaultImg = (fallback || name) + '.png';
-      return require('images/default/' + defaultImg);
+      try {
+        return require('images/default/' + defaultImg);
+      } catch(e) {
+      }
     };
   }
 
