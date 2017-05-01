@@ -527,7 +527,7 @@ module.exports = {
       if (!investment)
         return console.error('Investment doesn\'t exist: ' + id);
 
-      app.dialogs.confirm((confirmed) => {
+      app.dialogs.confirm('Are you sure?').then((confirmed) => {
         if (!confirmed)
           return;
 
