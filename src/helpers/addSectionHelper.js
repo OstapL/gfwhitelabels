@@ -31,7 +31,10 @@ module.exports = {
 
     deleteSection(e) {
       e.preventDefault();
-      if(confirm('Are you sure?')) {
+      app.dialogs.confirm('Are you sure?').then((confirmed) => {
+        if (!confirmed)
+          return;
+
         let sectionName = e.currentTarget.dataset.section;
         if($('.' + sectionName + ' .delete-section-container').length > 1) {
           $('.' + sectionName + ' .index_' + e.currentTarget.dataset.index).remove();
@@ -40,11 +43,10 @@ module.exports = {
           $('.' + sectionName + ' .index_' + e.currentTarget.dataset.index + ' input').val('');
           $('.' + sectionName + ' .index_' + e.currentTarget.dataset.index + ' textarea').val('');
         }
-      }
-
-      // ToDo
-      // Fix index counter
-      // this[sectionName + 'Index'] --;
+        // ToDo
+        // Fix index counter
+        // this[sectionName + 'Index'] --;
+      });
     },
 
     addSectionNew(e) {
@@ -79,7 +81,10 @@ module.exports = {
       */
 
       e.preventDefault();
-      if(confirm('Are you sure?')) {
+      app.dialogs.confirm('Are you sure?').then((confirmed) => {
+        if (!confirmed)
+          return;
+
         let sectionName = e.currentTarget.dataset.section;
         if(this.$el.find('.' + sectionName).length > 1) {
           $(e.target).parents('.addSectionBlock').remove();
@@ -90,7 +95,7 @@ module.exports = {
         this[sectionName + 'Index'] --;
         // TODO
         // Fix index of the next fields
-      }
+      });
     },
 
     createIndexes() {

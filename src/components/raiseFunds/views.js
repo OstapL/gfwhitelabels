@@ -544,12 +544,16 @@ module.exports = {
       e.preventDefault();
       e.stopPropagation();
       this.undelegateEvents();
-      if (confirm("Do you really want to leave?")) {
+
+      app.dialogs.confirm('Do you really want to leave?').then((confirmed) => {
+        if (!confirmed)
+          return;
+
         app.routers.navigate(
           '/campaign/' + this.campaign.id + '/team-members',
           { trigger: true, replace: false }
         );
-      }
+      });
     },
 
   }, app.helpers.confirmOnLeave.methods, app.helpers.menu.methods)),
@@ -599,22 +603,24 @@ module.exports = {
     deleteMember: function (e) {
       let memberId = e.currentTarget.dataset.id;
 
-      if (confirm('Are you sure you would like to delete this team member?')) {
+      app.dialogs.confirm('Are you sure you would like to delete this team member?').then((confirmed) => {
+        if (!confirmed)
+          return;
 
         api.makeRequest(this.urlRoot + '/' + memberId, 'DELETE').
-          then((data) => {
-            this.model.team_members.members.splice(memberId, 1);
+        then((data) => {
+          this.model.team_members.members.splice(memberId, 1);
 
-            $(e.currentTarget).parent().remove();
-            if (this.model.team_members.members.length < 1) {
-              this.$el.find('.notification').show();
-              this.$el.find('.buttons-row').hide();
-            } else {
-              this.$el.find('.notification').hide();
-              this.$el.find('.buttons-row').show();
-            }
-          });
-      }
+          $(e.currentTarget).parent().remove();
+          if (this.model.team_members.members.length < 1) {
+            this.$el.find('.notification').show();
+            this.$el.find('.buttons-row').hide();
+          } else {
+            this.$el.find('.notification').hide();
+            this.$el.find('.buttons-row').show();
+          }
+        });
+      });
     },
 
   }, app.helpers.menu.methods)),
@@ -701,7 +707,7 @@ module.exports = {
       min = parseInt(min.replace(/,/g, ''));
       max = parseInt(max.replace(/,/g, ''));
       if ((min && max) && !(min < max)) {
-        alert("Maximum Raise must be larger than Minimum Raise!");
+        app.dialogs.error("Maximum Raise must be larger than Minimum Raise!");
         e.preventDefault();
       }
     },
