@@ -388,7 +388,10 @@ module.exports = {
       e.preventDefault();
       let userId = e.currentTarget.dataset.id;
 
-      if (confirm('Are you sure you would like to delete this team member?')) {
+      app.dialogs.confirm('Are you sure you would like to delete this team member?').then((confirmed) => {
+        if (!confirmed)
+          return;
+
         api.makeRequest(
           this.urlRoot.replace('employers', '') +  userId,
           'DELETE',
@@ -402,16 +405,16 @@ module.exports = {
            * ToDo
            * Create right notification error
            *
-          if (this.model.team_members.length < 1) {
-            this.$el.find('.notification').show();
-            this.$el.find('.buttons-row').hide();
-          } else {
-            this.$el.find('.notification').hide();
-            this.$el.find('.buttons-row').show();
-          }
-          */
+           if (this.model.team_members.length < 1) {
+           this.$el.find('.notification').show();
+           this.$el.find('.buttons-row').hide();
+           } else {
+           this.$el.find('.notification').hide();
+           this.$el.find('.buttons-row').show();
+           }
+           */
         });
-      }
+      });
     },
 
     updateEmployees(e) {
@@ -1962,28 +1965,32 @@ module.exports = {
 
     deleteOutstanding(e) {
       e.preventDefault();
-      if (!confirm('Are you sure?')) return;
-      let sectionName = e.currentTarget.dataset.section;
-      let index = e.currentTarget.dataset.index;
-      this.$('.' + sectionName + '_container tr[data-index=' + index + ']').remove();
-      this.model[sectionName].splice(index, 1);
+      app.dialogs.confirm('Are you sure?').then((confirmed) => {
+        if (!confirmed)
+          return;
 
-      // Reorganize indice
-      this.$('.' + sectionName + '_container tr').each(function (idx, elem) {
-        $(this).attr('data-index', idx);
-        $(this).find('a').attr('data-index', idx);
+        let sectionName = e.currentTarget.dataset.section;
+        let index = e.currentTarget.dataset.index;
+        this.$('.' + sectionName + '_container tr[data-index=' + index + ']').remove();
+        this.model[sectionName].splice(index, 1);
+
+        // Reorganize indice
+        this.$('.' + sectionName + '_container tr').each(function (idx, elem) {
+          $(this).attr('data-index', idx);
+          $(this).find('a').attr('data-index', idx);
+        });
+
+        // ToDo
+        // Fix index counter
+        this[sectionName + 'Index']--;
+        this.$('.' + sectionName + '_container tr')
+
+        api.makeRequest(
+          this.urlRoot.replace(':id', this.model.id),
+          'PATCH',
+          {'outstanding_securities': this.model[sectionName]}
+        );
       });
-
-      // ToDo
-      // Fix index counter
-      this[sectionName + 'Index']--;
-      this.$('.' + sectionName + '_container tr')
-
-      api.makeRequest(
-        this.urlRoot.replace(':id', this.model.id),
-        'PATCH',
-        {'outstanding_securities': this.model[sectionName]}
-      );
     },
 
     _success(data, newData) {

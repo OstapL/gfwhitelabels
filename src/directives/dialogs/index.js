@@ -1,6 +1,9 @@
 const container = '#content';
 
-const __showModal = (options) => {
+const __showModal = (options={}, type) => {
+  options = _.isString(options) ? { message: options } : options;
+  options.type = type;
+
   return new Promise((resolve, reject) => {
     const template = require('./templates/modal.pug');
     $(container).append(template(options));
@@ -51,30 +54,20 @@ const __showModal = (options) => {
 };
 
 module.exports = {
-  info(options={}) {
-    if (_.isString(options))
-      options = { message: options };
-
-    options.type = 'info';
-    return __showModal(options);
+  info(options) {
+    return __showModal(options, 'info');
   },
 
-  warning(options={}) {
-    if (_.isString(options))
-      options = { message: options };
-
-    options.type = 'warning';
-    return __showModal(options);
+  warning(options) {
+    return __showModal(options, 'warning');
   },
 
-  error(options={}) {
-    options.type = 'error';
-    return __showModal(options);
+  error(options) {
+    return __showModal(options, 'error');
   },
 
-  confirm(options={}) {
-    options.type = 'confirm';
-    return __showModal(options);
+  confirm(options) {
+    return __showModal(options, 'confirm');
   },
 
 };

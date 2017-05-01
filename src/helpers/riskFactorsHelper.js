@@ -10,29 +10,33 @@ module.exports = {
     deleteRisk (e) {
       e.stopPropagation();
       e.preventDefault();
-      if (!confirm("Do you really want to delete this risk?")) return;
-      let index = e.target.dataset.index;
-      let url = this.urlRoot.replace(':id', this.model.id).replace(':index', index);
+      app.dialogs.confirm('Do you really want to delete this risk?').then((confirmed) => {
+        if (!confirmed)
+          return;
 
-      api.makeRequest(url, 'DELETE', {}).then((data) => {
-        if (index < Object.keys(this.defaultRisks).length) {
-          let $form = this.$('form[index=' + index + ']');
-          $form.find('.risk-button').css({display: 'none'});
-          $form.find('.unadded-state').css({display: 'inline-block'});
-          let $textarea = $form.find('textarea');
-          $textarea.val(this.defaultRisks[index].risk);
-          let $panel = this.$('.risk-panel[index=' + index + ']');
-          $panel.find('a').removeClass('added-risk-title');
-          $textarea.prop('readonly', true).removeClass('added').addClass('borderless-textarea unadded').css({ height: $textarea.prop('scrollHeight')+'px' });
-        } else {
-          let $section = $('.risk-panel[index=' + index + ']');
-          $section.remove();
-        }
+        let index = e.target.dataset.index;
+        let url = this.urlRoot.replace(':id', this.model.id).replace(':index', index);
 
-        delete this.model[this.riskType][index];
-        this.updateComplete();
-      }).fail((xhr, status, text) => {
-        api.errorAction(this, xhr, status, text, this.fields);
+        api.makeRequest(url, 'DELETE', {}).then((data) => {
+          if (index < Object.keys(this.defaultRisks).length) {
+            let $form = this.$('form[index=' + index + ']');
+            $form.find('.risk-button').css({display: 'none'});
+            $form.find('.unadded-state').css({display: 'inline-block'});
+            let $textarea = $form.find('textarea');
+            $textarea.val(this.defaultRisks[index].risk);
+            let $panel = this.$('.risk-panel[index=' + index + ']');
+            $panel.find('a').removeClass('added-risk-title');
+            $textarea.prop('readonly', true).removeClass('added').addClass('borderless-textarea unadded').css({ height: $textarea.prop('scrollHeight')+'px' });
+          } else {
+            let $section = $('.risk-panel[index=' + index + ']');
+            $section.remove();
+          }
+
+          delete this.model[this.riskType][index];
+          this.updateComplete();
+        }).fail((xhr, status, text) => {
+          api.errorAction(this, xhr, status, text, this.fields);
+        });
       });
     },
 
