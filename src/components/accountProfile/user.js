@@ -130,42 +130,41 @@ class User {
     this.data = {};
   }
 
-  load() {
-    this.token = localStorage.getItem('token');
-    if (this.token === null) {
-      return app.trigger('userLoaded', { id: '' });
-    } else {
-      const data = JSON.parse(localStorage.getItem('user')) || {};
-      let a = '';
-      // Check if user have all required data
-      if(data.hasOwnProperty('info') == false || Array.isArray(data.info) == false) {
-        a = api.makeRequest(app.config.authServer + '/info',  'GET'); //.done(() => {
-      }
-
-      $.when(a).done((responseData) => {
-        if(responseData) {
-          data = responseData;
-        }
-
-        data.image_image_id = new Image(
-          app.config.authServer + '/rest-auth/data',
-          data.image_data
-        );
-        this.data = data;
-
-        if(responseData) {
-          this.updateLocalStorage();
-        }
-      }).fail(() => {
-        this.emptyLocalStorage();
-        setTimeout(function() {
-          window.location = '/account/login?next=' + document.location.pathname;
-        }, 100);
-      });
-
-      return app.trigger('userLoaded', data);
-    }
-  }
+  // load() {
+  //   this.token = localStorage.getItem('token');
+  //   if (this.token === null) {
+  //     return app.trigger('userLoaded', { id: '' });
+  //   } else {
+  //     const data = JSON.parse(localStorage.getItem('user')) || {};
+  //     let a = '';
+  //     // Check if user have all required data
+  //     if(data.hasOwnProperty('info') == false || Array.isArray(data.info) == false) {
+  //       a = api.makeRequest(app.config.authServer + '/info',  'GET'); //.done(() => {
+  //     }
+  //
+  //     $.when(a).done((responseData) => {
+  //
+  //       this.data = responseData || data;
+  //
+  //       data.image_image_id = new Image(
+  //         app.config.authServer + '/rest-auth/data',
+  //         data.image_data
+  //       );
+  //       this.data = data;
+  //
+  //       if(responseData) {
+  //         this.updateLocalStorage();
+  //       }
+  //     }).fail(() => {
+  //       this.emptyLocalStorage();
+  //       setTimeout(function() {
+  //         window.location = '/account/login?next=' + document.location.pathname;
+  //       }, 100);
+  //     });
+  //
+  //     return app.trigger('userLoaded', data);
+  //   }
+  // }
 
   loadWithPromise() {
     return new Promise((resolve, reject) => {
