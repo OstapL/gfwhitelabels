@@ -366,8 +366,8 @@ section
                           if v.college
                             i.fa.fa-graduation-cap
                             |  #{v.college}
-    .col-lg-12.border-bottom.m-t-0.m-b-3
   if values.campaign.press && Object.keys(values.campaign.press).length > 0 && values.campaign.press[0].headline != ''
+    .col-lg-12.border-bottom.m-t-0.m-b-3
     section.articles
       .container
         
@@ -622,9 +622,9 @@ section
                   small.text-muted New York, NY
         .col-lg-12.text-lg-center
           a(href="" style="display: none").link-4 See All Investors
-  .border-bottom.m-t-3
-  section.faq.p-b-0
-    if values.campaign.faq && Object.keys(values.campaign.faq).length > 0 && values.campaign.faq[0].question != '' 
+  if values.campaign.faq && Object.keys(values.campaign.faq).length > 0 && values.campaign.faq[0].question != '' 
+    .border-bottom.m-t-3
+    section.faq.p-b-0
       .container
         h2#faq.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-subheading FAQ
         .col-lg-8.offset-lg-2.p-xs-0
