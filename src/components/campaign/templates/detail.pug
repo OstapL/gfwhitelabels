@@ -439,10 +439,10 @@ section
               i.fa.fa-file-pdf-o.d-inline-block
               h3.d-inline-block Financials
 
-          if values.campaign.investor_presentation_data.urls
+          if values.campaign.investor_presentation_file_id
             .col-lg-4.row.text-xs-center
               p Company documents
-              a(href=values.campaign.investor_presentation_data.urls.origin target="_blank")
+              a(href=values.campaign.investor_presentation_file_id.getUrl('origin') target="_blank")
                 i.fa.fa-file-powerpoint-o.d-inline-block
                 h3.d-inline-block Investor Presentation
   section.overview
