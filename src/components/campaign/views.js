@@ -434,7 +434,7 @@ module.exports = {
     urlRoot: app.config.investmentServer + '/',
     doNotExtendModel: true,
     events: {
-      'submit form.invest_form': 'submit',
+      'click #submitButton': 'submit',
       'keyup #amount': 'updateAmount',
       'change #amount': 'roundAmount',
       'focusout #amount': 'triggerAmountChange',
@@ -1063,7 +1063,7 @@ module.exports = {
     submit(e) {
       e.preventDefault();
 
-      let data = $(e.target).serializeJSON();
+      let data = $('#investForm').serializeJSON();
       // data.amount = data.amount.replace(/\,/g, '');
       if(data['payment_information_type'] == 1 || data['payment_information_type'] == 2) {
         delete data['payment_information_data'];
