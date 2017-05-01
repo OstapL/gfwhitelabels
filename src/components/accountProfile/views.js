@@ -565,7 +565,7 @@ module.exports = {
 
         this.onCancel(investment);
       }).fail((err) => {
-        alert(err.error);
+        app.dialogs.error(err.error);
       });
     },
   }),
@@ -693,7 +693,7 @@ module.exports = {
 
     cancelCampaign(e) {
       e.preventDefault();
-      alert('Please, call us 646-759-8228');
+      app.dialogs.info('Please, call us 646-759-8228');
     },
 
     initComments() {

@@ -1008,7 +1008,7 @@ module.exports = {
         this.$amount.keyup();
 
       }).fail((xhr, status, text) => {
-        alert('Update failed. Please try again!');
+        app.dialogs.error('Update failed. Please try again!');
       });
     },
 

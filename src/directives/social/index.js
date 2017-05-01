@@ -76,7 +76,7 @@ class SocialNetworks {
             IN.API.Raw('/people/~/shares?format=json')
               .method('POST')
               .body(JSON.stringify(data))
-              .result(() => {alert('You\'ve just shared the page to LinkedIn')})
+              .result(() => {app.dialogs.info('You\'ve just shared the page to LinkedIn')})
               .error((err) => {
                 if (retryWithLogout) {
                   console.error('LinkedIn error: ');

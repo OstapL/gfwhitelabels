@@ -701,7 +701,7 @@ module.exports = {
       min = parseInt(min.replace(/,/g, ''));
       max = parseInt(max.replace(/,/g, ''));
       if ((min && max) && !(min < max)) {
-        alert("Maximum Raise must be larger than Minimum Raise!");
+        app.dialogs.error("Maximum Raise must be larger than Minimum Raise!");
         e.preventDefault();
       }
     },

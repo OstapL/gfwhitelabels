@@ -118,7 +118,7 @@ class User {
         }, 100);
       });
     } else {
-      alert('no token or additional info providet');
+      app.dialogs.error('no token or additional info provided');
     }
   }
 
