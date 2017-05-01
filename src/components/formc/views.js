@@ -2326,6 +2326,7 @@ module.exports = {
       this.fields.formc.outstanding_securities.schema.security_type.validate.choices = securityTypeConsts.SECURITY_TYPES;
       this.fields.formc.outstanding_securities.schema.custom_security_type.validate.choices = securityTypeConsts.SECURITY_TYPES;
       this.fields.formc.outstanding_securities.schema.voting_right.validate.choices = yesNoConsts.YESNO;
+      this.fields.formc.business_plan_file_id.label = 'Please upload your business plan';
 
       this.$el.html(
         template({
