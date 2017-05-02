@@ -343,6 +343,7 @@ module.exports = {
         title: 'Drop your photo(s) here or click to upload',
         help_text: 'We recommend uploading 6 images (minimum size of 1024x612 is recommended) that represent your service of business. These images will be displayed in a gallery format.',
         onSaved: (data) => {
+          app.user.campaign.gallery_group_data = data.file.data;
           raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
         },
         crop: {

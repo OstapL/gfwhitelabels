@@ -562,7 +562,10 @@ module.exports = {
         }
 
         if (validationMessage) {
-          this.$amount.popover('show');
+          setTimeout(() => {
+            this.$amount.popover('show');
+            this.$amount.scrollTo(200);
+          }, 700);
           throw validationMessage;
         }
 

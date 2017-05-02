@@ -14,7 +14,7 @@ let exports = {
           data.video != '' &&
           data.header_image_image_id.id != null &&
           data.list_image_image_id.id != null &&
-          data.gallery_group_data.length > 0,
+          data.gallery_group_id.data.length > 5,
         'specifics': 
           data.minimum_raise >= 25000 &&
           data.maximum_raise <= 1000000 &&
