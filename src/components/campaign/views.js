@@ -276,10 +276,15 @@ module.exports = {
 
       }, 1200);
       $(window).scroll(function() {
-            var st = $(this).scrollTop() /20;
+            var st = $(this).scrollTop() /15;
 
             $(".scroll-paralax .background").css({
-              "transform" : "translate3d(0px, " + st /2 + "%, .01px)"
+              "transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+              "-o-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+              "-webkit-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+              "-moz-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+              "-ms-transform" : "translate3d(0px, " + st /2 + "%, .01px)"
+              
             });
           });
       this.$el.find('.perks .col-xl-4 p').equalHeights();
