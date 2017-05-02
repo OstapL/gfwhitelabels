@@ -10,11 +10,13 @@ module.exports = {
     deleteRisk (e) {
       e.stopPropagation();
       e.preventDefault();
+
+      const index = e.target.dataset.index;
+
       app.dialogs.confirm('Do you really want to delete this risk?').then((confirmed) => {
         if (!confirmed)
           return;
 
-        let index = e.target.dataset.index;
         let url = this.urlRoot.replace(':id', this.model.id).replace(':index', index);
 
         api.makeRequest(url, 'DELETE', {}).then((data) => {
