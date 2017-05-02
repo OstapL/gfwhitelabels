@@ -4,7 +4,7 @@ let sites = [{
 	name: "growthfountain",
 	bucket_name: "growthfountain-localhost",
 	url: "http://growthfountain-localhost.s3-website-us-east-1.amazonaws.com",
-	frontend_bucket: "",
+	frontend_bucket: "https://d2wcxl3wz6eub3.cloudfront.net",
 }, {
 	id: 21,
 	domain: "growthfountain-investment-admin.s3-website-us-east-1.amazonaws.com",
@@ -20,12 +20,12 @@ let sites = [{
 	url: "",
 	frontend_bucket: "", 
 }, {
-	id: 1,
-	domain: "jd-django.jwpbirm43d.us-east-1.elasticbeanstalk.com",
-	name: "growthfountain",
+	id: 4,
+	domain: "localhost_BROKEN",
+	name: "localhost",
 	bucket_name: "growthfountain-master-storage",
 	url: "http://growthfountain-master-storage.s3-website-us-east-1.amazonaws.com",
-	frontend_bucket: "",
+	frontend_bucket: "https://d2i0hc81gw5f0c.cloudfront.net",
 }, {
 	id: 18,
 	domain: "dcu.growthfountain.com",
@@ -67,7 +67,7 @@ let sites = [{
 	name: "growthfountain",
 	bucket_name: "growthfountain-master-storage",
 	url: "http://growthfountain-master-storage.s3-website-us-east-1.amazonaws.com",
-	frontend_bucket: "" 
+	frontend_bucket: "https://d2i0hc81gw5f0c.cloudfront.net" 
 }, {
 	id: 24,
 	domain: "www.growthfountain.com",
