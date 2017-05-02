@@ -386,7 +386,9 @@ module.exports = {
 
     deleteMember: function (e) {
       e.preventDefault();
-      let userId = e.currentTarget.dataset.id;
+
+      const target = e.currentTarget;
+      const userId = target.dataset.id;
 
       app.dialogs.confirm('Are you sure you would like to delete this team member?').then((confirmed) => {
         if (!confirmed)
@@ -395,12 +397,12 @@ module.exports = {
         api.makeRequest(
           this.urlRoot.replace('employers', '') +  userId,
           'DELETE',
-          {'role': e.currentTarget.dataset.role }
+          {'role': target.dataset.role }
         ).
         then((data) => {
           let index = this.model.team_members.findIndex((el) => { return el.user_id == userId });
           this.model.team_members.splice(index, 1);
-          e.currentTarget.parentElement.parentElement.remove()
+          target.parentElement.parentElement.remove()
           /*
            * ToDo
            * Create right notification error
@@ -1965,12 +1967,14 @@ module.exports = {
 
     deleteOutstanding(e) {
       e.preventDefault();
+      const target = e.currentTarget;
+      const sectionName = target.dataset.section;
+      const index = target.dataset.index;
+
       app.dialogs.confirm('Are you sure?').then((confirmed) => {
         if (!confirmed)
           return;
 
-        let sectionName = e.currentTarget.dataset.section;
-        let index = e.currentTarget.dataset.index;
         this.$('.' + sectionName + '_container tr[data-index=' + index + ']').remove();
         this.model[sectionName].splice(index, 1);
 

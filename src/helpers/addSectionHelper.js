@@ -31,17 +31,22 @@ module.exports = {
 
     deleteSection(e) {
       e.preventDefault();
+
+      const target = e.currentTarget;
+      const sectionName = target.dataset.section;
+      const index = target.dataset.index;
+
       app.dialogs.confirm('Are you sure?').then((confirmed) => {
         if (!confirmed)
           return;
 
-        let sectionName = e.currentTarget.dataset.section;
+
         if($('.' + sectionName + ' .delete-section-container').length > 1) {
-          $('.' + sectionName + ' .index_' + e.currentTarget.dataset.index).remove();
-          e.currentTarget.offsetParent.remove();
+          $('.' + sectionName + ' .index_' + index).remove();
+          target.offsetParent.remove();
         } else {
-          $('.' + sectionName + ' .index_' + e.currentTarget.dataset.index + ' input').val('');
-          $('.' + sectionName + ' .index_' + e.currentTarget.dataset.index + ' textarea').val('');
+          $('.' + sectionName + ' .index_' + index + ' input').val('');
+          $('.' + sectionName + ' .index_' + index + ' textarea').val('');
         }
         // ToDo
         // Fix index counter
@@ -81,16 +86,19 @@ module.exports = {
       */
 
       e.preventDefault();
+      const target = e.currentTarget;
+      const sectionName = target.dataset.section;
+      const index = target.dataset.index;
+
       app.dialogs.confirm('Are you sure?').then((confirmed) => {
         if (!confirmed)
           return;
 
-        let sectionName = e.currentTarget.dataset.section;
         if(this.$el.find('.' + sectionName).length > 1) {
-          $(e.target).parents('.addSectionBlock').remove();
+          $(target).parents('.addSectionBlock').remove();
         } else {
-          this.$el.find('.' + sectionName + '[data-index=' + e.currentTarget.dataset.index + '] input').val('');
-          this.$el.find('.' + sectionName + '[data-index=' + e.currentTarget.dataset.index + '] textarea').val('');
+          this.$el.find('.' + sectionName + '[data-index=' + index + '] input').val('');
+          this.$el.find('.' + sectionName + '[data-index=' + index + '] textarea').val('');
         }
         this[sectionName + 'Index'] --;
         // TODO
