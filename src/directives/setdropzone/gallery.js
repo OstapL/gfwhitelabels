@@ -64,9 +64,7 @@ class GalleryElement extends imageDropzone.ImageElement {
       this.file.data.splice(indexFile, 1);
       this.save().then(() => {
         imageRender.element.remove()
-        delete this.files[index];
         delete this.file.data[index];
-        // delete this.model.data[index];
         if(imageRender.options.onSaved) {
           imageRender.options.onSaved(this);
         }
@@ -140,11 +138,10 @@ class GalleryDropzone extends imageDropzone.ImageDropzone {
 
     this.galleryElement.update(this.galleryElement.file.data, () => {
       fileObj.render();
-      debugger;
 
-      this.model.data[this.galleryElement.fieldDataName].push(fileObj.file);
+      //this.model.data[this.galleryElement.fieldDataName].push(fileObj.file);
       if(this.galleryElement.options.onSaved) {
-        this.galleryElement.options.onSaved(this);
+        this.galleryElement.options.onSaved(this.galleryElement);
       }
 
       this.element.querySelector('.fileHolder').insertAdjacentHTML('beforeend', fileObj.resultHTML);
