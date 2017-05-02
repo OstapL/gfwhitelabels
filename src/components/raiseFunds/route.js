@@ -61,6 +61,18 @@ module.exports = {
       let view = require('./templates/landing.pug');
       document.getElementById('content').innerHTML = view();
       app.hideLoading();
+      $(window).scroll(function() {
+            var st = $(this).scrollTop() /15;
+
+            $(".scroll-paralax .background").css({
+              "transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+              "-o-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+              "-webkit-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+              "-moz-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+              "-ms-transform" : "translate3d(0px, " + st /2 + "%, .01px)"
+              
+            });
+          });
     },
 
     company() {

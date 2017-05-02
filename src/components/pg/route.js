@@ -59,10 +59,15 @@ module.exports = {
           });
           
           $(window).scroll(function() {
-            var st = $(this).scrollTop() /20;
+            var st = $(this).scrollTop() /15;
 
             $(".scroll-paralax .background").css({
-              "transform" : "translate3d(0px, -" + st /2 + "%, .01px)"
+              "transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+              "-o-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+              "-webkit-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+              "-moz-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+              "-ms-transform" : "translate3d(0px, " + st /2 + "%, .01px)"
+              
             });
           });
           // video main page
@@ -180,6 +185,7 @@ module.exports = {
               1000: { items: 1 },
             },
           });
+
         var owl = $('.owl-carousel');
         owl.owlCarousel();
         $('.customNextBtn').click(function() {
