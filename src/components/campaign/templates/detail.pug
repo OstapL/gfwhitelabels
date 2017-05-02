@@ -340,7 +340,7 @@ section
               each v in values.campaign.team_members.members
                 .col-xl-4.col-lg-4.col-md-6.col-sm-12.col-xs-12.team.team-detail.p-xs-0
                   .card.text-lg-center.text-xs-center
-                    img(src=v.photo_image_id.getUrl() alt="").img-circle
+                    img(src=v.photo_image_id.getUrl('350x209') alt="").img-circle
                     .card-block
                       h4.text-xs-center.card-title.text-uppercase #{v.first_name} #{v.last_name }
                       p.card-text
@@ -367,8 +367,8 @@ section
                           if v.college
                             i.fa.fa-graduation-cap
                             |  #{v.college}
-    .col-lg-12.border-bottom.m-t-0.m-b-3
   if values.campaign.press && Object.keys(values.campaign.press).length > 0 && values.campaign.press[0].headline != ''
+    .col-lg-12.border-bottom.m-t-0.m-b-3
     section.articles
       .container
         
@@ -440,10 +440,10 @@ section
               i.fa.fa-file-pdf-o.d-inline-block
               h3.d-inline-block Financials
 
-          if values.campaign.investor_presentation_data.urls
+          if values.campaign.investor_presentation_file_id
             .col-lg-4.row.text-xs-center
               p Company documents
-              a(href=values.campaign.investor_presentation_data.urls.origin target="_blank")
+              a(href=values.campaign.investor_presentation_file_id.getUrl('origin') target="_blank")
                 i.fa.fa-file-powerpoint-o.d-inline-block
                 h3.d-inline-block Investor Presentation
   section.overview
@@ -623,9 +623,9 @@ section
                   small.text-muted New York, NY
         .col-lg-12.text-lg-center
           a(href="" style="display: none").link-4 See All Investors
-  .border-bottom.m-t-3
-  section.faq.p-b-0
-    if values.campaign.faq && Object.keys(values.campaign.faq).length > 0 && values.campaign.faq[0].question != '' 
+  if values.campaign.faq && Object.keys(values.campaign.faq).length > 0 && values.campaign.faq[0].question != '' 
+    .border-bottom.m-t-3
+    section.faq.p-b-0
       .container
         h2#faq.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-subheading FAQ
         .col-lg-8.offset-lg-2.p-xs-0
@@ -666,4 +666,3 @@ section
               |  I’d Like to Invest in #{ values.short_name || values.name }!
             if values.is_approved == STATUSES.VERIFIED
               a(href="/" + values.slug + "/invest").btn.btn-lg.btn-primary.text-uppercase.m-t-2 invest in this company
-

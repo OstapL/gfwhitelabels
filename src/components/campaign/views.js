@@ -445,7 +445,7 @@ module.exports = {
     urlRoot: app.config.investmentServer + '/',
     doNotExtendModel: true,
     events: {
-      'submit form.invest_form': 'submit',
+      'click #submitButton': 'submit',
       'keyup #amount': 'updateAmount',
       'change #amount': 'roundAmount',
       'focusout #amount': 'triggerAmountChange',
@@ -562,13 +562,22 @@ module.exports = {
         amount = Number(amount);
         let min = this.model.campaign.minimum_increment;
         let max = this._maxAllowedAmount;
+        let validationMessage = '';
 
         if (amount < min) {
-          throw 'Sorry, minimum investment is $' + min;
+          validationMessage = 'Sorry, minimum investment is $' + min;
         }
 
         if (amount > max) {
-          throw 'Sorry, your amount is too high, please update your income or change amount';
+          validationMessage = 'Sorry, your amount is too high, please update your income or change amount';
+        }
+
+        if (validationMessage) {
+          setTimeout(() => {
+            this.$amount.popover('show');
+            this.$amount.scrollTo(200);
+          }, 700);
+          throw validationMessage;
         }
 
         return true;
@@ -1019,7 +1028,7 @@ module.exports = {
         this.$amount.keyup();
 
       }).fail((xhr, status, text) => {
-        alert('Update failed. Please try again!');
+        app.dialogs.error('Update failed. Please try again!');
       });
     },
 
@@ -1074,7 +1083,7 @@ module.exports = {
     submit(e) {
       e.preventDefault();
 
-      let data = $(e.target).serializeJSON();
+      let data = $('#investForm').serializeJSON();
       // data.amount = data.amount.replace(/\,/g, '');
       if(data['payment_information_type'] == 1 || data['payment_information_type'] == 2) {
         delete data['payment_information_data'];

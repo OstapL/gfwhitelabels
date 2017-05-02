@@ -19,6 +19,7 @@ class App {
     this.cookies = require('cookies-js');
     this.fields = require('./fields.js');
     this.validation = require('components/validation/validation.js');
+    this.dialogs = require('directives/dialogs/index.js');
     this.models = require('./models.js');
     this.sites = require('./sites.js');
     this.user = new User();
@@ -29,8 +30,9 @@ class App {
   start() {
     this.user.loadWithPromise().then(() => {
 
-      if(app.config.googleTagIdGeneral || app.config.googleTagId) {
-       this.initFacebookPixel();
+      if (app.config.googleTagID) {
+        this.initFacebookPixel();
+        this.initYandexMetrica();
       }
 
       this.routers = new Router();
@@ -58,13 +60,37 @@ class App {
     });
   }
 
+  initYandexMetrica() {
+    if (!app.config.googleTagID || !app.config.yandexMetricaID)
+      return;
+
+    safeDataLayerPush({
+      event: 'yandex-metrica-init',
+    })
+  }
+
+  emitYandexMetricaEvent() {
+    if (!app.config.googleTagID || !app.config.yandexMetricaID)
+      return;
+
+    safeDataLayerPush({
+      event: 'yandex-metrica-hit',
+    });
+  }
+
   initFacebookPixel() {
+    if (!app.config.googleTagID || !app.config.facebookPixelID)
+      return;
+
     safeDataLayerPush({
       event: 'fb-pixel-init'
     });
   }
 
   emitFacebookPixelEvent(eventName='ViewContent', params={}) {
+    if (!app.config.googleTagID || !app.config.facebookPixelID)
+      return;
+
     const STANDARD_EVENTS = [
       'ViewContent',
       'Search',
@@ -87,6 +113,9 @@ class App {
   }
 
   emitGoogleAnalyticsEvent(eventName, params={}) {
+    if (!app.config.googleTagID)
+      return;
+
     if (!eventName)
       return console.error('eventName is not set');
 
@@ -99,6 +128,9 @@ class App {
   }
 
   emitCompanyAnalyticsEvent(trackerId) {
+    if (app.config.googleTagID)
+      return;
+
     if (!trackerId)
       return;
 
@@ -400,41 +432,6 @@ class App {
 
       tag.onload = resolve;
       tag.onerror = reject;
-    });
-  }
-
-  confirm(container, data) {
-    return new Promise((resolve, reject) => {
-      if (!data || !data.message)
-        return resolve(true);
-
-      let template = require('./templates/confirmPopup.pug');
-      let $container = $(container);
-
-      let $modal = $(template(data));
-
-      $modal.on('shown.bs.modal', () => {
-        $modal.on('click', '.confirm-yes', () => {
-          $modal.modal('hide');
-          resolve(true);
-        });
-
-        $modal.on('click', '.confirm-no', () => {
-          $modal.modal('hide');
-          resolve(false)
-        });
-      });
-
-      $modal.on('hidden.bs.modal', () => {
-        $modal.off('hidden.bs.modal');
-        $modal.off('show.bs.modal');
-        $modal.off('click');
-        $modal.remove();
-      });
-
-      $container.append($modal);
-
-      $modal.modal('show');
     });
   }
 

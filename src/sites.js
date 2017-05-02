@@ -1,9 +1,9 @@
 let sites = [{
-	id: 4,
+	id: 37,
 	domain: "localhost",
 	name: "growthfountain",
-	bucket_name: "growthfountain-master-storage",
-	url: "http://growthfountain-master-storage.s3-website-us-east-1.amazonaws.com",
+	bucket_name: "growthfountain-localhost",
+	url: "http://growthfountain-localhost.s3-website-us-east-1.amazonaws.com",
 	frontend_bucket: "",
 }, {
 	id: 21,
@@ -147,10 +147,10 @@ let sites = [{
 	frontend_bucket: "" 
 }, {
 	id: 29,
-	domain: "localhost",
-	name:  "",
-	bucket_name: "",
-	url: "",
+	domain: "momentum3.growthfountain.com",
+	name:  "momentum3",
+	bucket_name: "growthfountain-momentum3-storage",
+	url: "http://growthfountain-momentum3-storage.s3-website-us-east-1.amazonaws.com",
 	frontend_bucket: "" 
 }, {
 	id: 30,
@@ -183,13 +183,6 @@ let sites = [{
 }, {
 	id: 36,
 	domain: "alpha-dcu.growthfountain.com",
-	name: "alpha dcu",
-	bucket_name: "growthfountain-alpha-storage",
-	url: "http://growthfountain-alpha-storage.s3-website-us-east-1.amazonaws.com",
-	frontend_bucket: "" 
-}, {
-	id: 37,
-	domain: "alpha-jdcu.growthfountain.com",
 	name: "alpha dcu",
 	bucket_name: "growthfountain-alpha-storage",
 	url: "http://growthfountain-alpha-storage.s3-website-us-east-1.amazonaws.com",

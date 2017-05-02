@@ -31,20 +31,27 @@ module.exports = {
 
     deleteSection(e) {
       e.preventDefault();
-      if(confirm('Are you sure?')) {
-        let sectionName = e.currentTarget.dataset.section;
-        if($('.' + sectionName + ' .delete-section-container').length > 1) {
-          $('.' + sectionName + ' .index_' + e.currentTarget.dataset.index).remove();
-          e.currentTarget.offsetParent.remove();
-        } else {
-          $('.' + sectionName + ' .index_' + e.currentTarget.dataset.index + ' input').val('');
-          $('.' + sectionName + ' .index_' + e.currentTarget.dataset.index + ' textarea').val('');
-        }
-      }
 
-      // ToDo
-      // Fix index counter
-      // this[sectionName + 'Index'] --;
+      const target = e.currentTarget;
+      const sectionName = target.dataset.section;
+      const index = target.dataset.index;
+
+      app.dialogs.confirm('Are you sure?').then((confirmed) => {
+        if (!confirmed)
+          return;
+
+
+        if($('.' + sectionName + ' .delete-section-container').length > 1) {
+          $('.' + sectionName + ' .index_' + index).remove();
+          target.offsetParent.remove();
+        } else {
+          $('.' + sectionName + ' .index_' + index + ' input').val('');
+          $('.' + sectionName + ' .index_' + index + ' textarea').val('');
+        }
+        // ToDo
+        // Fix index counter
+        // this[sectionName + 'Index'] --;
+      });
     },
 
     addSectionNew(e) {
@@ -79,18 +86,24 @@ module.exports = {
       */
 
       e.preventDefault();
-      if(confirm('Are you sure?')) {
-        let sectionName = e.currentTarget.dataset.section;
+      const target = e.currentTarget;
+      const sectionName = target.dataset.section;
+      const index = target.dataset.index;
+
+      app.dialogs.confirm('Are you sure?').then((confirmed) => {
+        if (!confirmed)
+          return;
+
         if(this.$el.find('.' + sectionName).length > 1) {
-          $(e.target).parents('.addSectionBlock').remove();
+          $(target).parents('.addSectionBlock').remove();
         } else {
-          this.$el.find('.' + sectionName + '[data-index=' + e.currentTarget.dataset.index + '] input').val('');
-          this.$el.find('.' + sectionName + '[data-index=' + e.currentTarget.dataset.index + '] textarea').val('');
+          this.$el.find('.' + sectionName + '[data-index=' + index + '] input').val('');
+          this.$el.find('.' + sectionName + '[data-index=' + index + '] textarea').val('');
         }
         this[sectionName + 'Index'] --;
         // TODO
         // Fix index of the next fields
-      }
+      });
     },
 
     createIndexes() {
