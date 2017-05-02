@@ -227,25 +227,24 @@ class User {
   }
 
   ensureLoggedIn(next) {
-    if (this.is_anonymous()) {
-      this.next = next || window.location.pathname;
+    if (!this.is_anonymous())
+      return true;
 
-      const pView = require('components/anonymousAccount/views.js');
+    this.next = next || (window.location.pathname + window.location.search);
 
-      let v = $('#content').is(':empty')
-        ? new pView.signup({
-            el: '#content',
-            model: {},
-          })
-        : new pView.popupLogin({});
+    const pView = require('components/anonymousAccount/views.js');
 
-      v.render();
-      app.hideLoading();
+    let v = $('#content').is(':empty')
+      ? new pView.signup({
+        el: '#content',
+        model: {},
+      })
+      : new pView.popupLogin({});
 
-      return false;
-    }
+    v.render();
+    app.hideLoading();
 
-    return true;
+    return false;
   }
 
   logout() {
