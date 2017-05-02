@@ -67,7 +67,7 @@ let sites = [{
 	name: "growthfountain",
 	bucket_name: "growthfountain-master-storage",
 	url: "http://growthfountain-master-storage.s3-website-us-east-1.amazonaws.com",
-	frontend_bucket: "" 
+	frontend_bucket: "https://d2i0hc81gw5f0c.cloudfront.net" 
 }, {
 	id: 24,
 	domain: "www.growthfountain.com",
