@@ -152,17 +152,17 @@ section.raise-capital-landing
                   br
                   a(href="/pg/entrepreneurquestions").link-3 Click here
       
-  section.home-wrap-text-block.raise-wrap.hide-bg-fixed.raise-landing-section.m-t-85
-    .opasity-block
-      .container.text-lg-center.text-xs-center
-        .wrap
-          .col-lg-12
-            h2.text-uppercase.m-t-0.font-weight-bold  Raise more than money. Raise awareness.
-            h3.font-weight-light.m-t-0 Your investors are a new community of supporters for your business.
-              br
-              | Their ability to spread the word about the great things
-              br
-              | you’re doing are as valuable as their dollars...
+section.height-block-banner.scroll-paralax
+  - var styleString = 'background: url(' + require('img/raise-landing/RS2.png') + ')';
+  div(style=styleString + '; height:600px').background
+  .center-wrap
+    .col-lg-12
+      h2.text-uppercase.m-t-0.font-weight-bold  Raise more than money. Raise awareness.
+      h3.font-weight-light.m-t-0 Your investors are a new community of supporters for your business.
+        br
+        | Their ability to spread the word about the great things
+        br
+        | you’re doing are as valuable as their dollars...
           
-          .col-xl-12.text-xs-center
-            a(href="/company/create?nolanding=1").btn.btn-primary.btn-lg Start Campaign
+    .col-xl-12.text-xs-center
+      a(href="/company/create?nolanding=1").btn.btn-primary.btn-lg Start Campaign

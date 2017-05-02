@@ -7,7 +7,8 @@
   var infoProvider = new CampaignInfoProvider(this.model);
   var directiveKey = 'campaign';
 
-section(style="background-image: url(" + values.campaign.getMainImage() + ")")#home.home-section.bg-after-company.parallax-2.fixed-height-small.hide-bg-fixed.company-header
+section.company-header.scroll-paralax
+  div(style="background-image: url(" + values.campaign.getMainImage() + ")").background
   .js-height-parent.container-fluid
     .home-content
       .home-text.text-lg-center
