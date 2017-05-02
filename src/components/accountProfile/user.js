@@ -32,7 +32,6 @@ class User {
     this.formc = null;
 
     this.data = { token: '', id: ''};
-    this.role_data = null;
     this.token = null;
 
     this.next = null;
@@ -77,8 +76,8 @@ class User {
   }
 
   updateLocalStorage() {
-      localStorage.setItem('token', this.data.token);
-      localStorage.setItem('user', JSON.stringify(this.data));
+    localStorage.setItem('token', this.data.token);
+    localStorage.setItem('user', JSON.stringify(this.data));
   }
 
   setData(data, next) {
@@ -118,8 +117,30 @@ class User {
         }, 100);
       });
     } else {
-      alert('no token or additional info providet');
+      app.dialogs.error('no token or additional info provided');
     }
+  }
+
+  updateUserData(data, next) {
+    console.log(data);
+    const infoRequest = data.info ? null : api.makeRequest(app.config.authServer + '/info',  'GET');
+    $.when(infoRequest).done((responseData) => {
+      this.data = _.extend({}, this.data, responseData || data);
+      this.data.image_image_id = new app.models.Image(
+        app.config.authServer + '/rest-auth/data',
+        data.image_data
+      );
+      this.updateLocalStorage();
+      app.profile.render();
+      delete data.token;
+      if (next)
+        setTimeout(() => window.location = next, 100);
+    }).fail(() => {
+      this.emptyLocalStorage();
+      setTimeout(function() {
+        window.location = '/account/login?next=' + document.location.pathname;
+      }, 100);
+    });
   }
 
   emptyLocalStorage() {
@@ -129,42 +150,6 @@ class User {
     this.token = null;
     this.data = {};
   }
-
-  // load() {
-  //   this.token = localStorage.getItem('token');
-  //   if (this.token === null) {
-  //     return app.trigger('userLoaded', { id: '' });
-  //   } else {
-  //     const data = JSON.parse(localStorage.getItem('user')) || {};
-  //     let a = '';
-  //     // Check if user have all required data
-  //     if(data.hasOwnProperty('info') == false || Array.isArray(data.info) == false) {
-  //       a = api.makeRequest(app.config.authServer + '/info',  'GET'); //.done(() => {
-  //     }
-  //
-  //     $.when(a).done((responseData) => {
-  //
-  //       this.data = responseData || data;
-  //
-  //       data.image_image_id = new Image(
-  //         app.config.authServer + '/rest-auth/data',
-  //         data.image_data
-  //       );
-  //       this.data = data;
-  //
-  //       if(responseData) {
-  //         this.updateLocalStorage();
-  //       }
-  //     }).fail(() => {
-  //       this.emptyLocalStorage();
-  //       setTimeout(function() {
-  //         window.location = '/account/login?next=' + document.location.pathname;
-  //       }, 100);
-  //     });
-  //
-  //     return app.trigger('userLoaded', data);
-  //   }
-  // }
 
   loadWithPromise() {
     return new Promise((resolve, reject) => {
@@ -210,15 +195,15 @@ class User {
     return data;
   }
 
-  _initRoles() {
+  getRoles() {
     if (!this.companiesMember || !this.companiesMember.length)
-      return;
+      return [];
 
-    this.role_data = [];
+    const role_data = [];
 
     _.each(this.companiesMember, (data) => {
       let roles = app.helpers.role.extractRoles(data.role);
-      this.role_data.push({
+      role_data.push({
         company: {
           id: data.company_id,
           name: data.company,
@@ -228,24 +213,17 @@ class User {
       });
     });
 
+    return role_data;
   }
 
   getRolesInCompany(company_id) {
-    if (!this.role_data)
-      this._initRoles();
-
     if (!_.isNumber(company_id)) {
       return;
     }
 
-    return _(this.role_data).find((data) => { return data.company.id == company_id; });
-  }
+    const role_data = this.getRoles();
 
-  getRoles() {
-    if (!this.role_data)
-      this._initRoles();
-
-    return this.role_data;
+    return _(role_data).find((data) => { return data.company.id == company_id; });
   }
 
   ensureLoggedIn(next) {

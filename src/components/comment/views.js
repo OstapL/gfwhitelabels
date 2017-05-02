@@ -301,7 +301,7 @@ module.exports = {
       }).fail((err) => {
         $target.prop('disabled', false);
         app.hideLoading();
-        alert(err);
+        app.dialogs.error(err);
       });
     },
 
