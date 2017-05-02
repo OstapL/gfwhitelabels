@@ -17,6 +17,7 @@ aws  s3 sync $DIR s3://$BUCKETSTORAGE/docs/ --profile "$PROFILE" > /dev/null
 echo 'updating alpha DCU'
 git checkout alpha-dcu
 git merge --no-ff alpha
+git submodule update --init --recursive
 BUCKET="growthfountain-alpha-dcu"
 BUCKETSTORAGE="growthfountain-alpha-dcu-storage"
 DIR=dist
@@ -32,6 +33,7 @@ echo 'updating alpha MOMENTUM3'
 git reset --hard
 git checkout alpha-momentum3
 git merge --no-ff alpha
+git submodule update --init --recursive
 BUCKET="growthfountain-alpha-momentm3"
 BUCKETSTORAGE="growthfountain-alpha-momentum3-storage"
 DIR=dist
@@ -47,6 +49,7 @@ echo 'updating alpha JDCU'
 git reset --hard
 git checkout alpha-jdcu
 git merge --no-ff alpha
+git submodule update --init --recursive
 BUCKET="growthfountain-alpha-jdcu"
 BUCKETSTORAGE="growthfountain-alpha-jdcu-storage"
 DIR=dist
@@ -62,6 +65,7 @@ echo 'updating alpha RIVERMARK'
 git reset --hard
 git checkout alpha-rivermark
 git merge --no-ff alpha
+git submodule update --init --recursive
 BUCKET="growthfountain-alpha-rivermark"
 BUCKETSTORAGE="growthfountain-alpha-rivermark-storage"
 DIR=dist
