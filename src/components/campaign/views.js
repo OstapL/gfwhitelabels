@@ -387,19 +387,20 @@ module.exports = {
         });
         $modal.on('hidden.bs.modal', () => {
           player.off('play');
-          player.unload();
-          player = null;
-          $modal.empty();
-          $modal.remove();
+          player.unload().then(() => {
+            player = null;
+            $modal.empty();
+            $modal.remove();
+          }).catch(console.error);
         });
       };
 
       const loadPlayer = (provider) => {
         if (provider == 'youtube')
-          return app.loadYoutubePlayerAPI();
+          return app.helpers.scripts.loadYoutubePlayerAPI();
 
         if (provider == 'vimeo')
-          return app.loadVimeoPlayerAPI();
+          return app.helpers.scripts.loadVimeoPlayerAPI();
       };
 
       let $target = $(e.target).closest('a');
