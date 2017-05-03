@@ -3,6 +3,7 @@
   var rolesConsts = require('consts/team_member/roles.json');
   var countryDirective = require('directives/country/index.js');
   var ssnDirective = require('directives/ssn/index.js');
+  var imageDropzone = require('directives/setdropzone/image.js'); 
 
   pug_html += app.breadcrumbs('Profile', '', [ ['Home', '/'], ['Profile', ''],]);
 
@@ -12,13 +13,11 @@
       form(method="post" action="").form.form-section
         h4.m-t-0.m-b-1.profile-user-name.text-xs-center.text-uppercase #{user.first_name + ' ' + user.last_name}
         -
-          pug_html += app.fields.userProfileDropzone('image_image_id', _.extend({
-            thumbSize: '255x135',
-            default: require('images/default/255x153.png'),
-            icon: 'camera',
-            text: 'Drop your profile photo here or click to upload',
-            data: user.image_data[0],
-          }, fields.image));
+          pug_html += new imageDropzone.ImageDropzone(view, 
+            'image_image_id', 
+            'image_data', 
+            view.fields.image_image_id
+          ).render().resultHTML;
       .row.m-t-2.m-b-2
         .col-xl-12.col-lg-12.col-md-6.offset-md-3.col-xs-8.offset-xs-2.offset-xl-0.offset-lg-0.p-l-0.p-r-0
           -
@@ -27,7 +26,7 @@
           if roles && roles.length
             each roleInfo, idx in roles
               .profile-type-user
-                if roleInfo.roles && roleInfo.roles.length
+                if roleInfo.roles && roleInfo.roles.length && roleInfo.company.is_paid
                   each role in roleInfo.roles
                     span.user-type #{ role.title }
                   .user-company
@@ -35,15 +34,25 @@
                     a(href=app.getIssuerDashboardUrl(roleInfo.company.id)).link-3  #{ roleInfo.company.name }
                     |  company.
                   hr
-          else if company && company.name
+          else if company && company.name && company.is_paid
             .profile-type-user
               .user-company
                 a(href="/dashboard/" + company.formc_id + "/issuer-dashboard").link-3  #{ company.name }
                 |  company.
+          if user.credit > 0 && user.days_left > 0
+            .profile-type-user.credit-all.m-t-2
+              
+              h3.text-uppercase.m-t-0 your credit
+                .small-text Credit valid for #{ user.days_left } days.
+              .profile-comission
+                .wrap
+                  h2.m-t-0.m-b-0 $#{ user.credit }
+              .text-xs-center
+                a(href="/companies").btn.btn-secondary invest
+              hr.m-t-2
           a(href="/account/change-password").link-3
             i.fa.fa-lock
             |  Need to change your password?
-
     .col-xl-8.col-lg-8
       ul.nav.nav-tabs.profile-tabs
         li(aria-expanded="false").nav-item
@@ -162,6 +171,7 @@
                           input(
                           type='text'
                           name="net_worth"
+                          value=user.net_worth
                           data-slider-value=user.net_worth
                           ).form-control.slider-net-worth
                       .form-group.row.bootstrap-slider-custom
@@ -317,7 +327,7 @@
                       .form-group.row.clearfix.m0
                         .col-lg-12.mt30.text-xs-center
                           .controls
-                            a(
+                            button(
                               href="#"
                               data-method="PATCH"
                             )#saveFinancialInfo.btn.btn-primary.pull-lg-right SAVE

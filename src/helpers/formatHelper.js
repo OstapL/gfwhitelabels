@@ -69,6 +69,14 @@ module.exports = {
       }
   },
 
+  ensureLinkProtocol(link, https=false) {
+    if (!link)
+      return link;
+
+    let protocol = https ? 'https://' : 'http://';
+    return protocol + link.replace(/http(s?)\:\/\//, '');
+  },
+
   getWebsiteUrl(href) {
     var l = document.createElement("a");
     l.href = href;
