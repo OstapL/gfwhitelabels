@@ -14,7 +14,8 @@ img
 		top: -450px
 		height: 100%
 		background-size: cover!important
-		
+		@media only screen and (max-width : 1024px)
+			top: -500px
 
 .scroll-paralax
 	&:after
@@ -46,5 +47,19 @@ img
 			margin-top: 0
 			font-weight: 300
 		.btn
-			&:last-child
+			&:nth-child(2)
 				margin-left: rem(30)
+			@media only screen and (max-width : 401px)
+				margin-left: 0!important
+				margin-top: 25px
+.no-paralax-mobile
+	.background
+		@media only screen and (max-width : 768px)
+			transform: none!important
+			top: 0px!important
+			background-position: center!important
+			height: 100%!important
+.page.partners
+  .partner-height-top
+    .background
+      top: -200px
