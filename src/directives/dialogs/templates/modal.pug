@@ -3,20 +3,20 @@ div(tabindex='-1' role='dialog' aria-hidden='true' aria-labelledby="generic-moda
   div.modal-dialog(role='document')
     div.modal-content
       div.modal-header
-        h5.modal-title#generic-modal-label #{ type }
-        button(type="button"  aria-label="Close").close.modal-btn-cancel
-          span(aria-hidden="true") &times;
-    div.modal-body
-      | #{ message }
+        button(type="button" data-dismiss="modal" aria-label="Close").close
+          span(aria-hidden="true")
+            i.fa.fa-times
+      div.modal-body.text-xs-center.p-t-0
+        h3.m-t-0 #{ message }
 
-    div.modal-footer
-      button(type="button").btn.btn-secondary.modal-btn-ok OK
-      case type
-        when 'confirm'
-          button(type="button").btn.btn-primary.modal-btn-cancel CANCEL
-        //-
-          when 'info'
-          when 'warning'
-          when 'error'
+      div.modal-footer.text-xs-center.p-b-2
+        button(type="button").btn.btn-secondary.modal-btn-ok OK
+        case type
+          when 'confirm'
+            button(type="button").btn.btn-primary.modal-btn-cancel.m-l-2 CANCEL
+          //-
+            when 'info'
+            when 'warning'
+            when 'error'
 
 
