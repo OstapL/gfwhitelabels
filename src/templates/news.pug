@@ -73,7 +73,7 @@ section.text_block
                       | Crowdfunding: New Opportunity for Start-Ups & Credit Unions
                     .small-text
                       | March 17, 2017
-                p.pt10 A partnership between New York City based GrowthFountain, an equity crowdfunding platform, and $7.6 billion, Marlborough, Mass.-based Digital Federal Credit Union enables entrepreneurs to raise capital and members to...
+                p.pt10 A partnership between New York City based GrowthFountain, an equity crowdfunding platform, and $7.6 billion, Marlborough, Mass.-based Digital Federal Credit Union enables entrepreneurs to raise capital...
 
           li.border-bottom.pb50.mb50
             .row
@@ -90,7 +90,74 @@ section.text_block
                     .small-text
                       | March 20, 2017
                 p.pt10 When you walk down main street anywhere in America – whether you’re in Sioux Falls, South Dakota or New York City, you’re sure to notice myriad local businesses on both sides of the street.  Restaurants, bars, dry cleaners...
+          li.border-bottom.pb50.mb50
+            .row
+              .col-lg-4
+                .news-img.text-xs-center.mpb50
+                  a(href="http://www.tulsaworld.com/business/smallbusiness/tulsa-company-offers-crowd-funding-platform-for-startups/article_e9a0859d-e0cf-5eb6-9bb9-01aaf7b81d34.html" target="_blank")
+                    img(src=require("img/pages/tulsa_world.png") alt="cheddar")
+                
+              .col-lg-8
+                h4.open-sans.letter-spacing-0.text-muted.m0
+                  a(href="http://www.tulsaworld.com/business/smallbusiness/tulsa-company-offers-crowd-funding-platform-for-startups/article_e9a0859d-e0cf-5eb6-9bb9-01aaf7b81d34.html" target="_blank")
+                    b
+                      | Tulsa company offers crowd-funding platform for startups
+                    .small-text
+                      | April 1, 2017
+                p.pt10 Typically, raising capital is a obstacle to expanding a small business. Greg Peters seeks to lower that hurdle. Partnering with New York-based GrowthFountain, the co-founder of ...
 
+          li.border-bottom.pb50.mb50
+            .row
+              .col-lg-4
+                .news-img.text-xs-center.mpb50
+                  a(href="#audio-modal" data-toggle="modal" data-target="#audio-modal")
+                    img(src=require("img/pages/business_radio.png") alt="cheddar")
+                
+              .col-lg-8
+                h4.open-sans.letter-spacing-0.text-muted.m0
+                  a(href="#audio-modal" data-toggle="modal" data-target="#audio-modal")
+                    b
+                      | Ken Staut discusses equity crowdfunding on the Barry Moltz show
+                    .small-text
+                      | April 5, 2017
+                p.pb10.pt10 Listen to the interview on the 
+                  a(href="#audio-modal" data-toggle="modal" data-target="#audio-modal").link-3 Barry Moltz show
+                p Ken Staut, CEO of GrowthFountain talks about equity crowdfunding and its revolutionary possibilities for small businesses.
+          
+          li.border-bottom.pb50.mb50
+            .row
+              .col-lg-4
+                .news-img.text-xs-center.mpb50
+                  a(href=app.config.bucketServer + '/docs/GrowthFountain.April.Bar.Business.Magazine.pdf' target="_blank")
+                    img(src=require("img/pages/bar-business.png") alt="finance")
+                
+              .col-lg-8
+                h4.open-sans.letter-spacing-0.text-muted.m0
+                  a(href=app.config.bucketServer + '/docs/GrowthFountain.April.Bar.Business.Magazine.pdf' target="_blank")
+                    b
+                      | Raise capital and Brand Ambassadors
+                    .small-text
+                      | April 17, 2017
+                
+                p.pt10 Imagine assembling a team of brand ambassadors who will promote your bar to anyone who will listen. It can now be a reality thanks to GrowthFountain. Launched in February, GrowthFountain is an... 
+          
+          li.border-bottom.pb50.mb50
+            .row
+              .col-lg-4
+                .news-img.text-xs-center.mpb50
+                  a(href="http://www.smallbizdaily.com/entrepreneur-life/" target="_blank")
+                    img(src=require("img/pages/smallbizdaily.png") alt="finance")
+                
+              .col-lg-8
+                h4.open-sans.letter-spacing-0.text-muted.m0
+                  a(href="http://www.smallbizdaily.com/entrepreneur-life/" target="_blank")
+                    b
+                      | Seeking Out Risk: The Life of an Entrepreneur
+                    .small-text
+                      | April 20, 2017
+                
+                p.pt10 A friend of mine once asked me if I am motivated out of fear of failure or a drive to succeed. My answer clearly depicts why I’ve been a moderately successful entrepreneur, and why I’m not really cut out to be a cog within...
+                
           li.border-bottom.pb50.mb50
             .row
               .col-lg-4
@@ -409,4 +476,18 @@ section.text_block
                       | January 7, 2014
                 
                 p.pt10 We were pleased to see the Securities and Exchange Commission’s long-awaited proposed rules with respect to Article III of the Jumpstart Our Business Startups Act. We are sensitive to the difficulties...
-          
+div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#audio-modal.modal.fade
+  div(role="document").modal-dialog
+    .modal-content
+      .container
+        .modal-header.p-x-0
+          button(type="button" data-dismiss="modal" aria-label="Close").close
+            span(aria-hidden="true")
+              i.fa.fa-times
+          h2.dosis.text-uppercase.text-sm-center.text-xs-center.mt50 INTERVIEW.MP3
+
+        .modal-body
+          audio(controls)#news_audio.w-100.m-b-2.p-x-3
+            source(src=require("img/audio/BIR_040217_SEG_4.mp3") type="audio/mpeg")
+
+    .modal-footer  

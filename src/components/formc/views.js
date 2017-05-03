@@ -1,5 +1,3 @@
-'use strict';
-
 const typeOfDocuments = require('consts/typeOfDocuments.json');
 const companyFees = require('consts/companyFees.json');
 const formcHelpers = require('./helpers.js');
@@ -388,32 +386,37 @@ module.exports = {
 
     deleteMember: function (e) {
       e.preventDefault();
-      let userId = e.currentTarget.dataset.id;
 
-      if (confirm('Are you sure you would like to delete this team member?')) {
+      const target = e.currentTarget;
+      const userId = target.dataset.id;
+
+      app.dialogs.confirm('Are you sure you would like to delete this team member?').then((confirmed) => {
+        if (!confirmed)
+          return;
+
         api.makeRequest(
           this.urlRoot.replace('employers', '') +  userId,
           'DELETE',
-          {'role': e.currentTarget.dataset.role }
+          {'role': target.dataset.role }
         ).
         then((data) => {
           let index = this.model.team_members.findIndex((el) => { return el.user_id == userId });
           this.model.team_members.splice(index, 1);
-          e.currentTarget.parentElement.parentElement.remove()
+          target.parentElement.parentElement.remove()
           /*
            * ToDo
            * Create right notification error
            *
-          if (this.model.team_members.length < 1) {
-            this.$el.find('.notification').show();
-            this.$el.find('.buttons-row').hide();
-          } else {
-            this.$el.find('.notification').hide();
-            this.$el.find('.buttons-row').show();
-          }
-          */
+           if (this.model.team_members.length < 1) {
+           this.$el.find('.notification').show();
+           this.$el.find('.buttons-row').hide();
+           } else {
+           this.$el.find('.notification').hide();
+           this.$el.find('.buttons-row').show();
+           }
+           */
         });
-      }
+      });
     },
 
     updateEmployees(e) {
@@ -879,7 +882,6 @@ module.exports = {
     },
 
     submit(e) {
-      debugger;
       var $target = $(e.target.currentTarget);
       var data = $target.serializeJSON();
       data.use_of_net_proceeds.forEach(function (elem) {
@@ -904,11 +906,12 @@ module.exports = {
           maxRaise: this.campaign.maximum_raise,
           minRaise: this.campaign.minimum_raise,
           campaignId: this.campaign.id,
+          view: this
         })
       );
       this.$('.max-total-use,.min-total-use').popover({
         html: true,
-        template: '<div class="popover" role="tooltip" style="border-color:red;width:170px;"><div class="popover-arrow" style="border-right-color:red;"></div><h3 class="popover-title"></h3><div class="popover-content" style="color:red;"></div></div>'
+        template: '<div class="popover  divPopover"  role="tooltip"><span class="popover-arrow"></span> <h3 class="popover-title"></h3> <span class="icon-popover"><i class="fa fa-info-circle" aria-hidden="true"></i></span> <span class="popover-content"> XXX </span></div>'
       });
 
       this.$('.min-expense,.max-expense,.min-use,.max-use').each(function (idx, elem) {
@@ -917,7 +920,6 @@ module.exports = {
       });
 
       this.calculate(null, false);
-      setTimeout(() => { this.createDropzones() } , 1000);
       app.helpers.disableEnter.disableEnter.call(this);
       raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
@@ -1753,13 +1755,14 @@ module.exports = {
 
       this.$el.html(
         template({
+          view: this,
           fields: this.fields,
           values: this.model,
           campaignId: this.campaign.id,
           templates: this.jsonTemplates,
         })
       );
-      setTimeout(() => { this.createDropzones() } , 1000);
+      // setTimeout(() => { this.createDropzones() } , 1000);
       app.helpers.disableEnter.disableEnter.call(this);
       raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
@@ -1964,28 +1967,34 @@ module.exports = {
 
     deleteOutstanding(e) {
       e.preventDefault();
-      if (!confirm('Are you sure?')) return;
-      let sectionName = e.currentTarget.dataset.section;
-      let index = e.currentTarget.dataset.index;
-      this.$('.' + sectionName + '_container tr[data-index=' + index + ']').remove();
-      this.model[sectionName].splice(index, 1);
+      const target = e.currentTarget;
+      const sectionName = target.dataset.section;
+      const index = target.dataset.index;
 
-      // Reorganize indice
-      this.$('.' + sectionName + '_container tr').each(function (idx, elem) {
-        $(this).attr('data-index', idx);
-        $(this).find('a').attr('data-index', idx);
+      app.dialogs.confirm('Are you sure?').then((confirmed) => {
+        if (!confirmed)
+          return;
+
+        this.$('.' + sectionName + '_container tr[data-index=' + index + ']').remove();
+        this.model[sectionName].splice(index, 1);
+
+        // Reorganize indice
+        this.$('.' + sectionName + '_container tr').each(function (idx, elem) {
+          $(this).attr('data-index', idx);
+          $(this).find('a').attr('data-index', idx);
+        });
+
+        // ToDo
+        // Fix index counter
+        this[sectionName + 'Index']--;
+        this.$('.' + sectionName + '_container tr')
+
+        api.makeRequest(
+          this.urlRoot.replace(':id', this.model.id),
+          'PATCH',
+          {'outstanding_securities': this.model[sectionName]}
+        );
       });
-
-      // ToDo
-      // Fix index counter
-      this[sectionName + 'Index']--;
-      this.$('.' + sectionName + '_container tr')
-
-      api.makeRequest(
-        this.urlRoot.replace(':id', this.model.id),
-        'PATCH',
-        {'outstanding_securities': this.model[sectionName]}
-      );
     },
 
     _success(data, newData) {
@@ -2086,6 +2095,10 @@ module.exports = {
     initialize(options) {
       this.formcId = options.formcId;
       this.fields = options.fields;
+
+      // this.model = options.formc;
+      // this.model.campaign = options.campaign;
+
       app.helpers.disableEnter.disableEnter.call(this);
     },
     events: {
@@ -2324,11 +2337,13 @@ module.exports = {
       this.fields.formc.outstanding_securities.schema.security_type.validate.choices = securityTypeConsts.SECURITY_TYPES;
       this.fields.formc.outstanding_securities.schema.custom_security_type.validate.choices = securityTypeConsts.SECURITY_TYPES;
       this.fields.formc.outstanding_securities.schema.voting_right.validate.choices = yesNoConsts.YESNO;
+      this.fields.formc.business_plan_file_id.label = 'Please upload your business plan';
 
       this.$el.html(
         template({
           fields: this.fields,
           formcId: this.formcId,
+          view: this,
           values: {
             company: app.user.company,
             campaign: app.user.campaign,

@@ -1,10 +1,9 @@
-
-// функция для перевода в rem - пример перевода padding-top: rem(50px)
-@import "functions/px-to-rem" 
-                                                                    
+                                                                
 // Загружаем об щие стали  и переменные для всех сайтов
-@import "common/colors"   // Общие цвета для всех сайтов используя сайт http://chir.ag/projects/name-that-color/#6195ED
-
+@import "unique/colors"   // Общие цвета для всех сайтов используя сайт http://chir.ag/projects/name-that-color/#6195ED
+ 
+  
+        
 /** Bootstrap **/ 
 // Core variables and mixins
 @import "functions/px-to-rem"
@@ -116,9 +115,7 @@
 @import "~bootstrap/scss/popover"
 @import "bootstrap_c/popover"
 @import "unique/popover"
-@import "~bootstrap/scss/carousel"
-@import "bootstrap_c/carousel"
-@import "unique/carousel"
+
  
 /** Bootstrap **/
 // Utility classes
@@ -134,7 +131,7 @@
          
   
 // Загружаем стили для всех страниц
-@import "pages/mixins.sass" 
+@import "pages/mixins.sass"
  
 // Загружаем стили от сторонних плагинов
 // используйте npm install плагин

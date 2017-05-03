@@ -1,6 +1,4 @@
-
 const socialAuth = require('./social-auth.js');
-
 
 module.exports = {
   popupLogin: Backbone.View.extend({
@@ -32,7 +30,6 @@ module.exports = {
           messageRequired: 'You must agree to the terms before creating an account',
         },
       };
-      this.next = options.next || window.location.pathname;
     },
 
     render() {
@@ -46,7 +43,7 @@ module.exports = {
       this.$signIn = $('#sign_in');
       this.$signUp = $('#sign_up');
 
-      this.$signIn.modal('show');
+      this.$signUp.modal('show');
 
       return this;
     },
@@ -117,16 +114,13 @@ module.exports = {
     },
 
     initialize(options) {
-      this.fields = options.fields;
     },
 
     render() {
       $('body').scrollTo();
 
       this.$el.html(
-        this.template({
-          fields: this.fields,
-        })
+        this.template()
       );
       return this;
     },
@@ -146,22 +140,69 @@ module.exports = {
     },
 
     initialize(options) {
-      this.fields = options.fields;
-      this.fields.checkbox1.messageRequired = 'You must agree to the terms ' +
-        'before creating an account';
+      this.fields = {
+        first_name: {
+          type: 'string',
+          validate: {
+            _Length: 'Length',
+          },
+          required: true,
+        },
+        last_name: {
+          type: 'string',
+          validate: {
+            _Length: 'Length',
+          },
+          required: true,
+        },
+        email: {
+          type: 'email',
+          validate: {
+            _Email: 'Email',
+            _Length: 'Length',
+          },
+          required: true
+        },
+        domain: {
+          type: 'string',
+          validate: {
+            _Length: 'Length',
+          },
+          required: true,
+        },
+        checkbox1: {
+          type: 'boolean',
+          validate: {
+            _OneOf: 'OneOf'
+          },
+          required: true,
+          messageRequired: 'You must agree to the terms before creating an account',
+        },
+        password1: {
+          type: 'string',
+          'validate': {
+            _Length: 'Length',
+          },
+          required: true,
+        },
+        password2: {
+          type: 'string',
+          validate: {
+            _Length: 'Length'
+          },
+          required: true,
+        },
+      };
     },
 
     render() {
       this.$el.html(
-        this.template({
-          register_fields: this.register_fields,
-        })
+        this.template({})
       );
       return this;
     },
 
     _success(data) {
-      app.emitFacebookPixelEvent('CompleteRegistration');
       app.emitFacebookPixelEvent('CompleteRegistration');
       app.user.setData(data);
     },

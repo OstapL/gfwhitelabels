@@ -1,0 +1,31 @@
+- 
+  klass = options.class || '';
+  var requiredklass = options.required ? 'required' : '',
+    popoverklass = options.help_text ? 'showPopover' : '';
+
+  klass = "row media-item imageDropzone userProfileDropzone" + klass + " " + fileElement.fieldName;
+
+  //klass1 = klass1 || 'col-xl-3 col-lg-12 text-xl-right text-lg-left ';
+  //klass1 += requiredklass;
+
+  klass2 = klass2 || 'col-lg-12 p-x-0';
+  klass2 += ' dropzone__' + fileElement.fieldName;
+
+  var title = options.title || 'Drop photo or click to upload';
+
+div(class=klass)
+  div(data-content=(options.help_text || '') class=popoverklass).dropzoneContainer
+    //div(class=klass1)
+      label(for=fileElement.file.id || fileElement.fieldName)!= options.label
+    div(class=klass2)
+      div(class="col-lg-12 p-sm-up-x-0 ")
+        div(class="uploading collapse")
+          i.fa.fa-spinner.fa-pulse.fa-3x.fa-fw
+        span
+          div(id=name).col-lg-12.col-md-12.col-sm-12.col-xs-12.img-dropzone.text-lg-center.user-photo-wrap.text-xs-center
+            - pug_html += fileElement.render().resultHTML
+          div.col-lg-12.col-md-12.col-sm-12.col-xs-12.p-xs-0.text-xs-center.text-md-center.text-lg-center.dropzone-profile.border-dropzone
+            .row(id=this.fileElement.fieldName).p-dropzone
+              a(class='link-1' href="#" onclick="return false")
+                p.drop-photo #{title}
+                i(class="fa fa-file-image-o")

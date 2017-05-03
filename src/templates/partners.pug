@@ -55,16 +55,17 @@ section.text_block.partner-page
           .col-lg-4.text-xs-center
             a(href="http://momentum3growth.com/" target="_blank")
               img(src=require("img/momentum3growth.png")).img-fluid.text-lg-right.text-xs-center.m-x-auto
-  section.home-wrap-text-block.hide-bg-fixed.partners-bgi.m-t-85
-    .opasity-block
-      .container.text-lg-center.text-xs-center.text-sm-center
-        .wrap
-          .col-lg-6.offset-lg-3
-            h2.dosis.text-uppercase.m-t-0 Be our partner
-            h3 Lead an affinity based group? Interested in obtaining 
-              br
-              | a white labeled platform and partnering with 
-              br
-              | GrowthFountain?
-          .col-lg-12
-            a(href="mailto:info@growthfountain.com").btn.btn-lg.btn-secondary.text-uppercase E-mail us
+
+section.height-block-banner.scroll-paralax.no-paralax-mobile.m-t-85.partner-height-top
+  - var styleString = 'background: url(' + require('img/partner-section.jpg') + ')';
+  div(style=styleString + '; height:500px').background
+  .center-wrap.container
+    .col-xl-12
+      h2.text-uppercase.m-t-0 Be our partner
+      h3 Lead an affinity based group? Interested in obtaining 
+        br
+        | a white labeled platform and partnering with 
+        br
+        | GrowthFountain?
+    .col-lg-12
+      a(href="mailto:info@growthfountain.com").btn.btn-lg.btn-secondary.text-uppercase E-mail us
