@@ -30,7 +30,7 @@
           .col-lg-4.p-xs-0
             .form-group
               .col-xl-12.text-xs-center
-                label(for="nextYearRevenue").font-weight-bold What do you expect next year's revenue share to be?
+                label(for="nextYearRevenue").font-weight-bold What do you expect next year's revenue to be?
               input(
                 value=(data.nextYearRevenue ? app.helpers.calculator.formatPrice(data.nextYearRevenue) : ''),
                 type='text',
@@ -45,7 +45,7 @@
           .col-lg-4.p-xs-0
             .form-group
               .col-xl-12.text-xs-center
-                label(for="growLevel").font-weight-bold At what rate do you expect revenues to grow each year?
+                label(for="growLevel").font-weight-bold At what rate to you expect revenue to grow each year?
               input(
                 value=(data.growLevel ? data.growLevel + '%' : ''),
                 type='text',
@@ -61,7 +61,7 @@
               button(type="submit").btn.btn-primary.text-uppercase go
     .col-xl-12
       #revenue-share-calculator-result
-        .calculator-container.col-xs-12.m-t-1
+        .calculator-container.col-xs-12.m-t-2
           .js-jq-plot-area
             #chart1
             p.plot-title Multiple Returned

@@ -40,10 +40,11 @@ function getOCCF(optionsR, viewName, params = {}, View) {
     }
 
     if (params.company.is_approved < STATUSES.APPROVED) {
-      alert('Sorry, your campaign is not approved yet. Please wait till we check your campaign');
-      app.routers.navigate('/campaign/' + params.campaign.id + '/general_information', {
-        trigger: true,
-        replace: true,
+      app.dialogs.info('Sorry, your campaign is not approved yet. Please wait till we check your campaign').then(() => {
+        app.routers.navigate('/campaign/' + params.campaign.id + '/general_information', {
+          trigger: true,
+          replace: true,
+        });
       });
       return false;
     }
@@ -55,6 +56,9 @@ function getOCCF(optionsR, viewName, params = {}, View) {
       });
       return false;
     }
+    params.company = new app.models.Company(app.user.company) || {};
+    params.campaign = new app.models.Campaign(app.user.campaign);
+    params.formc = new app.models.Formc(app.user.formc);
 
     if (typeof viewName == 'string') {
       new View[viewName](Object.assign({}, params)).render();
@@ -269,9 +273,9 @@ module.exports = {
             if (company[0]) app.user.company = company[0];
             if (campaign[0]) app.user.campaign = campaign[0];
 
-            var model = app.user.company;
-            model.campaign = app.user.campaign;
-            model.formc = app.user.formc;
+            var model = new app.models.Company(app.user.company);
+            model.campaign = new app.models.Campaign(app.user.campaign);
+            model.formc = new app.models.Formc(app.user.formc);
 
             const finalReviewView = new View.finalReview({
               el: '#content',
@@ -280,6 +284,13 @@ module.exports = {
               formcId: id,
             });
             finalReviewView.render();
+            if (location.hash && $(location.hash).length) {
+              setTimeout(() => {
+                $(location.hash).scrollTo(65);
+              }, 300);
+            } else {
+              $('body').scrollTo();
+            }
             app.hideLoading();
 
           });

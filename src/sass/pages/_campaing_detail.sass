@@ -6,8 +6,7 @@
   top: 0
   left: 0
   background: rgba(17, 17, 17, .5)
-.js-height-parent
-  height: 70vh
+
 .border-bottom-scroll
   box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.1)
   padding-top: rem(25)
@@ -37,6 +36,9 @@
   img
     max-width: 50%
 .company-header
+  height: 82vh
+  overflow: hidden
+  position: relative
   .company-name
     margin-top: 0
     position: relative
@@ -53,6 +55,23 @@
     width: 60px
     text-decoration: none
     outline: none
+  .background
+    position: absolute
+    width: 100%
+    top: -20px
+    height: 105%
+    background-size: cover!important
+    background-position: center
+  .home-content
+    position: absolute 
+    left: 50%
+    top: 45%
+    -ms-transform: translate(-50%,-50%)
+    -webkit-transform: translate(-50%,-50%)
+    transform: translate(-50%,-50%)
+    width: 100%
+    z-index: 2
+    text-align: center
 .detail-security-type-icon
   font-size: rem(18)!important
   padding-left: rem(5)
@@ -76,6 +95,9 @@
   position: relative
   padding-bottom: rem(20)
   padding-top: rem(15)
+  position: absolute
+  bottom: 0
+  width: 100%
   .top-info-wrap
     &:before
       width: 100%
@@ -289,45 +311,39 @@
 .articles_press
   .card
     margin-top: 0
-    min-height: rem(148)
     background-color: $alabaster
-    text-align: center
-    padding: rem(30)
-    margin-bottom: rem(45)
+    margin-bottom: rem(50)
     border: none
-    &:hover
-      .fa-link
-        color: $articles-icon-color-hover
-      .links
-        color: $articles-link-name-color-hover
-    .fa-link
-      font-size: rem(24)
-      color: $articles-icon-color
-      margin-bottom: 15px
-      +mt(.2s)
-      &:hover
-        color: $articles-icon-color-hover
-    .card-text
-      line-height: rem(18)
-      letter-spacing: rem(.45)
-      color: $black
-      font-size: rem(18)
-    .intro
-      margin-top: rem(10)
-    .links
-      font-size: rem(14)
-      color: $articles-link-name-color
-      +mt(.2s)
-      &:hover
-        color: $articles-link-name-color-hover
-    .icon-campaign
-      width: rem(12)
-      height: rem(12)
-      margin-right: rem(5)
-      margin-bottom: rem(8)
-    .pos-bottom
-      margin-top: 10px
-.team
+
+    .articles-press-item
+      padding: rem(30) 0
+      margin: 0 rem(20)
+      border-top: solid 1px $light_grey
+      .logo
+        width: 8%
+        display: inline-block
+        vertical-align: top
+        img
+          max-width: 45px
+          position: relative
+          top: -2px
+        @media only screen and (max-width : 767px)
+          img
+            width: 90%
+      .text-block
+        width: 92%
+        display: inline-block
+      &:first-child
+        border-top: none
+    #hidden-article-press
+      .border-top
+        border-top: solid 1px $light_grey
+  .see-all-article-press
+    position: relative
+    top: -20px
+      
+
+.team.team-detail
   padding-bottom: rem(15)
   a,a:hover
     .card-text,.card-title
