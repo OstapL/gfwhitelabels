@@ -1,13 +1,16 @@
 section.raise-capital-landing
-  .top-baner.home-wrap-text-block.m-t-0
-    .opasity-block
-      .wrap.text-xs-center
-        img(src=require('images/gf_icon.png')).logo-banner
-        h1.big-h1.text-uppercase.m-t-0 Turn your customers into owners
-          br
-          | and access our investor network
-        h2.font-weight-light.m-t-1.m-b-2 Raise $25,000 - $1,000,000
-        a(href="/company/create?nolanding=1").btn.btn-primary.btn-lg Start Campaign
+  section.height-block-banner.scroll-paralax.top-baner.m-t-0
+    - var styleString = 'background: url(' + require('img/raise-landing/raise-landing-top.jpg') + ')';
+    div(style=styleString + '; height:80vh').background
+    .center-wrap
+      .col-lg-12
+        .text-xs-center
+          img(src=require('images/gf_icon.png')).logo-banner
+          h1.big-h1.text-uppercase.m-t-0 Turn your customers into owners
+            br
+            | and access our investor network
+          h2.font-weight-light.m-t-1.m-b-2 Raise $25,000 - $1,000,000
+          a(href="/company/create?nolanding=1").btn.btn-primary.btn-lg Start Campaign
   .content-section
     .top-section
       .container
@@ -152,7 +155,7 @@ section.raise-capital-landing
                   br
                   a(href="/pg/entrepreneurquestions").link-3 Click here
       
-section.height-block-banner.scroll-paralax
+section.height-block-banner.scroll-paralax.no-paralax-mobile
   - var styleString = 'background: url(' + require('img/raise-landing/RS2.png') + ')';
   div(style=styleString + '; height:600px').background
   .center-wrap
