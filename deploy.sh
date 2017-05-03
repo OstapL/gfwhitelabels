@@ -15,6 +15,8 @@ DIR=src/docs/
 aws  s3 sync $DIR s3://$BUCKETSTORAGE/docs/ --profile "$PROFILE" > /dev/null
 
 echo 'updating alpha DCU'
+git reset --hard
+git checkout alpha
 git checkout alpha-dcu
 git merge --no-ff alpha
 ./fix_merge.sh
