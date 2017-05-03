@@ -23,7 +23,6 @@ class App {
     this.models = require('./models.js');
     this.sites = require('./sites.js');
     this.user = new User();
-    _.extend(this, Backbone.Events);
     return this;
   }
 
