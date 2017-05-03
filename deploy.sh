@@ -21,7 +21,7 @@ git checkout alpha-dcu
 git merge --no-ff alpha
 ./fix_merge.sh
 git submodule update --init --recursive
-NODE_ENV=production ./node_modules/webpack/bin/webpack.js -p --config ./webpack.config.js
+NODE_ENV=production ./node_modules/webpack/bin/webpack.js -p --config ./webpack.config.js > /dev/null
 BUCKET="growthfountain-alpha-dcu"
 BUCKETSTORAGE="growthfountain-alpha-dcu-storage"
 DIR=dist
@@ -39,7 +39,7 @@ git checkout alpha-momentum3
 git merge --no-ff alpha
 ./fix_merge.sh
 git submodule update --init --recursive
-NODE_ENV=production ./node_modules/webpack/bin/webpack.js -p --config ./webpack.config.js
+NODE_ENV=production ./node_modules/webpack/bin/webpack.js -p --config ./webpack.config.js > /dev/null
 BUCKET="growthfountain-alpha-momentm3"
 BUCKETSTORAGE="growthfountain-alpha-momentum3-storage"
 DIR=dist
@@ -57,7 +57,7 @@ git checkout alpha-jdcu
 git merge --no-ff alpha
 ./fix_merge.sh
 git submodule update --init --recursive
-NODE_ENV=production ./node_modules/webpack/bin/webpack.js -p --config ./webpack.config.js
+NODE_ENV=production ./node_modules/webpack/bin/webpack.js -p --config ./webpack.config.js > /dev/null
 BUCKET="growthfountain-alpha-jdcu"
 BUCKETSTORAGE="growthfountain-alpha-jdcu-storage"
 DIR=dist
@@ -75,7 +75,7 @@ git checkout alpha-rivermark
 git merge --no-ff alpha
 ./fix_merge.sh
 git submodule update --init --recursive
-NODE_ENV=production ./node_modules/webpack/bin/webpack.js -p --config ./webpack.config.js
+NODE_ENV=production ./node_modules/webpack/bin/webpack.js -p --config ./webpack.config.js > /dev/null
 BUCKET="growthfountain-alpha-rivermark"
 BUCKETSTORAGE="growthfountain-alpha-rivermark-storage"
 DIR=dist
