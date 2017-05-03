@@ -403,38 +403,6 @@ class App {
     }
   }
 
-  loadYoutubePlayerAPI() {
-    return new Promise((resolve, reject) => {
-      if (app.youtubeAPIReady)
-        return resolve();
-
-      let tag = document.createElement('script');
-
-      tag.src = "https://www.youtube.com/iframe_api";
-      let firstScriptTag = document.getElementsByTagName('script')[0];
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-      this.on('youtube-api-ready', () => {
-        resolve()
-      });
-    });
-  }
-
-  loadVimeoPlayerAPI() {
-    return new Promise((resolve, reject) => {
-      if (window.Vimeo)
-        return resolve();
-
-      let tag = document.createElement('script');
-
-      tag.src = "https://player.vimeo.com/api/player.js";
-      let firstScriptTag = document.getElementsByTagName('script')[0];
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-      tag.onload = resolve;
-      tag.onerror = reject;
-    });
-  }
-
 }
 
 let __instance = null;
