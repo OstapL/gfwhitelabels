@@ -2,9 +2,9 @@ const componentRoutes = [
   require('components/payBackShareCalculator/route'),
   require('components/capitalRaiseCalculator/route'),
   require('components/whatMyBusinessWorthCalculator/route'),
-  require('components/campaign/route'),
-  require('components/pg/route'),
   require('components/raiseFunds/route'),
+  require('components/pg/route'),
+  require('components/campaign/route'),
   require('components/anonymousAccount/route'),
   require('components/accountProfile/route'),
   require('components/establishedBusinessCalculator/route'),
@@ -47,8 +47,10 @@ module.exports = Backbone.Router.extend(_.extend({
   },
 
   execute(callback, args, name) {
+    //as we send custom events to pixel default events we will sent explicitly
     app.emitFacebookPixelEvent();
-    app.emitGoogleAnalyticsEvent();
+    //metrica stats are tracked in GTM
+    // app.emitYandexMetricaEvent();
 
     app.clearClasses('#page', ['page']);
 
