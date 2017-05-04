@@ -30,11 +30,7 @@ module.exports = {
         const dataR = api.makeCacheRequest(app.config.authServer + '/rest-auth/data');
 
         $.when(fieldsR, dataR).done((fields, data) => {
-          _.extend(app.user.data, data[0]);
-          app.user.data.image_image_id = new app.models.Image(
-            app.config.authServer + '/rest-auth/data',
-            data[0].image_data
-          );
+          app.user.updateUserData(data[0]);
           const i = new View.profile({
             el: '#content',
             model: app.user,

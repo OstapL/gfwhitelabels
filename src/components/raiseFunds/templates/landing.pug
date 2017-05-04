@@ -1,13 +1,16 @@
 section.raise-capital-landing
-  .top-baner.home-wrap-text-block.m-t-0
-    .opasity-block
-      .wrap.text-xs-center
-        img(src=require('images/gf_icon.png')).logo-banner
-        h1.big-h1.text-uppercase.m-t-0 Turn your customers into owners
-          br
-          | and access our investor network
-        h2.font-weight-light.m-t-1.m-b-2 Raise $25,000 - $1,000,000
-        a(href="/account/signup?next=/company/create").btn.btn-primary.btn-lg Start Campaign
+  section.height-block-banner.scroll-paralax.top-baner.m-t-0
+    - var styleString = 'background: url(' + require('img/raise-landing/raise-landing-top.jpg') + ')';
+    div(style=styleString + '; height:80vh').background
+    .center-wrap
+      .col-lg-12
+        .text-xs-center
+          img(src=require('images/gf_icon.png')).logo-banner
+          h1.big-h1.text-uppercase.m-t-0 Turn your customers into owners
+            br
+            | and access our investor network
+          h2.font-weight-light.m-t-1.m-b-2 Raise $25,000 - $1,000,000
+          a(href="/company/create?nolanding=1").btn.btn-primary.btn-lg Start Campaign
   .content-section
     .top-section
       .container
@@ -152,17 +155,17 @@ section.raise-capital-landing
                   br
                   a(href="/pg/entrepreneurquestions").link-3 Click here
       
-  section.home-wrap-text-block.raise-wrap.hide-bg-fixed.raise-landing-section.m-t-85
-    .opasity-block
-      .container.text-lg-center.text-xs-center
-        .wrap
-          .col-lg-6.offset-lg-3
-            h2.text-uppercase.m-t-0.font-weight-bold  Raise more than money. Raise awareness.
-            h3.font-weight-light.m-t-0 Your investors are a new community of supporters for your business.
-              br
-              | Their ability to spread the word about the great things
-              br
-              | you’re doing are as valuable as their dollars...
-          .m-t-3
-            .col-xl-12.text-xs-center
-              a(href="/account/signup?next=/company/create").btn.btn-primary.btn-lg Start Campaign
+section.height-block-banner.scroll-paralax.no-paralax-mobile
+  - var styleString = 'background: url(' + require('img/raise-landing/RS2.png') + ')';
+  div(style=styleString + '; height:600px').background
+  .center-wrap
+    .col-lg-12
+      h2.text-uppercase.m-t-0.font-weight-bold  Raise more than money. Raise awareness.
+      h3.font-weight-light.m-t-0 Your investors are a new community of supporters for your business.
+        br
+        | Their ability to spread the word about the great things
+        br
+        | you’re doing are as valuable as their dollars...
+          
+    .col-xl-12.text-xs-center
+      a(href="/company/create?nolanding=1").btn.btn-primary.btn-lg Start Campaign
