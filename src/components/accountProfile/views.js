@@ -1,15 +1,8 @@
-// ToDo
-// Refactor, moment shouden't be here
-const moment = require('moment');
-const today = moment.utc();
+
 const InvestmentModel = require('src/models/investment.js');
 // ToDo
 // Refactor, this consts shouden't be here
-const FINANCIAL_INFORMATION = require('consts/financialInformation.json');
-const FINANCIAL_INFO = require('consts/financialInformation.json');
 const FEES = require('consts/raisecapital/companyFees.json');
-const ACTIVE_STATUSES = FINANCIAL_INFO.INVESTMENT_STATUS_ACTIVE;                   
-const CANCELLED_STATUSES = FINANCIAL_INFO.INVESTMENT_STATUS_CANCELLED;   
 
 import 'bootstrap-slider/dist/bootstrap-slider';
 import 'bootstrap-slider/dist/css/bootstrap-slider.css';
