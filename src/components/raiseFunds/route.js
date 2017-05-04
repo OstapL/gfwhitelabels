@@ -46,6 +46,7 @@ function getOCCF(optionsR, viewName, params = {}, View) {
 
 module.exports = {
   routes: {
+    'raise-capital': 'landing',
     'company/create': 'company',
     'company/in-review': 'inReview',
     'campaign/:id/general_information': 'generalInformation',
@@ -56,7 +57,34 @@ module.exports = {
     'campaign/:id/perks': 'perks',
   },
   methods: {
+    landing() {
+      app.addClassesTo('#page', ['raise-capital-landing']);
+      let view = require('./templates/landing.pug');
+      document.getElementById('content').innerHTML = view();
+      app.hideLoading();
+      $(window).scroll(function() {
+            var st = $(this).scrollTop() /15;
+
+            $(".scroll-paralax .background").css({
+              "transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+              "-o-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+              "-webkit-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+              "-moz-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+              "-ms-transform" : "translate3d(0px, " + st /2 + "%, .01px)"
+              
+            });
+          });
+    },
+
     company() {
+
+      if(app.user.data.info.length == 0 &&
+          app.getParams().nolanding != 1 &&
+          window.location.pathname != '/raise-capital') {
+        app.routers.navigate('/raise-capital', {trigger: true, replace: false});
+        return false;
+      }
+
       require.ensure([], () => {
         const View = require('components/raiseFunds/views.js');
 
@@ -163,5 +191,15 @@ module.exports = {
       });
     },
   },
-  auth: '*',
+  auth: [
+    'company',
+    'inReview,',
+    'inReview',
+    'generalInformation',
+    'media',
+    'teamMembersAdd1',
+    'teamMembers1',
+    'specifics',
+    'perks',
+  ]
 };

@@ -21,10 +21,10 @@ class MailSubscriber {
         data: data,
         dataType: 'json',
       }).then((response) => {
-        alert('Check your email to proceed with your subscription.');
+        app.dialogs.info('Check your email to proceed with your subscription.');
       }).fail((jqXHR, textStatus, errorThrown) => {
         //TODO: this is temporary solution
-        alert('Check your email to proceed with your subscription.');
+        app.dialogs.info('Check your email to proceed with your subscription.');
       });
       console.log('subscribe');
       console.log(data);

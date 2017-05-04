@@ -104,8 +104,8 @@ class GeoCoder {
       if (cityStateElem)
         cityStateElem.innerHTML = city + ', ' + state;
 
-      this.view.model.city = city;
-      this.view.model.state = state;
+      // this.view.model.city = city;
+      // this.view.model.state = state;
       document.querySelector('#city').value = city;
       document.querySelector('#state').value = state;
     });
