@@ -11,13 +11,13 @@ div(tabindex='-1' role='dialog' aria-hidden='true' aria-labelledby="generic-moda
         h3.m-t-0 #{ message }
 
       div.modal-footer.text-xs-center.p-b-2
-        button(type="button").btn.btn-secondary.modal-btn-ok OK
         case type
           when 'confirm'
-            button(type="button").btn.btn-primary.modal-btn-cancel.m-l-2 CANCEL
+            button(type="button").btn.btn-primary.modal-btn-cancel CANCEL
           //-
             when 'info'
             when 'warning'
             when 'error'
+        button(type="button").btn.btn-secondary.modal-btn-ok.m-l-2 OK
 
 
