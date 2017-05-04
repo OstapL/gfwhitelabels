@@ -1,4 +1,5 @@
 require('src/sass/mixins_all.sass');
+require('babel-polyfill');
 require('jquery-serializejson/jquery.serializejson.min.js');
 require('js/html5-dataset.js');
 require('classlist-polyfill');
@@ -11,6 +12,11 @@ require('classlist-polyfill');
 
 require('bootstrap/dist/js/bootstrap.js');
 require('owl.carousel/dist/owl.carousel.min.js');
+
+(function () {
+  if ( typeof NodeList.prototype.forEach === "function" ) return false;
+  NodeList.prototype.forEach = Array.prototype.forEach;
+})();
 
 function scrollLogoHandler() {
   let $bottomLogo = $('#fade_in_logo');
@@ -31,9 +37,12 @@ function scrollMenuItemsHandler() {
   let topMenuHeight = topMenu.outerHeight();
   let menuItems = topMenu.find("a");
   let scrollItems = menuItems.map(function() {
-    let item = $($(this).attr("href"));
-    if (item.length) {
-      return item;
+    let href = $(this).attr("href");
+    if (href && href.startsWith('#')) {
+      let item = $(href);
+      if (item.length) {
+        return item;
+      }
     }
   });
 
@@ -365,8 +374,7 @@ $.serializeJSON.defaultOptions = _.extend($.serializeJSON.defaultOptions, {
 //TODO: remove this on next iteration
 global.api = require('./helpers/forms.js');
 global.onYouTubeIframeAPIReady = () => {
-  app.youtubeAPIReady = true;
-  app.trigger('youtube-api-ready');
+  app.helpers.scripts.onYoutubeAPILoaded()
 };
 
 const App = require('app.js');

@@ -6,8 +6,7 @@
   top: 0
   left: 0
   background: rgba(17, 17, 17, .5)
-.js-height-parent
-  height: 70vh
+
 .border-bottom-scroll
   box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.1)
   padding-top: rem(25)
@@ -37,6 +36,9 @@
   img
     max-width: 50%
 .company-header
+  height: 82vh
+  overflow: hidden
+  position: relative
   .company-name
     margin-top: 0
     position: relative
@@ -53,6 +55,23 @@
     width: 60px
     text-decoration: none
     outline: none
+  .background
+    position: absolute
+    width: 100%
+    top: -20px
+    height: 105%
+    background-size: cover!important
+    background-position: center
+  .home-content
+    position: absolute 
+    left: 50%
+    top: 45%
+    -ms-transform: translate(-50%,-50%)
+    -webkit-transform: translate(-50%,-50%)
+    transform: translate(-50%,-50%)
+    width: 100%
+    z-index: 2
+    text-align: center
 .detail-security-type-icon
   font-size: rem(18)!important
   padding-left: rem(5)
@@ -76,6 +95,9 @@
   position: relative
   padding-bottom: rem(20)
   padding-top: rem(15)
+  position: absolute
+  bottom: 0
+  width: 100%
   .top-info-wrap
     &:before
       width: 100%

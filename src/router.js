@@ -54,13 +54,19 @@ module.exports = Backbone.Router.extend(_.extend({
 
     app.clearClasses('#page', ['page']);
 
-    if (_.contains(routesMap.auth, name) && !app.user.ensureLoggedIn())
+    if (_.contains(routesMap.auth, name) && !app.user.ensureLoggedIn()) {
       return false;
+    }
 
-    if (callback)
+    if (!app.user.is_anonymous()) {
+      api.makeRequest(app.config.authServer + '/log', 'POST', {url:window.location.href, device: navigator.userAgent, tag: ''});
+    }
+
+    if (callback) {
       callback.apply(this, args);
-    else
+    } else {
       console.error(`Route handler '${name}' not found.`);
+    }
   },
 
   back: function (e) {

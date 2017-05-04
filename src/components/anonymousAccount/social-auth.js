@@ -107,7 +107,7 @@ let functions = {
       $('#sign_in').modal('hide');
     }, (err) => {
       app.hideLoading();
-      alert(err);
+      app.dialogs.error(err);
     });
 
     return false;

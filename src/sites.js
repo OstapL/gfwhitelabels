@@ -1,10 +1,17 @@
 let sites = [{
-	id: 4,
+	id: 37,
 	domain: "localhost",
+	name: "growthfountain",
+	bucket_name: "growthfountain-localhost",
+	url: "http://growthfountain-localhost.s3-website-us-east-1.amazonaws.com",
+	frontend_bucket: "https://d2ncibef8spfcn.cloudfront.net",
+}, {
+	id: 1,
+	domain: "localhost_BROKEN_2",
 	name: "growthfountain",
 	bucket_name: "growthfountain-master-storage",
 	url: "http://growthfountain-master-storage.s3-website-us-east-1.amazonaws.com",
-	frontend_bucket: "",
+	frontend_bucket: "https://d2i0hc81gw5f0c.cloudfront.net",
 }, {
 	id: 21,
 	domain: "growthfountain-investment-admin.s3-website-us-east-1.amazonaws.com",
@@ -20,12 +27,12 @@ let sites = [{
 	url: "",
 	frontend_bucket: "", 
 }, {
-	id: 1,
-	domain: "jd-django.jwpbirm43d.us-east-1.elasticbeanstalk.com",
-	name: "growthfountain",
+	id: 4,
+	domain: "localhost_BROKEN",
+	name: "localhost",
 	bucket_name: "growthfountain-master-storage",
 	url: "http://growthfountain-master-storage.s3-website-us-east-1.amazonaws.com",
-	frontend_bucket: "",
+	frontend_bucket: "https://d2i0hc81gw5f0c.cloudfront.net",
 }, {
 	id: 18,
 	domain: "dcu.growthfountain.com",
@@ -67,56 +74,7 @@ let sites = [{
 	name: "growthfountain",
 	bucket_name: "growthfountain-master-storage",
 	url: "http://growthfountain-master-storage.s3-website-us-east-1.amazonaws.com",
-	frontend_bucket: "" 
-}, {
-	id: 24,
-	domain: "www.growthfountain.com",
-	name: "growthfountain",
-	bucket_name: "growthfountain-master-storage",
-	url: "http://growthfountain-master-storage.s3-website-us-east-1.amazonaws.com",
-	frontend_bucket: "" 
-}, {
-	id: 25,
-	domain: "alpha.growthfountain.com:7070",
-	name: "growthfountain",
-	bucket_name: "growthfountain-master-storage",
-	url: "http://growthfountain-master-storage.s3-website-us-east-1.amazonaws.com",
-	frontend_bucket: "" 
-}, {
-	id: 14,
-	domain: "localhost:70740",
-	name: "growthfountain",
-	bucket_name: "growthfountain-localhost",
-	url: "http://growthfountain-localhost.s3-website-us-east-1.amazonaws.com",
-	frontend_bucket: "" 
-}, {
-	id: 15,
-	domain: "localhost:70750",
-	name: "growthfountain",
-	bucket_name: "growthfountain-localhost",
-	url: "http://growthfountain-localhost.s3-website-us-east-1.amazonaws.com",
-	frontend_bucket: "" 
-}, {
-	id: 19,
-	domain: "localhost:70760",
-	name: "growthfountain",
-	bucket_name: "growthfountain-localhost",
-	url: "http://growthfountain-localhost.s3-website-us-east-1.amazonaws.com",
-	frontend_bucket: "" 
-}, {
-	id: 17,
-	domain: "localhost:70770",
-	name: "growthfountain",
-	bucket_name: "growthfountain-localhost",
-	url: "http://growthfountain-localhost.s3-website-us-east-1.amazonaws.com",
-	frontend_bucket: "" 
-}, {
-	id: 16,
-	domain: "localhost:7072",
-	name: "Localhost Growthfountain",
-	bucket_name: "growthfountain-localhost-storage",
-	url: "http://",
-	frontend_bucket: "" 
+	frontend_bucket: "https://d2i0hc81gw5f0c.cloudfront.net" 
 }, {
 	id: 9,
 	domain: "beta.growthfountain.com",
@@ -160,27 +118,6 @@ let sites = [{
 	url: "",
 	frontend_bucket: "" 
 }, {
-	id: 31,
-	domain: "192.168.1.117:7070",
-	name: "",
-	bucket_name: "",
-	url: "",
-	frontend_bucket: "" 
-}, {
-	id: 32,
-	domain: "momentum3.growthfountain.com",
-	name: "",
-	bucket_name: "",
-	url: "",
-	frontend_bucket: "" 
-}, {
-	id: 33,
-	domain: "localhost:8080",
-	name:  "",
-	bucket_name: "",
-	url: "",
-	frontend_bucket: "" 
-}, {
 	id: 36,
 	domain: "alpha-dcu.growthfountain.com",
 	name: "alpha dcu",
@@ -188,25 +125,18 @@ let sites = [{
 	url: "http://growthfountain-alpha-storage.s3-website-us-east-1.amazonaws.com",
 	frontend_bucket: "" 
 }, {
-	id: 37,
-	domain: "alpha-jdcu.growthfountain.com",
-	name: "alpha dcu",
-	bucket_name: "growthfountain-alpha-storage",
-	url: "http://growthfountain-alpha-storage.s3-website-us-east-1.amazonaws.com",
+	id: 40,
+	domain: "alpha-rivermarkcu.growthfountain.com",
+	name: "alpha-rivermarkcu",
+	bucket_name: "growthfountain-alpha-rivermark-storage",
+	url: "http://growthfountain-alpha-rivermark-storage.s3-website-us-east-1.amazonaws.com",
 	frontend_bucket: "" 
 }, {
 	id: 38,
-	domain: "alpha-rivermarkcu.growthfountain.com",
-	name: "alpha rivermarkcu",
-	bucket_name: "growthfountain-alpha-storage",
-	url: "http://growthfountain-alpha-storage.s3-website-us-east-1.amazonaws.com",
-	frontend_bucket: "" 
-}, {
-	id: 39,
 	domain: "alpha-momentum3.growthfountain.com",
-	name: "alpha rivermarkcu",
-	bucket_name: "growthfountain-alpha-storage",
-	url: "http://growthfountain-alpha-storage.s3-website-us-east-1.amazonaws.com",
+	name: "alpha-momentum3",
+	bucket_name: "growthfountain-alpha-momentum3-storage",
+	url: "http://growthfountain-alpha-momentum3-storage.s3-website-us-east-1.amazonaws.com",
 	frontend_bucket: "" 
 }, {
 	id: 34,
