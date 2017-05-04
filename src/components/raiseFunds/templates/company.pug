@@ -249,10 +249,10 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
               input(type="text" placeholder="City" value=values.city).js-city.form-control
             .form-group.row.clearfix.required
               select(name='state' value=values.state).js-state.form-control.custom-select
-                option(checked='checked', value="") State
+                option(value="") State
                 each name,abbreviation in states
-                  if abbreviation == state
-                    option(value=abbreviation selected)= name
+                  if abbreviation == values.state
+                    option(value=abbreviation selected="true")= name
                   else
                     option(value=abbreviation)= name
             .form-group.row.clearfix.required.m0
