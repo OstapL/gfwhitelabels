@@ -58,7 +58,7 @@ module.exports = {
   },
   methods: {
     landing() {
-      app.addClassesTo('#page', ['landing']);
+      app.addClassesTo('#page', ['raise-capital-landing']);
       let view = require('./templates/landing.pug');
       document.getElementById('content').innerHTML = view();
       app.hideLoading();
