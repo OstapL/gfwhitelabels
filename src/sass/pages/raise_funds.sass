@@ -1,7 +1,6 @@
 .create-company,.create-company-general
   .custom-link-company // page /company/create
     .prefix_input_prefix
-      padding: rem(6) rem(15)
       position: relative
       float: left
       z-index: 2
@@ -11,10 +10,11 @@
       -ms-user-select: none
       user-select: none
       border: 1px solid rgba(0,0,0,.15)
-      height: 35px
       border-right: none
       background-color: $alabaster
       color: $black
+      font-size: rem(14)
+      width: auto
     .prefix_input_field
       overflow: hidden
       white-space: nowrap
@@ -110,10 +110,18 @@
     position: absolute
     right: 5px
     top: 1px
-  @media only screen and (max-width : 540px)
-    .btn.m-r-3
-      margin-right: 0!important
-      margin-bottom: 25px
+    @media only screen and (max-width : 375px)
+      right: 0
+  .add-button
+    @media only screen and (min-width : 486px)
+      .btn
+        &:first-child
+          margin-right: rem(30)
+    @media only screen and (max-width : 457px)
+      .btn
+        &:first-child
+          margin-right: 0
+          margin-bottom: 25px
 .create-perks
   .perks-textarea
     textarea
