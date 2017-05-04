@@ -31,7 +31,9 @@ function initInvestment(i) {
     : moment(i.campaign.expiration_date);
 
   i.expired = i.campaign.expiration_date.isBefore(today);
-  i.cancelled = _.contains(CANCELLED_STATUSES, i.status);
+  i.cancelled = _.contains(CANCELLED_STATUSES, i.status) ||
+    i.deposit_cancelled_by_investor ||
+    i.deposit_cancelled_by_manager;
   i.historical = i.expired || i.cancelled;
   i.active = !i.historical && _.contains(ACTIVE_STATUSES, i.status);
 }
@@ -527,46 +529,50 @@ module.exports = {
       if (!investment)
         return console.error('Investment doesn\'t exist: ' + id);
 
-      if (!confirm('Are you sure?'))
-        return false;
+      app.dialogs.confirm('Are you sure?').then((confirmed) => {
+        if (!confirmed)
+          return;
 
-      api.makeRequest(app.config.investmentServer + '/' + id + '/decline', 'PUT').done((response) => {
-        investment.status = FINANCIAL_INFORMATION.INVESTMENT_STATUS.CancelledByUser;
-        initInvestment(investment);
+        api.makeRequest(app.config.investmentServer + '/' + id + '/decline', 'PUT').done((response) => {
+          investment.status = FINANCIAL_INFORMATION.INVESTMENT_STATUS.CancelledByUser;
+          initInvestment(investment);
 
-        $target.closest('.one_table').remove();
+          $target.closest('.one_table').remove();
 
-        let hasActiveInvestments = _.some(this.model.data, i => i.active);
-        if (!hasActiveInvestments)
-          $('#active .investor_table')
-            .append(
-              '<div role="alert" class="alert alert-warning">' +
-              '<strong>You have no active investments</strong>' +
-              '</div>');
+          let hasActiveInvestments = _.some(this.model.data, i => i.active);
+          if (!hasActiveInvestments)
+            $('#active .investor_table')
+              .append(
+                '<div role="alert" class="alert alert-warning">' +
+                '<strong>You have no active investments</strong>' +
+                '</div>');
 
-        let historicalInvestmentsBlock = this.$el.find('#historical .investor_table');
-        let historicalInvestmentElements = historicalInvestmentsBlock.find('.one_table');
-        let cancelledInvestmentElem = this.snippets.investment(investment);
+          let historicalInvestmentsBlock = this.$el.find('#historical .investor_table');
+          let historicalInvestmentElements = historicalInvestmentsBlock.find('.one_table');
+          let cancelledInvestmentElem = this.snippets.investment(investment);
 
-        if (historicalInvestmentElements.length) {
-          //find investment to insert after it
-          let block = _.find(historicalInvestmentElements, (elem) => {
-            const investmentId = Number(elem.dataset.investmentid);
-            return investmentId > investment.id;
-          });
-          if (block)
-            $(block).after(cancelledInvestmentElem);
-          else
-            historicalInvestmentsBlock.prepend(cancelledInvestmentElem);
-        } else {
-          historicalInvestmentsBlock.empty();
-          historicalInvestmentsBlock.append(cancelledInvestmentElem);
-        }
+          if (historicalInvestmentElements.length) {
+            //find investment to insert after it
+            let block = _.find(historicalInvestmentElements, (elem) => {
+              const investmentId = Number(elem.dataset.investmentid);
+              return investmentId > investment.id;
+            });
+            if (block)
+              $(block).after(cancelledInvestmentElem);
+            else
+              historicalInvestmentsBlock.prepend(cancelledInvestmentElem);
+          } else {
+            historicalInvestmentsBlock.empty();
+            historicalInvestmentsBlock.append(cancelledInvestmentElem);
+          }
 
-        this.onCancel(investment);
-      }).fail((err) => {
-        alert(err.error);
+          this.onCancel(investment);
+        }).fail((err) => {
+          app.dialogs.error(err.error);
+        });
+
       });
+
     },
   }),
 
@@ -693,7 +699,7 @@ module.exports = {
 
     cancelCampaign(e) {
       e.preventDefault();
-      alert('Please, call us 646-759-8228');
+      app.dialogs.info('Please, call us 646-759-8228');
     },
 
     initComments() {

@@ -57,6 +57,19 @@ module.exports = {
               1000: { items: 1 },
             },
           });
+          
+          $(window).scroll(function() {
+            var st = $(this).scrollTop() /15;
+
+            $(".scroll-paralax .background").css({
+              "transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+              "-o-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+              "-webkit-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+              "-moz-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+              "-ms-transform" : "translate3d(0px, " + st /2 + "%, .01px)"
+              
+            });
+          });
           // video main page
           $( document ).ready(function() {
 
@@ -172,53 +185,34 @@ module.exports = {
               1000: { items: 1 },
             },
           });
+
         var owl = $('.owl-carousel');
         owl.owlCarousel();
         $('.customNextBtn').click(function() {
-        owl.trigger('next.owl.carousel');
+          owl.trigger('next.owl.carousel');
         });
 
         $('body').scrollTo();
         app.hideLoading();
 
-        $('.show-input').on('click', function (event) {
-          event.preventDefault();
-          if ($(event.target).hasClass('noactive')) {
-            return false;
-          }
+        $(window).scroll(function() {
+					var st = $(this).scrollTop() /15;
 
-          let $this = $(event.target);
-          let inputId = $this.data('name');
-          let $input = $('input' + '#' + inputId);
+					$(".scroll-paralax .background").css({
+						"transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+						"-o-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+						"-webkit-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+						"-moz-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+						"-ms-transform" : "translate3d(0px, " + st /2 + "%, .01px)"
 
-          $this.hide();
+					});
+				}); 
 
-          if ($input.length == 0) {
-            const input  = '<input type="text" id="' + inputId + '" ' +
-              'name="' + inputId + '" class="text-input"/>';
-            $input = $(input);
-            $this.after($input);
-          }
-
-          $input.fadeIn().focus();
-        });
         // pause for modal on page news
         $('#audio-modal').on('hidden.bs.modal', function (e) {
             document.getElementById('news_audio').pause()
         });
-        $('body').on('focusout', '.text-input', (event) => {
-          let $this = $(event.target);
-          let value = $this.val();
-          let inputId = $this.attr('id');
-          let $span = $('[data-name="' + inputId + '"]');
 
-          if (value !== '') {
-            $span.text(value);
-          }
-
-          $this.hide();
-          $span.fadeIn();
-        });
         const names = ['education',
           'terms-of-use',
           'privacy-policy',

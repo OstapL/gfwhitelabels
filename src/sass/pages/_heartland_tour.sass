@@ -1,13 +1,11 @@
 .heartland-tour
   .top-baner
-    background-image: url("img/heartland-tour.jpg")
-    background-repeat: no-repeat
-    background-size: cover
-    width: 100%
     height: 60vh
+    .background
+      top: -50px
     .top-baner-text
       position: relative
-      top: 70px
+
       h1, h3
         color: $white
       h1
@@ -82,12 +80,12 @@
       margin-top: rem(25)
       line-height: 15px
   .sities
+    .scroll-paralax
+      &:after
+        background: rgba(17, 17, 17, 0.1)
     .sities-section
-      background-image: url("img/cities.jpg")
-      background-position: center center
-      height: 340px
-      background-repeat: no-repeat
-      background-size: cover
+      .background
+        top: -250px
       h1
         color: $white
         @media only screen and (max-width : 360px)

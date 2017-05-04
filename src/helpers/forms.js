@@ -179,10 +179,6 @@ module.exports = {
 
       api.makeRequest(url, method, newData).
         then((responseData) => {
-          if(form.length > 0) {
-            form[0].removeAttribute('disabled');
-          }
-          e.target.removeAttribute('disabled');
 
           // ToDo
           // Do we really need this ?!
@@ -196,6 +192,11 @@ module.exports = {
           this.$el.find('.alert-warning').remove();
           // this.undelegateEvents();
           $('.popover').popover('hide');
+
+          if(form.length > 0) {
+            form[0].removeAttribute('disabled');
+          }
+          e.target.removeAttribute('disabled');
 
           let defaultAction  = 1;
           if (typeof this._success == 'function') {
