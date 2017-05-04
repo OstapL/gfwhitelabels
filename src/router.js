@@ -58,9 +58,11 @@ module.exports = Backbone.Router.extend(_.extend({
       return false;
     }
 
+    /*
     if (app.user.ensureLoggedIn()) {
       api.makeRequest(app.config.authServer + '/log', 'POST', {url:window.location.href, device: navigator.userAgent, tag: ''});
     }
+    */
 
     if (callback) {
       callback.apply(this, args);
