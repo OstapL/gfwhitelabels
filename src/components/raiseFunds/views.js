@@ -41,7 +41,7 @@ module.exports = {
       this.fields.tour.validate.choices = require('consts/raisecapital/tour.json').TOUR;
 
       this.labels = {
-        tour: 'Would You Like to Participate in The <a class="link-2" href="/pg/heartland-tour">Heartland Tour</a>',
+        tour: 'Would You Like to Participate in The <a class="link-2" href="/pg/heartland-tour" target="_blank">Heartland Tour</a>',
         name: 'Legal Name of Company',
         short_name: 'Doing Business as Another Name?',
         industry: 'Industry',
