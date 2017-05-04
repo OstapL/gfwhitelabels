@@ -374,8 +374,7 @@ $.serializeJSON.defaultOptions = _.extend($.serializeJSON.defaultOptions, {
 //TODO: remove this on next iteration
 global.api = require('./helpers/forms.js');
 global.onYouTubeIframeAPIReady = () => {
-  app.youtubeAPIReady = true;
-  app.trigger('youtube-api-ready');
+  app.helpers.scripts.onYoutubeAPILoaded()
 };
 
 const App = require('app.js');

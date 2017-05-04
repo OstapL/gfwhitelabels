@@ -31,7 +31,9 @@ function initInvestment(i) {
     : moment(i.campaign.expiration_date);
 
   i.expired = i.campaign.expiration_date.isBefore(today);
-  i.cancelled = _.contains(CANCELLED_STATUSES, i.status);
+  i.cancelled = _.contains(CANCELLED_STATUSES, i.status) ||
+    i.deposit_cancelled_by_investor ||
+    i.deposit_cancelled_by_manager;
   i.historical = i.expired || i.cancelled;
   i.active = !i.historical && _.contains(ACTIVE_STATUSES, i.status);
 }
