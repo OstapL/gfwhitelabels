@@ -132,7 +132,7 @@ mixin menu(currentSection, currentStep)
           .row
             .col-lg-12.text-xs-center
               .row
-                button(type="button").btn.btn-secondary.text-uppercase.m-t-2.onPreview preview
+                button(type="button" data-method="PATCH").btn.btn-secondary.text-uppercase.m-t-2.onPreview preview
               if app.user.company.is_approved == STATUSES.NEW
                 .row
                   button(type="button").btn.btn-primary.text-uppercase.m-t-2.submit_form submit campaign
