@@ -28,21 +28,21 @@ section.campaing-list
     include ../components/campaign/templates/_list.pug
     .col-lg-12.text-lg-center.text-md-center.text-xs-center
       a(href="/companies").link-4 See All
-
-section.home-wrap-text-block.hide-bg-fixed.main-section-invest
-  .opasity-block
-    .container.text-lg-center.text-xs-center.text-sm-center
-      .wrap
-        .col-lg-6.offset-lg-3
-          h2.dosis.text-uppercase.m-t-0 NOW ACCESSIBLE TO EVERYBODY
+section.height-block-banner.scroll-paralax.no-paralax-mobile
+  - var styleString = 'background: url(' + require('img/main-bg-section-invest.jpg') + ')';
+  div(style=styleString + '; height:600px').background
+  .center-wrap.container
+    .col-xl-12
+      h2.text-uppercase.m-t-0 NOW ACCESSIBLE TO EVERYBODY
           h3 It’s the evolution of investing. Receive a financial stake
             br
             | in the companies you support.
-        .col-lg-12
-          if app.user.is_anonymous()
-            a(href="/account/signup").btn.btn-lg.btn-secondary.text-uppercase Sign up to start investing
-          else
-            a(href="/companies").btn.btn-lg.btn-secondary.text-uppercase Start investing
+    .col-lg-12
+      if app.user.is_anonymous()
+        a(href="/account/signup").btn.btn-lg.btn-secondary.text-uppercase Sign up to start investing
+      else
+        a(href="/companies").btn.btn-lg.btn-secondary.text-uppercase Start investing
+
 section.home-what-is
   .container
     .col-lg-12
