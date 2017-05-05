@@ -121,21 +121,6 @@ class Campaign {
     return link;
   }
 
-  initInvestment(i) {
-    i.created_date = moment.isMoment(i.created_date)
-      ? i.created_date
-      : moment.parseZone(i.created_date);
-
-    i.campaign.expiration_date = moment.isMoment(i.campaign.expiration_date)
-      ? i.campaign.expiration_date
-      : moment(i.campaign.expiration_date);
-
-    i.expired = i.campaign.expiration_date.isBefore(today);
-    i.cancelled = _.contains(CANCELLED_STATUSES, i.status);
-    i.historical = i.expired || i.cancelled;
-    i.active = !i.historical  && _.contains(ACTIVE_STATUSES, i.status);
-  }
-
   getInvestorPresentationURL() {
     if (!this.investor_presentation_data ||
         !this.investor_presentation_data.urls ||
@@ -144,6 +129,14 @@ class Campaign {
       return '';
 
     return app.getFilerUrl(this.investor_presentation_data.urls);
+  }
+
+  get expirationDate() {
+    return moment(this.expiration_date);
+  }
+
+  get expired() {
+    return this.expirationDate.isBefore(today);
   }
 }
 

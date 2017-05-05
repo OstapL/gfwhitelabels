@@ -14,7 +14,7 @@ let exports = {
           data.video != '' &&
           data.header_image_image_id.id != null &&
           data.list_image_image_id.id != null &&
-          data.gallery_group_data.length > 0,
+          data.gallery_group_id.data.length > 5,
         'specifics': 
           data.minimum_raise >= 25000 &&
           data.maximum_raise <= 1000000 &&
@@ -112,7 +112,7 @@ let exports = {
     e.preventDefault();
     let pathname = location.pathname;
     app.showLoading();
-    let data = this.$('form').serializeJSON({ useIntKeysAsArrayIndex: true });
+    let data = this.$('form').serializeJSON();
     if (window.location.href.indexOf('team-members/add') !== -1) {
       e.target.dataset.method = 'PUT';
     }
@@ -120,6 +120,8 @@ let exports = {
       setTimeout((function() {
         window.location = '/' + this.formc.company_id + '?preview=1&previous=' + pathname;
       }).bind(this), 100);
+    } else {
+      app.hideLoading();
     }
   }
 };

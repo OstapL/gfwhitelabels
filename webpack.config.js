@@ -3,12 +3,13 @@ const path = require('path');
 const HtmlPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const CompressionPlugin = require("compression-webpack-plugin");
 
 const isAnalyze = process.env.NODE_ENV === 'analyze';
 const isProd = process.env.NODE_ENV === 'production';
 const isDev = process.env.NODE_ENV === 'development';
 
-let plugins = [
+const plugins = [
   new HtmlPlugin({
     title: 'GrowthFountain | Equity Crowdfunding Platform',
     template: './src/index.pug',
@@ -30,7 +31,7 @@ let plugins = [
     'Backbone': 'backbone',
   }),
   new webpack.optimize.CommonsChunkPlugin({
-    names: ['vendor'],
+    names: ['vendorAuth', 'vendorNoAuth'],
     minChunks: 2,
   }),
   new webpack.EnvironmentPlugin({
@@ -45,6 +46,13 @@ if (isProd) {
         warnings: false,
       },
       output: { comments: false },
+    }));
+  plugins.push(new CompressionPlugin({
+      asset: "[path].gz[query]",
+      algorithm: "gzip",
+      test: /\.(js|html|css)$/,
+      // threshold: 10240,
+      // minRatio: 0.8
     }));
   plugins.push(new CleanWebpackPlugin(['dist'], {
     root: __dirname,
@@ -64,10 +72,15 @@ if (isDev) {
 }
 
 const dependencies = Object.keys(require('./package.json').dependencies);
+const authDependencies = ['dropzone', 'socket.io-client', 'cropperjs'];
+const noAuthDependencies = dependencies.filter((dep) => {
+  return !authDependencies.find(authDep => authDep == dep);
+});
 
 module.exports = {
   entry: {
-    vendor: dependencies,
+    vendorAuth: authDependencies,
+    vendorNoAuth: noAuthDependencies,
     index: path.resolve(__dirname, './src/index.js'),
   },
   output: {

@@ -1,5 +1,3 @@
-
-//TODO: ?????
 const socialAuth = require('./social-auth.js');
 
 module.exports = {
@@ -17,6 +15,16 @@ module.exports = {
     login(id) {
       require.ensure([], () => {
         $('body').scrollTo();
+
+        let paramsToken = app.getParams().token;
+        if(app.getParams().token) {
+          localStorage.setItem('token', paramsToken);
+          let data = {
+            'token': paramsToken
+          };
+          app.user.setData(data, '/account/profile');
+          return false;
+        }
 
         const View = require('./views.js');
         let loginView = new View.login({

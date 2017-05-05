@@ -306,11 +306,15 @@ class CropperDropzone {
       ).done((responseData) => {
 
         let thumbSize = '';
-        this.file.file.urls.main = this.file.fixUrl(responseData[0].urls[0]);
-        if(this.options.resize) {
-          thumbSize = this.options.resize.width + 'x' + this.options.resize.height;
-          this.file.file.urls[thumbSize] = this.file.fixUrl(responseData[1].urls[0]);
-        }
+        responseData.forEach((image) => {
+          if(image.name.indexOf(this.options.auto.width + 'x' + this.options.auto.height) != -1) {
+            this.file.file.urls.main = this.file.fixUrl(image.urls[0]);
+          } 
+          if(this.options.resize && image.name.indexOf(this.options.resize.width + 'x' + this.options.resize.height) != -1) {
+            thumbSize = this.options.resize.width + 'x' + this.options.resize.height;
+            this.file.file.urls[thumbSize] = this.file.fixUrl(image.urls[0]);
+          }
+        });
 
         if (this.element.querySelector('#name')) {
           this.file.file.name = this.element.querySelector('#name').value;

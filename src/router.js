@@ -2,9 +2,9 @@ const componentRoutes = [
   require('components/payBackShareCalculator/route'),
   require('components/capitalRaiseCalculator/route'),
   require('components/whatMyBusinessWorthCalculator/route'),
-  require('components/campaign/route'),
-  require('components/pg/route'),
   require('components/raiseFunds/route'),
+  require('components/pg/route'),
+  require('components/campaign/route'),
   require('components/anonymousAccount/route'),
   require('components/accountProfile/route'),
   require('components/establishedBusinessCalculator/route'),
@@ -47,19 +47,29 @@ module.exports = Backbone.Router.extend(_.extend({
   },
 
   execute(callback, args, name) {
-    if(app.config.googleTagIdGeneral || app.config.googleTagId) {
-      app.emitFacebookPixelEvent();
-    }
+    //as we send custom events to pixel default events we will sent explicitly
+    app.emitFacebookPixelEvent();
+    //metrica stats are tracked in GTM
+    // app.emitYandexMetricaEvent();
 
     app.clearClasses('#page', ['page']);
 
-    if (_.contains(routesMap.auth, name) && !app.user.ensureLoggedIn())
+    if (_.contains(routesMap.auth, name) && !app.user.ensureLoggedIn()) {
       return false;
+    }
 
-    if (callback)
+    if (!app.user.is_anonymous()) {
+      api.makeRequest(app.config.authServer + '/log', 'POST', {
+        path:window.location.pathname,
+        device: navigator.userAgent
+      });
+    }
+
+    if (callback) {
       callback.apply(this, args);
-    else
+    } else {
       console.error(`Route handler '${name}' not found.`);
+    }
   },
 
   back: function (e) {

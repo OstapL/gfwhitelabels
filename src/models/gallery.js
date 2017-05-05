@@ -27,6 +27,7 @@ class Gallery extends Folder {
       );
       this.data.push(fileObj);
     });
+    //data = this.data;
     // this.file = file;
   }
 };

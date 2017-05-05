@@ -1,40 +1,12 @@
-// ToDo
-// Refactor, moment shouden't be here
-const moment = require('moment');
-const today = moment.utc();
 
+const InvestmentModel = require('src/models/investment.js');
 // ToDo
 // Refactor, this consts shouden't be here
-const FINANCIAL_INFORMATION = require('consts/financialInformation.json');
-const FINANCIAL_INFO = require('consts/financialInformation.json');
 const FEES = require('consts/raisecapital/companyFees.json');
-const ACTIVE_STATUSES = FINANCIAL_INFO.INVESTMENT_STATUS_ACTIVE;                   
-const CANCELLED_STATUSES = FINANCIAL_INFO.INVESTMENT_STATUS_CANCELLED;   
 
 import 'bootstrap-slider/dist/bootstrap-slider';
 import 'bootstrap-slider/dist/css/bootstrap-slider.css';
 
-const socialNetworksMap = {
-  instagram: ['instagram.com'],
-  facebook: ['fb.com', 'facebook.com'],
-  twitter: ['twitter.com'],
-  linkedin: ['linkedin.com'],
-};
-
-function initInvestment(i) {
-  i.created_date = moment.isMoment(i.created_date)
-    ? i.created_date
-    : moment.parseZone(i.created_date);
-
-  i.campaign.expiration_date = moment.isMoment(i.campaign.expiration_date)
-    ? i.campaign.expiration_date
-    : moment(i.campaign.expiration_date);
-
-  i.expired = i.campaign.expiration_date.isBefore(today);
-  i.cancelled = _.contains(CANCELLED_STATUSES, i.status);
-  i.historical = i.expired || i.cancelled;
-  i.active = !i.historical && _.contains(ACTIVE_STATUSES, i.status);
-}
 
 module.exports = {
   profile: Backbone.View.extend(_.extend({
@@ -42,7 +14,7 @@ module.exports = {
     urlRoot: app.config.authServer + '/rest-auth/data',
     doNotExtendModel: true,
     events: _.extend({
-      'click #saveAccountInfo': 'saveAccountInfo',
+      'click #saveAccountInfo': api.submitAction,
       // 'click #saveFinancialInfo': api.submitAction,
       'change #not-qualify': 'changeQualify',
       'change .investor-item-checkbox': 'changeAccreditedInvestorItem',
@@ -208,8 +180,6 @@ module.exports = {
 
       this._initSliders();
 
-      // this.onImageCrop();
-
       this.cityStateArea = this.$('.js-city-state');
       this.cityField = this.$('.js-city');
       this.stateField = this.$('.js-state');
@@ -237,24 +207,6 @@ module.exports = {
       } else {
         this.$('input[name=accredited_investor_choice]').val(true);
       }
-    },
-
-    onImageCrop(name) {
-      name = name || 'image_image_id';
-      let url = this.model.image_image_id.getUrl();
-      if (url) {
-        document.getElementById('user-thumbnail').src = url;
-      }
-
-    },
-
-    onImageDelete(name) {
-      $('.user-info-name > span').empty().append('<i class="fa fa-user">');
-    },
-
-    saveInfo(e) {
-      let data = _.pick(this.model, ['image_image_id', 'image_data']);
-      return api.submitAction.call(this, e, data);
     },
 
     appendHttpsIfNecessary(e) {
@@ -436,9 +388,8 @@ module.exports = {
     initialize(options) {
       this.fields = options.fields;
 
-      _.each(this.model.data, initInvestment);
-      this.model.data.forEach((el, i) => {
-        this.model.data[i].campaign = new app.models.Campaign(el.campaign, this.fields);
+      _.each(this.model.data, (investment, idx) => {
+        this.model.data[idx] = new InvestmentModel(investment);
       });
 
       this.snippets = {
@@ -547,46 +498,49 @@ module.exports = {
       if (!investment)
         return console.error('Investment doesn\'t exist: ' + id);
 
-      if (!confirm('Are you sure?'))
-        return false;
+      app.dialogs.confirm('Are you sure?').then((confirmed) => {
+        if (!confirmed)
+          return;
 
-      api.makeRequest(app.config.investmentServer + '/' + id + '/decline', 'PUT').done((response) => {
-        investment.status = FINANCIAL_INFORMATION.INVESTMENT_STATUS.CancelledByUser;
-        initInvestment(investment);
+        api.makeRequest(app.config.investmentServer + '/' + id + '/decline', 'PUT').done((response) => {
+          investment.deposit_cancelled_by_investor = true;
 
-        $target.closest('.one_table').remove();
+          $target.closest('.one_table').remove();
 
-        let hasActiveInvestments = _.some(this.model.data, i => i.active);
-        if (!hasActiveInvestments)
-          $('#active .investor_table')
-            .append(
-              '<div role="alert" class="alert alert-warning">' +
-              '<strong>You have no active investments</strong>' +
-              '</div>');
+          let hasActiveInvestments = _.some(this.model.data, i => i.active);
+          if (!hasActiveInvestments)
+            $('#active .investor_table')
+              .append(
+                '<div role="alert" class="alert alert-warning">' +
+                '<strong>You have no active investments</strong>' +
+                '</div>');
 
-        let historicalInvestmentsBlock = this.$el.find('#historical .investor_table');
-        let historicalInvestmentElements = historicalInvestmentsBlock.find('.one_table');
-        let cancelledInvestmentElem = this.snippets.investment(investment);
+          let historicalInvestmentsBlock = this.$el.find('#historical .investor_table');
+          let historicalInvestmentElements = historicalInvestmentsBlock.find('.one_table');
+          let cancelledInvestmentElem = this.snippets.investment(investment);
 
-        if (historicalInvestmentElements.length) {
-          //find investment to insert after it
-          let block = _.find(historicalInvestmentElements, (elem) => {
-            const investmentId = Number(elem.dataset.investmentid);
-            return investmentId > investment.id;
-          });
-          if (block)
-            $(block).after(cancelledInvestmentElem);
-          else
-            historicalInvestmentsBlock.prepend(cancelledInvestmentElem);
-        } else {
-          historicalInvestmentsBlock.empty();
-          historicalInvestmentsBlock.append(cancelledInvestmentElem);
-        }
+          if (historicalInvestmentElements.length) {
+            //find investment to insert after it
+            let block = _.find(historicalInvestmentElements, (elem) => {
+              const investmentId = Number(elem.dataset.investmentid);
+              return investmentId > investment.id;
+            });
+            if (block)
+              $(block).after(cancelledInvestmentElem);
+            else
+              historicalInvestmentsBlock.prepend(cancelledInvestmentElem);
+          } else {
+            historicalInvestmentsBlock.empty();
+            historicalInvestmentsBlock.append(cancelledInvestmentElem);
+          }
 
-        this.onCancel(investment);
-      }).fail((err) => {
-        alert(err.error);
+          this.onCancel(investment);
+        }).fail((err) => {
+          app.dialogs.error(err.error);
+        });
+
       });
+
     },
   }),
 
@@ -713,7 +667,7 @@ module.exports = {
 
     cancelCampaign(e) {
       e.preventDefault();
-      alert('Please, call us 646-759-8228');
+      app.dialogs.info('Please, call us 646-759-8228');
     },
 
     initComments() {
