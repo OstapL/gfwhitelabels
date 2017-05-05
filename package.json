@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "NODE_ENV=development webpack-dev-server",
-    "build": "NODE_ENV=production webpack -p --config ./webpack.config.js",
-    "stats": "webpack --profile --json >stats.json",
+    "build": "NODE_ENV=production webpack -p",
+    "stats": "NODE_ENV=production webpack --profile --json >stats.json",
     "analyzer": "NODE_ENV=analyze webpack",
     "webpack_analyzer": "webpack --json | ./node_modules/webpack-bundle-size-analyzer/webpack-bundle-size-analyzer",
     "lint": "jshint src/**/*.js",
