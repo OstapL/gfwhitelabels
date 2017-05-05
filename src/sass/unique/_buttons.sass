@@ -18,10 +18,10 @@ $btn-primary-bg-top: $puerto_rico
 $btn-primary-hover-bg: #40c8c4
 $btn-primary-color: $white
 
-$btn-secondary-hover-color: #e8e8e8
+$btn-secondary-hover-color: #000
 $btn-secondary-border: #e8e8e8
 $btn-secondary-bg: #e8e8e8
-$btn-secondary-hover-bg: transparent
+$btn-secondary-hover-bg: #cccccc
 $btn-secondary-color: $black
 
 $btn-success-bg: #5cb85c
@@ -121,17 +121,17 @@ $btn-email-hover-bg: rgba(76,212,208, .6)
 	&:hover
 		background: $btn-secondary-hover-bg
 		color: $btn-secondary-hover-color
-		border-color: $btn-secondary-border
+		border-color: $btn-secondary-hover-bg
 
 	&.inverse
 		background: $btn-secondary-hover-bg
 		color: $btn-secondary-hover-color
-		border-color: $btn-secondary-border
+		border-color: $btn-secondary-hover-bg
 
 		&:hover
 			background: $btn-secondary-bg
 			color: $btn-secondary-color
-			border-color: $btn-secondary-border
+			border-color: $btn-secondary-hover-bg
 
 .btn-success
 	background: $btn-success-bg
