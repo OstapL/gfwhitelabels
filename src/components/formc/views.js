@@ -1,12 +1,8 @@
 const typeOfDocuments = require('consts/typeOfDocuments.json');
 const companyFees = require('consts/companyFees.json');
-const formcHelpers = require('./helpers.js');
 const securityTypeConsts = require('consts/formc/security_type.json');
 const yesNoConsts = require('consts/yesNo.json');
 const roles = ['Shareholder', 'Director', 'Officer'];
-
-const validation = require('components/validation/validation.js');
-const raiseHelpers = require('../raiseFunds/helpers.js');
 
 const labels = {
   title: 'Title for Risk',
@@ -43,7 +39,7 @@ const labels = {
 
 const submitFormc = function submitFormc(e) {
   e.preventDefault();
-  let progress = formcHelpers.formcCalcProgress(this.model);
+  let progress = this.model.calcProgress();
 
   if(
       progress.introduction == true &&
@@ -123,7 +119,7 @@ module.exports = {
       this.eSignCompanyName = eSignForm.find('#company-name');
       this.eSignFullName = eSignForm.find('#full_name');
       this.eSignPreview = eSignForm.find('.electronically .name');
-      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+      app.user.campaign.updateMenu(app.user.campaign.calcProgress());
 
       return this;
     },
@@ -186,7 +182,7 @@ module.exports = {
 
     _success(data, newData) {
       if (this.formData && !this.formData.is_paid) this.saveEsign(data);
-      formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
+      app.user.formc.updateFormcMenu(app.user.formc.formcCalcProgress());
       return 1;
     },
 
@@ -216,17 +212,17 @@ module.exports = {
 
           $('.help-block').remove();
           if (!Stripe.card.validateCardNumber(number.val())) {
-            validation.invalidMsg({ $: $, $el: $('#content') }, selectors.number, ['Please, check card number.']);
+            app.validation.invalidMsg({ $: $, $el: $('#content') }, selectors.number, ['Please, check card number.']);
             error = 1;
           }
 
           if (!Stripe.card.validateExpiry(expMonth.val(), expYear.val())) {
-            validation.invalidMsg({ $: $, $el: $('#content') }, selectors.expDate, ['Please, check expiration date.']);
+            app.validation.invalidMsg({ $: $, $el: $('#content') }, selectors.expDate, ['Please, check expiration date.']);
             error = 1;
           }
 
           if (!Stripe.card.validateCVC(cvc.val())) {
-            validation.invalidMsg({ $: $, $el: $('#content') }, selectors.cvc, ['Please, check CVC.']);
+            app.validation.invalidMsg({ $: $, $el: $('#content') }, selectors.cvc, ['Please, check CVC.']);
             error = 1;
           }
 
@@ -259,7 +255,7 @@ module.exports = {
         }
 
         if (!this.eSignFullName.val().trim()) {
-          validation.invalidMsg({ $: $, $el: $('#content'), }, 'full-name', ['Check your name']);
+          app.validation.invalidMsg({ $: $, $el: $('#content'), }, 'full-name', ['Check your name']);
           $payBtn.prop('disabled', false);
           return;
         }
@@ -270,7 +266,7 @@ module.exports = {
 
         Stripe.card.createToken(card, (status, stripeResponse) => {
           if (stripeResponse.error) {
-            validation.invalidMsg({ $: $, $el: $('#content'), }, 'card_number', [stripeResponse.error.message]);
+            app.validation.invalidMsg({ $: $, $el: $('#content'), }, 'card_number', [stripeResponse.error.message]);
             $payBtn.prop('disabled', false); // Re-enable submission
             app.hideLoading();
             return;
@@ -280,7 +276,7 @@ module.exports = {
             stripeToken: stripeResponse.id
           }).done((formcResponse, statusText, xhr) => {
             if (xhr.status !== 200) {
-              validation.invalidMsg({'$': $, $el: $('#content'),}, "expiration-block",
+              app.validation.invalidMsg({'$': $, $el: $('#content'),}, "expiration-block",
                 [formcResponse.description || 'Some error message should be here']);
 
               $payBtn.prop('disabled', false);
@@ -313,7 +309,7 @@ module.exports = {
             app.hideLoading();
 
           }).fail((xhr, ajaxOptions, err) => {
-            validation.invalidMsg({'$': $}, "expiration-block",
+            app.validation.invalidMsg({'$': $}, "expiration-block",
               [xhr.responseJSON.non_field_errors || 'An error occurred, please, try again later.']);
 
             $payBtn.prop('disabled', false);
@@ -372,13 +368,13 @@ module.exports = {
     initialize(options) {
       this.model = options.formc;
       this.fields = options.fields;
-      this.fields.full_time_employers = { label: 'Full Time Employees' };
-      this.fields.part_time_employers = { label: 'Part Time Employees' };
+      this.fields.full_time_employers.label = 'Full Time Employees';
+      this.fields.part_time_employers.label = 'Part Time Employees';
       this.urlRoot = this.urlRoot.replace(':id', this.model.id);
     },
 
     _success(data, newData) {
-      formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
+      app.user.formc.updateFormcMenu(app.user.formc.formcCalcProgress());
       return 1;
     },
 
@@ -463,7 +459,7 @@ module.exports = {
         })
       );
       app.helpers.disableEnter.disableEnter.call(this);
-      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+      app.user.campaign.updateMenu(app.user.campaign.calcProgress());
       return this;
     },
 
@@ -574,7 +570,7 @@ module.exports = {
       );
       this.$el.find('.selectpicker').selectpicker();
       app.helpers.disableEnter.disableEnter.call(this);
-      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+      app.user.campaign.updateMenu(app.user.campaign.calcProgress());
       return this;
     },
 
@@ -722,12 +718,12 @@ module.exports = {
         })
       );
       app.helpers.disableEnter.disableEnter.call(this);
-      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+      app.user.campaign.updateMenu(app.user.campaign.calcProgress());
       return this;
     },
 
     _success(data, newData) {
-      formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
+      app.user.formc.updateFormcMenu(app.user.formc.formcCalcProgress());
       return 1;
     },
 
@@ -814,7 +810,7 @@ module.exports = {
     },
 
     _success(data, newData) {
-      formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
+      app.user.formc.updateFormcMenu(app.user.formc.formcCalcProgress());
       return 1;
     },
 
@@ -923,7 +919,7 @@ module.exports = {
 
       this.calculate(null, false);
       app.helpers.disableEnter.disableEnter.call(this);
-      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+      app.user.campaign.updateMenu(app.user.campaign.calcProgress());
       return this;
     }, 
   }, app.helpers.menu.methods, app.helpers.dropzone.methods, app.helpers.section.methods, app.helpers.confirmOnLeave.methods)),
@@ -956,7 +952,7 @@ module.exports = {
           values: this.model,
         })
       );
-      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+      app.user.campaign.updateMenu(app.user.campaign.calcProgress());
       return this;
     },
   }, app.helpers.menu.methods)),
@@ -1064,7 +1060,7 @@ module.exports = {
         $(this).css({ height: this.scrollHeight + 'px' });
       });
       app.helpers.disableEnter.disableEnter.call(this);
-      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+      app.user.campaign.updateMenu(app.user.campaign.calcProgress());
       return this;
     },
   }, app.helpers.menu.methods, app.helpers.section.methods, app.helpers.riskFactors.methods, app.helpers.confirmOnLeave.methods)),
@@ -1180,7 +1176,7 @@ module.exports = {
         $(this).css({ height: this.scrollHeight + 'px' });
       });
       app.helpers.disableEnter.disableEnter.call(this);
-      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+      app.user.campaign.updateMenu(app.user.campaign.calcProgress());
       return this;
     },
   }, app.helpers.menu.methods, app.helpers.section.methods, app.helpers.riskFactors.methods, app.helpers.confirmOnLeave.methods)),
@@ -1324,7 +1320,7 @@ module.exports = {
         $(this).css({ height: this.scrollHeight + 'px' });
       });
       app.helpers.disableEnter.disableEnter.call(this);
-      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+      app.user.campaign.updateMenu(app.user.campaign.calcProgress());
       return this;
     },
 
@@ -1413,7 +1409,7 @@ module.exports = {
         $(this).css({ height: this.scrollHeight + 'px' });
       });
       app.helpers.disableEnter.disableEnter.call(this);
-      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+      app.user.campaign.updateMenu(app.user.campaign.calcProgress());
       return this;
     },
 
@@ -1521,7 +1517,7 @@ module.exports = {
         $(this).css({ height: this.scrollHeight + 'px' });
       });
       app.helpers.disableEnter.disableEnter.call(this);
-      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+      app.user.campaign.updateMenu(app.user.campaign.calcProgress());
       return this;
     },
   }, app.helpers.menu.methods, app.helpers.section.methods, app.helpers.riskFactors.methods, app.helpers.confirmOnLeave.methods)),
@@ -1650,7 +1646,7 @@ module.exports = {
         $(this).css({ height: this.scrollHeight + 'px' });
       });
       app.helpers.disableEnter.disableEnter.call(this);
-      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+      app.user.campaign.updateMenu(app.user.campaign.calcProgress());
       return this;
     },
   }, app.helpers.menu.methods, app.helpers.section.methods, app.helpers.riskFactors.methods, app.helpers.confirmOnLeave.methods)),
@@ -1693,7 +1689,7 @@ module.exports = {
         $(this).css({ height: this.scrollHeight + 'px' });
       });
       app.helpers.disableEnter.disableEnter.call(this);
-      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+      app.user.campaign.updateMenu(app.user.campaign.calcProgress());
       return this;
     },
   }, app.helpers.menu.methods, app.helpers.section.methods, app.helpers.riskFactors.methods, app.helpers.confirmOnLeave.methods)),
@@ -1744,7 +1740,7 @@ module.exports = {
     },
 
     _success(data, newData) {
-      formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
+      app.user.formc.updateFormcMenu(app.user.formc.formcCalcProgress());
       return 1;
     },
 
@@ -1766,7 +1762,7 @@ module.exports = {
       );
       // setTimeout(() => { this.createDropzones() } , 1000);
       app.helpers.disableEnter.disableEnter.call(this);
-      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+      app.user.campaign.updateMenu(app.user.campaign.calcProgress());
       return this;
     },
   }, app.helpers.menu.methods, app.helpers.yesNo.methods, app.helpers.section.methods, app.helpers.dropzone.methods, app.helpers.confirmOnLeave.methods)),
@@ -1923,9 +1919,9 @@ module.exports = {
           data.amount_outstanding * 100
       ) / 100;
 
-      if (!validation.validate(this.fields.outstanding_securities.schema, data, this)) {
-        _(validation.errors).each((errors, key) => {
-          validation.invalidMsg(this, key, errors);
+      if (!app.validation.validate(this.fields.outstanding_securities.schema, data, this)) {
+        _(app.validation.errors).each((errors, key) => {
+          app.validation.invalidMsg(this, key, errors);
         });
         this.$('.help-block').prev().scrollTo(5);
         return;
@@ -2000,7 +1996,7 @@ module.exports = {
     },
 
     _success(data, newData) {
-      formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
+      app.user.formc.updateFormcMenu(app.user.formc.formcCalcProgress());
       return 1;
     },
 
@@ -2026,7 +2022,7 @@ module.exports = {
       );
       $('#security_modal #custom_security_type').parent().parent().hide();
       app.helpers.disableEnter.disableEnter.call(this);
-      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+      app.user.campaign.updateMenu(app.user.campaign.calcProgress());
       return this;
     },
   }, app.helpers.section.methods, app.helpers.menu.methods, app.helpers.yesNo.methods, app.helpers.confirmOnLeave.methods)),
@@ -2079,7 +2075,7 @@ module.exports = {
         })
       );
       app.helpers.disableEnter.disableEnter.call(this);
-      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+      app.user.campaign.updateMenu(app.user.campaign.calcProgress());
       return this;
     },
   }, app.helpers.menu.methods, app.helpers.yesNo.methods, app.helpers.section.methods, app.helpers.confirmOnLeave.methods)),
