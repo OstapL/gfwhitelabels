@@ -39,7 +39,8 @@ const plugins = [
   })
 ];
 
-if (isProd) {
+if (isProd || isAnalyze) {
+  plugins.push(new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /en/))
   plugins.push(new webpack.optimize.UglifyJsPlugin({
       mangle: true,
       compress: {
@@ -47,17 +48,17 @@ if (isProd) {
       },
       output: { comments: false },
     }));
-  plugins.push(new CompressionPlugin({
-      asset: "[path].gz[query]",
-      algorithm: "gzip",
-      test: /\.(js|html|css)$/,
-      // threshold: 10240,
-      // minRatio: 0.8
-    }));
   plugins.push(new CleanWebpackPlugin(['dist'], {
     root: __dirname,
     verbose: true,
     dry: false,
+  }));
+  plugins.push(new CompressionPlugin({
+    asset: "[path].gz[query]",
+    algorithm: "gzip",
+    test: /\.(js|html|css)$/,
+    // threshold: 10240,
+    // minRatio: 0.8
   }));
 }
 
