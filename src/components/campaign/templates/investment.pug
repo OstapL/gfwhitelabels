@@ -304,9 +304,9 @@ mixin confirmStatement(name, attr)
                   'account_number',
                   user,
                   -1, {
+                    'help_text': '<div class="img-routing-number"></div>',
                   },
                   fields.payment_information_data.schema.account_number);
-
               -
                 pug_html += app.fields.nestedTextLabel(
                   'payment_information_data',
@@ -314,6 +314,7 @@ mixin confirmStatement(name, attr)
                   user,
                   -1, {
                     class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right p-t-0 m-b-0',
+                    'help_text': '<div class="img-routing-number"></div>',
                   },
                   fields.payment_information_data.schema.account_number_re);
 
@@ -323,6 +324,7 @@ mixin confirmStatement(name, attr)
                   'routing_number',
                   user,
                   -1, {
+                    'help_text': '<div class="img-routing-number"></div>',
                   },
                   fields.payment_information_data.schema.routing_number);
               -
@@ -331,6 +333,7 @@ mixin confirmStatement(name, attr)
                   'routing_number_re',
                   user,
                   -1, {
+                    'help_text': '<div class="img-routing-number"></div>',
                   },
                 fields.payment_information_data.schema.routing_number_re);
 
