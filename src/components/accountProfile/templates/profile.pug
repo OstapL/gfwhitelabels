@@ -274,26 +274,26 @@
                           }, fields.name_on_bank_account))
 
                         pug_html += app.fields.textLabel('account_number', _.extend({
-                            'help_text': '<img src=' + require('images/routing-number-on-check.png') + '>',
+                            'help_text': '<div class="img-routing-number"></div>',
                             'type': 'text',
                             'value': user.account_number
                           }, fields.account_number))
 
                         pug_html += app.fields.textLabel('account_number_re', _.extend({
                             'class1': 'col-xl-3 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 m-b-lg-1',
-                            'help_text': '<img src=' + require('images/routing-number-on-check.png') + '>',
+                            'help_text': '<div class="img-routing-number"></div>',
                             'type': 'text',
                             'value': user.account_number
                           }, fields.account_number_re))
 
                         pug_html += app.fields.textLabel('routing_number', _.extend({
-                            'help_text': '<img src=' + require('images/routing-number-on-check.png') + '>',
+                            'help_text': '<div class="img-routing-number"></div>',
                             'type': 'text',
                             'value': user.routing_number
                           }, fields.routing_number))
 
                         pug_html += app.fields.textLabel('routing_number_re', _.extend({
-                            'help_text': '<img src=' + require('images/routing-number-on-check.png') + '>',
+                            'help_text': '<div class="img-routing-number"></div>',
                             'type': 'text',
                             'class1': 'col-xl-3 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 m-b-lg-1',
                             'value': user.routing_number
