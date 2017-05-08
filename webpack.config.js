@@ -31,16 +31,18 @@ const plugins = [
     'Backbone': 'backbone',
   }),
   new webpack.optimize.CommonsChunkPlugin({
-    names: ['vendorAuth', 'vendorNoAuth'],
-    minChunks: 2,
+    // name: 'vendor',
+    names: ['vendor_auth', 'vendor_no_auth'],
+    filename: '[name].bundle.js',
+    minChunks: Infinity,
   }),
   new webpack.EnvironmentPlugin({
     NODE_ENV: 'development',
-  })
+  }),
 ];
 
 if (isProd || isAnalyze) {
-  plugins.push(new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /en/))
+  plugins.push(new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /en/));
   plugins.push(new webpack.optimize.UglifyJsPlugin({
       mangle: true,
       compress: {
@@ -52,13 +54,6 @@ if (isProd || isAnalyze) {
     root: __dirname,
     verbose: true,
     dry: false,
-  }));
-  plugins.push(new CompressionPlugin({
-    asset: "[path].gz[query]",
-    algorithm: "gzip",
-    test: /\.(js|html|css)$/,
-    // threshold: 10240,
-    // minRatio: 0.8
   }));
 }
 
@@ -80,8 +75,9 @@ const noAuthDependencies = dependencies.filter((dep) => {
 
 module.exports = {
   entry: {
-    vendorAuth: authDependencies,
-    vendorNoAuth: noAuthDependencies,
+    // vendor: dependencies,
+    vendor_auth: authDependencies,
+    vendor_no_auth: noAuthDependencies,
     index: path.resolve(__dirname, './src/index.js'),
   },
   output: {
