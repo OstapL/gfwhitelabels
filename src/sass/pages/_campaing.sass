@@ -326,19 +326,10 @@
 			margin-bottom: rem(19)
 			h6
 				color: $black_text
-@media only screen and (max-width : 991px)
-	.one_block
-		.description
-			height: 90px
 @media only screen and (max-width : 768px)
 	.create-alert-block
 		.pull-right
 			float: left
-	.one_block
-		.description
-			height: 100px
-			ul
-				margin-left: rem(3)
 	
 @media only screen and (max-width : 545px)
 	.create-alert-block
@@ -352,14 +343,15 @@
 			margin-left: 0!important
 	.one_block
 		.description
-			height: 120px
+			min-height: 120px
+			height: 100%
 	.block_link
 		&:hover~.one_block
 			.for_img
 				.more_inform
 					opacity: 0
 
-@media only screen and (max-width : 320px)
+@media only screen and (max-width : 360px)
 	.campaing-list
 		.one_block
 			.for_img
@@ -375,16 +367,17 @@
 					padding-top: 10px
 		.title
 			h3
-				text-align: center
-				float: none
+				text-align: left
 			.place
-				text-align: center!important
-				float: none!important
+				text-align: left!important
 		.bottom_text
+			margin: 0 rem(9)
 			.left_desc, .right_desc
-				text-align: center
-				float: none
-				display: block
+				font-size: rem(10)
+				letter-spacing: normal
+				h6
+					font-size: rem(10)
+					letter-spacing: 1px
 	.create-alert-block
 		.mr30
 			margin-right: 0
