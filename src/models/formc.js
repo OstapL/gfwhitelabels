@@ -53,28 +53,30 @@ class Formc {
     return data;
   }
 
-  isBoolean(val) {
-    return val == 0 || val == 1 || val == true || val == false;
+  requiredRoles() {
+    return { 4: 'CEO/President', 8: 'Principal Financial Officer/Treasurer', 64: 'Controller/Principal Accounting Officer' };
   }
 
   haveRequiredMembers() {
-    var requiredRoles = { 4: 'CEO/President', 8: 'Principal Financial Officer/Treasurer', 64: 'Controller/Principal Accounting Officer' };
     var roleCounter = 0;
 
-    _(requiredRoles).each((k, v) => {
-      var persons = this.teamMembers.filter(function(el) { return (el.role ? (el.role & v) && (el.is_invited == 1): false); })
+    var requiredRoles = this.requiredRoles();
+    Object.keys(requiredRoles).forEach((k) => {
+      var persons = this.data.team_members.filter(function(el) { 
+        return (el.role ? (el.role & k) && (el.is_invited == 1): false); 
+      })
       
       if(persons.length > 0) {
         roleCounter ++;
       }
     });
 
-    return roleCounter == 3
+    return roleCounter >= 3
   }
 
   calcProgress() {
     return {
-      'introduction': this.certify == true && isBoolean(this.failed_to_comply_choice),
+      'introduction': this.certify == true && app.utils.isBoolean(this.failed_to_comply_choice),
       'team-members': this.haveRequiredMembers(this.team_members),
       'related-parties':
           this.transaction_with_related_parties_choice == 0 ||
@@ -128,7 +130,7 @@ class Formc {
            this.sold_securities_data[1].hasOwnProperty('total_income') == 1 &&
            this.sold_securities_data[1].hasOwnProperty('taxable_income') == 1 &&
            this.sold_securities_data[1].hasOwnProperty('total_tax') == 1) ||
-           this.user.campaign.maximum_raise > 100000
+           app.user.campaign.maximum_raise > 100000
           ),
       'outstanding-security':
         (
@@ -158,7 +160,8 @@ class Formc {
   }
 
   updateMenu(progress) {
-    _(progress).each((v,k) => {
+    Object.keys(progress).forEach((k) => {
+      let v = progress[k];
       var el = null;
       if (v == false) {
         el = document.querySelector('#menu_f_' + k + ' .icon-check');

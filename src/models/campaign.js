@@ -164,7 +164,7 @@ class Campaign {
           this.minimum_increment >= 100 &&
           this.length_days >= 60 &&
           this.investor_presentation_file_id.id != null &&
-          isBoolean(this.security_type),
+          app.utils.isBoolean(this.security_type),
         'team-members': this.team_members.members.length > 0,
         'perks': this.perks.length > 0
       }
@@ -196,7 +196,10 @@ class Campaign {
       document.querySelectorAll('#form_c a.disabled').forEach((v, i) => {
         v.className = v.className.replace('disabled', '');
       });
-      app.user.formc.updateMenu(app.user.formc.calcProgress());
+      // ToDo
+      // Fix this
+      var formcClass = new app.models.Formc(app.user.formc);
+      formcClass.updateMenu(formcClass.calcProgress());
     }
   }
 }

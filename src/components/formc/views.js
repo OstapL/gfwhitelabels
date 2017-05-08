@@ -95,6 +95,7 @@ module.exports = {
 
     initialize(options) {
       this.model = options.formc;
+      this.campaign = options.campaign;
       this.fields = options.fields;
 
       if(this.model.is_paid === false) {
@@ -119,7 +120,7 @@ module.exports = {
       this.eSignCompanyName = eSignForm.find('#company-name');
       this.eSignFullName = eSignForm.find('#full_name');
       this.eSignPreview = eSignForm.find('.electronically .name');
-      app.user.campaign.updateMenu(app.user.campaign.calcProgress());
+      this.campaign.updateMenu(this.campaign.calcProgress());
 
       return this;
     },
@@ -367,6 +368,7 @@ module.exports = {
 
     initialize(options) {
       this.model = options.formc;
+      this.campaign = options.campaign;
       this.fields = options.fields;
       this.fields.full_time_employers.label = 'Full Time Employees';
       this.fields.part_time_employers.label = 'Part Time Employees';
@@ -459,7 +461,7 @@ module.exports = {
         })
       );
       app.helpers.disableEnter.disableEnter.call(this);
-      app.user.campaign.updateMenu(app.user.campaign.calcProgress());
+      this.campaign.updateMenu(this.campaign.calcProgress());
       return this;
     },
 
@@ -570,7 +572,7 @@ module.exports = {
       );
       this.$el.find('.selectpicker').selectpicker();
       app.helpers.disableEnter.disableEnter.call(this);
-      app.user.campaign.updateMenu(app.user.campaign.calcProgress());
+      this.campaign.updateMenu(this.campaign.calcProgress());
       return this;
     },
 
@@ -681,6 +683,7 @@ module.exports = {
     initialize(options) {
       this.model = options.formc;
       this.fields = options.fields;
+      this.campaign = options.campaign;
 
       this.labels = {
         transaction_with_related_parties: {
@@ -718,7 +721,7 @@ module.exports = {
         })
       );
       app.helpers.disableEnter.disableEnter.call(this);
-      app.user.campaign.updateMenu(app.user.campaign.calcProgress());
+      this.campaign.updateMenu(this.campaign.calcProgress());
       return this;
     },
 
@@ -919,16 +922,12 @@ module.exports = {
 
       this.calculate(null, false);
       app.helpers.disableEnter.disableEnter.call(this);
-      app.user.campaign.updateMenu(app.user.campaign.calcProgress());
+      this.campaign.updateMenu(this.campaign.calcProgress());
       return this;
     }, 
   }, app.helpers.menu.methods, app.helpers.dropzone.methods, app.helpers.section.methods, app.helpers.confirmOnLeave.methods)),
 
   riskFactorsInstruction: Backbone.View.extend(_.extend({
-    initialize(options) {
-      this.model = options.formc;
-    },
-
     preinitialize() {
       // ToDo
       // Hack for undelegate previous events
@@ -938,11 +937,14 @@ module.exports = {
     },
 
     events: _.extend({
-      'submit form': 'submit',
+      'submit form': api.submitAction,
       'click .submit_formc': submitFormc,
     }, app.helpers.menu.events),
 
-    submit: api.submitAction,
+    initialize(options) {
+      this.model = options.formc;
+      this.campaign = options.campaign;
+    },
 
     render() {
       const template = require('components/formc/templates/riskFactorsInstructions.pug');
@@ -952,7 +954,7 @@ module.exports = {
           values: this.model,
         })
       );
-      app.user.campaign.updateMenu(app.user.campaign.calcProgress());
+      this.campaign.updateMenu(this.campaign.calcProgress());
       return this;
     },
   }, app.helpers.menu.methods)),
@@ -974,6 +976,7 @@ module.exports = {
 
     initialize(options) {
       this.model = options.formc;
+      this.campaign = options.campaign;
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
@@ -1060,7 +1063,7 @@ module.exports = {
         $(this).css({ height: this.scrollHeight + 'px' });
       });
       app.helpers.disableEnter.disableEnter.call(this);
-      app.user.campaign.updateMenu(app.user.campaign.calcProgress());
+      this.campaign.updateMenu(this.campaign.calcProgress());
       return this;
     },
   }, app.helpers.menu.methods, app.helpers.section.methods, app.helpers.riskFactors.methods, app.helpers.confirmOnLeave.methods)),
@@ -1082,6 +1085,7 @@ module.exports = {
 
     initialize(options) {
       this.model = options.formc;
+      this.campaign = options.campaign;
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
@@ -1176,7 +1180,7 @@ module.exports = {
         $(this).css({ height: this.scrollHeight + 'px' });
       });
       app.helpers.disableEnter.disableEnter.call(this);
-      app.user.campaign.updateMenu(app.user.campaign.calcProgress());
+      this.campaign.updateMenu(this.campaign.calcProgress());
       return this;
     },
   }, app.helpers.menu.methods, app.helpers.section.methods, app.helpers.riskFactors.methods, app.helpers.confirmOnLeave.methods)),
@@ -1198,6 +1202,7 @@ module.exports = {
 
     initialize(options) {
       this.model = options.formc;
+      this.campaign = options.campaign;
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
@@ -1320,7 +1325,7 @@ module.exports = {
         $(this).css({ height: this.scrollHeight + 'px' });
       });
       app.helpers.disableEnter.disableEnter.call(this);
-      app.user.campaign.updateMenu(app.user.campaign.calcProgress());
+      this.campaign.updateMenu(this.campaign.calcProgress());
       return this;
     },
 
@@ -1343,6 +1348,7 @@ module.exports = {
 
     initialize(options) {
       this.model = options.formc;
+      this.campaign = options.campaign;
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
@@ -1409,7 +1415,7 @@ module.exports = {
         $(this).css({ height: this.scrollHeight + 'px' });
       });
       app.helpers.disableEnter.disableEnter.call(this);
-      app.user.campaign.updateMenu(app.user.campaign.calcProgress());
+      this.campaign.updateMenu(this.campaign.calcProgress());
       return this;
     },
 
@@ -1432,6 +1438,7 @@ module.exports = {
 
     initialize(options) {
       this.model = options.formc;
+      this.campaign = options.campaign;
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
@@ -1517,7 +1524,7 @@ module.exports = {
         $(this).css({ height: this.scrollHeight + 'px' });
       });
       app.helpers.disableEnter.disableEnter.call(this);
-      app.user.campaign.updateMenu(app.user.campaign.calcProgress());
+      this.campaign.updateMenu(this.campaign.calcProgress());
       return this;
     },
   }, app.helpers.menu.methods, app.helpers.section.methods, app.helpers.riskFactors.methods, app.helpers.confirmOnLeave.methods)),
@@ -1539,6 +1546,7 @@ module.exports = {
 
     initialize(options) {
       this.model = options.formc;
+      this.campaign = options.campaign;
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
@@ -1646,7 +1654,7 @@ module.exports = {
         $(this).css({ height: this.scrollHeight + 'px' });
       });
       app.helpers.disableEnter.disableEnter.call(this);
-      app.user.campaign.updateMenu(app.user.campaign.calcProgress());
+      this.campaign.updateMenu(this.campaign.calcProgress());
       return this;
     },
   }, app.helpers.menu.methods, app.helpers.section.methods, app.helpers.riskFactors.methods, app.helpers.confirmOnLeave.methods)),
@@ -1668,6 +1676,7 @@ module.exports = {
 
     initialize(options) {
       this.model = options.formc;
+      this.campaign = options.campaign;
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
@@ -1689,7 +1698,7 @@ module.exports = {
         $(this).css({ height: this.scrollHeight + 'px' });
       });
       app.helpers.disableEnter.disableEnter.call(this);
-      app.user.campaign.updateMenu(app.user.campaign.calcProgress());
+      this.campaign.updateMenu(this.campaign.calcProgress());
       return this;
     },
   }, app.helpers.menu.methods, app.helpers.section.methods, app.helpers.riskFactors.methods, app.helpers.confirmOnLeave.methods)),
@@ -1712,6 +1721,7 @@ module.exports = {
 
     initialize(options) {
       this.model = options.formc;
+      this.campaign = options.campaign;
       this.fields = options.fields;
       this.campaign = options.campaign;
       this.labels = {
@@ -1762,7 +1772,7 @@ module.exports = {
       );
       // setTimeout(() => { this.createDropzones() } , 1000);
       app.helpers.disableEnter.disableEnter.call(this);
-      app.user.campaign.updateMenu(app.user.campaign.calcProgress());
+      this.campaign.updateMenu(this.campaign.calcProgress());
       return this;
     },
   }, app.helpers.menu.methods, app.helpers.yesNo.methods, app.helpers.section.methods, app.helpers.dropzone.methods, app.helpers.confirmOnLeave.methods)),
@@ -1789,6 +1799,7 @@ module.exports = {
 
     initialize(options) {
       this.model = options.formc;
+      this.campaign = options.campaign;
       this.fields = options.fields;
       this.fields.business_loans_or_debt_choice.validate = {};
       this.fields.business_loans_or_debt_choice.validate.choices = {
@@ -2022,7 +2033,7 @@ module.exports = {
       );
       $('#security_modal #custom_security_type').parent().parent().hide();
       app.helpers.disableEnter.disableEnter.call(this);
-      app.user.campaign.updateMenu(app.user.campaign.calcProgress());
+      this.campaign.updateMenu(this.campaign.calcProgress());
       return this;
     },
   }, app.helpers.section.methods, app.helpers.menu.methods, app.helpers.yesNo.methods, app.helpers.confirmOnLeave.methods)),
@@ -2039,6 +2050,7 @@ module.exports = {
     },
     initialize(options) {
       this.model = options.formc;
+      this.campaign = options.campaign;
       this.fields = options.fields;
       this.labels = {
         company_or_director_subjected_to: 'If Yes, Explain',
@@ -2075,7 +2087,7 @@ module.exports = {
         })
       );
       app.helpers.disableEnter.disableEnter.call(this);
-      app.user.campaign.updateMenu(app.user.campaign.calcProgress());
+      this.campaign.updateMenu(this.campaign.calcProgress());
       return this;
     },
   }, app.helpers.menu.methods, app.helpers.yesNo.methods, app.helpers.section.methods, app.helpers.confirmOnLeave.methods)),
@@ -2093,6 +2105,7 @@ module.exports = {
     initialize(options) {
       this.formcId = options.formcId;
       this.fields = options.fields;
+      this.campaign = options.campaign;
 
       // this.model = options.formc;
       // this.model.campaign = options.campaign;
@@ -2215,8 +2228,8 @@ module.exports = {
       } else if(name.indexOf('campaign.') !== -1) {
         fieldName = name.split('campaign.')[1];
         data[fieldName] = val;
-        url = app.config.raiseCapitalServer + '/campaign/' + app.user.campaign.id;
-        updateModel = app.user.campaign;
+        url = app.config.raiseCapitalServer + '/campaign/' + this.campaign.id;
+        updateModel = this.campaign;
 
       } else if(name.indexOf('formc.') !== -1) {
         fieldName = name.split('formc.')[1];
@@ -2344,7 +2357,7 @@ module.exports = {
           view: this,
           values: {
             company: app.user.company,
-            campaign: app.user.campaign,
+            campaign: this.campaign,
             formc: app.user.formc
           }
         })

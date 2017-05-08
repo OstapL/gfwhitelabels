@@ -67,7 +67,7 @@ function getOCCF(optionsR, viewName, params = {}, View) {
       viewName();
     }
 
-    formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
+    params.formc.updateMenu(params.formc.calcProgress());
   }).fail(function (xhr, response, error) {
     if (xhr.responseJSON.location) {
       app.routers.navigate('/formc' + response.responseJSON.location + '?notPaid=1', {

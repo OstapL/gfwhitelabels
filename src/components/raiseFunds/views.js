@@ -112,7 +112,7 @@ module.exports = {
       );
       app.helpers.disableEnter.disableEnter.call(this);
       this.checkForm();
-      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+      this.model.updateMenu(this.model.calcProgress(this.model));
       return this;
     },
 
@@ -183,7 +183,7 @@ module.exports = {
     },
 
     _success(data, newData) {
-      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+      this.model.updateMenu(this.model.calcProgress(this.model));
       return 1;
     },
 
@@ -230,7 +230,7 @@ module.exports = {
 
       this.checkForm();
       app.helpers.disableEnter.disableEnter.call(this);
-      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+      this.model.updateMenu(this.model.calcProgress(this.model));
       return this;
     },
   }, app.helpers.confirmOnLeave.methods, app.helpers.menu.methods, app.helpers.section.methods)),
@@ -251,7 +251,7 @@ module.exports = {
     ),
 
     _success(data, newData) {
-      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+      this.model.updateMenu(this.model.calcProgress(this.model));
       return 1;
     },
 
@@ -284,7 +284,7 @@ module.exports = {
         help_text: 'This is the image that will appear at the top of your campaign. A minimum size of 1600x800 is recommended.',
         templateDropzone: 'headerMedia.pug',
         onSaved: (data) => {
-          raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+          this.model.updateMenu(this.model.calcProgress(this.model));
         },
         crop: {
           control: {
@@ -320,7 +320,7 @@ module.exports = {
         title: 'Drop your photo here or click to upload',
         help_text: ' This image entices investors to view your campaign. A minimum size of 350x209 is recommended.',
         onSaved: (data) => {
-          raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+          this.model.updateMenu(this.model.calcProgress(this.model));
         },
         crop: {
           control:  {
@@ -343,8 +343,8 @@ module.exports = {
         title: 'Drop your photo(s) here or click to upload',
         help_text: 'We recommend uploading 6 images (minimum size of 1024x612 is recommended) that represent your service of business. These images will be displayed in a gallery format.',
         onSaved: (data) => {
-          app.user.campaign.gallery_group_data = data.file.data;
-          raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+          this.model.gallery_group_data = data.file.data;
+          this.model.updateMenu(this.model.calcProgress(this.model));
         },
         crop: {
           control: {
@@ -406,7 +406,7 @@ module.exports = {
       // setTimeout(() => { this.createDropzones() } , 1000);
       app.helpers.disableEnter.disableEnter.call(this);
       this.checkForm();
-      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+      this.model.updateMenu(this.model.calcProgress(this.model));
 
       return this;
     },
@@ -537,7 +537,7 @@ module.exports = {
       this.checkForm();
 
       app.helpers.disableEnter.disableEnter.call(this);
-      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+      this.model.updateMenu(this.model.calcProgress(this.model));
       return this;
     },
 
@@ -597,7 +597,7 @@ module.exports = {
       app.helpers.disableEnter.disableEnter.call(this);
       this.checkForm();
       this.$el.find('.team-add-item').equalHeights();
-      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+      this.model.updateMenu(this.model.calcProgress(this.model));
       return this;
     },
 
@@ -669,7 +669,7 @@ module.exports = {
       this.fields.investor_presentation_file_id = _.extend(this.fields.investor_presentation_file_id, {
         label: 'Upload an Investor Presentation',
         onSaved: (data) => {
-          raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+          this.model.updateMenu(this.model.calcProgress(this.model));
         },
       });
 
@@ -747,7 +747,7 @@ module.exports = {
     },
 
     _success(data, newData) {
-      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+      this.model.updateMenu(this.model.calcProgress(this.model));
       return 1;
     },
 
@@ -798,7 +798,7 @@ module.exports = {
       $('#description_determine').parent().parent().hide();
 
       app.helpers.disableEnter.disableEnter.call(this);
-      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+      this.model.updateMenu(this.model.calcProgress(this.model));
       return this;
     },
   }, app.helpers.confirmOnLeave.methods, app.helpers.menu.methods, app.helpers.dropzone.methods, app.helpers.section.methods)),
@@ -847,12 +847,12 @@ module.exports = {
       );
 
       app.helpers.disableEnter.disableEnter.call(this);
-      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+      this.model.updateMenu(this.model.calcProgress(this.model));
       return this;
     },
 
     _success(data) {
-      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+      this.model.updateMenu(this.model.calcProgress(this.model));
       app.hideLoading();
       return 0;
     }
