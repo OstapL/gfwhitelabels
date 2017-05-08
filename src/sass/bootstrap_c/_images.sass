@@ -48,13 +48,14 @@ img
 		.btn
 			&:nth-child(2)
 				margin-left: rem(30)
-			@media only screen and (max-width : 425px)
-
-				padding: rem(10) rem(20)
-				font-size: rem(13)!important
-				border: none
-				&:nth-child(2)
-					margin-left: rem(10)
+		&.small-button
+			.btn
+				@media only screen and (max-width : 425px)
+					padding: rem(10) rem(20)
+					font-size: rem(13)!important
+					border: none
+					&:nth-child(2)
+						margin-left: rem(10)
 
 .no-paralax-mobile
 	.background
