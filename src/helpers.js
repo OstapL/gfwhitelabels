@@ -1,7 +1,8 @@
 module.exports = {
   format: require('./helpers/formatHelper.js'),
   phone: require('./helpers/phoneHelper.js'),
-  section: require('./helpers/addSectionHelper.js'),
+  //TODO:refactor this helper usage
+  // section: require('./helpers/addSectionHelper.js'),
   calculator: require('./helpers/calculatorHelpers.js'),
   calculatorValidation: require('./helpers/calculatorValidationHelper.js'),
   capitalraiseData: require('./helpers/capitalraiseCalculatorData.js'),
@@ -16,7 +17,8 @@ module.exports = {
   icons: require('./helpers/iconsHelper.js'),
   confirmOnLeave: require('./helpers/leavingConfirmationHelper.js'),
   menu: require('./helpers/menuHelper.js'),
-  riskFactors: require('./helpers/riskFactorsHelper.js'),
+  //TODO: refactor this helper usage
+  // riskFactors: require('./helpers/riskFactorsHelper.js'),
   role: require('./helpers/roleHelper.js'),
   text: require('./helpers/textHelper.js'),
   userDocuments: require('./helpers/userDocuments.js'),

@@ -8,6 +8,8 @@ const roles = ['Shareholder', 'Director', 'Officer'];
 const validation = require('components/validation/validation.js');
 const raiseHelpers = require('../raiseFunds/helpers.js');
 
+const riskFactorsHelper = require('./riskFactorsHelper.js');
+
 const labels = {
   title: 'Title for Risk',
   risk: 'Describe Your Risk',
@@ -966,7 +968,7 @@ module.exports = {
     riskType: 'market_and_customer_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, app.helpers.menu.events, app.helpers.riskFactors.events, app.helpers.confirmOnLeave.events),
+    }, app.helpers.menu.events, riskFactorsHelper.events, app.helpers.confirmOnLeave.events),
 
     preinitialize() {
       // ToDo
@@ -1067,14 +1069,14 @@ module.exports = {
       raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
-  }, app.helpers.menu.methods, app.helpers.section.methods, app.helpers.riskFactors.methods, app.helpers.confirmOnLeave.methods)),
+  }, app.helpers.menu.methods, app.helpers.section.methods, riskFactorsHelper.methods, app.helpers.confirmOnLeave.methods)),
 
   riskFactorsFinancial: Backbone.View.extend(_.extend({
     urlRoot: app.config.formcServer + '/:id' + '/risk-factors-financial/:index',
     riskType: 'financial_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, app.helpers.menu.events, app.helpers.riskFactors.events, app.helpers.confirmOnLeave.events),
+    }, app.helpers.menu.events, riskFactorsHelper.events, app.helpers.confirmOnLeave.events),
 
     preinitialize() {
       // ToDo
@@ -1183,14 +1185,14 @@ module.exports = {
       raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
-  }, app.helpers.menu.methods, app.helpers.section.methods, app.helpers.riskFactors.methods, app.helpers.confirmOnLeave.methods)),
+  }, app.helpers.menu.methods, app.helpers.section.methods, riskFactorsHelper.methods, app.helpers.confirmOnLeave.methods)),
 
   riskFactorsOperational: Backbone.View.extend(_.extend({
     urlRoot: app.config.formcServer + '/:id' + '/risk-factors-operational/:index',
     riskType: 'operational_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, app.helpers.menu.events, app.helpers.riskFactors.events, app.helpers.confirmOnLeave.events),
+    }, app.helpers.menu.events, riskFactorsHelper.events, app.helpers.confirmOnLeave.events),
 
     preinitialize() {
       // ToDo
@@ -1328,14 +1330,14 @@ module.exports = {
       return this;
     },
 
-  }, app.helpers.menu.methods, app.helpers.section.methods, app.helpers.riskFactors.methods, app.helpers.confirmOnLeave.methods)),
+  }, app.helpers.menu.methods, app.helpers.section.methods, riskFactorsHelper.methods, app.helpers.confirmOnLeave.methods)),
 
   riskFactorsCompetitive: Backbone.View.extend(_.extend({
     urlRoot: app.config.formcServer + '/:id' + '/risk-factors-competitive/:index',
     riskType: 'competitive_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, app.helpers.menu.events, app.helpers.riskFactors.events, app.helpers.confirmOnLeave.methods),
+    }, app.helpers.menu.events, riskFactorsHelper.events, app.helpers.confirmOnLeave.methods),
 
     preinitialize() {
       // ToDo
@@ -1417,14 +1419,14 @@ module.exports = {
       return this;
     },
 
-  }, app.helpers.menu.methods, app.helpers.section.methods, app.helpers.riskFactors.methods, app.helpers.confirmOnLeave.methods)),
+  }, app.helpers.menu.methods, app.helpers.section.methods, riskFactorsHelper.methods, app.helpers.confirmOnLeave.methods)),
 
   riskFactorsPersonnel: Backbone.View.extend(_.extend({
     urlRoot: app.config.formcServer + '/:id' + '/risk-factors-personnel/:index',
     riskType: 'personnel_and_third_parties_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, app.helpers.menu.events, app.helpers.riskFactors.events, app.helpers.confirmOnLeave.events),
+    }, app.helpers.menu.events, riskFactorsHelper.events, app.helpers.confirmOnLeave.events),
 
     preinitialize() {
       // ToDo
@@ -1524,14 +1526,14 @@ module.exports = {
       raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
-  }, app.helpers.menu.methods, app.helpers.section.methods, app.helpers.riskFactors.methods, app.helpers.confirmOnLeave.methods)),
+  }, app.helpers.menu.methods, app.helpers.section.methods, riskFactorsHelper.methods, app.helpers.confirmOnLeave.methods)),
 
   riskFactorsLegal: Backbone.View.extend(_.extend({
     urlRoot: app.config.formcServer + '/:id' + '/risk-factors-legal/:index',
     riskType: 'legal_and_regulatory_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, app.helpers.menu.events, app.helpers.riskFactors.events, app.helpers.confirmOnLeave.events),
+    }, app.helpers.menu.events, riskFactorsHelper.events, app.helpers.confirmOnLeave.events),
 
     preinitialize() {
       // ToDo
@@ -1653,14 +1655,14 @@ module.exports = {
       raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
-  }, app.helpers.menu.methods, app.helpers.section.methods, app.helpers.riskFactors.methods, app.helpers.confirmOnLeave.methods)),
+  }, app.helpers.menu.methods, app.helpers.section.methods, riskFactorsHelper.methods, app.helpers.confirmOnLeave.methods)),
 
   riskFactorsMisc: Backbone.View.extend(_.extend({
     urlRoot: app.config.formcServer + '/:id' + '/risk-factors-misc/:index',
     riskType: 'miscellaneous_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, app.helpers.menu.events, app.helpers.riskFactors.events, app.helpers.confirmOnLeave.events),
+    }, app.helpers.menu.events, riskFactorsHelper.events, app.helpers.confirmOnLeave.events),
 
     preinitialize() {
       // ToDo
@@ -1696,7 +1698,7 @@ module.exports = {
       raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       return this;
     },
-  }, app.helpers.menu.methods, app.helpers.section.methods, app.helpers.riskFactors.methods, app.helpers.confirmOnLeave.methods)),
+  }, app.helpers.menu.methods, app.helpers.section.methods, riskFactorsHelper.methods, app.helpers.confirmOnLeave.methods)),
 
   financialCondition: Backbone.View.extend(_.extend({
     urlRoot: app.config.formcServer + '/:id/financial-condition',

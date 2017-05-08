@@ -5,7 +5,6 @@ const templateMap = {
   'success-guide': 'success_guide',
   'terms-of-use': 'terms_of_use',
   'privacy-policy': 'privacy_policy',
-  'annual-privacy': 'annual_privacy',
   'electronic-signature': 'electronic_signature',
 };
 
@@ -16,7 +15,7 @@ module.exports = {
   },
   methods: {
     mainPage(id) {
-      require.ensure([], () => {
+      require.ensure([], (require) => {
         const template = require('templates/mainPage.pug');
 
         //TODO: it looks like repeated snippet
@@ -141,7 +140,7 @@ module.exports = {
 
     pagePG: function (name) {
 
-      require.ensure([], () => {
+      require.ensure([], (require) => {
         //TODO: move this to common router ensure logged in
         if ((name == 'success-guide' || name == 'advertising') &&
           !app.user.ensureLoggedIn(window.location.pathname)) {
