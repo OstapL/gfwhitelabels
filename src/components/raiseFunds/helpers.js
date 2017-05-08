@@ -5,7 +5,10 @@ const isBoolean = function(val) {
 let exports = {
 
   submitCampaign: function submitCampaign(e) {
-    let progress = exports.calcProgress(app.user.campaign);
+    // ToDo
+    // Fix class
+    let campaignClass = new app.models.Campaign(app.user.campaign);
+    let progress = campaignClass.calcProgress();
 
     if(
         progress.general_information == true &&

@@ -3,6 +3,7 @@ const companyFees = require('consts/companyFees.json');
 const securityTypeConsts = require('consts/formc/security_type.json');
 const yesNoConsts = require('consts/yesNo.json');
 const roles = ['Shareholder', 'Director', 'Officer'];
+const riskFactors = require('./riskFactorsHelper.js');
 
 const labels = {
   title: 'Title for Risk',
@@ -182,8 +183,10 @@ module.exports = {
     },
 
     _success(data, newData) {
-      if (this.formData && !this.formData.is_paid) this.saveEsign(data);
-      app.user.formc.updateFormcMenu(app.user.formc.formcCalcProgress());
+      if (this.formData && !this.formData.is_paid) {
+        this.saveEsign(data);
+      }
+      this.model.updateMenu(this.model.calcProgress());
       return 1;
     },
 
@@ -376,7 +379,7 @@ module.exports = {
     },
 
     _success(data, newData) {
-      app.user.formc.updateFormcMenu(app.user.formc.formcCalcProgress());
+      this.model.updateMenu(this.model.calcProgress());
       return 1;
     },
 
@@ -505,6 +508,7 @@ module.exports = {
       this.role = options.role;
       this.allFields = options.fields;
       this.fields = options.fields[this.role].fields;
+      this.campaign = options.campaign;
 
       this.labels = {
         first_name: 'First name',
@@ -701,7 +705,7 @@ module.exports = {
 
     submit(e) {
       e.preventDefault();
-      let data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
+      let data = $(e.target).serializeJSON();
 
       if (data.transaction_with_related_parties_choice == false) {
         data.transaction_with_related_parties = this.model.transaction_with_related_parties;
@@ -726,7 +730,7 @@ module.exports = {
     },
 
     _success(data, newData) {
-      app.user.formc.updateFormcMenu(app.user.formc.formcCalcProgress());
+      this.model.updateMenu(this.model.calcProgress());
       return 1;
     },
 
@@ -805,7 +809,7 @@ module.exports = {
       'blur .min-expense,.max-expense,.min-use,.max-use': 'calculate',
       'click .add-sectionnew': 'addSectionNew',
       'click .delete-sectionnew': 'deleteRow',
-    }, app.helpers.menu.events, app.helpers.dropzone.events, app.helpers.confirmOnLeave.events),
+    }, app.helpers.menu.events, app.helpers.confirmOnLeave.events),
 
     deleteRow(e) {
       this.deleteSectionNew(e);
@@ -813,7 +817,7 @@ module.exports = {
     },
 
     _success(data, newData) {
-      app.user.formc.updateFormcMenu(app.user.formc.formcCalcProgress());
+      this.model.updateMenu(this.model.calcProgress());
       return 1;
     },
 
@@ -925,7 +929,7 @@ module.exports = {
       this.campaign.updateMenu(this.campaign.calcProgress());
       return this;
     }, 
-  }, app.helpers.menu.methods, app.helpers.dropzone.methods, app.helpers.section.methods, app.helpers.confirmOnLeave.methods)),
+  }, app.helpers.menu.methods, app.helpers.section.methods, app.helpers.confirmOnLeave.methods)),
 
   riskFactorsInstruction: Backbone.View.extend(_.extend({
     preinitialize() {
@@ -964,7 +968,7 @@ module.exports = {
     riskType: 'market_and_customer_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, app.helpers.menu.events, app.helpers.riskFactors.events, app.helpers.confirmOnLeave.events),
+    }, app.helpers.menu.events, riskFactors.events, app.helpers.confirmOnLeave.events),
 
     preinitialize() {
       // ToDo
@@ -1066,14 +1070,14 @@ module.exports = {
       this.campaign.updateMenu(this.campaign.calcProgress());
       return this;
     },
-  }, app.helpers.menu.methods, app.helpers.section.methods, app.helpers.riskFactors.methods, app.helpers.confirmOnLeave.methods)),
+  }, app.helpers.menu.methods, app.helpers.section.methods, riskFactors.methods, app.helpers.confirmOnLeave.methods)),
 
   riskFactorsFinancial: Backbone.View.extend(_.extend({
     urlRoot: app.config.formcServer + '/:id' + '/risk-factors-financial/:index',
     riskType: 'financial_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, app.helpers.menu.events, app.helpers.riskFactors.events, app.helpers.confirmOnLeave.events),
+    }, app.helpers.menu.events, riskFactors.events, app.helpers.confirmOnLeave.events),
 
     preinitialize() {
       // ToDo
@@ -1183,14 +1187,14 @@ module.exports = {
       this.campaign.updateMenu(this.campaign.calcProgress());
       return this;
     },
-  }, app.helpers.menu.methods, app.helpers.section.methods, app.helpers.riskFactors.methods, app.helpers.confirmOnLeave.methods)),
+  }, app.helpers.menu.methods, app.helpers.section.methods, riskFactors.methods, app.helpers.confirmOnLeave.methods)),
 
   riskFactorsOperational: Backbone.View.extend(_.extend({
     urlRoot: app.config.formcServer + '/:id' + '/risk-factors-operational/:index',
     riskType: 'operational_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, app.helpers.menu.events, app.helpers.riskFactors.events, app.helpers.confirmOnLeave.events),
+    }, app.helpers.menu.events, riskFactors.events, app.helpers.confirmOnLeave.events),
 
     preinitialize() {
       // ToDo
@@ -1329,14 +1333,14 @@ module.exports = {
       return this;
     },
 
-  }, app.helpers.menu.methods, app.helpers.section.methods, app.helpers.riskFactors.methods, app.helpers.confirmOnLeave.methods)),
+  }, app.helpers.menu.methods, app.helpers.section.methods, riskFactors.methods, app.helpers.confirmOnLeave.methods)),
 
   riskFactorsCompetitive: Backbone.View.extend(_.extend({
     urlRoot: app.config.formcServer + '/:id' + '/risk-factors-competitive/:index',
     riskType: 'competitive_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, app.helpers.menu.events, app.helpers.riskFactors.events, app.helpers.confirmOnLeave.methods),
+    }, app.helpers.menu.events, riskFactors.events, app.helpers.confirmOnLeave.methods),
 
     preinitialize() {
       // ToDo
@@ -1419,14 +1423,14 @@ module.exports = {
       return this;
     },
 
-  }, app.helpers.menu.methods, app.helpers.section.methods, app.helpers.riskFactors.methods, app.helpers.confirmOnLeave.methods)),
+  }, app.helpers.menu.methods, app.helpers.section.methods, riskFactors.methods, app.helpers.confirmOnLeave.methods)),
 
   riskFactorsPersonnel: Backbone.View.extend(_.extend({
     urlRoot: app.config.formcServer + '/:id' + '/risk-factors-personnel/:index',
     riskType: 'personnel_and_third_parties_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, app.helpers.menu.events, app.helpers.riskFactors.events, app.helpers.confirmOnLeave.events),
+    }, app.helpers.menu.events, riskFactors.events, app.helpers.confirmOnLeave.events),
 
     preinitialize() {
       // ToDo
@@ -1527,14 +1531,14 @@ module.exports = {
       this.campaign.updateMenu(this.campaign.calcProgress());
       return this;
     },
-  }, app.helpers.menu.methods, app.helpers.section.methods, app.helpers.riskFactors.methods, app.helpers.confirmOnLeave.methods)),
+  }, app.helpers.menu.methods, app.helpers.section.methods, riskFactors.methods, app.helpers.confirmOnLeave.methods)),
 
   riskFactorsLegal: Backbone.View.extend(_.extend({
     urlRoot: app.config.formcServer + '/:id' + '/risk-factors-legal/:index',
     riskType: 'legal_and_regulatory_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, app.helpers.menu.events, app.helpers.riskFactors.events, app.helpers.confirmOnLeave.events),
+    }, app.helpers.menu.events, riskFactors.events, app.helpers.confirmOnLeave.events),
 
     preinitialize() {
       // ToDo
@@ -1657,14 +1661,14 @@ module.exports = {
       this.campaign.updateMenu(this.campaign.calcProgress());
       return this;
     },
-  }, app.helpers.menu.methods, app.helpers.section.methods, app.helpers.riskFactors.methods, app.helpers.confirmOnLeave.methods)),
+  }, app.helpers.menu.methods, app.helpers.section.methods, riskFactors.methods, app.helpers.confirmOnLeave.methods)),
 
   riskFactorsMisc: Backbone.View.extend(_.extend({
     urlRoot: app.config.formcServer + '/:id' + '/risk-factors-misc/:index',
     riskType: 'miscellaneous_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, app.helpers.menu.events, app.helpers.riskFactors.events, app.helpers.confirmOnLeave.events),
+    }, app.helpers.menu.events, riskFactors.events, app.helpers.confirmOnLeave.events),
 
     preinitialize() {
       // ToDo
@@ -1701,7 +1705,7 @@ module.exports = {
       this.campaign.updateMenu(this.campaign.calcProgress());
       return this;
     },
-  }, app.helpers.menu.methods, app.helpers.section.methods, app.helpers.riskFactors.methods, app.helpers.confirmOnLeave.methods)),
+  }, app.helpers.menu.methods, app.helpers.section.methods, riskFactors.methods, app.helpers.confirmOnLeave.methods)),
 
   financialCondition: Backbone.View.extend(_.extend({
     urlRoot: app.config.formcServer + '/:id/financial-condition',
@@ -1709,7 +1713,7 @@ module.exports = {
     events: _.extend({
       'submit form': api.submitAction,
       'click .submit_formc': submitFormc,
-    }, app.helpers.menu.events, app.helpers.yesNo.events, app.helpers.section.events, app.helpers.dropzone.events, /*app.helpers.confirmOnLeave.events*/),
+    }, app.helpers.menu.events, app.helpers.yesNo.events, app.helpers.section.events, /*app.helpers.confirmOnLeave.events*/),
 
     preinitialize() {
       // ToDo
@@ -1750,7 +1754,7 @@ module.exports = {
     },
 
     _success(data, newData) {
-      app.user.formc.updateFormcMenu(app.user.formc.formcCalcProgress());
+      this.model.updateMenu(this.model.calcProgress());
       return 1;
     },
 
@@ -1770,12 +1774,11 @@ module.exports = {
           templates: this.jsonTemplates,
         })
       );
-      // setTimeout(() => { this.createDropzones() } , 1000);
       app.helpers.disableEnter.disableEnter.call(this);
       this.campaign.updateMenu(this.campaign.calcProgress());
       return this;
     },
-  }, app.helpers.menu.methods, app.helpers.yesNo.methods, app.helpers.section.methods, app.helpers.dropzone.methods, app.helpers.confirmOnLeave.methods)),
+  }, app.helpers.menu.methods, app.helpers.yesNo.methods, app.helpers.section.methods, app.helpers.confirmOnLeave.methods)),
 
   outstandingSecurity: Backbone.View.extend(_.extend({
     urlRoot: app.config.formcServer + '/:id/outstanding-security',
@@ -2007,7 +2010,7 @@ module.exports = {
     },
 
     _success(data, newData) {
-      app.user.formc.updateFormcMenu(app.user.formc.formcCalcProgress());
+      this.model.updateMenu(this.model.calcProgress());
       return 1;
     },
 
@@ -2117,7 +2120,6 @@ module.exports = {
     },
 
     _success(data, newData) {
-      // formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
       return 1;
     },
 
@@ -2233,7 +2235,7 @@ module.exports = {
 
       } else if(name.indexOf('formc.') !== -1) {
         fieldName = name.split('formc.')[1];
-        url = app.config.formcServer + '/' + app.user.formc.id;
+        url = app.config.formcServer + '/' + this.model.id;
 
         if(fieldName.indexOf('[') !== -1) {
           let names = fieldName.split('.');
@@ -2242,29 +2244,29 @@ module.exports = {
           app.setValByKey(app.user, name, val);
 
           if(fieldName == 'team_members') {
-            url = app.config.formcServer + '/' + app.user.formc.id + '/team-members/' +
-              roles[app.user.formc.team_members[index].role[0]].toLocaleLowerCase() + '/' + 
-              app.user.formc.team_members[index].user_id;
+            url = app.config.formcServer + '/' + this.model.id + '/team-members/' +
+              roles[this.model.team_members[index].role[0]].toLocaleLowerCase() + '/' + 
+              this.model.team_members[index].user_id;
 
-            data = app.user.formc.team_members[index];
+            data = this.model.team_members[index];
             method = 'PUT';
 
           } else if(fieldName.indexOf('risk') !== -1) {
             let riskVar = name.split('.')[2];
-            app.user.formc[fieldName][riskVar] = val;
+            this.model[fieldName][riskVar] = val;
             let riskName = fieldName.split('_')[0];
             riskName = riskName.indexOf('miscellaneous') >= 0 ? 'misc' : riskName;
-            url = app.config.formcServer + '/' + app.user.formc.id + '/risk-factors-' + riskName + '/' + index;
-            app.user.formc[fieldName][index];
-            data = app.user.formc[fieldName][index];
+            url = app.config.formcServer + '/' + this.model.id + '/risk-factors-' + riskName + '/' + index;
+            this.model[fieldName][index];
+            data = this.model[fieldName][index];
           } else {
-            data[names[0].replace(/\[\d+\]/, '')] = app.user.formc[names[0].replace(/\[\d+\]/, '')];
+            data[names[0].replace(/\[\d+\]/, '')] = this.model[names[0].replace(/\[\d+\]/, '')];
           }
         } else {
           data[fieldName] = val;
         }
 
-        updateModel = app.user.formc;
+        updateModel = this.model;
       }
 
       fillDataWithDependencies(data, fieldName, updateModel);
@@ -2358,7 +2360,7 @@ module.exports = {
           values: {
             company: app.user.company,
             campaign: this.campaign,
-            formc: app.user.formc
+            formc: this.model
           }
         })
       );

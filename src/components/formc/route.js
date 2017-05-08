@@ -1,5 +1,4 @@
 //TODO: remove view into methods
-const formcHelpers = require('./helpers.js');
 const STATUSES = require('consts/raisecapital/companyStatuses.json').STATUS;
 
 function getOCCF(optionsR, viewName, params = {}, View) {

@@ -112,7 +112,9 @@ module.exports = {
       );
       app.helpers.disableEnter.disableEnter.call(this);
       this.checkForm();
-      this.model.updateMenu(this.model.calcProgress(this.model));
+      if(this.campaign) {
+        this.campaign.updateMenu(this.campaign.calcProgress());
+      }
       return this;
     },
 
@@ -247,7 +249,7 @@ module.exports = {
         'click #postForReview': raiseHelpers.postForReview,
         'click .onPreview': raiseHelpers.onPreviewAction,
       }, app.helpers.confirmOnLeave.events, app.helpers.menu.events,
-        app.helpers.section.events, app.helpers.dropzone.events
+        app.helpers.section.events
     ),
 
     _success(data, newData) {
@@ -363,8 +365,8 @@ module.exports = {
         },
 
         fn: function checkNotEmpty(name, value, attr, data, computed) { 
-          if(!this.model.gallery_group_data || !this.model.gallery_group_data.length) {
-            throw 'Please upload at least 1 image';
+          if(!data.gallery_group_data || data.gallery_group_data.length < 6) {
+            throw 'Please upload at least 6 images';
           }
         },
       });
@@ -403,7 +405,6 @@ module.exports = {
         })
       );
 
-      // setTimeout(() => { this.createDropzones() } , 1000);
       app.helpers.disableEnter.disableEnter.call(this);
       this.checkForm();
       this.model.updateMenu(this.model.calcProgress(this.model));
@@ -423,7 +424,7 @@ module.exports = {
     },
 
   }, app.helpers.confirmOnLeave.methods, app.helpers.menu.methods,
-    app.helpers.dropzone.methods, app.helpers.section.methods)),
+    app.helpers.section.methods)),
 
   teamMemberAdd: Backbone.View.extend(_.extend({
     urlRoot: app.config.raiseCapitalServer + '/campaign/:id/team-members',
@@ -437,7 +438,7 @@ module.exports = {
       'click .save': api.submitAction,
       'click .onPreview': raiseHelpers.onPreviewAction,
       // 'change #zip_code': 'changeZipCode',
-    }, app.helpers.confirmOnLeave.events, app.helpers.menu.events, app.helpers.dropzone.events),
+    }, app.helpers.confirmOnLeave.events, app.helpers.menu.events),
     
     _success(data, postData, method) {
       /*
@@ -533,11 +534,10 @@ module.exports = {
         })
       );
 
-      // this.createDropzones();
       this.checkForm();
 
       app.helpers.disableEnter.disableEnter.call(this);
-      this.model.updateMenu(this.model.calcProgress(this.model));
+      this.campaign.updateMenu(this.campaign.calcProgress());
       return this;
     },
 
@@ -637,7 +637,7 @@ module.exports = {
       'click #postForReview': raiseHelpers.postForReview,
       'click .submit-specifics': 'checkMinMaxRaise',
       'change #valuation_determination': 'valuationDetermine',
-    }, app.helpers.confirmOnLeave.events, app.helpers.menu.events, app.helpers.dropzone.events),
+    }, app.helpers.confirmOnLeave.events, app.helpers.menu.events),
 
     preinitialize() {
       // ToDo
@@ -783,8 +783,6 @@ module.exports = {
 
       // delete this.model.progress;
 
-      // setTimeout(() => { this.createDropzones() } , 1000);
-
       this.calculateNumberOfShares(null);
 
       this.checkForm();
@@ -801,7 +799,7 @@ module.exports = {
       this.model.updateMenu(this.model.calcProgress(this.model));
       return this;
     },
-  }, app.helpers.confirmOnLeave.methods, app.helpers.menu.methods, app.helpers.dropzone.methods, app.helpers.section.methods)),
+  }, app.helpers.confirmOnLeave.methods, app.helpers.menu.methods, app.helpers.section.methods)),
 
   perks: Backbone.View.extend(_.extend({
     urlRoot: app.config.raiseCapitalServer + '/campaign/:id',
