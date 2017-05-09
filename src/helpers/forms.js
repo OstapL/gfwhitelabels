@@ -115,7 +115,6 @@ module.exports = {
     if(method == 'PATCH') {
       let patchData = {};
       let d = deepDiff(newData, this.model.toJSON ? this.model.toJSON() : this.model);
-      debugger;
       _(d).forEach((el, i) => {
         if(el.kind == 'E' || el.kind == 'A') {
           patchData[el.path[0]] = newData[el.path[0]];

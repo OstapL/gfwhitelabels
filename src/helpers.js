@@ -1,8 +1,7 @@
 module.exports = {
   format: require('./helpers/formatHelper.js'),
   phone: require('./helpers/phoneHelper.js'),
-  // TODO: fix this
-  // section: require('./helpers/addSectionHelper.js'),
+  section: require('./helpers/addSectionHelper.js'),
   calculator: require('./helpers/calculatorHelpers.js'),
   calculatorValidation: require('./helpers/calculatorValidationHelper.js'),
   capitalraiseData: require('./helpers/capitalraiseCalculatorData.js'),

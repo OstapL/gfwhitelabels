@@ -27,7 +27,7 @@ class HeartlandInfoProvider extends ShareInfoProvider {
     this.data = {
       title: this._format('title'),
       url: window.location.href,
-      picture: window.location.origin + require('images/cities.jpg'),
+      picture: window.location.origin + require('images/cities.png'),
     };
   }
 
