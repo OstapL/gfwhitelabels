@@ -709,7 +709,7 @@ module.exports = {
 
       this.fields.minimum_raise.dependies = ['maximum_raise',];
       this.fields.maximum_raise.dependies = ['minimum_raise',];
-
+      this.fields.price_per_share.type = 'money';
       if(this.model.hasOwnProperty('id')) {
         this.urlRoot = this.urlRoot.replace(':id', this.model.id);
       }

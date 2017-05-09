@@ -946,10 +946,6 @@ module.exports = {
       this.$amount.popover('hide');
     },
 
-    getSuccessUrl(data) {
-      return app.config.investmentServer + '/' + data.id + '/invest-thanks';
-    },
-
     updateLimitInModal(e) {
       let annualIncome = Number(this.$('#annual_income').val().replace(/\,/g, '')) || 0,
           netWorth = Number(this.$('#net_worth').val().replace(/\,/g, '')) || 0;
@@ -1095,7 +1091,7 @@ module.exports = {
     },
 
     getSuccessUrl(data) {
-      return data.id + '/invest-thanks';
+      return (data.company.slug || data.company.id) + '/' + data.id + '/invest-thanks';
     },
 
     saveEsign(responseData) {
