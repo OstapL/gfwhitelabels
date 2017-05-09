@@ -88,7 +88,8 @@ module.exports = {
           templateImage: 'profileImage.pug'
         },
       });
-
+      app.user.set('credit', 25);
+app.user.set('days_left', 90);
       this.fields.account_number = {
         type: 'password',
         required: true,
