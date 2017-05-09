@@ -481,15 +481,15 @@ mixin confirmStatement(name, attr)
                   button#submitButton(data-method="POST" type="button").btn.btn-lg.btn-primary.pull-lg-right.text-uppercase invest
     //END LEFT BLOCK
     //START RIGHT BLOCK
-    .col-xl-4.col-lg-5.pull-right.hidden-xs-down.invest-perks
-      if values.campaign.perks
+    .col-xl-4.col-lg-5.col-md-12.col-sm-12.pull-right.hidden-xs-down.invest-perks
+      if values.campaign.perks.length > 0 && values.campaign.perks.length != ''
         h2.text-uppercase.dosis.m-t-0 PERKS
           span.small-text.open-sans
             | Investor Perks are not intended to affect the value of the security and
             | investors should evaluate the merits of each investment without regard to any
             | Investor Perks.
 
-        .list-group.list-group-border-invest.invest-right-margin
+        .list-group.list-group-border-invest.invest-right-margin.m-b-3
           -
             values.campaign.perks = Object.keys(values.campaign.perks).map(function(key) {
               return values.campaign.perks[key];
@@ -507,25 +507,25 @@ mixin confirmStatement(name, attr)
                 i.fa.fa-check(style="display:none;")
               p.list-group-item-text.text-justify #{v.perk}
       section.hidden-xs-down
-        h2.text-uppercase Investment Summary
+        h2.text-uppercase.m-t-0 Investment Summary
         .jumbotron.jumbotron-fluid.investment-summary
           .container
-            .col-md-7
+            .col-md-7.col-sm-6
               .row
                 span Target
                 p.font-weight-bold
                   | $#{values.campaign.minimum_raise.toLocaleString('en-US')} -
                   | $#{values.campaign.maximum_raise.toLocaleString('en-US')}
-            .col-md-5
+            .col-md-5.col-sm-6
               .row
                 span Committed
                 p.font-weight-bold $#{values.campaign.amount_raised.toLocaleString('en-US')}
           .container
-            .col-md-7
+            .col-md-7.col-sm-6
               .row
                 span Offering deadline
                 p.font-weight-bold.m-b-0 #{values.campaign.expiration_date.toLocaleDateString('en-US', {timeZone: 'UTC'})}
-            .col-md-5
+            .col-md-5.col-sm-6
               .row
                 span Type of security
                 p.font-weight-bold.m-b-0
