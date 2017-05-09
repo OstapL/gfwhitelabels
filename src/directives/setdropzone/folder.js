@@ -103,6 +103,7 @@ class FolderDropzone extends fileDropzone.FileDropzone {
       this.folderElement.fieldName,
       this.folderElement.fieldDataName
     );
+    //fileObj.file.data.site_id = app.sites.getId();
     fileObj.getTemplate = this.folderElement.getTemplate;
     fileObj.elementSelector = '.' + this.folderElement.fieldName + ' .fileContainer' + reorgData.id;
     fileObj.save = () => this.folderElement.save.call(this.galleryElement);
@@ -112,6 +113,11 @@ class FolderDropzone extends fileDropzone.FileDropzone {
 
     this.folderElement.update(this.folderElement.file.data, () => {
       fileObj.render();
+
+      if(this.folderElement.options.onSaved) {
+        this.folderElement.options.onSaved(this.folderElement);
+      }
+
       this.element.querySelector('.fileHolder').insertAdjacentHTML('beforeend', fileObj.resultHTML);
     });
   }

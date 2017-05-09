@@ -1,5 +1,4 @@
 //TODO: remove view into methods
-const formcHelpers = require('./helpers.js');
 const STATUSES = require('consts/raisecapital/companyStatuses.json').STATUS;
 
 function getOCCF(optionsR, viewName, params = {}, View) {
@@ -67,8 +66,7 @@ function getOCCF(optionsR, viewName, params = {}, View) {
       viewName();
     }
 
-    // TODO: refactor this
-    // formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
+    params.formc.updateMenu(params.formc.calcProgress());
   }).fail(function (xhr, response, error) {
     if (xhr.responseJSON.location) {
       app.routers.navigate('/formc' + response.responseJSON.location + '?notPaid=1', {

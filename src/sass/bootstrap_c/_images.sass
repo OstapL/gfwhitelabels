@@ -16,7 +16,6 @@ img
 		background-size: cover!important
 		@media only screen and (max-width : 1024px)
 			top: -500px
-
 .scroll-paralax
 	&:after
 		position: absolute
@@ -50,8 +49,13 @@ img
 			&:nth-child(2)
 				margin-left: rem(30)
 			@media only screen and (max-width : 425px)
-				margin-left: 0!important
-				margin-top: 25px
+
+				padding: rem(10) rem(20)
+				font-size: rem(13)!important
+				border: none
+				&:nth-child(2)
+					margin-left: rem(10)
+
 .no-paralax-mobile
 	.background
 		@media only screen and (max-width : 768px)
@@ -63,3 +67,10 @@ img
   .partner-height-top
     .background
       top: -200px
+// для подсказки в профайле и на странице инвест 
+.img-routing-number
+	background-image: url(../img/routing-number-on-check.png)
+	width: 251px
+	height: 156px
+	background-repeat: no-repeat
+	background-size: 100%

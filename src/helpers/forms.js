@@ -115,6 +115,7 @@ module.exports = {
     if(method == 'PATCH') {
       let patchData = {};
       let d = deepDiff(newData, this.model.toJSON ? this.model.toJSON() : this.model);
+      debugger;
       _(d).forEach((el, i) => {
         if(el.kind == 'E' || el.kind == 'A') {
           patchData[el.path[0]] = newData[el.path[0]];
@@ -308,7 +309,7 @@ module.exports = {
           data[key].forEach((el, i) => {
             let emptyValues = 0;
             _(el).each((val, subkey) => {
-              if(val == '' || Number.isNaN(val)) {
+              if(val === '' || Number.isNaN(val)) {
                 emptyValues ++;
               }
             });
