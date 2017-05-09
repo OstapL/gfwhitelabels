@@ -16,7 +16,7 @@ module.exports = {
   methods: {
     mainPage(id) {
       require.ensure([], (require) => {
-        const template = require('templates/mainPage.pug');
+        const template = require('./templates/mainPage.pug');
 
         //TODO: it looks like repeated snippet
         const meta = '<meta name="keywords" content="local investing equity crowdfunding ' +
@@ -159,7 +159,7 @@ module.exports = {
           $(document.head).append(meta);
         }
 
-        let view = require('templates/' + (templateMap[name] || name) + '.pug');
+        let view = require('./templates/' + (templateMap[name] || name) + '.pug');
 
         app.addClassesTo('#page', [name]);
 

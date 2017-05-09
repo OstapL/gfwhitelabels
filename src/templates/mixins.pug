@@ -387,7 +387,7 @@ mixin fieldDropzone(name, attr, type)
                                 p.drop-photo #{attr.text}
                                 i(class="fa fa-" + attr.icon)
                         div.col-lg-7.col-md-7.col-sm-7.col-xs-7.p-r-0.p-l-3.img-dropzone
-                            img(src=app.helpers.dropzone.getDropzoneUrl(name, attr, values) alt=fields[name].label class="img-file img-" + name)
+                            //img(src=app.helpers.dropzone.getDropzoneUrl(name, attr, values) alt=fields[name].label class="img-file img-" + name)
                             input(name=name id=name value=values[name] type="hidden" data-value-type="null")
 
 
@@ -427,7 +427,7 @@ mixin fieldDropzone(name, attr, type)
                 
                 //- div(class='dropzone__' + name)
                 div
-                    img(src=app.helpers.dropzone.getDropzoneUrl(name, attr, values) alt=fields[name].label class="img-fluid m-x-auto img-" + name)
+                    //img(src=app.helpers.dropzone.getDropzoneUrl(name, attr, values) alt=fields[name].label class="img-fluid m-x-auto img-" + name)
                     .drop-image-title.text-xs-center.p-l-1.p-r-1 
                         p Drop your profile photo here or click to upload
                         div

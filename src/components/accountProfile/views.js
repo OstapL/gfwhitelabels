@@ -21,7 +21,6 @@ module.exports = {
       // 'change input[name=accredited_investor]': 'changeAccreditedInvestor',
     },
     app.helpers.phone.events,
-    app.helpers.dropzone.events,
     app.helpers.yesNo.events,
     app.helpers.social.events,
     ),
@@ -336,7 +335,6 @@ module.exports = {
 
   },
     app.helpers.phone.methods,
-    app.helpers.dropzone.methods,
     app.helpers.yesNo.methods,
     app.helpers.social.methods,
   )),
