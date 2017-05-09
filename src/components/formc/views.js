@@ -2245,7 +2245,7 @@ module.exports = {
 
           if(fieldName == 'team_members') {
             url = app.config.formcServer + '/' + this.model.id + '/team-members/' +
-              roles[this.model.team_members[index].role[0]].toLocaleLowerCase() + '/' + 
+              roles[this.model.team_members[index].role[0]].toLocaleLowerCase() + '/' +
               this.model.team_members[index].user_id;
 
             data = this.model.team_members[index];

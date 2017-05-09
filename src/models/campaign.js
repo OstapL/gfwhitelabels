@@ -121,21 +121,6 @@ class Campaign {
     return link;
   }
 
-  initInvestment(i) {
-    i.created_date = moment.isMoment(i.created_date)
-      ? i.created_date
-      : moment.parseZone(i.created_date);
-
-    i.campaign.expiration_date = moment.isMoment(i.campaign.expiration_date)
-      ? i.campaign.expiration_date
-      : moment(i.campaign.expiration_date);
-
-    i.expired = i.campaign.expiration_date.isBefore(today);
-    i.cancelled = _.contains(CANCELLED_STATUSES, i.status);
-    i.historical = i.expired || i.cancelled;
-    i.active = !i.historical  && _.contains(ACTIVE_STATUSES, i.status);
-  }
-
   getInvestorPresentationURL() {
     if (!this.investor_presentation_data ||
         !this.investor_presentation_data.urls ||
@@ -149,7 +134,7 @@ class Campaign {
   calcProgress(data) {
     try {
       return {
-        'general_information': 
+        'general_information':
           this.pitch.length > 5 &&
           this.intended_use_of_proceeds.length > 5 &&
           this.business_model.length > 5,
@@ -158,7 +143,7 @@ class Campaign {
           this.header_image_image_id.id != null &&
           this.list_image_image_id.id != null &&
           this.gallery_group_id.data.length > 5,
-        'specifics': 
+        'specifics':
           this.minimum_raise >= 25000 &&
           this.maximum_raise <= 1000000 &&
           this.minimum_increment >= 100 &&
@@ -191,7 +176,7 @@ class Campaign {
         }
       }
     });
-    
+
     if(complited == 4) {
       document.querySelectorAll('#form_c a.disabled').forEach((v, i) => {
         v.className = v.className.replace('disabled', '');
@@ -201,6 +186,14 @@ class Campaign {
       var formcClass = new app.models.Formc(app.user.formc);
       formcClass.updateMenu(formcClass.calcProgress());
     }
+  }
+
+  get expirationDate() {
+    return moment(this.expiration_date);
+  }
+
+  get expired() {
+    return this.expirationDate.isBefore(today);
   }
 }
 
