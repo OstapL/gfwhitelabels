@@ -74,6 +74,18 @@ const submitFormc = function submitFormc(e) {
   }
 };
 
+const snippets = {
+  business_loans_or_debt: require('./templates/snippets/business_loans_or_debt.pug'),
+  exempt_offering: require('./templates/snippets/exempt_offering.pug'),
+  experiences: require('./templates/snippets/experiences.pug'),
+  less_offering_express: require('./templates/snippets/less_offering_express.pug'),
+  outstanding_securities: require('./templates/snippets/outstanding_securities.pug'),
+  positions: require('./templates/snippets/positions.pug'),
+  sold_securities_data: require('./templates/snippets/sold_securities_data.pug'),
+  transaction_with_related_parties: require('./templates/snippets/transaction_with_related_parties.pug'),
+  use_of_net_proceeds: require('./templates/snippets/use_of_net_proceeds.pug'),
+};
+
 module.exports = {
   introduction: Backbone.View.extend(_.extend({
     urlRoot: app.config.formcServer + '/:id/introduction',
@@ -539,7 +551,7 @@ module.exports = {
       this.assignLabels();
 
       this.createIndexes();
-      this.buildJsonTemplates('formc');
+      this.buildSnippets(snippets);
     },
 
     render() {
@@ -556,10 +568,10 @@ module.exports = {
 
       if (this.role == 'director') {
         template = require('components/formc/templates/teamMembersDirector.pug');
-        this.buildJsonTemplates('formc');
+        this.buildSnippets(snippets);
       } else if (this.role == 'officer') {
         template = require('components/formc/templates/teamMembersOfficer.pug');
-        this.buildJsonTemplates('formc');
+        this.buildSnippets(snippets);
       } else if (this.role == 'shareholder') {
         template = require('components/formc/templates/teamMembersShareHolder.pug');
       }
@@ -700,7 +712,7 @@ module.exports = {
       this.assignLabels();
 
       this.createIndexes();
-      this.buildJsonTemplates('formc');
+      this.buildSnippets(snippets);
     },
 
     submit(e) {
@@ -798,7 +810,7 @@ module.exports = {
 
       this.assignLabels();
       this.createIndexes();
-      this.buildJsonTemplates('formc');
+      this.buildSnippets(snippets);
     },
 
     events: _.extend({
@@ -1750,7 +1762,7 @@ module.exports = {
       this.assignLabels();
 
       this.createIndexes();
-      this.buildJsonTemplates('formc', {campaign: this.campaign});
+      this.buildSnippets(snippets, {campaign: this.campaign});
     },
 
     _success(data, newData) {
@@ -1862,7 +1874,7 @@ module.exports = {
       this.assignLabels();
 
       this.createIndexes();
-      this.buildJsonTemplates('formc');
+      this.buildSnippets(snippets);
 
     },
 

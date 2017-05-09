@@ -1,4 +1,5 @@
 - 'use strict';
+
 mixin fieldBlock(name, data, attr)
 
   // If we did not created fields vocabulary
@@ -18,10 +19,10 @@ mixin fieldBlock(name, data, attr)
     if attr.type == 'checkbox'
       div(class=(attr.class1 ? attr.class1 : 'col-md-2') + ' text-md-right text-xs-right')
         input(
-        id=name
-        name=name
-        value=values[name]
-        type="checkbox"
+          id=name
+          name=name
+          value=values[name]
+          type="checkbox"
         ).form-check-input
       div(class=attr.class2 ? attr.class2 : 'col-md-10')
         label(for=name).text-justify #{attr.text}
@@ -40,12 +41,12 @@ mixin fieldBlock(name, data, attr)
     else if attr.type == 'choice'
       label(class=attr.text_align ? 'text-md-' + attr.text_align + ' ' + attr.class1 : ' text-lg-right ' + attr.class1 for=name)= (attr.label ? attr.label : fields[name].label)
       div(
-      class=attr.class2 + (attr.help_text ? ' showPopover' : '')
-      data-content=(attr.help_text ? attr.help_text : '')
+        class=attr.class2 + (attr.help_text ? ' showPopover' : '')
+        data-content=(attr.help_text ? attr.help_text : '')
       )
         select(
-        id=name
-        name=name
+          id=name
+          name=name
         ).custom-select
           if attr.hasOwnProperty('empty')
             option(value=attr.empty.value) #{attr.empty.display}
@@ -360,21 +361,21 @@ else
       .col-lg-9.col-md-12.p-sm-0
         if k.type == 'text'
           textarea(
-          id=name + '_' + v
-          class=name + '_' + v + ' form-control'
-          name=name + '[' + indexCounter + '][' + v + ']'
-          placeholder=k.placeholder ? k.placeholder : k.label
-          maxLength=k.maxLength ? k.maxLength : ''
-          data-index=indexCounter
+            id=name + '_' + v
+            class=name + '_' + v + ' form-control'
+            name=name + '[' + indexCounter + '][' + v + ']'
+            placeholder=k.placeholder ? k.placeholder : k.label
+            maxLength=k.maxLength ? k.maxLength : ''
+            data-index=indexCounter
           )
         else
           input(
-          id=name + '_' + v
-          class=name + '_' + v + ' form-control'
-          name=name + '[' + indexCounter + '][' + v + ']'
-          placeholder=k.placeholder ? k.placeholder : k.label
-          maxLength=k.maxLength ? k.maxLength : ''
-          data-index=indexCounter
-          type=k.inputType ? k.inputType : ''
+            id=name + '_' + v
+            class=name + '_' + v + ' form-control'
+            name=name + '[' + indexCounter + '][' + v + ']'
+            placeholder=k.placeholder ? k.placeholder : k.label
+            maxLength=k.maxLength ? k.maxLength : ''
+            data-index=indexCounter
+            type=k.inputType ? k.inputType : ''
           )
 - counter ++

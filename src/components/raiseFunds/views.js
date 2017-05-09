@@ -5,6 +5,20 @@ const validation = require('components/validation/validation.js');
 
 const valuation_determination = require('consts/raisecapital/valuation_determination.json');
 
+const snippets = {
+  additional_info: require('./templates/snippets/additional_info.pug'),
+  additional_video: require('./templates/snippets/additional_video.pug'),
+  faq: require('./templates/snippets/faq.pug'),
+  gallery_data: require('./templates/snippets/gallery_data.pug'),
+  header_image_data: require('./templates/snippets/header_image_data.pug'),
+  investor_presentation_data: require('./templates/snippets/investor_presentation_data.pug'),
+  list_image_data: require('./templates/snippets/list_image_data.pug'),
+  media: require('./templates/snippets/media.pug'),
+  perks: require('./templates/snippets/perks.pug'),
+  press: require('./templates/snippets/press.pug'),
+  team_members: require('./templates/snippets/team_members.pug'),
+};
+
 module.exports = {
   company: Backbone.View.extend(_.extend({
     urlRoot: app.config.raiseCapitalServer + '/company',
@@ -217,7 +231,7 @@ module.exports = {
       this.fields.faq.help_text = 'We need help text here too';
       this.assignLabels();
       this.createIndexes();
-      this.buildJsonTemplates('raiseFunds');
+      this.buildSnippets(snippets);
     },
 
     render() {
@@ -391,7 +405,7 @@ module.exports = {
 
       this.assignLabels();
       this.createIndexes();
-      this.buildJsonTemplates('raiseFunds');
+      this.buildSnippets(snippets);
     },
 
     render() {
@@ -691,7 +705,7 @@ module.exports = {
       };
       this.assignLabels();
       this.createIndexes();
-      this.buildJsonTemplates('raiseFunds');
+      this.buildSnippets(snippets);
 
       this.fields.minimum_raise.dependies = ['maximum_raise',];
       this.fields.maximum_raise.dependies = ['minimum_raise',];
@@ -830,7 +844,7 @@ module.exports = {
       };
       this.assignLabels();
       this.createIndexes();
-      this.buildJsonTemplates('raiseFunds');
+      this.buildSnippets(snippets);
     },
 
     render() {
