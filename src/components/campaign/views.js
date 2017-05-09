@@ -947,7 +947,6 @@ module.exports = {
     },
 
     getSuccessUrl(data) {
-      debugger;
       return app.config.investmentServer + '/' + data.id + '/invest-thanks';
     },
 
@@ -1096,7 +1095,6 @@ module.exports = {
     },
 
     getSuccessUrl(data) {
-      debugger;
       return data.id + '/invest-thanks';
     },
 
