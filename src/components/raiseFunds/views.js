@@ -337,11 +337,6 @@ module.exports = {
           cssClass: 'img-crop',
           template: 'regular'
         },
-        fn: function checkNotEmpty(name, value, attr, data, computed) {
-          // if(!this.model.gallery_group_data || !this.model.gallery_group_data.length) {
-            throw 'Please upload at least 1 image';
-          // }
-        },
       });
 
       this.fields.gallery_group_id = _.extend(this.fields.gallery_group_id, {
