@@ -348,6 +348,9 @@ module.exports = {
     },
 
     disposePlot() {
+      if (!this.$chart || !this.$chart.length)
+        return;
+
       this.$chart
         .off('growFinished')
         .off('plothover');
