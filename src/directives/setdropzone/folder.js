@@ -1,7 +1,7 @@
 const folder = require('models/folder.js');
 const fileDropzone = require('./file.js');
 const fileClass = require('models/file.js');
-const defaultImage = '/img/default/255x153.png'; 
+const defaultImage = require('images/default/255x153.png');
 
 
 class FolderElement extends fileDropzone.FileElement {

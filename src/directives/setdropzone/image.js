@@ -1,5 +1,5 @@
 const file = require('./file.js');
-const defaultImage = '/img/default/255x153.png'; 
+const defaultImage = require('images/default/255x153.png');
 
 
 class ImageElement extends file.FileElement {
