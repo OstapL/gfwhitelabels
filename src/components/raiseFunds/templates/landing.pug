@@ -3,12 +3,10 @@ section.raise-capital-landing
     - var styleString = 'background: url(' + require('img/raise-landing/raise-landing-top.jpg') + ')';
     div(style=styleString + '; height:80vh').background
     .center-wrap
-      .col-lg-12
+      .col-xl-10.offset-xl-1
         .text-xs-center
           img(src=require('images/gf_icon.png')).logo-banner
-          h1.big-h1.text-uppercase.m-t-0 Turn your customers into owners
-            br
-            | and access our investor network
+          h1.big-h1.text-uppercase.m-t-0 Turn your customers into owners and access our investor network
           h2.font-weight-light.m-t-1.m-b-2 Raise $25,000 - $1,000,000
           a(href="/company/create?nolanding=1").btn.btn-primary.btn-lg Start Campaign
   .content-section
@@ -16,13 +14,13 @@ section.raise-capital-landing
       .container
         .row
           .col-xl-12
-            .col-xl-6.col-lg-6.col-md-6
+            .col-xl-6.col-lg-6.col-md-12.col-sm-12.p-xs-0
               .growth-is
                 .content
                   h3.text-uppercase.font-weight-bold.m-b-1.m-t-0 GrowthFountain is a community focused on investing in small businesses and startups.
                   p But you’ll need to get the ball rolling first by getting your most loyal followers involved. This is the chance to turn your customers, community and network into owners!  This will empower them to spread the word about your company. Once you receive early traction, you can attract more investors from our network.
               
-            .col-xl-6.col-lg-6.col-md-6
+            .col-xl-6.col-lg-6.col-md-12.col-sm-12.p-xs-0
               .good-candidate.p-l-2
                 h3.font-weight-bold.text-uppercase.m-t-3 Is my business a good candidate?
                 p.font-weight-bold GrowthFountain doesn’t vet your application,we just screen for fraud. We have seen that successful issuers tend to share many of these attributes:
@@ -156,7 +154,7 @@ section.raise-capital-landing
                   br
                   a(href="/pg/entrepreneurquestions").link-3 Click here
       
-section.height-block-banner.scroll-paralax.no-paralax-mobile
+section.height-block-banner.scroll-paralax.no-paralax-mobile.raise-landing-banner
   - var styleString = 'background: url(' + require('img/raise-landing/RS2.png') + ')';
   div(style=styleString + '; height:600px').background
   .center-wrap.small-button
