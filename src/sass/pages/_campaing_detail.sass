@@ -117,17 +117,19 @@
     .top-info-wrap-item
       position: relative
       z-index: 1
-      @media only screen and (max-width : 375px)
-        .one-block
-          height: 80px
       h2
         letter-spacing: rem(.6)
         color: $white
         margin-bottom: 0
         margin-top: 0
+        @media only screen and (max-width : 575px)
+          font-size: rem(16)
       p
         color: $small-text
         margin-bottom: rem(3)
+        @media only screen and (max-width : 575px)
+          font-size: rem(13)
+
     .btn
       margin-top: rem(8)
 .edit-campaign-wrap
