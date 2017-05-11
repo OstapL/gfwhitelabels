@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 git fetch -q --all
 git checkout alpha > /dev/null
-for b in alpha-dcu alpha-momentum3 alpha-river-mark alpha-jdcu
+for b in alpha-dcu alpha-momentum3 alpha-rivermarkcu alpha-jdcu
 do
     git checkout $b
     git pull origin $b
