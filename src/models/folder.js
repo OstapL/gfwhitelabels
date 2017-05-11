@@ -36,7 +36,7 @@ class Folder {
       return this.urls[name];
     }
 
-    return '/img/icon/' + fallback;
+    return fallback ? require('images/icons/' + fallback) : '';
   }
 
   save(dataId, dataName) {

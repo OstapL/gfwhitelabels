@@ -43,7 +43,7 @@ class File {
         return this.urls.origin;
       }
     }
-    return require('images/default/' + fallback);
+    return fallback ? require('images/default/' + fallback) : '';
   }
 
   getExtention() {
@@ -91,7 +91,7 @@ class File {
         return app.sites[this.site_id] + this.urls[name];
       }
     }
-    return require('images/default/' + fallback);
+    return fallback ? require('images/default/' + fallback) : '';
   }
 
   save(idName, dataName) {
