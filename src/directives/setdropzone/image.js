@@ -1,5 +1,5 @@
 const file = require('./file.js');
-const defaultImage = '/img/default/255x153.png'; 
+const defaultImage = require('images/default/255x153.png');
 
 
 class ImageElement extends file.FileElement {
@@ -309,7 +309,8 @@ class CropperDropzone {
         responseData.forEach((image) => {
           if(image.name.indexOf(this.options.auto.width + 'x' + this.options.auto.height) != -1) {
             this.file.file.urls.main = this.file.fixUrl(image.urls[0]);
-          } else if(this.options.resize && image.name.indexOf(this.options.resize.width + 'x' + this.options.resize.height) != -1) {
+          } 
+          if(this.options.resize && image.name.indexOf(this.options.resize.width + 'x' + this.options.resize.height) != -1) {
             thumbSize = this.options.resize.width + 'x' + this.options.resize.height;
             this.file.file.urls[thumbSize] = this.file.fixUrl(image.urls[0]);
           }

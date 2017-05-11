@@ -1,3 +1,4 @@
+- var GENERAL = require('consts/general.json');
 section.slider-main
   .owl-carousel.owl-theme.carousel-test
     div
@@ -24,22 +25,25 @@ section.slider-main
 section.campaing-list
   .container#campaignList
     .col-lg-12
-      h2.dosis.text-uppercase.text-sm-center.text-xs-center.mt50 What's Popular
-    include ../components/campaign/templates/_list.pug
+      h2.dosis.text-uppercase.text-sm-center.text-xs-center.mt50 CURRENT CAMPAIGNS
+    include ../../campaign/templates/_list
     .col-lg-12.text-lg-center.text-md-center.text-xs-center
-      a(href="/companies").link-4 See All
-
-section.home-wrap-text-block.hide-bg-fixed.main-section-invest
-  .opasity-block
-    .container.text-lg-center.text-xs-center.text-sm-center
-      .wrap
-        .col-lg-6.offset-lg-3
-          h2.dosis.text-uppercase.m-t-0 NOW ACCESSIBLE TO EVERYBODY
+      if collection && collection.count && collection.count > GENERAL.COMPANIES_PER_PAGE
+        a(href="/companies").link-4 See All
+section.height-block-banner.scroll-paralax.no-paralax-mobile
+  - var styleString = 'background: url(' + require('img/main-bg-section-invest.jpg') + ')';
+  div(style=styleString + '; height:600px').background
+  .center-wrap.container
+    .col-xl-12
+      h2.text-uppercase.m-t-0 NOW ACCESSIBLE TO EVERYBODY
           h3 It’s the evolution of investing. Receive a financial stake
             br
             | in the companies you support.
-        .col-lg-12
-          a(href="/account/signup").btn.btn-lg.btn-secondary.text-uppercase Sign up to start investing
+    .col-lg-12
+      if app.user.is_anonymous()
+        a(href="/account/signup").btn.btn-lg.btn-secondary.text-uppercase Sign up to start investing
+      else
+        a(href="/companies").btn.btn-lg.btn-secondary.text-uppercase Start investing
 
 section.home-what-is
   .container
