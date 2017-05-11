@@ -1,12 +1,4 @@
-include mixins.pug
-
-+breadcrumbs('Overview', '', 
-  [
-    ['Home', '/'],
-    ['Overview', ''],
-  ]
-)
-
+- pug_html += app.breadcrumbs('Overview', '', [ ['Home', '/'], ['Overview', ''], ]);
 section.text_block 
   .container
     .row
@@ -65,7 +57,4 @@ section.text_block
                 b What’s my Business Worth?:  
                 | This tool helps you benchmark valuations for similar companies
               li.pb10.text-justify
-                b FAQ:  
-                | Scroll through our Frequently Asked Questions to gain additional insight into how it all works
-
-            p.text-justify Together, we can help support entrepreneurs and grow businesses that otherwise might not have had the chance.
+                b FAQ:

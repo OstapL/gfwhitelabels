@@ -227,8 +227,9 @@ class User {
   }
 
   ensureLoggedIn(next) {
-    if (!this.is_anonymous())
+    if (!this.is_anonymous()) {
       return true;
+    }
 
     this.next = next || (window.location.pathname + window.location.search);
 

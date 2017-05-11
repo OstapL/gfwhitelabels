@@ -7,7 +7,7 @@
   var infoProvider = new CampaignInfoProvider(this.model);
   var directiveKey = 'campaign';
 
-section.company-header.scroll-paralax
+section.company-header.scroll-paralax.no-paralax-mobile
   div(style="background-image: url(" + values.campaign.getMainImage() + ")").background
   .js-height-parent.container-fluid
     .home-content
@@ -44,7 +44,7 @@ section.company-header.scroll-paralax
     .container
       .top-info-wrap
         .top-info-wrap-item
-          .col-xl-3.col-lg-4.col-md-4.col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left
+          .col-xl-3.col-lg-4.col-md-4.col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left.one-block
             p Type of Security
             h2.font-weight-bold #{ values.campaign.security_type == SECURITY.CommonEquity ? 'Common Equity' : 'Revenue Share' }
               if values.campaign.security_type == 0
@@ -57,20 +57,20 @@ section.company-header.scroll-paralax
                     i(aria-hidden="true").fa.fa-question-circle.text-muted.detail-security-type-icon
 
           if values.campaign.security_type == 0
-            .col-xl-2.col-lg-3.col-md-3.col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left
+            .col-xl-2.col-lg-3.col-md-3.col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left.one-block
               p Pre-Money Valuation
               h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.premoney_valuation) }
           else
-            .col-xl-2.col-lg-3.col-md-3.col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left
+            .col-xl-2.col-lg-3.col-md-3.col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left.one-block
               p Percentage Revenue
               h2.font-weight-bold #{ values.campaign.percentage_revenue }%
-          .col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left.hidden-sm-up
+          .col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left.hidden-sm-up.one-block
             p Minimum Investment
             h2.font-weight-bold.no-margin #{ app.helpers.format.formatPrice(values.campaign.minimum_increment) }
-          .col-xl-2.col-lg-2.col-md-2.col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left
+          .col-xl-2.col-lg-2.col-md-2.col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left.one-block
             p Days Left
             h2.font-weight-bold.no-margin #{ values.campaign.daysLeft() }
-          .col-xl-4.col-lg-3.col-md-2.hidden-xs-down.p-sm-0.pull-lg-right.text-xs-center
+          .col-xl-4.col-lg-3.col-md-2.hidden-xs-down.p-sm-0.pull-lg-right.text-xs-center.one-block
             if values.is_approved == STATUSES.VERIFIED
               a(href="/" + values.slug + "/invest").btn.btn-primary.text-uppercase.pull-lg-right Invest
 
@@ -130,7 +130,7 @@ if app.getParams().preview == '1'
       // if values.campaign.list_image_image_id
         img(src=values.campaign.list_image_image_id.getUrl('350x209') style="width: 305px" class="m-b-2")
       .row
-        a(href=app.getParams().previous).btn.btn-secondary.text-uppercase.m-b-2 Edit campaign
+        a(href=app.getParams().previous).btn.btn-secondary.text-uppercase Edit campaign
       .row
         if values.is_approved == STATUSES.NEW  && app.user.data.id == values.owner_id
           .row(style='display:none')
@@ -147,11 +147,11 @@ section.campaigndetail
       if values.tagline.length > 0
         h1.text-xs-center.text-lg-left.m-t-0.m-b-1 #{ values.tagline }
       .row
-        .col-lg-4.col-xs-6
+        .col-lg-4.col-xs-5
           .sity-detail
             i.fa.fa-map-marker
             |  #{ values.city }, #{ values.state }
-        .col-lg-6.col-xs-6.text-xs-right.text-lg-left
+        .col-lg-6.col-xs-7.text-xs-right.text-lg-left
           .date-detail.pull-md-right.pull-lg-left
             i.fa.fa-calendar-check-o
             |  Founded #{ app.helpers.format.formatDate(values.founding_date) }
@@ -665,4 +665,4 @@ section
                 i.fa.fa-thumbs-o-up.like-icon-circle
               |  I’d Like to Invest in #{ values.short_name || values.name }!
             if values.is_approved == STATUSES.VERIFIED
-              a(href="/" + values.slug + "/invest").btn.btn-lg.btn-primary.text-uppercase.m-t-2 invest in this company
+              a(href="/" + values.slug + "/invest").btn.btn-lg.btn-primary.text-uppercase.m-t-2.large-btn-mobile-main invest in this company
