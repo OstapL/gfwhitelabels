@@ -10,6 +10,15 @@
         color: $white
       h1
         margin-bottom: rem(15)
+    .center-wrap 
+      top: 30%
+      @media only screen and (max-width : 992px)
+        top: 40%
+      @media only screen and (max-width : 375px)
+        top: 50%
+  .scroll-paralax
+    &:after
+      background: rgba(17, 17, 17, 0.1)
   .how-it-works
     background-color: $alabaster
     padding: rem(45) 0
@@ -41,6 +50,10 @@
           .btn
             &:first-child
               margin-bottom: 30px
+      @media only screen and (max-width : 375px)
+        .btn
+          font-size: rem(10)
+
 
     .wrap-logo
       position: relative
