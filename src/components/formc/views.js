@@ -110,6 +110,7 @@ module.exports = {
       this.model = options.formc;
       this.campaign = options.campaign;
       this.fields = options.fields;
+      this.fields.failed_to_comply_choice.dependies = ['failed_to_comply'];
 
       if(this.model.is_paid === false) {
         this.fields.full_name = { 
@@ -2120,10 +2121,7 @@ module.exports = {
     initialize(options) {
       this.formcId = options.formcId;
       this.fields = options.fields;
-      this.campaign = options.campaign;
-
-      // this.model = options.formc;
-      // this.model.campaign = options.campaign;
+      this.campaign = options.model.campaign;
 
       app.helpers.disableEnter.disableEnter.call(this);
     },
@@ -2369,11 +2367,7 @@ module.exports = {
           fields: this.fields,
           formcId: this.formcId,
           view: this,
-          values: {
-            company: app.user.company,
-            campaign: this.campaign,
-            formc: this.model
-          }
+          values: this.model
         })
       );
 
