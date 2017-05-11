@@ -3,10 +3,10 @@ git fetch -q --all
 git checkout alpha > /dev/null
 for b in alpha-dcu alpha-momentum3 alpha-rivermarkcu alpha-jdcu
 do
+    echo "========================= branch $b =========================="
     git checkout $b
     git pull origin $b
 
-    echo "========================= branch $b =========================="
     if git branch --all | grep --quiet "remove/vladyslav2/$b"; then
         echo "============ MERGE WITH VLADYSLAV/$b ============"
         git merge vladyslav2/$b > /dev/null
