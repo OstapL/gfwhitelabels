@@ -26,7 +26,7 @@ class Image extends File {
         return a.split('x')[0] > b.split('x')[0];
       })[0];
 
-      if (this.urls[smallestSize].startsWith('http')) {
+      if (this.urls[smallestSize] && this.urls[smallestSize].startsWith('http')) {
         return this.urls[smallestSize];
       }
 

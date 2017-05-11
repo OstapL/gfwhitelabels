@@ -1,6 +1,5 @@
 git checkout --ours src/config.js
 git checkout --ours src/img/logo.png
-git checkout --ours .gitattributes
 git checkout --ours src/sass/unique/_colors.sass
 git checkout --ours src/sass/unique/_accordion.sass
 git checkout --ours src/sass/unique/_card.sass
@@ -46,10 +45,10 @@ git checkout --ours src/sass/unique/_resposive-embed.sass
 git checkout --ours src/sass/unique/_utilities.sass
 
 git checkout --ours src/sass/pages/_index.sass
-git checkout --ours src/templates/overview.pug
-git checkout --ours src/templates/mainPage.pug
-git checkout --ours src/templates/contact.pug
-git checkout --ours src/templates/careers.pug
+git checkout --ours src/components/pg/templates/overview.pug
+git checkout --ours src/components/pg/templates/mainPage.pug
+git checkout --ours src/components/pg/templates/contact.pug
+git checkout --ours src/components/pg/templates/careers.pug
 
 git checkout --ours src/img/slide_1.jpg
 git checkout --ours src/img/slide_2.jpg

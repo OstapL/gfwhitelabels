@@ -1,11 +1,4 @@
-include mixins.pug
-
-+breadcrumbs('Contact us', '', 
-  [
-    ['Home', '/'],
-    ['Contacts us', ''],
-  ]
-)
+- pug_html += app.breadcrumbs('Contact us', '', [ ['Home', '/'], ['Contacts us', ''], ]);
 
 section.text_block 
   .container
@@ -30,10 +23,8 @@ section.text_block
             a(href='/pg/faq').d-inline-block.w-100 FAQ
 
       .col-lg-9
-        section#map_canvas.map-block
-          // сейчас тут стоит заглушка, так как необходимо подключить гугл мап
-          include map.pug
-        section.all-contacts.mt50.mb50
+        include ../../../templates/map
+        section.all-contacts.mt50
           .row
             //temporary hidden phone
             .col-lg-5.offset-lg-2
