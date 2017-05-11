@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 git fetch -q --all
 git checkout alpha > /dev/null
-# for b in alph-dcu alpha-momentum3 alpha-river-mark alpha-jdcu
-for b in alpha-dcu
+for b in alph-dcu alpha-momentum3 alpha-river-mark alpha-jdcu
 do
     git checkout $b
     git merge --no-ff alpha > /dev/null
