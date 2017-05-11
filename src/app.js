@@ -17,13 +17,18 @@ class App {
     this.helpers = require('./helpers.js');
     this.config = require('./config.js');
     this.cookies = require('cookies-js');
-    this.fields = require('./fields.js');
+    this.fields = require('./fields/fields.js');
     this.validation = require('components/validation/validation.js');
     this.dialogs = require('directives/dialogs/index.js');
     this.models = require('./models.js');
     this.sites = require('./sites.js');
     this.user = new User();
-    _.extend(this, Backbone.Events);
+
+    this.utils = {};
+    this.utils.isBoolean = function(val) {
+      return val == 0 || val == 1 || val == true || val == false;
+    }
+
     return this;
   }
 
@@ -401,38 +406,6 @@ class App {
       if (!except.includes(cls))
         elem.classList.remove(cls);
     }
-  }
-
-  loadYoutubePlayerAPI() {
-    return new Promise((resolve, reject) => {
-      if (app.youtubeAPIReady)
-        return resolve();
-
-      let tag = document.createElement('script');
-
-      tag.src = "https://www.youtube.com/iframe_api";
-      let firstScriptTag = document.getElementsByTagName('script')[0];
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-      this.on('youtube-api-ready', () => {
-        resolve()
-      });
-    });
-  }
-
-  loadVimeoPlayerAPI() {
-    return new Promise((resolve, reject) => {
-      if (window.Vimeo)
-        return resolve();
-
-      let tag = document.createElement('script');
-
-      tag.src = "https://player.vimeo.com/api/player.js";
-      let firstScriptTag = document.getElementsByTagName('script')[0];
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-      tag.onload = resolve;
-      tag.onerror = reject;
-    });
   }
 
 }
