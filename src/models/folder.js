@@ -33,10 +33,18 @@ class Folder {
   getUrl(name, fallback='folder.png') {
 
     if(this.urls.hasOwnProperty(name)) {
+      if(this.urls[name].indexOf('http://') == -1 && this.urls[name].indexOf('https://') == -1) {
+        return app.sites[this.site_id] + this.urls[name];
+      } else {
+        return this.urls[name];
+      }
       return this.urls[name];
     }
 
-    return '/img/icon/' + fallback;
+    if(fallback) {
+      return require('images/icons/' + fallback);
+    }
+    return require('images/icons/file.png');
   }
 
   save(dataId, dataName) {
