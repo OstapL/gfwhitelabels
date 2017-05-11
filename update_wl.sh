@@ -7,7 +7,7 @@ do
     git pull origin $b
 
     echo "========================= branch $b =========================="
-    if git branch --all | grep --quit "remove/vladyslav2/$b"; then
+    if git branch --all | grep --quiet "remove/vladyslav2/$b"; then
         echo "============ MERGE WITH VLADYSLAV/$b ============"
         git merge vladyslav2/$b > /dev/null
     fi
