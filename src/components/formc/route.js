@@ -273,9 +273,14 @@ module.exports = {
             if (company[0]) app.user.company = company[0];
             if (campaign[0]) app.user.campaign = campaign[0];
 
-            var model = new app.models.Company(app.user.company);
-            model.campaign = new app.models.Campaign(app.user.campaign);
+            // FixMe
+            // Dirty hack for final review
+            var company = new app.models.Company(app.user.company);
+            var model = company;
+            model.company = company;
+
             model.formc = new app.models.Formc(app.user.formc);
+            model.campaign = new app.models.Campaign(app.user.campaign);
 
             const finalReviewView = new View.finalReview({
               el: '#content',
