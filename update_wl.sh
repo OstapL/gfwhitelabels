@@ -20,7 +20,12 @@ do
         git st | grep 'UU '
         break;
     else
-        echo "Succesfull merged ALPHA WITH $b"
+        if git branch --all | grep --quiet "remove/vladyslav2/$b"; then
+            git push origin vladyslav/$b
+        else
+            git push origin $b
+        fi
+        echo "Succesfull merged AND PUSHED $b"
     fi
     echo ""
 
