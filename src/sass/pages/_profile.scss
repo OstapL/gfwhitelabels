@@ -29,6 +29,10 @@ hr.profile-type-user-hr {
 .profile-type-user.credit-all {
 		position: relative;
 		margin-bottom: rem(25);
+		&:nth-child(2) {
+			margin-top: rem(20);
+			border: none!important;
+		}
 		h3 {
 			.small-text {
 				font-size: rem(12);
