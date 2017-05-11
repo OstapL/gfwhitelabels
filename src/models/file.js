@@ -43,7 +43,10 @@ class File {
         return this.urls.origin;
       }
     }
-    return fallback ? require('images/default/' + fallback) : '';
+    if(fallback) {
+      return require('images/default/' + fallback);
+    }
+    return require('images/default/350x282.png');
   }
 
   getExtention() {
