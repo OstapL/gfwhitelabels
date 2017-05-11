@@ -1,18 +1,53 @@
 - var GENERAL = require('consts/general.json');
-
 section.slider-main
-  .heartland-tour-in-main(style="display:none")
-    p GrowthFountain is coming to your town. 
-      a(href="/pg/heartland-tour") Apply Now
-      |  to present your fundraise live!
   .owl-carousel.owl-theme.carousel-test
     div
-      - var styleString = 'background: url(' + require('images/slide_5.png') + ')';
-      div(style=styleString + '; background-position: center center !important').slide_1.main-slider-item
+      div(style="background: url(/img/slide_1.jpg)").slide_1.main-slider-item
+      //img(src="/img/slide_1.jpg" alt="...")
       .slider-content.container
         .text-xs-center
           .col-lg-12
-            h1.big-h1 Own a Piece of Your Favorite Company
+            h1.big-h1.hidden-sm-down Own a Piece of Your Favorite Company
+          .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
+            span.small-text Invest in local businesses and entrepreneurs you believe in, starting at $100
+          .col-lg-12.mt20.mb30
+            a(href="/pg/education").link-6 Learn the Risks
+          if app.user.is_anonymous()
+            .col-lg-12
+              a(href="/account/signup").btn.btn-lg.btn-primary sign up + get $25
+          else
+            .col-lg-12.hidden-sm-down
+              a(href="/companies").btn.btn-lg.btn-primary.m-r-2 INVEST
+              a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
+            .col-lg-12.hidden-md-up
+              a(href="/companies").btn.btn-lg.btn-primary INVEST
+    div
+      div(style="background: url(/img/slide_2.jpg)").slide_2.main-slider-item
+      //img(src="/img/slide_1.jpg" alt="...")
+      .slider-content.container
+        .text-xs-center
+          .col-lg-12
+            h1.big-h1.hidden-sm-down Own a Piece of Your Favorite Company
+          .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
+            span.small-text Invest in local businesses and entrepreneurs you believe in, starting at $100
+          .col-lg-12.mt20.mb30
+            a(href="/pg/education").link-6 Learn the Risks
+          if app.user.is_anonymous()
+            .col-lg-12
+              a(href="/account/signup").btn.btn-lg.btn-primary sign up + get $25
+          else
+            .col-lg-12.hidden-sm-down
+              a(href="/companies").btn.btn-lg.btn-primary.m-r-2 INVEST
+              a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
+            .col-lg-12.hidden-md-up
+              a(href="/companies").btn.btn-lg.btn-primary INVEST
+    div
+      div(style="background: url(/img/slide_3.jpg)").slide_3.main-slider-item
+      //img(src="/img/slide_1.jpg" alt="...")
+      .slider-content.container
+        .text-xs-center
+          .col-lg-12
+            h1.big-h1.hidden-sm-down Own a Piece of Your Favorite Company
           .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
             span.small-text Invest in local businesses and entrepreneurs you believe in, starting at $100
           .col-lg-12.mt20.mb30
@@ -27,73 +62,19 @@ section.slider-main
             .col-lg-12.hidden-md-up
               a(href="/companies").btn.btn-lg.btn-primary INVEST
 
-    div
-      - var styleString = 'background: url(' + require('images/slide_2.jpg') + ')';
-      div(style=styleString).main-slider-item.slide_2
-      //img(src=require('images/slide_2.jpg') alt="...")
-      .slider-content.container
-        .text-xs-center
-          .col-lg-12
-            h1.big-h1 Own a Piece of Your Favorite Company
-          .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
-            span.small-text Invest in local businesses and entrepreneurs you believe in, starting at $100
-          .col-lg-12.mt20.mb30
-            a(href="/pg/education").link-6 Learn the Risks
-          if app.user.is_anonymous()
-            .col-lg-12
-              a(href="/account/signup").btn.btn-lg.btn-primary sign up + get $25
-          else
-            .col-lg-12.hidden-sm-down
-              a(href="/companies").btn.btn-lg.btn-primary.m-r-2 INVEST
-              a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
-            .col-lg-12.hidden-md-up
-              a(href="/companies").btn.btn-lg.btn-primary INVEST
-    div
-      - var styleString = 'background: url(' + require('images/slide_3.jpg') + ')';
-      div(style=styleString).main-slider-item.slide_3
-      //img(src=require('images/slide_3.jpg') alt="...")
-      .slider-content.container
-        .text-xs-center
-          .col-lg-12
-            h1.big-h1 Own a Piece of Your Favorite Company
-          .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
-            span.small-text Invest in local businesses and entrepreneurs you believe in, starting at $100
-          .col-lg-12.mt20.mb30
-            a(href="/pg/education").link-6 Learn the Risks
-          if app.user.is_anonymous()
-            .col-lg-12
-              a(href="/account/signup").btn.btn-lg.btn-primary sign up + get $25
-          else
-            .col-lg-12.hidden-sm-down
-              a(href="/companies").btn.btn-lg.btn-primary.m-r-2 INVEST
-              a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
-            .col-lg-12.hidden-md-up
-              a(href="/companies").btn.btn-lg.btn-primary INVEST
-//section.main-video
-  .homepage-hero-module
-    .video-container
-      .filter
-      video(autoplay loop).fillWidth
-        source(src=require("img/video/In-And-Out/MP4/In-And-Out.mp4") type="video/mp4")
-        //source(src=require("img/video/In-And-Out/WEBM/In-And-Out.webm") type="video/webm")
-      .slider-main
-        .slider-content.container
-          .text-xs-center
-            .col-lg-12
-              h1.big-h1.hidden-sm-down Own a Piece of Your Favorite Company
-            .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
-              span.small-text Invest in local businesses and entrepreneurs you believe in, starting at $100
-            .col-lg-12.mt20.mb30
-              a(href="/pg/education").link-6 Learn the Risks
-            if app.user.is_anonymous()
-              .col-lg-12
-                a(href="/account/signup").btn.btn-lg.btn-primary sign up + get $25
-            else
-              .col-lg-12.hidden-sm-down
-                a(href="/companies").btn.btn-lg.btn-primary.m-r-2 INVEST
-                a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
-              .col-lg-12.hidden-md-up
-                a(href="/companies").btn.btn-lg.btn-primary INVEST
+section.home-wrap-text-block.top-block
+  div(style="background: url(/img/dcu-bg-under-banner.jpg) top center;  background-attachment: fixed;").opasity-blocks.hide-bg-fixed
+    .container.text-lg-center.text-xs-center.text-sm-center
+      .col-lg-12.mt45
+        p.mb25 DCU (Digital Federal Credit Union) is not a registered broker/dealer, nor is it affiliated with GrowthFountain LLC, GrowthFountain Capital LLC, or the issuers of securities on this site.  Neither DCU nor its officers, directors, or employees make any warranty, express or implied, of any kind whatsoever related to the adequacy, accuracy, or completeness of any information on this site or the use of information on this site.  DCU does not give investment advice or recommendations for any investment offered on this platform and no communication, through this web site or otherwise, should be construed as such.
+      .col-xl-11.offset-xl-1.col-lg-11.offset-lg-1.p-b-3.top-baner-tabel
+        .col-xl-4.col-lg-4.left.p-l-0.p-r-0.border
+          h3.font-weight-bold.m0.letter-spacing-normal.padding-5 Not NCUA Insured
+        .col-xl-4.col-lg-4.center.p-l-0.p-r-0.border
+          h3.font-weight-bold.m0.letter-spacing-normal.padding-5 Not Credit Union Guaranteed
+        .col-xl-4.col-lg-4.right.p-l-0.p-r-0.border
+          h3.font-weight-bold.m0.letter-spacing-normal.padding-5 May Lose Value
+
 
 section.campaing-list
   .container#campaignList
@@ -104,17 +85,16 @@ section.campaing-list
       if collection && collection.count && collection.count > GENERAL.COMPANIES_PER_PAGE
         a(href="/companies").link-4 See All
 
-
-section.height-block-banner.scroll-paralax.no-paralax-mobile
-  - var styleString = 'background: url(' + require('images/main-bg-section-one.jpg') + ')';
-  div(style=styleString + '; height:600px').background
-  .center-wrap.container.small-button
+section.height-block-banner.scroll-paralax.no-paralax-mobile.main-height-banner
+  - var styleString = 'background: url(' + require('img/dcu-bg-bottom-block.jpg') + ')';
+  div(style=styleString + '; height:700px').background
+  .center-wrap.container
     .col-xl-12
       h2.text-uppercase.m-t-0 NOW ACCESSIBLE TO EVERYBODY
           h3 It’s the evolution of investing. Receive a financial stake
             br
             | in the companies you support.
-    .col-lg-12.p-xs-0
+    .col-lg-12
       if app.user.is_anonymous()
         a(href="/account/signup").btn.btn-lg.btn-secondary.text-uppercase Sign up to start investing
       else
@@ -122,64 +102,31 @@ section.height-block-banner.scroll-paralax.no-paralax-mobile
 
 section.home-what-is
   .container
-    .col-lg-8.offset-lg-2.p-xs-0
-      h2.dosis.text-uppercase.text-sm-center.text-xs-center.m-t-3.mb20 WHAT IS GROWTHFOUNTAIN?
+    .col-lg-12
+      h2.text-uppercase.text-sm-center.text-xs-center.font-weight-bold.mb50 Connecting investors and entrepreneurs
       .row
-        .col-lg-12
-          h3.m-t-0.m-b-1.text-xs-center We banded together with a simple mission: to simplify fundraising
-            br
-            | and help businesses raise capital.
-          h3.m-t-0.text-xs-center Everybody in the world now has the ability to invest directly
-            br
-            | in America’s entrepreneurs!
-      .row
-        .col-lg-12
+        .col-lg-6
           .embed-responsive.embed-responsive-16by9.boxshadow
             iframe(
               embed-responsive-item="true" 
-              src="https://player.vimeo.com/video/198101157?title=0&amp;byline=0&amp;portrait=0" 
+              src="https://player.vimeo.com/video/196334693?title=0&amp;byline=0&amp;portrait=0" 
               data-webkitallowfullscreen="" 
               data-mozallowfullscreen="" 
-              data-allowfullscreen=""
-            )
+              data-allowfullscreen="")
 
-section.height-block-banner.scroll-paralax.no-paralax-mobile
-  - var styleString = 'background: url(' + require('images/main-bg-section-raise.jpg') + ')';
-  div(style=styleString + '; height:450px').background
-  .center-wrap.container.small-button
-    .row
-      .col-xl-12
-        h2.text-uppercase.m-t-0  Raise capital with us
-        h3 Now you can turn your customers
-          br
-          | into owners, who can become your brand
-          br
-          | ambassadors and evangelists
-      .col-xl-12.p-xs-0
-        if app.user.is_anonymous()
-          a(href="/raise-capital").btn.btn-lg.btn-primary.text-uppercase raise capital
-        else
-          a(href="/company/create").btn.btn-lg.btn-primary.text-uppercase raise capital
-        a(href="/pg/entrepreneurquestions").btn.btn-lg.btn-secondary.text-uppercase learn more
-
-section.home-our-partners
-  .container
-    .row
-      .col-lg-12
-        h2.dosis.text-uppercase.text-xs-center OUR PARTNERS
-    .row.text-center-flex
-      .col-lg-4.col-sm-6.col-xs-12.text-xs-center.p-b-3
-        a(href="http://www.callahan.com/" target="_blank")
-          img(src=require("images/callahan.png") alt="").img-fluid.text-lg-right.text-xs-center.m-x-auto
-      .col-lg-4.col-sm-6.col-xs-12.text-lg-center.text-xs-center.m-x-auto.p-b-3
-        a(href="https://www.jdcu.org/" target="_blank")
-          img(src=require('images/logo_jd.png') alt="").img-fluid.text-xs-center.m-x-auto
-      .col-lg-4.col-sm-6.col-xs-12.text-lg-left.m-x-auto.p-b-3
-        a(href="https://www.rivermarkcu.org/" target="_blank")
-          img(src=require('images/logo_rivermark.png') alt="").img-fluid.text-xs-center.m-x-auto
-      .col-lg-3.col-sm-6.col-xs-12.text-xs-center
-        a(href="https://www.dcu.org/" target="_blank")
-          img(src=require('images/logo_dcu.jpg') alt="").img-fluid.text-xs-center.m-x-auto
-      .col-lg-3.col-sm-6.col-xs-12.p-l-0.text-xs-center.momentum-img
-        a(href="http://momentum3growth.com/" target="_blank")
-          img(src=require('images/momentum3growth.png') alt="").img-fluid.text-xs-center.m-x-auto
+        .col-lg-6
+          p.mb15.text-xs-center.home-what-is-paragraf This innovative equity crowdfunding partnership between DCU and Growth Fountain offers investors and entrepreneurs a unique way to connect, invest, raise capital, and grow ideas.
+          p.mb15.text-xs-center.home-what-is-paragraf Local and national entrepreneurs can use this as a way to connect with and
+            br
+            | raise capital from investors interested in their ideas and small businesses.
+          p.mb20.text-xs-center.home-what-is-paragraf Whether you’re an interested investor looking for exciting ideas and businesses to back or an entrepreneur looking to grow your business, this platform is a great way to get started.
+          
+          .logo
+            .row
+              .col-lg-12.text-xs-center
+                p.text-uppercase.font-weight-bold.custom-text equity crowdfunding
+                span.text-xs-center.text-xs-center Powered by
+            .row
+              .offset-sm-4.col-sm-4.text-xs-center
+                a(href="#").powered-by-logo
+                  img(src="/img/logo/GF.png")

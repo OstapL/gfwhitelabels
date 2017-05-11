@@ -143,6 +143,7 @@ module.exports = {
     //   }
     // },
 
+
     onArticlePressCollapse(e) {
       if (e.type == 'hidden') {
         this.$('.see-all-article-press').text('Show More')
@@ -678,6 +679,15 @@ module.exports = {
         nonUs: require('./templates/snippets/nonUsFields.pug'),
       };
 
+      // For check in localhost
+      // if(window.location.hostname == 'localhost') {
+      if(window.location.hostname == 'dcu.growthfountain.com') {
+        this.fields.is_understand_securities_related = this.fields.is_reviewed_educational_material;
+        this.fields.is_understand_securities_related.label = this.labels.is_understand_securities_related;
+      } else {
+        delete this.fields.is_understand_securities_related;
+      }
+
       this.assignLabels();
 
       if(window.location.hostname == 'dcu.growthfountain.com') {
@@ -695,6 +705,7 @@ module.exports = {
     },
 
     render() {
+
       this.$el.html(
         this.template({
           snippets: this.snippets,
