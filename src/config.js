@@ -2,17 +2,26 @@ module.exports = {
   domainUrl: "growthfountain.com",
   serverUrl: "https://django-api-dev.growthfountain.com",
   raiseCapitalServer: "https://api-raisecapital-dev.growthfountain.com",
+  //raiseCapitalServer: "http://localhost:8003",
   authServer: "https://api-auth-dev.growthfountain.com",
+  //authServer: "http://localhost:8002",
   formcServer: "https://api-formc-dev.growthfountain.com",
+  //formcServer: "http://localhost:8001",
   investmentServer: "https://api-investment-dev.growthfountain.com",
+  //investmentServer: "http://localhost:8003",
   filerServer: "https://api-filer-dev.growthfountain.com",
   esignServer: 'https://api-esign-dev.growthfountain.com',
+  // esignServer: 'https://api-esign.growthfountain.com',
   commentsServer: "https://api-comments-dev.growthfountain.com",
   blogServer: "https://api-blog-dev.growthfountain.com",
   bucketServer: "https://s3.amazonaws.com/growthfountain-alpha-storage",
+  // notificationsServer: "https://notifications.growthfountain.com",
   notificationsServer: "https://notifications-dev.growthfountain.com/",
-  teamName: 'Team',
+  teamName: 'GrowthFountain Team',
   teamTitle: "Meet The Team",
+  title: "Crowdfunding | Jeanne D'Arc CU",
+  footerText: "The investment opportunities and/or products offered through GrowthFountain are not insured by Jeanne D'Arc Credit Union. Deposits/investments are not insured by the National Credit Union Administration (NCUA) or the Massachusetts Share Insurance Corporation (MSIC). These investment opportunities/products are not obligations of Jeanne D’Arc Credit Union and are not endorsed, recommended or guaranteed by Jeanne D'Arc Credit Union or any government agency. The value of the investment may fluctuate, the return on the investment is not guaranteed, and loss of principal is possible. Jeanne D'Arc Credit Union is not a registered broker-dealer nor are they affiliated with GrowthFountain. Jeanne D'Arc Credit Union has contracted with GrowthFountain to make potential non-deposit investment opportunities and products available to credit union members.",
+
   //serverUrl: "http://192.168.99.100:8000",
   //serverUrl: "http://gfauth.com:8000",
 
@@ -20,18 +29,12 @@ module.exports = {
   // facebookClientId: "191471871275050",
   // googleClientId: "488593151885-87nqfd8gl444a1me0n149otrf37dbahq.apps.googleusercontent.com",
   // linkedinClientId: "77wzj6tz0yyr33",
-
+  
   facebookClientId: "1405768896335643",
   googleClientId: "805823281871-0sbsf2btjd5j13g5aa7sfo4pfjorn3k2.apps.googleusercontent.com",
   linkedinClientId: "77wzj6tz0yyr33",
 
   googleMapKey: "AIzaSyBpCl9-7bkVISZ0o-AaFCsKzZwGAxalkZU",
   stripeKey: "pk_test_Z7YAhlyPtnW7bpd8LJUHTSou",
-
-  //analytics services settings
-  googleTagID: 'GTM-WP7K455',
-  googleAnalyticsID: 'UA-97185485-1',
-  googleAnalyticsIDGeneral: 'UA-97185485-3',
-  facebookPixelID: 1020185798119090,
-  yandexMetricaID: 44164214,
+  googleTagId: 'GTM-WP7K455',
 };

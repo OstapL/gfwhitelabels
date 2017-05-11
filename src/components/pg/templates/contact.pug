@@ -1,11 +1,11 @@
 - pug_html += app.breadcrumbs('Contact us', '', [ ['Home', '/'], ['Contacts us', ''], ]);
 
-section.text_block  
+section.text_block 
   .container
     .row
       .col-lg-3.hidden-md-down  
         .page_title.border-bottom.mb25
-          h4.text-uppercase ABOUT US
+          h4.text-uppercase.dosis ABOUT US
         ul.list-unstyled.custom.pages-left-menu
           li
             a(href='/pg/overview').d-inline-block.w-100 Overview
@@ -27,18 +27,19 @@ section.text_block
         section.all-contacts.mt50
           .row
             //temporary hidden phone
-            .col-sm-5.offset-lg-2.offset-sm-1
+            .col-lg-5.offset-lg-2
               h4.dosis.text-uppercase.m0 ADDRESS
               p 
                 i.fa.fa-map-marker
                 | &nbsp; 79 Madison Ave, 5th Floor 
                 p &nbsp;&nbsp;&nbsp; New York, NY 10016
-            .col-sm-5.col-lg-4.xs-top-padding
+            .col-lg-3
               h4.dosis.text-uppercase.m0 E-MAIL
               p 
                 i.fa.fa-envelope-o
                 | &nbsp; info@growthfountain.com
-        section.form-section.clearfix(style="display: none")
+
+        //section.form-section.clearfix 
           form(method="post" action="").form
             .row
               .col-lg-10.offset-lg-1
@@ -59,6 +60,8 @@ section.text_block
                           textarea(name="Message" placeholder="Message" value="").form-control.contacts-textarea
 
                       .form-group.row.clearfix.m0 
-                        .col-lg-12.text-xs-center
+                        .col-lg-12
                           .controls  
-                            button(type="submit").btn.btn-primary.pull-lg-right.text-uppercase submit
+                            button(
+                              type="submit"
+                            ).btn.btn-primary.pull-right.text-uppercase submit 
