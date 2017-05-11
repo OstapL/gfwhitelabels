@@ -55,52 +55,56 @@ class SocialNetworks {
   }
 
   shareLinkedin (e) {
-    let retryWithLogout = false;
-    let $linksContainer = $(e.target).closest('.social-links-container');
-    let key = $linksContainer.data('key');
+    app.helpers.scripts.loadLinkedInAPI().then(() => {
+      let retryWithLogout = false;
+      let $linksContainer = $(e.target).closest('.social-links-container');
+      let key = $linksContainer.data('key');
 
-    let self = this;
+      let self = this;
 
-    function share() {
+      function share() {
 
-      const data = self.data[key].linkedin();
-      self.loginLinkedin().then((res) => {
-        if (res === false) {
-          return;
-        }
-
-        let message = self.data[key].confirmationMessage('LinkedIn');
-
-        app.dialogs.confirm(message).then((confirmed) => {
-          if (!confirmed)
+        const data = self.data[key].linkedin();
+        self.loginLinkedin().then((res) => {
+          if (res === false) {
             return;
+          }
 
-          IN.API.Raw('/people/~/shares?format=json')
-            .method('POST')
-            .body(JSON.stringify(data))
-            .result(() => {app.dialogs.info('You\'ve just shared the page to LinkedIn')})
-            .error((err) => {
-              if (retryWithLogout) {
-                console.error('LinkedIn error: ');
-                console.dir(err);
-                return;
-              }
+          let message = self.data[key].confirmationMessage('LinkedIn');
 
-              IN.User.logout(() => {
-                share();
-                retryWithLogout = true;
+          app.dialogs.confirm(message).then((confirmed) => {
+            if (!confirmed)
+              return;
+
+            IN.API.Raw('/people/~/shares?format=json')
+              .method('POST')
+              .body(JSON.stringify(data))
+              .result(() => {app.dialogs.info('You\'ve just shared the page to LinkedIn')})
+              .error((err) => {
+                if (retryWithLogout) {
+                  console.error('LinkedIn error: ');
+                  console.dir(err);
+                  return;
+                }
+
+                IN.User.logout(() => {
+                  share();
+                  retryWithLogout = true;
+                });
+
               });
-
-            });
+          });
+        }).catch((err) => {
+          console.log(err);
         });
-      }).catch((err) => {
-        console.log(err);
-      });
-    };
+      };
 
-    e.preventDefault();
+      e.preventDefault();
 
-    share();
+      share();
+    }).catch((err) => {
+      app.dialogs.error(err);
+    });
   }
 
   socialPopup(e) {

@@ -25,10 +25,10 @@ div(class=klass)
         div(class="uploading collapse")
           i.fa.fa-spinner.fa-pulse.fa-3x.fa-fw
         span
-          div.col-lg-5.col-md-5.col-sm-5.col-xs-5.text-xs-center.text-md-center.text-lg-center.p-dropzone
+          div.col-lg-5.col-md-5.col-sm-5.col-xs-12.text-xs-center.text-md-center.text-lg-center.p-dropzone
             .row(id=fileElement.fieldName)
               a(class='link-1' href="#" onclick="return false")
                 p.drop-photo #{text}
                 i(class="fa fa-file")
-          div(id=name).col-lg-7.col-md-7.col-sm-7.col-xs-12.p-r-0.p-xs-0.img-dropzone.text-lg-center
+          div(id=name).col-lg-7.col-md-7.col-sm-7.col-xs-12.p-r-0.p-xs-0.img-dropzone.text-xs-center
             - pug_html += fileElement.render().resultHTML

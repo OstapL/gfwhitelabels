@@ -15,9 +15,13 @@ DIR=src/docs/
 aws  s3 sync $DIR s3://$BUCKETSTORAGE/docs/ --profile "$PROFILE" > /dev/null
 
 echo 'updating alpha DCU'
+git reset --hard
+git checkout alpha
 git checkout alpha-dcu
 git merge --no-ff alpha
+./fix_merge.sh
 git submodule update --init --recursive
+NODE_ENV=production ./node_modules/webpack/bin/webpack.js -p --config ./webpack.config.js > /dev/null
 BUCKET="growthfountain-alpha-dcu"
 BUCKETSTORAGE="growthfountain-alpha-dcu-storage"
 DIR=dist
@@ -33,8 +37,10 @@ echo 'updating alpha MOMENTUM3'
 git reset --hard
 git checkout alpha-momentum3
 git merge --no-ff alpha
+./fix_merge.sh
 git submodule update --init --recursive
-BUCKET="growthfountain-alpha-momentm3"
+NODE_ENV=production ./node_modules/webpack/bin/webpack.js -p --config ./webpack.config.js > /dev/null
+BUCKET="growthfountain-alpha-momentum3"
 BUCKETSTORAGE="growthfountain-alpha-momentum3-storage"
 DIR=dist
 aws  s3 sync $DIR s3://$BUCKET/ --profile "$PROFILE" > /dev/null
@@ -49,7 +55,9 @@ echo 'updating alpha JDCU'
 git reset --hard
 git checkout alpha-jdcu
 git merge --no-ff alpha
+./fix_merge.sh
 git submodule update --init --recursive
+NODE_ENV=production ./node_modules/webpack/bin/webpack.js -p --config ./webpack.config.js > /dev/null
 BUCKET="growthfountain-alpha-jdcu"
 BUCKETSTORAGE="growthfountain-alpha-jdcu-storage"
 DIR=dist
@@ -61,13 +69,15 @@ aws  s3 sync $DIR s3://$BUCKET/js/ --profile "$PROFILE" > /dev/null
 DIR=src/docs/
 aws  s3 sync $DIR s3://$BUCKETSTORAGE/docs/ --profile "$PROFILE" > /dev/null
 
-echo 'updating alpha RIVERMARK'
+echo 'updating alpha RIVERMARKCU'
 git reset --hard
 git checkout alpha-rivermark
 git merge --no-ff alpha
+./fix_merge.sh
 git submodule update --init --recursive
-BUCKET="growthfountain-alpha-rivermark"
-BUCKETSTORAGE="growthfountain-alpha-rivermark-storage"
+NODE_ENV=production ./node_modules/webpack/bin/webpack.js -p --config ./webpack.config.js > /dev/null
+BUCKET="growthfountain-alpha-rivermarkcu"
+BUCKETSTORAGE="growthfountain-alpha-rivermarkcu-storage"
 DIR=dist
 aws  s3 sync $DIR s3://$BUCKET/ --profile "$PROFILE" > /dev/null
 DIR=src/img/

@@ -1,40 +1,12 @@
-// ToDo
-// Refactor, moment shouden't be here
-const moment = require('moment');
-const today = moment.utc();
 
+const InvestmentModel = require('src/models/investment.js');
 // ToDo
 // Refactor, this consts shouden't be here
-const FINANCIAL_INFORMATION = require('consts/financialInformation.json');
-const FINANCIAL_INFO = require('consts/financialInformation.json');
 const FEES = require('consts/raisecapital/companyFees.json');
-const ACTIVE_STATUSES = FINANCIAL_INFO.INVESTMENT_STATUS_ACTIVE;                   
-const CANCELLED_STATUSES = FINANCIAL_INFO.INVESTMENT_STATUS_CANCELLED;   
 
 import 'bootstrap-slider/dist/bootstrap-slider';
 import 'bootstrap-slider/dist/css/bootstrap-slider.css';
 
-const socialNetworksMap = {
-  instagram: ['instagram.com'],
-  facebook: ['fb.com', 'facebook.com'],
-  twitter: ['twitter.com'],
-  linkedin: ['linkedin.com'],
-};
-
-function initInvestment(i) {
-  i.created_date = moment.isMoment(i.created_date)
-    ? i.created_date
-    : moment.parseZone(i.created_date);
-
-  i.campaign.expiration_date = moment.isMoment(i.campaign.expiration_date)
-    ? i.campaign.expiration_date
-    : moment(i.campaign.expiration_date);
-
-  i.expired = i.campaign.expiration_date.isBefore(today);
-  i.cancelled = _.contains(CANCELLED_STATUSES, i.status);
-  i.historical = i.expired || i.cancelled;
-  i.active = !i.historical && _.contains(ACTIVE_STATUSES, i.status);
-}
 
 module.exports = {
   profile: Backbone.View.extend(_.extend({
@@ -49,7 +21,6 @@ module.exports = {
       // 'change input[name=accredited_investor]': 'changeAccreditedInvestor',
     },
     app.helpers.phone.events,
-    app.helpers.dropzone.events,
     app.helpers.yesNo.events,
     app.helpers.social.events,
     ),
@@ -364,7 +335,6 @@ module.exports = {
 
   },
     app.helpers.phone.methods,
-    app.helpers.dropzone.methods,
     app.helpers.yesNo.methods,
     app.helpers.social.methods,
   )),
@@ -416,9 +386,8 @@ module.exports = {
     initialize(options) {
       this.fields = options.fields;
 
-      _.each(this.model.data, initInvestment);
-      this.model.data.forEach((el, i) => {
-        this.model.data[i].campaign = new app.models.Campaign(el.campaign, this.fields);
+      _.each(this.model.data, (investment, idx) => {
+        this.model.data[idx] = new InvestmentModel(investment);
       });
 
       this.snippets = {
@@ -532,8 +501,7 @@ module.exports = {
           return;
 
         api.makeRequest(app.config.investmentServer + '/' + id + '/decline', 'PUT').done((response) => {
-          investment.status = FINANCIAL_INFORMATION.INVESTMENT_STATUS.CancelledByUser;
-          initInvestment(investment);
+          investment.deposit_cancelled_by_investor = true;
 
           $target.closest('.one_table').remove();
 
@@ -675,22 +643,10 @@ module.exports = {
 
       this.initComments();
 
-      try {
+      require.ensure(['src/js/graph/graph.js', 'src/js/graph_data.js'], () => {
         require('src/js/graph/graph.js');
         require('src/js/graph_data.js');
-
-        // let script = document.createElement('script');
-        // script.type = 'text/javascript';
-        // script.src = '/js/graph/graph.js';
-        // $(document.head).append(script);
-        //
-        // script = document.createElement('script');
-        // script.type = 'text/javascript';
-        // script.src = '/js/graph_data.js';
-        // $(document.head).append(script);
-      } catch (err) {
-        console.log(err);
-      }
+      }, 'graph_chunk');
 
       return this;
     },
