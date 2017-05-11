@@ -35,7 +35,7 @@ section.text_block.information-page
             .col-xl-12.text-xs-center
               h4.section-bg-line.text-uppercase our Founders
           .row.m-b-3
-            .col-xl-6.col-lg-6.p-r-0
+            .col-xl-6.col-lg-6.p-r-0-medium-up
               img(src=require("img/pages/ken.jpg")).img-fluid.m-x-auto.fade-img
             .col-xl-6.col-lg-6
               h4.text-uppercase.name.text-lg-left.text-md-center.text-sm-center.text-xs-center.right-animated Kenneth Staut
@@ -84,16 +84,18 @@ section.text_block.information-page
                 img(src=require("img/pages/morgan.png")).img-circle.h-100.m-b-1
                 h4.text-uppercase Morgan kinzler
                   .small-text.font-weight-normal Marketing Associate
-  section.home-wrap-text-block.raise-wrap.hide-bg-fixed.bg-team-wrap
-    .opasity-block
-      .container.text-lg-center.text-xs-center
-        .wrap
-          .col-lg-6.offset-lg-3
-            h2.dosis.text-uppercase.m-t-0  Want to work with us?
-            h3.font-weight-light We're always looking for smart, hard working
-              br
-              | team members to help us fulfill our mission:
-              br
-              | to level the playing field for America’s small businesses!
-          .col-xs-12.text-xs-center.mt25
-            a(href="/pg/careers").btn.btn-lg.btn-secondary.text-uppercase JOIN NOW
+
+section.height-block-banner.scroll-paralax.no-paralax-mobile
+  - var styleString = 'background: url(' + require('img/team-bg.jpg') + ')';
+  div(style=styleString + '; height:600px').background
+  .center-wrap.container
+    .row
+      .col-xl-12
+        h2.text-uppercase.m-t-0  Want to work with us?
+        h3.font-weight-light We're always looking for smart, hard working
+          br
+          | team members to help us fulfill our mission:
+          br
+          | to level the playing field for America’s small businesses!
+      .col-xs-12.text-xs-center
+        a(href="/pg/careers").btn.btn-lg.btn-secondary.text-uppercase JOIN NOW

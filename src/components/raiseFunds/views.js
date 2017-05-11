@@ -5,6 +5,20 @@ const validation = require('components/validation/validation.js');
 
 const valuation_determination = require('consts/raisecapital/valuation_determination.json');
 
+const snippets = {
+  additional_info: require('./templates/snippets/additional_info.pug'),
+  additional_video: require('./templates/snippets/additional_video.pug'),
+  faq: require('./templates/snippets/faq.pug'),
+  gallery_data: require('./templates/snippets/gallery_data.pug'),
+  header_image_data: require('./templates/snippets/header_image_data.pug'),
+  investor_presentation_data: require('./templates/snippets/investor_presentation_data.pug'),
+  list_image_data: require('./templates/snippets/list_image_data.pug'),
+  media: require('./templates/snippets/media.pug'),
+  perks: require('./templates/snippets/perks.pug'),
+  press: require('./templates/snippets/press.pug'),
+  team_members: require('./templates/snippets/team_members.pug'),
+};
+
 module.exports = {
   company: Backbone.View.extend(_.extend({
     urlRoot: app.config.raiseCapitalServer + '/company',
@@ -41,7 +55,7 @@ module.exports = {
       this.fields.tour.validate.choices = require('consts/raisecapital/tour.json').TOUR;
 
       this.labels = {
-        tour: 'Would You Like to Participate in The <a class="link-2" href="/pg/heartland-tour">Heartland Tour</a>',
+        tour: 'Would You Like to Participate in The <a class="link-2" href="/pg/heartland-tour" target="_blank">Heartland Tour</a>',
         name: 'Legal Name of Company',
         short_name: 'Doing Business as Another Name?',
         industry: 'Industry',
@@ -112,7 +126,9 @@ module.exports = {
       );
       app.helpers.disableEnter.disableEnter.call(this);
       this.checkForm();
-      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+      if(this.campaign) {
+        this.campaign.updateMenu(this.campaign.calcProgress());
+      }
       return this;
     },
 
@@ -183,7 +199,7 @@ module.exports = {
     },
 
     _success(data, newData) {
-      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+      this.model.updateMenu(this.model.calcProgress(this.model));
       return 1;
     },
 
@@ -215,7 +231,7 @@ module.exports = {
       this.fields.faq.help_text = 'We need help text here too';
       this.assignLabels();
       this.createIndexes();
-      this.buildJsonTemplates('raiseFunds');
+      this.buildSnippets(snippets);
     },
 
     render() {
@@ -230,7 +246,7 @@ module.exports = {
 
       this.checkForm();
       app.helpers.disableEnter.disableEnter.call(this);
-      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+      this.model.updateMenu(this.model.calcProgress(this.model));
       return this;
     },
   }, app.helpers.confirmOnLeave.methods, app.helpers.menu.methods, app.helpers.section.methods)),
@@ -247,11 +263,11 @@ module.exports = {
         'click #postForReview': raiseHelpers.postForReview,
         'click .onPreview': raiseHelpers.onPreviewAction,
       }, app.helpers.confirmOnLeave.events, app.helpers.menu.events,
-        app.helpers.section.events, app.helpers.dropzone.events
+        app.helpers.section.events
     ),
 
     _success(data, newData) {
-      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+      this.model.updateMenu(this.model.calcProgress(this.model));
       return 1;
     },
 
@@ -284,7 +300,7 @@ module.exports = {
         help_text: 'This is the image that will appear at the top of your campaign. A minimum size of 1600x800 is recommended.',
         templateDropzone: 'headerMedia.pug',
         onSaved: (data) => {
-          raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+          this.model.updateMenu(this.model.calcProgress(this.model));
         },
         crop: {
           control: {
@@ -320,7 +336,7 @@ module.exports = {
         title: 'Drop your photo here or click to upload',
         help_text: ' This image entices investors to view your campaign. A minimum size of 350x209 is recommended.',
         onSaved: (data) => {
-          raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+          this.model.updateMenu(this.model.calcProgress(this.model));
         },
         crop: {
           control:  {
@@ -343,8 +359,8 @@ module.exports = {
         title: 'Drop your photo(s) here or click to upload',
         help_text: 'We recommend uploading 6 images (minimum size of 1024x612 is recommended) that represent your service of business. These images will be displayed in a gallery format.',
         onSaved: (data) => {
-          app.user.campaign.gallery_group_data = data.file.data;
-          raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+          this.model.gallery_group_data = data.file.data;
+          this.model.updateMenu(this.model.calcProgress(this.model));
         },
         crop: {
           control: {
@@ -363,8 +379,8 @@ module.exports = {
         },
 
         fn: function checkNotEmpty(name, value, attr, data, computed) { 
-          if(!this.model.gallery_group_data || !this.model.gallery_group_data.length) {
-            throw 'Please upload at least 1 image';
+          if(!data.gallery_group_data || data.gallery_group_data.length < 6) {
+            throw 'Please upload at least 6 images';
           }
         },
       });
@@ -389,7 +405,7 @@ module.exports = {
 
       this.assignLabels();
       this.createIndexes();
-      this.buildJsonTemplates('raiseFunds');
+      this.buildSnippets(snippets);
     },
 
     render() {
@@ -403,10 +419,9 @@ module.exports = {
         })
       );
 
-      // setTimeout(() => { this.createDropzones() } , 1000);
       app.helpers.disableEnter.disableEnter.call(this);
       this.checkForm();
-      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+      this.model.updateMenu(this.model.calcProgress(this.model));
 
       return this;
     },
@@ -423,7 +438,7 @@ module.exports = {
     },
 
   }, app.helpers.confirmOnLeave.methods, app.helpers.menu.methods,
-    app.helpers.dropzone.methods, app.helpers.section.methods)),
+    app.helpers.section.methods)),
 
   teamMemberAdd: Backbone.View.extend(_.extend({
     urlRoot: app.config.raiseCapitalServer + '/campaign/:id/team-members',
@@ -437,7 +452,7 @@ module.exports = {
       'click .save': api.submitAction,
       'click .onPreview': raiseHelpers.onPreviewAction,
       // 'change #zip_code': 'changeZipCode',
-    }, app.helpers.confirmOnLeave.events, app.helpers.menu.events, app.helpers.dropzone.events),
+    }, app.helpers.confirmOnLeave.events, app.helpers.menu.events),
     
     _success(data, postData, method) {
       /*
@@ -533,11 +548,10 @@ module.exports = {
         })
       );
 
-      // this.createDropzones();
       this.checkForm();
 
       app.helpers.disableEnter.disableEnter.call(this);
-      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+      this.campaign.updateMenu(this.campaign.calcProgress());
       return this;
     },
 
@@ -597,7 +611,7 @@ module.exports = {
       app.helpers.disableEnter.disableEnter.call(this);
       this.checkForm();
       this.$el.find('.team-add-item').equalHeights();
-      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+      this.model.updateMenu(this.model.calcProgress(this.model));
       return this;
     },
 
@@ -637,7 +651,7 @@ module.exports = {
       'click #postForReview': raiseHelpers.postForReview,
       'click .submit-specifics': 'checkMinMaxRaise',
       'change #valuation_determination': 'valuationDetermine',
-    }, app.helpers.confirmOnLeave.events, app.helpers.menu.events, app.helpers.dropzone.events),
+    }, app.helpers.confirmOnLeave.events, app.helpers.menu.events),
 
     preinitialize() {
       // ToDo
@@ -669,7 +683,7 @@ module.exports = {
       this.fields.investor_presentation_file_id = _.extend(this.fields.investor_presentation_file_id, {
         label: 'Upload an Investor Presentation',
         onSaved: (data) => {
-          raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+          this.model.updateMenu(this.model.calcProgress(this.model));
         },
       });
 
@@ -691,11 +705,11 @@ module.exports = {
       };
       this.assignLabels();
       this.createIndexes();
-      this.buildJsonTemplates('raiseFunds');
+      this.buildSnippets(snippets);
 
       this.fields.minimum_raise.dependies = ['maximum_raise',];
       this.fields.maximum_raise.dependies = ['minimum_raise',];
-
+      this.fields.price_per_share.type = 'money';
       if(this.model.hasOwnProperty('id')) {
         this.urlRoot = this.urlRoot.replace(':id', this.model.id);
       }
@@ -747,7 +761,7 @@ module.exports = {
     },
 
     _success(data, newData) {
-      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+      this.model.updateMenu(this.model.calcProgress(this.model));
       return 1;
     },
 
@@ -783,8 +797,6 @@ module.exports = {
 
       // delete this.model.progress;
 
-      // setTimeout(() => { this.createDropzones() } , 1000);
-
       this.calculateNumberOfShares(null);
 
       this.checkForm();
@@ -798,10 +810,10 @@ module.exports = {
       $('#description_determine').parent().parent().hide();
 
       app.helpers.disableEnter.disableEnter.call(this);
-      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+      this.model.updateMenu(this.model.calcProgress(this.model));
       return this;
     },
-  }, app.helpers.confirmOnLeave.methods, app.helpers.menu.methods, app.helpers.dropzone.methods, app.helpers.section.methods)),
+  }, app.helpers.confirmOnLeave.methods, app.helpers.menu.methods, app.helpers.section.methods)),
 
   perks: Backbone.View.extend(_.extend({
     urlRoot: app.config.raiseCapitalServer + '/campaign/:id',
@@ -832,7 +844,7 @@ module.exports = {
       };
       this.assignLabels();
       this.createIndexes();
-      this.buildJsonTemplates('raiseFunds');
+      this.buildSnippets(snippets);
     },
 
     render() {
@@ -847,12 +859,12 @@ module.exports = {
       );
 
       app.helpers.disableEnter.disableEnter.call(this);
-      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+      this.model.updateMenu(this.model.calcProgress(this.model));
       return this;
     },
 
     _success(data) {
-      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+      this.model.updateMenu(this.model.calcProgress(this.model));
       app.hideLoading();
       return 0;
     }
