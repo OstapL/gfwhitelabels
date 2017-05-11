@@ -55,3 +55,62 @@ git checkout --ours src/img/slide_2.jpg
 git checkout --ours src/img/slide_3.jpg
 git checkout --ours src/img/slide_4.jpg
 git checkout --ours src/img/favicon.ico
+
+
+git add src/config.js
+git add src/img/logo.png
+git add src/sass/unique/_colors.sass
+git add src/sass/unique/_accordion.sass
+git add src/sass/unique/_card.sass
+git add src/sass/unique/_dropdown.sass
+git add src/sass/unique/_list-group.sass
+git add src/sass/unique/_pagination.sass
+git add src/sass/unique/_tables.sass
+git add src/sass/unique/_variables.sass
+
+git add src/sass/unique/_alert.sass
+git add src/sass/unique/_carousel.sass
+git add src/sass/unique/_forms.sass
+git add src/sass/unique/_media.sass
+git add src/sass/unique/_popover.sass
+git add src/sass/unique/_tabs.sass
+
+git add src/sass/unique/_animation.sass
+git add src/sass/unique/_close.sass
+git add src/sass/unique/_grid.sass
+git add src/sass/unique/_modal.sass
+git add src/sass/unique/_print.sass
+git add src/sass/unique/_tags.sass
+
+git add src/sass/unique/_breadcrumb.sass
+git add src/sass/unique/_code.sass
+git add src/sass/unique/_images.sass
+git add src/sass/unique/_nav.sass
+git add src/sass/unique/_progress.sass
+git add src/sass/unique/_tooltip.sass
+
+git add src/sass/unique/_button-group.sass
+git add src/sass/unique/_custom-forms.sass
+git add src/sass/unique/_input-group.sass
+git add src/sass/unique/_navbar.sass
+git add src/sass/unique/_reboot.sass
+git add src/sass/unique/_type.sass
+
+git add src/sass/unique/_buttons.sass
+git add src/sass/unique/_custom.sass
+git add src/sass/unique/_jumbotron.sass
+git add src/sass/unique/_normalize.sass
+git add src/sass/unique/_resposive-embed.sass
+git add src/sass/unique/_utilities.sass
+
+git add src/sass/pages/_index.sass
+git add src/components/pg/templates/overview.pug
+git add src/components/pg/templates/mainPage.pug
+git add src/components/pg/templates/contact.pug
+git add src/components/pg/templates/careers.pug
+
+git add src/img/slide_1.jpg
+git add src/img/slide_2.jpg
+git add src/img/slide_3.jpg
+git add src/img/slide_4.jpg
+git add src/img/favicon.ico

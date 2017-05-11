@@ -431,18 +431,20 @@ section
         .col-xl-8.offset-xl-2.col-lg-10.offset-lg-1.col-sm-12.offset-sm-0
           .col-lg-4.text-xs-center
             p Official filing on SEC.gov
-            a(href=values.formc.link_to_formc target="_blank")
-              img(src=require('images/lrg_US_Department_of_State35.gif')).img-document.d-inline-block
-              h3.d-inline-block  Form C
+            if values.formc.link_to_formc
+              a(href=values.formc.link_to_formc target="_blank")
+                img(src=require('images/lrg_US_Department_of_State35.gif')).img-document.d-inline-block
+                h3.d-inline-block  Form C
+
           .col-lg-4.text-xs-center
             p Company documents
             a(href="#" target="_blank").company-documents
               i.fa.fa-file-pdf-o.d-inline-block
               h3.d-inline-block Financials
 
-          if values.campaign.investor_presentation_file_id
-            .col-lg-4.row.text-xs-center
-              p Company documents
+          .col-lg-4.row.text-xs-center
+            p Company documents
+            if values.campaign.investor_presentation_file_id.id
               a(href=values.campaign.investor_presentation_file_id.getUrl('origin') target="_blank")
                 i.fa.fa-file-powerpoint-o.d-inline-block
                 h3.d-inline-block Investor Presentation
