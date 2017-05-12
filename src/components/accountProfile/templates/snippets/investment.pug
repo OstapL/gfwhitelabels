@@ -6,14 +6,16 @@ div(data-investmentid=id).one_table
 
     if active
       span.img_tab #{campaign.daysLeft() + ' Days Left'}
+      if processed
+        span.investment-processed
+          i.fa.fa-check.like-icon-circle
+          | Investment Processed
+
     if cancelled
       span.successfull.unsuccessfull  Cancelled
     if expired
-      span.end-date  #{campaign.expiration_date.format('MM/DD/YYYY')}
-    if add_deposit_to_csv
-      span.investment-processed
-        i.fa.fa-check.like-icon-circle
-        | Investment Processed
+      span.end-date  #{campaign.expirationDate.format('MM/DD/YYYY')}
+
     h2.text-uppercase #{company.name}
   .right-columns
     .one_line
@@ -25,7 +27,7 @@ div(data-investmentid=id).one_table
       .col40
         span.light_grey Investment Day
       .col60
-        span.dark_grey #{created_date.format('MM/DD/YYYY') }
+        span.dark_grey #{createdDate.format('MM/DD/YYYY') }
     .one_line
       .col40
         span.light_grey Investment ID

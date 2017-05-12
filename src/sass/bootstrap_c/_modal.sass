@@ -49,14 +49,19 @@
 					margin-bottom: 20px
 					font-size: 12px
 					line-height: 16px
-		@media only screen and (max-width : 400px)
+		@media only screen and (max-width : 375px)
 			text-align: center
 			.title-header-signup
 				h1
-					font-size: rem(26)!important
+					font-size: rem(21)!important
+					margin-bottom: 0
 			hr
-				margin: rem(20) auto!important
+				margin: rem(10) auto!important
 				width: 100%!important
+			.title-header-bottom
+				span
+					font-size: rem(16)
+            		margin-bottom: 0
 	.modal-body
 		padding: rem(15) rem(30) 0
 		form
@@ -150,6 +155,8 @@
 		.modal-header
 			.close
 				font-size: rem(30)
+				position: relative
+				top: -5px
 		.img-preview
 			position: relative
 			border-radius: 100%
