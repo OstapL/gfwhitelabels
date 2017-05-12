@@ -334,10 +334,16 @@ Backbone.View.prototype.assignLabels = function () {
 Backbone.View.prototype.checkForm = function () {
   if (app.getParams().check == '1') {
     if (!app.validation.validate(this.fields, this.model, this)) {
-      _(app.validation.errors).each((errors, key) => {
-        app.validation.invalidMsg(this, key, errors);
+      Object.keys(app.validation.errors).forEach((key) => {
+        let errors = app.validation.errors[key];
+        if (this.el.querySelector('#' + key)) {
+          app.validation.invalidMsg(this, key, errors);
+        }
       });
-      this.$('.help-block').prev().scrollTo(5);
+
+      if(this.el.querySelector('.help-block') != null) {
+        this.$('.help-block').prev().scrollTo(5);
+      }
     }
   }
 };
