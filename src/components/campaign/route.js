@@ -42,11 +42,14 @@ module.exports = {
           i.render();
           app.hideLoading();
         });
-        const meta = '<meta name="keywords" ' +
-          'content="local investing equity crowdfunding GrowthFountain is focused ' +
-          'on local investing. Find the perfect fit for your investment with our equity ' +
-          'crowdfunding setup by clicking here."></meta>';
-        $(document.head).append(meta);
+
+        app.setMeta({
+          name: 'keywords',
+          content: 'local investing equity crowdfunding GrowthFountain is focused ' +
+            'on local investing. Find the perfect fit for your investment with our equity ' +
+            'crowdfunding setup by clicking here.'
+        });
+
       });
     },
 
