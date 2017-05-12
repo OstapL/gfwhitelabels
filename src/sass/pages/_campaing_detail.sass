@@ -39,6 +39,8 @@
   height: 82vh
   overflow: hidden
   position: relative
+  @media only screen and (max-width : 576px)
+    height: 90vh
   .company-name
     margin-top: 0
     position: relative
@@ -72,6 +74,8 @@
     width: 100%
     z-index: 2
     text-align: center
+    @media only screen and (max-width : 576px)
+      top: 35%
 .detail-security-type-icon
   font-size: rem(18)!important
   padding-left: rem(5)
@@ -118,9 +122,14 @@
         color: $white
         margin-bottom: 0
         margin-top: 0
+        @media only screen and (max-width : 575px)
+          font-size: rem(16)
       p
         color: $small-text
         margin-bottom: rem(3)
+        @media only screen and (max-width : 575px)
+          font-size: rem(13)
+
     .btn
       margin-top: rem(8)
 .edit-campaign-wrap
@@ -435,9 +444,6 @@
       letter-spacing: normal
     .width-50
       width: 50%
-    @media only screen and (max-width : 480px)
-      h2
-        font-size: rem(18)
   .perks
     text-align: left
     .perks-invest
@@ -509,11 +515,6 @@
   @media only screen and (max-width : 460px)
     img
       height: 240px
-    h1.like-detail-text
-      font-size: rem(24)
-    .like-text-wrap
-      h2
-        font-size: rem(18)
 
 @media only screen and (max-width : 992px)
   .hs-line-14
@@ -543,7 +544,7 @@
   .js-height-parent
     height: 250px
   h1.big-h1
-    font-size: rem(28)
+    letter-spacing: rem(2.8)
   .top-info-wrap-item
     h2
       font-size: rem(19)
@@ -557,25 +558,26 @@
   .campaigndetail
     padding-top: rem(30) 
     h1
-      font-size: rem(21)
+      font-size: rem(18)
     .sity-detail
-      font-size: rem(15)
+      font-size: rem(13)
     .date-detail
-      font-size: rem(15)
+      font-size: rem(13)
   .right-block-investors
     span
-      font-size: rem(15)
+      font-size: rem(13)
+      line-height: rem(22)
     .committed
-      font-size: rem(19)!important
+      font-size: rem(16)!important
     h2
-      font-size: rem(19)
+      font-size: rem(16)
       margin-bottom: rem(30)!important
   .campaigndetail
     border-bottom: solid 1px $gallery
     .share
       margin-bottom: rem(30)
       span
-        font-size: rem(18) 
+        font-size: rem(13) 
       a 
         i.fa-facebook-square
           margin-left: 0
@@ -586,11 +588,18 @@
   .fundraising 
     .bgc-row-middle
       p
-        font-size: rem(15)
+        font-size: rem(13)
   .perks 
     td
       padding-left: rem(10)!important
       padding-right: rem(10)!important
   .big-icon
     margin: auto!important
+  .detail-page-calculator
+    h4
+      font-size: rem(15)
+  .overview
+    table
+      h2
+        font-size: rem(16)
 

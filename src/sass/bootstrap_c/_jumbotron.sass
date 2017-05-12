@@ -67,11 +67,16 @@
             background-color: $gallery
             color: $black
         .list-group-item-action
-          padding-left: rem(50)
+          padding-left: rem(55)
+          &.active
+            padding-left: rem(50)
+            &:before
+              left: 40px
           &:before
             content: '\f0c8'
             position: absolute
-            left: rem(40)
+            left: rem(45)
+            top: 45%
             font-family: FontAwesome
             font-size: rem(3)
   .raise-funds
