@@ -1,11 +1,4 @@
-include mixins.pug
-
-+breadcrumbs('Overview', '', 
-  [
-    ['Home', '/'],
-    ['Overview', '']
-  ]
-)
+- pug_html += app.breadcrumbs(app.config.teamName, '', [ ['Home', '/'], [app.config.teamName, ''], ]);
 
 section.text_block  
   .container

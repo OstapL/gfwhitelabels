@@ -59,7 +59,10 @@ module.exports = Backbone.Router.extend(_.extend({
     }
 
     if (!app.user.is_anonymous()) {
-      api.makeRequest(app.config.authServer + '/log', 'POST', {url:window.location.href, device: navigator.userAgent, tag: ''});
+      api.makeRequest(app.config.authServer + '/log', 'POST', {
+        path:window.location.pathname,
+        device: navigator.userAgent
+      });
     }
 
     if (callback) {

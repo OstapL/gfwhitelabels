@@ -3,12 +3,13 @@ const path = require('path');
 const HtmlPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const CompressionPlugin = require("compression-webpack-plugin");
 
 const isAnalyze = process.env.NODE_ENV === 'analyze';
 const isProd = process.env.NODE_ENV === 'production';
 const isDev = process.env.NODE_ENV === 'development';
 
-let plugins = [
+const plugins = [
   new HtmlPlugin({
     title: 'GrowthFountain | Equity Crowdfunding Platform',
     template: './src/index.pug',
@@ -16,7 +17,7 @@ let plugins = [
     inject: 'body',
   }),
   new ExtractTextPlugin({
-    filename: '[name].[hash].css',
+    filename: 'styles.[name].[hash].css',
     disable: false,
     allChunks: true,
   }),
@@ -30,15 +31,18 @@ let plugins = [
     'Backbone': 'backbone',
   }),
   new webpack.optimize.CommonsChunkPlugin({
-    names: ['vendor'],
-    minChunks: 2,
+    // name: 'vendor',
+    names: ['vendor_auth', 'vendor_no_auth'],
+    filename: '[name].[hash].js',
+    minChunks: Infinity,
   }),
   new webpack.EnvironmentPlugin({
     NODE_ENV: 'development',
-  })
+  }),
 ];
 
-if (isProd) {
+if (isProd || isAnalyze) {
+  plugins.push(new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /en/));
   plugins.push(new webpack.optimize.UglifyJsPlugin({
       mangle: true,
       compress: {
@@ -64,10 +68,16 @@ if (isDev) {
 }
 
 const dependencies = Object.keys(require('./package.json').dependencies);
+const authDependencies = ['dropzone', 'socket.io-client', 'cropperjs'];
+const noAuthDependencies = dependencies.filter((dep) => {
+  return !authDependencies.find(authDep => authDep == dep);
+});
 
 module.exports = {
   entry: {
-    vendor: dependencies,
+    // vendor: dependencies,
+    vendor_auth: authDependencies,
+    vendor_no_auth: noAuthDependencies,
     index: path.resolve(__dirname, './src/index.js'),
   },
   output: {
@@ -91,7 +101,17 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loaders: ['style-loader', 'css-loader', 'resolve-url-loader'],
+        include: [
+          path.resolve(__dirname, './node_modules'),
+          path.resolve(__dirname, './src'),
+        ],
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            'css-loader',
+            'resolve-url-loader',
+          ],
+        }),
       },
       {
         test: /\.(scss|sass)$/i,

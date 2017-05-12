@@ -1,3 +1,4 @@
+- var GENERAL = require('consts/general.json');
 section.slider-main
   .owl-carousel.owl-theme.carousel-test
     div
@@ -75,16 +76,13 @@ section.home-wrap-text-block.top-block
           h3.font-weight-bold.m0.letter-spacing-normal.padding-5 May Lose Value
 
 
-section.campaing-list.m-t-85
+section.campaing-list
   .container#campaignList
-    if global.commingSoon != 1
-      .col-lg-12
-        h2.text-uppercase.text-xs-center.m-t-0.mb50.font-weight-bold.main-page-title TRENDING
-
-      include ../components/campaign/templates/_list.pug
-
-    if global.commingSoon != 1
-      .col-lg-12.text-lg-center.text-md-center.text-xs-center
+    .col-lg-12
+      h2.dosis.text-uppercase.text-sm-center.text-xs-center.mt50 CURRENT CAMPAIGNS
+    include ../../campaign/templates/_list
+    .col-lg-12.text-lg-center.text-md-center.text-xs-center
+      if collection && collection.count && collection.count > GENERAL.COMPANIES_PER_PAGE
         a(href="/companies").link-4 See All
 
 section.height-block-banner.scroll-paralax.no-paralax-mobile.main-height-banner

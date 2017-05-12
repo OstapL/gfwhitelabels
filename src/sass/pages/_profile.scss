@@ -22,9 +22,17 @@
 		}
 	}
 }
-
+hr.profile-type-user-hr {
+	margin-bottom: rem(30);
+	margin-top: 0;
+}
 .profile-type-user.credit-all {
 		position: relative;
+		margin-bottom: rem(25);
+		&:nth-child(2) {
+			margin-top: rem(20);
+			border: none!important;
+		}
 		h3 {
 			.small-text {
 				font-size: rem(12);
@@ -64,8 +72,20 @@
 		}
 	}
 .profile {
-
+	.profile-reset-password {
+		hr {
+			margin-bottom: rem(20);
+		}
+	}
 	.profile-type-user {
+		&:nth-child(2) {
+			margin-top: rem(20);
+			border-top: solid 1px #e6e6e6;
+			.profile-type-user-wrap {
+				margin-top: rem(20);
+				margin-bottom: rem(20);
+			}
+		}
 		span.user-type {
 			font-size: rem(11);
 			font-weight: bold;
