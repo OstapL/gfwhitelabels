@@ -1,5 +1,6 @@
 const File = require('./file.js');
 
+const moment = require('moment');
 
 class Investment {
   constructor(data={}, schema={}, url=null) {
@@ -33,6 +34,30 @@ class Investment {
     let data = Object.assign({}, this.data);
     return data;
   }
+
+  get createdDate() {
+    return moment.parseZone(this.created_date)
+  }
+
+  get expired() {
+    return this.campaign.expired;
+  }
+
+  get cancelled() {
+    return this.deposit_cancelled_by_investor || this.deposit_cancelled_by_manager;
+  }
+
+  get processed() {
+    return this.add_deposit_to_csv;
+  }
+
+  get historical() {
+    return this.expired || this.cancelled;
+  }
+
+  get active() {
+    return !this.historical;
+  }
 }
 
-module.exports = Investment
+module.exports = Investment;

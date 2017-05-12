@@ -12,7 +12,7 @@ section.slider-main
       .slider-content.container
         .text-xs-center
           .col-lg-12
-            h1.big-h1.hidden-sm-down Own a Piece of Your Favorite Company
+            h1.big-h1 Own a Piece of Your Favorite Company
           .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
             span.small-text Invest in local businesses and entrepreneurs you believe in, starting at $100
           .col-lg-12.mt20.mb30
@@ -34,7 +34,7 @@ section.slider-main
       .slider-content.container
         .text-xs-center
           .col-lg-12
-            h1.big-h1.hidden-sm-down Own a Piece of Your Favorite Company
+            h1.big-h1 Own a Piece of Your Favorite Company
           .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
             span.small-text Invest in local businesses and entrepreneurs you believe in, starting at $100
           .col-lg-12.mt20.mb30
@@ -55,7 +55,7 @@ section.slider-main
       .slider-content.container
         .text-xs-center
           .col-lg-12
-            h1.big-h1.hidden-sm-down Own a Piece of Your Favorite Company
+            h1.big-h1 Own a Piece of Your Favorite Company
           .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
             span.small-text Invest in local businesses and entrepreneurs you believe in, starting at $100
           .col-lg-12.mt20.mb30
@@ -99,35 +99,22 @@ section.campaing-list
   .container#campaignList
     .col-lg-12
       h2.dosis.text-uppercase.text-sm-center.text-xs-center.mt50 CURRENT CAMPAIGNS
-    include ../components/campaign/templates/_list.pug
+    include ../../campaign/templates/_list
     .col-lg-12.text-lg-center.text-md-center.text-xs-center
       if collection && collection.count && collection.count > GENERAL.COMPANIES_PER_PAGE
         a(href="/companies").link-4 See All
 
-//section.home-wrap-text-block.hide-bg-fixed.main-section-invest
-  .opasity-block
-    .container.text-lg-center.text-xs-center.text-sm-center
-      .wrap
-        .col-lg-6.offset-lg-3
-          h2.dosis.text-uppercase.m-t-0 NOW ACCESSIBLE TO EVERYBODY
-          h3 It’s the evolution of investing. Receive a financial stake
-            br
-            | in the companies you support.
-        .col-lg-12
-          if app.user.is_anonymous()
-            a(href="/account/signup").btn.btn-lg.btn-secondary.text-uppercase Sign up to start investing
-          else
-            a(href="/companies").btn.btn-lg.btn-secondary.text-uppercase Start investing
+
 section.height-block-banner.scroll-paralax.no-paralax-mobile
   - var styleString = 'background: url(' + require('images/main-bg-section-one.jpg') + ')';
   div(style=styleString + '; height:600px').background
-  .center-wrap.container
+  .center-wrap.container.small-button
     .col-xl-12
       h2.text-uppercase.m-t-0 NOW ACCESSIBLE TO EVERYBODY
           h3 It’s the evolution of investing. Receive a financial stake
             br
             | in the companies you support.
-    .col-lg-12
+    .col-lg-12.p-xs-0
       if app.user.is_anonymous()
         a(href="/account/signup").btn.btn-lg.btn-secondary.text-uppercase Sign up to start investing
       else
@@ -148,6 +135,7 @@ section.home-what-is
       .row
         .col-lg-12
           .embed-responsive.embed-responsive-16by9.boxshadow
+
             iframe(
               embed-responsive-item="true" 
               src="https://player.vimeo.com/video/198101157?title=0&amp;byline=0&amp;portrait=0" 
@@ -159,20 +147,22 @@ section.home-what-is
 section.height-block-banner.scroll-paralax.no-paralax-mobile
   - var styleString = 'background: url(' + require('images/main-bg-section-raise.jpg') + ')';
   div(style=styleString + '; height:450px').background
-  .center-wrap.container
-    .col-xl-12
-      h2.dosis.text-uppercase.m-t-0  Raise capital with us
-      h3 Now you can turn your customers
-        br
-        | into owners, who can become your brand
-        br
-        | ambassadors and evangelists
-    .col-xl-12
-      if app.user.is_anonymous()
-        a(href="/raise-capital").btn.btn-lg.btn-primary.text-uppercase raise capital
-      else
-        a(href="/company/create").btn.btn-lg.btn-primary.text-uppercase raise capital
-      a(href="/pg/entrepreneurquestions").btn.btn-lg.btn-secondary.text-uppercase learn more
+  .center-wrap.container.small-button
+    .row
+      .col-xl-12
+        h2.text-uppercase.m-t-0  Raise capital with us
+        h3 Now you can turn your customers
+          br
+          | into owners, who can become your brand
+          br
+          | ambassadors and evangelists
+      .col-xl-12.p-xs-0
+        if app.user.is_anonymous()
+          a(href="/raise-capital").btn.btn-lg.btn-primary.text-uppercase raise capital
+        else
+          a(href="/company/create").btn.btn-lg.btn-primary.text-uppercase raise capital
+        a(href="/pg/entrepreneurquestions").btn.btn-lg.btn-secondary.text-uppercase learn more
+
 
 section.home-our-partners
   .container

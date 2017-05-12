@@ -145,6 +145,7 @@ section.create-company.container.m-b-85
               class1:'col-xl-5 col-lg-12 text-lg-left text-xl-right', 
               class2:'col-xl-7 col-lg-12', 
               schema: fields.website, 
+              placeholder: 'http://www.',
               value: values.website,})
         .border-bottom.m-t-2.m-b-3
         .row.m-b-0
@@ -154,6 +155,7 @@ section.create-company.container.m-b-85
               class1:'col-xl-6 col-lg-12 text-lg-left text-xl-right', 
               class2:'col-xl-6 col-lg-12', 
               schema: fields.twitter, 
+              placeholder: 'http://www.',
               value: values.twitter,})
           .col-xl-6.col-lg-6
             - 
@@ -161,6 +163,7 @@ section.create-company.container.m-b-85
               class1:'col-xl-5 col-lg-12 text-lg-left text-xl-right', 
               class2:'col-xl-7 col-lg-12', 
               schema: fields.facebook, 
+              placeholder: 'http://www.',
               value: values.facebook,})
         .row.m-b-0
           .col-lg-6.col-l-65
@@ -169,6 +172,7 @@ section.create-company.container.m-b-85
               class1:'col-xl-6 col-lg-12 text-lg-left text-xl-right', 
               class2:'col-xl-6 col-lg-12', 
               schema: fields.instagram, 
+              placeholder: 'http://www.',
               value: values.instagram,})
           .col-lg-6
             - 
@@ -176,6 +180,7 @@ section.create-company.container.m-b-85
               class1:'col-xl-5 col-lg-12 text-lg-left text-xl-right', 
               class2:'col-xl-7 col-lg-12', 
               schema: fields.linkedin, 
+              placeholder: 'http://www.',
               value: values.linkedin,})
         .row.m-t-2.pull-lg-right.text-md-center.text-sm-center.text-xs-center
           .col-xl-12
@@ -249,10 +254,10 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
               input(type="text" placeholder="City" value=values.city).js-city.form-control
             .form-group.row.clearfix.required
               select(name='state' value=values.state).js-state.form-control.custom-select
-                option(checked='checked', value="") State
+                option(value="") State
                 each name,abbreviation in states
-                  if abbreviation == state
-                    option(value=abbreviation selected)= name
+                  if abbreviation == values.state
+                    option(value=abbreviation selected="true")= name
                   else
                     option(value=abbreviation)= name
             .form-group.row.clearfix.required.m0
