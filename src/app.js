@@ -408,6 +408,20 @@ class App {
     }
   }
 
+  setMeta(options) {
+      const { name, content } = options;
+
+      let meta = document.head.querySelector('meta[name=' +name + ']');
+      if (meta) {
+          meta.setAttribute('content', content)
+      } else {
+          meta = document.createElement('meta');
+          meta.setAttribute('name', name);
+          meta.setAttribute('content', content);
+          document.head.appendChild(meta);
+      }
+  }
+
 }
 
 let __instance = null;

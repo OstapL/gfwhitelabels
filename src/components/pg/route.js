@@ -18,11 +18,12 @@ module.exports = {
       require.ensure([], (require) => {
         const template = require('./templates/mainPage.pug');
 
-        //TODO: it looks like repeated snippet
-        const meta = '<meta name="keywords" content="local investing equity crowdfunding ' +
-          'GrowthFountain is changing equity crowdfunding for small businesses. Focused on ' +
-          'local investing, they give a whole new meaning to finding investment."></meta>';
-        $(document.head).append(meta);
+        app.setMeta({
+          name: 'keywords',
+          content: 'local investing equity crowdfunding ' +
+            'GrowthFountain is changing equity crowdfunding for small businesses. Focused on ' +
+            'local investing, they give a whole new meaning to finding investment.',
+        });
         api.makeCacheRequest(app.config.raiseCapitalServer + '?limit=6').then((data) => {
           let dataClass = [];
           data.data.forEach((el) => {
@@ -147,17 +148,18 @@ module.exports = {
           return false;
         }
 
-        if (window.location.pathname == '/pg/faq') {
-          const meta = '<meta name="keywords" content="local investing equity crowdfunding Have a ' +
-            'question about local investing? Interested in equity crowdfunding but unsure how it ' +
-            'works? Then visit our FAQ page to learn more."></meta>';
-          $(document.head).append(meta);
-        } else {
-          const meta = '<meta name="keywords" content="local investing equity crowdfunding ' +
-            'GrowthFountain is changing equity crowdfunding for small businesses. Focused on local ' +
-            'investing, they give a whole new meaning to finding investment."></meta>';
-          $(document.head).append(meta);
-        }
+          const metaContent = window.location.pathname == '/pg/faq'
+            ? 'local investing equity crowdfunding Have a ' +
+              'question about local investing? Interested in equity crowdfunding but unsure how it ' +
+              'works? Then visit our FAQ page to learn more.'
+            : 'local investing equity crowdfunding ' +
+              'GrowthFountain is changing equity crowdfunding for small businesses. Focused on local ' +
+              'investing, they give a whole new meaning to finding investment.';
+
+          app.setMeta({
+              name: 'keywords',
+              content: metaContent,
+          });
 
         let view = require('./templates/' + (templateMap[name] || name) + '.pug');
 
