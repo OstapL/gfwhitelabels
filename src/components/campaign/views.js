@@ -332,6 +332,12 @@ module.exports = {
           cssClass: 'offset-xl-2',
         });
         comments.render();
+        if (location.hash && $(location.hash).length) {
+          if(location.hash.indexOf('comment') != -1) {
+            app.hideLoading();
+            $(location.hash).scrollTo(65);
+          }
+        }
       });
     },
 
