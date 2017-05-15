@@ -17,7 +17,7 @@ const plugins = [
     inject: 'body',
   }),
   new ExtractTextPlugin({
-    filename: '[name].[hash].css',
+    filename: 'styles.[name].[hash].css',
     disable: false,
     allChunks: true,
   }),
@@ -33,7 +33,7 @@ const plugins = [
   new webpack.optimize.CommonsChunkPlugin({
     // name: 'vendor',
     names: ['vendor_auth', 'vendor_no_auth'],
-    filename: '[name].bundle.js',
+    filename: '[name].[hash].js',
     minChunks: Infinity,
   }),
   new webpack.EnvironmentPlugin({
@@ -101,7 +101,17 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loaders: ['style-loader', 'css-loader', 'resolve-url-loader'],
+        include: [
+          path.resolve(__dirname, './node_modules'),
+          path.resolve(__dirname, './src'),
+        ],
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            'css-loader',
+            'resolve-url-loader',
+          ],
+        }),
       },
       {
         test: /\.(scss|sass)$/i,

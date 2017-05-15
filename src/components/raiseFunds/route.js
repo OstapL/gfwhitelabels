@@ -90,10 +90,12 @@ module.exports = {
         const View = require('components/raiseFunds/views.js');
 
         const optionsR = api.makeCacheRequest(app.config.raiseCapitalServer + '/company', 'OPTIONS');
-        const meta = '<meta name="keywords" content="local investing equity crowdfunding Get to ' +
-          'work and secure funding with our equity crowdfunding platform. Harness the power of ' +
-          'local investing to secure the capital you need by getting started."></meta>';
-        $(document.head).append(meta);
+        app.setMeta({
+          name: 'keywords',
+          content: 'local investing equity crowdfunding Get to ' +
+            'work and secure funding with our equity crowdfunding platform. Harness the power of ' +
+            'local investing to secure the capital you need by getting started.',
+        });
         getOCCF(optionsR, 'company', {}, View);
       });
     },

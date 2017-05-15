@@ -69,7 +69,7 @@ class File {
       icon = this.getIcon();
     }
 
-    return `/img/icons/${icon}.png` 
+    return require('images/icons/' + icon + '.png');
   }
 
   shortenFileName(toLength=20) {
