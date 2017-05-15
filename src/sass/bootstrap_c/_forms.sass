@@ -17,6 +17,7 @@ select.form-control
 		label
 			margin-right: rem(30)
 			font-weight: 400
+			cursor: pointer
 		input
 			margin-left: 0
 			margin-right: rem(5)
@@ -57,6 +58,7 @@ select.form-control
 		border: dashed 1px $small-text
 		display: inline-block
 		cursor: pointer
+		min-height: 155px
 		+mt(.2s)
 		&.gallery
 			min-height: 155px
@@ -83,6 +85,9 @@ select.form-control
 
 	.dragging-over
 		border: dashed 1px $dragging-hover-border
+		-webkit-box-shadow: 0px 0px 6px 1px $dragging-hover-border
+		-moz-box-shadow: 0px 0px 6px 1px $dragging-hover-border
+		box-shadow: 0px 0px 6px 1px $dragging-hover-border
 
 	// класс для инпутов только с border-bottom 
 	.input-border-bottom
@@ -251,3 +256,6 @@ select.form-control
 		margin-bottom: rem(15)
 	.custom-select
 		height: rem(40)!important
+
+[type="checkbox"], [type="radio"]
+	cursor: pointer
