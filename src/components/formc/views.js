@@ -807,7 +807,6 @@ module.exports = {
 
       commission.min = Math.round(this.campaign.minimum_raise * companyFees.trans_percent / 100);
       commission.max = Math.round(this.campaign.maximum_raise * companyFees.trans_percent / 100);
-      commission.fee = true;
 
       this.assignLabels();
       this.createIndexes();
