@@ -6,7 +6,7 @@ mixin row(value, index)
         i.fa.fa-times
 
     | !{app.fields.nestedTextLabel(name, 'headline', value, index, {placeholder:'Please enter a quote or the headline'}, attr.schema.headline)}
-    | !{app.fields.nestedTextLabel(name, 'name', value, index, {placeholder:'Example: Business Insider'}, attr.schema.name)}
+    | !{app.fields.nestedTextLabel(name, 'name', value, index, {placeholder:'Example: Business Insider', class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right p-t-0',}, attr.schema.name)}
     | !{app.fields.nestedTextLabel(name, 'link', value, index, {placeholder:'http://www.'}, attr.schema.link)}
 
 mixin run()
