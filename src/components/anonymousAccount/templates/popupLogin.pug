@@ -31,16 +31,17 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
               | Log In
           form(novalidate autocomplete="off")#sign-up-form.col-lg-10.offset-lg-1
             input(type="hidden" name="domain" value=window.location.host)
-            .social-btn.m-t-2.m-b-2
-              button(data-network="facebook").btn.btn-block.btn-social-network.btn-facebook.text-uppercase.m-t-0
-                i.fa.fa-facebook
-                |  SIGN UP with Facebook
-              button(data-network="linkedin").btn.btn-block.btn-social-network.btn-linkedin.text-uppercase
-                i.fa.fa-linkedin
-                |  SIGN UP with linkedin
-              button(data-network="google").btn.btn-block.btn-social-network.btn-google.text-uppercase
-                i.fa.fa-google-plus
-                |  SIGN UP with Google
+            .row
+              .social-btn.m-t-2.m-b-2
+                button(data-network="facebook").btn.btn-block.btn-social-network.btn-facebook.text-uppercase.m-t-0
+                  i.fa.fa-facebook
+                  |  SIGN UP with Facebook
+                button(data-network="linkedin").btn.btn-block.btn-social-network.btn-linkedin.text-uppercase
+                  i.fa.fa-linkedin
+                  |  SIGN UP with linkedin
+                button(data-network="google").btn.btn-block.btn-social-network.btn-google.text-uppercase
+                  i.fa.fa-google-plus
+                  |  SIGN UP with Google
             .form-group.row.clearfix.required
               .row
                 .col-lg-12

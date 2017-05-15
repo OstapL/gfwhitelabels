@@ -17,12 +17,18 @@ class App {
     this.helpers = require('./helpers.js');
     this.config = require('./config.js');
     this.cookies = require('cookies-js');
-    this.fields = require('./fields.js');
+    this.fields = require('./fields/fields.js');
     this.validation = require('components/validation/validation.js');
     this.dialogs = require('directives/dialogs/index.js');
     this.models = require('./models.js');
     this.sites = require('./sites.js');
     this.user = new User();
+
+    this.utils = {};
+    this.utils.isBoolean = function(val) {
+      return val == 0 || val == 1 || val == true || val == false;
+    }
+
     return this;
   }
 
@@ -400,6 +406,20 @@ class App {
       if (!except.includes(cls))
         elem.classList.remove(cls);
     }
+  }
+
+  setMeta(options) {
+      const { name, content } = options;
+
+      let meta = document.head.querySelector('meta[name=' +name + ']');
+      if (meta) {
+          meta.setAttribute('content', content)
+      } else {
+          meta = document.createElement('meta');
+          meta.setAttribute('name', name);
+          meta.setAttribute('content', content);
+          document.head.appendChild(meta);
+      }
   }
 
 }

@@ -43,7 +43,10 @@ class File {
         return this.urls.origin;
       }
     }
-    return '/img/default/' + fallback;
+    if(fallback) {
+      return require('images/default/' + fallback);
+    }
+    return require('images/default/350x282.png');
   }
 
   getExtention() {
@@ -66,7 +69,7 @@ class File {
       icon = this.getIcon();
     }
 
-    return `/img/icons/${icon}.png` 
+    return require('images/icons/' + icon + '.png');
   }
 
   shortenFileName(toLength=20) {
@@ -91,7 +94,7 @@ class File {
         return app.sites[this.site_id] + this.urls[name];
       }
     }
-    return '/img/default/' + fallback;
+    return fallback ? require('images/default/' + fallback) : '';
   }
 
   save(idName, dataName) {

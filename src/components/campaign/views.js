@@ -332,6 +332,12 @@ module.exports = {
           cssClass: 'offset-xl-2',
         });
         comments.render();
+        if (location.hash && $(location.hash).length) {
+          if(location.hash.indexOf('comment') != -1) {
+            app.hideLoading();
+            $(location.hash).scrollTo(65);
+          }
+        }
       });
     },
 
@@ -855,11 +861,11 @@ module.exports = {
         investedPastYear, investedOnOtherSites);
     },
 
-    getInt(value) {
-      return parseInt(value.replace(/\,/g, ''));
+    getNumber(value) {
+      return Number(value.replace(/\,/g, ''));
     },
 
-    formatInt(value) {
+    formatNumber(value) {
       return value.toLocaleString('en-US');
     },
 
@@ -870,7 +876,7 @@ module.exports = {
       if (this.model.campaign.security_type == 1)
         return;
 
-      let amount = this.getInt(e.target.value);
+      let amount = this.getNumber(e.target.value);
       if (!amount)
         return;
 
@@ -883,7 +889,7 @@ module.exports = {
 
       let newAmount = Math.ceil(amount / pricePerShare) *  pricePerShare;
 
-      this.$amount.val(this.formatInt(newAmount));
+      this.$amount.val(this.formatNumber(newAmount));
       this._updateTotalAmount();
 
       if (newAmount > amount) {
@@ -899,11 +905,11 @@ module.exports = {
         return;
       }
 
-      let amount = this.getInt(e.currentTarget.value);
+      let amount = this.getNumber(e.currentTarget.value);
       if (!amount)
         return;
 
-      e.currentTarget.value = this.formatInt(amount);
+      e.currentTarget.value = this.formatNumber(amount);
 
       this.$amount.data('rounded', false);
 
@@ -932,8 +938,8 @@ module.exports = {
     _updateTotalAmount() {
       const feeInfo = this.calcFeeWithCredit();
 
-      let totalAmount = this.getInt(this.$amount.val()) + feeInfo.fee;
-      let formattedTotalAmount = '$' + this.formatInt(totalAmount)
+      let totalAmount = this.getNumber(this.$amount.val()) + feeInfo.fee;
+      let formattedTotalAmount = '$' + this.formatNumber(totalAmount)
       this.$el.find('.total-investment-amount').text(formattedTotalAmount);
       this.$el.find('[name=total_amount]').val(formattedTotalAmount);
 
@@ -944,10 +950,6 @@ module.exports = {
         return;
 
       this.$amount.popover('hide');
-    },
-
-    getSuccessUrl(data) {
-      return app.config.investmentServer + '/' + data.id + '/invest-thanks';
     },
 
     updateLimitInModal(e) {
@@ -1095,7 +1097,7 @@ module.exports = {
     },
 
     getSuccessUrl(data) {
-      return data.id + '/invest-thanks';
+      return (data.company.slug || data.company.id) + '/' + data.id + '/invest-thanks';
     },
 
     saveEsign(responseData) {

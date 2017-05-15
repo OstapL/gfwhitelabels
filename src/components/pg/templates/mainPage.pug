@@ -1,3 +1,4 @@
+- var GENERAL = require('consts/general.json');
 section.slider-main
   .owl-carousel.owl-theme.carousel-test
     div
@@ -51,15 +52,14 @@ section.home-wrap-text-block.top-block.m-t-0
       .col-lg-12
         a(href="https://www.rivermarkcu.org/business-accounts" target="_blank").btn.btn-lg.btn-secondary.m-b-3 Click to Learn More
 
-section.campaing-list.m-t-85
+section.campaing-list
   .container#campaignList
     .col-lg-12
-      h2.dosis.text-uppercase.text-xs-center.m-t-0.mb50.font-weight-bold TRENDING
-
-    include ../components/campaign/templates/_list.pug
-
+      h2.dosis.text-uppercase.text-sm-center.text-xs-center.mt50 CURRENT CAMPAIGNS
+    include ../../campaign/templates/_list
     .col-lg-12.text-lg-center.text-md-center.text-xs-center
-      a(href="/companies").link-4 See All
+      if collection && collection.count && collection.count > GENERAL.COMPANIES_PER_PAGE
+        a(href="/companies").link-4 See All
 
 section.height-block-banner.scroll-paralax.no-paralax-mobile
   - var styleString = 'background: url(' + require('img/cd-depsoite-campaign-hero-size-2.png') + ')';
