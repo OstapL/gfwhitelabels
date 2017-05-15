@@ -42,11 +42,14 @@ module.exports = {
           i.render();
           app.hideLoading();
         });
-        const meta = '<meta name="keywords" ' +
-          'content="local investing equity crowdfunding GrowthFountain is focused ' +
-          'on local investing. Find the perfect fit for your investment with our equity ' +
-          'crowdfunding setup by clicking here."></meta>';
-        $(document.head).append(meta);
+
+        app.setMeta({
+          name: 'keywords',
+          content: 'local investing equity crowdfunding GrowthFountain is focused ' +
+            'on local investing. Find the perfect fit for your investment with our equity ' +
+            'crowdfunding setup by clicking here.'
+        });
+
       });
     },
 
@@ -63,14 +66,19 @@ module.exports = {
           });
           i.render();
           if (location.hash && $(location.hash).length) {
-            setTimeout(() => {
-              $(location.hash).scrollTo(65);
-            }, 300);
+            if(location.hash.indexOf('comment') == -1) {
+              setTimeout(() => {
+                $(location.hash).scrollTo(65);
+              }, 300);
+              app.hideLoading();
+            }
           } else {
-            $('body').scrollTo();
+            // Lets Give some time for images to loaded
+            setTimeout(() => {
+              $('body').scrollTo();
+              app.hideLoading();
+            }, 300);
           }
-
-          app.hideLoading();
         });
       });
     },

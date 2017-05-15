@@ -27,7 +27,7 @@ class Folder {
       icon = this.getIcon();
     }
 
-    return `/img/icons/${icon}.png`;
+    return require('images/icons/' + icon + '.png');
   }
 
   getUrl(name, fallback='folder.png') {
