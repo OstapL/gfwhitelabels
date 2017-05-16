@@ -1,6 +1,6 @@
 const rules = require('./rules.js');
 const fixedProps = ['type', 'label', 'placeholder'];
-const fixedRegex = ['number', 'url', 'email', 'money'];
+const fixedRegex = ['number', 'url', 'email', 'money', 'file', 'image'];
 
 module.exports = {
   clearMsg(view, attr, selector) {
@@ -112,6 +112,7 @@ module.exports = {
     this.errors = {};
 
     _(schema).each((attr, name) => {
+
       // TODO
       // How to check nested one element if that can be blank ?
       // requiredTemp - temp fix to validate fields on investment page only
