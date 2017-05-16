@@ -21,9 +21,10 @@ do
         break;
     else
         git push origin $b
-        if git branch --all | grep --quiet "remotes/vladyslav2/$b"; then
-            git push origin vladyslav/$b
-        fi
+        # Push in the main repositary will not work
+        # if git branch --all | grep --quiet "remotes/vladyslav2/$b"; then
+        #    git push origin vladyslav/$b
+        # fi
         echo "Succesfull merged AND PUSHED $b"
     fi
     echo ""

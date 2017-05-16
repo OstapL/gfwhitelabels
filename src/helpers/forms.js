@@ -1,6 +1,10 @@
 'use strict';
 const deepDiff = require('deep-diff').diff;
 
+//this code will work for deep-diff@0.3.8
+// const diff = require('deep-diff');
+// const deepDiff = diff.diff || diff.default || diff;
+
 module.exports = {
   makeCacheRequest(url, type, data) {
     return this.makeRequest(url, type, data);
