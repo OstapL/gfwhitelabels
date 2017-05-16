@@ -447,12 +447,14 @@ module.exports = {
       'click .delete-member': 'deleteMember',
       'click .submit_form': raiseHelpers.submitCampaign,
       'click #postForReview': raiseHelpers.postForReview,
-      'change #linkedin,#facebook': 'appendHttpsIfNecessary',
       'click .cancel': 'cancel',
       'click .save': api.submitAction,
       'click .onPreview': raiseHelpers.onPreviewAction,
       // 'change #zip_code': 'changeZipCode',
-    }, app.helpers.confirmOnLeave.events, app.helpers.menu.events),
+    },
+      app.helpers.confirmOnLeave.events,
+      app.helpers.menu.events,
+      app.helpers.social.events),
     
     _success(data, postData, method) {
       /*
@@ -571,7 +573,10 @@ module.exports = {
       });
     },
 
-  }, app.helpers.confirmOnLeave.methods, app.helpers.menu.methods)),
+  },
+    app.helpers.confirmOnLeave.methods,
+    app.helpers.menu.methods,
+    app.helpers.social.methods)),
 
   teamMembers: Backbone.View.extend(_.extend({
     urlRoot: app.config.raiseCapitalServer + '/campaign/:id/team-members',
