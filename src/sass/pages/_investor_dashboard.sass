@@ -32,6 +32,8 @@
       overflow: hidden;
       position: relative
       float: left
+      @media only screen and (max-width : 576px)
+        height: 240px
       &:before
         content: ''
         background-color: #000
@@ -101,6 +103,9 @@
         -ms-transform: translate(-50%,-50%)
         -webkit-transform: translate(-50%,-50%)
         transform: translate(-50%,-50%)
+        @media only screen and (max-width : 576px)
+          letter-spacing: rem(2.1)
+          line-height: rem(22)!important
       .investment-processed
         position: absolute
         left: 8px
@@ -136,12 +141,15 @@
         span
           margin: 0 0 0 rem(30)
           line-height: rem(32)
+          @media only screen and (max-width : 576px)
+            font-size: rem(14)
         span.light_grey
           color: $small-text
         span.dark_grey
           color: $black
         span.bold-grey
           font-size: rem(18)
+
     .big_columns
       width: 69.27%
     .right-columns.small-column
@@ -152,11 +160,12 @@
       border: 1px solid $border_color
       border-left: none
       float: left
-      h4
-        font-size: 18px
+      @media only screen and (max-width : 576px)
+        min-height: 155px
+      h3
         text-align: center
         margin-top: 14px
-        letter-spacing: 0.5px
+        margin-bottom: 0
       ul
         margin-left: 0
         padding: 0
@@ -165,6 +174,8 @@
           list-style-type: none
           text-align: center
           padding: rem(3)
+          @media only screen and (max-width : 576px)
+            font-size: rem(14)
 
   .bottom_column
     width: 67%
@@ -174,10 +185,15 @@
     border-left: none
     padding: 0 29px
     padding-top: 10px
+    @media only screen and (max-width : 576px)
+      padding: rem(20) rem(10)
     .btn
       margin-top: 12px
       i
         padding-left: 5px
+      @media only screen and (max-width : 576px)
+        margin-top: rem(20)
+        margin-bottom: rem(20)
     .top_descript
       width: 100%
       padding-top: 2px
@@ -185,14 +201,12 @@
       .left_text
         float: left
         text-align: center
-        b
+        h3
           color: $black_text
-          font-size: 18px
           margin: 0
           line-height: 1em
           display: block
           float: none
-          font-weight: 400
         span
           color: $small-text
           font-size: 11px
@@ -205,18 +219,17 @@
         height: 6px
         margin-top: 13px
         text-align: center
-
+        @media only screen and (max-width : 576px)
+          font-size: rem(13)
       .right_text
         float: right
         text-align: center
-        b
+        h3
           color: $black_text
-          font-size: 18px
           margin: 0
           line-height: 1em
           display: block
           float: none
-          font-weight: 400
         span
           color: $small-text
           font-size: 11px
@@ -250,6 +263,10 @@
       margin-top: -12px
       text-align: right
       padding-bottom: 25px
+      @media only screen and (max-width : 576px)
+        padding: 0
+        margin-top: 0!important
+        margin-bottom: 0!important
       a
         display: inline-block
       :hover
@@ -267,6 +284,8 @@
       display: none
     .bottom_column
       padding-bottom: rem(10)
+      @media only screen and (max-width : 576px)
+        padding-bottom: 0
     .img_column
       height: 285px
 @media only screen and (max-width : 992px)
@@ -327,8 +346,6 @@
     .bottom_column
       width: 100%
       border-left: 1px solid $border-color
-      .cancel_invest
-        margin-top: 10px
     .one_line 
       span
         margin: 0 0 0 rem(16)!important
