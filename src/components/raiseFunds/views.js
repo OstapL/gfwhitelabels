@@ -422,19 +422,66 @@ module.exports = {
       app.helpers.disableEnter.disableEnter.call(this);
       this.checkForm();
       this.model.updateMenu(this.model.calcProgress(this.model));
-
+      setTimeout(this._initVimeoVideoThumbnails.bind(this), 100);
       return this;
     },
 
     updateVideo(e) {
       appendHttpIfNecessary(e, true);
 
-      let $videoContainer = $(e.target).closest('.video-container');
+      const $videoContainer = $(e.target).closest('.video-container');
+      const img = $videoContainer.find('img')[0];
 
-      var videoInfo = app.getVideoId(e.target.value);
-      var src = app.getVideoUrl(videoInfo);
+      if (!e.target.value) {
+        img.src = require('images/default/255x153.png');
+        return;
+      }
 
-      $videoContainer.find('iframe').attr('src', src);
+      const videoInfo = app.getVideoInfo(e.target.value);
+      if (!videoInfo) {
+        return;
+      }
+
+      if (videoInfo.provider === 'youtube')
+        this._updateYoutubeThumbnail(img, videoInfo);
+      else if (videoInfo.provider === 'vimeo')
+        this._updateVimeoThumbnail(img, videoInfo.id);
+    },
+
+    _updateYoutubeThumbnail(img, videoID) {
+      img.src = videoID
+        ? 'http://img.youtube.com/vi/' + videoID + '/0.jpg'
+        : require('images/default/255x153.png');
+    },
+
+    _updateVimeoThumbnail(img, videoID) {
+      if (!videoID) {
+        img.src = require('images/default/255x153.png');
+        return;
+      }
+
+      $.getJSON('http://vimeo.com/api/v2/video/' + videoID + '.json').then((response) => {
+        if (!response || !response[0] || !response[0].thumbnail_large) {
+          console.error('Unexpected response format');
+          console.log(response);
+          return;
+        }
+
+        img.src = response[0].thumbnail_large;
+      }).fail((err) => {
+        console.error('Failed to load thumbnail from vimeo');
+        img.src = require('images/default/255x153.png');
+      });
+    },
+
+    _initVimeoVideoThumbnails() {
+      const $images = this.$('img[data-vimeo-id]');
+      if (!$images.length)
+        return;
+
+      $images.each((idx, img) => {
+        this._updateVimeoThumbnail(img, img.dataset.vimeoId);
+      });
     },
 
   }, app.helpers.confirmOnLeave.methods, app.helpers.menu.methods,
@@ -447,12 +494,14 @@ module.exports = {
       'click .delete-member': 'deleteMember',
       'click .submit_form': raiseHelpers.submitCampaign,
       'click #postForReview': raiseHelpers.postForReview,
-      'change #linkedin,#facebook': 'appendHttpsIfNecessary',
       'click .cancel': 'cancel',
       'click .save': api.submitAction,
       'click .onPreview': raiseHelpers.onPreviewAction,
       // 'change #zip_code': 'changeZipCode',
-    }, app.helpers.confirmOnLeave.events, app.helpers.menu.events),
+    },
+      app.helpers.confirmOnLeave.events,
+      app.helpers.menu.events,
+      app.helpers.social.events),
     
     _success(data, postData, method) {
       /*
@@ -571,7 +620,10 @@ module.exports = {
       });
     },
 
-  }, app.helpers.confirmOnLeave.methods, app.helpers.menu.methods)),
+  },
+    app.helpers.confirmOnLeave.methods,
+    app.helpers.menu.methods,
+    app.helpers.social.methods)),
 
   teamMembers: Backbone.View.extend(_.extend({
     urlRoot: app.config.raiseCapitalServer + '/campaign/:id/team-members',

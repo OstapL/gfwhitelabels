@@ -56,6 +56,8 @@ module.exports = {
     submitRisk(e) {
       e.preventDefault();
       let index = e.target.dataset.index;
+
+      let newRisk = false;
       if (!index) {
         index = Object.keys(this.defaultRisks).length - 1;
         $('.risk-panel').each(function(idx, elem) {
@@ -64,13 +66,17 @@ module.exports = {
           if (panelIdx > index) index = panelIdx;
         });
         index += 1;
+        newRisk = true;
       }
+
       let url = this.urlRoot.replace(':id', this.model.id).replace(':index', index);
       let formData = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
 
       api.makeRequest(url, 'PATCH', formData).then((data) => {
         let $textarea = $(e.target).find('textarea');
-        $textarea.prop('readonly', true).removeClass('editing').addClass('borderless-textarea added').css({ height: $textarea.prop('scrollHeight')+'px' });
+        if (!newRisk)
+          $textarea.prop('readonly', true).removeClass('editing').addClass('borderless-textarea added').css({ height: $textarea.prop('scrollHeight')+'px' });
+
         let $form = $('form[index=' + index + ']');
         if ($form.length > 0) { // find the form    
           $form.find('.risk-button').css({display: 'none'});
