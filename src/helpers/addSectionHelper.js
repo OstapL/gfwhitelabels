@@ -101,6 +101,9 @@ module.exports = {
         } else {
           this.$el.find('.' + sectionName + '[data-index=' + index + '] input').val('');
           this.$el.find('.' + sectionName + '[data-index=' + index + '] textarea').val('');
+          if (sectionName == 'additional_video') {
+            this.$el.find('.' + sectionName + '[data-index=' + index + '] input').trigger('change');
+          }
         }
         this[sectionName + 'Index'] --;
         // TODO

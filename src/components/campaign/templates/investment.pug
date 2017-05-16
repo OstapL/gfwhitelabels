@@ -143,7 +143,7 @@ mixin confirmStatement(name, attr)
                     p Offering deadline
                 tr
                   td.big-h
-                    p.text-uppercase.font-weight-bold #{values.campaign.security_type == 0 ? 'Common Equity' : 'Revenue Share'}
+                    p.font-weight-bold #{values.campaign.security_type == 0 ? 'Common Equity' : 'Revenue Share'}
                   td.big-h
                     p.text-uppercase.font-weight-bold #{values.campaign.expiration_date.toLocaleDateString('en-US', {timeZone: 'UTC'})}
                 tr.grey
@@ -537,9 +537,9 @@ mixin confirmStatement(name, attr)
                 p Offering deadline
             tr
               td.big-h
-                p.text-uppercase.font-weight-bold #{values.campaign.security_type == 0 ? 'Common Equity' : 'Revenue Share'}
+                p.font-weight-bold #{values.campaign.security_type == 0 ? 'Common Equity' : 'Revenue Share'}
               td.big-h
-                p.text-uppercase.font-weight-bold #{values.campaign.expiration_date.toLocaleDateString('en-US', {timeZone: 'UTC'})}
+                p.font-weight-bold #{ values.campaign.expirationDate.format('MMM DD, YYYY') }
             tr.grey
               td
                 p Target
