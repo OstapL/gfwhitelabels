@@ -7,7 +7,7 @@ section.slider-main
       .slider-content.container
         .text-xs-center
           .col-lg-12
-            h1.big-h1.hidden-sm-down Own a Piece of Your Favorite Company
+            h1.big-h1 Own a Piece of Your Favorite Company
           .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
             span.small-text Invest in local businesses and entrepreneurs you believe in, starting at $100
           .col-lg-12.mt20.mb30
@@ -30,9 +30,9 @@ section.campaing-list
     .col-lg-12.text-lg-center.text-md-center.text-xs-center
       if collection && collection.count && collection.count > GENERAL.COMPANIES_PER_PAGE
         a(href="/companies").link-4 See All
-section.height-block-banner.scroll-paralax.no-paralax-mobile
+section.height-block-banner.scroll-paralax.no-paralax-mobile.main-paralax-banner
   - var styleString = 'background: url(' + require('img/main-bg-section-invest.jpg') + ')';
-  div(style=styleString + '; height:600px').background
+  div(style=styleString + '; height:460px').background
   .center-wrap.container
     .col-xl-12
       h2.text-uppercase.m-t-0 NOW ACCESSIBLE TO EVERYBODY
