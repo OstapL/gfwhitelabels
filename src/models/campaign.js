@@ -149,7 +149,10 @@ class Campaign {
           this.minimum_increment >= 100 &&
           this.length_days >= 60 &&
           this.investor_presentation_file_id.id != null &&
-          app.utils.isBoolean(this.security_type),
+          app.utils.isBoolean(this.security_type) &&
+          (this.security_type == 1 || 
+           (this.security_type == 0 && this.premoney_valuation > 0)
+          ),
         'team-members': this.team_members.members.length > 0,
         'perks': this.perks.length > 0
       }
