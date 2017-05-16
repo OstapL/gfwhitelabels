@@ -30,6 +30,7 @@ module.exports = {
     rangeLength: '{0} must be between {1} and {2} characters',
     oneOf: '{0} must be one of: {1}',
     equalTo: '{0} must be the same as {1}',
+    money: '{0} must only contain digits',
     digits: '{0} must only contain digits',
     number: '{0} must be a number',
     file: '{0} must be a file',
