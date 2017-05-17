@@ -22,8 +22,6 @@ class Notifications {
   __attachEvents() {
     _.each(channels, (channel) => {
       this.__socket.on(channel, (data) => {
-        console.log(channel);
-        console.log(data);
         if (data === null || typeof data[Symbol.iterator] !== 'function')
           data = [data];
         this.trigger(channel, data);
