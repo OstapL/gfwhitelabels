@@ -32,7 +32,7 @@ const plugins = [
   }),
   new webpack.optimize.CommonsChunkPlugin({
     // name: 'vendor',
-    names: ['vendor_auth', 'vendor_no_auth'],
+    names: ['vendor_no_auth'],
     filename: '[name].[hash].js',
     minChunks: Infinity,
   }),
@@ -75,8 +75,6 @@ const noAuthDependencies = dependencies.filter((dep) => {
 
 module.exports = {
   entry: {
-    // vendor: dependencies,
-    vendor_auth: authDependencies,
     vendor_no_auth: noAuthDependencies,
     index: path.resolve(__dirname, './src/index.js'),
   },

@@ -28,6 +28,7 @@ function scrollLogoHandler() {
   }
 }
 
+//TODO: move this to separate view
 function scrollMenuItemsHandler() {
   let lastId = '';
   let topMenu = $(".pages-left-menu");
