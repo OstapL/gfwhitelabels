@@ -136,7 +136,7 @@ module.exports = {
           $('body').scrollTo();
           app.hideLoading();
         });
-      });
+      }, 'pg_chunk');
     },
 
     pagePG: function (name) {
@@ -256,7 +256,7 @@ module.exports = {
 
           $elem.toggleClass('active');
         });
-      });
+      }, 'pg_chunk');
     },
   },
 };
