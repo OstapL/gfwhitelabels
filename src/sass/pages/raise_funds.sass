@@ -175,11 +175,14 @@
       margin-right: 10px!important  
 .create-company-media
   .main-video-block, .additional-video-block
-    .img-media.youtube-media
-      height: 155px
+    .img-media
+      height: 160px!important
       overflow: hidden
-      @media only screen and (max-width : 991px)
-        height: auto
       img
-        margin: rem(-23) 0
+        height: 160px
+      @media only screen and (max-width : 991px)
+        height: auto!important
+        img
+          height: auto!important
+      img
         width: 100%
