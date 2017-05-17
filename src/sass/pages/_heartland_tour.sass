@@ -47,9 +47,21 @@
       @media only screen and (max-width : 992px)
         .col-md-12
           padding: 0
-          .btn
-            &:first-child
-              margin-bottom: 30px
+        .wrap-logo
+          .center-logo
+            position: relative
+            text-align: center
+            top: 0
+            left: 0
+            transform: none
+            margin-bottom: rem(15)
+            margin-top: rem(15)
+      @media only screen and (max-width : 576px)
+        .wrap-logo
+          .center-logo
+            img
+              width: 35px
+          
       @media only screen and (max-width : 375px)
         .btn
           font-size: rem(10)
@@ -83,10 +95,9 @@
         transform: translate(-50%, -50%)
         width: 100%
         h1
-          @media only screen and (max-width : 768px)
-            font-size: rem(24)
-          @media only screen and (max-width : 360px)
-            font-size: rem(18)
+          @media only screen and (max-width : 576px)
+            font-size: rem(22)
+            line-height: rem(25)!important
     .small
       font-size: rem(12)
       color: $small-text
