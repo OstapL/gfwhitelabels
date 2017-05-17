@@ -12,11 +12,11 @@ module.exports = {
   methods: {
     ensureSocialNetworkLink(e) {
       const network = e.target.name;
-      const value = e.target.value;
+      const value = e.target.value.toLowerCase();
 
-      const withPrefix = _(socialNetworksMap[network]).find(link => value.startsWith(link));
+      const withNetwork = !!_(socialNetworksMap[network]).find(link => value.indexOf(link) >= 0);
 
-      if (withPrefix)
+      if (withNetwork)
         return e.target.value = app.helpers.format.ensureLinkProtocol(value, true);
 
       let linkValue = socialNetworksMap[network][0] + (value.startsWith('/') ? value : '/' + value);
