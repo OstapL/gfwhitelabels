@@ -44,7 +44,7 @@ div(data-investmentid=id).one_table
       .col60.col-perks.showPopover(data-content=perk)
         span.dark_grey #{perk}
   .right_buttons
-    h4 Downloadable Files
+    h3 Downloadable Files
     ul
       li
         a(href=campaign.getInvestorPresentationURL() target="_blank").link-3 Investor Presentation
@@ -62,10 +62,10 @@ div(data-investmentid=id).one_table
   .bottom_column
     .top_descript
       .left_text
-        b #{app.helpers.format.formatAmount(campaign.amount_raised)}
+        h3 #{app.helpers.format.formatAmount(campaign.amount_raised)}
         span Raised
       .right_text
-        b #{app.helpers.format.formatAmount((campaign.minimum_raise))}
+        h3 #{app.helpers.format.formatAmount((campaign.minimum_raise))}
         span Goal
       p.percents #{ campaign.fundedPercentage().text }
       .clear

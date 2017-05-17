@@ -54,9 +54,10 @@ module.exports = {
     },
 
     detail(name) {
+      app.showLoading();
+
       require.ensure([], () => {
         const View = require('./views.js');
-
         $.when(
           api.makeCacheRequest(app.config.raiseCapitalServer + '/company', 'OPTIONS'),
           api.makeCacheRequest(app.config.raiseCapitalServer + '/' + name)
@@ -65,20 +66,7 @@ module.exports = {
             model: new app.models.Company(companyData[0], companyFields[0]),
           });
           i.render();
-          if (location.hash && $(location.hash).length) {
-            if(location.hash.indexOf('comment') == -1) {
-              setTimeout(() => {
-                $(location.hash).scrollTo(65);
-              }, 300);
-              app.hideLoading();
-            }
-          } else {
-            // Lets Give some time for images to loaded
-            setTimeout(() => {
-              $('body').scrollTo();
-              app.hideLoading();
-            }, 300);
-          }
+          $('body').scrollTo();
         });
       });
     },
