@@ -144,20 +144,23 @@ $(document).ready(function () {
 // Money field auto correction
   $('body').on('keyup', '[type="money"]', function (e) {
 
-    if(e.keyCode == 37 || e.keyCode == 39) {
+    if(e.keyCode == 37 || e.keyCode == 39 || e.keyCode == 190 || e.keyCode == 188 || e.keyCode == 91) {
       return;
     }
 
     var valStr = e.target.value.replace(/[\$\,]/g, '');
-    var val = parseInt(valStr);
+    var val = parseFloat(valStr);
     if (val) {
+      var selStart = e.target.selectionStart;
+      var selEnd = e.target.selectionEnd;
       e.target.value = '$' + val.toLocaleString('en-US');
+      e.target.setSelectionRange(selStart, selEnd);
     }
   });
 
   $('body').on('focus', '[type="money"]', function (e) {
     var valStr = e.target.value.replace(/[\$\,]/g, '');
-    var val = parseInt(valStr);
+    var val = parseFloat(valStr);
     if (val == 0 || val == NaN) {
       e.target.value = '';
     }
