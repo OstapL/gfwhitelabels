@@ -50,7 +50,7 @@ section.create-company-media.container.media-container
               -
                 var videoInfo = app.getVideoInfo(values.video);
               if videoInfo.provider === 'youtube'
-                .img-media
+                .img-media.youtube-media
                   img(src="http://img.youtube.com/vi/" + videoInfo.id + "/0.jpg")
               else if videoInfo.provider === 'vimeo'
                 .img-media
