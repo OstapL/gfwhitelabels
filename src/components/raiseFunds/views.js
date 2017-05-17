@@ -443,14 +443,14 @@ module.exports = {
       }
 
       if (videoInfo.provider === 'youtube')
-        this._updateYoutubeThumbnail(img, videoInfo);
+        this._updateYoutubeThumbnail(img, videoInfo.id);
       else if (videoInfo.provider === 'vimeo')
         this._updateVimeoThumbnail(img, videoInfo.id);
     },
 
     _updateYoutubeThumbnail(img, videoID) {
       img.src = videoID
-        ? 'http://img.youtube.com/vi/' + videoID + '/0.jpg'
+        ? '//img.youtube.com/vi/' + videoID + '/0.jpg'
         : require('images/default/255x153.png');
     },
 
@@ -460,7 +460,7 @@ module.exports = {
         return;
       }
 
-      $.getJSON('http://vimeo.com/api/v2/video/' + videoID + '.json').then((response) => {
+      $.getJSON('//vimeo.com/api/v2/video/' + videoID + '.json').then((response) => {
         if (!response || !response[0] || !response[0].thumbnail_large) {
           console.error('Unexpected response format');
           console.log(response);
