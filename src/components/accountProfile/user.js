@@ -122,7 +122,6 @@ class User {
   }
 
   updateUserData(data, next) {
-    console.log(data);
     const infoRequest = data.info ? null : api.makeRequest(app.config.authServer + '/info',  'GET');
     $.when(infoRequest).done((responseData) => {
       this.data = _.extend({}, this.data, responseData || data);
