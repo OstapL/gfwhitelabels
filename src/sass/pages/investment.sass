@@ -19,6 +19,12 @@
 				font-size: 14px
 				font-weight: 700
 .investment
+	@media screen and (min-width: 991px)
+		.invest-left-p-0
+			padding-right: 0
+		.invest-right-p-0
+			padding-left: 30px
+
 	.input-border
 		padding: 0 15px
 		.form-control:disabled
@@ -55,15 +61,31 @@
 		margin-top: 30px
 		margin-bottom: 0
 	.investment-summary
-		padding-top: 11px
-		background-color: $detail-overview-background
-		p
-			line-height: 1
-			margin-top: 7px
-			margin-bottom: 20px
-			color: $white
-		span
-			color: $white
+		border: none
+		.investment-summary-wrap
+			.grey
+				padding: rem(12) 0
+				text-align: center
+				background-color: $alabaster
+			td
+				width: 50%
+			.big-h
+				min-height: 55px
+				height: 55px
+				vertical-align: middle
+				padding: rem(12) 0
+				text-align: center
+				*
+					margin-bottom: 0
+				&.target
+					*
+						line-height: 21px
+		@media screen and (max-width: 544px)
+			margin-top: rem(30)
+		@media screen and (max-width: 375px)
+			p
+				font-size: rem(13)
+
 	.total-investment-amount
 		font-size: rem(14)
 	.fee
@@ -273,6 +295,7 @@
 			.input-border
 				&:before
 					top: 7px
+
 @media screen and (max-width: 320px)
 	.commission-group
 		.commission

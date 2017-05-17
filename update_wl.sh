@@ -7,7 +7,7 @@ do
     git checkout $b
     git pull origin $b
 
-    if git branch --all | grep --quiet "remove/vladyslav2/$b"; then
+    if git branch --all | grep --quiet "remotes/vladyslav2/$b"; then
         echo "============ MERGE WITH VLADYSLAV/$b ============"
         git merge vladyslav2/$b > /dev/null
     fi
@@ -20,11 +20,11 @@ do
         git st | grep 'UU '
         break;
     else
-        if git branch --all | grep --quiet "remove/vladyslav2/$b"; then
-            git push origin vladyslav/$b
-        else
-            git push origin $b
-        fi
+        git push origin $b
+        # Push in the main repositary will not work
+        # if git branch --all | grep --quiet "remotes/vladyslav2/$b"; then
+        #    git push origin vladyslav/$b
+        # fi
         echo "Succesfull merged AND PUSHED $b"
     fi
     echo ""

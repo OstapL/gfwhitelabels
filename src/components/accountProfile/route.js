@@ -72,6 +72,7 @@ module.exports = {
 
     investorDashboard() {
       require.ensure([], (require) => {
+        $('body').scrollTo();
         const View = require('components/accountProfile/views.js');
 
         const fieldsR = api.makeCacheRequest(app.config.investmentServer, 'OPTIONS');
