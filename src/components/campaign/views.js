@@ -204,10 +204,112 @@ module.exports = {
       app.helpers.fileList.show(this.companyDocsData);
     },
 
-    render() {
-      const fancybox = require('components/fancybox/js/jquery.fancybox.js');
-      const fancyboxCSS = require('components/fancybox/css/jquery.fancybox.css');
+    initAsyncUI() {
+      this.initStickyToggle();
+      if (this.model.campaign.security_type == 1)
+        (new CalculatorView.calculator()).render();
 
+      Promise.all([
+        this.initFancyBox(),
+        this.initComments()
+      ]).then(() => {
+        app.hideLoading();
+      });
+    },
+
+    initFancyBox() {
+      return new Promise((resolve, reject) => {
+        const $fancyBox = this.$('.fancybox');
+
+        $fancyBox.on('click', (e) => { e.preventDefault(); return false; });
+
+        require.ensure([
+          'components/fancybox/js/jquery.fancybox.js',
+          'components/fancybox/css/jquery.fancybox.css',
+        ], (require) => {
+          const fancybox = require('components/fancybox/js/jquery.fancybox.js');
+          const fancyboxCSS = require('components/fancybox/css/jquery.fancybox.css');
+
+          $fancyBox.off('click');
+
+          $fancyBox.fancybox({
+            openEffect  : 'elastic',
+            closeEffect : 'elastic',
+
+            helpers : {
+              title : {
+                type : 'inside'
+              }
+            }
+          });
+          resolve();
+        }, 'fancybox_chunk');
+      });
+    },
+
+    initStickyToggle() {
+      var stickyToggle = function(sticky, stickyWrapper, scrollElement) {
+        var stickyHeight = sticky.outerHeight();
+        var stickyTop = stickyWrapper.offset().top;
+        if (scrollElement.scrollTop() >= stickyTop){
+          stickyWrapper.height(stickyHeight);
+          sticky.addClass("is-sticky");
+        }
+        else{
+          sticky.removeClass("is-sticky");
+          stickyWrapper.height('auto');
+        }
+      };
+
+      this.$el.find('[data-toggle="sticky-onscroll"]').each(function() {
+        var sticky = $(this);
+        var stickyWrapper = $('<div>').addClass('sticky-wrapper'); // insert hidden element to maintain actual top offset on page
+        sticky.before(stickyWrapper);
+        sticky.addClass('sticky');
+
+        // Scroll & resize events
+        $(window).on('scroll.sticky-onscroll resize.sticky-onscroll', function() {
+          stickyToggle(sticky, stickyWrapper, $(this));
+        });
+
+        // On page load
+        stickyToggle(sticky, stickyWrapper, $(window));
+      });
+    },
+
+    initComments() {
+      return new Promise((resolve, reject) => {
+        if (this.model.is_approved != 6)
+          return resolve();
+
+        const View = require('components/comment/views.js');
+        const urlComments = app.config.commentsServer + '/company/' + this.model.id;
+        let optionsR = api.makeRequest(urlComments, 'OPTIONS');
+        let dataR = api.makeRequest(urlComments);
+
+        $.when(optionsR, dataR).done((options, data) => {
+          data[0].id = this.model.id;
+          data[0].owner_id = this.model.owner_id;
+
+          let comments = new View.comments({
+            // model: commentsModel,
+            model: data[0],
+            fields: options[0].fields,
+            cssClass: 'offset-xl-2',
+          });
+          comments.render();
+
+          if (location.hash && location.hash.indexOf('comment') >= 0) {
+            let $comments = $(location.hash);
+            if ($comments.length)
+              $comments.scrollTo(65);
+          }
+          resolve();
+        }).fail(reject);
+      });
+    },
+
+    render() {
       this.$el.html(
         this.template({
           values: this.model,
@@ -223,59 +325,9 @@ module.exports = {
       });
 
       setTimeout(() => {
-        if (this.model.campaign.security_type == 1) { //enable calculator only for bluehollar company
-          (new CalculatorView.calculator()).render();
-        }
+        this.initAsyncUI();
       }, 100);
 
-      setTimeout(() => {
-
-        this.$('.fancybox').fancybox({
-          openEffect  : 'elastic',
-          closeEffect : 'elastic',
-
-          helpers : {
-            title : {
-              type : 'inside'
-            }
-          }
-        });
-      }, 100);
-
-      setTimeout(() => {
-        var stickyToggle = function(sticky, stickyWrapper, scrollElement) {
-          var stickyHeight = sticky.outerHeight();
-          var stickyTop = stickyWrapper.offset().top;
-          if (scrollElement.scrollTop() >= stickyTop){
-            stickyWrapper.height(stickyHeight);
-            sticky.addClass("is-sticky");
-          }
-          else{
-            sticky.removeClass("is-sticky");
-            stickyWrapper.height('auto');
-          }
-        };
-
-        this.$el.find('[data-toggle="sticky-onscroll"]').each(function() {
-          var sticky = $(this);
-          var stickyWrapper = $('<div>').addClass('sticky-wrapper'); // insert hidden element to maintain actual top offset on page
-          sticky.before(stickyWrapper);
-          sticky.addClass('sticky');
-
-          // Scroll & resize events
-          $(window).on('scroll.sticky-onscroll resize.sticky-onscroll', function() {
-            stickyToggle(sticky, stickyWrapper, $(this));
-          });
-
-          // On page load
-          stickyToggle(sticky, stickyWrapper, $(window));
-        });
-
-        if(this.model.is_approved == 6) {
-          this.initComments();
-        };
-
-      }, 1200);
       $(window).scroll(function() {
             var st = $(this).scrollTop() /15;
 
@@ -314,32 +366,6 @@ module.exports = {
       this.$('#documents-modal').modal('hide');
 
       return this;
-    },
-
-    initComments() {
-      const View = require('components/comment/views.js');
-      const urlComments = app.config.commentsServer + '/company/' + this.model.id;
-      let optionsR = api.makeRequest(urlComments, 'OPTIONS');
-      let dataR = api.makeRequest(urlComments);
-
-      $.when(optionsR, dataR).done((options, data) => {
-        data[0].id = this.model.id;
-        data[0].owner_id = this.model.owner_id;
-
-        let comments = new View.comments({
-          // model: commentsModel,
-          model: data[0],
-          fields: options[0].fields,
-          cssClass: 'offset-xl-2',
-        });
-        comments.render();
-        if (location.hash && $(location.hash).length) {
-          if(location.hash.indexOf('comment') != -1) {
-            app.hideLoading();
-            $(location.hash).scrollTo(65);
-          }
-        }
-      });
     },
 
     readMore(e) {
