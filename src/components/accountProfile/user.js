@@ -231,18 +231,19 @@ class User {
     }
 
     this.next = next || (window.location.pathname + window.location.search);
+    require.ensure(['components/anonymousAccount/views.js'], (require) => {
+      const pView = require('components/anonymousAccount/views.js');
 
-    const pView = require('components/anonymousAccount/views.js');
+      let v = $('#content').is(':empty')
+        ? new pView.signup({
+          el: '#content',
+          model: {},
+        })
+        : new pView.popupLogin({});
 
-    let v = $('#content').is(':empty')
-      ? new pView.signup({
-        el: '#content',
-        model: {},
-      })
-      : new pView.popupLogin({});
-
-    v.render();
-    app.hideLoading();
+      v.render();
+      app.hideLoading();
+    }, 'anonymous_account_chunk');
 
     return false;
   }

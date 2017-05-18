@@ -14,9 +14,9 @@ module.exports = {
     'pg/:name': 'pagePG',
   },
   methods: {
-    mainPage(id) {
+    mainPage() {
       require.ensure([], (require) => {
-        const template = require('./templates/mainPage.pug');
+        const template = require('src/templates/mainPage.pug');
 
         app.setMeta({
           name: 'keywords',
@@ -24,6 +24,7 @@ module.exports = {
             'GrowthFountain is changing equity crowdfunding for small businesses. Focused on ' +
             'local investing, they give a whole new meaning to finding investment.',
         });
+
         api.makeCacheRequest(app.config.raiseCapitalServer + '?limit=6').then((data) => {
           let dataClass = [];
           data.data.forEach((el) => {
@@ -136,7 +137,7 @@ module.exports = {
           $('body').scrollTo();
           app.hideLoading();
         });
-      }, 'pg_chunk');
+      }, 'main_page_chunk');
     },
 
     pagePG: function (name) {
