@@ -1,6 +1,6 @@
 require('src/sass/mixins_all.sass');
 require('babel-polyfill');
-require('jquery-serializejson/jquery.serializejson.min.js');
+require('jquery-serializejson');
 require('js/html5-dataset.js');
 require('classlist-polyfill');
 
@@ -11,7 +11,7 @@ require('classlist-polyfill');
 // }
 
 require('bootstrap/dist/js/bootstrap.js');
-require('owl.carousel/dist/owl.carousel.min.js');
+require('owl.carousel');
 
 (function () {
   if ( typeof NodeList.prototype.forEach === "function" ) return false;
