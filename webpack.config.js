@@ -135,11 +135,7 @@ module.exports = {
         loader: 'pug-loader',
       },
       {
-       test: /\.(mp4|webm)$/,
-       loader: 'file-loader',
-     },
-     {
-       test: /\.(mp3|mp4)$/,
+       test: /\.(mp3|mp4|webm)$/,
        loader: 'file-loader',
      },
       {
