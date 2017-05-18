@@ -95,6 +95,7 @@
           transform: translate(-50%, -50%)
           opacity: .5
           margin-left: 2px
+          z-index: -1
           @media only screen and (max-width : 991px)
             display: none
           img
@@ -212,6 +213,8 @@
               margin: 0
               strong
                 margin-right: rem(5)
+              .grey
+                color: $small-text
         .calendar
           display: inline
           border-radius: 2px
@@ -230,7 +233,7 @@
         background: rgba(17, 17, 17, 0.1)
     .sities-section
       .background
-        top: -250px
+        top: -300px
       h1
         color: $white
         @media only screen and (max-width : 360px)
