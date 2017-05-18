@@ -4,6 +4,42 @@
   var infoProvider = new HeartlandInfoProvider();
   var directiveKey = 'heartland-tour';
 
+mixin renderPlaces(places)
+  div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#heartland-tour-modal.modal.fade
+    div(role="document").modal-dialog
+      .modal-content
+        .modal-header
+          button(type="button" data-dismiss="modal" aria-label="Close").close
+            span(aria-hidden="true")
+              i.fa.fa-times
+          h2.text-uppercase.text-xs-center PLEASE CHOOSE YOUR
+            br
+            | LOCATION OF INTEREST
+        .modal-body
+          .container
+            .row.m-b-2
+              .col-xl-10.offset-xl-1.p-x-0
+                .col-xl-6
+                  ul
+                    each place, idx in places
+                      li
+                        a(href=infoProvider.rsvpToAttendInPersonEmail(place)).link-3
+                          i.fa.fa-map-marker
+                          | #{ place }
+                      if idx >= 4
+                        - break;
+                .col-xl-6
+                  ul
+                    each place, idx in places
+                      if (idx <= 4)
+                        - continue;
+                      li
+                        a(href=infoProvider.rsvpToAttendInPersonEmail(place)).link-3
+                          i.fa.fa-map-marker
+                          | #{ place }
+          .modal-footer.m-b-2
+
+
 section.heartland-tour
   section.height-block-banner.scroll-paralax.no-paralax-mobile.m-t-0.top-baner
     - var styleString = 'background: url(' + require('img/heartland-tour.jpg') + ')';
@@ -39,7 +75,7 @@ section.heartland-tour
       .background
         .center-wrap.container.small-button
           .one-button
-            a(href=infoProvider.nominateEmail()).btn.btn-block.btn-secondary nominate your favorite business!
+            a(href=infoProvider.nominateYourBusinessEmail()).btn.btn-block.btn-secondary nominate your favorite business!
           .center-logo
             img(src=require("img/gf_icon.png") alt="")
           .one-button
@@ -62,56 +98,14 @@ section.heartland-tour
             | One presenter or more per location may receive an honorarium to cover travel expenses, up to $1,000.
         .col-xl-4.col-lg-4.city
           ul
-            li
-              i.fa.fa-map-marker
-              h3 
-                strong New York,
-                .grey New York
-            li
-              i.fa.fa-map-marker
-              h3 
-                strong Portland,
-                .grey Maine
-            li
-              i.fa.fa-map-marker
-              h3 
-                strong Boston,
-                .grey Massachusetts
-            li
-              i.fa.fa-map-marker
-              h3 
-                strong Jacksonville,
-                .grey Florida
-            li
-              i.fa.fa-map-marker
-              h3 
-                strong Chattanooga,
-                .grey Tennessee
-            li
-              i.fa.fa-map-marker
-              h3 
-                strong Waterloo,
-                .grey Indiana
-            li
-              i.fa.fa-map-marker
-              h3 
-                strong New Orleans,
-                .grey Louisiana
-            li
-              i.fa.fa-map-marker
-              h3 
-                strong Tulsa,
-                .grey Oklahoma
-            li
-              i.fa.fa-map-marker
-              h3 
-                strong Portland,
-                .grey Oregon
-            li
-              i.fa.fa-map-marker
-              h3 
-                strong Los Angeles,
-                .grey California
+            each place in infoProvider.places
+              - placeParts = place.split(',');
+              li
+                i.fa.fa-map-marker
+                h3
+                  strong= placeParts[0]
+                    | ,
+                  .grey= placeParts[1]
           h4.text-uppercase.m-t-2.m-b-2 All events will take place in
           .calendar
             i.fa.fa-calendar
@@ -136,63 +130,5 @@ section.heartland-tour
             h1.text-uppercase Join GrowthFountain’s Heartland Tour
           .col-lg-12
             a(href="/company/create").btn.btn-lg.btn-primary.m-t-2 apply now!
-div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#heartland-tour-modal.modal.fade
-  div(role="document").modal-dialog
-    .modal-content
-      .modal-header
-        button(type="button" data-dismiss="modal" aria-label="Close").close
-          span(aria-hidden="true")
-            i.fa.fa-times
-        h2.text-uppercase.text-xs-center PLEASE CHOOSE YOUR 
-          br
-          | LOCATION OF INTEREST
-      .modal-body
-        .container
-          .row.m-b-2
-            .col-xl-10.offset-xl-1.p-x-0
-              .col-xl-6
-                ul
-                  li
-                    a(href="#").link-3
-                      i.fa.fa-map-marker
-                      | New York, New York
-                  li
-                    a(href="#").link-3
-                      i.fa.fa-map-marker
-                      | Portland, Maine
-                  li
-                    a(href="#").link-3
-                      i.fa.fa-map-marker
-                      | Boston, Massachusetts
-                  li
-                    a(href="#").link-3
-                      i.fa.fa-map-marker
-                      | Jacksonville, Florida
-                  li
-                    a(href="#").link-3
-                      i.fa.fa-map-marker
-                      | Chattanooga, Tennessee
-              .col-xl-6
-                ul
-                  li
-                    a(href="#").link-3
-                      i.fa.fa-map-marker
-                      | Waterloo, Indiana
-                  li
-                    a(href="#").link-3
-                      i.fa.fa-map-marker
-                      | New Orleans, Louisiana
-                  li
-                    a(href="#").link-3
-                      i.fa.fa-map-marker
-                      | Tulsa, Oklahoma
-                  li
-                    a(href="#").link-3
-                      i.fa.fa-map-marker
-                      | Portland, Oregon 
-                  li
-                    a(href="#").link-3
-                      i.fa.fa-map-marker
-                      | Los Angeles, California
-        .modal-footer.m-b-2
++renderPlaces(infoProvider.places)
 
