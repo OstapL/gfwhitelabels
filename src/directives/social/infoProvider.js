@@ -35,7 +35,9 @@ class InfoProvider {
   _buildMailToLink(email) {
     let emailString = 'mailto:';
 
-    emailString += '?subject=' + (email.subject || '');
+    emailString += '?to=' + (email.to || '');
+    emailString += '&cc=' + (email.cc || '');
+    emailString += '&subject=' + (email.subject || '');
     emailString += '&body=' + (email.body || '');
 
     return emailString;
