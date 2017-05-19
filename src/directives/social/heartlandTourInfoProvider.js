@@ -113,8 +113,10 @@ class HeartlandInfoProvider extends ShareInfoProvider {
     return this._buildMailToLink({
       to: 'info@growthfountain.com',
       subject: 'I\'m interested in attending one of your events!',
-      body: 'Please send me details as you finalize the schedule for the Heartland Tour!' + SPECIAL_SYMBOLS.NEW_LINE +
-        'I am primarily interested in the event in ' + place + '. ' + SPECIAL_SYMBOLS.NEW_LINE +
+      body: 'Please send me details as you finalize the schedule for the Heartland Tour!' +
+        SPECIAL_SYMBOLS.NEW_LINE + SPECIAL_SYMBOLS.NEW_LINE +
+        'I am primarily interested in the event in ' + place + '. ' +
+        SPECIAL_SYMBOLS.NEW_LINE + SPECIAL_SYMBOLS.NEW_LINE +
         'All events will take place in September in: ' + SPECIAL_SYMBOLS.NEW_LINE +
         this.placesList + SPECIAL_SYMBOLS.NEW_LINE + SPECIAL_SYMBOLS.NEW_LINE +
         'GrowthFountain\'s Heartland Tour: https://growthfountain.com/pg/heartland-tour',
