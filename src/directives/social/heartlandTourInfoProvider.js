@@ -100,18 +100,22 @@ class HeartlandInfoProvider extends ShareInfoProvider {
 
   nominateYourBusinessEmail() {
     return this._buildMailToLink({
+      to: 'info@growthfountain.com',
       subject: 'I\'d like to nominate my favorite business for The Heartland Tour',
       body: 'Here is the contact information for the business I\'d like to nominate! ' +
-        'I understand that if they list on GrowthFountain, I\'ll receive $500!',
+        'I understand that if they list on GrowthFountain, I\'ll receive $500!' +
+        SPECIAL_SYMBOLS.NEW_LINE + SPECIAL_SYMBOLS.NEW_LINE +
+        'Come take a look: https://growthfountain.com/pg/heartland-tour',
     });
   }
 
   rsvpToAttendInPersonEmail(place) {
     return this._buildMailToLink({
+      to: 'info@growthfountain.com',
       subject: 'I\'m interested in attending one of your events!',
-      body: 'I am primarily interested in the event in ' + place + '. ' +
-        'All events will take place in September in: ' +
-        SPECIAL_SYMBOLS.NEW_LINE +
+      body: 'Please send me details as you finalize the schedule for the Heartland Tour!' + SPECIAL_SYMBOLS.NEW_LINE +
+        'I am primarily interested in the event in ' + place + '. ' + SPECIAL_SYMBOLS.NEW_LINE +
+        'All events will take place in September in: ' + SPECIAL_SYMBOLS.NEW_LINE +
         this.placesList + SPECIAL_SYMBOLS.NEW_LINE + SPECIAL_SYMBOLS.NEW_LINE +
         'GrowthFountain\'s Heartland Tour: https://growthfountain.com/pg/heartland-tour',
     });
