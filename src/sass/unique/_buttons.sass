@@ -102,18 +102,23 @@ $btn-email-hover-bg: rgba(76,212,208, .6)
 			+mt(.2s)
 			color: $btn-primary-color
 			background: $btn-primary-active-bg
+.btn
+	&.btn-primary,
+	&.btn-secondary
+		border: none
+		padding: rem(10) rem(22)
 .btn-lg
-	letter-spacing: rem(1.4)
+	letter-spacing: rem(1.5)
 	font-weight: bold
-	&.btn-primary
+	&.btn-primary,
+	&.btn-secondary
 		border: none
-		padding-top: rem(16)
-		padding-bottom: rem(16)
+		padding: rem(16) rem(32)
 .btn-sm
-	&.btn-primary
+	&.btn-primary,
+	&.btn-secondary
 		border: none
-		padding-top: rem(8)
-		padding-bottom: rem(8)
+		padding: rem(7) rem(10)
 
 .btn-secondary
 	background: $btn-secondary-bg
@@ -163,8 +168,8 @@ $btn-email-hover-bg: rgba(76,212,208, .6)
 	border: none
 	color: $white
 	border-radius: 10px
-	padding-top: 11px
-	padding-bottom: 11px
+	padding-top: 12px
+	padding-bottom: 12px
 	&:hover
 		background: $btn-facebook-hover-bg
 
@@ -173,8 +178,8 @@ $btn-email-hover-bg: rgba(76,212,208, .6)
 	border: none
 	color: $white
 	border-radius: 10px
-	padding-top: 11px
-	padding-bottom: 11px
+	padding-top: 12px
+	padding-bottom: 12px
 	&:hover
 		background: $btn-linkedin-hover-bg
 
@@ -183,8 +188,8 @@ $btn-email-hover-bg: rgba(76,212,208, .6)
 	border: none
 	color: $white
 	border-radius: 10px
-	padding-top: 11px
-	padding-bottom: 11px
+	padding-top: 12px
+	padding-bottom: 12px
 	&:hover
 		background: $btn-google-hover-bg
 
