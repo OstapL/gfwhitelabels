@@ -1,11 +1,8 @@
-const io = require('socket.io-client');
 const channels = ['general'];
-
-let __instance = null;
 
 class Notifications {
 
-  constructor() {
+  constructor(io) {
     _.extend(this, Backbone.Events);
     this.__socket = io(app.config.notificationsServer);
     this.__socket.on('connect', () => {
@@ -15,15 +12,12 @@ class Notifications {
         "numMessagesFromArchive": 0,
       });
     });
-
     this.__attachEvents();
   }
 
   __attachEvents() {
     _.each(channels, (channel) => {
       this.__socket.on(channel, (data) => {
-        console.log(channel);
-        console.log(data);
         if (data === null || typeof data[Symbol.iterator] !== 'function')
           data = [data];
         this.trigger(channel, data);
@@ -37,10 +31,18 @@ class Notifications {
 
 }
 
+let __instance = null;
 
-module.exports = () => {
-  if (!__instance)
-    __instance = new Notifications();
+module.exports = {
+  getInstanceAsync() {
+    return new Promise((resolve, reject) => {
+      if (__instance)
+        return resolve(__instance);
 
-  return __instance;
+      require.ensure(['socket.io-client'], (require) => {
+        __instance = new Notifications(require('socket.io-client'));
+        resolve(__instance);
+      }, 'socket.io_chunk');
+    });
+  }
 };

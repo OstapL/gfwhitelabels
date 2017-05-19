@@ -32,6 +32,17 @@ class InfoProvider {
     }, this.templates[template]);
   }
 
+  _buildMailToLink(email) {
+    let emailString = 'mailto:';
+
+    emailString += '?to=' + (email.to || '');
+    emailString += '&cc=' + (email.cc || '');
+    emailString += '&subject=' + (email.subject || '');
+    emailString += '&body=' + (email.body || '');
+
+    return emailString;
+  }
+
   twitter() {
     throw 'Not implemented';
   }
