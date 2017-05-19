@@ -6,15 +6,6 @@ const SPECIAL_SYMBOLS = {
 
 const listMarker = SPECIAL_SYMBOLS.NEW_LINE + ' ' + SPECIAL_SYMBOLS.BULLET + ' ';
 
-const buildEmailString = (email) => {
-  let emailString = 'mailto:';
-
-  emailString += '?subject=' + (email.subject || '');
-  emailString += '&body=' + (email.body || '');
-
-  return emailString;
-};
-
 const ShareInfoProvider = require('src/directives/social/infoProvider.js');
 
 
@@ -91,7 +82,7 @@ class HeartlandInfoProvider extends ShareInfoProvider {
   }
 
   email() {
-    return buildEmailString({
+    return this._buildMailToLink({
       subject: 'I thought you\'d be interested in GrowthFountain\'s Heartland Tour',
       body: 'Hi! I think you should check out GrowthFountain\'s Heartland Tour. ' +
         'They\'re traveling across country on a quest for exciting companies that need to raise money to grow; ' +
@@ -108,7 +99,7 @@ class HeartlandInfoProvider extends ShareInfoProvider {
   }
 
   nominateYourBusinessEmail() {
-    return buildEmailString({
+    return this._buildMailToLink({
       subject: 'I\'d like to nominate my favorite business for The Heartland Tour',
       body: 'Here is the contact information for the business I\'d like to nominate! ' +
         'I understand that if they list on GrowthFountain, I\'ll receive $500!',
@@ -116,7 +107,7 @@ class HeartlandInfoProvider extends ShareInfoProvider {
   }
 
   rsvpToAttendInPersonEmail(place) {
-    return buildEmailString({
+    return this._buildMailToLink({
       subject: 'I\'m interested in attending one of your events!',
       body: 'I am primarily interested in the event in ' + place + '. ' +
         'All events will take place in September in: ' +
