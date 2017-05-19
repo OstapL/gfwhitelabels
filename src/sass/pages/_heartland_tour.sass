@@ -64,27 +64,36 @@
         transform: translate(-50%, -50%)
         text-align: center
         width: 100%
+        @media only screen and (max-width : 991px)
+          padding: 0
         .one-button
-          min-width: 360px
+          min-width: 470px
           display: inline-block
           margin: 0 40px
-          @media only screen and (max-width : 991px)
-            width: 50%
-            min-width: 45%
-            max-width: 250px
-            margin: 0 10px
+          @media only screen and (max-width : 1200px)
+            min-width: 370px
             .btn
               font-size: 60%
+          @media only screen and (max-width : 991px)
+            width: 50%
+            min-width: 340px
+            max-width: 340px
+            margin: 0 10px
+            .btn
+              font-size: 55%
           @media only screen and (max-width : 767px)
             min-width: 360px
             max-width: 400px
             display: block
             margin: rem(120) auto
-            .btn
-              font-style: 100%!important
           @media only screen and (max-width : 420px)
-            min-width: 280px
+            min-width: 90%
             max-width: 280px
+            .btn
+              font-size: 50%
+          @media only screen and (max-width : 360px)
+            .btn
+              font-size: 42%
 
         .center-logo
           position: absolute
