@@ -4,20 +4,16 @@ const GENERAL = require('consts/general.json');
 
 module.exports = {
   routes: {
-    ':id/invest-thanks': 'investmentThankYou',
+    ':name/:investmentId/invest-thanks': 'investmentThankYou',
     'companies': 'list',
     ':name': 'detail',
     ':name/invest': 'investment',
   },
   methods: {
-    investmentThankYou(id) {
+    investmentThankYou(companyName, investmentId) {
       require.ensure([], () => {
-        //TODO: move this to common code
-        if (!app.user.ensureLoggedIn(window.location.pathname))
-          return false;
-
-        api.makeRequest(app.config.investmentServer + '/' + id).done((data) => {
-          data.id = id;
+        api.makeRequest(app.config.investmentServer + '/' + investmentId).done((data) => {
+          data.id = investmentId;
           const View = require('./views.js');
           let i = new View.investmentThankYou({
             model: new app.models.Company(data),
@@ -25,7 +21,7 @@ module.exports = {
           i.render();
           app.hideLoading();
         });
-      });
+      }, 'campaign_chunk');
     },
 
     list() {
@@ -46,18 +42,22 @@ module.exports = {
           i.render();
           app.hideLoading();
         });
-        const meta = '<meta name="keywords" ' +
-          'content="local investing equity crowdfunding GrowthFountain is focused ' +
-          'on local investing. Find the perfect fit for your investment with our equity ' +
-          'crowdfunding setup by clicking here."></meta>';
-        $(document.head).append(meta);
-      });
+
+        app.setMeta({
+          name: 'keywords',
+          content: 'local investing equity crowdfunding GrowthFountain is focused ' +
+            'on local investing. Find the perfect fit for your investment with our equity ' +
+            'crowdfunding setup by clicking here.'
+        });
+
+      }, 'campaign_chunk');
     },
 
     detail(name) {
+      app.showLoading();
+
       require.ensure([], () => {
         const View = require('./views.js');
-
         $.when(
           api.makeCacheRequest(app.config.raiseCapitalServer + '/company', 'OPTIONS'),
           api.makeCacheRequest(app.config.raiseCapitalServer + '/' + name)
@@ -66,47 +66,32 @@ module.exports = {
             model: new app.models.Company(companyData[0], companyFields[0]),
           });
           i.render();
-          if (location.hash && $(location.hash).length) {
-            setTimeout(() => {
-              $(location.hash).scrollTo(65);
-            }, 300);
-          } else {
-            $('body').scrollTo();
-          }
-
-          app.hideLoading();
+          $('body').scrollTo();
         });
-      });
+      }, 'campaign_chunk');
     },
 
     investment(name) {
       require.ensure([], () => {
-        if (!app.user.ensureLoggedIn(window.location.pathname))
-          return false;
+        const View = require('./views.js');
+        let investmentR = api.makeCacheRequest(app.config.investmentServer + '/', 'OPTIONS');
+        let companyR = api.makeCacheRequest(app.config.raiseCapitalServer + '/' + name);
 
-        if (!app.user.is_anonymous()) {
-          const View = require('./views.js');
-          let investmentR = api.makeCacheRequest(app.config.investmentServer + '/', 'OPTIONS');
-          let companyR = api.makeCacheRequest(app.config.raiseCapitalServer + '/' + name);
+        // TODO
+        // Do we really need this ?
+        let userR = api.makeCacheRequest(app.config.authServer + '/rest-auth/data');
 
-          // TODO
-          // Do we really need this ?
-          let userR = api.makeCacheRequest(app.config.authServer + '/rest-auth/data');
-
-          $.when(investmentR, companyR, userR).done((investmentMeta, companyData, userData) => {
-            Object.assign(app.user.data, userData[0]);
-            const i = new View.investment({
-              model: new app.models.Company(companyData[0], investmentMeta[0].fields),
-              user: userData[0],
-              fields: investmentMeta[0].fields,
-            });
-            i.render();
-            $('body').scrollTo();
-            app.hideLoading();
+        $.when(investmentR, companyR, userR).done((investmentMeta, companyData, userData) => {
+          Object.assign(app.user.data, userData[0]);
+          const i = new View.investment({
+            model: new app.models.Company(companyData[0], investmentMeta[0].fields),
+            user: userData[0],
+            fields: investmentMeta[0].fields,
           });
-        } else {
-          app.routers.navigate('/account/login', { trigger: true, replace: true });
-        }
+          i.render();
+          $('body').scrollTo();
+          app.hideLoading();
+        });
 
         //TODO: fixme
         // if (!window.pdfMake) {
@@ -117,7 +102,9 @@ module.exports = {
         //     $('head').append(script);
         //   });
         // }
-      });
+      }, 'campaign_chunk');
     },
   },
+
+  auth: ['investment', 'investmentThankYou']
 };

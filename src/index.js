@@ -1,6 +1,6 @@
 require('src/sass/mixins_all.sass');
 require('babel-polyfill');
-require('jquery-serializejson/jquery.serializejson.min.js');
+require('jquery-serializejson');
 require('js/html5-dataset.js');
 require('classlist-polyfill');
 
@@ -11,7 +11,7 @@ require('classlist-polyfill');
 // }
 
 require('bootstrap/dist/js/bootstrap.js');
-require('owl.carousel/dist/owl.carousel.min.js');
+require('owl.carousel');
 
 (function () {
   if ( typeof NodeList.prototype.forEach === "function" ) return false;
@@ -28,6 +28,7 @@ function scrollLogoHandler() {
   }
 }
 
+//TODO: move this to separate view
 function scrollMenuItemsHandler() {
   let lastId = '';
   let topMenu = $(".pages-left-menu");
@@ -144,20 +145,23 @@ $(document).ready(function () {
 // Money field auto correction
   $('body').on('keyup', '[type="money"]', function (e) {
 
-    if(e.keyCode == 37 || e.keyCode == 39) {
+    if(e.keyCode == 37 || e.keyCode == 39 || e.keyCode == 190 || e.keyCode == 188 || e.keyCode == 91) {
       return;
     }
 
     var valStr = e.target.value.replace(/[\$\,]/g, '');
-    var val = parseInt(valStr);
+    var val = parseFloat(valStr);
     if (val) {
+      var selStart = e.target.selectionStart;
+      var selEnd = e.target.selectionEnd;
       e.target.value = '$' + val.toLocaleString('en-US');
+      e.target.setSelectionRange(selStart, selEnd);
     }
   });
 
   $('body').on('focus', '[type="money"]', function (e) {
     var valStr = e.target.value.replace(/[\$\,]/g, '');
-    var val = parseInt(valStr);
+    var val = parseFloat(valStr);
     if (val == 0 || val == NaN) {
       e.target.value = '';
     }
@@ -334,10 +338,16 @@ Backbone.View.prototype.assignLabels = function () {
 Backbone.View.prototype.checkForm = function () {
   if (app.getParams().check == '1') {
     if (!app.validation.validate(this.fields, this.model, this)) {
-      _(app.validation.errors).each((errors, key) => {
-        app.validation.invalidMsg(this, key, errors);
+      Object.keys(app.validation.errors).forEach((key) => {
+        let errors = app.validation.errors[key];
+        if (this.el.querySelector('#' + key)) {
+          app.validation.invalidMsg(this, key, errors);
+        }
       });
-      this.$('.help-block').prev().scrollTo(5);
+
+      if(this.el.querySelector('.help-block') != null) {
+        this.$('.help-block').prev().scrollTo(5);
+      }
     }
   }
 };

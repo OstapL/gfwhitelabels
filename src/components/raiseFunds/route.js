@@ -90,12 +90,14 @@ module.exports = {
         const View = require('components/raiseFunds/views.js');
 
         const optionsR = api.makeCacheRequest(app.config.raiseCapitalServer + '/company', 'OPTIONS');
-        const meta = '<meta name="keywords" content="local investing equity crowdfunding Get to ' +
-          'work and secure funding with our equity crowdfunding platform. Harness the power of ' +
-          'local investing to secure the capital you need by getting started."></meta>';
-        $(document.head).append(meta);
+        app.setMeta({
+          name: 'keywords',
+          content: 'local investing equity crowdfunding Get to ' +
+            'work and secure funding with our equity crowdfunding platform. Harness the power of ' +
+            'local investing to secure the capital you need by getting started.',
+        });
         getOCCF(optionsR, 'company', {}, View);
-      });
+      }, 'raise_funds_chunk');
     },
 
     generalInformation(id) {
@@ -105,7 +107,7 @@ module.exports = {
         const optionsUrl = app.config.raiseCapitalServer + '/campaign';
         const optionsR = api.makeCacheRequest(optionsUrl, 'OPTIONS');
         getOCCF(optionsR, 'generalInformation', {}, View);
-      });
+      }, 'raise_funds_chunk');
     },
 
     media(id) {
@@ -115,7 +117,7 @@ module.exports = {
         const optionsUrl = app.config.raiseCapitalServer + '/campaign';
         const optionsR = api.makeCacheRequest(optionsUrl, 'OPTIONS');
         getOCCF(optionsR, 'media', {}, View);
-      });
+      }, 'raise_funds_chunk');
     },
 
     teamMembers1(id) {
@@ -124,7 +126,7 @@ module.exports = {
         const optionsUrl = app.config.raiseCapitalServer + '/campaign';
         const optionsR = api.makeCacheRequest(optionsUrl, 'OPTIONS');
         getOCCF(optionsR, 'teamMembers', {}, View);
-      });
+      }, 'raise_funds_chunk');
     },
 
     teamMembersAdd1(id, type, index) {
@@ -137,7 +139,7 @@ module.exports = {
           type: type,
           index: index,
         }, View);
-      });
+      }, 'raise_funds_chunk');
     },
 
     specifics(id) {
@@ -147,7 +149,7 @@ module.exports = {
         const optionsUrl = app.config.raiseCapitalServer + '/campaign';
         const optionsR = api.makeCacheRequest(optionsUrl, 'OPTIONS');
         getOCCF(optionsR, 'specifics', {}, View);
-      });
+      }, 'raise_funds_chunk');
     },
 
     perks(id) {
@@ -157,7 +159,7 @@ module.exports = {
         const optionsUrl = app.config.raiseCapitalServer + '/campaign';
         const optionsR = api.makeCacheRequest(optionsUrl, 'OPTIONS');
         getOCCF(optionsR, 'perks', {}, View);
-      });
+      }, 'raise_funds_chunk');
     },
 
     inReview() {
@@ -189,7 +191,7 @@ module.exports = {
         };
 
         getOCCF('', view);
-      });
+      }, 'raise_funds_chunk');
     },
   },
   auth: [

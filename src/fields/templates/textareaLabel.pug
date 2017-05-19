@@ -1,0 +1,22 @@
+-
+  var cssClass = 'form-group '  +
+    (row == 0 ? ' ' : 'row ') +
+    (id || name) +
+    (required == true ? ' required ' : ' ') +
+    type;
+div(class=cssClass)
+  label(class=class1 for=id)!= label
+  div(class=class2)
+      textarea(
+          id=id || name
+          name=name || name
+          placeholder=placeholder ? placeholder :label
+          type=type ? type : 'textarea'
+          class=(help_text ? 'showPopover' : '')
+          data-content=(help_text ?help_text : '')
+          readonly=(readonly ?readonly : false)
+          value=value
+          maxlength = maxlength ? maxlength : false
+          disabled=(disabled ? disabled : false)
+          data-value-type=(valueType ? valueType : type)
+        ).form-control #{ value }

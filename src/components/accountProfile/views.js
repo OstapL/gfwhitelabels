@@ -21,7 +21,6 @@ module.exports = {
       // 'change input[name=accredited_investor]': 'changeAccreditedInvestor',
     },
     app.helpers.phone.events,
-    app.helpers.dropzone.events,
     app.helpers.yesNo.events,
     app.helpers.social.events,
     ),
@@ -336,7 +335,6 @@ module.exports = {
 
   },
     app.helpers.phone.methods,
-    app.helpers.dropzone.methods,
     app.helpers.yesNo.methods,
     app.helpers.social.methods,
   )),
@@ -645,22 +643,10 @@ module.exports = {
 
       this.initComments();
 
-      try {
+      require.ensure(['src/js/graph/graph.js', 'src/js/graph_data.js'], () => {
         require('src/js/graph/graph.js');
         require('src/js/graph_data.js');
-
-        // let script = document.createElement('script');
-        // script.type = 'text/javascript';
-        // script.src = '/js/graph/graph.js';
-        // $(document.head).append(script);
-        //
-        // script = document.createElement('script');
-        // script.type = 'text/javascript';
-        // script.src = '/js/graph_data.js';
-        // $(document.head).append(script);
-      } catch (err) {
-        console.log(err);
-      }
+      }, 'graph_chunk');
 
       return this;
     },

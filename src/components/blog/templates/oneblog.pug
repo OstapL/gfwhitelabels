@@ -1,0 +1,200 @@
+- pug_html += app.breadcrumbs('Blog', '', [ ['Home', '/'], ['Blog', ''], ]);
+
+section.text_block  
+    .container
+        .row
+            .col-lg-3 
+                .page_title.border-bottom.mb25
+                    h4.text-uppercase.dosis CATEGORIES
+                ul.list-unstyled.mb50.custom
+                    li
+                        a.d-inline-block.w-100.pb10(href='') Branding
+                    li
+                        a.d-inline-block.w-100.pb10(href='') Business
+                    li
+                        a.d-inline-block.w-100.pb10(href='') Design
+                    li
+                        a.d-inline-block.w-100.pb10(href='') Development
+                    li
+                        // у последнего елемента <a> клас pb10 отстутствует
+                        a.d-inline-block.w-100(href='') Other
+
+                .page_title.border-bottom.mb25
+                    h4.text-uppercase.dosis LATEST POSTS
+                ul.list-unstyled.mb50.list-blog-aside.list-blog
+                    li
+                        a.d-inline-block.w-100.pb10(href='')
+                            img(src=require('images/pages/bas1.png') alt="").pull-md-left
+                            p.title Crowdfunding Regulation
+                            .blog-info
+                                span.author John Doe 
+                                span.date-blog 10 December
+
+                    li
+                        a.d-inline-block.w-100.pb10(href='' alt="")
+                            img(src=require('images/pages/bas1.png')).pull-md-left
+                            p.title Crowdfunding Regulation
+                            .blog-info
+                                span.author John Doe 
+                                span.date-blog 10 December
+
+                    li
+                        // у последнего елемента <a> клас pb10 отстутствует
+                        a.d-inline-block.w-100(href='' alt="")
+                            img(src=require('images/pages/bas1.png')).pull-md-left
+                            p.title Crowdfunding Regulation
+                            .blog-info
+                                span.author John Doe 
+                                span.date-blog 10 December
+
+
+                .page_title.border-bottom.mb25
+                    h4.text-uppercase.dosis ARCHIVES
+                ul.list-unstyled.mb50.list-blog-aside
+                    li
+                        a.d-inline-block.w-100.pb10(href='') July 2016
+
+                    li
+                        a.d-inline-block.w-100.pb10(href='' alt="") June 2016
+
+                    li
+                        // у последнего елемента <a> клас pb10 отстутствует
+                        a.d-inline-block.w-100(href='' alt="") May 2016 
+
+
+            .col-lg-9.single-blog
+                article
+                    .row
+                        .col-lg-12.text-xs-center.mb50
+                            h2.text-uppercase.dosis.m0.title-blog HERE IS THE HEADLINE FOR YOUR BLOG POST
+
+                    .row
+                        .col-lg-12
+                            .blog-img
+                                img(src=require('images/pages/bt1.png')).img-fluid
+
+                            .blog-text
+                                p
+                                    | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris non laoreet dui. Morbi lacus massa, euismod ut turpis molestie, tristique sodales est. Integer sit amet mi id sapien tempor molestie in nec massa.
+
+                                p
+                                    | Fusce non ante sed lorem rutrum feugiat. Vestibulum pellentesque, purus ut dignissim consectetur, nulla erat ultrices purus, ut consequat sem elit non sem. Morbi lacus massa, euismod ut turpis molestie, tristique sodales est. Integer sit amet mi id sapien tempor molestie in nec massa. Fusce non ante sed lorem rutrum feugiat.
+
+                                p
+                                    | Praesent ultricies ut ipsum non laoreet. Nunc ac ultricies leo. Nulla ac ultrices arcu. Nullam adipiscing lacus in consectetur posuere. Nunc malesuada tellus turpis, ac pretium orci molestie vel. Morbi lacus massa, euismod ut turpis molestie, tristique sodales est. Integer sit amet mi id sapien tempor molestie in nec massa. Fusce non ante sed lorem rutrum feugiat.
+
+                                ol
+                                    li First item of the list
+                                    li Second item of the list
+                                    li Third item of the list
+
+                                p
+                                    | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris non laoreet dui. <a href="#">Morbi lacus massa</a>, euismod ut turpis molestie, tristique sodales est. Integer sit amet mi id sapien tempor molestie in nec massa. Fusce non ante sed lorem rutrum feugiat. Vestibulum pellentesque, purus ut dignissim consectetur, nulla erat ultrices purus, ut consequat sem elit non sem.
+
+                            .blog-info.mt25
+                                ul.list-inline.list-unstyled.m0
+                                    li.text-muted
+                                        i.fa.fa-calendar
+                                        span.letter-spacing-2 DECEMBER 10, 2016
+
+                                    li.text-muted
+                                        i.fa.fa-user
+                                        span.letter-spacing-2 MARIA KR. 
+
+                                    li.text-muted
+                                        i.fa.fa-folder-open
+                                        span.letter-spacing-2 POSTED: IN BRENDING
+
+                // comments
+                .comments.blog-comments.row
+
+                    .col-lg-12.p-l-0
+                        h3.m0 Comments (2)
+
+                    .col-lg-12.p-r-0.p-l-0
+                        .hr
+                        .col-lg-1
+                            img(src=require('images/pages/cam1.png') alt="").img-circle
+                        .col-lg-11
+                            .comments-wrap
+                                span.name-comments.text-uppercase maria kravchuk
+
+                                span.date-comments.pull-right 2 Days Ago
+                                p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua?
+                                .responce
+                                    li.text-muted
+                                        a(href="").link-1 1 
+                                        i.fa.fa-angle-up  
+                                        span |
+                                    li.text-muted
+                                        a(href="").link-1 Responce 
+                                        span |
+                                    li.text-muted
+                                        a(href="").link-1
+                                        i.fa.fa-thumbs-up
+                    .col-lg-11.offset-lg-1.pt30.p-r-0.p-l-0
+                        .col-lg-1
+                            img(src=require('images/pages/cam2.png') alt="").img-circle
+                        .col-lg-11
+                            .comments-wrap
+                                span.name-comments.text-uppercase maria kravchuk
+                                span.kvalificatio-comments.text-uppercase CEO
+                                span.date-comments.pull-right 2 Days Ago
+                                p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua?
+                                .responce
+                                    li.text-muted
+                                        a(href="").link-1 0 
+                                        i.fa.fa-angle-down  
+                                        span |
+                                    li.text-muted
+                                        a(href="").link-1 Responce 
+                                        span |
+                                    li.text-muted
+                                        a(href="").link-1
+                                        i.fa.fa-thumbs-up
+
+
+                    .col-lg-12.p-r-0.p-l-0.mt50
+                        h3.m0 Leave a Comment
+                        .hr
+
+                        form(method="post" action="").form
+                            .form-body
+                                .form-group.row.comment_text.required
+                                    .col-lg-8
+                                        textarea(name="first_name" placeholder="Type your comment here..." value="")#comment_text.form-control
+
+                                    
+                                    .col-lg-4
+                                        .controls  
+                                            button(
+                                                type="submit"
+                                            ).btn.btn-primary.pull-right.text-uppercase Submit comment 
+
+                        .mt25
+                            nav
+                                ul.pagination.pagination-lg
+                                    li.page-item.active.pull-xs-left
+                                        a(href="#").page-link.text-uppercase.letter-spacing-2
+                                            i.fa.fa-angle-left &nbsp;&nbsp;
+                                            | Prev post
+                                    li.page-item.pull-xs-right
+                                        a(href="#").page-link.text-uppercase.letter-spacing-2
+                                            | Next post &nbsp;&nbsp;
+                                            i.fa.fa-angle-right
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

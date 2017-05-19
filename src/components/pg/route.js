@@ -5,7 +5,6 @@ const templateMap = {
   'success-guide': 'success_guide',
   'terms-of-use': 'terms_of_use',
   'privacy-policy': 'privacy_policy',
-  'annual-privacy': 'annual_privacy',
   'electronic-signature': 'electronic_signature',
 };
 
@@ -15,15 +14,17 @@ module.exports = {
     'pg/:name': 'pagePG',
   },
   methods: {
-    mainPage(id) {
-      require.ensure([], () => {
-        const template = require('templates/mainPage.pug');
+    mainPage() {
+      require.ensure([], (require) => {
+        const template = require('src/templates/mainPage.pug');
 
-        //TODO: it looks like repeated snippet
-        const meta = '<meta name="keywords" content="local investing equity crowdfunding ' +
-          'GrowthFountain is changing equity crowdfunding for small businesses. Focused on ' +
-          'local investing, they give a whole new meaning to finding investment."></meta>';
-        $(document.head).append(meta);
+        app.setMeta({
+          name: 'keywords',
+          content: 'local investing equity crowdfunding ' +
+            'GrowthFountain is changing equity crowdfunding for small businesses. Focused on ' +
+            'local investing, they give a whole new meaning to finding investment.',
+        });
+
         api.makeCacheRequest(app.config.raiseCapitalServer + '?limit=6').then((data) => {
           let dataClass = [];
           data.data.forEach((el) => {
@@ -136,31 +137,32 @@ module.exports = {
           $('body').scrollTo();
           app.hideLoading();
         });
-      });
+      }, 'main_page_chunk');
     },
 
     pagePG: function (name) {
 
-      require.ensure([], () => {
+      require.ensure([], (require) => {
         //TODO: move this to common router ensure logged in
         if ((name == 'success-guide' || name == 'advertising') &&
           !app.user.ensureLoggedIn(window.location.pathname)) {
           return false;
         }
 
-        if (window.location.pathname == '/pg/faq') {
-          const meta = '<meta name="keywords" content="local investing equity crowdfunding Have a ' +
-            'question about local investing? Interested in equity crowdfunding but unsure how it ' +
-            'works? Then visit our FAQ page to learn more."></meta>';
-          $(document.head).append(meta);
-        } else {
-          const meta = '<meta name="keywords" content="local investing equity crowdfunding ' +
-            'GrowthFountain is changing equity crowdfunding for small businesses. Focused on local ' +
-            'investing, they give a whole new meaning to finding investment."></meta>';
-          $(document.head).append(meta);
-        }
+          const metaContent = window.location.pathname == '/pg/faq'
+            ? 'local investing equity crowdfunding Have a ' +
+              'question about local investing? Interested in equity crowdfunding but unsure how it ' +
+              'works? Then visit our FAQ page to learn more.'
+            : 'local investing equity crowdfunding ' +
+              'GrowthFountain is changing equity crowdfunding for small businesses. Focused on local ' +
+              'investing, they give a whole new meaning to finding investment.';
 
-        let view = require('templates/' + (templateMap[name] || name) + '.pug');
+          app.setMeta({
+              name: 'keywords',
+              content: metaContent,
+          });
+
+        let view = require('./templates/' + (templateMap[name] || name) + '.pug');
 
         app.addClassesTo('#page', [name]);
 
@@ -255,7 +257,7 @@ module.exports = {
 
           $elem.toggleClass('active');
         });
-      });
+      }, 'pg_chunk');
     },
   },
 };

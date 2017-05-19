@@ -1,0 +1,25 @@
+-
+  var cssClass = 'form-group '  +
+    (attr.row == 0 ? ' ' : 'row ') +
+    (attr.id || name) +
+    (attr.required == true ? ' required ' : ' ') +
+    attr.type;
+
+- var type = attr.type ? attr.type : 'text';
+
+div(class=cssClass)
+  label(class=attr.class1 for=attr.id)!= attr.label
+  div(class=attr.class2)
+    input(
+    id=attr.id || name
+    name=attr.name || name
+    placeholder=attr.placeholder ? attr.placeholder :attr.label
+    type=attr.type || 'text'
+    class=(attr.help_text ? 'showPopover' : '')
+    data-content=(attr.help_text ? attr.help_text : '')
+    readonly=(attr.readonly || false)
+    value=attr.value
+    maxlength = attr.maxlength ? attr.maxlength : false
+    disabled=(attr.disabled || false)
+    data-value-type=(attr.valueType ? attr.valueType : type)
+    ).form-control
