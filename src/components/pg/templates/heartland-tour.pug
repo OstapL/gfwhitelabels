@@ -4,6 +4,42 @@
   var infoProvider = new HeartlandInfoProvider();
   var directiveKey = 'heartland-tour';
 
+mixin renderPlaces(places)
+  div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#heartland-tour-modal.modal.fade
+    div(role="document").modal-dialog
+      .modal-content
+        .modal-header
+          button(type="button" data-dismiss="modal" aria-label="Close").close
+            span(aria-hidden="true")
+              i.fa.fa-times
+          h2.text-uppercase.text-xs-center PLEASE CHOOSE YOUR
+            br
+            | LOCATION OF INTEREST
+        .modal-body
+          .container
+            .row.m-b-2
+              .col-xl-10.offset-xl-1.p-x-0
+                .col-xl-6
+                  ul
+                    each place, idx in places
+                      li
+                        a(href=infoProvider.rsvpToAttendInPersonEmail(place)).link-3
+                          i.fa.fa-map-marker
+                          | #{ place }
+                      if idx >= 4
+                        - break;
+                .col-xl-6
+                  ul
+                    each place, idx in places
+                      if (idx <= 4)
+                        - continue;
+                      li
+                        a(href=infoProvider.rsvpToAttendInPersonEmail(place)).link-3
+                          i.fa.fa-map-marker
+                          | #{ place }
+          .modal-footer.m-b-2
+
+
 section.heartland-tour
   section.height-block-banner.scroll-paralax.no-paralax-mobile.m-t-0.top-baner
     - var styleString = 'background: url(' + require('img/heartland-tour.jpg') + ')';
@@ -35,40 +71,58 @@ section.heartland-tour
             .circle.blue-circle
             | The investors – both at the event and viewing remotely, can invest in real time through their devices
   .map-apply
-    .container
-      .row
-        .col-xl-12.block-links
-          .col-xl-4.offset-xl-1.col-lg-5.offset-lg-0.col-md-12.col-xs-12.text-xs-center.p-r-0
-            a(href=infoProvider.nominateEmail()).btn.btn-block nominate your favorite business!
-          .col-xl-2.col-lg-2.wrap-logo.col-xs-12
-            .center-logo
-              img(src=require("img/gf_icon.png") alt="")
-          .col-xl-4.col-lg-5.col-md-12.col-xs-12.text-xs-center.p-l-0
-            a(href="mailto:info@growthfountain.com?subject=I’m interested in attending one of your events!&body=Please send me details as you finalize the schedule for The Heartland Tour!").btn.btn-block RSVP to attend in person!
+    section.bgi-button-section
+      .background
+        .center-wrap.container.small-button
+          .one-button
+            a(href=infoProvider.nominateYourBusinessEmail()).btn.btn-block.btn-secondary nominate your favorite business and earn $500!
+          .center-logo
+            img(src=require("img/gf_icon.png") alt="")
+          .one-button
+            a(href="#heartland-tour-modal" data-toggle="modal" data-target="#heartland-tour-modal").btn.btn-block.btn-secondary RSVP to attend in person!
           
-            
-      .row
-        .col-xl-8.offset-xl-2
+    .container
+      .row.all-map
+        .col-xl-8.col-lg-8
           .map-center
-            img(src=require("img/USA5.png") alt="")
+            .bgi-xs
+              img(src=require("img/hearlend-map-bgi-mob.npg.png") alt="")
+            video(poster=require("images/hearlend-map-bgi.jpg") id="bgvid" playsinline autoplay muted loop)
+              source(src=require("images/video/cover-video.mp4"))
             .text-wrap
-              h2.m-b-1.m-t-0 We’re finalizing our schedule.
-              h1.text-uppercase Apply today and we’ll fly you
+              h1.text-uppercase APPLY TODAY TO PARTICIPATE
                 br
-                | to one of our great events!*
-        .col-xl-8.offset-xl-2
-          p.small.m-b-1.text-xs-left *Companies interested in participate must have a completed campaign and Form C. Call us with any questions: 646-759-8229.
+                | IN ONE OF OUR GREAT EVENTS!*
+          p.small.m-b-1.text-xs-center *Companies interested in participated must have a completed campaign and Form C.
             br
-            | One presenter or more per location may receive an honorarium to cover travel expenses, up to $1,000.
+            | Call us with any questions: 646-759-8228.  Schedule subject to change.
+        .col-xl-4.col-lg-4.city
+          ul
+            each place in infoProvider.places
+              - placeParts = place.split(',');
+              li
+                i.fa.fa-map-marker
+                h3
+                  strong= placeParts[0]
+                    | ,
+                  .grey= placeParts[1]
+          h4.text-uppercase.m-t-2.m-b-2 All events will take place in
+          .calendar
+            i.fa.fa-calendar
+            h4.text-uppercase September
+          p.m-t-2
+            i We’re finalizing dates!
+
+          
       .row
         .col-xl-12
-          h2.font-weight-light.m-t-2.m-b-0.text-xs-center Share the Heartland Tour!
+          h2.font-weight-light.m-t-3.m-b-0.text-xs-center Share the Heartland Tour!
           .share.text-xs-center
             | !{ socialDirective.render(directiveKey, infoProvider) }
   .sities
     section.height-block-banner.scroll-paralax.no-paralax-mobile.sities-section
       - var styleString = 'background: url(' + require('img/cities.png') + ')';
-      div(style=styleString + '; height:440px').background
+      div(style=styleString + '; height:480px').background
       .center-wrap.container
         .row
           .col-xl-12
@@ -76,5 +130,5 @@ section.heartland-tour
             h1.text-uppercase Join GrowthFountain’s Heartland Tour
           .col-lg-12
             a(href="/company/create").btn.btn-lg.btn-primary.m-t-2 apply now!
-
++renderPlaces(infoProvider.places)
 
