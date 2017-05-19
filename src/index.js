@@ -283,6 +283,16 @@ $(document).ready(function () {
     $('.modal-open').removeClass('modal-open');
 
     if (app.cache.hasOwnProperty(url) == false) {
+      //fix for comments
+      //when content is scrolled to one comment there user should be available scroll to other comment via direct link
+      if (url.indexOf('#comment') >= 0) {
+        const hashIdx = url.indexOf('#');
+        const randomQueryIdx = url.indexOf('?r=');
+        const r = ('?r=' + Math.random());
+        url = (randomQueryIdx >= 0)
+          ? url.substring(0, randomQueryIdx) + r + url.substring(hashIdx)
+          : url.substring(0, hashIdx) + r + url.substring(hashIdx);
+      }
       app.routers.navigate(
         url, {trigger: true, replace: false}
       );
