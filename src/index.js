@@ -149,13 +149,26 @@ $(document).ready(function () {
       return;
     }
 
+    var addPosition = 0;
     var valStr = e.target.value.replace(/[\$\,]/g, '');
+
+
     var val = parseFloat(valStr);
     if (val) {
-      var selStart = e.target.selectionStart;
-      var selEnd = e.target.selectionEnd;
+      let selStart = e.target.selectionStart;
+      let selEnd = e.target.selectionEnd;
+      let selectionVal = e.target.value.substring(0, selEnd);
+
       e.target.value = '$' + val.toLocaleString('en-US');
-      e.target.setSelectionRange(selStart, selEnd);
+      let currentVal = e.target.value.substring(0, selEnd);
+
+      if (currentVal !== selectionVal) {
+        addPosition = (currentVal.match(/,/g) || []).length - (selectionVal.match(/,/g) || []).length;
+      }
+      console.log(valStr.length, e.target.value.length, addPosition, e.target.selectionStart, e.target.selectionEnd);
+
+      // debugger;
+      e.target.setSelectionRange(selStart + addPosition, selEnd + addPosition);
     }
   });
 
