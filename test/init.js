@@ -28,6 +28,8 @@ global.window = new jsdom.JSDOM('<body><div id="content"></div></body>', {
 global.document = global.window.document;
 global.window.localStorage = global.localStorage;
 global.navigator = {userAgent: 'node.js'};
+global._ = require('underscore');
+global.Backbone = require('backbone');
 
 require('../src/app.js');
 global.require = require;
