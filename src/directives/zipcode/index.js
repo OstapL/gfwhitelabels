@@ -24,15 +24,9 @@ class GeoCoder {
     //   this.template = require('./templates/non_usa.pug');
     // }
     this.resultHtml = '';
-    // fix me
-    // as script loads async we can add multiple google api scripts
-    if(!window.google || !window.google.maps) {
-      let p = document.createElement("script");
-      p.type = "text/javascript";
-      p.src = window.location.protocol + "//maps.google.com/maps/api/js?language=en&key=" + app.config.googleMapKey;
-      $("head").append(p);
-    }
+    app.helpers.scripts.loadGoogleMapsAPI().then(() => {
 
+    });
     return this;
   }
 
@@ -74,40 +68,37 @@ class GeoCoder {
       return;
     }
 
-    if (!google || !google.maps) {
-      console.debug('google maps API is not available.');
-      return;
-    }
+    app.helpers.scripts.loadGoogleMapsAPI().then(() => {
+      let geocoder = new google.maps.Geocoder();
 
-    let geocoder = new google.maps.Geocoder();
+      let country = this.__getCountry(e);
+      let address = zip + (country ? (', ' + country) : '');
 
-    let country = this.__getCountry(e);
-    let address = zip + (country ? (', ' + country) : '');
+      geocoder.geocode({ 'address': address }, (results, status) => {
+        if (status != google.maps.GeocoderStatus.OK) {
+          console.debug('Failed to get state by zip code');
+          return;
+        }
 
-    geocoder.geocode({ 'address': address }, (results, status) => {
-      if (status != google.maps.GeocoderStatus.OK) {
-        console.debug('Failed to get state by zip code');
-        return;
-      }
+        if (!results || results.length < 1) {
+          console.log('Geocoder results shorter than expected');
+          return;
+        }
 
-      if (!results || results.length < 1) {
-        console.log('Geocoder results shorter than expected');
-        return;
-      }
+        let strs = results[0].formatted_address.split(", ");
+        let city = strs[0];
+        let state = strs[1].substr(0, 2);
 
-      let strs = results[0].formatted_address.split(", ");
-      let city = strs[0];
-      let state = strs[1].substr(0, 2);
+        // Use overlord
+        let cityStateElem = document.querySelector('.js-city-state');
+        if (cityStateElem)
+          cityStateElem.innerHTML = city + ', ' + state;
 
-      // Use overlord
-      let cityStateElem = document.querySelector('.js-city-state');
-      if (cityStateElem)
-        cityStateElem.innerHTML = city + ', ' + state;
-
-      // this.view.model.city = city;
-      // this.view.model.state = state;
-      document.querySelector('#city').value = city;
-      document.querySelector('#state').value = state;
+        // this.view.model.city = city;
+        // this.view.model.state = state;
+        document.querySelector('#city').value = city;
+        document.querySelector('#state').value = state;
+      });
     });
   }
 
