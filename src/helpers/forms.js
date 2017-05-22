@@ -319,11 +319,17 @@ module.exports = {
             if(Object.keys(el).length == emptyValues) {
               delete data[key][i];
               if(Object.keys(data[key]).length == 0) {
+                // Why do we doing this? Issue 417, impossible to delete press in campaign geleral
+                /*
                 if(this.model[key]) {
                   data[key] = this.model[key];
                 } else {
                   delete data[key];
                 }
+                */
+                // fix for 417
+                // this.model[key] = [];
+                data[key] = [];
               }
             };
           });

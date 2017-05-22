@@ -422,19 +422,66 @@ module.exports = {
       app.helpers.disableEnter.disableEnter.call(this);
       this.checkForm();
       this.model.updateMenu(this.model.calcProgress(this.model));
-
+      setTimeout(this._initVimeoVideoThumbnails.bind(this), 100);
       return this;
     },
 
     updateVideo(e) {
       appendHttpIfNecessary(e, true);
 
-      let $videoContainer = $(e.target).closest('.video-container');
+      const $videoContainer = $(e.target).closest('.video-container');
+      const img = $videoContainer.find('img')[0];
 
-      var videoInfo = app.getVideoId(e.target.value);
-      var src = app.getVideoUrl(videoInfo);
+      if (!e.target.value) {
+        img.src = require('images/default/255x153.png');
+        return;
+      }
 
-      $videoContainer.find('iframe').attr('src', src);
+      const videoInfo = app.getVideoInfo(e.target.value);
+      if (!videoInfo) {
+        return;
+      }
+
+      if (videoInfo.provider === 'youtube')
+        this._updateYoutubeThumbnail(img, videoInfo.id);
+      else if (videoInfo.provider === 'vimeo')
+        this._updateVimeoThumbnail(img, videoInfo.id);
+    },
+
+    _updateYoutubeThumbnail(img, videoID) {
+      img.src = videoID
+        ? '//img.youtube.com/vi/' + videoID + '/0.jpg'
+        : require('images/default/255x153.png');
+    },
+
+    _updateVimeoThumbnail(img, videoID) {
+      if (!videoID) {
+        img.src = require('images/default/255x153.png');
+        return;
+      }
+
+      $.getJSON('//vimeo.com/api/v2/video/' + videoID + '.json').then((response) => {
+        if (!response || !response[0] || !response[0].thumbnail_large) {
+          console.error('Unexpected response format');
+          console.log(response);
+          return;
+        }
+
+        img.src = response[0].thumbnail_large;
+      }).fail((err) => {
+        console.error('Failed to load thumbnail from vimeo');
+        img.src = require('images/default/255x153.png');
+      });
+    },
+
+    _initVimeoVideoThumbnails() {
+      const $images = this.$('img[data-vimeo-id]');
+      if (!$images.length)
+        return;
+
+      $images.each((idx, img) => {
+        this._updateVimeoThumbnail(img, img.dataset.vimeoId);
+      });
     },
 
   }, app.helpers.confirmOnLeave.methods, app.helpers.menu.methods,
@@ -714,6 +761,8 @@ module.exports = {
 
       this.fields.minimum_raise.dependies = ['maximum_raise',];
       this.fields.maximum_raise.dependies = ['minimum_raise',];
+      this.fields.premoney_valuation.dependies = ['security_type',];
+      this.fields.security_type.dependies = ['premoney_valuation',];
       this.fields.price_per_share.type = 'money';
       if(this.model.hasOwnProperty('id')) {
         this.urlRoot = this.urlRoot.replace(':id', this.model.id);
