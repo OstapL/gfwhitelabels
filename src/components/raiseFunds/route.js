@@ -29,7 +29,7 @@ function getOCCF(optionsR, viewName, params = {}, View) {
     ) || {};
     params.campaign = new app.models.Campaign(
       app.user.campaign,
-      params.fields.campaign,
+      params.fields.campaign
     );
     params.formc = new app.models.Formc(app.user.formc);
 
