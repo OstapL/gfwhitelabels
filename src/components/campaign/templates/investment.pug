@@ -145,7 +145,7 @@ mixin confirmStatement(name, attr)
                   td.big-h
                     p.font-weight-bold #{values.campaign.security_type == 0 ? 'Common Equity' : 'Revenue Share'}
                   td.big-h
-                    p.text-uppercase.font-weight-bold #{values.campaign.expiration_date.toLocaleDateString('en-US', {timeZone: 'UTC'})}
+                    p.text-uppercase.font-weight-bold #{ values.campaign.expirationDate.format('MMM DD, YYYY') }
                 tr.grey
                   td
                     p Target
