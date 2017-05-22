@@ -202,7 +202,7 @@ class CropperDropzone {
           '</div>' +
         '</div>' +
         '<div class="row">' +
-          '<div class="col-xl-11 m-t-3 m-b-0 text-xs-right">' +
+          '<div class="col-xl-11 m-t-3 m-b-0 text-xs-center text-sm-center text-md-right text-lg-right text-xl-right">' +
             '<button type="button" class="btn btn-secondary m-r-2 cropper-cancel" data-dismiss="modal">' +
               'Cancel' +
             '</button>' +
