@@ -145,6 +145,12 @@ let sites = [{
 	bucket_name: "growthfountain-alpha-storage",
 	url: "http://growthfountain-alpha-storage.s3-website-us-east-1.amazonaws.com",
 	frontend_bucket: ""
+}, {
+  id: 45,
+  domain: "alpha-infinityfcu.growthfountain.com",
+  name: "alpha-infinityfcu",
+  bucket_name: "growthfountain-alpha-infinityfcu",
+  url: "http://growthfountain-alpha-intinityfcu-storage.s3-website-us-east-1.amazonaws.com",
 }] 
 
 
