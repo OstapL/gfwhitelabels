@@ -1,6 +1,36 @@
 .clear
 	clear: both
-
+.main-top-baner
+	.height-block-banner
+		height: 70vh
+		overflow: hidden
+		&:after
+			background: rgba(17, 17, 17, 0.3);
+		.background
+			position: absolute
+			width: 100%
+			top: -20px
+			height: 105%
+			background-size: cover!important
+			background-position: center
+		h1
+			color: $white
+			margin-bottom: 15px
+			margin-top: 0
+			letter-spacing: normal
+			font-weight: bold
+		.small-text
+			line-height: 26px
+			color: $white
+			letter-spacing: .6px
+			font-size: 24px
+			font-weight: 300
+		.link-6
+			font-size: 15px
+			color: #d7d7d7
+			text-decoration: none
+			&:hover
+				color: $white
 .main_block
 	background: url(../img/bg_img.png)
 	background-repeat: no-repeat
@@ -213,6 +243,9 @@
 		letter-spacing: rem(.45)
 		line-height: rem(24)
 		font-weight: lighter
+	
+	.custom-text
+		color: $monza
 .home-our-partners
 	img
 		width: 255px
