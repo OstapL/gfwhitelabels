@@ -33,6 +33,7 @@ global.Backbone = require('backbone');
 global.Tether = window.Tether = require('tether');
 require('bootstrap');
 require('babel-polyfill');
+global.Node = {ELEMENT_NODE: 1}
 // require('js/html5-dataset.js');
 // require('classlist-polyfill');
 // global.require = require;
