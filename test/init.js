@@ -17,12 +17,15 @@ if (require.extensions) {
 }
 
 const LocalStorage = require('node-localstorage').LocalStorage;
-global.localStorage = new LocalStorage('./test/localStorageTemp');
-
 const jsdom = require('jsdom');
 
-global.document = jsdom.jsdom('<body><div id="content"></div></body>');
-global.window = document.defaultView;
+global.localStorage = new LocalStorage('./test/localStorageTemp');
+
+global.window = new jsdom.JSDOM('<body><div id="content"></div></body>', {
+  url: 'https://alpha.growthfountain.com'
+});
+
+global.document = global.window.document;
 global.window.localStorage = global.localStorage;
 global.navigator = {userAgent: 'node.js'};
 
