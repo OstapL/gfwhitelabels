@@ -62,6 +62,11 @@ module.exports = {
           api.makeCacheRequest(app.config.raiseCapitalServer + '/company', 'OPTIONS'),
           api.makeCacheRequest(app.config.raiseCapitalServer + '/' + name)
         ).done((companyFields, companyData) => {
+
+          document.title = companyData[0].short_name || companyData[0].name;
+          document.head.querySelector('meta[name="description"]').content = companyData[0].tagline + '. ' + companyData[0].description.split('.')[0];
+          // document.head.querySelector('meta[name="keywords"]').content = companyData[0].tagline.replace(/ /g,',');
+
           let i = new View.detail({
             model: new app.models.Company(companyData[0], companyFields[0]),
           });
