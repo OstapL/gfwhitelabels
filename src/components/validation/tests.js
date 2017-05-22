@@ -4,7 +4,7 @@ const should    = chai.should();
 const expect    = chai.expect;
 const rules     = require('./rules.js');
 
-describe('Attribute validation', function () {
+describe('Attribute validation', function () {``
   it('Required', function () {
     let attr = {
       label: 'City',

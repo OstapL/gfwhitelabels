@@ -1,5 +1,4 @@
-
-let exports = {
+module.exports = {
   prepareNestedField(nestedName, name, value, index, myAttr, schema) {
     if(value == null) {
       console.log('value for ' + name + ' is null ')
@@ -7,7 +6,7 @@ let exports = {
     }
     _.extend(myAttr, schema);
     myAttr.value = value.hasOwnProperty(name) ? value[name]: '';
-    
+
     // Fix for nested fields not to be required in html
     myAttr._required = myAttr.required;
     myAttr.required = false;
@@ -232,7 +231,7 @@ let exports = {
       name: name,
       attr: attr,
     });
-  },  
+  },
 
   radioLabel(name, attr) {
     this.prepareField(name, attr);
@@ -248,5 +247,3 @@ let exports = {
   },
 
 };
-
-module.exports = exports;

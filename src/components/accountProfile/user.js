@@ -336,6 +336,4 @@ class User {
 
 }
 
-module.exports = () => {
-  return new User();
-};
+module.exports = User;

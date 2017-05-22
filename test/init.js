@@ -17,19 +17,22 @@ if (require.extensions) {
 }
 
 const LocalStorage = require('node-localstorage').LocalStorage;
-const jsdom = require('jsdom');
+const { JSDOM } = require('jsdom');
 
 global.localStorage = new LocalStorage('./test/localStorageTemp');
-
-global.window = new jsdom.JSDOM('<body><div id="content"></div></body>', {
+global.window = (new JSDOM('<body><div id="page"><div id="content"></div></div></body>', {
   url: 'https://alpha.growthfountain.com'
-});
+})).window;
+global.document = window.document;
 
-global.document = global.window.document;
 global.window.localStorage = global.localStorage;
 global.navigator = {userAgent: 'node.js'};
+global.$ = require('jquery')(window);
 global._ = require('underscore');
 global.Backbone = require('backbone');
+// global.require = require;
+global.api = require('src/helpers/forms.js');
+const App = require('../src/app.js');
+global.app = App();
+app.user = {};
 
-require('../src/app.js');
-global.require = require;
