@@ -105,7 +105,7 @@ git add src/sass/unique/_utilities.sass
 
 git add src/sass/pages/_index.sass
 git add src/components/pg/templates/overview.pug
-git add src/mainPage.pug
+git add src/templates/mainPage.pug
 git add src/components/pg/templates/contact.pug
 git add src/components/pg/templates/careers.pug
 
