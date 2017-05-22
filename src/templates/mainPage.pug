@@ -1,0 +1,104 @@
+- var GENERAL = require('consts/general.json');
+section.slider-main
+  .owl-carousel.owl-theme.carousel-test
+    div
+      div(style="background: url(/img/slider_1.png)").slide_1.main-slider-item
+      //img(src="/img/slide_1.jpg" alt="...")
+      .slider-content.container
+        .text-xs-center
+          .col-lg-12
+            h1.big-h1.hidden-sm-down Own a Piece of Your Favorite Company
+          .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
+            span.small-text Invest in local businesses and entrepreneurs you believe in, starting at $100
+          .col-lg-12.mt20.mb30
+            a(href="/pg/education").link-6 Learn the Risks
+          if app.user.is_anonymous()
+            .col-lg-12
+              a(href="/account/signup").btn.btn-lg.btn-primary sign up + get $25
+          else
+            .col-lg-12.hidden-sm-down
+              a(href="/companies").btn.btn-lg.btn-primary.m-r-2 INVEST
+              a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
+            .col-lg-12.hidden-md-up
+              a(href="/companies").btn.btn-lg.btn-primary INVEST
+    div
+      div(style="background: url(img/slider_2.png)").slide_1.main-slider-item
+      //img(src="/img/slide_1.jpg" alt="...")
+      .slider-content.container
+        .text-xs-center
+          .col-lg-12
+            h1.big-h1.hidden-sm-down Own a Piece of Your Favorite Company
+          .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
+            span.small-text Invest in local businesses and entrepreneurs you believe in, starting at $100
+          .col-lg-12.mt20.mb30
+            a(href="/pg/education").link-6 Learn the Risks
+          if app.user.is_anonymous()
+            .col-lg-12
+              a(href="/account/signup").btn.btn-lg.btn-primary sign up + get $25
+          else
+            .col-lg-12.hidden-sm-down
+              a(href="/companies").btn.btn-lg.btn-primary.m-r-2 INVEST
+              a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
+            .col-lg-12.hidden-md-up
+              a(href="/companies").btn.btn-lg.btn-primary INVEST
+
+
+section.home-wrap-text-block.top-block.m-t-0
+  div(style="background: url(/img/main_bg_section.jpg) top center;  background-attachment: fixed; background-size: 120%;").opasity-blocks.hide-bg-fixed
+    .container.text-lg-center.text-xs-center.text-sm-center
+      .col-lg-12
+        h2.text-uppercase.font-weight-bold What can we do to help your company grow and prosper?
+        h3 Rivermark is your partner for business success, with solutions for business checking, payments and lending that help you grow your revenue and better manage your cash.
+      .col-lg-12
+        a(href="https://www.rivermarkcu.org/business-accounts" target="_blank").btn.btn-lg.btn-secondary.m-b-3 Click to Learn More
+
+section.campaing-list
+  .container#campaignList
+    .col-lg-12
+      h2.dosis.text-uppercase.text-sm-center.text-xs-center.mt50 CURRENT CAMPAIGNS
+    include ../../campaign/templates/_list
+    .col-lg-12.text-lg-center.text-md-center.text-xs-center
+      if collection && collection.count && collection.count > GENERAL.COMPANIES_PER_PAGE
+        a(href="/companies").link-4 See All
+
+section.height-block-banner.scroll-paralax.no-paralax-mobile
+  - var styleString = 'background: url(' + require('img/cd-depsoite-campaign-hero-size-2.png') + ')';
+  div(style=styleString + '; height:600px').background
+  .center-wrap.container
+    .col-xl-12
+      h2.text-uppercase.m-t-0 NOW ACCESSIBLE TO EVERYBODY
+          h3 It’s the evolution of investing. Receive a financial stake
+            br
+            | in the companies you support.
+    .col-lg-12
+      if app.user.is_anonymous()
+        a(href="/account/signup").btn.btn-lg.btn-secondary.text-uppercase Sign up to start investing
+      else
+        a(href="/companies").btn.btn-lg.btn-secondary.text-uppercase Start investing
+section.home-what-is
+  .container
+    .col-lg-12
+      h2.text-uppercase.text-sm-center.text-xs-center.font-weight-bold A PLATFORM BUILT FOR OUR COMMUNITY
+      .row
+        .col-lg-6
+          .embed-responsive.embed-responsive-16by9.boxshadow
+            iframe(
+              embed-responsive-item="true" 
+              src="https://player.vimeo.com/video/180959588?title=0&amp;byline=0&amp;portrait=0" 
+              data-webkitallowfullscreen="" 
+              data-mozallowfullscreen="" 
+              data-allowfullscreen="")
+
+        .col-lg-6
+          h2.m-t-1.text-lg-center.text-xs-center.light.open-sans Through our partnership with GrowthFountain we’re pleased to introduce Equity Crowdfunding.
+          h3.m-t-0.text-justify.font-weight-normal Discover, support and invest in the businesses within our community, and receive ownership for your contribution.
+          h3.m-t-0.text-lg-center.text-xs-center.font-weight-normal It’s people helping people at an entirely new level.
+          .logo
+            .col-lg-4.p-x-0
+              a(href="")
+                img(src="/img/logo/logo-color-png-r.png").img-fluid.m-x-auto
+            .col-lg-4
+              p.small.text-lg-center.text-xs-center.font-weight-bold.text-uppercase Powered by
+            .col-lg-4.p-x-0
+              a(href="#")
+                img(src="/img/logo/GF.png").img-fluid
