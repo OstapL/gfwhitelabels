@@ -1,6 +1,6 @@
 require('src/sass/mixins_all.sass');
 require('babel-polyfill');
-require('jquery-serializejson/jquery.serializejson.min.js');
+require('jquery-serializejson');
 require('js/html5-dataset.js');
 require('classlist-polyfill');
 
@@ -11,7 +11,7 @@ require('classlist-polyfill');
 // }
 
 require('bootstrap/dist/js/bootstrap.js');
-require('owl.carousel/dist/owl.carousel.min.js');
+require('owl.carousel');
 
 (function () {
   if ( typeof NodeList.prototype.forEach === "function" ) return false;
@@ -28,6 +28,7 @@ function scrollLogoHandler() {
   }
 }
 
+//TODO: move this to separate view
 function scrollMenuItemsHandler() {
   let lastId = '';
   let topMenu = $(".pages-left-menu");
@@ -144,20 +145,23 @@ $(document).ready(function () {
 // Money field auto correction
   $('body').on('keyup', '[type="money"]', function (e) {
 
-    if(e.keyCode == 37 || e.keyCode == 39) {
+    if(e.keyCode == 37 || e.keyCode == 39 || e.keyCode == 190 || e.keyCode == 188 || e.keyCode == 91) {
       return;
     }
 
     var valStr = e.target.value.replace(/[\$\,]/g, '');
-    var val = parseInt(valStr);
+    var val = parseFloat(valStr);
     if (val) {
+      var selStart = e.target.selectionStart;
+      var selEnd = e.target.selectionEnd;
       e.target.value = '$' + val.toLocaleString('en-US');
+      e.target.setSelectionRange(selStart, selEnd);
     }
   });
 
   $('body').on('focus', '[type="money"]', function (e) {
     var valStr = e.target.value.replace(/[\$\,]/g, '');
-    var val = parseInt(valStr);
+    var val = parseFloat(valStr);
     if (val == 0 || val == NaN) {
       e.target.value = '';
     }
@@ -279,6 +283,16 @@ $(document).ready(function () {
     $('.modal-open').removeClass('modal-open');
 
     if (app.cache.hasOwnProperty(url) == false) {
+      //fix for comments
+      //when content is scrolled to one comment there user should be available scroll to other comment via direct link
+      if (url.indexOf('#comment') >= 0) {
+        const hashIdx = url.indexOf('#');
+        const randomQueryIdx = url.indexOf('?r=');
+        const r = ('?r=' + Math.random());
+        url = (randomQueryIdx >= 0)
+          ? url.substring(0, randomQueryIdx) + r + url.substring(hashIdx)
+          : url.substring(0, hashIdx) + r + url.substring(hashIdx);
+      }
       app.routers.navigate(
         url, {trigger: true, replace: false}
       );
