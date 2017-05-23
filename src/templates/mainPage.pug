@@ -4,7 +4,7 @@ section.slider-main
   //-.heartland-tour-in-main
     p GrowthFountain is coming to your town. 
       a(href="/pg/heartland-tour") Apply Now
-      |  to present your fundraise live!
+      |  to join The Heartland Tour and present your fundraise live!
   .owl-carousel.owl-theme.carousel-test
     div
       - var styleString = 'background: url(' + require('images/slide_5.png') + ')';
@@ -95,54 +95,23 @@ section.slider-main
               .col-lg-12.hidden-md-up
                 a(href="/companies").btn.btn-lg.btn-primary INVEST
 
-section.campaing-list
+section.campaing-list.campaign-list-main-page
   .container#campaignList
     .col-lg-12
-      h2.dosis.text-uppercase.text-sm-center.text-xs-center.mt50 CURRENT CAMPAIGNS
+      h2.text-uppercase.text-sm-center.text-xs-center.m-t-0 CURRENT CAMPAIGNS
     include ../components/campaign/templates/_list
     .col-lg-12.text-lg-center.text-md-center.text-xs-center
       if collection && collection.count && collection.count > GENERAL.COMPANIES_PER_PAGE
-        a(href="/companies").link-4 See All
+        a(href="/companies").btn.btn-sm.btn-secondary.btn-see-all 
+          | See All
+          i.fa.fa-angle-right
 
 
-section.height-block-banner.scroll-paralax.no-paralax-mobile
-  - var styleString = 'background: url(' + require('images/main-bg-section-one.jpg') + ')';
-  div(style=styleString + '; height:600px').background
-  .center-wrap.container.small-button
-    .col-xl-12
-      h2.text-uppercase.m-t-0 NOW ACCESSIBLE TO EVERYBODY
-          h3 It’s the evolution of investing. Receive a financial stake
-            br
-            | in the companies you support.
-    .col-lg-12.p-xs-0
-      if app.user.is_anonymous()
-        a(href="/account/signup").btn.btn-lg.btn-secondary.text-uppercase Sign up to start investing
-      else
-        a(href="/companies").btn.btn-lg.btn-secondary.text-uppercase Start investing
-
-section.home-what-is
-  .container
-    .col-lg-8.offset-lg-2.p-xs-0
-      h2.dosis.text-uppercase.text-sm-center.text-xs-center.m-t-3.mb20 WHAT IS GROWTHFOUNTAIN?
-      .row
-        .col-lg-12
-          h3.m-t-0.m-b-1.text-xs-center We banded together with a simple mission: to simplify fundraising
-            br
-            | and help businesses raise capital.
-          h3.m-t-0.text-xs-center Everybody in the world now has the ability to invest directly
-            br
-            | in America’s entrepreneurs!
-      .row
-        .col-lg-12
-          .embed-responsive.embed-responsive-16by9.boxshadow
-
-            iframe(
-              embed-responsive-item="true" 
-              src="https://player.vimeo.com/video/198101157?title=0&amp;byline=0&amp;portrait=0" 
-              data-webkitallowfullscreen="" 
-              data-mozallowfullscreen="" 
-              data-allowfullscreen=""
-            )
+section.main-video-wrap
+  video( id="bgvid" playsinline autoplay muted loop)
+    source(src="http://thenewcode.com/assets/videos/polina.mp4" type="video/mp4")
+  .center-wrap
+    h1 awlkdlakw
 
 section.height-block-banner.scroll-paralax.no-paralax-mobile
   - var styleString = 'background: url(' + require('images/main-bg-section-raise.jpg') + ')';
