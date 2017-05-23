@@ -48,7 +48,7 @@ class FileElement {
       // this.element = $(this.resultHTML)[0];
       this.element = document.querySelector(this.elementSelector);
       if(this.element) {
-        this.attacheEvents();
+        this.attachEvents();
       } else {
         console.debug('cannot find element ', this.elementSelector, this);
       }
@@ -57,7 +57,7 @@ class FileElement {
     return this;
   }
 
-  attacheEvents() {
+  attachEvents() {
     this.element.querySelectorAll('.deleteFile').forEach((item) => {
       item.addEventListener("click", (event) => {
         event.preventDefault();
@@ -208,7 +208,7 @@ class FileDropzone {
     return this;
   }
 
-  attacheEvents() {
+  attachEvents() {
     this.element.ondragover = () => {
       this.element.querySelector('.border-dropzone').classList.add('active-border');
     };
@@ -230,7 +230,7 @@ class FileDropzone {
       // this.element = $(this.resultHTML)[0];
       this.element = document.querySelector('.' + this.fileElement.fieldName);
       this.createDropzone().then(() => {
-        this.attacheEvents();
+        this.attachEvents();
       });
 
     }, 100);
