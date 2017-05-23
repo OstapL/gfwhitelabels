@@ -49,7 +49,22 @@
     .expiration
       margin-top: rem(25)
       margin-bottom: rem(20)
-
+      @media only screen and (min-width : 1200px)
+        .p-xl-l-0
+          padding-left: 0!important
+        .p-xl-r-0
+          padding-right: 0!important
+      @media only screen and (max-width : 1200px)
+        .p-lg-l-0
+          padding-left: 0!important
+        .p-lg-r-0
+          padding-right: 0!important
+      @media only screen and (max-width : 768px)
+        .cvv-code
+          padding-left: 0
+        .expiration-form
+          padding-bottom: rem(50)
+          padding-right: 0
   .btn-pay
     text-align: right
     margin-top: rem(45)
@@ -237,3 +252,7 @@
     color: $crimson
   .color-grey
     color: $small-text
+.outstanding-button
+  @media only screen and (max-width : 568px)
+    padding: rem(8) rem(15)
+    font-size: rem(13)!important
