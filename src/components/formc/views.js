@@ -1863,13 +1863,13 @@ module.exports = {
         exempt_offering_choice: 'An "exempt offering" is any offering of securities which is exempted from the registration requirements of the Securities Act. Have you conducted any exempt offerings in the past three years?',
         exercise_of_rights: 'How could the exercise of rights held by the principal shareholders affect the purchasers of the securities being offered?',
         risks_to_purchasers: '',
-        terms_of_securities: 'How may the terms of the securities being offered be modified?',
+        terms_of_securities: 'How may the terms of the securities being offered be modified? <div class="d-inline-block"><div class="showPopover hidden-xs-down" data-content="What would it take to amend the provisions of the security being offered and is there any minimum amount of consent that would be required to make such an amendment possible (such as a majority of voting power)?" data-original-title="" title=""><i class="fa fa-question-circle text-muted" aria-hidden="true"></i></div></div>',
         security_differences: 'Are there any differences not reflected above between the ' +
                               'securities being offered and each other class of security of ' +
                               'the issuer?',
-        rights_of_securities: 'How may the rights of the securities being offered be materially ' +
-                              'limited, diluted or qualified by the rights of any other class of ' +
-                              'security identified above?',
+        rights_of_securities: 'How may the rights of the securities being offered be materially limited, ' +
+                              'diluted or qualified by the rights of any other class of security identified above?' +
+                              ' <div class="d-inline-block"><div class="showPopover hidden-xs-down" data-content=" Is there any action that common or preferred holders could take against the group of investors in this offering that would limit their rights?  Are there any resolutions that could be passed or votes that could be taken to alter or diminish the rights of the investors in this offering?" data-original-title="" title=""><i class="fa fa-question-circle text-muted" aria-hidden="true"></i></div></div>',
       };
       this.assignLabels();
 

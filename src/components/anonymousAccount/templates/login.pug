@@ -9,18 +9,23 @@ section.login
       form(action="" novalidate autocomplete="off" role="presentation").form-section.login-form
         .col-lg-12.login-padding.p-xs-0
           input(type="hidden" name="domain" value=window.location.host)
-          .form-group.row.clearfix.required
-            input(type="email"
-            autocomplete='off'
-            placeholder="E-mail"
-            data-value-type="email"
-            name="email").form-control
-          .form-group.row.clearfix.required
-            input(type="password"
-            placeholder="Password"
-            autocomplete='off'
-            data-value-type="password"
-            name="password").form-control
+          -
+            pug_html += app.fields.fieldText('email', {
+              type: 'email',
+              placeholder: 'E-mail',
+              'class': 'form-group row clearfix',
+              required: true,
+              autocomplete: 'off',
+            });
+
+            pug_html += app.fields.fieldText('password', {
+              'class': 'form-group row clearfix',
+              required: true,
+              type: 'password',
+              placeholder: 'Password',
+              autocomplete: 'off',
+              name: 'password',
+            });
         .col-lg-12
           .row.forgot
             a(href="/account/reset").link-3 Forgot Your Password?
