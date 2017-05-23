@@ -7,12 +7,12 @@ section.formc-team-members-director.container.m-b-85
   +menu('formc', 'outstanding-security')
 
   //START RIGHT BLOCK
-  .col-xl-8.col-lg-8.col-md-12
+  .col-xl-8.col-lg-8.col-md-12.p-xs-0
     h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis.mb45 outstanding security
 
     form(action="").form-section
       input(name="outstanding_securities_choice" type="hidden" value="false")
-      .col-lg-12
+      .col-lg-12.p-xs-0
         -
           pug_html += app.fields.radioLabel('business_loans_or_debt_choice',{
           value: values.business_loans_or_debt_choice,
@@ -87,7 +87,7 @@ section.formc-team-members-director.container.m-b-85
             textarea(placeholder="Description" id="risks_to_purchasers" name="risks_to_purchasers").form-control= values['risks_to_purchasers']
         .col-lg-12.m-t-2
           .row
-            .text-md-center.text-sm-center-text-xs-center
+            .text-md-center.text-sm-center.text-xs-center
               button#submitForm.btn.btn-primary.text-uppercase.pull-lg-right Save And Continue
                 i.fa.fa-angle-right
 #security_modal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
