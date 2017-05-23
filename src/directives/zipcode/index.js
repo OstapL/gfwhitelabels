@@ -30,7 +30,7 @@ class GeoCoder {
     return this;
   }
 
-  attacheEvents() {
+  attachEvents() {
     // ToDo
     // Get Rid of jquery 
     // use overlord
@@ -44,7 +44,7 @@ class GeoCoder {
       values: this.values,
     });
     this.$resultHtml = $(this.resultHtml);
-    this.attacheEvents();
+    this.attachEvents();
 
     if (this.values.zip_code && !this.values.city && !this.values.state)
       setTimeout(() => { $('#zip_code').trigger('change'); }, 50);
