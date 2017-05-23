@@ -53,6 +53,7 @@ section.formc-team-members-director.container.m-b-85
           schema: fields.terms_of_securities,
           class1: 'col-xl-12 text-xl-left',
           class2: 'col-xl-12 big-textarea',
+          placeholder: 'Description',
           value: values.terms_of_securities,})
 
         - 
@@ -71,7 +72,7 @@ section.formc-team-members-director.container.m-b-85
         
         .row.form-group.form-section.required
           .col-lg-12
-            label Please discuss risks to purchasers of securities relating to:
+            label To the extent not already discussed above, are there any risks to the investors in this offering relating to any of the following:
               br
               | - minority ownership
               br
@@ -81,7 +82,7 @@ section.formc-team-members-director.container.m-b-85
               br
               | - a sale of the company or company assets
               br
-              | - transactions with related parties 
+              | - transactions with related parties
               span.color-red *
           .col-lg-12.big-textarea
             textarea(placeholder="Description" id="risks_to_purchasers" name="risks_to_purchasers").form-control= values['risks_to_purchasers']
