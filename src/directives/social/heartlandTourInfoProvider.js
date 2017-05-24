@@ -19,7 +19,7 @@ class HeartlandInfoProvider extends ShareInfoProvider {
       'Boston, Massachusetts',
       'Jacksonville, Florida',
       'Chattanooga, Tennessee',
-      'Waterloo, Indiana',
+      'Waterloo, Iowa',
       'New Orleans, Louisiana',
       'Tulsa, Oklahoma',
       'Portland, Oregon',
