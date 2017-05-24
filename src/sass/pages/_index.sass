@@ -215,7 +215,7 @@
 		font-weight: lighter
 .home-our-partners
 	background-color: $alabaster
-	padding: rem(25) 0
+	padding: rem(25) 0 rem(20) 0
 	.item
 		min-height: 70px
 		@media only screen and (max-width : 544px)
@@ -444,6 +444,14 @@
 	height: 500px
 	position: relative
 	overflow: hidden
+	&:before
+		content: " "
+		width: 100%
+		height: 100%
+		position: absolute
+		top: 0
+		left: 0
+		background: rgba(17, 17, 17, .5)
 	@media only screen and (max-width : 890px)
 		height: auto
 	@media only screen and (max-width : 768px)
@@ -457,6 +465,7 @@
 		width: 100%
 		position: relative
 		z-index: -1
+
 		@media only screen and (max-width : 768px)
 			display: none
 	.center-wrap
@@ -545,3 +554,9 @@
 			top: -670px
 .news-on-main-page
 	margin-top: rem(70)
+	a
+		color: $black
+		+mt(.5s)
+		&:hover
+			+mt(.5s)
+			color: rgba($black, .7)

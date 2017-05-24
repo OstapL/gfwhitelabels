@@ -108,7 +108,7 @@ section.campaing-list.campaign-list-main-page
 
 
 section.main-video-wrap
-  video( id="bgvid" playsinline autoplay muted loop)
+  video(poster=require("images/partner-section.jpg") id="bgvid" playsinline autoplay muted loop)
     source(src="https://d2i0hc81gw5f0c.cloudfront.net/videos/main-video.m4v" type="video/mp4")
   .center-wrap
     .text-wrap.col-xl-12
@@ -176,7 +176,7 @@ section.better
             .item
               i.fa.fa-chevron-right
               h3.font-weight-light Time to raise money on
-                strong  your terms 
+                strong.font-weight-bold  your terms 
                 | and keep control
           .col-xl-6
             .item
@@ -198,7 +198,7 @@ section.height-block-banner.scroll-paralax.no-paralax-mobile.main-page-banner.m-
   .center-wrap.container.small-button
     .row
       .col-xl-12
-        h2.text-uppercase.m-t-0  Raise capital with us
+        h2.text-uppercase.m-t-0.m-b-2  Raise capital with us
       .col-xl-12.p-xs-0
         if app.user.is_anonymous()
           a(href="/raise-capital").btn.btn-lg.btn-primary.text-uppercase raise capital
@@ -288,7 +288,7 @@ section.news-on-main-page
           | See All
           i.fa.fa-angle-right
 
-div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#videoModal.modal.fade.video-modal
+div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#videoModal.modal.fade.video-modal.main-video-modal
   div(role="document").modal-dialog.modal-lg
     button(type="button", data-dismiss="modal", aria-label="Close").close
       span(aria-hidden="true") &times;
