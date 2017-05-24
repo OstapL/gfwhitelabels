@@ -33,5 +33,5 @@ module.exports = {
   googleAnalyticsID: 'UA-97185485-1',
   googleAnalyticsIDGeneral: 'UA-97185485-3',
   facebookPixelID: 1020185798119090,
-  yandexMetricaID: 44164214,
+  //yandexMetricaID: 44164214,
 };

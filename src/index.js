@@ -410,7 +410,10 @@ global.onYouTubeIframeAPIReady = () => {
   app.helpers.scripts.onYoutubeAPILoaded()
 };
 
-const App = require('app.js');
 
-global.app = new App();
-app.start();
+$(document).ready(function() {
+  const App = require('app.js');
+
+  global.app = new App();
+  app.start();
+});
