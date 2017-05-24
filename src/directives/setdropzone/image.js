@@ -19,7 +19,7 @@ class ImageElement extends file.FileElement {
     super.attachEvents();
     // ToDo
     // This should be in the image model
-    this.element.querySelectorAll('.cropImage').forEach((item) => {
+    this.element.querySelectorAll('.getCropperData').forEach((item) => {
       item.addEventListener("click", (event) => {
         event.preventDefault();
         event.stopPropagation();
@@ -210,7 +210,7 @@ class CropperDropzone {
     return this.showModalWithImage();
   }
 
-  cropImage() {
+  getCropperData() {
     const imageData = this.cropper.getImageData();
     const maxWidth = imageData.naturalWidth,
       maxHeight = imageData.naturalHeight;
@@ -234,56 +234,36 @@ class CropperDropzone {
       height: this.options.resize.height,
     };
 
-    api.makeRequest(
-      app.config.filerServer + '/transform_image',
-      'PUT',
-      data
-    ).done((responseData) => {
-
-      let thumbSize = '';
-      responseData.forEach((image) => {
-        if(image.name.indexOf(this.options.auto.width + 'x' + this.options.auto.height) != -1) {
-          this.file.file.urls.main = this.file.fixUrl(image.urls[0]);
-        }
-        if(this.options.resize && image.name.indexOf(this.options.resize.width + 'x' + this.options.resize.height) != -1) {
-          thumbSize = this.options.resize.width + 'x' + this.options.resize.height;
-          this.file.file.urls[thumbSize] = this.file.fixUrl(image.urls[0]);
-        }
-      });
-
-      if (this.element.querySelector('#name')) {
-        this.file.file.name = this.element.querySelector('#name').value;
-      }
-
-      this.file.update(this.file.file).done(() => {
-        this.$modal.modal('hide');
-      });
-    });
+    return data;
   }
 
   showModalWithImage() {
-    this.$modal = $('.cropModal');
+    return new Promise((resolve, reject) => {
+      this.$modal = $('.cropModal');
 
-    this.$modal.on('hidden.bs.modal', (e) => {
-      this.$modal.remove();
-    }).on('hide.bs.modal', (e) => {
+      this.$modal.on('hidden.bs.modal', (e) => {
+        this.$modal.remove();
+        resolve(this.cropperData);
+      }).on('hide.bs.modal', (e) => {
 
-    }).on('shown.bs.modal', (modalEvent) => {
-      this.$modal.find('.cropper-ok').on('click', (okEvent) => {
-        okEvent.preventDefault();
-        this.cropImage();
-        return false;
+      }).on('shown.bs.modal', (modalEvent) => {
+        this.$modal.find('.cropper-ok').on('click', (okEvent) => {
+          okEvent.preventDefault();
+          this.cropperData = this.getCropperData();
+          this.$modal.modal('hide');
+          return false;
+        });
       });
-    });
 
-    return Promise.all([loadImage(this.file.file.getOriginal()), getCropper()]).then((res) => {
-      const [img, Cropper] = res;
-      this.cropper = new Cropper(img, this.options.control);
-      const cropData = this.options.auto ? _.extend({x: 0, y: 0}, this.options.auto) : null;
-      this.$modal.modal('show');
-      if (cropData) {
-        this.cropper.setData(cropData);
-      }
+      Promise.all([loadImage(this.file.file.getOriginal()), getCropper()]).then((res) => {
+        const [img, Cropper] = res;
+        this.cropper = new Cropper(img, this.options.control);
+        const cropData = this.options.auto ? _.extend({x: 0, y: 0}, this.options.auto) : null;
+        this.$modal.modal('show');
+        if (cropData) {
+          this.cropper.setData(cropData);
+        }
+      });
     });
   }
 }

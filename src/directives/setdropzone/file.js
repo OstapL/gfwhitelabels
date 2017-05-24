@@ -246,6 +246,7 @@ class FileDropzone {
     return new Promise((resolve, reject) => {
       require.ensure(['dropzone'], (require) => {
         const Dropzone = require('dropzone');
+        Dropzone.autoDiscover = false;
         const dropbox = new Dropzone(this.element, this.options);
 
         this.element.classList.add('dropzone');
