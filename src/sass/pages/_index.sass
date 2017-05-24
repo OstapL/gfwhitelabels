@@ -214,11 +214,34 @@
 		line-height: rem(24)
 		font-weight: lighter
 .home-our-partners
+	background-color: $alabaster
+	padding: rem(25) 0
+	.item
+		min-height: 70px
+		@media only screen and (max-width : 544px)
+			margin: rem(10) 0
+			img
+				margin-top: 0!important
+				margin-bottom: 0
 	img
-		width: 255px
-	.momentum-img
-		img
-			width: 220px
+		margin: 0 auto
+		&.callahan
+			width: 160px
+			margin-top: rem(12)
+		&.jdcu
+			width: 160px
+			margin-top: rem(12)
+		&.river-mark
+			width: 160px
+			margin-top: rem(15)
+		&.dcu
+			width: 140px
+			margin-top: rem(7)
+		&.momentum3
+			width: 125px
+		&.infinity
+			width: 160px
+
 
 .home-wrap-text-block
 	.wrap
@@ -411,4 +434,114 @@
 				+mt(.3s)
 				color: rgba($white, .7)
 				text-decoration: none
+.campaign-list-main-page
+	margin-top: rem(70)
+	margin-bottom: rem(70)
+	.btn-see-all
+		i
+			font-size: rem(12)
+.main-video-wrap
+	height: 500px
+	position: relative
+	overflow: hidden
+	@media only screen and (max-width : 890px)
+		height: auto
+	@media only screen and (max-width : 768px)
+		background-image: url("img/main-video-bgi.jpg")
+		width: 100%
+		height: 450px
+		background-repeat: no-repeat
+		background-size: cover
 
+	video
+		width: 100%
+		position: relative
+		z-index: -1
+		@media only screen and (max-width : 768px)
+			display: none
+	.center-wrap
+		position: absolute 
+		left: 50%
+		top: 50%
+		-ms-transform: translate(-50%,-50%)
+		-webkit-transform: translate(-50%,-50%)
+		transform: translate(-50%,-50%)
+		width: 100%
+		z-index: 2
+		text-align: center
+		.text-wrap
+			background-color: rgba($puerto_rico, .8)
+			width: 100%
+			text-align: center
+			padding-top: rem(30)
+			padding-bottom: rem(30)
+			color: $white
+		.play-icon
+			background-color: rgba($white, .6)
+			border-radius: 100px
+			width: 85px
+			height: 85px
+			display: inline-block
+			margin-top: rem(60)
+			position: relative
+			@media only screen and (max-width : 544px)
+				width: 50px
+				height: 50px
+				margin-top: rem(35)
+			i
+				color: $puerto_rico
+				font-size: rem(30)
+				position: absolute 
+				left: 53%
+				top: 50%
+				-ms-transform: translate(-50%,-50%)
+				-webkit-transform: translate(-50%,-50%)
+				transform: translate(-50%,-50%)
+				@media only screen and (max-width : 544px)
+					font-size: rem(16)
+			+mt(.5s)
+			&:hover
+				+mt(.5s)
+				background-color: rgba($white, .9)
+.better
+	margin-top: rem(60)
+	margin-bottom: rem(70)
+	h2
+		margin-bottom: rem(15)
+	h3
+		margin-bottom: 0
+	.titile-better
+		color: $puerto_rico
+		font-size: rem(36)
+		display: inline-block
+		@media only screen and (max-width : 544px)
+			font-size: rem(26)
+	.better-item
+		margin-top: rem(50)
+		.photo
+			text-align: center
+		.title
+			text-align: center
+			margin-top: rem(30)
+	.bottom-wrap
+		margin-top: rem(50)
+		.item
+			margin-bottom: rem(30)
+			h3
+				font-style: italic
+				width: 90%
+				display: inline-block
+				vertical-align: top
+				margin: 0
+			i
+				font-size: rem(18)
+				color: $puerto_rico
+				width: 9%
+				display: inline-block
+.main-page-banner
+	.background
+		top: -470px
+		@media only screen and (max-width : 1200px)
+			top: -670px
+.news-on-main-page
+	margin-top: rem(70)
