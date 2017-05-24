@@ -20,9 +20,6 @@ html(lang="en")
       var loadingStyle = document.createElement('style');
       loadingStyle.innerHTML =  '.loader_overlay{position:fixed;width:100%;height:100%;background:#fff;z-index:9999}.loader_overlay .loader{width:50px;height:50px;position:absolute;top:50%;left:50%;margin:-25px 0 0 -25px;font-size:10px;text-indent:-12345px;border-top:1px solid rgba(0,0,0,.08);border-right:1px solid rgba(0,0,0,.08);border-bottom:1px solid rgba(0,0,0,.08);border-left:1px solid rgba(0,0,0,.5);-webkit-border-radius:50%;-moz-border-radius:50%;border-radius:50%;-webkit-animation:spinner .7s infinite linear;-moz-animation:spinner .7s infinite linear;-ms-animation:spinner .7s infinite linear;-o-animation:spinner .7s infinite linear;animation:spinner .7s infinite linear;z-index:100001}@-webkit-keyframes spinner{0%{-webkit-transform:rotate(0);-moz-transform:rotate(0);-ms-transform:rotate(0);-o-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);-moz-transform:rotate(360deg);-ms-transform:rotate(360deg);-o-transform:rotate(360deg);transform:rotate(360deg)}}@-moz-keyframes spinner{0%{-webkit-transform:rotate(0);-moz-transform:rotate(0);-ms-transform:rotate(0);-o-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);-moz-transform:rotate(360deg);-ms-transform:rotate(360deg);-o-transform:rotate(360deg);transform:rotate(360deg)}}@-o-keyframes spinner{0%{-webkit-transform:rotate(0);-moz-transform:rotate(0);-ms-transform:rotate(0);-o-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);-moz-transform:rotate(360deg);-ms-transform:rotate(360deg);-o-transform:rotate(360deg);transform:rotate(360deg)}}@keyframes spinner{0%{-webkit-transform:rotate(0);-moz-transform:rotate(0);-ms-transform:rotate(0);-o-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);-moz-transform:rotate(360deg);-ms-transform:rotate(360deg);-o-transform:rotate(360deg);transform:rotate(360deg)}} '
       document.head.appendChild(loadingStyle)
-    noscript
-      style.
-        .loader_overlay{display:none;visible:0}
 
   body.appear-animate
     div.loader_overlay
@@ -56,6 +53,8 @@ html(lang="en")
     <!--[if lt IE 9]>
     script(type="text/javascript" src="https://raw.githubusercontent.com/es-shims/es5-shim/master/es5-shim.js")
     <![endif]-->
+    noscript.
+      <style>.loader_overlay{display:none;visible:0} </style>
     script(src="https://cdnjs.cloudflare.com/ajax/libs/es6-shim/0.35.1/es6-shim.min.js")
 
     script(type="application/ld+json").
