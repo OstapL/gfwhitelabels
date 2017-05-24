@@ -98,14 +98,14 @@
 	z-index: 2
 	
 	&:hover~.one_block
-		+mt(0.2s)
+		+mt(0.5s)
 		-webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
 		-moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
 		box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
 		.for_img
 			.more_inform
 				opacity: 1
-				+mt(0.2s)
+				+mt(0.5s)
 
 				.ico_cont
 					z-index: 3
@@ -153,7 +153,7 @@
 			background: $more_inform-bgc
 			text-align: center
 			color: $white
-			+mt(0.2s)
+			+mt(0.6s)
 			hr
 				color: $white
 				width: 50%
@@ -218,9 +218,11 @@
 					line-height: rem(18)
 					margin: 0
 	&:hover
+		+mt(0.6s)
 		.more_inform
+			+mt(0.6s)
 			opacity: 1
-			+mt(0.2s)
+			
 	
 	.title
 		margin: 0 rem(10)
