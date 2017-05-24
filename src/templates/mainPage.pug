@@ -109,11 +109,39 @@ section.campaing-list.campaign-list-main-page
 
 section.main-video-wrap
   video( id="bgvid" playsinline autoplay muted loop)
-    source(src="http://thenewcode.com/assets/videos/polina.mp4" type="video/mp4")
+    source(src="https://d2i0hc81gw5f0c.cloudfront.net/videos/main-video.m4v" type="video/mp4")
   .center-wrap
-    h1 awlkdlakw
-
-section.height-block-banner.scroll-paralax.no-paralax-mobile
+    .text-wrap
+      h2.m-t-0.m-b-2.text-uppercase WHAT IS GROWTHFOUNTAIN?
+      h3.m-t-0.m-b-2.font-weight-light We banded together with a simple mission: to simplify fundraising
+        br
+        | and help businesses raise capital.
+      h3.m-t-0.m-b-0.font-weight-light Everybody in the world now has the ability to invest directly
+        br
+        | in America’s entrepreneurs!
+    a(href="#").play-icon
+      i.fa.fa-play
+.section.home-our-partners
+  .container-fluid
+    .col-xl-2
+      a(href="http://www.callahan.com/" target="_blank")
+        img(src=require("images/partners-logo/callahan-logo.png") alt="").img-fluid.callahan
+    .col-xl-2
+      a(href="https://www.jdcu.org/" target="_blank")
+        img(src=require('images/partners-logo/jdcu-logo.png') alt="").img-fluid.jdcu
+    .col-xl-2
+      a(href="https://www.rivermarkcu.org/" target="_blank")
+        img(src=require('images/partners-logo/river-logo.png') alt="").img-fluid.river-mark
+    .col-xl-2
+      a(href="https://www.dcu.org/" target="_blank")
+        img(src=require('images/partners-logo/dcu-logo.png') alt="").img-fluid.dcu
+    .col-xl-2
+      a(href="http://momentum3growth.com/" target="_blank")
+        img(src=require('images/partners-logo/momentum-logo.png') alt="").img-fluid.momentum3
+    .col-xl-2
+      a(href="https://www.infinityfcu.com/" target="_blank")
+        img(src=require('images/partners-logo/infinityfcu-logo.png') alt="").img-fluid.infinity
+//section.height-block-banner.scroll-paralax.no-paralax-mobile
   - var styleString = 'background: url(' + require('images/main-bg-section-raise.jpg') + ')';
   div(style=styleString + '; height:450px').background
   .center-wrap.container.small-button
@@ -133,7 +161,7 @@ section.height-block-banner.scroll-paralax.no-paralax-mobile
         a(href="/pg/entrepreneurquestions").btn.btn-lg.btn-secondary.text-uppercase learn more
 
 
-section.home-our-partners
+//section.home-our-partners
   .container
     .row
       .col-lg-12

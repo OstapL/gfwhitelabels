@@ -214,11 +214,27 @@
 		line-height: rem(24)
 		font-weight: lighter
 .home-our-partners
+	background-color: $alabaster
+	padding: rem(25) 0
 	img
-		width: 255px
-	.momentum-img
-		img
-			width: 220px
+		margin: 0 auto
+		&.callahan
+			width: 160px
+			margin-top: rem(12)
+		&.jdcu
+			width: 160px
+			margin-top: rem(12)
+		&.river-mark
+			width: 160px
+			margin-top: rem(15)
+		&.dcu
+			width: 140px
+			margin-top: rem(7)
+		&.momentum3
+			width: 125px
+		&.infinity
+			width: 160px
+
 
 .home-wrap-text-block
 	.wrap
@@ -420,6 +436,7 @@
 .main-video-wrap
 	height: 500px
 	position: relative
+	overflow: hidden
 	video
 		width: 100%
 		position: relative
@@ -433,3 +450,32 @@
 		transform: translate(-50%,-50%)
 		width: 100%
 		z-index: 2
+		text-align: center
+		.text-wrap
+			background-color: rgba($puerto_rico, .8)
+			width: 100%
+			text-align: center
+			padding-top: 30px
+			padding-bottom: 30px
+			color: $white
+		.play-icon
+			background-color: rgba($white, .6)
+			border-radius: 100px
+			width: 85px
+			height: 85px
+			display: inline-block
+			margin-top: rem(60)
+			position: relative
+			i
+				color: $puerto_rico
+				font-size: rem(30)
+				position: absolute 
+				left: 53%
+				top: 50%
+				-ms-transform: translate(-50%,-50%)
+				-webkit-transform: translate(-50%,-50%)
+				transform: translate(-50%,-50%)
+			+mt(.5s)
+			&:hover
+				+mt(.5s)
+				background-color: rgba($white, .9)
