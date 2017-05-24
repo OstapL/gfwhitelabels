@@ -14,7 +14,7 @@ const plugins = [
     title: 'GrowthFountain | Equity Crowdfunding Platform',
     template: './src/index.pug',
     filename: 'index.html',
-    inject: 'body',
+    inject: 'head',
   }),
   new ExtractTextPlugin({
     filename: 'styles.[name].[hash].css',
