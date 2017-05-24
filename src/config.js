@@ -9,7 +9,7 @@ module.exports = {
   esignServer: 'https://api-esign-dev.growthfountain.com',
   commentsServer: "https://api-comments-dev.growthfountain.com",
   blogServer: "https://api-blog-dev.growthfountain.com",
-  bucketServer: "https://s3.amazonaws.com/growthfountain-alpha-storage",
+  bucketServer: "https://d2i0hc81gw5f0c.cloudfront.net",
   notificationsServer: "https://notifications-dev.growthfountain.com/",
   teamName: 'Team',
   teamTitle: "Meet The Team",
