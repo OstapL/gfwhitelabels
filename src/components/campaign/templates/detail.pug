@@ -275,11 +275,11 @@ section
                       var videoInfo = app.getVideoInfo(v.link);
 
                     if videoInfo.provider === 'youtube'
-                      div(style="background-image: url(http://img.youtube.com/vi/" + videoInfo.id + "/0.jpg)").additional-video
+                      div(style="background-image: url(https://img.youtube.com/vi/" + videoInfo.id + "/0.jpg)").additional-video
                     else if videoInfo.provider === 'vimeo'
                       img(src="" alt="" style="width: 338px;" data-vimeo-id=videoInfo.id).card-img.w-100.vimeo-thumbnail
                     else
-                      div(style="background-image: url(http://img.youtube.com/vi/" + "/0.jpg)").additional-video
+                      div(style="background-image: url(https://img.youtube.com/vi/" + "/0.jpg)").additional-video
                     .card-img-overlays
                       .card-title
                         a(
