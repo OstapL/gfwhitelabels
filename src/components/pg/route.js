@@ -36,7 +36,9 @@ module.exports = {
           });
 
           // app.cache[window.location.pathname] = html;
-
+          $('body').on('click', '.playMainvideo', function () {
+            $('body').addClass('show-video-modal');
+          });
           $('#content').html(html);
 
           $('.carousel-test').owlCarousel({
