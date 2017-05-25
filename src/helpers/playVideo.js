@@ -10,7 +10,7 @@ const preloadScripts =(providers=['youtube', 'vimeo']) => {
     else if (provider === 'vimeo')
       _preload[provider] = app.helpers.scripts.loadVimeoPlayerAPI();
   });
-}
+};
 
 const loadPlayer = (provider) => {
   if (!_preload[provider])
