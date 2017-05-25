@@ -56,6 +56,11 @@ module.exports = Backbone.Router.extend(_.extend({
       return false;
     }
 
+    if(app.seo.title[window.location.pathname]) {
+      document.title = app.seo.title[window.location.pathname];
+      document.head.querySelector('meta[name="description"]').content = app.seo.meta[window.location.pathname];
+    }
+
     if (!app.user.is_anonymous()) {
       api.makeRequest(app.config.authServer + '/log', 'POST', {
         path:window.location.pathname,
