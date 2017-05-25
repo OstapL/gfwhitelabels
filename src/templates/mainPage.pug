@@ -119,8 +119,15 @@ section.main-video-wrap
       h3.m-t-0.m-b-0.font-weight-light Everybody in the world now has the ability to invest directly
         br
         | in America’s entrepreneurs!
-    a(href="" data-toggle="modal" data-target="#videoModal").play-icon.playMainvideo
+    a(
+      href='#'
+      data-provider='vimeo'
+      data-id='198101157'
+      data-url="https://player.vimeo.com/video/198101157?title=0&amp;byline=0&amp;controls=0&fullscreen=1&buttons.share = false&embed.buttons.like = false;autoplay=0&portrait=0"
+      data-hide-page='true'
+    ).showVideoModal.play-icon
       i.fa.fa-play
+
 section.home-our-partners
   .container-fluid
     .col-xl-2.col-lg-4.col-md-4.col-sm-6.col-xs-12.item
@@ -287,18 +294,3 @@ section.news-on-main-page
         a(href="/pg/news").btn.btn-sm.btn-secondary.btn-see-all 
           | See All
           i.fa.fa-angle-right
-
-div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#videoModal.modal.fade.video-modal.main-video-modal
-  div(role="document").modal-dialog.modal-lg
-    button(type="button", data-dismiss="modal", aria-label="Close").close
-      span(aria-hidden="true") &times;
-    .modal-content
-      .hide-share
-      .embed-responsive.embed-responsive-16by9
-        //- #video-iframe-container
-        iframe(
-          src="https://player.vimeo.com/video/198101157?title=0&amp;byline=0&amp;controls=0&fullscreen=1&buttons.share = false&embed.buttons.like = false;autoplay=0&portrait=0"
-          allowfullscreen="true"
-          data-provider=provider
-          data-id=id
-        )#video-iframe-container.embed-responsive-item

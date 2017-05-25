@@ -321,6 +321,8 @@ $(document).ready(function () {
     }
   });
 
+  $('#page').on('click', '.showVideoModal', (e) => app.helpers.video.showVideoModal(e));
+
 });
 
 $.fn.scrollTo = function (padding=0) {

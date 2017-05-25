@@ -35,10 +35,11 @@ module.exports = {
             collection: data,
           });
 
+          //TODO: universal optimization in scriptLoader
+          app.helpers.video.preloadScripts(['vimeo']);
+
           // app.cache[window.location.pathname] = html;
-          $('body').on('click', '.playMainvideo', function () {
-            $('body').addClass('show-video-modal');
-          });
+
           $('#content').html(html);
 
           $('.carousel-test').owlCarousel({
@@ -91,51 +92,52 @@ module.exports = {
 
         });
 
-        function scaleVideoContainer() {
+          function scaleVideoContainer() {
 
-        var height = $(window).height() + 5;
-        var unitHeight = parseInt(height) + 'px';
-        $('.homepage-hero-module').css('height',unitHeight);
+          var height = $(window).height() + 5;
+          var unitHeight = parseInt(height) + 'px';
+          $('.homepage-hero-module').css('height',unitHeight);
 
-        };
+          };
 
-        function initBannerVideoSize(element){
+          function initBannerVideoSize(element){
 
-            $(element).each(function(){
-                $(this).data('height', $(this).height());
-                $(this).data('width', $(this).width());
-            });
+              $(element).each(function(){
+                  $(this).data('height', $(this).height());
+                  $(this).data('width', $(this).width());
+              });
 
-            scaleBannerVideoSize(element);
+              scaleBannerVideoSize(element);
 
-        };
+          };
 
-        function scaleBannerVideoSize(element){
+          function scaleBannerVideoSize(element){
 
-            var windowWidth = $(window).width(),
-            windowHeight = $(window).height() + 5,
-            videoWidth,
-            videoHeight;
+              var windowWidth = $(window).width(),
+              windowHeight = $(window).height() + 5,
+              videoWidth,
+              videoHeight;
 
-            // console.log(windowHeight);
+              // console.log(windowHeight);
 
-            $(element).each(function(){
-                var videoAspectRatio = $(this).data('height')/$(this).data('width');
+              $(element).each(function(){
+                  var videoAspectRatio = $(this).data('height')/$(this).data('width');
 
-                $(this).width(windowWidth);
+                  $(this).width(windowWidth);
 
-                if(windowWidth < 1000){
-                    videoHeight = windowHeight;
-                    videoWidth = videoHeight / videoAspectRatio;
-                    $(this).css({'margin-top' : 0, 'margin-left' : -(videoWidth - windowWidth) / 2 + 'px'});
+                  if(windowWidth < 1000){
+                      videoHeight = windowHeight;
+                      videoWidth = videoHeight / videoAspectRatio;
+                      $(this).css({'margin-top' : 0, 'margin-left' : -(videoWidth - windowWidth) / 2 + 'px'});
 
-                    $(this).width(videoWidth).height(videoHeight);
-                }
+                      $(this).width(videoWidth).height(videoHeight);
+                  }
 
-                $('.homepage-hero-module .video-container video').addClass('fadeIn animated');
+                  $('.homepage-hero-module .video-container video').addClass('fadeIn animated');
 
-            });
-        };
+              });
+          };
+
           $('body').scrollTo();
           app.hideLoading();
         });
