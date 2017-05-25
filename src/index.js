@@ -321,6 +321,8 @@ $(document).ready(function () {
     }
   });
 
+  $('#page').on('click', '.showVideoModal', (e) => app.helpers.video.showVideoModal(e));
+
 });
 
 $.fn.scrollTo = function (padding=0) {
@@ -410,7 +412,10 @@ global.onYouTubeIframeAPIReady = () => {
   app.helpers.scripts.onYoutubeAPILoaded()
 };
 
-const App = require('app.js');
 
-global.app = new App();
-app.start();
+$(document).ready(function() {
+  const App = require('app.js');
+
+  global.app = new App();
+  app.start();
+});

@@ -22,7 +22,7 @@ section.company-header.scroll-paralax.no-paralax-mobile
               data-provider=videoInfo.provider
               data-id=videoInfo.id
               data-url=videoInfo.url
-            ).big-icon.link-6.youtube_popup.show-video-modal
+            ).big-icon.link-6.youtube_popup.showVideoModal
               i.fa.fa-play-circle-o
           a(href=values.website target="_blank").link-6.link-campaing-detail.hidden-xs-down #{ app.helpers.format.getWebsiteUrl(values.website) }
           .row.social-link.hidden-xs-down
@@ -275,11 +275,11 @@ section
                       var videoInfo = app.getVideoInfo(v.link);
 
                     if videoInfo.provider === 'youtube'
-                      div(style="background-image: url(http://img.youtube.com/vi/" + videoInfo.id + "/0.jpg)").additional-video
+                      div(style="background-image: url(https://img.youtube.com/vi/" + videoInfo.id + "/0.jpg)").additional-video
                     else if videoInfo.provider === 'vimeo'
                       img(src="" alt="" style="width: 338px;" data-vimeo-id=videoInfo.id).card-img.w-100.vimeo-thumbnail
                     else
-                      div(style="background-image: url(http://img.youtube.com/vi/" + "/0.jpg)").additional-video
+                      div(style="background-image: url(https://img.youtube.com/vi/" + "/0.jpg)").additional-video
                     .card-img-overlays
                       .card-title
                         a(
