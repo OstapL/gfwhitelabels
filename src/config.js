@@ -11,9 +11,15 @@ module.exports = {
   blogServer: "https://api-blog.growthfountain.com",
   notificationsServer: "https://notifications.growthfountain.com/",
   bucketServer: "https://s3.amazonaws.com/growthfountain-alpha-storage",
-
-  teamName: 'Team',
+  teamName: 'GrowthFountain Team',
   teamTitle: "Meet The Team",
+  //serverUrl: "http://192.168.99.100:8000",
+  //serverUrl: "http://gfauth.com:8000",
+
+  // Growth Fountain production keys:
+  // facebookClientId: "191471871275050",
+  // googleClientId: "488593151885-87nqfd8gl444a1me0n149otrf37dbahq.apps.googleusercontent.com",
+  // linkedinClientId: "77wzj6tz0yyr33",
 
   facebookClientId: '1071081646296574',
   googleClientId: '805823281871-ve3unmva9aer69papghudk0dnpf8tqr2.apps.googleusercontent.com',
@@ -24,7 +30,7 @@ module.exports = {
 
   //analytics services settings
   googleTagID: 'GTM-NC9XW5D',
-  googleAnalyticsID: 'UA-47199302-4',
+  googleAnalyticsID: 'UA-47199302-7',
   googleAnalyticsIDGeneral: 'UA-47199302-1',
   facebookPixelID: 172026009946228,
   yandexMetricaID: 42321779,
