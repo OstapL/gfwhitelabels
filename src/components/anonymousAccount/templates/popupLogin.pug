@@ -33,13 +33,13 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
             input(type="hidden" name="domain" value=window.location.host)
             .row
               .social-btn.m-t-2.m-b-2
-                button(data-network="facebook").btn.btn-block.btn-social-network.btn-facebook.text-uppercase.m-t-0
+                button(data-network="facebook")#signup-facebook.btn.btn-block.btn-social-network.btn-facebook.text-uppercase.m-t-0
                   i.fa.fa-facebook
                   |  SIGN UP with Facebook
-                button(data-network="linkedin").btn.btn-block.btn-social-network.btn-linkedin.text-uppercase
+                button(data-network="linkedin")#signup-linkedin.btn.btn-block.btn-social-network.btn-linkedin.text-uppercase
                   i.fa.fa-linkedin
                   |  SIGN UP with linkedin
-                button(data-network="google").btn.btn-block.btn-social-network.btn-google.text-uppercase
+                button(data-network="google")#signup-google.btn.btn-block.btn-social-network.btn-google.text-uppercase
                   i.fa.fa-google-plus
                   |  SIGN UP with Google
             .form-group.row.clearfix.required
@@ -94,7 +94,7 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
               name="domain"
             )
             .col-lg-12.text-xs-center
-              button(type="submit").btn.btn-primary.text-uppercase Sign up
+              button(type="submit")#signup-btn.btn.btn-primary.text-uppercase Sign up
             
         .modal-footer
 
@@ -138,18 +138,18 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
                   a(href="#").reset-password-link.link-3 Forgot Your Password?
               .col-lg-12
                 .row.text-sm-center.text-xs-center
-                  button(type="submit").btn.btn-primary.btn-login.text-uppercase Log In
+                  button(type="submit")#login-btn.btn.btn-primary.btn-login.text-uppercase Log In
             //-
               .col-lg-12.border-bottom.or
                 span or
               .social-btn.col-lg-12
-                a(data-original-title="facebook" href="#").btn.btn-block.btn-facebook.text-uppercase
+                a(data-original-title="facebook" href="#")#login-facebook.btn.btn-block.btn-facebook.text-uppercase
                   i.fa.fa-facebook
                   |  Log In with Facebook
-                a(data-original-title="Linkedin" href="#").btn.btn-block.btn-linkedin.text-uppercase
+                a(data-original-title="Linkedin" href="#")#login-linkedin.btn.btn-block.btn-linkedin.text-uppercase
                   i.fa.fa-linkedin
                   |  Log In with linkedin
-                a(data-original-title="Google Plus" href="#").btn.btn-block.btn-google.text-uppercase
+                a(data-original-title="Google Plus" href="#")#login-google.btn.btn-block.btn-google.text-uppercase
                   i.fa.fa-google-plus
                   |  Log In with Google
     .modal-footer

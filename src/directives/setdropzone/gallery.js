@@ -2,7 +2,7 @@ const folder = require('models/folder.js');
 const folderDropzone = require('./folder.js');
 const imageDropzone = require('./image.js');
 const ImageClass = require('models/image.js');
-const defaultImage = require('images/default/255x153.png');
+const defaultImage = '/img/default/255x153.png'; 
 
 
 class GalleryElement extends imageDropzone.ImageElement {
@@ -97,16 +97,10 @@ class GalleryDropzone extends imageDropzone.ImageDropzone {
     if(options.onSaved) {
       this.galleryElement.options.onSaved = options.onSaved;
     }
-
-    this.cropQueue = [];
   }
 
   getTemplate() {
     return require('./templates/galleryDropzone.pug');
-  }
-
-  processQueue() {
-
   }
 
   success(file, data) {
@@ -151,10 +145,6 @@ class GalleryDropzone extends imageDropzone.ImageDropzone {
       }
 
       this.element.querySelector('.fileHolder').insertAdjacentHTML('beforeend', fileObj.resultHTML);
-
-      this.cropQueue.push(fileObj);
-      this.processQueue();
-
       new imageDropzone.CropperDropzone(
         this,
         fileObj,
