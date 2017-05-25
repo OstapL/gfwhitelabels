@@ -19,24 +19,42 @@
     .top-breadcrambs
         li 
             display: inline-block
-            margin-right: .5%
+            margin-right: -2px
             width: 33%
 
             &:last-child
                 margin-right: 0
-
+                a
+                    &:after
+                        display: none
             a 
                 padding: rem(11)
                 width: 100%
-
+                position: relative
                 border-color: $calc_tabs_bg
                 background: $calc_tabs_bg
-
+                border: solid 1px $gallery
                 text-align: center
                 color: $small-text
 
                 &.btn
                     border-radius: $calc_tabs_radius
+                &:after
+                    content: "";
+                    width: 30px
+                    height: 31px
+                    position: absolute
+                    background: inherit
+                    top: 0
+                    bottom: 0
+                    right: -15px
+                    margin: auto
+                    border: 1px solid $gallery
+                    border-left: none
+                    border-bottom: none
+                    transform: rotate(45deg)
+                    z-index: 1
+
 
 
                 &.current
@@ -45,6 +63,7 @@
                     border-color: $calc_tabs_current_bg
                     color: $white
                     cursor: default
+                    
 
         &.capitalraise
             padding: 0 2%
