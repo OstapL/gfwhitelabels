@@ -37,7 +37,6 @@ class App {
 
       if (app.config.googleTagID) {
         this.initFacebookPixel();
-        this.initYandexMetrica();
       }
 
       this.routers = new Router();
@@ -62,24 +61,6 @@ class App {
         el: '#menuProfile',
       });
       this.profile.render();
-    });
-  }
-
-  initYandexMetrica() {
-    if (!app.config.googleTagID || !app.config.yandexMetricaID)
-      return;
-
-    safeDataLayerPush({
-      event: 'yandex-metrica-init',
-    })
-  }
-
-  emitYandexMetricaEvent() {
-    if (!app.config.googleTagID || !app.config.yandexMetricaID)
-      return;
-
-    safeDataLayerPush({
-      event: 'yandex-metrica-hit',
     });
   }
 
