@@ -86,6 +86,7 @@ module.exports = {
     const id = $target.data('id');
     const url = $target.data('url');
     const hidePage = !!$target.data('hide-page');
+    const modalClass = $target.data('modal-class');
 
     loadPlayer(provider).then(() => {
       let $content = $('#content');
@@ -95,6 +96,7 @@ module.exports = {
         provider,
         id,
         url,
+        modalClass,
       }));
 
       const sendVideoPlayEvent = () => {
