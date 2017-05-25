@@ -19,7 +19,7 @@ class ImageElement extends file.FileElement {
     super.attachEvents();
     // ToDo
     // This should be in the image model
-    this.element.querySelectorAll('.getCropperData').forEach((item) => {
+    this.element.querySelectorAll('.cropImage').forEach((item) => {
       item.addEventListener("click", (event) => {
         event.preventDefault();
         event.stopPropagation();
