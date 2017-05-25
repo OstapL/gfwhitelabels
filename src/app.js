@@ -22,6 +22,7 @@ class App {
     this.dialogs = require('directives/dialogs/index.js');
     this.models = require('./models.js');
     this.sites = require('./sites.js');
+    this.seo = require('./seo.js');
     this.user = new User();
 
     this.utils = {};
