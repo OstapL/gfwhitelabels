@@ -128,7 +128,7 @@ class GalleryDropzone extends imageDropzone.ImageDropzone {
       this,
       image,
       this.cropperOptions
-    ).render(
+    ).showCropper(
       $(this.element).closest('.dropzone')[0]
     ).then((data)=> {
       if (!data)

@@ -27,7 +27,7 @@ class ImageElement extends file.FileElement {
           this,
           this,
           this.options,
-        ).render($(this.element).closest('.dropzone')[0]);
+        ).render($(this.element).closest('.dropzone')[0], true);
         return false;
       });
     });
@@ -80,6 +80,36 @@ class ImageDropzone extends file.FileDropzone {
     }
   }
 
+  saveCroppedData(data) {
+    api.makeRequest(
+      app.config.filerServer + '/transform_image',
+      'PUT',
+      data
+    ).done((responseData) => {
+      const element = $(this.element).closest('.dropzone')[0];
+      responseData.forEach((img) => {
+        const autoSize = this.cropperOptions.auto.width + 'x' + this.cropperOptions.auto.height;
+        if (img.name.indexOf(autoSize) != -1) {
+          this.fileElement.file.urls.main = this.fileElement.fixUrl(img.urls[0]);
+        }
+
+        const thumbSize = this.cropperOptions.resize.width + 'x' + this.cropperOptions.resize.height;
+        if (this.cropperOptions.resize && img.name.indexOf(thumbSize) != -1) {
+          this.fileElement.file.urls[thumbSize] = this.fileElement.fixUrl(img.urls[0]);
+        }
+      });
+
+      const nameElement = element.querySelector('#name');
+      if (nameElement) {
+        this.fileElement.file.name = nameElement.value;
+      }
+
+      this.fileElement.update(this.fileElement.file).done(() => {
+
+      });
+    });
+  }
+
   success(file, data) {
     const reorgData = {
       urls: {}
@@ -106,7 +136,14 @@ class ImageDropzone extends file.FileDropzone {
       this,
       this.fileElement,
       this.cropperOptions
-    ).render($(this.element).closest('.dropzone')[0]);
+    ).showCropper(
+      $(this.element).closest('.dropzone')[0]
+    ).then((data) => {
+      if (!data)
+        return;
+
+      this.saveCroppedData(data);
+    });
   }
 }
 
@@ -180,7 +217,7 @@ class CropperDropzone {
     this.template = require('./templates/cropperModal.pug');
   }
 
-  render(attachTo) {
+  render(attachTo, updateOnCrop=false) {
     $('.popover').popover('hide');
 
     if(this.options.template === null) {
@@ -207,6 +244,43 @@ class CropperDropzone {
     */
     attachTo.appendChild(this.element);
 
+    if (!updateOnCrop)
+      return;
+
+    this.showModalWithImage().then((data) => {
+      if (!data)
+        return;
+
+      api.makeRequest(
+        app.config.filerServer + '/transform_image',
+        'PUT',
+        data
+      ).done((responseData) => {
+
+        let thumbSize = '';
+        responseData.forEach((image) => {
+          if(image.name.indexOf(this.options.auto.width + 'x' + this.options.auto.height) != -1) {
+            this.file.file.urls.main = this.file.fixUrl(image.urls[0]);
+          }
+          if(this.options.resize && image.name.indexOf(this.options.resize.width + 'x' + this.options.resize.height) != -1) {
+            thumbSize = this.options.resize.width + 'x' + this.options.resize.height;
+            this.file.file.urls[thumbSize] = this.file.fixUrl(image.urls[0]);
+          }
+        });
+
+        if (this.element.querySelector('#name')) {
+          this.file.file.name = this.element.querySelector('#name').value;
+        }
+
+        this.file.update(this.file.file).done(() => {
+
+        });
+      });
+    });
+  }
+
+  showCropper(attachTo) {
+    this.render(attachTo);
     return this.showModalWithImage();
   }
 
