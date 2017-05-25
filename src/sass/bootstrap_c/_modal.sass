@@ -146,18 +146,40 @@
 			font-size: rem(33)
 			opacity: .7
 .main-video-modal
-	top: 0
+	top: 30px
 	.modal-dialog
+		.embed-responsive-16by9
+			padding-bottom: 0
+			height: 95vh
 		max-width: 100%
 		margin-top: 0
+		background: #000
 		.close
 			position: absolute
-			right: 40px
-			top: 40px
-			z-index: 999
-			color: $white
+			right: 5px
+			top: 5px
+			z-index: 1051
+			color: $black
 			font-size: rem(33)
-			opacity: .7
+			opacity: 1
+			background: #fff
+			width: 50px
+			height: 50px
+			border-radius: 100px
+			+mt(.2s)
+			&:hover
+				+mt(.2s)
+				color: rgba($black, .7)
+			@media only screen and (max-width : 991px)
+				right: -20px!important
+		.player
+			.sidedock
+				display: none !important
+
+
+.show-video-modal
+	.modal-backdrop.in
+		opacity: 1
 
 .modal-dropzone
 	top: 15%
