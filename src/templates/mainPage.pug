@@ -1,7 +1,7 @@
 - var GENERAL = require('consts/general.json');
 
 section.slider-main
-  //-.heartland-tour-in-main
+  .heartland-tour-in-main
     p GrowthFountain is coming to your town. 
       a(href="/pg/heartland-tour") Apply Now
       |  to join The Heartland Tour and present your fundraise live!
@@ -108,7 +108,7 @@ section.campaing-list.campaign-list-main-page
 
 
 section.main-video-wrap
-  video(poster=require("images/partner-section.jpg") id="bgvid" playsinline autoplay muted loop)
+  video(poster=require("images/main-before-video.jpg") id="bgvid" playsinline autoplay muted loop)
     source(src="https://d2i0hc81gw5f0c.cloudfront.net/videos/main-video.m4v" type="video/mp4")
   .center-wrap
     .text-wrap.col-xl-12
@@ -119,7 +119,7 @@ section.main-video-wrap
       h3.m-t-0.m-b-0.font-weight-light Everybody in the world now has the ability to invest directly
         br
         | in America’s entrepreneurs!
-    a(href="" data-toggle="modal" data-target="#videoModal").play-icon
+    a(href="" data-toggle="modal" data-target="#videoModal").play-icon.playMainvideo
       i.fa.fa-play
 section.home-our-partners
   .container-fluid
@@ -293,10 +293,11 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
     button(type="button", data-dismiss="modal", aria-label="Close").close
       span(aria-hidden="true") &times;
     .modal-content
+      .hide-share
       .embed-responsive.embed-responsive-16by9
         //- #video-iframe-container
         iframe(
-          src="https://player.vimeo.com/video/198101157?title=0&amp;byline=0&amp;portrait=0"
+          src="https://player.vimeo.com/video/198101157?title=0&amp;byline=0&amp;controls=0&fullscreen=1&buttons.share = false&embed.buttons.like = false;autoplay=0&portrait=0"
           allowfullscreen="true"
           data-provider=provider
           data-id=id
