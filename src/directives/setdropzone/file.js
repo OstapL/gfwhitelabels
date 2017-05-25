@@ -1,4 +1,6 @@
 const File = require('models/file.js');
+const Dropzone = require('dropzone');
+
 
 class FileElement {
   constructor(file, fieldName, fieldDataName, options={}) {
@@ -48,7 +50,7 @@ class FileElement {
       // this.element = $(this.resultHTML)[0];
       this.element = document.querySelector(this.elementSelector);
       if(this.element) {
-        this.attachEvents();
+        this.attacheEvents();
       } else {
         console.debug('cannot find element ', this.elementSelector, this);
       }
@@ -57,7 +59,7 @@ class FileElement {
     return this;
   }
 
-  attachEvents() {
+  attacheEvents() {
     this.element.querySelectorAll('.deleteFile').forEach((item) => {
       item.addEventListener("click", (event) => {
         event.preventDefault();
@@ -208,7 +210,7 @@ class FileDropzone {
     return this;
   }
 
-  attachEvents() {
+  attacheEvents() {
     this.element.ondragover = () => {
       this.element.querySelector('.border-dropzone').classList.add('active-border');
     };
@@ -229,11 +231,9 @@ class FileDropzone {
       // Don't know who recreate that html ... uhhh
       // this.element = $(this.resultHTML)[0];
       this.element = document.querySelector('.' + this.fileElement.fieldName);
-      this.createDropzone().then(() => {
-        this.attachEvents();
-      });
-
-    }, 100);
+      this.createDropzone();
+      this.attacheEvents();
+    }, 1200);
 
     return this;
   }
@@ -243,39 +243,31 @@ class FileDropzone {
   }
 
   createDropzone() {
-    return new Promise((resolve, reject) => {
-      require.ensure(['dropzone'], (require) => {
-        const Dropzone = require('dropzone');
-        Dropzone.autoDiscover = false;
-        const dropbox = new Dropzone(this.element, this.options);
+    const dropbox = new Dropzone(this.element, this.options);
 
-        this.element.classList.add('dropzone');
+    this.element.classList.add('dropzone');
 
-        dropbox.on('addedfile', (file) => {
-          _(this.files).each((f, i) => {
-            if (f.lastModified != file.lastModified) {
-              this.removeFile(f);
-            }
-          });
-        });
-
-        dropbox.on('success', (file, data) => {
-          this.success(file, data);
-        });
-
-        dropbox.on('error', (file, error, xhr) => {
-          $(this.element).find('.uploading').hide().addClass('collapse').css('z-index', '');
-          app.validation.invalidMsg(
-            this.view,
-            this.fileElement.fieldName,
-            Object.values(error)[0]
-          );
-        });
-        this.dropzone = dropbox;
-
-        resolve();
-      }, 'dropzone_chunk');
+    dropbox.on('addedfile', (file) => {
+      _(this.files).each((f, i) => {
+        if (f.lastModified != file.lastModified) {
+          this.removeFile(f);
+        }
+      });
     });
+
+    dropbox.on('success', (file, data) => {
+      this.success(file, data);
+    });
+
+    dropbox.on('error', (file, error, xhr) => {
+      $(this.element).find('.uploading').hide().addClass('collapse').css('z-index', '');
+      app.validation.invalidMsg(
+        this.view,
+        this.fileElement.fieldName,
+        Object.values(error)[0]
+      ); 
+    });
+    this.dropzone = dropbox;
   }
 
   success(file, data) {

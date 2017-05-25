@@ -2,7 +2,7 @@ const folder = require('models/folder.js');
 const folderDropzone = require('./folder.js');
 const imageDropzone = require('./image.js');
 const ImageClass = require('models/image.js');
-const defaultImage = require('images/default/255x153.png');
+const defaultImage = '/img/default/255x153.png'; 
 
 
 class GalleryElement extends imageDropzone.ImageElement {
@@ -97,72 +97,10 @@ class GalleryDropzone extends imageDropzone.ImageDropzone {
     if(options.onSaved) {
       this.galleryElement.options.onSaved = options.onSaved;
     }
-
-    this.cropQueue = [];
   }
 
   getTemplate() {
     return require('./templates/galleryDropzone.pug');
-  }
-
-  enqueueImage(image) {
-    this.cropQueue.push(image);
-    this.cropNext();
-  }
-
-  cropNext(takeNext) {
-    if (takeNext === true)
-      this.cropping = false;
-
-    if (this.cropping)
-      return;
-
-    if (this.cropQueue.length <= 0)
-      return;
-
-    this.cropping = true;
-
-    const image = this.cropQueue.shift();
-
-    new imageDropzone.CropperDropzone(
-      this,
-      image,
-      this.cropperOptions
-    ).showCropper(
-      $(this.element).closest('.dropzone')[0]
-    ).then((data)=> {
-      if (!data)
-        return this.cropNext(true);
-
-      api.makeRequest(
-        app.config.filerServer + '/transform_image',
-        'PUT',
-        data
-      ).done((responseData) => {
-        const element = $(this.element).closest('.dropzone')[0];
-        responseData.forEach((img) => {
-          const autoSize = this.cropperOptions.auto.width + 'x' + this.cropperOptions.auto.height;
-          if (img.name.indexOf(autoSize) != -1) {
-            image.file.urls.main = image.fixUrl(img.urls[0]);
-          }
-
-          const thumbSize = this.cropperOptions.resize.width + 'x' + this.cropperOptions.resize.height;
-          if (this.cropperOptions.resize && img.name.indexOf(thumbSize) != -1) {
-            image.file.urls[thumbSize] = image.fixUrl(img.urls[0]);
-          }
-        });
-
-        const nameElement = element.querySelector('#name');
-        if (nameElement) {
-          image.file.name = nameElement.value;
-        }
-
-        image.update(image.file).done(() => {
-          // this.cropNext(true);
-        });
-        this.cropNext(true);
-      });
-    });
   }
 
   success(file, data) {
@@ -186,33 +124,34 @@ class GalleryDropzone extends imageDropzone.ImageDropzone {
 
     reorgData.site_id = app.sites.getId();
     this.galleryElement.file.data.push(reorgData);
-    let imgObj = new imageDropzone.ImageElement(
+    let fileObj = new imageDropzone.ImageElement(
       new ImageClass('', reorgData),
       this.galleryElement.fieldName,
       this.galleryElement.fieldDataName
     );
-    imgObj.getTemplate = this.galleryElement.getTemplate;
-    imgObj.elementSelector = '.' + this.galleryElement.fieldName + ' .fileContainer' + reorgData.id;
-    imgObj.save = () => this.galleryElement.save.call(this.galleryElement);
-    imgObj.delete = () => this.galleryElement.delete.call(this.galleryElement, imgObj.file.id);
-    imgObj.options = this.galleryElement.options;
-    this.galleryElement.files.push(imgObj);
+    fileObj.getTemplate = this.galleryElement.getTemplate;
+    fileObj.elementSelector = '.' + this.galleryElement.fieldName + ' .fileContainer' + reorgData.id;
+    fileObj.save = () => this.galleryElement.save.call(this.galleryElement);
+    fileObj.delete = () => this.galleryElement.delete.call(this.galleryElement, fileObj.file.id);
+    fileObj.options = this.galleryElement.options;
+    this.galleryElement.files.push(fileObj);
 
     this.galleryElement.update(this.galleryElement.file.data, () => {
-      imgObj.render();
+      fileObj.render();
 
-      //this.model.data[this.galleryElement.fieldDataName].push(imgObj.file);
+      //this.model.data[this.galleryElement.fieldDataName].push(fileObj.file);
       if(this.galleryElement.options.onSaved) {
         this.galleryElement.options.onSaved(this.galleryElement);
       }
 
-      this.element.querySelector('.fileHolder').insertAdjacentHTML('beforeend', imgObj.resultHTML);
-
-      this.enqueueImage(imgObj);
+      this.element.querySelector('.fileHolder').insertAdjacentHTML('beforeend', fileObj.resultHTML);
+      new imageDropzone.CropperDropzone(
+        this,
+        fileObj,
+        this.cropperOptions
+      ).render($(this.element).closest('.dropzone')[0]);
     });
   }
-
-
 }
 
 module.exports = {
