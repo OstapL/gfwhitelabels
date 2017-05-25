@@ -1,4 +1,4 @@
-module.exports = {
+var e = {
   domainUrl: "growthfountain.com",
   serverUrl: "https://django-api-dev.growthfountain.com",
   raiseCapitalServer: "https://api-raisecapital-dev.growthfountain.com",
@@ -13,8 +13,6 @@ module.exports = {
   notificationsServer: "https://notifications-dev.growthfountain.com/",
   teamName: 'Team',
   teamTitle: "Meet The Team",
-  //serverUrl: "http://192.168.99.100:8000",
-  //serverUrl: "http://gfauth.com:8000",
 
   // Growth Fountain production keys:
   // facebookClientId: "191471871275050",
@@ -35,3 +33,5 @@ module.exports = {
   facebookPixelID: 1020185798119090,
   //yandexMetricaID: 44164214,
 };
+
+module.exports = e;
