@@ -243,7 +243,9 @@ $(document).ready(function () {
   $('body').on('click', 'a', (event) => {
     const href = event.currentTarget.getAttribute('href');
 
-    if (href == window.location.pathname) {
+    if (href === (window.location.pathname + window.location.search || '')) {
+    // if (href && href.startsWith(window.location.pathname)) {
+    // if (href == window.location.pathname) {
       window.location.reload();
       return;
     }
