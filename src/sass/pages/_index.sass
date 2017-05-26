@@ -330,10 +330,11 @@
 			&:first-child
 				margin-right: 5px
 	.slider-main 
-		.slider-content 
+		.slider-content
+			top: 60%!important
 			.small-text
-				font-size: rem(18)
-				line-height: 20px
+				font-size: rem(16)!important
+				line-height: 22px!important
 	.momentum-img
 		img
 			margin-top: 30px
@@ -522,33 +523,7 @@
 			padding-top: rem(30)
 			padding-bottom: rem(30)
 			color: $white
-		.play-icon
-			background-color: rgba($white, .6)
-			border-radius: 100px
-			width: 85px
-			height: 85px
-			display: inline-block
-			margin-top: rem(60)
-			position: relative
-			@media only screen and (max-width : 544px)
-				width: 50px
-				height: 50px
-				margin-top: rem(35)
-			i
-				color: $puerto_rico
-				font-size: rem(30)
-				position: absolute 
-				left: 53%
-				top: 50%
-				-ms-transform: translate(-50%,-50%)
-				-webkit-transform: translate(-50%,-50%)
-				transform: translate(-50%,-50%)
-				@media only screen and (max-width : 544px)
-					font-size: rem(16)
-			+mt(.5s)
-			&:hover
-				+mt(.5s)
-				background-color: rgba($white, .9)
+		
 .better
 	margin-top: rem(60)
 	margin-bottom: rem(70)
