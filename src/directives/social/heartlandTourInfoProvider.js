@@ -19,7 +19,7 @@ class HeartlandInfoProvider extends ShareInfoProvider {
       'Boston, Massachusetts',
       'Jacksonville, Florida',
       'Chattanooga, Tennessee',
-      'Waterloo, Indiana',
+      'Waterloo, Iowa',
       'New Orleans, Louisiana',
       'Tulsa, Oklahoma',
       'Portland, Oregon',
@@ -103,7 +103,7 @@ class HeartlandInfoProvider extends ShareInfoProvider {
       to: 'info@growthfountain.com',
       subject: 'I\'d like to nominate my favorite business for The Heartland Tour',
       body: 'Here is the contact information for the business I\'d like to nominate! ' +
-        'I understand that if they list on GrowthFountain, I\'ll receive $500!' +
+        'I understand that if I\'m the first to introduce this business and they list on GrowthFountain, I\'ll receive $500!' +
         SPECIAL_SYMBOLS.NEW_LINE + SPECIAL_SYMBOLS.NEW_LINE +
         'Come take a look: https://growthfountain.com/pg/heartland-tour',
     });
