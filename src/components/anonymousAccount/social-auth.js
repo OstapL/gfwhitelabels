@@ -22,7 +22,7 @@ let functions = {
         google: app.config.googleClientId,
         linkedin: app.config.linkedinClientId,
       }, {
-        redirect_uri: '/account/finish/login/',
+        // redirect_uri: '/account/finish/login/',
         oauth_proxy: app.config.authServer+'/proxy/'
       });
       __initialized = true;
