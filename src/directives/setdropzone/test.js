@@ -7,7 +7,7 @@ const expect    = chai.expect;
 describe('File Element', function () {
   it('Render Function', function () {
   },
-  it('attachEvents Function', function () {
+  it('attacheEvents Function', function () {
   },
   it('update Function', function() {
   }
@@ -16,7 +16,7 @@ describe('File Element', function () {
 describe('File Dropzone', function () {
   it('Render Function', function () {
   },
-  it('attachEvents Function', function () {
+  it('attacheEvents Function', function () {
   },
   it('update Function', function() {
   },

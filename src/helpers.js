@@ -21,4 +21,5 @@ module.exports = {
   usaStates: require('./helpers/usaStates.js'),
   social: require('./helpers/socialLinks.js'),
   scripts: require('./helpers/scriptLoader.js'),
+  video: require('./helpers/playVideo.js'),
 };
