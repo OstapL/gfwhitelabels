@@ -15,6 +15,7 @@ let functions = {
   // resolves with `true` when canceled
   // rejects with error message otherwise
   login(network) {
+    debugger;
     if (!__initialized) {
       hello.init({
         facebook: app.config.facebookClientId,
@@ -28,6 +29,7 @@ let functions = {
     }
 
     return new Promise((resolve, reject) => {
+      debugger;
       if (!_.contains(SUPPORTED_NETWORKS, network))
         return reject(`Network ${network} is not supported`);
 
