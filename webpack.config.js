@@ -67,7 +67,7 @@ if (isDev) {
 }
 
 const dependencies = Object.keys(require('./package.json').dependencies);
-const lazyDependencies = ['dropzone', 'socket.io-client', 'cropperjs', 'hellojs'];
+const lazyDependencies = ['dropzone', 'socket.io-client', 'cropperjs'];
 
 const baseDependencies = dependencies.filter((dep) => {
   return !lazyDependencies.find(authDep => authDep == dep);
