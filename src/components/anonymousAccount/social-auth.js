@@ -1,23 +1,21 @@
-const SUPPORTED_NETWORKS = [
-  'facebook',
-  'linkedin',
-  'google'
-];
+const validation = require('components/validation/validation.js');
+const hello = require('hellojs');
 
+const SUPPORTED_NETWORKS = ['facebook', 'linkedin', 'google'];
 const SCOPES = {
   facebook: 'public_profile,email',
   linkedin: 'r_basicprofile,r_emailaddress,w_share',
   google: 'profile,email',
 };
 
-let hello = null;
-const initLibrary = () => {
-  return new Promise((resolve, reject) => {
-    require.ensure(['hellojs'], (require) => {
-      if (hello)
-        return resolve();
+let __initialized = false;
 
-      hello = require('hellojs');
+let functions = {
+  // resolves when successful
+  // resolves with `true` when canceled
+  // rejects with error message otherwise
+  login(network) {
+    if (!__initialized) {
       hello.init({
         facebook: app.config.facebookClientId,
         google: app.config.googleClientId,
@@ -26,48 +24,37 @@ const initLibrary = () => {
         redirect_uri: '/account/finish/login/',
         oauth_proxy: app.config.authServer+'/proxy/'
       });
+      __initialized = true;
+    }
 
-      resolve();
-    }, 'hellojs_chunk');
-  });
-};
+    return new Promise((resolve, reject) => {
+      if (!_.contains(SUPPORTED_NETWORKS, network))
+        return reject(`Network ${network} is not supported`);
 
-let functions = {
-
-  // resolves when successful
-  // resolves with `true` when canceled
-  // rejects with error message otherwise
-  login(network) {
-    return initLibrary().then(() => {
-      return new Promise((resolve, reject) => {
-        if (!_.contains(SUPPORTED_NETWORKS, network))
-          return reject(`Network ${network} is not supported`);
-
-        console.log(`${network} logging in ...`);
-        hello(network).login({
-          scope: SCOPES[network],
-        }).then((data) => {
-          return this.sendToken(network, data.authResponse.access_token);
-        }).then((data) => {
-          return resolve({
-            cancelled: false,
-            data: data
-          });
-        }).then(null, (data) => {
-          console.log(`${network} error`);
-          console.log(data);
-
-          if (_.isBoolean(data))
-            return reject(`Authentication with ${network} account failed.`);
-
-          if (data.error.code == 'cancelled')
-            return resolve({
-              cancelled: true,
-              data: {}
-            });
-
-          return reject(data.error.message || `Authentication with ${network} account failed.`);
+      console.log(`${network} logging in ...`);
+      hello(network).login({
+        scope: SCOPES[network],
+      }).then((data) => {
+        return this.sendToken(network, data.authResponse.access_token);
+      }).then((data) => {
+        return resolve({
+          cancelled: false, 
+          data: data
         });
+      }).then(null, (data) => {
+        console.log(`${network} error`);
+        console.log(data);
+
+        if (_.isBoolean(data))
+          return reject(`Authentication with ${network} account failed.`);
+
+        if (data.error.code == 'cancelled')
+          return resolve({
+            cancelled: true, 
+            data: {}
+          });
+
+        return reject(data.error.message || `Authentication with ${network} account failed.`);
       });
     });
   },
@@ -87,9 +74,9 @@ let functions = {
     if (cb.checked)
       data.checkbox1 = cb.value;
 
-    if (!app.validation.validate({ checkbox1: view.fields.checkbox1 }, data, this)) {
-      _(app.validation.errors).each((errors, key) => {
-        app.validation.invalidMsg(view, key, errors);
+    if (!validation.validate({ checkbox1: view.fields.checkbox1 }, data, this)) {
+      _(validation.errors).each((errors, key) => {
+        validation.invalidMsg(view, key, errors);
       });
 
       return false;
