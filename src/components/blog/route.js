@@ -1,6 +1,3 @@
-//TODO: move this into methods for webpack optimization
-const View = require('components/blog/views.js');
-
 module.exports = {
   routes: {
     'blog': 'list',
@@ -11,17 +8,19 @@ module.exports = {
   methods: {
     list() {
       require.ensure([], () => {
+        const View = require('components/blog/views.js');
         api.makeCacheRequest(app.config.blogServer + '/', 'GET').then((data) => {
           new View.list({
             model: data,
           }).render();
           app.hideLoading();
         });
-      });
+      }, 'blog_chunk');
     },
 
     createEdit(id) {
       require.ensure([], () => {
+        const View = require('components/blog/views.js');
         const r = id ? app.config.blogServer + '/' + id : '';
         $.when(r).then((data) => {
           new View.createEdit({
@@ -29,18 +28,19 @@ module.exports = {
           }).render();
           app.hideLoading();
         });
-      });
+      }, 'blog_chunk');
     },
 
     detail(id) {
       require.ensure([], () => {
+        const View = require('components/blog/views.js');
         api.makeCacheRequest(app.config.blogServer + '/' + id, 'GET').then((data) => {
           new View.detail({
             model: data,
           }).render();
           app.hideLoading();
         });
-      });
+      }, 'blog_chunk');
     },
   },
   auth: ['createEdit'],
