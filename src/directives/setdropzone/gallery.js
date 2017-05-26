@@ -97,16 +97,10 @@ class GalleryDropzone extends imageDropzone.ImageDropzone {
     if(options.onSaved) {
       this.galleryElement.options.onSaved = options.onSaved;
     }
-
-    this.cropQueue = [];
   }
 
   getTemplate() {
     return require('./templates/galleryDropzone.pug');
-  }
-
-  processQueue() {
-
   }
 
   success(file, data) {
@@ -151,10 +145,6 @@ class GalleryDropzone extends imageDropzone.ImageDropzone {
       }
 
       this.element.querySelector('.fileHolder').insertAdjacentHTML('beforeend', fileObj.resultHTML);
-
-      this.cropQueue.push(fileObj);
-      this.processQueue();
-
       new imageDropzone.CropperDropzone(
         this,
         fileObj,
