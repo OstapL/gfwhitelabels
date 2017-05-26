@@ -34,14 +34,38 @@ module.exports = {
 
     render() {
       $('body').scrollTo();
+
       this.$el.html(
         this.template()
       );
+
+      // clear previous modal elements from DOM
+      $('#sign_in').remove();
+      $('#sign_up').remove();
 
       $('body').append(this.$el);
 
       this.$signIn = $('#sign_in');
       this.$signUp = $('#sign_up');
+
+      this.$signIn.off('hidden.bs.modal');
+      this.$signUp.off('hidden.bs.modal');
+      this.$signIn.off('shown.bs.modal');
+      this.$signUp.off('shown.bs.modal');
+
+      this.$signIn.on('hidden.bs.modal', () => {
+        if (this.showModal) {
+          this.$signUp.modal('show');
+          this.showModal = false;
+        }
+      });
+
+      this.$signUp.on('hidden.bs.modal', () => {
+        if (this.showModal) {
+          this.$signIn.modal('show');
+          this.showModal = false;
+        }
+      });
 
       this.$signUp.modal('show');
 
@@ -50,19 +74,15 @@ module.exports = {
 
     switchToLogin(e) {
       e.preventDefault();
-
+      this.showModal = true;
       this.$signUp.modal('hide');
-      this.$signIn.modal();
-
       return false;
     },
 
     switchToSignup(e) {
       e.preventDefault();
-
+      this.showModal = true;
       this.$signIn.modal('hide');
-      this.$signUp.modal();
-
       return false;
     },
 

@@ -14,7 +14,7 @@ const plugins = [
     title: 'GrowthFountain | Equity Crowdfunding Platform',
     template: './src/index.pug',
     filename: 'index.html',
-    inject: 'body',
+    inject: 'head',
   }),
   new ExtractTextPlugin({
     filename: 'styles.[name].[hash].css',
@@ -31,8 +31,7 @@ const plugins = [
     'Backbone': 'backbone',
   }),
   new webpack.optimize.CommonsChunkPlugin({
-    // name: 'vendor',
-    names: ['vendor_auth', 'vendor_no_auth'],
+    name: 'vendor',
     filename: '[name].[hash].js',
     minChunks: Infinity,
   }),
@@ -68,16 +67,15 @@ if (isDev) {
 }
 
 const dependencies = Object.keys(require('./package.json').dependencies);
-const authDependencies = ['dropzone', 'socket.io-client', 'cropperjs'];
-const noAuthDependencies = dependencies.filter((dep) => {
-  return !authDependencies.find(authDep => authDep == dep);
+const lazyDependencies = ['dropzone', 'socket.io-client', 'cropperjs', 'hellojs'];
+
+const baseDependencies = dependencies.filter((dep) => {
+  return !lazyDependencies.find(authDep => authDep == dep);
 });
 
 module.exports = {
   entry: {
-    // vendor: dependencies,
-    vendor_auth: authDependencies,
-    vendor_no_auth: noAuthDependencies,
+    vendor: baseDependencies,
     index: path.resolve(__dirname, './src/index.js'),
   },
   output: {
@@ -137,11 +135,7 @@ module.exports = {
         loader: 'pug-loader',
       },
       {
-       test: /\.(mp4|webm)$/,
-       loader: 'file-loader',
-     },
-     {
-       test: /\.(mp3|mp4)$/,
+       test: /\.(mp3|mp4|webm)$/,
        loader: 'file-loader',
      },
       {

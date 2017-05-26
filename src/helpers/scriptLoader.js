@@ -8,6 +8,9 @@ const createScript = (url, options={}) => {
   if (options.onLoad) script.onload = options.onLoad;
   if (options.onError) script.onerror = options.onError;
 
+  script.async = true;
+  script.defer = true;
+
   return script;
 };
 
@@ -88,6 +91,27 @@ const scriptLoader = _.extend({
     const url = 'https://player.vimeo.com/api/player.js';
     return this.load(url);
   },
+
+  loadGoogleMapsAPI() {
+    const url = 'https://maps.googleapis.com/maps/api/js?key=' + app.config.googleMapKey + '&callback=app.helpers.scripts.onGoogleMapsAPILoaded';
+
+    return new Promise((resolve, reject) => {
+      if (loadedScripts[url])
+        return resolve();
+
+      const script = createScript(url);
+
+      this.on('google-maps-loaded', () => {
+        loadedScripts[url] = true;
+        resolve();
+      });
+      document.head.appendChild(script);
+    });
+  },
+
+  onGoogleMapsAPILoaded() {
+    scriptLoader.trigger('google-maps-loaded');
+  }
 
 }, Backbone.Events);
 

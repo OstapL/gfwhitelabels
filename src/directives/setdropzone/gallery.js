@@ -2,7 +2,7 @@ const folder = require('models/folder.js');
 const folderDropzone = require('./folder.js');
 const imageDropzone = require('./image.js');
 const ImageClass = require('models/image.js');
-const defaultImage = require('images/default/255x153.png');
+const defaultImage = '/img/default/255x153.png'; 
 
 
 class GalleryElement extends imageDropzone.ImageElement {
