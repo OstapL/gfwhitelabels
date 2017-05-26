@@ -13,7 +13,7 @@ module.exports = {
         new View.intro().render();
         app.hideLoading();
         $('body').scrollTo();
-      });
+      }, 'establish_business_calculator_chunk');
     },
 
     calculatorEstablishedBusinessStep1() {
@@ -22,7 +22,7 @@ module.exports = {
         new View.step1().render();
         $('body').scrollTo();
         app.hideLoading();
-      });
+      }, 'establish_business_calculator_chunk');
     },
 
     calculatorEstablishedBusinessStep2() {
@@ -31,7 +31,7 @@ module.exports = {
         new View.step2().render();
         $('body').scrollTo();
         app.hideLoading();
-      });
+      }, 'establish_business_calculator_chunk');
     },
 
     calculatorEstablishedBusinessStep3() {
@@ -40,7 +40,7 @@ module.exports = {
         new View.step3().render();
         $('body').scrollTo();
         app.hideLoading();
-      });
+      }, 'establish_business_calculator_chunk');
     },
 
     calculatorEstablishedBusinessFinish() {
@@ -49,7 +49,7 @@ module.exports = {
         new View.finish().render();
         $('body').scrollTo();
         app.hideLoading();
-      });
+      }, 'establish_business_calculator_chunk');
     },
   },
 };

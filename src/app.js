@@ -22,6 +22,7 @@ class App {
     this.dialogs = require('directives/dialogs/index.js');
     this.models = require('./models.js');
     this.sites = require('./sites.js');
+    this.seo = require('./seo.js');
     this.user = new User();
 
     this.utils = {};
@@ -35,9 +36,13 @@ class App {
   start() {
     this.user.loadWithPromise().then(() => {
 
+      // A trick for turn off statistics with GET param, for SEO issue
+      if(document.location.search.indexOf('nometrix=t') !== -1) {
+        delete app.config.googleTagID;
+      }
+
       if (app.config.googleTagID) {
         this.initFacebookPixel();
-        this.initYandexMetrica();
       }
 
       this.routers = new Router();
@@ -62,24 +67,6 @@ class App {
         el: '#menuProfile',
       });
       this.profile.render();
-    });
-  }
-
-  initYandexMetrica() {
-    if (!app.config.googleTagID || !app.config.yandexMetricaID)
-      return;
-
-    safeDataLayerPush({
-      event: 'yandex-metrica-init',
-    })
-  }
-
-  emitYandexMetricaEvent() {
-    if (!app.config.googleTagID || !app.config.yandexMetricaID)
-      return;
-
-    safeDataLayerPush({
-      event: 'yandex-metrica-hit',
     });
   }
 
@@ -151,8 +138,7 @@ class App {
     $('.loader_overlay').show();
   }
 
-  hideLoading(time) {
-    time = time || 500;
+  hideLoading(time=500) {
     if (time > 0) {
       $('.loader_overlay').animate({
         opacity: 0,
@@ -251,41 +237,6 @@ class App {
 
   }
 
-  getVideoId(url) {
-    try {
-      let provider = url.match(/https:\/\/(:?www.)?(\w*)/)[2];
-      provider = provider.toLowerCase();
-      let id;
-      if (provider === 'youtube') {
-        id = url.match(/https:\/\/(?:www.)?(\w*).com\/.*v=([^\&]*)/)[2];
-      } else if (provider === 'youtu') {
-        provider = 'youtube';
-        id = url.match(/https:\/\/(?:www.)?(\w*).be\/(.*)/)[2];
-      } else if (provider === 'vimeo') {
-        id = url.match(/https:\/\/(?:www.)?(\w*).com\/(\d*)/)[2];
-      } else {
-        console.log(url, 'Takes a YouTube or Vimeo URL');
-      }
-
-      return { id: id, provider: provider };
-
-    } catch (err) {
-      console.log(url, 'Takes a YouTube or Vimeo URL');
-    }
-  }
-
-  getVideoUrl(videoInfo) {
-    var provider = videoInfo && videoInfo.provider ? videoInfo.provider : '';
-
-    if (provider === 'youtube')
-      return '//www.youtube.com/embed/' + videoInfo.id + '?rel=0&enablejsapi=1';
-
-    if (provider === 'vimeo')
-      return '//player.vimeo.com/video/' + videoInfo.id;
-
-    return '//www.youtube.com/embed/?rel=0';
-  }
-
   getVideoInfo(url) {
     try {
       let provider = url.match(/https:\/\/(:?www.)?(\w*)/)[2];
@@ -315,13 +266,6 @@ class App {
     }
 
     return {};
-  }
-
-  getThumbnail(size, thumbnails, _default) {
-    let thumb = thumbnails.find(function (el) {
-      return el.size == size;
-    });
-    return (thumb ? thumb.url : _default || require('images/default/Default_photo.png'))
   }
 
   getUrl(data) {

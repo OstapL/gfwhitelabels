@@ -31,7 +31,7 @@ module.exports = {
 
         new View();
         app.hideLoading();
-      });
+      }, 'what_my_business_worth_chunk');
     },
 
     selectCalculator() {
@@ -50,7 +50,7 @@ module.exports = {
 
         new View();
         app.hideLoading();
-      });
+      }, 'what_my_business_worth_chunk');
     },
 
     selectCalculator2() {
@@ -69,7 +69,7 @@ module.exports = {
 
         new View();
         app.hideLoading();
-      });
+      }, 'what_my_business_worth_chunk');
     },
 
     calculatorWhatMyBusinessWorthIntro() {
@@ -78,7 +78,7 @@ module.exports = {
         new View.intro().render();
         $('body').scrollTo();
         app.hideLoading();
-      });
+      }, 'what_my_business_worth_chunk');
     },
 
     calculatorWhatMyBusinessWorthStep1() {
@@ -87,7 +87,7 @@ module.exports = {
         new View.step1().render();
         $('body').scrollTo();
         app.hideLoading();
-      });
+      }, 'what_my_business_worth_chunk');
     },
 
     calculatorWhatMyBusinessWorthStep2() {
@@ -96,7 +96,7 @@ module.exports = {
         new View.step2().render();
         $('body').scrollTo();
         app.hideLoading();
-      });
+      }, 'what_my_business_worth_chunk');
     },
 
     calculatorWhatMyBusinessWorthFinish() {
@@ -105,7 +105,7 @@ module.exports = {
         new View.finish().render();
         $('body').scrollTo();
         app.hideLoading();
-      });
+      }, 'what_my_business_worth_chunk');
     },
   },
   auth: ['calculatorWhatMyBusinessWorthIntro', 'businessValuation'],

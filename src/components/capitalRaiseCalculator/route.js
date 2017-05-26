@@ -11,7 +11,7 @@ module.exports = {
         new View.intro().render();
         $('body').scrollTo();
         app.hideLoading();
-      });
+      }, 'raise_capital_calculator_chunk');
     },
 
     calculatorCapitalraiseStep1() {
@@ -20,7 +20,7 @@ module.exports = {
         new View.step1().render();
         $('body').scrollTo();
         app.hideLoading();
-      });
+      }, 'raise_capital_calculator_chunk');
     },
 
     calculatorCapitalraiseFinish() {
@@ -29,7 +29,7 @@ module.exports = {
         new View.finish().render();
         $('body').scrollTo();
         app.hideLoading();
-      });
+      }, 'raise_capital_calculator_chunk');
     },
   },
 };
