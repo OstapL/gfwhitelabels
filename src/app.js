@@ -22,6 +22,7 @@ class App {
     this.dialogs = require('directives/dialogs/index.js');
     this.models = require('./models.js');
     this.sites = require('./sites.js');
+    this.seo = require('./seo.js');
     this.user = new User();
 
     this.utils = {};
@@ -35,9 +36,13 @@ class App {
   start() {
     this.user.loadWithPromise().then(() => {
 
+      // A trick for turn off statistics with GET param, for SEO issue
+      if(document.location.search.indexOf('nometrix=t') !== -1) {
+        delete app.config.googleTagID;
+      }
+
       if (app.config.googleTagID) {
         this.initFacebookPixel();
-        this.initYandexMetrica();
       }
 
       this.routers = new Router();
@@ -62,24 +67,6 @@ class App {
         el: '#menuProfile',
       });
       this.profile.render();
-    });
-  }
-
-  initYandexMetrica() {
-    if (!app.config.googleTagID || !app.config.yandexMetricaID)
-      return;
-
-    safeDataLayerPush({
-      event: 'yandex-metrica-init',
-    })
-  }
-
-  emitYandexMetricaEvent() {
-    if (!app.config.googleTagID || !app.config.yandexMetricaID)
-      return;
-
-    safeDataLayerPush({
-      event: 'yandex-metrica-hit',
     });
   }
 
