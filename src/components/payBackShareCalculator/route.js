@@ -11,7 +11,7 @@ module.exports = {
         new View.step1().render();
         $('body').scrollTo();
         app.hideLoading();
-      });
+      }, 'payback_share_calculator_chunk');
     },
 
     calculatorPaybackshareStep2() {
@@ -20,7 +20,7 @@ module.exports = {
         new View.step2().render();
         $('body').scrollTo();
         app.hideLoading();
-      });
+      }, 'payback_share_calculator_chunk');
     },
 
     calculatorPaybackshareStep3: function () {
@@ -29,7 +29,7 @@ module.exports = {
         new View.step3().render();
         $('body').scrollTo();
         app.hideLoading();
-      });
+      }, 'payback_share_calculator_chunk');
     },
   },
   auth: ['calculatorPaybackshareStep1'],
