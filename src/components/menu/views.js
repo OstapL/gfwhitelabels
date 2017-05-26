@@ -1,4 +1,4 @@
-const Notifications = require('./notifications');
+const Notifications = require('./notifications.js');
 const notifications_channel = 'general';
 const HIDE_TIMEOUT = 500;
 
@@ -152,12 +152,14 @@ module.exports = {
     },
 
     initNotifications() {
-      this.notifications = new Notifications();
-      this.notifications.on(notifications_channel, (data) => {
-        this.model.data = this.model.data.concat(data);
-        this.updateUnreadCount();
-        let notificationsHtml = data.map(this.snippets.notification);
-        this.$notificationList.prepend(notificationsHtml);
+      Notifications.getInstanceAsync().then((instance) => {
+        this.notifications = instance;
+        this.notifications.on(notifications_channel, (data) => {
+          this.model.data = this.model.data.concat(data);
+          this.updateUnreadCount();
+          let notificationsHtml = data.map(this.snippets.notification);
+          this.$notificationList.prepend(notificationsHtml);
+        });
       });
     },
 

@@ -21,7 +21,7 @@ module.exports = {
           i.render();
           app.hideLoading();
         });
-      });
+      }, 'campaign_chunk');
     },
 
     list() {
@@ -50,7 +50,7 @@ module.exports = {
             'crowdfunding setup by clicking here.'
         });
 
-      });
+      }, 'campaign_chunk');
     },
 
     detail(name) {
@@ -73,7 +73,7 @@ module.exports = {
           i.render();
           $('body').scrollTo();
         });
-      });
+      }, 'campaign_chunk');
     },
 
     investment(name) {
@@ -107,7 +107,7 @@ module.exports = {
         //     $('head').append(script);
         //   });
         // }
-      });
+      }, 'campaign_chunk');
     },
   },
 
