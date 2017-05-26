@@ -243,7 +243,9 @@ $(document).ready(function () {
   $('body').on('click', 'a', (event) => {
     const href = event.currentTarget.getAttribute('href');
 
-    if (href == window.location.pathname) {
+    if (href === (window.location.pathname + window.location.search || '')) {
+    // if (href && href.startsWith(window.location.pathname)) {
+    // if (href == window.location.pathname) {
       window.location.reload();
       return;
     }
@@ -320,6 +322,8 @@ $(document).ready(function () {
       // app.trigger('menuReady');
     }
   });
+
+  $('#page').on('click', '.showVideoModal', (e) => app.helpers.video.showVideoModal(e));
 
 });
 
@@ -410,7 +414,10 @@ global.onYouTubeIframeAPIReady = () => {
   app.helpers.scripts.onYoutubeAPILoaded()
 };
 
-const App = require('app.js');
 
-global.app = new App();
-app.start();
+$(document).ready(function() {
+  const App = require('app.js');
+
+  global.app = new App();
+  app.start();
+});
