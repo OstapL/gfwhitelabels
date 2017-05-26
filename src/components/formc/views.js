@@ -260,9 +260,9 @@ module.exports = {
 
         var card = validateCard($stripeForm,
           { number: 'card_number',
-            expDate: 'card_exp_date_year__year',
-            expMonth: 'card_exp_month__month',
-            expYear: 'card_exp_date_year__year',
+            expDate: 'card_exp_date_year',
+            expMonth: 'card_exp_month',
+            expYear: 'card_exp_date_year',
             cvc: 'card_cvc',
           });
 
