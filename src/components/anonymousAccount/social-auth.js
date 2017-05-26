@@ -105,7 +105,7 @@ let functions = {
       return false;
     }
 
-    const network = $(e.target).data('network');
+    const network = $(e.target).closest('.btn-social-network').data('network');
 
     app.showLoading();
     functions.login(network).then((data) => {
