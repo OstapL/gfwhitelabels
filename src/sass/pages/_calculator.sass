@@ -1,5 +1,8 @@
 
 .calculator-container
+    p
+        font-size: rem(14)
+        line-height: 18px
     label
         font-size: 15px
         line-height: 22px
@@ -21,7 +24,7 @@
             display: inline-block
             margin-right: -2px
             width: 33%
-
+            position: relative
             &:last-child
                 margin-right: 0
                 a
@@ -42,8 +45,12 @@
                     @media screen and (max-width:575px)
                         h4
                             font-size: rem(10)
+                            position: relative
+                            z-index: 2
+                
+                
                 &:after
-                    content: "";
+                    content: ""
                     width: 30px
                     height: 31px
                     position: absolute
@@ -69,8 +76,17 @@
                     border-color: $calc_tabs_current_bg
                     color: $white
                     cursor: default
-                    
+            @media screen and (max-width:360px)
 
+                &:nth-child(1n+1)
+                    h4
+                        left: 8px
+                &:first-of-type
+                    width: 24%!important
+                &:last-of-type
+                    width: 28%!important
+                    h4
+                        left: 5px
         &.capitalraise
             padding: 0 2%
 
@@ -80,6 +96,11 @@
         &.established-business
             li
                 width: 19.6%
+        &.revenue-share-calculator
+            li
+              @media screen and (max-width:360px)
+                width: 33%!important
+
 
     .simple-list
         padding-left: rem(17)
@@ -112,16 +133,16 @@
     @media screen and (max-width: 992px)
         .mb30xs    
             margin-bottom: rem(30)
+    
+    &.select-business
+        @media screen and (max-width: 767px)
+            .btn
+                display: block
+        @media screen and (max-width: 380px)
+            .btn
+                font-size: rem(10)!important
 
     @media screen and (max-width:543px)
-        &.select-business
-            .btn-lg
-                padding-left: rem(9)
-                padding-right: rem(9)
-
-            .sm-font-xs
-                font-size: 9px!important
-
         .p-r-0
             padding-right: rem(9)!important
         .p-l-0
@@ -135,16 +156,20 @@
                 li a
                     letter-spacing: 1px
                     padding: rem(14) rem(5)
-
-    @media screen and (max-width:380px)
-        &.select-business
-            .btn-lg.p0btn
-                padding-left: rem(0)
-                padding-right: rem(0)
     .grey-text-help
         color: $small-text
         font-size: rem(11)
-
+    &.select-calculator-two
+        .row-button
+            div
+                margin: auto
+                text-align: center
+                float: none
+            .btn
+                display: block
+                margin-top: rem(25)
+                @media screen and (max-width:440px)
+                    font-size: rem(10)!important
 .table-custom-data
     table-layout: fixed
     max-width: 400px
