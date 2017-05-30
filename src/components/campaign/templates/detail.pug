@@ -6,6 +6,9 @@
 
   var infoProvider = new CampaignInfoProvider(this.model);
   var directiveKey = 'campaign';
+  var disableInvest = values.is_approved == STATUSES.VERIFIED;
+  var investURL =  disableInvest ? '#' : '/' + values.slug + '/invest';
+
 
 section.company-header.scroll-paralax.no-paralax-mobile
   div(style="background-image: url(" + values.campaign.getMainImage() + ")").background
@@ -71,8 +74,7 @@ section.company-header.scroll-paralax.no-paralax-mobile
             p Days Left
             h2.font-weight-bold.no-margin #{ values.campaign.daysLeft() }
           .col-xl-4.col-lg-3.col-md-2.hidden-xs-down.p-sm-0.pull-lg-right.text-xs-center.one-block
-            if values.is_approved == STATUSES.VERIFIED
-              a(href="/" + values.slug + "/invest").btn.btn-primary.text-uppercase.pull-lg-right Invest
+            a(href=investURL disabled=disableInvest).btn.btn-primary.text-uppercase.pull-lg-right Invest
 
 if app.getParams().preview == '1'
   div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#company_publish.modal.fade
@@ -197,8 +199,7 @@ section.campaigndetail
                   img(src=require('images/avatar1.jpg') alt="...").img-circle
               a(href="#" style="display: none").link-1 see all...
         .col-xl-4.col-lg-3.col-md-2.hidden-sm-up.p-sm-0.pull-lg-right.text-xs-center
-            if values.is_approved == STATUSES.VERIFIED
-              a(href="/" + values.slug + "/invest").btn.btn-primary.text-uppercase.pull-lg-right Invest
+            a(href=investURL disabled=disableInvest).btn.btn-primary.text-uppercase.pull-lg-right Invest
         .row.social-share-mobile
           .col-lg-12.share.hidden-sm-up.text-xs-center
             | !{ socialDirective.render(directiveKey, infoProvider) }
@@ -218,8 +219,7 @@ section.border-bottom-scroll.hidden-lg-down
           a(href="#faq").nav-link faq
         li.nav-item.text-uppercase
           a(href="#ask").nav-link Ask a Question
-        if values.is_approved == STATUSES.VERIFIED
-          a(href="/" + values.slug + "/invest").btn.btn-primary.text-uppercase.pull-xl-right.pull-lg-left invest
+          a(href=investURL disabled=disableInvest).btn.btn-primary.text-uppercase.pull-xl-right.pull-lg-left invest
 section
   div(data-spy="scroll"
   data-target="#navbar-example2"
@@ -666,5 +666,4 @@ section
               .like-detail-icon.d-inline-block
                 i.fa.fa-thumbs-o-up.like-icon-circle
               |  I’d Like to Invest in #{ values.short_name || values.name }!
-            if values.is_approved == STATUSES.VERIFIED
-              a(href="/" + values.slug + "/invest").btn.btn-lg.btn-primary.text-uppercase.m-t-2.large-btn-mobile-main invest in this company
+            a(href=investURL disabled=disableInvest).btn.btn-lg.btn-primary.text-uppercase.m-t-2.large-btn-mobile-main invest in this company
