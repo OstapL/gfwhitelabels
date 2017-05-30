@@ -1835,6 +1835,9 @@ module.exports = {
         1: 'Yes',
         0: 'No',
       };
+      this.fields.outstanding_securities.schema.amount_authorized.required = true;
+      this.fields.outstanding_securities.schema.amount_outstanding.required = true;
+
       this.labels = {
         outstanding_securities: {
           security_type: "Security Type",
@@ -1926,6 +1929,13 @@ module.exports = {
       e.preventDefault();
       const data = $(e.target).serializeJSON();
 
+      //work around NaN values in decimal field type serialization
+      if (isNaN(data.amount_authorized))
+        delete data.amount_authorized;
+
+      if (isNaN(data.amount_outstanding))
+        delete data.amount_outstanding;
+
       const sectionName = e.target.dataset.section;
       const template = require('./templates/snippets/outstanding_securities.pug');
 
@@ -1941,9 +1951,11 @@ module.exports = {
         }
       }
 
-      data.amount_outstanding = Math.round(
-          data.amount_outstanding * 100
-      ) / 100;
+      if (data.amount_outstanding) {
+        data.amount_outstanding = Math.round(
+            data.amount_outstanding * 100
+        ) / 100;
+      }
 
       if (!app.validation.validate(this.fields.outstanding_securities.schema, data, this)) {
         _(app.validation.errors).each((errors, key) => {
