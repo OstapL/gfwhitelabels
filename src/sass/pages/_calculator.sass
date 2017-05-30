@@ -39,6 +39,9 @@
 
                 &.btn
                     border-radius: $calc_tabs_radius
+                    @media screen and (max-width:575px)
+                        h4
+                            font-size: rem(10)
                 &:after
                     content: "";
                     width: 30px
@@ -54,7 +57,10 @@
                     border-bottom: none
                     transform: rotate(45deg)
                     z-index: 1
-
+                    @media screen and (max-width:575px)
+                        width: 27px
+                        height: 27px
+                        right: -13px
 
 
                 &.current
