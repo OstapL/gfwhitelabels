@@ -2247,6 +2247,9 @@ module.exports = {
         url = app.config.formcServer + '/' + this.model.id;
 
         if(fieldName.indexOf('[') !== -1) {
+          val = (fieldName.indexOf('end_date_of_service') >= 0 && (val || '').toLowerCase() == 'current')
+            ? ''
+            : val;
           let names = fieldName.split('.');
           fieldName = names[0].split('[')[0];
           let index = names[0].split('[')[1].replace(']', '');
@@ -2254,10 +2257,10 @@ module.exports = {
 
           if(fieldName == 'team_members') {
             url = app.config.formcServer + '/' + this.model.id + '/team-members/' +
-              roles[this.model.team_members[index].role[0]].toLocaleLowerCase() + '/' +
-              this.model.team_members[index].user_id;
+              roles[this.model.formc.team_members[index].role[0]].toLocaleLowerCase() + '/' +
+              this.model.formc.team_members[index].user_id;
 
-            data = this.model.team_members[index];
+            data = this.model.formc.team_members[index];
             method = 'PUT';
 
           } else if(fieldName.indexOf('risk') !== -1) {
