@@ -62,7 +62,6 @@ module.exports = {
       'shown.bs.collapse #hidden-article-press' :'onArticlePressCollapse',
       'click .submit_form': 'submitCampaign',
       'click .company-documents': 'showDocumentsModal',
-      'click .show-video-modal': 'showVideoModal',
     },
 
     onCollapse (e) {
@@ -342,9 +341,6 @@ module.exports = {
       this.$el.find('.perks .col-xl-4 p').equalHeights();
       this.$el.find('.team .auto-height').equalHeights();
       this.$el.find('.card-inverse p').equalHeights();
-      this.$el.find('.modal').on('hidden.bs.modal', function(event) {
-        $(event.currentTarget).find('iframe').attr('src', $(event.currentTarget).find('iframe').attr('src'));
-      });
 
       // fetch vimeo
       $('.vimeo-thumbnail').each(function(elem, idx) {
@@ -370,104 +366,6 @@ module.exports = {
     readMore(e) {
       e.preventDefault();
       $(e.target).parent().addClass('show-more-detail');
-    },
-
-    showVideoModal(e) {
-
-      const attachYoutubeEvents = ($modal, callback) => {
-        let player = null;
-        let eventSent = false;
-
-        $modal.on('show.bs.modal', () => {
-          player = new YT.Player('video-iframe-container', {
-            // videoId: videoInfo.id,
-            events: {
-              onReady(e){},
-              onStateChange(e) {
-                if (e.data == YT.PlayerState.PLAYING && !eventSent) {
-                  eventSent = true;
-                  callback();
-                }
-              },
-              onError(err) {
-                console.error(err);
-              },
-            }
-          });
-        });
-
-        $modal.on('hidden.bs.modal', () => {
-          player.stopVideo();
-          player.destroy();
-          player = null;
-          $modal.empty();
-          $modal.remove();
-        });
-      };
-
-      const attachVimeoEvents = ($modal, callback) => {
-        let player = null;
-        let eventSent = false;
-        $modal.on('show.bs.modal', () => {
-          player = new Vimeo.Player('video-iframe-container');
-          player.on('play', () => {
-            if (!eventSent) {
-              eventSent = true;
-              callback();
-            }
-          });
-        });
-        $modal.on('hidden.bs.modal', () => {
-          player.off('play');
-          player.unload().then(() => {
-            player = null;
-            $modal.empty();
-            $modal.remove();
-          }).catch(console.error);
-        });
-      };
-
-      const loadPlayer = (provider) => {
-        if (provider == 'youtube')
-          return app.helpers.scripts.loadYoutubePlayerAPI();
-
-        if (provider == 'vimeo')
-          return app.helpers.scripts.loadVimeoPlayerAPI();
-      };
-
-      let $target = $(e.target).closest('a');
-
-      const provider = $target.data('provider');
-      const id = $target.data('id');
-      const url = $target.data('url');
-
-      loadPlayer(provider).then((Player) => {
-        let $content = $('#content');
-        const template = require('templates/videoModal.pug');
-
-        $content.append(template({
-          provider,
-          id,
-          url,
-        }));
-
-        const sendVideoPlayEvent = () => {
-          app.emitGoogleAnalyticsEvent('company-video-play', {
-            eventCategory: 'Video',
-            eventAction: 'play',
-            //eventLabel: 'Youtube Video',
-            eventValue: url,
-          });
-        };
-
-        let $modal = $('#videoModal');
-
-        if (provider === 'youtube')
-          attachYoutubeEvents($modal, sendVideoPlayEvent);
-        else if (provider === 'vimeo')
-          attachVimeoEvents($modal, sendVideoPlayEvent)
-        $modal.modal('show');
-      });
     },
 
   }),
