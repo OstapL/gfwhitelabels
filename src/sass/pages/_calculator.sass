@@ -93,7 +93,10 @@
     .jqplot-title
         display: none
 
-    table 
+    table
+        .bgc-row
+            background-color: $table-bgc-row-calculator
+            color: $white
         thead tr th 
             padding: rem(15)
 
@@ -102,7 +105,10 @@
         tbody tr td,
         tbody tr th
             text-align: center
-
+    .table-revenue-finish
+        td,
+        th
+            font-size: rem(12)
     @media screen and (max-width: 992px)
         .mb30xs    
             margin-bottom: rem(30)
@@ -158,7 +164,17 @@
     padding: 3px 5px
     border-radius: 4px
     font-size: 12px
-
+.graf-responsive
+    overflow: auto!important
+    #chart1   
+        width: 100%
+        @media screen and (max-width: 767px)
+            width: 768px!important
+    .data-point-label
+        transform: translate(-50%, -50%)
+        position: absolute
+        left: 50%!important
+        top: 20%!important
 .tooltip
     &.tooltip-custom
         opacity: 1

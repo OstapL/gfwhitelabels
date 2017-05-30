@@ -16,24 +16,24 @@
 
   .page
     .row
-      .offset-lg-1.col-xs-10.text-sm-center.mb15
+      .col-xl-12.text-xs-center.mb15
 
-        h2.dosis.m0.text-uppercase REVENUE GRAPH
+        h2.m0.text-uppercase.text-xs-center REVENUE GRAPH
 
     .row
       .col-xs-12
-        .js-jq-plot-area
+        .js-jq-plot-area.graf-responsive
           #chart1
           p.plot-title Multiple Returned
 
     .row
-      .col-xs-12.text-sm-center.mt45
-        h2.dosis.m0.text-uppercase Your results
+      .col-xs-12.text-xs-center.mt45
+        h2.m0.text-uppercase Your results
 
         .table-responsive.mt30
-          table.table.table-sm.table-bordered.table-striped
+          table.table.table-sm.table-bordered.table-striped.table-revenue-finish
             thead
-              tr
+              tr.bgc-row
                 th Time
                 th Fundraise
                 th Revenue
@@ -43,7 +43,7 @@
             tbody
               each val, index in data.outputData
                 tr
-                  th(scope='row')= 'Year ' + index
+                  td(scope='row')= 'Year ' + index
                   td= formatPrice(val.fundraise)
                   td= formatPrice(val.revenue)
                   td= formatPrice(val.annual)
