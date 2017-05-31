@@ -4,8 +4,8 @@
         font-size: rem(14)
         line-height: 18px
     label
-        font-size: 15px
-        line-height: 22px
+        font-size: 14px
+        line-height: 18px
     h3,h2,h4 
         line-height: 1.35!important
 
@@ -96,6 +96,19 @@
         &.established-business
             li
                 width: 19.6%
+                @media screen and (max-width:360px)
+                    width: 20%!important
+                    &:nth-child(1n+1)
+                        h4
+                            left: 10px
+                    &:first-of-type
+                        width: 18%!important
+                        h4
+                            left: 0
+                    &:last-of-type
+                        width: 24%!important
+                        h4
+                            left: 7px
         &.revenue-share-calculator
             li
               @media screen and (max-width:360px)
@@ -152,10 +165,6 @@
             &.capitalraise
                 padding: 0
 
-            &.established-business
-                li a
-                    letter-spacing: 1px
-                    padding: rem(14) rem(5)
     .grey-text-help
         color: $small-text
         font-size: rem(11)
@@ -170,10 +179,18 @@
                 margin-top: rem(25)
                 @media screen and (max-width:440px)
                     font-size: rem(10)!important
-.table-custom-data
-    table-layout: fixed
-    max-width: 400px
-    margin: 0 auto 20px
+    &.established-business-finish
+        #chart
+            .flot-x-axis
+                .flot-tick-label
+                    @media screen and (max-width:575px)
+                        font-size: 6px
+                        width: 30px
+                        margin-left: 25px
+    .table-custom-data
+        table-layout: fixed
+        max-width: 400px
+        margin: 0 auto 20px
 
 .lead
     margin-bottom: 10px
