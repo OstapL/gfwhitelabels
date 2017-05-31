@@ -183,10 +183,17 @@
         #chart
             .flot-x-axis
                 .flot-tick-label
+                    width: 74px
+                    &:last-child
+                        text-align: center!important
                     @media screen and (max-width:575px)
                         font-size: 6px
                         width: 30px
                         margin-left: 25px
+    &.revenue-calculator
+        .graf-responsive
+            .plot-x-title
+                text-align: center
     .table-custom-data
         table-layout: fixed
         max-width: 400px
