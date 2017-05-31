@@ -1835,6 +1835,9 @@ module.exports = {
         1: 'Yes',
         0: 'No',
       };
+      this.fields.outstanding_securities.schema.amount_authorized.required = true;
+      this.fields.outstanding_securities.schema.amount_outstanding.required = true;
+
       this.labels = {
         outstanding_securities: {
           security_type: "Security Type",
@@ -1926,6 +1929,13 @@ module.exports = {
       e.preventDefault();
       const data = $(e.target).serializeJSON();
 
+      //work around NaN values in decimal field type serialization
+      if (isNaN(data.amount_authorized))
+        delete data.amount_authorized;
+
+      if (isNaN(data.amount_outstanding))
+        delete data.amount_outstanding;
+
       const sectionName = e.target.dataset.section;
       const template = require('./templates/snippets/outstanding_securities.pug');
 
@@ -1941,9 +1951,11 @@ module.exports = {
         }
       }
 
-      data.amount_outstanding = Math.round(
-          data.amount_outstanding * 100
-      ) / 100;
+      if (data.amount_outstanding) {
+        data.amount_outstanding = Math.round(
+            data.amount_outstanding * 100
+        ) / 100;
+      }
 
       if (!app.validation.validate(this.fields.outstanding_securities.schema, data, this)) {
         _(app.validation.errors).each((errors, key) => {
@@ -2247,6 +2259,9 @@ module.exports = {
         url = app.config.formcServer + '/' + this.model.id;
 
         if(fieldName.indexOf('[') !== -1) {
+          val = (fieldName.indexOf('end_date_of_service') >= 0 && (val || '').toLowerCase() == 'current')
+            ? ''
+            : val;
           let names = fieldName.split('.');
           fieldName = names[0].split('[')[0];
           let index = names[0].split('[')[1].replace(']', '');
@@ -2254,10 +2269,10 @@ module.exports = {
 
           if(fieldName == 'team_members') {
             url = app.config.formcServer + '/' + this.model.id + '/team-members/' +
-              roles[this.model.team_members[index].role[0]].toLocaleLowerCase() + '/' +
-              this.model.team_members[index].user_id;
+              roles[this.model.formc.team_members[index].role[0]].toLocaleLowerCase() + '/' +
+              this.model.formc.team_members[index].user_id;
 
-            data = this.model.team_members[index];
+            data = this.model.formc.team_members[index];
             method = 'PUT';
 
           } else if(fieldName.indexOf('risk') !== -1) {
