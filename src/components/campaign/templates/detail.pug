@@ -16,6 +16,8 @@ section.company-header.scroll-paralax.no-paralax-mobile
     .home-content
       .home-text.text-lg-center
         h1.company-name.mb-xs-30.big-h1.text-uppercase #{ values.short_name || values.name }
+        if values.tagline.length > 0
+          h2.font-weight-light.tagline #{ values.tagline }
         .local-scroll
           if values.campaign.video
             -
@@ -27,8 +29,8 @@ section.company-header.scroll-paralax.no-paralax-mobile
               data-url=videoInfo.url
             ).big-icon.link-6.youtube_popup.showVideoModal.play-icon
               i.fa.fa-play
-          a(href=values.website target="_blank").link-6.link-campaing-detail.hidden-xs-down #{ app.helpers.format.getWebsiteUrl(values.website) }
-          .row.social-link.hidden-xs-down
+          //a(href=values.website target="_blank").link-6.link-campaing-detail.hidden-xs-down #{ app.helpers.format.getWebsiteUrl(values.website) }
+          //.row.social-link.hidden-xs-down
             if values.facebook
               a(href=values.facebook target="_blank").link-6.link-campaing-detail
                 i.fa.fa-facebook
@@ -73,8 +75,9 @@ section.company-header.scroll-paralax.no-paralax-mobile
           .col-xl-2.col-lg-2.col-md-2.col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left.one-block
             p Days Left
             h2.font-weight-bold.no-margin #{ values.campaign.daysLeft() }
-          .col-xl-4.col-lg-3.col-md-2.hidden-xs-down.p-sm-0.pull-lg-right.text-xs-center.one-block
-            a(href=investURL disabled=disableInvest).btn.btn-primary.text-uppercase.pull-lg-right Invest
+          .col-xl-4.col-lg-3.col-md-2.hidden-xs-down.text-xs-right.one-block.share.pull-right
+            | !{ socialDirective.render(directiveKey, infoProvider) }
+            
 
 if app.getParams().preview == '1'
   div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#company_publish.modal.fade
@@ -145,9 +148,27 @@ if app.getParams().preview == '1'
 
 section.campaigndetail
   .container
-    .col-lg-6.p-md-0
-      if values.tagline.length > 0
-        h1.text-xs-center.text-lg-left.m-t-0.m-b-1 #{ values.tagline }
+    .col-xl-2.col-xs-12
+      .left-wrap-city
+        .d-inline-block
+          i.fa.fa-calendar-check-o.icon-city
+        span Founded #{ app.helpers.format.formatDate(values.founding_date) }
+        .vertical-line
+      .left-wrap-city
+        .d-inline-block
+          i.fa.fa-map-marker.icon-city
+        span #{ values.city }, #{ values.state }
+        .vertical-line
+      .left-wrap-city
+        .d-inline-block
+          i.fa.fa-tags.icon-city
+        span Education #{ values.industry }
+    .col-xl-4.brif
+      h4.text-uppercase.font-weight-bold Highlights
+      | !{values.brief}
+      .link-site
+        a(href=values.website target="_blank").link-1.link-campaing-detail #{ app.helpers.format.getWebsiteUrl(values.website) }
+    ///.col-lg-6.p-md-0
       .row
         .col-lg-4.col-xs-5
           .sity-detail
@@ -157,10 +178,8 @@ section.campaigndetail
           .date-detail.pull-md-right.pull-lg-left
             i.fa.fa-calendar-check-o
             |  Founded #{ app.helpers.format.formatDate(values.founding_date) }
-      .row.hidden-xs-down
-        .col-lg-12.share
-          | !{ socialDirective.render(directiveKey, infoProvider) }
-    .col-lg-6.right-block-investors.p-l-0.p-sm-0
+    
+    .col-lg-6.right-block-investors
       .progress_bar_container
         -
           var percentage_raised = values.campaign.fundedPercentage();
@@ -200,7 +219,7 @@ section.campaigndetail
               a(href="#" style="display: none").link-1 see all...
         .col-xl-4.col-lg-3.col-md-2.hidden-sm-up.p-sm-0.pull-lg-right.text-xs-center
             a(href=investURL disabled=disableInvest).btn.btn-primary.text-uppercase.pull-lg-right Invest
-        .row.social-share-mobile
+        //.row.social-share-mobile
           .col-lg-12.share.hidden-sm-up.text-xs-center
             | !{ socialDirective.render(directiveKey, infoProvider) }
 section.border-bottom-scroll.hidden-lg-down

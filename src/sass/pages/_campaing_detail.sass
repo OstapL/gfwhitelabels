@@ -50,6 +50,9 @@
     font-weight: $campain_main_name_font_weight
     color: $white
     padding-left: rem(4)
+  .tagline
+    font-style: italic
+    margin-top: 15px
 
   .big-icon
     display: block
@@ -85,11 +88,6 @@
   text-align: center
   font-size: rem(36)
   color: rgba(255,255,255, .97)
-
-.link-campaing-detail
-  +calc-rem(18)
-  color: $white
-  padding: rem(10)
 
 .social-link
   padding: rem(15) 0
@@ -128,7 +126,12 @@
         margin-bottom: rem(3)
         @media only screen and (max-width : 575px)
           font-size: rem(13)
-
+      .share
+        margin-top: rem(13)
+        padding-top: 0
+        span
+          position: relative
+          top: -5px
     .btn
       margin-top: rem(8)
 .edit-campaign-wrap
@@ -153,11 +156,37 @@
     margin-bottom: rem(3)
     color: $small-text
     line-height: rem(14)
-  .sity-detail
-    color: $small-text
-    text-transform: capitalize
-  .date-detail
-    color: $small-text
+  .left-wrap-city
+    margin-bottom: 25px
+    span
+      color: $small-text
+      text-transform: capitalize
+    .icon-city
+      font-size: rem(12)
+      width: 22px
+      height: 22px
+      background-color: $campaign-like-bgc
+      position: relative
+      vertical-align: middle
+      border-radius: 100px
+      color: $white
+      margin-right: rem(3)
+      &:before
+        transform: translate(-50%, -50%)
+        position: absolute
+        left: 50%
+        top: 50%
+    .vertical-line
+      height: 28px
+      border-left: 3px solid $alabaster
+      margin: 0 10px
+      position: absolute
+  .brif
+    border-left: solid 1px #e7e7e7
+    border-right: solid 1px #e7e7e7
+    .link-campaing-detail
+      font-size: rem(12)
+      text-decoration: underline
   .mt25
     margin-top: rem(25)
   .mt20
