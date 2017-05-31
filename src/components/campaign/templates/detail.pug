@@ -6,7 +6,7 @@
 
   var infoProvider = new CampaignInfoProvider(this.model);
   var directiveKey = 'campaign';
-  var disableInvest = values.is_approved == STATUSES.VERIFIED;
+  var disableInvest = values.is_approved != STATUSES.VERIFIED;
   var investURL =  disableInvest ? '#' : '/' + values.slug + '/invest';
 
 
@@ -219,7 +219,7 @@ section.border-bottom-scroll.hidden-lg-down
           a(href="#faq").nav-link faq
         li.nav-item.text-uppercase
           a(href="#ask").nav-link Ask a Question
-          a(href=investURL disabled=disableInvest).btn.btn-primary.text-uppercase.pull-xl-right.pull-lg-left invest
+        a(href=investURL disabled=disableInvest).btn.btn-primary.text-uppercase.pull-xl-right.pull-lg-left invest
 section
   div(data-spy="scroll"
   data-target="#navbar-example2"
