@@ -28,7 +28,6 @@
 			.title-header-signup
 				margin-top: rem(20)!important
 				text-align: center
-				margin-left: rem(15)
 				margin-bottom: rem(20)
 				h1
 					font-size: rem(24)
@@ -39,10 +38,14 @@
 						font-size: rem(36)
 				.border-left
 					border-left: solid 1px $white
+					@media only screen and (max-width : 545px)
+						border: none
 				.text
 					p
 						margin-top: 0
 						margin-bottom: 0
+						@media only screen and (min-width : 544px)
+							margin-right: 10px
 			.title-header-bottom
 				font-size: rem(20)
 				text-align: center
@@ -128,6 +131,20 @@
 	.radio-input
 		label
 			font-weight: normal
+#sign_up
+  .modal-dialog
+    max-width: 540px
+    .modal-body
+      padding: rem(15) rem(45) 0
+      @media only screen and (max-width : 480px)
+      	padding: rem(15) rem(15) 0
+      @media only screen and (max-width : 360px)
+      	padding: rem(15) 0 0
+
+      .label-text
+        line-height: 14px
+        font-size: rem(12)
+	
 
 @media only screen and (max-width : 991px)
 	[id^="videoModal"]
