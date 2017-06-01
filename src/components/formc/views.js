@@ -327,7 +327,7 @@ module.exports = {
 
           }).fail((xhr, ajaxOptions, err) => {
             app.validation.invalidMsg({'$': $}, "expiration-block",
-              [xhr.responseJSON.non_field_errors || 'An error occurred, please, try again later.']);
+              [xhr.responseJSON && xhr.responseJSON.non_field_errors ? xhr.responseJSON.non_field_errors : 'An error occurred, please, try again later.']);
 
             $payBtn.prop('disabled', false);
             app.hideLoading();
