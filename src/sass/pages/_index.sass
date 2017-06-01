@@ -138,27 +138,21 @@
 @-webkit-keyframes fadeOuts
   from
     opacity: 1
-
   to
     opacity: 0
-
 
 @keyframes fadeOuts
   from
     opacity: 1
-
   to
     opacity: 0
-
 
 .fadeOuts
   -webkit-animation-name: fadeOuts
   animation-name: fadeOuts
-
 @-webkit-keyframes fadeOutsDown
   from
     opacity: 1
-
   to
     opacity: 0
     -webkit-transform: translate3d(0, 100%, 0)
@@ -292,45 +286,15 @@
     .link-6
       font-size: rem(14)
 
-.home-wrap-text-block
-  position: relative
-  margin-top: rem(50)
-  .opasity-block
-    &:before
-      content: " "
-      width: 100%
-      height: 100%
-      position: absolute
-      top: 0
-      left: 0
-      background: rgba(17, 17, 17, .5)
-  h2
-    color: $alabaster
-    margin-bottom: rem(20)
-  h3
-    color: $alabaster
-    letter-spacing: rem(.45)
-    line-height: rem(24)
-    margin-top: 0
-    font-weight: 300
-  .learn-link
-    margin-top: rem(20)
-    margin-bottom: rem(45)
-  .m-l-30
-    margin-left: rem(30)
 .raise-wrap
   .btn
     &:first-child
       margin-right: rem(30)
-.home-what-is
-  h3
-    color: $cod_gray
-    letter-spacing: rem(.45)
-    line-height: rem(24)
-    font-weight: lighter
+
 .home-our-partners
   background-color: $alabaster
   padding: rem(25) 0 rem(20) 0
+  display: $home-our-partners
   .item
     min-height: 70px
     @media only screen and (max-width : 544px)
@@ -358,7 +322,7 @@
       width: 160px
 
 
-.home-wrap-text-block
+.home-wrap-text-block // проверить вроде не нужно
   .wrap
     position: absolute 
     left: 50%
@@ -367,6 +331,7 @@
     -webkit-transform: translate(-50%,-50%)
     transform: translate(-50%,-50%)
     width: 100%
+    
 @media only screen and (max-width : 992px)
   .home-text-main
     h1

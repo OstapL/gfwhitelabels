@@ -6,95 +6,6 @@ section.slider-main
       a(href="/pg/heartland-tour") Apply Now
       |  to join The Heartland Tour and present your fundraise live!
   include slider
-  //.owl-carousel.owl-theme.carousel-test
-    div
-      - var styleString = 'background: url(' + require('images/slide_5.png') + ')';
-      div(style=styleString + '; background-position: center center !important').slide_1.main-slider-item
-      .slider-content.container
-        .text-xs-center
-          .col-lg-12
-            h1.big-h1 Own a Piece of Your Favorite Company
-          .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
-            span.small-text Invest in local businesses and entrepreneurs you believe in, starting at $100
-          .col-lg-12.mt20.mb30
-            a(href="/pg/education").link-6 Learn the Risks
-          if app.user.is_anonymous()
-            .col-lg-12
-              a(href="/account/signup").btn.btn-lg.btn-primary sign up + get $25
-          else
-            .col-lg-12.hidden-sm-down
-              a(href="/companies").btn.btn-lg.btn-primary.m-r-2 INVEST
-              a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
-            .col-lg-12.hidden-md-up
-              a(href="/companies").btn.btn-lg.btn-primary INVEST
-
-    div
-      - var styleString = 'background: url(' + require('images/slide_2.jpg') + ')';
-      div(style=styleString).main-slider-item.slide_2
-      //img(src=require('images/slide_2.jpg') alt="...")
-      .slider-content.container
-        .text-xs-center
-          .col-lg-12
-            h1.big-h1 Own a Piece of Your Favorite Company
-          .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
-            span.small-text Invest in local businesses and entrepreneurs you believe in, starting at $100
-          .col-lg-12.mt20.mb30
-            a(href="/pg/education").link-6 Learn the Risks
-          if app.user.is_anonymous()
-            .col-lg-12
-              a(href="/account/signup").btn.btn-lg.btn-primary sign up + get $25
-          else
-            .col-lg-12.hidden-sm-down
-              a(href="/companies").btn.btn-lg.btn-primary.m-r-2 INVEST
-              a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
-            .col-lg-12.hidden-md-up
-              a(href="/companies").btn.btn-lg.btn-primary INVEST
-    div
-      - var styleString = 'background: url(' + require('images/slide_3.jpg') + ')';
-      div(style=styleString).main-slider-item.slide_3
-      //img(src=require('images/slide_3.jpg') alt="...")
-      .slider-content.container
-        .text-xs-center
-          .col-lg-12
-            h1.big-h1 Own a Piece of Your Favorite Company
-          .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
-            span.small-text Invest in local businesses and entrepreneurs you believe in, starting at $100
-          .col-lg-12.mt20.mb30
-            a(href="/pg/education").link-6 Learn the Risks
-          if app.user.is_anonymous()
-            .col-lg-12
-              a(href="/account/signup").btn.btn-lg.btn-primary sign up + get $25
-          else
-            .col-lg-12.hidden-sm-down
-              a(href="/companies").btn.btn-lg.btn-primary.m-r-2 INVEST
-              a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
-            .col-lg-12.hidden-md-up
-              a(href="/companies").btn.btn-lg.btn-primary INVEST
-//section.main-video
-  .homepage-hero-module
-    .video-container
-      .filter
-      video(autoplay loop).fillWidth
-        source(src=require("img/video/In-And-Out/MP4/In-And-Out.mp4") type="video/mp4")
-        //source(src=require("img/video/In-And-Out/WEBM/In-And-Out.webm") type="video/webm")
-      .slider-main
-        .slider-content.container
-          .text-xs-center
-            .col-lg-12
-              h1.big-h1.hidden-sm-down Own a Piece of Your Favorite Company
-            .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
-              span.small-text Invest in local businesses and entrepreneurs you believe in, starting at $100
-            .col-lg-12.mt20.mb30
-              a(href="/pg/education").link-6 Learn the Risks
-            if app.user.is_anonymous()
-              .col-lg-12
-                a(href="/account/signup").btn.btn-lg.btn-primary sign up + get $25
-            else
-              .col-lg-12.hidden-sm-down
-                a(href="/companies").btn.btn-lg.btn-primary.m-r-2 INVEST
-                a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
-              .col-lg-12.hidden-md-up
-                a(href="/companies").btn.btn-lg.btn-primary INVEST
 
 section.campaing-list.campaign-list-main-page
   .container#campaignList
@@ -106,7 +17,6 @@ section.campaing-list.campaign-list-main-page
         a(href="/companies").btn.btn-sm.btn-secondary.btn-see-all 
           | See All
           i.fa.fa-angle-right
-
 
 section.main-video-wrap
   video(poster=require("images/main-before-video.jpg") id="bgvid" playsinline autoplay muted loop)
