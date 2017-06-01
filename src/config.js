@@ -32,6 +32,9 @@ var e = {
   googleAnalyticsID: 'UA-97185485-1',
   googleAnalyticsIDGeneral: 'UA-97185485-3',
   facebookPixelID: 1020185798119090,
+
+  //main slider or img (slider - 1/ img - 0)
+  indexSlider: 1,
 };
 
 module.exports = e;
