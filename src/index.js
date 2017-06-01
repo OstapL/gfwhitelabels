@@ -62,6 +62,47 @@ function scrollMenuItemsHandler() {
   }
 }
 
+function scrollAnimateHandler() {
+  const isElementInView = (element, percentsInView) => {
+    const $w = $(window);
+    const $el = $(element);
+
+    const windowTop = $w.scrollTop();
+    const windowBottom = windowTop + $w.height();
+    const elementTop = $el.offset().top;
+    const elementBottom = elementTop + $el.height();
+
+    let visibleElementHeight = Math.min(windowBottom, elementBottom) - Math.max(windowTop, elementTop);
+    if (visibleElementHeight <= 0)
+      return false;
+
+    if (_.isNumber(percentsInView)) {
+      const visiblePercents = visibleElementHeight / $el.height();
+      return visiblePercents >= percentsInView;
+      // return ((windowTop < elementTop) && (windowBottom > elementBottom));
+    }
+
+    return ((elementTop <= windowBottom) && (elementBottom >= windowTop));
+  };
+
+  const animateClasses = ['animated',  'fadeInLeft'];
+  const animateSelector = '.scroll-animate';
+  const animateElements = $(animateSelector);
+  if (!animateElements.length)
+    return;
+
+  animateElements.each((idx, element) => {
+    if (!isElementInView(element, 0.4)) {
+      return;
+    }
+
+    animateClasses.forEach((animateClass) => {
+      if (!element.classList.contains(animateClass))
+        element.classList.add(animateClass);
+    });
+  });
+}
+
 function hideOtherPopovers(popoverElement) {
   // hide other popovers
   const $popoverElements = $('.showPopover');
@@ -103,6 +144,7 @@ $(document).ready(function () {
   $(window).scroll((e) => {
     scrollLogoHandler(e);
     scrollMenuItemsHandler(e);
+    scrollAnimateHandler(e);
   });
 
   //attach global event handlers
