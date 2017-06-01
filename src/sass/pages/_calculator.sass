@@ -1,5 +1,8 @@
 
 .calculator-container
+    .help-block
+        font-size: rem(12)
+        line-height: rem(14)
     p
         font-size: rem(14)
         line-height: 18px
@@ -22,7 +25,6 @@
     .top-breadcrambs
         li 
             display: inline-block
-            margin-right: -2px
             width: 33%
             position: relative
             &:last-child
@@ -39,8 +41,12 @@
                 border: solid 1px $gallery
                 text-align: center
                 color: $small-text
-
+                
                 &.btn
+                    h4
+                        margin-left: 15px
+                        @media screen and (max-width:575px)
+                            margin-left: 0
                     border-radius: $calc_tabs_radius
                     @media screen and (max-width:575px)
                         h4
@@ -92,6 +98,20 @@
 
             li
                 width: 24.6%
+                @media screen and (max-width:360px)
+                    width: 20%!important
+                    &:nth-child(1n+1)
+                        width: 25%!important
+                        h4
+                            left: 10px
+                    &:first-of-type
+                        width: 23%!important
+                        h4
+                            left: 0
+                    &:last-of-type
+                        width: 27%!important
+                        h4
+                            left: 7px
 
         &.established-business
             li
@@ -99,6 +119,7 @@
                 @media screen and (max-width:360px)
                     width: 20%!important
                     &:nth-child(1n+1)
+                        width: 20%
                         h4
                             left: 10px
                     &:first-of-type
@@ -106,7 +127,7 @@
                         h4
                             left: 0
                     &:last-of-type
-                        width: 24%!important
+                        width: 22%!important
                         h4
                             left: 7px
         &.revenue-share-calculator
