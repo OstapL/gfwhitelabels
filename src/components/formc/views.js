@@ -327,7 +327,7 @@ module.exports = {
 
           }).fail((xhr, ajaxOptions, err) => {
             app.validation.invalidMsg({'$': $}, "expiration-block",
-              [xhr.responseJSON.non_field_errors || 'An error occurred, please, try again later.']);
+              [xhr.responseJSON && xhr.responseJSON.non_field_errors ? xhr.responseJSON.non_field_errors : 'An error occurred, please, try again later.']);
 
             $payBtn.prop('disabled', false);
             app.hideLoading();
@@ -2243,7 +2243,6 @@ module.exports = {
       let method = 'PATCH';
 
       if(name.indexOf('company.') !== -1) {
-
         fieldName = name.split('company.')[1];
         data[fieldName] = val;
         url = app.config.raiseCapitalServer + '/company/' + app.user.company.id;
@@ -2259,22 +2258,18 @@ module.exports = {
         url = app.config.formcServer + '/' + this.model.id;
 
         if(fieldName.indexOf('[') !== -1) {
-          val = (fieldName.indexOf('end_date_of_service') >= 0 && (val || '').toLowerCase() == 'current')
-            ? ''
-            : val;
           let names = fieldName.split('.');
           fieldName = names[0].split('[')[0];
           let index = names[0].split('[')[1].replace(']', '');
+          if (name.indexOf('end_date_of_service') >= 0 && (val || '').toLowerCase() == 'current') {
+            val = void(0);
+          }
           app.setValByKey(app.user, name, val);
 
           if(fieldName == 'team_members') {
-            url = app.config.formcServer + '/' + this.model.id + '/team-members/' +
-              roles[this.model.formc.team_members[index].role[0]].toLocaleLowerCase() + '/' +
-              this.model.formc.team_members[index].user_id;
-
             data = this.model.formc.team_members[index];
-            method = 'PUT';
-
+            url = app.config.formcServer + '/' + this.model.id + '/team-members/' + data.user_id;
+            method = 'PATCH';
           } else if(fieldName.indexOf('risk') !== -1) {
             let riskVar = name.split('.')[2];
             this.model[fieldName][riskVar] = val;
