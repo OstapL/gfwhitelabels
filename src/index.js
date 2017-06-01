@@ -62,6 +62,41 @@ function scrollMenuItemsHandler() {
   }
 }
 
+function hideOtherPopovers(popoverElement) {
+  // hide other popovers
+  const $popoverElements = $('.showPopover');
+  $popoverElements.each((idx, elem) => {
+    if (elem != popoverElement) {
+      const $elem = $(elem);
+      if ($elem.attr('aria-describedby')) {
+        $(elem).popover('hide');
+      }
+    }
+  });
+}
+
+const popoverTemplate = '<div class="popover  divPopover"  role="tooltip"><span class="popover-arrow"></span> <h3 class="popover-title"></h3> <span class="icon-popover"><i class="fa fa-info-circle" aria-hidden="true"></i></span> <span class="popover-content"> XXX </span></div>';
+
+function initPopover(elem, options={}) {
+  if (!elem)
+    return;
+
+  if (elem.getAttribute('aria-describedby'))
+    return;
+
+  const $popoverElem = $(elem);
+  $popoverElem.popover({
+    html: true,
+    template: options.template || popoverTemplate,
+    placement: 'top',
+    trigger: 'hover',
+  });
+  $popoverElem.on('show.bs.popover', (e) => {
+    hideOtherPopovers(elem);
+  });
+
+  $popoverElem.popover('show');
+}
 
 $(document).ready(function () {
   // show bottom logo while scrolling page
@@ -71,64 +106,25 @@ $(document).ready(function () {
   });
 
   //attach global event handlers
-
-//TODO: do we need this template and popover logic?
-  const popoverTemplate = '<div class="popover  divPopover"  role="tooltip"><span class="popover-arrow"></span> <h3 class="popover-title"></h3> <span class="icon-popover"><i class="fa fa-info-circle" aria-hidden="true"></i></span> <span class="popover-content"> XXX </span></div>';
-
-  $('body').on('mouseover', 'div.showPopover', function () {
-    var $el = $(this);
-    if ($el.attr('aria-describedby') == null) {
-      $(this).popover({
-        html: true,
-        template: popoverTemplate,
-        placement: 'top',
-        trigger: 'hover',
-      });
-      $(this).popover('show');
-    }
-  });
-
-  $('body').on('mouseout', 'div.showPopover', function () {
+  $('body').on('mouseout', '.showPopover', function () {
     //$(this).popover('hide');
-  });
-
-  $('body').on('focus', 'input.showPopover', function () {
-    var $el = $(this);
-    if ($el.attr('aria-describedby') == null) {
-      $(this).popover({
-        html: true,
-        template: popoverTemplate.replace('divPopover', 'inputPopover'),
-        placement: 'top',
-        trigger: 'hover',
-      });
-      $(this).popover('show');
-    }
-  });
-
-  $('body').on('focus', 'textarea.showPopover', function () {
-    var $el = $(this);
-    if ($el.attr('aria-describedby') == null) {
-      $(this).popover({
-        html: true,
-        template: popoverTemplate.replace('divPopover', 'textareaPopover'),
-        placement: 'top',
-        trigger: 'hover',
-      });
-      $(this).popover('show');
-    }
-  });
-
-  $('body').on('focus', 'i.showPopover', function () {
-    var $el = $(this);
-    if ($el.attr('aria-describedby') == null) {
-      $(this).popover({
-        html: true,
-        template: popoverTemplate.replace('divPopover', 'textareaPopover'),
-        placement: 'top',
-        trigger: 'hover',
-      });
-      $(this).popover('show');
-    }
+  }).on('focusout', '.showPopover', function() {
+    //hide all popovers
+    hideOtherPopovers();
+  }).on('mouseover', 'div.showPopover', function () {
+    initPopover(this);
+  }).on('focus', 'input.showPopover', function () {
+    initPopover(this, {
+      template: popoverTemplate.replace('divPopover', 'inputPopover'),
+    })
+  }).on('focus', 'textarea.showPopover', function () {
+    initPopover(this, {
+      template: popoverTemplate.replace('divPopover', 'textareaPopover'),
+    });
+  }).on('focus', 'i.showPopover', function () {
+    initPopover(this, {
+      template: popoverTemplate.replace('divPopover', 'textareaPopover'),
+    });
   });
 
 // show bottom logo while scrolling page
