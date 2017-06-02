@@ -289,6 +289,9 @@ module.exports = {
             return;
           }
 
+          app.user.setFormcPaid(this.model.id);
+          app.profile.render();
+
           api.makeRequest(app.config.formcServer + '/' + this.model.id + '/stripe', "PUT", {
             stripeToken: stripeResponse.id
           }).done((formcResponse, statusText, xhr) => {
