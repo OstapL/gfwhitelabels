@@ -35,6 +35,20 @@ var e = {
 
   //main slider or img (slider - 1/ img - 0)
   indexSlider: 1,
+
+  // top banner (none - 0 / dcu - 1 / river - 2)
+  mainTopBanner: 0,
+  campaignListTitle: 'CURRENT CAMPAIGNS', // title main page list campaign
+  // url main video 
+  urlMainVideo: 'https://d2i0hc81gw5f0c.cloudfront.net/videos/main-video.m4v',
+  urlMainVideoPopup: 'https://player.vimeo.com/video/198101157?title=0&amp;byline=0&amp;controls=0&fullscreen=1&buttons.share = false&embed.buttons.like = false;autoplay=0&portrait=0',
+  dataVideoIdPopup: '198101157',
+  dataProviderVideoPopup: 'vimeo',
+  titleMainVideo: 'WHAT IS GROWTHFOUNTAIN?',
+  textMainVideo: '<h3>We banded together with a simple mission: to simplify fundraising <br> and help businesses raise capital.</h3>'
+  + '<h3>Everybody in the world now has the ability to invest directly <br> in America’s entrepreneurs!</h3>',
+  //bottom banner (1 - raise capital/ 0 - INVEST)
+  mainBottomBunner: 1,
 };
 
 module.exports = e;
