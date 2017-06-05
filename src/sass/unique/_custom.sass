@@ -125,3 +125,32 @@
 .modal-dialog .modal-header.sign-up-header .title-header-signup
 	h1
 		letter-spacing: normal!important
+
+//main page top banner
+.home-wrap-text-block.top-block
+	background: url(img/main-bg-section-top.jpg)
+	background-size: 100% 100%
+	-webkit-box-shadow: inset 0px 6px 5px -2px rgba(0,0,0,0.5)
+	-moz-box-shadow: inset 0px 6px 5px -2px rgba(0,0,0,0.5)
+	box-shadow: inset 0px 6px 5px -2px rgba(0,0,0,0.5);
+	border-top: 1px solid $limed_spruce
+	p
+		font-size: rem(14)
+		line-height: 18px
+	.border
+		border: solid 1px #111
+	h3.padding-5
+		padding: 5px 0
+	@media only screen and (min-width : 992px)
+		.top-baner-tabel
+			.col-xl-4.left
+				width: 27%
+			.col-xl-4.center
+				width: 36%
+				border-left: none
+				border-right: none
+			.col-xl-4.right
+				width: 27%
+.main-video-wrap
+	@media only screen and (max-width : 768px)
+		height: 100vh

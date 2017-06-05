@@ -1,5 +1,6 @@
 const companyFees = require('consts/companyFees.json');
 const typeOfDocuments = require('consts/typeOfDocuments.json');
+const STATUSES = require('consts/raisecapital/companyStatuses.json').STATUS;
 
 const COUNTRIES = require('consts/countries.json');
 const validation = require('components/validation/validation.js');
@@ -278,9 +279,6 @@ module.exports = {
 
     initComments() {
       return new Promise((resolve, reject) => {
-        if (this.model.is_approved != 6)
-          return resolve();
-
         const View = require('components/comment/views.js');
         const urlComments = app.config.commentsServer + '/company/' + this.model.id;
         let optionsR = api.makeRequest(urlComments, 'OPTIONS');
@@ -295,6 +293,7 @@ module.exports = {
             model: data[0],
             fields: options[0].fields,
             cssClass: 'offset-xl-2',
+            readonly: this.model.is_approved != STATUSES.VERIFIED,
           });
           comments.render();
 
