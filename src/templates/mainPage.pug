@@ -5,100 +5,12 @@ section.slider-main
     p GrowthFountain is coming to your town. 
       a(href="/pg/heartland-tour") Apply Now
       |  to join The Heartland Tour and present your fundraise live!
-  .owl-carousel.owl-theme.carousel-test
-    div
-      - var styleString = 'background: url(' + require('images/slide_5.png') + ')';
-      div(style=styleString + '; background-position: center center !important').slide_1.main-slider-item
-      .slider-content.container
-        .text-xs-center
-          .col-lg-12
-            h1.big-h1 Own a Piece of Your Favorite Company
-          .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
-            span.small-text Invest in local businesses and entrepreneurs you believe in, starting at $100
-          .col-lg-12.mt20.mb30
-            a(href="/pg/education").link-6 Learn the Risks
-          if app.user.is_anonymous()
-            .col-lg-12
-              a(href="/account/signup").btn.btn-lg.btn-primary sign up + get $25
-          else
-            .col-lg-12.hidden-sm-down
-              a(href="/companies").btn.btn-lg.btn-primary.m-r-2 INVEST
-              a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
-            .col-lg-12.hidden-md-up
-              a(href="/companies").btn.btn-lg.btn-primary INVEST
-
-    div
-      - var styleString = 'background: url(' + require('images/slide_2.jpg') + ')';
-      div(style=styleString).main-slider-item.slide_2
-      //img(src=require('images/slide_2.jpg') alt="...")
-      .slider-content.container
-        .text-xs-center
-          .col-lg-12
-            h1.big-h1 Own a Piece of Your Favorite Company
-          .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
-            span.small-text Invest in local businesses and entrepreneurs you believe in, starting at $100
-          .col-lg-12.mt20.mb30
-            a(href="/pg/education").link-6 Learn the Risks
-          if app.user.is_anonymous()
-            .col-lg-12
-              a(href="/account/signup").btn.btn-lg.btn-primary sign up + get $25
-          else
-            .col-lg-12.hidden-sm-down
-              a(href="/companies").btn.btn-lg.btn-primary.m-r-2 INVEST
-              a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
-            .col-lg-12.hidden-md-up
-              a(href="/companies").btn.btn-lg.btn-primary INVEST
-    div
-      - var styleString = 'background: url(' + require('images/slide_3.jpg') + ')';
-      div(style=styleString).main-slider-item.slide_3
-      //img(src=require('images/slide_3.jpg') alt="...")
-      .slider-content.container
-        .text-xs-center
-          .col-lg-12
-            h1.big-h1 Own a Piece of Your Favorite Company
-          .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
-            span.small-text Invest in local businesses and entrepreneurs you believe in, starting at $100
-          .col-lg-12.mt20.mb30
-            a(href="/pg/education").link-6 Learn the Risks
-          if app.user.is_anonymous()
-            .col-lg-12
-              a(href="/account/signup").btn.btn-lg.btn-primary sign up + get $25
-          else
-            .col-lg-12.hidden-sm-down
-              a(href="/companies").btn.btn-lg.btn-primary.m-r-2 INVEST
-              a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
-            .col-lg-12.hidden-md-up
-              a(href="/companies").btn.btn-lg.btn-primary INVEST
-//section.main-video
-  .homepage-hero-module
-    .video-container
-      .filter
-      video(autoplay loop).fillWidth
-        source(src=require("img/video/In-And-Out/MP4/In-And-Out.mp4") type="video/mp4")
-        //source(src=require("img/video/In-And-Out/WEBM/In-And-Out.webm") type="video/webm")
-      .slider-main
-        .slider-content.container
-          .text-xs-center
-            .col-lg-12
-              h1.big-h1.hidden-sm-down Own a Piece of Your Favorite Company
-            .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
-              span.small-text Invest in local businesses and entrepreneurs you believe in, starting at $100
-            .col-lg-12.mt20.mb30
-              a(href="/pg/education").link-6 Learn the Risks
-            if app.user.is_anonymous()
-              .col-lg-12
-                a(href="/account/signup").btn.btn-lg.btn-primary sign up + get $25
-            else
-              .col-lg-12.hidden-sm-down
-                a(href="/companies").btn.btn-lg.btn-primary.m-r-2 INVEST
-                a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
-              .col-lg-12.hidden-md-up
-                a(href="/companies").btn.btn-lg.btn-primary INVEST
-
+  include slider
+include topbanner
 section.campaing-list.campaign-list-main-page
   .container#campaignList
     .col-lg-12
-      h2.text-uppercase.text-sm-center.text-xs-center.m-t-0 CURRENT CAMPAIGNS
+      h2.text-uppercase.text-sm-center.text-xs-center.m-t-0 !{app.config.indexPage.campaignListTitle}
     include ../components/campaign/templates/_list
     .col-lg-12.text-lg-center.text-md-center.text-xs-center
       if collection && collection.count && collection.count > GENERAL.COMPANIES_PER_PAGE
@@ -106,24 +18,21 @@ section.campaing-list.campaign-list-main-page
           | See All
           i.fa.fa-angle-right
 
-
 section.main-video-wrap
   video(poster=require("images/main-before-video.jpg") id="bgvid" playsinline autoplay muted loop)
-    source(src="https://d2i0hc81gw5f0c.cloudfront.net/videos/main-video.m4v" type="video/mp4")
+    source(src=app.config.indexPage.videoUrl type="video/mp4")
   .center-wrap
-    .text-wrap.col-xl-12
-      h2.m-t-0.m-b-2.text-uppercase WHAT IS GROWTHFOUNTAIN?
-      h3.m-t-0.m-b-2.font-weight-light We banded together with a simple mission: to simplify fundraising
-        br
-        | and help businesses raise capital.
-      h3.m-t-0.m-b-0.font-weight-light Everybody in the world now has the ability to invest directly
-        br
-        | in America’s entrepreneurs!
+    .text-wrap
+      .container
+        .col-xl-12
+          h2.text-uppercase !{app.config.indexPage.videoTitle}
+        .col-xl-12.text-video-wrap
+          | !{app.config.indexPage.videoText}
     a(
       href='#'
-      data-provider='vimeo'
-      data-id='198101157'
-      data-url="https://player.vimeo.com/video/198101157?title=0&amp;byline=0&amp;controls=0&fullscreen=1&buttons.share = false&embed.buttons.like = false;autoplay=0&portrait=0"
+      data-provider=app.config.indexPage.dataProviderVideoPopup
+      data-id=app.config.indexPage.dataVideoIdPopup
+      data-url=app.config.indexPage.videoPopupUrl
       data-hide-page='true'
       data-modal-class='main-video-modal'
     ).showVideoModal.play-icon
@@ -198,20 +107,14 @@ section.better
             .item
               i.fa.fa-chevron-right
               h3.font-weight-light Turn your customers and users into brand ambassadors and evangelists
-
-section.height-block-banner.scroll-paralax.no-paralax-mobile.main-page-banner.m-t-0
-  - var styleString = 'background: url(' + require('images/main-bg-section-raise.jpg') + ')';
-  div(style=styleString + '; height:420px').background
-  .center-wrap.container.small-button
     .row
       .col-xl-12
-        h2.text-uppercase.m-t-0.m-b-2  Raise capital with us
-      .col-xl-12.p-xs-0
-        if app.user.is_anonymous()
-          a(href="/raise-capital").btn.btn-lg.btn-primary.text-uppercase raise capital
-        else
-          a(href="/company/create").btn.btn-lg.btn-primary.text-uppercase raise capital
-        a(href="/pg/entrepreneurquestions").btn.btn-lg.btn-secondary.text-uppercase learn more
+        .powered-by
+          h4.text-uppercase equity crowdfunding
+          p.small-powered-by Powered by
+          img(src=require('images/pages/news4.png'), alt="")
+include bottombanner
+
 section.news-on-main-page
   .container
     .row
