@@ -40,7 +40,7 @@ module.exports = {
     slider: 1,
     campaignListTitle: 'TRENDING', // title main page list campaign
     // url main video 
-    videoUrl: 'https://fpdl.vimeocdn.com/vimeo-prod-skyfire-std-us/01/4266/7/196334693/659039754.mp4?token=1496672655-0xb3e07c833a95b2f2abfad95e653e1cdd0961a5e2',
+    videoUrl: 'https://fpdl.vimeocdn.com/vimeo-prod-skyfire-std-us/01/4266/7/196334693/659039736.mp4?token=1496682220-0x3d9ecf2e6990544ed99f350ec2c872348f32a008',
     videoPopupUrl: 'https://player.vimeo.com/video/196334693?title=0&amp;byline=0&amp;controls=0&fullscreen=1&buttons.share = false&embed.buttons.like = false;autoplay=0&portrait=0',
     videoTitle: 'CONNECTING INVESTORS AND ENTREPRENEURS',
     videoText: '<p>This innovative equity crowdfunding partnership between DCU and GrowthFountain offers investors <br> and entrepreneurs a unique way to connect, invest, raise capital, and grow ideas.</p>'
