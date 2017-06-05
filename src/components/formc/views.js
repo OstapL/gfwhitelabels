@@ -260,9 +260,9 @@ module.exports = {
 
         var card = validateCard($stripeForm,
           { number: 'card_number',
-            expDate: 'card_exp_date_year__year',
-            expMonth: 'card_exp_month__month',
-            expYear: 'card_exp_date_year__year',
+            expDate: 'card_exp_date_year',
+            expMonth: 'card_exp_month',
+            expYear: 'card_exp_date_year',
             cvc: 'card_cvc',
           });
 
@@ -288,6 +288,9 @@ module.exports = {
             app.hideLoading();
             return;
           }
+
+          app.user.setFormcPaid(this.model.id);
+          app.profile.render();
 
           api.makeRequest(app.config.formcServer + '/' + this.model.id + '/stripe', "PUT", {
             stripeToken: stripeResponse.id
@@ -327,7 +330,7 @@ module.exports = {
 
           }).fail((xhr, ajaxOptions, err) => {
             app.validation.invalidMsg({'$': $}, "expiration-block",
-              [xhr.responseJSON.non_field_errors || 'An error occurred, please, try again later.']);
+              [xhr.responseJSON && xhr.responseJSON.non_field_errors ? xhr.responseJSON.non_field_errors : 'An error occurred, please, try again later.']);
 
             $payBtn.prop('disabled', false);
             app.hideLoading();
@@ -1835,6 +1838,9 @@ module.exports = {
         1: 'Yes',
         0: 'No',
       };
+      this.fields.outstanding_securities.schema.amount_authorized.required = true;
+      this.fields.outstanding_securities.schema.amount_outstanding.required = true;
+
       this.labels = {
         outstanding_securities: {
           security_type: "Security Type",
@@ -1926,6 +1932,13 @@ module.exports = {
       e.preventDefault();
       const data = $(e.target).serializeJSON();
 
+      //work around NaN values in decimal field type serialization
+      if (isNaN(data.amount_authorized))
+        delete data.amount_authorized;
+
+      if (isNaN(data.amount_outstanding))
+        delete data.amount_outstanding;
+
       const sectionName = e.target.dataset.section;
       const template = require('./templates/snippets/outstanding_securities.pug');
 
@@ -1941,9 +1954,11 @@ module.exports = {
         }
       }
 
-      data.amount_outstanding = Math.round(
-          data.amount_outstanding * 100
-      ) / 100;
+      if (data.amount_outstanding) {
+        data.amount_outstanding = Math.round(
+            data.amount_outstanding * 100
+        ) / 100;
+      }
 
       if (!app.validation.validate(this.fields.outstanding_securities.schema, data, this)) {
         _(app.validation.errors).each((errors, key) => {
@@ -2231,7 +2246,6 @@ module.exports = {
       let method = 'PATCH';
 
       if(name.indexOf('company.') !== -1) {
-
         fieldName = name.split('company.')[1];
         data[fieldName] = val;
         url = app.config.raiseCapitalServer + '/company/' + app.user.company.id;
@@ -2250,16 +2264,15 @@ module.exports = {
           let names = fieldName.split('.');
           fieldName = names[0].split('[')[0];
           let index = names[0].split('[')[1].replace(']', '');
+          if (name.indexOf('end_date_of_service') >= 0 && (val || '').toLowerCase() == 'current') {
+            val = void(0);
+          }
           app.setValByKey(app.user, name, val);
 
           if(fieldName == 'team_members') {
-            url = app.config.formcServer + '/' + this.model.id + '/team-members/' +
-              roles[this.model.team_members[index].role[0]].toLocaleLowerCase() + '/' +
-              this.model.team_members[index].user_id;
-
-            data = this.model.team_members[index];
-            method = 'PUT';
-
+            data = this.model.formc.team_members[index];
+            url = app.config.formcServer + '/' + this.model.id + '/team-members/' + data.user_id;
+            method = 'PATCH';
           } else if(fieldName.indexOf('risk') !== -1) {
             let riskVar = name.split('.')[2];
             this.model[fieldName][riskVar] = val;

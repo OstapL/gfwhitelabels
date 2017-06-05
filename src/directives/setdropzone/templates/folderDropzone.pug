@@ -26,14 +26,14 @@ div(class=klass)
         div(class="uploading collapse")
           i.fa.fa-spinner.fa-pulse.fa-3x.fa-fw
         span.filescroll
-          div.col-lg-5.col-md-5.col-sm-5.col-xs-5.text-xs-center.text-md-center.text-lg-center.p-dropzone
+          div.col-lg-5.col-md-5.col-sm-5.col-xs-12.text-xs-center.text-md-center.text-lg-center.p-dropzone
             a(class='link-1' href="#")
               p.drop-photo #{text}
               i(class="fa fa-file")
-          div.col-lg-7.col-md-7.col-sm-7.col-xs-7.p-r-0.p-l-0.img-dropzone.text-xs-center.all-file-scroll
+          div.col-lg-7.col-md-7.col-sm-7.col-xs-12.p-r-0.p-l-0.img-dropzone.text-xs-center.all-file-scroll
             .file-scroll.fileHolder
               each file,index in this.folderElement.files
                 - pug_html += file.render().resultHTML
               else
                 .thumb-file-container.text-xl-center
-                  img(src="" alt=label class="img-file img-")
+                  img(src=require('images/icons/filefolder.png') alt=label class="img-file img-")
