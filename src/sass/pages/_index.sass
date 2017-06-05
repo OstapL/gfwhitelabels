@@ -318,6 +318,8 @@
     height: 450px
     background-repeat: no-repeat
     background-size: cover
+  @media only screen and (max-width : 575px)
+    height: $main-video-mobile-height
 
   video
     width: 100%
@@ -410,6 +412,7 @@
       color: $powered-by-small-color
       font-weight: $powered-by-small-font-weight
       margin-bottom: rem(20)
+      font-size: $small-powered-by-font-size
 .main-page-banner-raise
   .background
     top: $main-page-banner-bottom-top
