@@ -312,7 +312,7 @@ module.exports = {
                 ticks = [];
 
             for (var i = 0; i < 11; i++) {
-                ticks.push([i, 'Year ' + (currentYear + i)]);
+                ticks.push([i, ' ' + (currentYear + i)]);
             }
 
 

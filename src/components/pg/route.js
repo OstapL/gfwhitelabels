@@ -6,6 +6,7 @@ const templateMap = {
   'terms-of-use': 'terms_of_use',
   'privacy-policy': 'privacy_policy',
   'electronic-signature': 'electronic_signature',
+  'formc-review-congratulations': 'formc_review_congratulations',
 };
 
 module.exports = {
