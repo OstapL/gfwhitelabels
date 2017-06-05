@@ -14,13 +14,13 @@ if app.config.indexPage.bottomBunner == 1
 else
   section.height-block-banner.scroll-paralax.no-paralax-mobile.main-page-banner-invest.m-t-0
     div.background
-    .center-wrap.container
+    .center-wrap.container.small-button
       .col-xl-12
         h2.text-uppercase.m-t-0 INVEST IN YOUR LOCAL COMMUNITY
             h3 Find companies in your neighborhood, and help them grow
               br
               | through your investment.
-      .col-lg-12
+      .col-lg-12.p-xs-0
         if app.user.is_anonymous()
           a(href="/account/signup").btn.btn-lg.btn-secondary.text-uppercase Sign up to start investing
         else
