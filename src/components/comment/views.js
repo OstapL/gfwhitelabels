@@ -56,6 +56,7 @@ module.exports = {
         },
       });
 
+      this.readonly = options.readonly;
       this.allowQuestion = _.isBoolean(options.allowQuestion) ? options.allowQuestion : true;
       this.allowResponse = _.isBoolean(options.allowResponse) ? options.allowResponse : true;
       this.cssClass = _.isString(options.cssClass) ? options.cssClass : '';
@@ -122,6 +123,7 @@ module.exports = {
         owner_id: this.model.owner_id,
         company_id: this.model.id,
         attr: {
+          readonly: this.readonly,
           allowQuestion: this.allowQuestion,
           allowResponse: this.allowResponse,
           cssClass: this.cssClass,
@@ -192,6 +194,9 @@ module.exports = {
 
     submitComment(e) {
       e.preventDefault();
+
+      if (this.readonly)
+        return false;
 
       if (!app.user.ensureLoggedIn(window.location.pathname))
         return false;
@@ -321,6 +326,9 @@ module.exports = {
 
     showReplyTo(e) {
       e.preventDefault();
+      if (this.readonly)
+        return false;
+
       let $commentBlock = $(e.target).closest('.single-comment');
 
       let $newCommentBlock = $commentBlock.find('.comment-form');
