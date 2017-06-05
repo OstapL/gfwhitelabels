@@ -1,4 +1,4 @@
-module.exports = {
+var e = {
   domainUrl: "growthfountain.com",
   serverUrl: "https://django-api.growthfountain.com",
   raiseCapitalServer: "https://api-raisecapital.growthfountain.com",
@@ -62,3 +62,4 @@ module.exports = {
     bottomBunner: 1,
   },
 };
+module.exports = e;
