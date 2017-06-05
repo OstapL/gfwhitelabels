@@ -53,6 +53,7 @@ git checkout --ours src/img/slide_2.jpg
 git checkout --ours src/img/slide_3.jpg
 git checkout --ours src/img/slide_4.jpg
 git checkout --ours src/img/main-bg-section-bottom.jpg
+git checkout --ours src/img/main-bg-section-top.jpg
 git checkout --ours src/img/favicon.ico
 
 
@@ -111,4 +112,5 @@ git add src/img/slide_2.jpg
 git add src/img/slide_3.jpg
 git add src/img/slide_4.jpg
 git add src/img/main-bg-section-bottom.jpg
+git add src/img/main-bg-section-top.jpg
 git add src/img/favicon.ico
