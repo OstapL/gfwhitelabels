@@ -366,6 +366,28 @@ class App {
       }
   }
 
+  isElementInView(element, percentsInView) {
+    const $w = $(window);
+    const $el = $(element);
+
+    const windowTop = $w.scrollTop();
+    const windowBottom = windowTop + $w.height();
+    const elementTop = $el.offset().top;
+    const elementBottom = elementTop + $el.height();
+
+    let visibleElementHeight = Math.min(windowBottom, elementBottom) - Math.max(windowTop, elementTop);
+    if (visibleElementHeight <= 0)
+      return false;
+
+    if (_.isNumber(percentsInView)) {
+      const visiblePercents = visibleElementHeight / $el.height();
+      return visiblePercents >= percentsInView;
+      // return ((windowTop < elementTop) && (windowBottom > elementBottom));
+    }
+
+    return ((elementTop <= windowBottom) && (elementBottom >= windowTop));
+  }
+
 }
 
 let __instance = null;

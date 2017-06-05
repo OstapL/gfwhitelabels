@@ -28,63 +28,7 @@ function scrollLogoHandler() {
   }
 }
 
-//TODO: move this to separate view
-function scrollMenuItemsHandler() {
-  let lastId = '';
-  let topMenu = $(".pages-left-menu");
-  if (!topMenu.length)
-    return;
-
-  let topMenuHeight = topMenu.outerHeight();
-  let menuItems = topMenu.find("a");
-  let scrollItems = menuItems.map(function() {
-    let href = $(this).attr("href");
-    if (href && href.startsWith('#')) {
-      let item = $(href);
-      if (item.length) {
-        return item;
-      }
-    }
-  });
-
-  let fromTop = $(window).scrollTop() + topMenuHeight;
-  let cur = scrollItems.map(function() {
-    if ($(this).offset().top < fromTop)
-      return this;
-  });
-  cur = cur[cur.length - 1];
-  let id = cur && cur.length ? cur[0].id : "";
-  if (lastId !== id) {
-    lastId = id;
-    menuItems
-      .parent().removeClass("active")
-      .end().filter("[href='#" + id + "']").parent().addClass("active");
-  }
-}
-
 function scrollAnimateHandler() {
-  const isElementInView = (element, percentsInView) => {
-    const $w = $(window);
-    const $el = $(element);
-
-    const windowTop = $w.scrollTop();
-    const windowBottom = windowTop + $w.height();
-    const elementTop = $el.offset().top;
-    const elementBottom = elementTop + $el.height();
-
-    let visibleElementHeight = Math.min(windowBottom, elementBottom) - Math.max(windowTop, elementTop);
-    if (visibleElementHeight <= 0)
-      return false;
-
-    if (_.isNumber(percentsInView)) {
-      const visiblePercents = visibleElementHeight / $el.height();
-      return visiblePercents >= percentsInView;
-      // return ((windowTop < elementTop) && (windowBottom > elementBottom));
-    }
-
-    return ((elementTop <= windowBottom) && (elementBottom >= windowTop));
-  };
-
   const animateClasses = ['animated',  'fadeInLeft'];
   const animateSelector = '.scroll-animate';
   const animateElements = $(animateSelector);
@@ -92,7 +36,7 @@ function scrollAnimateHandler() {
     return;
 
   animateElements.each((idx, element) => {
-    if (!isElementInView(element, 0.4)) {
+    if (!app.isElementInView(element, 0.4)) {
       return;
     }
 
@@ -143,7 +87,7 @@ $(document).ready(function () {
   // show bottom logo while scrolling page
   $(window).scroll((e) => {
     scrollLogoHandler(e);
-    scrollMenuItemsHandler(e);
+    // scrollMenuItemsHandler(e);
     scrollAnimateHandler(e);
   });
 
