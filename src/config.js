@@ -40,13 +40,13 @@ var e = {
     slider: 0,
     campaignListTitle: 'WHAT`S POPULAR', // title main page list campaign
     // url main video 
-    videoUrl: 'https://d2i0hc81gw5f0c.cloudfront.net/videos/main-video.m4v',
-    videoPopupUrl: 'https://player.vimeo.com/video/198101157?title=0&amp;byline=0&amp;controls=0&fullscreen=1&buttons.share = false&embed.buttons.like = false;autoplay=0&portrait=0',
+    videoUrl: 'https://fpdl.vimeocdn.com/vimeo-prod-skyfire-std-us/01/1191/7/180959588/592220585.mp4?token=1496689595-0x8b9d7c06d2638964fee25840a9f7f5fda3fb3b4c',
+    videoPopupUrl: 'https://player.vimeo.com/video/180959588?title=0&byline=0&portrait=0',
     videoTitle: 'A NEW WAY TO INVEST OR RAISE CAPITAL',
     videoText: '<h3>Through our partnership with Growth Fountain we\'re pleased <br>to introduce Equity Crowdfunding.</h3>'
     + '<h3>Discover, support and invest in the businesses within our <br> community, and receive ownership for your contribution.</h3>'
     + '<h3>It’s people helping people at an entirely new level.</h3>',
-    dataVideoIdPopup: '198101157',
+    dataVideoIdPopup: '180959588',
     dataProviderVideoPopup: 'vimeo',
     // top banner (none - 0 / dcu - 1 / river - 2)
     topBanner: 0,
