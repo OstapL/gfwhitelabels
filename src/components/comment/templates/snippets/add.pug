@@ -7,9 +7,10 @@ h2#ask.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-sub
           .col-lg-12.p-l-0.p-r-0
             textarea(
               type='textarea'
+              readonly=attr.readonly
               name='message'
               rows='1'
               placeholder='Type your text here...'
             ).w-100.text-body
         .col-lg-3.p-r-0.text-xl-right.text-xs-center.p-t-sm-1
-          button(type="button").btn.btn-primary.text-uppercase.pull-lg-right.ask-question Submit
+          button(type="button" disabled=attr.readonly).btn.btn-primary.text-uppercase.pull-lg-right.ask-question Submit

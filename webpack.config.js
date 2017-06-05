@@ -190,6 +190,10 @@ module.exports = {
     historyApiFallback: true,
     port: 7070,
     host: '0.0.0.0',
+    disableHostCheck: true,
+    //this can be used only on local machine,
+    //to open app hosted on local machine from mobile phone you need to use disableHostCheck prop;
+    // public: 'local.growthfountain.com',
     hot: true,
     inline: true,
   },
