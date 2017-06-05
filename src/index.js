@@ -28,43 +28,7 @@ function scrollLogoHandler() {
   }
 }
 
-//TODO: move this to separate view
-function scrollMenuItemsHandler() {
-  let lastId = '';
-  let topMenu = $(".pages-left-menu");
-  if (!topMenu.length)
-    return;
-
-  let topMenuHeight = topMenu.outerHeight();
-  let menuItems = topMenu.find("a");
-  let scrollItems = menuItems.map(function() {
-    let href = $(this).attr("href");
-    if (href && href.startsWith('#')) {
-      let item = $(href);
-      if (item.length) {
-        return item;
-      }
-    }
-  });
-
-  let fromTop = $(window).scrollTop() + topMenuHeight;
-  let cur = scrollItems.map(function() {
-    if ($(this).offset().top < fromTop)
-      return this;
-  });
-  cur = cur[cur.length - 1];
-  let id = cur && cur.length ? cur[0].id : "";
-  if (lastId !== id) {
-    lastId = id;
-    menuItems
-      .parent().removeClass("active")
-      .end().filter("[href='#" + id + "']").parent().addClass("active");
-  }
-}
-
 function scrollAnimateHandler() {
-
-
   const animateClasses = ['animated',  'fadeInLeft'];
   const animateSelector = '.scroll-animate';
   const animateElements = $(animateSelector);
