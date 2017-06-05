@@ -30,6 +30,7 @@ module.exports = {
         });
 
         new View();
+        $('body').scrollTo();
         app.hideLoading();
       }, 'what_my_business_worth_chunk');
     },
@@ -49,6 +50,7 @@ module.exports = {
         });
 
         new View();
+        $('body').scrollTo();
         app.hideLoading();
       }, 'what_my_business_worth_chunk');
     },
@@ -68,6 +70,7 @@ module.exports = {
         });
 
         new View();
+        $('body').scrollTo();
         app.hideLoading();
       }, 'what_my_business_worth_chunk');
     },
