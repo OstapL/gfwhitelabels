@@ -24,6 +24,9 @@ module.exports = {
 
     updateMenuOnScroll(e) {
       const leftMenu = this.el.querySelector('.pages-left-menu');
+      if (!leftMenu)
+        return;
+
       const menuItems = leftMenu.querySelectorAll('a');
       const visibleElements = _(menuItems).map((menuItem) => {
         const href = menuItem.getAttribute('href');
