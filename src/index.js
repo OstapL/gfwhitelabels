@@ -29,16 +29,20 @@ function scrollLogoHandler() {
 }
 
 function scrollAnimateHandler() {
-  const animateClasses = ['animated'];
-  const animateSelector = '.scroll-animate';
-  const animateElements = $(animateSelector);
-  if (!animateElements.length)
+  const defaultAnimateClasses = ['animated', 'fadeInLeft'];
+  const animateSelector = '[data-animate-class]';
+
+  const animateElements = document.querySelectorAll(animateSelector);
+  if (!animateElements || !animateElements.length)
     return;
 
-  animateElements.each((idx, element) => {
+  animateElements.forEach((element) => {
     if (!app.isElementInView(element, 0.4)) {
       return;
     }
+    const animateClasses = element.dataset.animateClass
+      ? element.dataset.animateClass.split('|')
+      : defaultAnimateClasses;
 
     animateClasses.forEach((animateClass) => {
       if (!element.classList.contains(animateClass))
