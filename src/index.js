@@ -37,7 +37,7 @@ function scrollAnimateHandler() {
     return;
 
   animateElements.forEach((element) => {
-    if (!app.isElementInView(element, 0.4)) {
+    if (!app.isElementInView(element, 0)) {
       return;
     }
     const animateClasses = element.dataset.animateClass
