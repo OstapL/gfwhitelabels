@@ -29,7 +29,7 @@ function scrollLogoHandler() {
 }
 
 function scrollAnimateHandler() {
-  const animateClasses = ['animated',  'fadeInLeft'];
+  const animateClasses = ['animated'];
   const animateSelector = '.scroll-animate';
   const animateElements = $(animateSelector);
   if (!animateElements.length)
