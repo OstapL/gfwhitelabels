@@ -318,7 +318,10 @@
     height: $main-video-table-height
     background-repeat: no-repeat
     background-size: cover
-
+  @media only screen and (max-width : 575px)
+    height: $main-video-mobile-height
+  @media only screen and (max-width : 375px)
+    height: $main-video-xs-height
   video
     width: 100%
     position: absolute
