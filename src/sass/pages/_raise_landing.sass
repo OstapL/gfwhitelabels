@@ -2,53 +2,32 @@
   position: relative
   .raise-landing-top-line
     position: absolute
-    top: 30px
+    top: 0
     left: 0
-    z-index: 3
     width: 100%
+    background-color: rgba($heartland-tour-in-main, .8)
+    padding: rem(10)
     text-align: center
-    color: $white
-    font-size: rem(18)
-    @media only screen and (max-width : 699px)
-      top: 0
-      background-color: rgba($heartland-tour-in-main, .8)
-      font-size: rem(14)
-      padding: 5px
-    .link
-      display: inline-block
-      background-color: rgba($heartland-tour-in-main, .8)
-      padding: rem(10)
+    z-index: 3
+    span 
+      color: $white
+    a
+      color: $white
+      text-decoration: underline
       font-weight: bold
-      @media only screen and (max-width : 699px)
-        background-color: transparent
-        display: inline
-        padding: 0
-      a
-        color: $white
-        text-decoration: underline
-        +mt(.2s)
-        &:hover
-          +mt(.2s)
-          color: rgba($white, .8)
-
-    .text
-      display: inline-block
-      background-color: rgba($heartland-tour-in-main, .9)
-      padding: rem(9)
-      -webkit-box-shadow: 0px -2px 1px 0px rgba(0,0,0,0.1);
-      -moz-box-shadow: 0px -2px 1px 0px rgba(0,0,0,0.1);
-      box-shadow: 0px -2px 1px 0px rgba(0,0,0,0.1);
-      @media only screen and (max-width : 699px)
-        background-color: transparent
-        display: inline
-        box-shadow: none
-        padding: 0
+      &:hover
+        +mt(.3s)
+        color: rgba($white, .7)
+        text-decoration: none
   .top-baner
     height: 70vh
     background-size: cover
     .background
       top: -50px
       height: 80vh
+    .center-wrap
+      @media only screen and (max-width : 768px)
+        top: 55%
     h1
       color: $white
       line-height: rem(60)
@@ -66,6 +45,9 @@
       position: relative
       top: -10px
       @media screen and (min-width : 1200px) and (max-width : 1300px)
+        top: 0
+      @media only screen and (max-width : 768px)
+        width: 70px
         top: 0
       @media only screen and (max-width : 375px)
         width: 50px
