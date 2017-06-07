@@ -13,14 +13,15 @@ section.campaing-list.campaign-list-main-page
       h2.text-uppercase.text-sm-center.text-xs-center.m-t-0 !{app.config.indexPage.campaignListTitle}
     include ../components/campaign/templates/_list
     .col-lg-12.text-lg-center.text-md-center.text-xs-center
-      if collection && collection.count && collection.count > GENERAL.COMPANIES_PER_PAGE
+      - debugger;
+      if collection && collection.count && collection.count > GENERAL.COMPANIES_ON_MAINPAGE
         a(href="/companies").btn.btn-sm.btn-secondary.btn-see-all 
           | See All
           i.fa.fa-angle-right
 
 section.main-video-wrap
   video(poster=require("images/main-before-video.jpg") id="bgvid" playsinline autoplay muted loop)
-    source(src=app.config.indexPage.videoUrl type="video/mp4")
+    source(src=require("staticdata/video/main_background_video.mp4") type="video/mp4")
   .center-wrap
     .text-wrap
       .container
