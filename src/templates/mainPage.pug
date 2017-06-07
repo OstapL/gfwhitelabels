@@ -101,7 +101,8 @@ section.campaing-list.campaign-list-main-page
       h2.text-uppercase.text-sm-center.text-xs-center.m-t-0 CURRENT CAMPAIGNS
     include ../components/campaign/templates/_list
     .col-lg-12.text-lg-center.text-md-center.text-xs-center
-      if collection && collection.count && collection.count > GENERAL.COMPANIES_PER_PAGE
+      - debugger;
+      if collection && collection.count && collection.count > GENERAL.COMPANIES_ON_MAINPAGE
         a(href="/companies").btn.btn-sm.btn-secondary.btn-see-all 
           | See All
           i.fa.fa-angle-right
