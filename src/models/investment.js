@@ -1,4 +1,5 @@
 const File = require('./file.js');
+const Image = require('./image.js');
 
 const moment = require('moment');
 
@@ -20,6 +21,16 @@ class Investment {
     if (this.data.formc) {
       this.data.formc = new app.models.Formc(this.data.formc);
     }
+
+    this.data['investor_presentation_file_id'] = new File(
+      this.url,
+      this.data.investor_presentation_data
+    );
+
+    this.data['header_image_image_id'] = new Image(
+      this.url,
+      this.data.header_image_data
+    );
 
     this.data = Object.seal(this.data);
     for(let key in this.data) {
