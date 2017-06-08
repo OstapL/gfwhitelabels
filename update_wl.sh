@@ -8,6 +8,7 @@ do
     git pull origin $b
     git submodule update --init
     cd consts && git pull origin master && cd ..
+    git add consts
 
     if git branch --all | grep --quiet "remotes/vladyslav2/$b"; then
         echo "============ MERGE WITH VLADYSLAV/$b ============"
