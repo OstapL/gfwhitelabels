@@ -38,10 +38,10 @@ class App {
 
       // A trick for turn off statistics with GET param, for SEO issue
       if(document.location.search.indexOf('nometrix=t') !== -1) {
-        delete app.config.googleTagID;
+        delete this.config.googleTagID;
       }
 
-      if (app.config.googleTagID) {
+      if (this.config.googleTagID) {
         this.initFacebookPixel();
       }
 
@@ -71,7 +71,7 @@ class App {
   }
 
   initFacebookPixel() {
-    if (!app.config.googleTagID || !app.config.facebookPixelID)
+    if (!this.config.googleTagID || !this.config.facebookPixelID)
       return;
 
     safeDataLayerPush({
@@ -80,7 +80,7 @@ class App {
   }
 
   emitFacebookPixelEvent(eventName='ViewContent', params={}) {
-    if (!app.config.googleTagID || !app.config.facebookPixelID)
+    if (!this.config.googleTagID || !this.config.facebookPixelID)
       return;
 
     const STANDARD_EVENTS = [
@@ -105,7 +105,7 @@ class App {
   }
 
   emitGoogleAnalyticsEvent(eventName, params={}) {
-    if (!app.config.googleTagID)
+    if (!this.config.googleTagID)
       return;
 
     if (!eventName)
@@ -120,7 +120,7 @@ class App {
   }
 
   emitCompanyAnalyticsEvent(trackerId) {
-    if (app.config.googleTagID)
+    if (this.config.googleTagID)
       return;
 
     if (!trackerId)
@@ -287,7 +287,7 @@ class App {
     // ToDo
     // get bucket server base on the site_id of the file
     // i.e. app.sites[file.site_id] + file.origin;
-    return app.config.bucketServer + file.origin;
+    return this.config.bucketServer + file.origin;
   }
 
   breadcrumbs(title, subtitle, data) {
@@ -364,6 +364,28 @@ class App {
           meta.setAttribute('content', content);
           document.head.appendChild(meta);
       }
+  }
+
+  isElementInView(element, percentsInView) {
+    const $w = $(window);
+    const $el = $(element);
+
+    const windowTop = $w.scrollTop();
+    const windowBottom = windowTop + $w.height();
+    const elementTop = $el.offset().top;
+    const elementBottom = elementTop + $el.height();
+
+    let visibleElementHeight = Math.min(windowBottom, elementBottom) - Math.max(windowTop, elementTop);
+    if (visibleElementHeight <= 0)
+      return false;
+
+    if (_.isNumber(percentsInView)) {
+      const visiblePercents = visibleElementHeight / $el.height();
+      return visiblePercents >= percentsInView;
+      // return ((windowTop < elementTop) && (windowBottom > elementBottom));
+    }
+
+    return ((elementTop <= windowBottom) && (elementBottom >= windowTop));
   }
 
 }
