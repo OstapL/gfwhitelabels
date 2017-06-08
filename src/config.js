@@ -33,9 +33,27 @@ module.exports = {
  googleClientId: "805823281871-ve3unmva9aer69papghudk0dnpf8tqr2.apps.googleusercontent.com",
  linkedinClientId: "77rg2wrcb8utfq",
 
-
  googleMapKey: "AIzaSyBpCl9-7bkVISZ0o-AaFCsKzZwGAxalkZU",
  stripeKey: "pk_live_4ZF2RPjAVJ0tXrDNMauofmgb",
  googleTagIdGeneral: 'GTM-NC9XW5D',
- googleTagId: 'GTM-55SNV9B'
+ googleTagId: 'GTM-55SNV9B',
+
+ indexPage: {
+	 //main slider or img (slider - 1/ img - 0)
+	 slider: 0,
+	 campaignListTitle: 'WHAT`S POPULAR', // title main page list campaign
+	 // url main video 
+	 videoUrl: 'https://fpdl.vimeocdn.com/vimeo-prod-skyfire-std-us/01/1191/7/180959588/592220585.mp4?token=1496689595-0x8b9d7c06d2638964fee25840a9f7f5fda3fb3b4c',
+	 videoPopupUrl: 'https://player.vimeo.com/video/180959588?title=0&byline=0&portrait=0',
+	 videoTitle: 'A NEW WAY TO INVEST OR RAISE CAPITAL',
+	 videoText: '<h3>Through our partnership with Growth Fountain we\'re pleased <br>to introduce Equity Crowdfunding.</h3>'
+		 + '<h3>Discover, support and invest in the businesses within our <br> community, and receive ownership for your contribution.</h3>'
+		 + '<h3>It’s people helping people at an entirely new level.</h3>',
+	 dataVideoIdPopup: '180959588',
+	 dataProviderVideoPopup: 'vimeo',
+	 // top banner (none - 0 / dcu - 1 / river - 2)
+	 topBanner: 2,
+	 //bottom banner (1 - raise capital/ 0 - INVEST)
+	 bottomBunner: 0,
+ },
 };
