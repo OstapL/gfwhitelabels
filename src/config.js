@@ -42,4 +42,23 @@ module.exports = {
   googleAnalyticsIDGeneral: 'UA-47199302-1',
   facebookPixelID: 172026009946228,
   yandexMetricaID: 42321779,
+
+	indexPage: {
+		//main slider or img (slider - 1/ img - 0)
+		slider: 1,
+		campaignListTitle: 'TRENDING', // title main page list campaign
+		// url main video 
+		videoUrl: 'https://fpdl.vimeocdn.com/vimeo-prod-skyfire-std-us/01/4266/7/196334693/659039736.mp4?token=1496682220-0x3d9ecf2e6990544ed99f350ec2c872348f32a008',
+		videoPopupUrl: 'https://player.vimeo.com/video/196334693?title=0&amp;byline=0&amp;controls=0&fullscreen=1&buttons.share = false&embed.buttons.like = false;autoplay=0&portrait=0',
+		videoTitle: 'CONNECTING INVESTORS AND ENTREPRENEURS',
+		videoText: '<p>This innovative equity crowdfunding partnership between DCU and GrowthFountain offers investors <br> and entrepreneurs a unique way to connect, invest, raise capital, and grow ideas.</p>'
+			+ '<p>Local and national entrepreneurs can use this as a way to connect with and <br> raise capital from investors interested in their ideas and small businesses.</p>'
+			+ '<p>Whether you’re an interested investor looking for exciting ideas and businesses to back or an entrepre - <br> neur looking to grow your business, this platform is a great way to get started.</p>',
+		dataVideoIdPopup: '196334693',
+		dataProviderVideoPopup: 'vimeo',
+		// top banner (none - 0 / dcu - 1 / river - 2)
+		topBanner: 1,
+		//bottom banner (1 - raise capital/ 0 - INVEST)
+		bottomBunner: 0,
+	},
 };
