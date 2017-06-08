@@ -1,3 +1,6 @@
 [submodule "consts"]
     path = consts
-    url = git@github.com:Growth-fountain/consts
+    url = git@www.github.com:Growth-fountain/consts
+[submodule "staticdata"]
+	path = staticdata
+	url = git@www.github.com:Growth-Fountain/staticdata
