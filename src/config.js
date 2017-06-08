@@ -35,8 +35,10 @@ module.exports = {
 
  googleMapKey: "AIzaSyBpCl9-7bkVISZ0o-AaFCsKzZwGAxalkZU",
  stripeKey: "pk_live_4ZF2RPjAVJ0tXrDNMauofmgb",
- googleTagIdGeneral: 'GTM-NC9XW5D',
- googleTagId: 'GTM-55SNV9B',
+ googleTagID: 'GTM-NC9XW5D',
+ googleAnalyticsID: 'UA-47199302-6',
+ googleAnalyticsIDGeneral: 'UA-47199302-1',
+ facebookPixelID: 172026009946228,
 
  indexPage: {
 	 //main slider or img (slider - 1/ img - 0)
