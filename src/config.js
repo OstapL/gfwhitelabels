@@ -1,39 +1,62 @@
 module.exports = {
-  domainUrl: "growthfountain.com",
-  serverUrl: "https://django-api.growthfountain.com",
-  raiseCapitalServer: "https://api-raisecapital.growthfountain.com",
-// raiseCapitalServer: "http://localhost:8003",
-  authServer: "https://api-auth.growthfountain.com",
-// authServer: "http://localhost:8002",
-  formcServer: "https://api-formc.growthfountain.com",
-// formcServer: "http://localhost:8001",
-  investmentServer: "https://api-investment.growthfountain.com",
-// investmentServer: "http://localhost:8003",
-  filerServer: "https://api-filer.growthfountain.com",
-  esignServer: 'https://api-esign.growthfountain.com',
-//  esignServer: 'https://api-esign.growthfountain.com',
-  commentsServer: "https://api-comments.growthfountain.com",
-  blogServer: "https://api-blog.growthfountain.com",
-  notificationsServer: "https://notifications.growthfountain.com/",
-  bucketServer: "https://s3.amazonaws.com/growthfountain-alpha-storage",
-  teamName: 'GrowthFountain Team',
-  teamTitle: "Meet The Team",
-  title: "Crowdfunding | Jeanne D'Arc CU",
-  footerText: "The investment opportunities and/or products offered through GrowthFountain are not insured by Jeanne D'Arc Credit Union. Deposits/investments are not insured by the National Credit Union Administration (NCUA) or the Massachusetts Share Insurance Corporation (MSIC). These investment opportunities/products are not obligations of Jeanne D’Arc Credit Union and are not endorsed, recommended or guaranteed by Jeanne D'Arc Credit Union or any government agency. The value of the investment may fluctuate, the return on the investment is not guaranteed, and loss of principal is possible. Jeanne D'Arc Credit Union is not a registered broker-dealer nor are they affiliated with GrowthFountain. Jeanne D'Arc Credit Union has contracted with GrowthFountain to make potential non-deposit investment opportunities and products available to credit union members.",
+	domainUrl: "growthfountain.com",
+	serverUrl: "https://django-api.growthfountain.com",
+	raiseCapitalServer: "https://api-raisecapital.growthfountain.com",
+	// raiseCapitalServer: "http://localhost:8003",
+	authServer: "https://api-auth.growthfountain.com",
+	// authServer: "http://localhost:8002",
+	formcServer: "https://api-formc.growthfountain.com",
+	// formcServer: "http://localhost:8001",
+	investmentServer: "https://api-investment.growthfountain.com",
+	// investmentServer: "http://localhost:8003",
+	filerServer: "https://api-filer.growthfountain.com",
+	esignServer: 'https://api-esign.growthfountain.com',
+	//  esignServer: 'https://api-esign.growthfountain.com',
+	commentsServer: "https://api-comments.growthfountain.com",
+	blogServer: "https://api-blog.growthfountain.com",
+	notificationsServer: "https://notifications.growthfountain.com/",
+	bucketServer: "https://s3.amazonaws.com/growthfountain-alpha-storage",
+	teamName: 'GrowthFountain Team',
+	teamTitle: "Meet The Team",
+	title: "Crowdfunding | Jeanne D'Arc CU",
+	footerText: "The investment opportunities and/or products offered through GrowthFountain are not insured by Jeanne D'Arc Credit Union. Deposits/investments are not insured by the National Credit Union Administration (NCUA) or the Massachusetts Share Insurance Corporation (MSIC). These investment opportunities/products are not obligations of Jeanne D’Arc Credit Union and are not endorsed, recommended or guaranteed by Jeanne D'Arc Credit Union or any government agency. The value of the investment may fluctuate, the return on the investment is not guaranteed, and loss of principal is possible. Jeanne D'Arc Credit Union is not a registered broker-dealer nor are they affiliated with GrowthFountain. Jeanne D'Arc Credit Union has contracted with GrowthFountain to make potential non-deposit investment opportunities and products available to credit union members.",
 
-  //serverUrl: "http://192.168.99.100:8000",
-  //serverUrl: "http://gfauth.com:8000",
+	//serverUrl: "http://192.168.99.100:8000",
+	//serverUrl: "http://gfauth.com:8000",
 
-  // Growth Fountain production keys:
-  // facebookClientId: "191471871275050",
-  // googleClientId: "488593151885-87nqfd8gl444a1me0n149otrf37dbahq.apps.googleusercontent.com",
-  // linkedinClientId: "77wzj6tz0yyr33",
-  
-  facebookClientId: "1405768896335643",
-  googleClientId: "805823281871-0sbsf2btjd5j13g5aa7sfo4pfjorn3k2.apps.googleusercontent.com",
-  linkedinClientId: "77wzj6tz0yyr33",
+	// Growth Fountain production keys:
+	// facebookClientId: "191471871275050",
+	// googleClientId: "488593151885-87nqfd8gl444a1me0n149otrf37dbahq.apps.googleusercontent.com",
+	// linkedinClientId: "77wzj6tz0yyr33",
+
+	facebookClientId: '1071081646296574',
+  googleClientId: '805823281871-ve3unmva9aer69papghudk0dnpf8tqr2.apps.googleusercontent.com',
+  linkedinClientId: "77rg2wrcb8utfq",
 
   googleMapKey: "AIzaSyBpCl9-7bkVISZ0o-AaFCsKzZwGAxalkZU",
-  stripeKey: "pk_test_Z7YAhlyPtnW7bpd8LJUHTSou",
-  googleTagId: 'GTM-WP7K455',
+  stripeKey: "pk_live_4ZF2RPjAVJ0tXrDNMauofmgb",
+
+  googleTagID: 'GTM-NC9XW5D',
+	googleAnalyticsID: 'UA-47199302-3',
+	googleAnalyticsIDGeneral: 'UA-47199302-1',
+	facebookPixelID: 172026009946228,
+
+	indexPage: {
+		//main slider or img (slider - 1/ img - 0)
+		slider: 1,
+		campaignListTitle: 'TRENDING', // title main page list campaign
+		// url main video 
+		videoUrl: 'https://fpdl.vimeocdn.com/vimeo-prod-skyfire-std-us/01/1191/7/180959374/592219733.mp4?token=1496687755-0xed3bf6c7b33568ddf73ebda42e21d412fb6a7361',
+		videoPopupUrl: 'https://player.vimeo.com/video/180959374?title=0&amp;byline=0&amp;portrait=0',
+		videoTitle: 'A NEW WAY TO INVEST OR RAISE CAPITAL',
+		videoText: '<h3>Through our partnership with Growth Fountain we\'re pleased <br>to introduce Equity Crowdfunding.</h3>'
+			+ '<h3>Discover, support and invest in the businesses within our <br> community, and receive ownership for your contribution.</h3>'
+			+ '<h3>It’s people helping people at an entirely new level.</h3>',
+		dataVideoIdPopup: '180959374',
+		dataProviderVideoPopup: 'vimeo',
+		// top banner (none - 0 / dcu - 1 / river - 2)
+		topBanner: 0,
+		//bottom banner (1 - raise capital/ 0 - INVEST)
+		bottomBunner: 0,
+	},
 };
