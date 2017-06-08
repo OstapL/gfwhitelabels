@@ -6,6 +6,7 @@ do
     echo "========================= branch $b =========================="
     git checkout $b
     git pull origin $b
+    git submodule update --init
 
     if git branch --all | grep --quiet "remotes/vladyslav2/$b"; then
         echo "============ MERGE WITH VLADYSLAV/$b ============"
