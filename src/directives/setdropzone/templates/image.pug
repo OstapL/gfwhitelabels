@@ -6,6 +6,8 @@
           i.fa.fa-crop
         a(href="#").delete-image.deleteFile
           i.fa.fa-times
-      img(class=("w-100 img-" + file.fieldName) src=file.file.getUrl())
+      .bgc-wrap
+        img(class=("w-100 img-" + file.fieldName) src=file.file.getUrl())
     else
-      img(class=("w-100 img-" + file.fieldName) src=file.getDefaultImage())
+      .bgc-wrap
+        img(class=("w-100 img-" + file.fieldName) src=file.getDefaultImage())
