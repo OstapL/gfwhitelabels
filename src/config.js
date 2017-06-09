@@ -45,9 +45,12 @@ var e = {
     videoUrl: 'https://fpdl.vimeocdn.com/vimeo-prod-skyfire-std-us/01/1191/7/180959374/592219733.mp4?token=1496687755-0xed3bf6c7b33568ddf73ebda42e21d412fb6a7361',
     videoPopupUrl: 'https://player.vimeo.com/video/180959374?title=0&amp;byline=0&amp;portrait=0',
     videoTitle: 'A NEW WAY TO INVEST OR RAISE CAPITAL',
-    videoText: '<h3>Through our partnership with Growth Fountain we\'re pleased <br>to introduce Equity Crowdfunding.</h3>'
-    + '<h3>Discover, support and invest in the businesses within our <br> community, and receive ownership for your contribution.</h3>'
-    + '<h3>It’s people helping people at an entirely new level.</h3>',
+    videoText: '<p class="font-weight-normal">Through our partnership with Growth Fountain we\'re pleased to introduce Equity Crowdfunding. <br> With this innovative program:</p>'
+    + '<p class="m-t-0 m-b-0">- Investors and entrepreneurs can connect to enrich each other.'
+    +'<br>- Investors receive equity for their contributions to small businesses.'
+    + '<br>- Entrepreneurs can raise capital for their businesses through these contributions'
+    + '<br>- Opportunities are available on local and national levels.'
+    + '<br>- Economic growth is spurred by greater exposure and interest.</p>',
     dataVideoIdPopup: '180959374',
     dataProviderVideoPopup: 'vimeo',
     // top banner (none - 0 / dcu - 1 / river - 2)
