@@ -143,8 +143,8 @@ class Formc {
         ) &&
         this.rights_of_securities.length > 0 &&
         this.terms_of_securities.length > 0 &&
-        this.security_differences.length > 0 &&
-        this.exercise_of_rights.length > 0 &&
+        // this.security_differences.length > 0 &&
+        // this.exercise_of_rights.length > 0 &&
         this.risks_to_purchasers.length > 0, 
       'background-check': 
         (
