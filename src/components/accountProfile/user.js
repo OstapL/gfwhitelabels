@@ -65,6 +65,18 @@ class User {
     return this.data.info || [];
   }
 
+  setFormcPaid(formcID) {
+    if (this.companiesMember.length <= 0)
+      return;
+
+    if (this.formc.id === formcID)
+      this.formc.is_paid = true;
+
+    const companyInfo = _.find(this.companiesMember, companyInfo => companyInfo.formc_id === formcID);
+    if (companyInfo)
+      companyInfo.is_paid = true;
+  }
+
   updateImage(imageData) {
     this.data.image_data = imageData;
     this.data.image_image_id = new Image(

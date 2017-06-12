@@ -9,6 +9,8 @@ const templateMap = {
   'formc-review-congratulations': 'formc_review_congratulations',
 };
 
+const withLeftMenuPages = ['education', 'advertising', 'terms-of-use', 'privacy-policy'];
+
 module.exports = {
   routes: {
     '': 'mainPage',
@@ -31,9 +33,7 @@ module.exports = {
 
           //TODO: universal optimization in scriptLoader
           app.helpers.video.preloadScripts(['vimeo']);
-
           // app.cache[window.location.pathname] = html;
-
           $('#content').html(html);
 
           $('.carousel-test').owlCarousel({
@@ -147,10 +147,17 @@ module.exports = {
           return false;
         }
 
-        let view = require('./templates/' + (templateMap[name] || name) + '.pug');
         app.addClassesTo('#page', [name]);
+        const template = require('./templates/' + (templateMap[name] || name) + '.pug');
+        if (_.contains(withLeftMenuPages, name)) {
+          const Views = require('./views.js');
+          (new Views.WithLeftMenu({
+            template,
+          })).render();
+        } else {
+          $('#content').html(template());
+        }
 
-        $('#content').html(view());
         // investor and busines tutorial
         $('.carousel-tutorial').owlCarousel({
             loop: true,

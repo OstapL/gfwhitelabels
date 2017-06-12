@@ -375,9 +375,9 @@ section
                           if v.college
                             i.fa.fa-graduation-cap
                             |  #{v.college}
-  if values.campaign.press && Object.keys(values.campaign.press).length > 0 && values.campaign.press[0].headline != ''
     .col-lg-12.border-bottom.m-t-0.m-b-3
-    section#articles
+  if values.campaign.press && Object.keys(values.campaign.press).length > 0 && values.campaign.press[0].headline != ''
+    section.articles
       .container
         
           - var showMore = false;
@@ -467,12 +467,12 @@ section
                 tr.bgc-row-top
                   td(colspan="2").p-x-0.p-y-0
                     h4.text-uppercase.text-lg-center.text-xs-center.campaign-subheading.section-bg-line.m-y-0 Fundraising Description
-                tr.bgc-row-middle
+                tr.bgc-row-middle.text-xs-center
                   td.width-50
                     p Type of Security
                   td
                     p Pre-Money Valuation
-                tr
+                tr.text-xs-center
                   td.width-50
                     h2.font-weight-bold Common Equity
                       div.d-inline-block
@@ -480,22 +480,22 @@ section
                           i(aria-hidden="true").fa.fa-question-circle.text-muted.detail-security-type-icon
                   td
                     h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.premoney_valuation) }
-                tr.bgc-row-middle
+                tr.bgc-row-middle.text-xs-center
                   td.width-50
                     p Minimum Investment
                   td
                     p Price per Share
-                tr
+                tr.text-xs-center
                   td.width-50
                     h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.minimum_increment) }
                   td
                     h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.price_per_share) }
-                tr.bgc-row-middle
+                tr.bgc-row-middle.text-xs-center
                   td.width-50
                     p Minimum # of Shares
                   td
                     p Maximum # of Shares
-                tr
+                tr.text-xs-center
                   td.width-50
                     h2.font-weight-bold #{ (Math.round(values.campaign.minimum_raise / values.campaign.price_per_share)).toLocaleString('en-US') }
                   td
@@ -506,12 +506,12 @@ section
                 tr.bgc-row-top
                   td(colspan="2").p-x-0.p-y-0
                     h4.text-uppercase.text-lg-center.text-xs-center.campaign-subheading.section-bg-line.m-y-0  Fundraising Description
-                tr.bgc-row-middle
+                tr.bgc-row-middle.text-xs-center
                   td.width-50
                     p Type of Security
                   td
                     p Percentage Revenue
-                tr
+                tr.text-xs-center
                   td.width-50
                     h2.font-weight-bold Revenue Share
                       div.d-inline-block
@@ -519,22 +519,22 @@ section
                           i(aria-hidden="true").fa.fa-question-circle.text-muted.detail-security-type-icon
                   td
                     h2.font-weight-bold #{ values.campaign.percentage_revenue }%
-                tr.bgc-row-middle
+                tr.bgc-row-middle.text-xs-center
                   td.width-50
                     p Target Minimum Raise Amount
                   td
                     p Target Maximum Raise Amount
-                tr
+                tr.text-xs-center
                   td.width-50
                     h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.minimum_raise) }
                   td
                     h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.maximum_raise) }
-                tr.bgc-row-middle
+                tr.bgc-row-middle.text-xs-center
                   td.width-50
                     p Minimum Investment
                   td
                     p Cap
-                tr
+                tr.text-xs-center
                   td.width-50
                     h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.minimum_increment) }
                   td
