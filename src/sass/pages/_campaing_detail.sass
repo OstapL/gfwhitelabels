@@ -8,7 +8,7 @@
   background: rgba(17, 17, 17, .5)
 
 .border-bottom-scroll
-  box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.1)
+  box-shadow: 0px 1px 0px 0px rgba(0,0,0,0.1)
   padding-top: rem(25)
   background-color: #fdfdfd
 
@@ -39,11 +39,11 @@
   height: 82vh
   overflow: hidden
   position: relative
+  @media only screen and (max-width : 767px)
+    height: 650px
   &.scroll-paralax
     &:after
       z-index: 1
-  @media only screen and (max-width : 576px)
-    height: 90vh
   .company-name
     margin-top: 0
     position: relative
@@ -116,6 +116,8 @@
         color: $white
         margin-bottom: 0
         margin-top: 0
+        @media only screen and (max-width : 767px)
+          margin-bottom: rem(25)
         @media only screen and (max-width : 575px)
           font-size: rem(16)
       p
@@ -129,6 +131,8 @@
         span
           position: relative
           top: -5px
+        @media screen and (min-width : 992px) and (max-width : 1199px)
+          margin-top: 0
     .btn
       margin-top: rem(8)
 .edit-campaign-wrap
@@ -142,6 +146,14 @@
 .campaigndetail
   background-color: #fdfdfd
   padding-top: rem(50)
+  @media only screen and (max-width : 1199px)
+    box-shadow: 0px 1px 0px 0px rgba(0,0,0,0.1)
+    padding-bottom: rem(25)
+    .btn
+      margin-top: rem(25)
+  @media only screen and (max-width : 991px)
+    .btn
+      margin-top: 0
   h1
     letter-spacing: rem(.75)
     margin-bottom: 0
@@ -154,10 +166,15 @@
     color: $small-text
     line-height: rem(14)
   .left-wrap-city
-    margin-bottom: 25px
-    span
+    margin-bottom: rem(25)
+    margin-top: rem(5)
+    p
       color: $small-text
       text-transform: capitalize
+      vertical-align: middle
+      display: inline-block
+      width: 83%
+      line-height: 15px
     .icon-city
       font-size: rem(12)
       width: 22px
@@ -168,19 +185,25 @@
       border-radius: 100px
       color: $white
       margin-right: rem(3)
+      z-index: 2
       &:before
         transform: translate(-50%, -50%)
         position: absolute
         left: 50%
         top: 50%
     .vertical-line
-      height: 28px
+      height: 75%
       border-left: 3px solid $alabaster
-      margin: 0 10px
+      margin: 0 rem(10)
       position: absolute
+      bottom: 25px
+  .brif-block
+    @media only screen and (min-width : 1200px)
+      padding-right: 0
   .brif
     border-left: solid 1px #e7e7e7
     border-right: solid 1px #e7e7e7
+    padding: 0 rem(15)
     .link-campaing-detail
       font-size: rem(12)
       text-decoration: underline
@@ -196,14 +219,22 @@
     .social-link
       .link-campaing-detail
         font-size: rem(15)
-        padding: 0 7px
+        padding: 0 rem(7)
         &:last-child
           padding-right: 0
+      @media only screen and (max-width : 375px)
+        width: 100%
+        display: block
+        margin-top: rem(10)
+        position: relative
+        left: -6px
   .mt25
     margin-top: rem(25)
   .mt20
     margin-top: rem(20)
   .right-block-investors
+    @media only screen and (max-width : 991px)
+      margin-top: rem(30)
     h2
       margin-top: 0
       margin-bottom: 0
@@ -275,8 +306,8 @@
 
 
 .about-detail
-  margin-top: rem(70)
-  padding-bottom: rem(70)
+  margin-top: rem($margin-top-section-campaign)
+  padding-bottom: rem($padding-bottom-section-campaign)
 
   .no-padding-img
     padding: 5px
@@ -341,8 +372,8 @@
 
 
 #members
-  margin-top: rem(70)
-  padding-bottom: rem(20)
+  margin-top: rem($margin-top-section-campaign)
+  padding-bottom: rem($padding-bottom-section-campaign-members)
   .hide-more-detail
     height: 83px
     overflow: hidden
@@ -368,12 +399,14 @@
 
 
 #articles
-  margin-top: rem(70)
+  margin-top: rem($margin-top-section-campaign)
+  padding-bottom: rem($padding-bottom-section-campaign)
+  .see-all-article
+    margin-top: rem(30)
 .articles_press
   .card
     margin-top: 0
     background-color: $alabaster
-    margin-bottom: rem(70)
     border: none
 
     .articles-press-item
@@ -400,9 +433,8 @@
       .border-top
         border-top: solid 1px $light_grey
   .see-all-article-press
-    position: relative
-    top: -20px
-      
+    margin-top: rem(30)
+
 
 .team.team-detail
   padding-bottom: rem(15)
@@ -435,7 +467,8 @@
       i
         padding: 0 rem(4) rem(15)
       .cite_education
-        margin-top: rem(5)
+        margin-top: rem(15)
+
     .card-title
       margin-bottom: 0
     .img-circle
@@ -445,9 +478,10 @@
       color: $small-text
       font-size: rem(12)
 
+
 .document
-  padding-bottom: rem(60)
-  margin-top: rem(70)
+  padding-bottom: rem($padding-bottom-section-campaign)
+  margin-top: rem($margin-top-section-campaign)
   h2
     margin-bottom: rem(25)
   h3
@@ -480,7 +514,8 @@
     a
       font-size: rem(11)
 .overview
-  margin-top: rem(70)
+  margin-top: rem($margin-top-section-campaign)
+  padding-bottom: rem($padding-bottom-section-campaign)
   h3
     margin-top: 0 
   .fundraising, .perks, .thankyou-page
@@ -517,8 +552,8 @@
       padding-right: 20px
 
 #perks
-  margin-top: 0
-  padding-bottom: 70px
+  margin-top: rem(10)
+  
   table
     th, td
       border: 1px solid #ebebeb
@@ -548,11 +583,11 @@
   a.see-all
     margin-top: rem(25)
 #faq-section
-  margin-top: rem(70)
-  padding-bottom: rem(70)
+  margin-top: rem($margin-top-section-campaign)
+  padding-bottom: rem($padding-bottom-section-campaign)
 #ask-section
-  margin-top: rem(70)
-  padding-bottom: rem(70)
+  margin-top: rem($margin-top-section-campaign)
+  padding-bottom: rem($padding-bottom-section-campaign)
   h2
     margin-top: 0
 .like-detail
@@ -633,7 +668,6 @@
       font-size: rem(16)!important
     h2
       font-size: rem(16)
-      margin-bottom: rem(30)!important
   .campaigndetail
     border-bottom: solid 1px $gallery
     .share
