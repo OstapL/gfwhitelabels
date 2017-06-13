@@ -24,3 +24,4 @@
     {"id":36,"domain":"alpha-dcu.growthfountain.com","name":"alpha-dcu","bucket_name":"growthfountain-alpha-dcu-storage","url":"http://growthfountain-alpha-dcu-storage.s3-website-us-east-1.amazonaws.com","frontend_bucket":""},
     {"id":38,"domain":"alpha-momentum3.growthfountain.com","name":"alpha-momentum3","bucket_name":"growthfountain-alpha-momentum3-storage","url":"http://growthfountain-alpha-momentum3-storage.s3-website-us-east-1.amazonaws.com","frontend_bucket":""}
 ]
+
