@@ -629,6 +629,13 @@ module.exports = {
       this.model = this.company;
       this.campaign = options.campaign;
       this.formc = options.formc;
+
+      //this is auth cookie for downloadable files
+      app.cookies.set('token', app.user.data.token, {
+        domain: '.' + app.config.domainUrl,
+        expires: 1000 * 60 * 60 * 24 * 30 * 12,
+        path: '/',
+      });
     },
 
     render() {

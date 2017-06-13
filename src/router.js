@@ -48,6 +48,13 @@ module.exports = Backbone.Router.extend(_.extend({
 
   execute(callback, args, name) {
     //as we send custom events to pixel default events we will sent explicitly
+    //
+    if(
+        window.location.pathname.substr(window.location.pathname.length-1, 1) == '/' &&
+        window.location.pathname != '/'
+        ) {
+      window.location = window.location.pathname.substr(0, window.location.pathname.length-1);
+    }
     app.emitFacebookPixelEvent();
 
     app.clearClasses('#page', ['page']);

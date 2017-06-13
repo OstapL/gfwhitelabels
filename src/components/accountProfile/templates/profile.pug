@@ -19,7 +19,7 @@
             view.fields.image_image_id
           ).render().resultHTML;
       .row
-        .col-xl-12.col-lg-12.col-md-6.offset-md-3.col-xs-8.offset-xs-2.offset-xl-0.offset-lg-0.p-l-0.p-r-0
+        .col-xl-12.col-lg-12.col-md-6.offset-md-3.col-xs-12.offset-xl-0.offset-lg-0.credit-password-block
           -
             var roles = app.user.getRoles();
             var company = app.user.getCompany();
@@ -52,7 +52,7 @@
               .text-xs-center
                 a(href="/companies").btn.btn-secondary invest
           .profile-reset-password      
-            hr.m-t-0
+            hr
             a(href="/account/change-password").link-3
               i.fa.fa-lock
               |  Need to change your password?
