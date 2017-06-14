@@ -116,34 +116,90 @@ class Campaign {
   }
 
   getMainImage () {
+    // Vlad
+    console.debug('Use campaign.header_image_id.getUrl("main")');
     const link = this.header_image_data && this.header_image_data.urls ? 
       this.header_image_image_id.getUrl('main') : '';
     return link;
   }
 
-  initInvestment(i) {
-    i.created_date = moment.isMoment(i.created_date)
-      ? i.created_date
-      : moment.parseZone(i.created_date);
-
-    i.campaign.expiration_date = moment.isMoment(i.campaign.expiration_date)
-      ? i.campaign.expiration_date
-      : moment(i.campaign.expiration_date);
-
-    i.expired = i.campaign.expiration_date.isBefore(today);
-    i.cancelled = _.contains(CANCELLED_STATUSES, i.status);
-    i.historical = i.expired || i.cancelled;
-    i.active = !i.historical  && _.contains(ACTIVE_STATUSES, i.status);
-  }
-
   getInvestorPresentationURL() {
+    // Vlad
+    console.debug('Use campaign.investor_presentation_id.getUrl("origin")');
     if (!this.investor_presentation_data ||
         !this.investor_presentation_data.urls ||
         !this.investor_presentation_data.urls.origin
     )
       return '';
+    return this.investor_presentation_data.getUrl();
+  }
 
-    return app.getFilerUrl(this.investor_presentation_data.urls);
+  calcProgress(data) {
+    try {
+      return {
+        'general_information':
+          this.pitch.length > 5 &&
+          this.intended_use_of_proceeds.length > 5 &&
+          this.business_model.length > 5,
+        'media':
+          this.video != '' &&
+          this.header_image_image_id.id != null &&
+          this.list_image_image_id.id != null &&
+          this.gallery_group_id.data.length > 5,
+        'specifics':
+          this.minimum_raise >= 25000 &&
+          this.maximum_raise <= 1000000 &&
+          this.minimum_increment >= 100 &&
+          this.length_days >= 60 &&
+          this.investor_presentation_file_id.id != null &&
+          app.utils.isBoolean(this.security_type) &&
+          (this.security_type == 1 || 
+           (this.security_type == 0 && this.premoney_valuation > 0)
+          ),
+        'team-members': this.team_members.members.length > 0,
+        'perks': this.perks.length > 0
+      }
+    } catch(e) {
+      return {};
+    }
+  }
+
+  updateMenu(progress) {
+    let complited = 0;
+    _(progress).each((v,k) => {
+      let el = null;
+      if(v == false) {
+        el = document.querySelector('#menu_c_' + k + ' .icon-check');
+        if(el != null) {
+          el.remove();
+        }
+      } else {
+        if(k != 'perks') {
+          complited ++;
+        }
+        if(document.querySelector('#menu_c_' + k + ' .icon-check') == null) {
+          document.querySelector('#menu_c_' + k).innerHTML += ' <div class="icon-check"><i class="fa fa-check-circle-o"></i></div>';
+        }
+      }
+    });
+
+    if(complited == 4) {
+      document.querySelectorAll('#form_c a.disabled').forEach((v, i) => {
+        v.className = v.className.replace('disabled', '');
+      });
+      // ToDo
+      // Fix this
+      var formcClass = new app.models.Formc(app.user.formc);
+      formcClass.updateMenu(formcClass.calcProgress());
+    }
+  }
+
+  get expirationDate() {
+    return moment(this.expiration_date);
+  }
+
+  get expired() {
+    return this.expirationDate.isBefore(today);
   }
 }
 

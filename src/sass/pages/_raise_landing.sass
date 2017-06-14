@@ -1,10 +1,33 @@
 .raise-capital-landing
   position: relative
+  .raise-landing-top-line
+    position: absolute
+    top: 0
+    left: 0
+    width: 100%
+    background-color: rgba($heartland-tour-in-main, .8)
+    padding: rem(10)
+    text-align: center
+    z-index: 3
+    span 
+      color: $white
+    a
+      color: $white
+      text-decoration: underline
+      font-weight: bold
+      &:hover
+        +mt(.3s)
+        color: rgba($white, .7)
+        text-decoration: none
   .top-baner
-    background-image: url("img/raise-landing/raise-landing-top.jpg")
     height: 70vh
     background-size: cover
-    background-attachment: fixed
+    .background
+      top: -50px
+      height: 80vh
+    .center-wrap
+      @media only screen and (max-width : 768px)
+        top: 55%
     h1
       color: $white
       line-height: rem(60)
@@ -14,13 +37,21 @@
       @media only screen and (max-width : 768px)
         font-size: rem(26)!important
         line-height: 26px
-      @media only screen and (max-width : 768px)
-        font-size: rem(18)!important
-        line-height: 20px
+      @media only screen and (max-width : 375px)
+        font-size: rem(24)!important
+        line-height: 30px
     img
       width: 145px
       position: relative
       top: -10px
+      @media screen and (min-width : 1200px) and (max-width : 1300px)
+        top: 0
+      @media only screen and (max-width : 768px)
+        width: 70px
+        top: 0
+      @media only screen and (max-width : 375px)
+        width: 50px
+        top: 0
     @media only screen and (max-width : 768px)
       background-attachment: initial
   .top-section
@@ -37,8 +68,11 @@
         width: 43%
       @media screen and (min-width : 1400px) and (max-width : 1600px)
         width: 42%
-      @media only screen and (max-width : 992px)
+      @media only screen and (max-width : 991px)
         width: 100%
+        height: 45%
+      @media only screen and (max-width : 575px)
+        height: 47%
     &:after
       position: absolute
       top: 0
@@ -53,8 +87,15 @@
       @media only screen and (max-width : 1199px)
         border: 195px solid transparent
         border-left: 110px solid $growth-is-bgc
-      @media only screen and (max-width : 992px)
-        border: none
+      @media only screen and (max-width : 991px)
+        top: 50%
+        border: 50px solid transparent
+        border-top: 50px solid $growth-is-bgc
+        left: 50%
+        -ms-transform: translate(-50%, -50%)
+        -webkit-transform: translate(-50%, -50%)
+        transform: translate(-50%, -50%)
+
     .growth-is
       position: relative
       padding-top: rem(50)
@@ -68,7 +109,7 @@
         padding-right: 100px
         position: relative
         z-index: 1
-        @media only screen and (max-width : 992px)
+        @media only screen and (max-width : 991px)
           padding-right: 0
 
     .good-candidate
@@ -77,12 +118,16 @@
       ul
         list-style-type: none
         margin-top: rem(10)
-      @media only screen and (max-width : 992px)
-        color: $white
-      @media only screen and (max-width : 768px)
+      @media only screen and (max-width : 991px)
+        color: $black
         &.p-l-2
           padding-left: 0!important
           padding-bottom: rem(50)
+      @media only screen and (max-width : 768px)
+        color: $black
+        margin-top: rem(75)
+      @media only screen and (max-width : 575px)
+        margin-top: rem(90)
 
   .simplify
     background-color: $alabaster
@@ -103,13 +148,6 @@
         width: 80px
 
 
-  .raise-landing-section
-    background: url(img/raise-landing/RS2.png)
-    background-position: center center
-    background-attachment: fixed
-    height: 340px
-    background-repeat: no-repeat
-    background-size: cover
   .content-bottom
     h2
       margin-bottom: rem(20)
@@ -134,6 +172,9 @@
           span
             width: 87%
             display: inline-block
+          &.li-photos
+            @media only screen and (min-width : 543px)
+              margin-bottom: rem(30)
     @media only screen and (max-width : 650px)
       .p-x-0
         padding-left: 15px!important
@@ -154,3 +195,10 @@
       @media only screen and (max-width : 544px)
         div:first-child
           margin-bottom: rem(20)
+.raise-landing-banner
+  @media only screen and (max-width : 375px)
+    h2
+      line-height: rem(24)!important
+    h3
+      font-size: rem(16)
+      line-height: rem(22)

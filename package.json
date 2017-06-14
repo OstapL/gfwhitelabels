@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "NODE_ENV=development webpack-dev-server",
-    "build": "NODE_ENV=production webpack -p --config ./webpack.config.js",
-    "stats": "webpack --profile --json >stats.json",
+    "build": "NODE_ENV=production webpack -p",
+    "stats": "NODE_ENV=production webpack --profile --json >stats.json",
     "analyzer": "NODE_ENV=analyze webpack",
     "webpack_analyzer": "webpack --json | ./node_modules/webpack-bundle-size-analyzer/webpack-bundle-size-analyzer",
     "lint": "jshint src/**/*.js",
@@ -21,6 +21,7 @@
     "babel-preset-env": "^1.2.2",
     "caniuse-db": "^1.0.30000644",
     "clean-webpack-plugin": "^0.1.16",
+    "compression-webpack-plugin": "^0.4.0",
     "css-loader": "^0.27.3",
     "extract-text-webpack-plugin": "^2.1.0",
     "file-loader": "^0.10.1",
@@ -35,13 +36,12 @@
     "sass-loader": "^6.0.3",
     "style-loader": "^0.16.0",
     "url-loader": "^0.5.8",
-    "webpack": "^2.3.2",
+    "webpack": "^2.6.1",
     "webpack-bundle-analyzer": "^2.3.1",
     "webpack-bundle-size-analyzer": "^2.5.0",
-    "webpack-dev-server": "^2.4.2"
+    "webpack-dev-server": "^2.4.5"
   },
   "dependencies": {
-    "animate.css": "^3.5.2",
     "babel-polyfill": "^6.23.0",
     "backbone": "git+https://github.com/jashkenas/backbone.git",
     "bootstrap": "^4.0.0-alpha.4",
@@ -56,8 +56,6 @@
     "intl": "^1.2.5",
     "jquery": "^2.2.4",
     "jquery-serializejson": "^2.7.2",
-    "jquery.appear": "^1.0.1",
-    "json-loader": "^0.5.4",
     "moment": "^2.17.1",
     "owl.carousel": "^2.2.0",
     "socket.io-client": "^1.7.3",

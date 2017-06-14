@@ -12,10 +12,10 @@
   var directiveKey = 'invest';
 
 
-.container
+.container.thank-you-page
   .row
     .col-sm-8.offset-sm-2
-      h2.text-xs-center.m-b-1.font-weight-light.m-t-0
+      h2.text-xs-center.m-b-1.font-weight-light.m-t-0.thank-you-page-title
         .icon-in-circle.m-r-1.d-inline-block.align-middle
           i(aria-hidden="true").fa.fa-thumbs-o-up
         | Thank you for your investment.
@@ -92,7 +92,7 @@
                       else
                         h3.m-y-0
                           hr(style="width:40px;")
-        h3.m-b-2.m-t-2 You will have the opportunity to track your investments in the Investor Dashboard
+        p.m-b-2.m-t-3 You will have the opportunity to track your investments in the Investor Dashboard
         .info-btn-block
           a(href="/account/investor-dashboard").btn.btn-secondary INVESTOR DASHBOARD
             i.fa.fa-angle-right

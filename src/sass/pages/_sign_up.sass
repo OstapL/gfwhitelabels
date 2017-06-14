@@ -71,13 +71,12 @@
       padding-right: 0
     .sign-up-right
       border-left: none
-  @media only screen and (max-width : 768px)
+  @media only screen and (max-width : 767px)
     .sign-up-left-banner-img
       display: none
     .sign-up-left-banner
       height: auto
       background-image: none
-      margin-bottom: rem(20)
       .block-top-section
         background-color: $sign-up-header-bgc
         color: $white
@@ -99,6 +98,21 @@
     .sign-up-right
       border-top: none
       height: auto
+  @media only screen and (max-width : 375px)
+    .sign-up-left-banner
+      .block-top-section
+        .wrap-baner-title
+          h1, h1.credit
+            font-size: rem(21)
+            margin-bottom: 0
+        .wrap-baner
+          h2
+            font-size: rem(16)
+            margin-bottom: 0
+          hr
+            margin: 10px auto
+
+
   @media only screen and (max-width : 320px)
     .sign-up-right
       height: auto
@@ -113,14 +127,6 @@
   .login-padding
     padding-left: 10px
     padding-right: 10px
-#sign_up
-  .modal-dialog
-    max-width: 540px
-    .modal-body
-      padding: rem(15) rem(45) 0
-      .label-text
-        line-height: 14px
-        font-size: rem(12)
 
 .login, .singup
   .or

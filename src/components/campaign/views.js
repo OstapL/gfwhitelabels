@@ -1,5 +1,6 @@
 const companyFees = require('consts/companyFees.json');
 const typeOfDocuments = require('consts/typeOfDocuments.json');
+const STATUSES = require('consts/raisecapital/companyStatuses.json').STATUS;
 
 const COUNTRIES = require('consts/countries.json');
 const validation = require('components/validation/validation.js');
@@ -62,7 +63,6 @@ module.exports = {
       'shown.bs.collapse #hidden-article-press' :'onArticlePressCollapse',
       'click .submit_form': 'submitCampaign',
       'click .company-documents': 'showDocumentsModal',
-      'click .show-video-modal': 'showVideoModal',
     },
 
     onCollapse (e) {
@@ -203,10 +203,110 @@ module.exports = {
       app.helpers.fileList.show(this.companyDocsData);
     },
 
-    render() {
-      const fancybox = require('components/fancybox/js/jquery.fancybox.js');
-      const fancyboxCSS = require('components/fancybox/css/jquery.fancybox.css');
+    initAsyncUI() {
+      this.initStickyToggle();
+      if (this.model.campaign.security_type == 1)
+        (new CalculatorView.calculator()).render();
 
+      Promise.all([
+        this.initFancyBox(),
+        this.initComments()
+      ]).then(() => {
+        app.hideLoading();
+      });
+    },
+
+    initFancyBox() {
+      return new Promise((resolve, reject) => {
+        const $fancyBox = this.$('.fancybox');
+
+        $fancyBox.on('click', (e) => { e.preventDefault(); return false; });
+
+        require.ensure([
+          'components/fancybox/js/jquery.fancybox.js',
+          'components/fancybox/css/jquery.fancybox.css',
+        ], (require) => {
+          const fancybox = require('components/fancybox/js/jquery.fancybox.js');
+          const fancyboxCSS = require('components/fancybox/css/jquery.fancybox.css');
+
+          $fancyBox.off('click');
+
+          $fancyBox.fancybox({
+            openEffect  : 'elastic',
+            closeEffect : 'elastic',
+
+            helpers : {
+              title : {
+                type : 'inside'
+              }
+            }
+          });
+          resolve();
+        }, 'fancybox_chunk');
+      });
+    },
+
+    initStickyToggle() {
+      var stickyToggle = function(sticky, stickyWrapper, scrollElement) {
+        var stickyHeight = sticky.outerHeight();
+        var stickyTop = stickyWrapper.offset().top;
+        if (scrollElement.scrollTop() >= stickyTop){
+          stickyWrapper.height(stickyHeight);
+          sticky.addClass("is-sticky");
+        }
+        else{
+          sticky.removeClass("is-sticky");
+          stickyWrapper.height('auto');
+        }
+      };
+
+      this.$el.find('[data-toggle="sticky-onscroll"]').each(function() {
+        var sticky = $(this);
+        var stickyWrapper = $('<div>').addClass('sticky-wrapper'); // insert hidden element to maintain actual top offset on page
+        sticky.before(stickyWrapper);
+        sticky.addClass('sticky');
+
+        // Scroll & resize events
+        $(window).on('scroll.sticky-onscroll resize.sticky-onscroll', function() {
+          stickyToggle(sticky, stickyWrapper, $(this));
+        });
+
+        // On page load
+        stickyToggle(sticky, stickyWrapper, $(window));
+      });
+    },
+
+    initComments() {
+      return new Promise((resolve, reject) => {
+        const View = require('components/comment/views.js');
+        const urlComments = app.config.commentsServer + '/company/' + this.model.id;
+        let optionsR = api.makeRequest(urlComments, 'OPTIONS');
+        let dataR = api.makeRequest(urlComments);
+
+        $.when(optionsR, dataR).done((options, data) => {
+          data[0].id = this.model.id;
+          data[0].owner_id = this.model.owner_id;
+
+          let comments = new View.comments({
+            // model: commentsModel,
+            model: data[0],
+            fields: options[0].fields,
+            cssClass: 'offset-xl-2',
+            readonly: this.model.is_approved != STATUSES.VERIFIED,
+          });
+          comments.render();
+
+          if (location.hash && location.hash.indexOf('comment') >= 0) {
+            let $comments = $(location.hash);
+            if ($comments.length)
+              $comments.scrollTo(65);
+          }
+          resolve();
+        }).fail(reject);
+      });
+    },
+
+    render() {
       this.$el.html(
         this.template({
           values: this.model,
@@ -222,59 +322,9 @@ module.exports = {
       });
 
       setTimeout(() => {
-        if (this.model.campaign.security_type == 1) { //enable calculator only for bluehollar company
-          (new CalculatorView.calculator()).render();
-        }
+        this.initAsyncUI();
       }, 100);
 
-      setTimeout(() => {
-
-        this.$('.fancybox').fancybox({
-          openEffect  : 'elastic',
-          closeEffect : 'elastic',
-
-          helpers : {
-            title : {
-              type : 'inside'
-            }
-          }
-        });
-      }, 100);
-
-      setTimeout(() => {
-        var stickyToggle = function(sticky, stickyWrapper, scrollElement) {
-          var stickyHeight = sticky.outerHeight();
-          var stickyTop = stickyWrapper.offset().top;
-          if (scrollElement.scrollTop() >= stickyTop){
-            stickyWrapper.height(stickyHeight);
-            sticky.addClass("is-sticky");
-          }
-          else{
-            sticky.removeClass("is-sticky");
-            stickyWrapper.height('auto');
-          }
-        };
-
-        this.$el.find('[data-toggle="sticky-onscroll"]').each(function() {
-          var sticky = $(this);
-          var stickyWrapper = $('<div>').addClass('sticky-wrapper'); // insert hidden element to maintain actual top offset on page
-          sticky.before(stickyWrapper);
-          sticky.addClass('sticky');
-
-          // Scroll & resize events
-          $(window).on('scroll.sticky-onscroll resize.sticky-onscroll', function() {
-            stickyToggle(sticky, stickyWrapper, $(this));
-          });
-
-          // On page load
-          stickyToggle(sticky, stickyWrapper, $(window));
-        });
-
-        if(this.model.is_approved == 6) {
-          this.initComments();
-        };
-
-      }, 1200);
       $(window).scroll(function() {
             var st = $(this).scrollTop() /15;
 
@@ -290,9 +340,6 @@ module.exports = {
       this.$el.find('.perks .col-xl-4 p').equalHeights();
       this.$el.find('.team .auto-height').equalHeights();
       this.$el.find('.card-inverse p').equalHeights();
-      this.$el.find('.modal').on('hidden.bs.modal', function(event) {
-        $(event.currentTarget).find('iframe').attr('src', $(event.currentTarget).find('iframe').attr('src'));
-      });
 
       // fetch vimeo
       $('.vimeo-thumbnail').each(function(elem, idx) {
@@ -315,126 +362,9 @@ module.exports = {
       return this;
     },
 
-    initComments() {
-      const View = require('components/comment/views.js');
-      const urlComments = app.config.commentsServer + '/company/' + this.model.id;
-      let optionsR = api.makeRequest(urlComments, 'OPTIONS');
-      let dataR = api.makeRequest(urlComments);
-
-      $.when(optionsR, dataR).done((options, data) => {
-        data[0].id = this.model.id;
-        data[0].owner_id = this.model.owner_id;
-
-        let comments = new View.comments({
-          // model: commentsModel,
-          model: data[0],
-          fields: options[0].fields,
-          cssClass: 'offset-xl-2',
-        });
-        comments.render();
-      });
-    },
-
     readMore(e) {
       e.preventDefault();
       $(e.target).parent().addClass('show-more-detail');
-    },
-
-    showVideoModal(e) {
-
-      const attachYoutubeEvents = ($modal, callback) => {
-        let player = null;
-        let eventSent = false;
-
-        $modal.on('show.bs.modal', () => {
-          player = new YT.Player('video-iframe-container', {
-            // videoId: videoInfo.id,
-            events: {
-              onReady(e){},
-              onStateChange(e) {
-                if (e.data == YT.PlayerState.PLAYING && !eventSent) {
-                  eventSent = true;
-                  callback();
-                }
-              },
-              onError(err) {
-                console.error(err);
-              },
-            }
-          });
-        });
-
-        $modal.on('hidden.bs.modal', () => {
-          player.stopVideo();
-          player.destroy();
-          player = null;
-          $modal.empty();
-          $modal.remove();
-        });
-      };
-
-      const attachVimeoEvents = ($modal, callback) => {
-        let player = null;
-        let eventSent = false;
-        $modal.on('show.bs.modal', () => {
-          player = new Vimeo.Player('video-iframe-container');
-          player.on('play', () => {
-            if (!eventSent) {
-              eventSent = true;
-              callback();
-            }
-          });
-        });
-        $modal.on('hidden.bs.modal', () => {
-          player.off('play');
-          player.unload();
-          player = null;
-          $modal.empty();
-          $modal.remove();
-        });
-      };
-
-      const loadPlayer = (provider) => {
-        if (provider == 'youtube')
-          return app.loadYoutubePlayerAPI();
-
-        if (provider == 'vimeo')
-          return app.loadVimeoPlayerAPI();
-      };
-
-      let $target = $(e.target).closest('a');
-
-      const provider = $target.data('provider');
-      const id = $target.data('id');
-      const url = $target.data('url');
-
-      loadPlayer(provider).then((Player) => {
-        let $content = $('#content');
-        const template = require('templates/videoModal.pug');
-
-        $content.append(template({
-          provider,
-          id,
-          url,
-        }));
-
-        const sendVideoPlayEvent = () => {
-          app.emitGoogleAnalyticsEvent('company-video-play', {
-            eventCategory: 'Video',
-            eventAction: 'play',
-            //eventLabel: 'Youtube Video',
-            eventValue: url,
-          });
-        };
-
-        let $modal = $('#videoModal');
-
-        if (provider === 'youtube')
-          attachYoutubeEvents($modal, sendVideoPlayEvent);
-        else if (provider === 'vimeo')
-          attachVimeoEvents($modal, sendVideoPlayEvent)
-        $modal.modal('show');
-      });
     },
 
   }),
@@ -445,7 +375,7 @@ module.exports = {
     urlRoot: app.config.investmentServer + '/',
     doNotExtendModel: true,
     events: {
-      'submit form.invest_form': 'submit',
+      'click #submitButton': 'submit',
       'keyup #amount': 'updateAmount',
       'change #amount': 'roundAmount',
       'focusout #amount': 'triggerAmountChange',
@@ -562,13 +492,22 @@ module.exports = {
         amount = Number(amount);
         let min = this.model.campaign.minimum_increment;
         let max = this._maxAllowedAmount;
+        let validationMessage = '';
 
         if (amount < min) {
-          throw 'Sorry, minimum investment is $' + min;
+          validationMessage = 'Sorry, minimum investment is $' + min;
         }
 
         if (amount > max) {
-          throw 'Sorry, your amount is too high, please update your income or change amount';
+          validationMessage = 'Sorry, your amount is too high, please update your income or change amount';
+        }
+
+        if (validationMessage) {
+          setTimeout(() => {
+            this.$amount.popover('show');
+            this.$amount.scrollTo(200);
+          }, 700);
+          throw validationMessage;
         }
 
         return true;
@@ -845,11 +784,11 @@ module.exports = {
         investedPastYear, investedOnOtherSites);
     },
 
-    getInt(value) {
-      return parseInt(value.replace(/\,/g, ''));
+    getNumber(value) {
+      return Number(value.replace(/\,/g, ''));
     },
 
-    formatInt(value) {
+    formatNumber(value) {
       return value.toLocaleString('en-US');
     },
 
@@ -860,7 +799,7 @@ module.exports = {
       if (this.model.campaign.security_type == 1)
         return;
 
-      let amount = this.getInt(e.target.value);
+      let amount = this.getNumber(e.target.value);
       if (!amount)
         return;
 
@@ -873,7 +812,7 @@ module.exports = {
 
       let newAmount = Math.ceil(amount / pricePerShare) *  pricePerShare;
 
-      this.$amount.val(this.formatInt(newAmount));
+      this.$amount.val(this.formatNumber(newAmount));
       this._updateTotalAmount();
 
       if (newAmount > amount) {
@@ -889,11 +828,11 @@ module.exports = {
         return;
       }
 
-      let amount = this.getInt(e.currentTarget.value);
+      let amount = this.getNumber(e.currentTarget.value);
       if (!amount)
         return;
 
-      e.currentTarget.value = this.formatInt(amount);
+      e.currentTarget.value = this.formatNumber(amount);
 
       this.$amount.data('rounded', false);
 
@@ -922,8 +861,8 @@ module.exports = {
     _updateTotalAmount() {
       const feeInfo = this.calcFeeWithCredit();
 
-      let totalAmount = this.getInt(this.$amount.val()) + feeInfo.fee;
-      let formattedTotalAmount = '$' + this.formatInt(totalAmount)
+      let totalAmount = this.getNumber(this.$amount.val()) + feeInfo.fee;
+      let formattedTotalAmount = '$' + this.formatNumber(totalAmount)
       this.$el.find('.total-investment-amount').text(formattedTotalAmount);
       this.$el.find('[name=total_amount]').val(formattedTotalAmount);
 
@@ -934,10 +873,6 @@ module.exports = {
         return;
 
       this.$amount.popover('hide');
-    },
-
-    getSuccessUrl(data) {
-      return app.config.investmentServer + '/' + data.id + '/invest-thanks';
     },
 
     updateLimitInModal(e) {
@@ -1019,7 +954,7 @@ module.exports = {
         this.$amount.keyup();
 
       }).fail((xhr, status, text) => {
-        alert('Update failed. Please try again!');
+        app.dialogs.error('Update failed. Please try again!');
       });
     },
 
@@ -1074,7 +1009,7 @@ module.exports = {
     submit(e) {
       e.preventDefault();
 
-      let data = $(e.target).serializeJSON();
+      let data = $('#investForm').serializeJSON();
       // data.amount = data.amount.replace(/\,/g, '');
       if(data['payment_information_type'] == 1 || data['payment_information_type'] == 2) {
         delete data['payment_information_data'];
@@ -1085,7 +1020,7 @@ module.exports = {
     },
 
     getSuccessUrl(data) {
-      return data.id + '/invest-thanks';
+      return (data.company.slug || data.company.id) + '/' + data.id + '/invest-thanks';
     },
 
     saveEsign(responseData) {

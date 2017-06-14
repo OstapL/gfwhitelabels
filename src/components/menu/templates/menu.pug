@@ -75,7 +75,7 @@ li.nav-item.hidden-md-down
 
   if app.user.is_anonymous()
     li.nav-item.hidden-md-down
-      a(href="/pg/raise-landing").nav-link Raise Capital
+      a(href="/raise-capital").nav-link Raise Capital
   else
     li.nav-item.hidden-md-down
       a(href="/company/create").nav-link Raise Capital
@@ -83,3 +83,5 @@ if app.user.is_anonymous()
   .mobile-signup.mobile-singup-wrap.hidden-lg-up.text-xs-left
     a(href="/account/login").btn.m-b-2.m-t-2.btn-login-mobile Log in
     a(href="/account/signup").btn.btn-primary.btn-login-mobile sign up + get $25
+.hidden-lg-up.profile-mobile-menu
+  include profile

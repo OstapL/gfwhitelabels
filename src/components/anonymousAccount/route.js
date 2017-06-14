@@ -1,6 +1,4 @@
-
-//TODO: ?????
-const socialAuth = require('./social-auth.js');
+// const socialAuth = require('./social-auth.js');
 
 module.exports = {
   routes: {
@@ -14,9 +12,19 @@ module.exports = {
     'code/:formcId/:code': 'membershipConfirmation',
   },
   methods: {
-    login(id) {
-      require.ensure([], () => {
+    login() {
+      require.ensure([], (require) => {
         $('body').scrollTo();
+
+        let paramsToken = app.getParams().token;
+        if(app.getParams().token) {
+          localStorage.setItem('token', paramsToken);
+          let data = {
+            'token': paramsToken
+          };
+          app.user.setData(data, '/account/profile');
+          return false;
+        }
 
         const View = require('./views.js');
         let loginView = new View.login({
@@ -25,11 +33,11 @@ module.exports = {
         });
         loginView.render();
         app.hideLoading();
-      });
+      }, 'anonymous_account_chunk');
     },
 
     signup() {
-      require.ensure([], () => {
+      require.ensure([], (require) => {
         $('body').scrollTo();
 
         const View = require('./views.js');
@@ -39,7 +47,7 @@ module.exports = {
         });
         signView.render();
         app.hideLoading();
-      });
+      }, 'anonymous_account_chunk');
     },
 
     // //TODO: ??????
@@ -71,7 +79,7 @@ module.exports = {
         const i = new View.reset();
         i.render();
         app.hideLoading();
-      });
+      }, 'anonymous_account_chunk');
     },
 
     //TODO: ????????
@@ -84,7 +92,7 @@ module.exports = {
       }).done((data) => {
         app.user.setData(data,  '/account/password/new');
       }).fail((data) => {
-        const template = require('./templates/expiredCode.pug');
+        // const template = require('./templates/expiredCode.pug');
         app.hideLoading();
       });
     },
@@ -119,7 +127,7 @@ module.exports = {
           $('#content').html(template());
           app.hideLoading();
         });
-      });
+      }, 'anonymous_account_chunk');
     },
   },
 };

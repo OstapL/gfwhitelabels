@@ -9,35 +9,40 @@ section.login
       form(action="" novalidate autocomplete="off" role="presentation").form-section.login-form
         .col-lg-12.login-padding.p-xs-0
           input(type="hidden" name="domain" value=window.location.host)
-          .form-group.row.clearfix.required
-            input(type="email"
-            autocomplete='off'
-            placeholder="E-mail"
-            data-value-type="email"
-            name="email").form-control
-          .form-group.row.clearfix.required
-            input(type="password"
-            placeholder="Password"
-            autocomplete='off'
-            data-value-type="password"
-            name="password").form-control
+          -
+            pug_html += app.fields.fieldText('email', {
+              type: 'email',
+              placeholder: 'E-mail',
+              'class': 'form-group row clearfix',
+              required: true,
+              autocomplete: 'off',
+            });
+
+            pug_html += app.fields.fieldText('password', {
+              'class': 'form-group row clearfix',
+              required: true,
+              type: 'password',
+              placeholder: 'Password',
+              autocomplete: 'off',
+              name: 'password',
+            });
         .col-lg-12
           .row.forgot
             a(href="/account/reset").link-3 Forgot Your Password?
         .col-lg-12
           .row.text-sm-center.text-xs-center
-            button(type="submit").btn.btn-primary.text-uppercase Log In
+            button(type="submit")#login-btn.btn.btn-primary.text-uppercase Log In
 
       //-
         .col-lg-12.border-bottom.or
           span or
         .social-btn.col-lg-12
-          a(data-original-title="facebook" href="#").btn.btn-block.btn-facebook.text-uppercase
+          a(data-original-title="facebook" href="#")#login-facebook.btn.btn-block.btn-facebook.text-uppercase
             i.fa.fa-facebook
             |  Log In with Facebook
-          a(data-original-title="Linkedin" href="#").btn.btn-block.btn-linkedin.text-uppercase
+          a(data-original-title="Linkedin" href="#")#login-linkedin.btn.btn-block.btn-linkedin.text-uppercase
             i.fa.fa-linkedin
             |  Log In with linkedin
-          a(data-original-title="Google Plus" href="#").btn.btn-block.btn-google.text-uppercase
+          a(data-original-title="Google Plus" href="#")#login-google.btn.btn-block.btn-google.text-uppercase
             i.fa.fa-google-plus
             |  Log In with Google

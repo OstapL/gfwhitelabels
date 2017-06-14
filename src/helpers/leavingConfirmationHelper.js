@@ -10,7 +10,8 @@ module.exports = {
       if (this.isDifferent() === false){
         return;
       }
-      
+
+      //TODO: investigate logic and refactor this code///!!!
       if (confirm("You have unsaved changes. Do you really want to leave?")) {
       } else {
         e.preventDefault();

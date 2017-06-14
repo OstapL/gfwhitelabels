@@ -1,5 +1,7 @@
 const File = require('./file.js');
+const Image = require('./image.js');
 
+const moment = require('moment');
 
 class Investment {
   constructor(data={}, schema={}, url=null) {
@@ -20,6 +22,16 @@ class Investment {
       this.data.formc = new app.models.Formc(this.data.formc);
     }
 
+    this.data['investor_presentation_file_id'] = new File(
+      this.url,
+      this.data.investor_presentation_data
+    );
+
+    this.data['header_image_image_id'] = new Image(
+      this.url,
+      this.data.header_image_data
+    );
+
     this.data = Object.seal(this.data);
     for(let key in this.data) {
       Object.defineProperty(this, key, {
@@ -33,6 +45,30 @@ class Investment {
     let data = Object.assign({}, this.data);
     return data;
   }
+
+  get createdDate() {
+    return moment.parseZone(this.created_date)
+  }
+
+  get expired() {
+    return this.campaign.expired;
+  }
+
+  get cancelled() {
+    return this.deposit_cancelled_by_investor || this.deposit_cancelled_by_manager;
+  }
+
+  get processed() {
+    return this.add_deposit_to_csv;
+  }
+
+  get historical() {
+    return this.expired || this.cancelled;
+  }
+
+  get active() {
+    return !this.historical;
+  }
 }
 
-module.exports = Investment
+module.exports = Investment;

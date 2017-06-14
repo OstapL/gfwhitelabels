@@ -98,14 +98,14 @@
 	z-index: 2
 	
 	&:hover~.one_block
-		+mt(0.2s)
+		+mt(0.3s)
 		-webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
 		-moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
 		box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
 		.for_img
 			.more_inform
 				opacity: 1
-				+mt(0.2s)
+				+mt(0.3s)
 
 				.ico_cont
 					z-index: 3
@@ -153,7 +153,7 @@
 			background: $more_inform-bgc
 			text-align: center
 			color: $white
-			+mt(0.2s)
+			+mt(0.3s)
 			hr
 				color: $white
 				width: 50%
@@ -218,9 +218,11 @@
 					line-height: rem(18)
 					margin: 0
 	&:hover
+		+mt(0.2s)
 		.more_inform
-			opacity: 1
 			+mt(0.2s)
+			opacity: 1
+			
 	
 	.title
 		margin: 0 rem(10)
@@ -326,19 +328,10 @@
 			margin-bottom: rem(19)
 			h6
 				color: $black_text
-@media only screen and (max-width : 991px)
-	.one_block
-		.description
-			height: 90px
 @media only screen and (max-width : 768px)
 	.create-alert-block
 		.pull-right
 			float: left
-	.one_block
-		.description
-			height: 100px
-			ul
-				margin-left: rem(3)
 	
 @media only screen and (max-width : 545px)
 	.create-alert-block
@@ -352,14 +345,15 @@
 			margin-left: 0!important
 	.one_block
 		.description
-			height: 120px
+			min-height: 120px
+			height: 100%
 	.block_link
 		&:hover~.one_block
 			.for_img
 				.more_inform
 					opacity: 0
 
-@media only screen and (max-width : 320px)
+@media only screen and (max-width : 360px)
 	.campaing-list
 		.one_block
 			.for_img
@@ -375,16 +369,17 @@
 					padding-top: 10px
 		.title
 			h3
-				text-align: center
-				float: none
+				text-align: left
 			.place
-				text-align: center!important
-				float: none!important
+				text-align: left!important
 		.bottom_text
+			margin: 0 rem(9)
 			.left_desc, .right_desc
-				text-align: center
-				float: none
-				display: block
+				font-size: rem(10)
+				letter-spacing: normal
+				h6
+					font-size: rem(10)
+					letter-spacing: rem(1)
 	.create-alert-block
 		.mr30
 			margin-right: 0
@@ -394,3 +389,14 @@
 			text-align: center
 			float: none!important
 			margin-left: 0!important
+@media only screen and (max-width : 320px)
+	.campaing-list
+		.one_block
+			.bottom_text
+				.left_desc, .right_desc
+					display: block
+					width: 100%
+					text-align: center
+					margin: rem(10) 0
+				.left_desc
+					margin-bottom: 0

@@ -1,8 +1,4 @@
 import './styles/style.sass'
-import '../../js/graph/graph.js';
-import '../../js/graph/jquery.flot.categories.js';
-import '../../js/graph/jquery.flot.growraf';
-
 
 if (!app.cache.establishedBusinessCalculator) {
     app.cache.establishedBusinessCalculator = {
@@ -470,49 +466,59 @@ module.exports = {
         },
 
         buildGraph() {
+          require.ensure([
+            'src/js/graph/graph.js',
+            'src/js/graph/jquery.flot.categories.js',
+            'src/js/graph/jquery.flot.growraf',
+          ], () => {
+            require('src/js/graph/graph.js');
+            require('src/js/graph/jquery.flot.categories.js');
+            require('src/js/graph/jquery.flot.growraf');
+
             let data = app.cache.establishedBusinessCalculator.graphData;
 
             $.plot($("#chart"), data, {
-                series: {
-                    lines: {
-                        fill: false
-                    },
-                    points: {show: false},
-                    bars: {
-                        show: true,
-                        align: 'center',
-                        barWidth: 0.6,
-                        fill: 1
-                    },
-                    grow: {
-                        active: true
-                    }
+              series: {
+                lines: {
+                  fill: false
                 },
-                xaxis: {
-                    tickColor: "#eee",
-                    autoscaleMargin: 0.1,
-                    tickLength: 0,
-                    ticks: [
-                        [0, "Blended Valuation"],
-                        [1, "Price/Sales"],
-                        [2, "Enterprise Value/EBITDA"],
-                        [3, "Price/Earnings"]
-                    ]
+                points: {show: false},
+                bars: {
+                  show: true,
+                  align: 'center',
+                  barWidth: 0.6,
+                  fill: 1
                 },
-                yaxis: {
-                    tickColor: "#eee",
-                    tickFormatter(val, axis) {
-                        return formatPrice(val).replace(/\,/g, ' ');
-                    }
-                },
-                grid: {
-                    hoverable: false,
-                    clickable: false,
-                    tickColor: "#eee",
-                    borderColor: "#eee",
-                    borderWidth: 1
+                grow: {
+                  active: true
                 }
+              },
+              xaxis: {
+                tickColor: "#eee",
+                autoscaleMargin: 0.1,
+                tickLength: 0,
+                ticks: [
+                  [0, "GF Valuation"],
+                  [1, "P/S"],
+                  [2, "EV/EBITDA"],
+                  [3, "P/E"]
+                ]
+              },
+              yaxis: {
+                tickColor: "#eee",
+                tickFormatter(val, axis) {
+                  return formatPrice(val).replace(/\,/g, ' ');
+                }
+              },
+              grid: {
+                hoverable: false,
+                clickable: false,
+                tickColor: "#eee",
+                borderColor: "#eee",
+                borderWidth: 1
+              }
             });
+          }, 'graph_chunk');
         }
     })
 };

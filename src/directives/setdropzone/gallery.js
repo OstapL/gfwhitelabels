@@ -2,7 +2,7 @@ const folder = require('models/folder.js');
 const folderDropzone = require('./folder.js');
 const imageDropzone = require('./image.js');
 const ImageClass = require('models/image.js');
-const defaultImage = '/img/default/255x153.png'; 
+const defaultImage = require('images/default/255x153.png');
 
 
 class GalleryElement extends imageDropzone.ImageElement {
@@ -62,7 +62,13 @@ class GalleryElement extends imageDropzone.ImageElement {
     this.files[index].file.delete().done(() => {
       let indexFile = this.file.data.indexOf(this.file.data.filter((el) => {return fileId == el.id})[0]);
       this.file.data.splice(indexFile, 1);
-      this.save().then(() => imageRender.element.remove());
+      this.save().then(() => {
+        imageRender.element.remove()
+        delete this.file.data[index];
+        if(imageRender.options.onSaved) {
+          imageRender.options.onSaved(this);
+        }
+      });
     }).fail((xhr, error) => {
       // If file was already deleted in filer - just update model
       if(xhr.status == 503) {
@@ -87,6 +93,10 @@ class GalleryDropzone extends imageDropzone.ImageDropzone {
       fieldDataName,
       options.crop
     );
+
+    if(options.onSaved) {
+      this.galleryElement.options.onSaved = options.onSaved;
+    }
   }
 
   getTemplate() {
@@ -128,6 +138,12 @@ class GalleryDropzone extends imageDropzone.ImageDropzone {
 
     this.galleryElement.update(this.galleryElement.file.data, () => {
       fileObj.render();
+
+      //this.model.data[this.galleryElement.fieldDataName].push(fileObj.file);
+      if(this.galleryElement.options.onSaved) {
+        this.galleryElement.options.onSaved(this.galleryElement);
+      }
+
       this.element.querySelector('.fileHolder').insertAdjacentHTML('beforeend', fileObj.resultHTML);
       new imageDropzone.CropperDropzone(
         this,

@@ -1,4 +1,2 @@
 src/config.js merge=ours
 src/img/logo.png merge=ours
-src/ga.script.pug merge=ours
-src/ga.noscript.pug merge=ours

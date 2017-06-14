@@ -11,7 +11,7 @@
 section.issuer-dashbord-top
   .container
     .row
-      .col-md-4
+      .col-md-4.text-xs-center.text-sm-center.text-md-left.text-lg-left.text-xl-left
         .img_under_text
           img(src=campaign.list_image_image_id.getUrl() alt="")
           h2.text-uppercase.dosis.m-t-0 #{company.name}
@@ -105,12 +105,12 @@ section.investors-dashbord-document
         h2.text-uppercase documents with growthfountain
         a(href=formc.link_to_formc target="_blank").link-1
           img(src=require('images/lrg_US_Department_of_State35.gif')).img-document.d-inline-block
-          h3.d-inline-block.m-t-0.m-b-0  Form C
+          h3.d-inline-block.m-t-0.m-b-0.listing  Form C
         br
         a(href=app.config.esignServer + '/pdf-doc/investors/' + formc.id + '/' + 3 target="_blank").link-1
-          h2.d-inline-block.m-t-1.m-b-0
+          h2.d-inline-block.m-t-1.m-b-0.listing
             i.fa.fa-file-pdf-o
-          h3.d-inline-block.m-t-0.m-b-0  Listing Agreement
+          h3.d-inline-block.m-t-0.m-b-0.listing  Listing Agreement
         br
         a(href=app.config.bucketServer + '/docs/GrowthFountain_Crowdfunding_Success_Checklist.pdf' target="_blank").link-1
           h2.d-inline-block.m-t-1.m-b-0

@@ -6,14 +6,16 @@ div(data-investmentid=id).one_table
 
     if active
       span.img_tab #{campaign.daysLeft() + ' Days Left'}
+      if processed
+        span.investment-processed
+          i.fa.fa-check.like-icon-circle
+          | Investment Processed
+
     if cancelled
       span.successfull.unsuccessfull  Cancelled
     if expired
-      span.end-date  #{campaign.expiration_date.format('MM/DD/YYYY')}
-    if add_deposit_to_csv
-      span.investment-processed
-        i.fa.fa-check.like-icon-circle
-        | Investment Processed
+      span.end-date  #{campaign.expirationDate.format('MM/DD/YYYY')}
+
     h2.text-uppercase #{company.name}
   .right-columns
     .one_line
@@ -25,7 +27,7 @@ div(data-investmentid=id).one_table
       .col40
         span.light_grey Investment Day
       .col60
-        span.dark_grey #{created_date.format('MM/DD/YYYY') }
+        span.dark_grey #{createdDate.format('MM/DD/YYYY') }
     .one_line
       .col40
         span.light_grey Investment ID
@@ -42,10 +44,11 @@ div(data-investmentid=id).one_table
       .col60.col-perks.showPopover(data-content=perk)
         span.dark_grey #{perk}
   .right_buttons
-    h4 Downloadable Files
+    h3 Downloadable Files
     ul
       li
-        a(href=campaign.getInvestorPresentationURL() target="_blank").link-3 Investor Presentation
+        - debugger;
+        a(href=campaign.investor_presentation_file_id.getUrl('origin') target="_blank").link-3 Investor Presentation
       li
         a(href=formc.link_to_formc data-id=id target="_blank").link-3.formc-docs-link Form C
       li
@@ -60,10 +63,10 @@ div(data-investmentid=id).one_table
   .bottom_column
     .top_descript
       .left_text
-        b #{app.helpers.format.formatAmount(campaign.amount_raised)}
+        h3 #{app.helpers.format.formatAmount(campaign.amount_raised)}
         span Raised
       .right_text
-        b #{app.helpers.format.formatAmount((campaign.minimum_raise))}
+        h3 #{app.helpers.format.formatAmount((campaign.minimum_raise))}
         span Goal
       p.percents #{ campaign.fundedPercentage().text }
       .clear

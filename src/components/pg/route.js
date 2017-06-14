@@ -3,12 +3,13 @@ const templateMap = {
   'investor-tutorial': 'investor_tutorial',
   'business-tutorial': 'business_tutorial',
   'success-guide': 'success_guide',
-  'raise-landing': 'raise_landing',
   'terms-of-use': 'terms_of_use',
   'privacy-policy': 'privacy_policy',
-  'annual-privacy': 'annual_privacy',
   'electronic-signature': 'electronic_signature',
+  'formc-review-congratulations': 'formc_review_congratulations',
 };
+
+const withLeftMenuPages = ['education', 'advertising', 'terms-of-use', 'privacy-policy'];
 
 module.exports = {
   routes: {
@@ -16,15 +17,10 @@ module.exports = {
     'pg/:name': 'pagePG',
   },
   methods: {
-    mainPage(id) {
-      require.ensure([], () => {
-        const template = require('templates/mainPage.pug');
+    mainPage() {
+      require.ensure([], (require) => {
+        const template = require('src/templates/mainPage.pug');
 
-        //TODO: it looks like repeated snippet
-        const meta = '<meta name="keywords" content="local investing equity crowdfunding ' +
-          'GrowthFountain is changing equity crowdfunding for small businesses. Focused on ' +
-          'local investing, they give a whole new meaning to finding investment."></meta>';
-        $(document.head).append(meta);
         api.makeCacheRequest(app.config.raiseCapitalServer + '?limit=6').then((data) => {
           let dataClass = [];
           data.data.forEach((el) => {
@@ -35,8 +31,9 @@ module.exports = {
             collection: data,
           });
 
+          //TODO: universal optimization in scriptLoader
+          app.helpers.video.preloadScripts(['vimeo']);
           // app.cache[window.location.pathname] = html;
-
           $('#content').html(html);
 
           $('.carousel-test').owlCarousel({
@@ -60,10 +57,15 @@ module.exports = {
           });
           
           $(window).scroll(function() {
-            var st = $(this).scrollTop() /20;
+            var st = $(this).scrollTop() /15;
 
             $(".scroll-paralax .background").css({
-              "transform" : "translate3d(0px, -" + st /2 + "%, .01px)"
+              "transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+              "-o-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+              "-webkit-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+              "-moz-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+              "-ms-transform" : "translate3d(0px, " + st /2 + "%, .01px)"
+              
             });
           });
           // video main page
@@ -84,83 +86,78 @@ module.exports = {
 
         });
 
-        function scaleVideoContainer() {
+          function scaleVideoContainer() {
 
-        var height = $(window).height() + 5;
-        var unitHeight = parseInt(height) + 'px';
-        $('.homepage-hero-module').css('height',unitHeight);
+          var height = $(window).height() + 5;
+          var unitHeight = parseInt(height) + 'px';
+          $('.homepage-hero-module').css('height',unitHeight);
 
-        };
+          };
 
-        function initBannerVideoSize(element){
+          function initBannerVideoSize(element){
 
-            $(element).each(function(){
-                $(this).data('height', $(this).height());
-                $(this).data('width', $(this).width());
-            });
+              $(element).each(function(){
+                  $(this).data('height', $(this).height());
+                  $(this).data('width', $(this).width());
+              });
 
-            scaleBannerVideoSize(element);
+              scaleBannerVideoSize(element);
 
-        };
+          };
 
-        function scaleBannerVideoSize(element){
+          function scaleBannerVideoSize(element){
 
-            var windowWidth = $(window).width(),
-            windowHeight = $(window).height() + 5,
-            videoWidth,
-            videoHeight;
+              var windowWidth = $(window).width(),
+              windowHeight = $(window).height() + 5,
+              videoWidth,
+              videoHeight;
 
-            // console.log(windowHeight);
+              // console.log(windowHeight);
 
-            $(element).each(function(){
-                var videoAspectRatio = $(this).data('height')/$(this).data('width');
+              $(element).each(function(){
+                  var videoAspectRatio = $(this).data('height')/$(this).data('width');
 
-                $(this).width(windowWidth);
+                  $(this).width(windowWidth);
 
-                if(windowWidth < 1000){
-                    videoHeight = windowHeight;
-                    videoWidth = videoHeight / videoAspectRatio;
-                    $(this).css({'margin-top' : 0, 'margin-left' : -(videoWidth - windowWidth) / 2 + 'px'});
+                  if(windowWidth < 1000){
+                      videoHeight = windowHeight;
+                      videoWidth = videoHeight / videoAspectRatio;
+                      $(this).css({'margin-top' : 0, 'margin-left' : -(videoWidth - windowWidth) / 2 + 'px'});
 
-                    $(this).width(videoWidth).height(videoHeight);
-                }
+                      $(this).width(videoWidth).height(videoHeight);
+                  }
 
-                $('.homepage-hero-module .video-container video').addClass('fadeIn animated');
+                  $('.homepage-hero-module .video-container video').addClass('fadeIn animated');
 
-            });
-        };
+              });
+          };
+
           $('body').scrollTo();
           app.hideLoading();
         });
-      });
+      }, 'main_page_chunk');
     },
 
     pagePG: function (name) {
 
-      require.ensure([], () => {
+      require.ensure([], (require) => {
         //TODO: move this to common router ensure logged in
         if ((name == 'success-guide' || name == 'advertising') &&
           !app.user.ensureLoggedIn(window.location.pathname)) {
           return false;
         }
 
-        if (window.location.pathname == '/pg/faq') {
-          const meta = '<meta name="keywords" content="local investing equity crowdfunding Have a ' +
-            'question about local investing? Interested in equity crowdfunding but unsure how it ' +
-            'works? Then visit our FAQ page to learn more."></meta>';
-          $(document.head).append(meta);
+        app.addClassesTo('#page', [name]);
+        const template = require('./templates/' + (templateMap[name] || name) + '.pug');
+        if (_.contains(withLeftMenuPages, name)) {
+          const Views = require('./views.js');
+          (new Views.WithLeftMenu({
+            template,
+          })).render();
         } else {
-          const meta = '<meta name="keywords" content="local investing equity crowdfunding ' +
-            'GrowthFountain is changing equity crowdfunding for small businesses. Focused on local ' +
-            'investing, they give a whole new meaning to finding investment."></meta>';
-          $(document.head).append(meta);
+          $('#content').html(template());
         }
 
-        let view = require('templates/' + (templateMap[name] || name) + '.pug');
-
-        app.addClassesTo('#page', [name]);
-
-        $('#content').html(view());
         // investor and busines tutorial
         $('.carousel-tutorial').owlCarousel({
             loop: true,
@@ -181,53 +178,34 @@ module.exports = {
               1000: { items: 1 },
             },
           });
+
         var owl = $('.owl-carousel');
         owl.owlCarousel();
         $('.customNextBtn').click(function() {
-        owl.trigger('next.owl.carousel');
+          owl.trigger('next.owl.carousel');
         });
 
         $('body').scrollTo();
         app.hideLoading();
 
-        $('.show-input').on('click', function (event) {
-          event.preventDefault();
-          if ($(event.target).hasClass('noactive')) {
-            return false;
-          }
+        $(window).scroll(function() {
+					var st = $(this).scrollTop() /15;
 
-          let $this = $(event.target);
-          let inputId = $this.data('name');
-          let $input = $('input' + '#' + inputId);
+					$(".scroll-paralax .background").css({
+						"transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+						"-o-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+						"-webkit-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+						"-moz-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+						"-ms-transform" : "translate3d(0px, " + st /2 + "%, .01px)"
 
-          $this.hide();
+					});
+				}); 
 
-          if ($input.length == 0) {
-            const input  = '<input type="text" id="' + inputId + '" ' +
-              'name="' + inputId + '" class="text-input"/>';
-            $input = $(input);
-            $this.after($input);
-          }
-
-          $input.fadeIn().focus();
-        });
         // pause for modal on page news
         $('#audio-modal').on('hidden.bs.modal', function (e) {
             document.getElementById('news_audio').pause()
         });
-        $('body').on('focusout', '.text-input', (event) => {
-          let $this = $(event.target);
-          let value = $this.val();
-          let inputId = $this.attr('id');
-          let $span = $('[data-name="' + inputId + '"]');
 
-          if (value !== '') {
-            $span.text(value);
-          }
-
-          $this.hide();
-          $span.fadeIn();
-        });
         const names = ['education',
           'terms-of-use',
           'privacy-policy',
@@ -270,12 +248,7 @@ module.exports = {
 
           $elem.toggleClass('active');
         });
-        // page raise- landing
-        $('#content').on('click', '.good-candidate a', function (event) {
-          $('#content').find('.good-candidate').addClass('active-opasity-hidden');
-          $('#content').find('.does-not').addClass('active-opasity');
-        });
-      });
+      }, 'pg_chunk');
     },
   },
 };

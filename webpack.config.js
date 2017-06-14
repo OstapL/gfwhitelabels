@@ -3,20 +3,21 @@ const path = require('path');
 const HtmlPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const CompressionPlugin = require("compression-webpack-plugin");
 
 const isAnalyze = process.env.NODE_ENV === 'analyze';
 const isProd = process.env.NODE_ENV === 'production';
 const isDev = process.env.NODE_ENV === 'development';
 
-let plugins = [
+const plugins = [
   new HtmlPlugin({
     title: 'GrowthFountain | Equity Crowdfunding Platform',
     template: './src/index.pug',
     filename: 'index.html',
-    inject: 'body',
+    inject: 'head',
   }),
   new ExtractTextPlugin({
-    filename: '[name].[hash].css',
+    filename: 'styles.[name].[hash].css',
     disable: false,
     allChunks: true,
   }),
@@ -30,15 +31,17 @@ let plugins = [
     'Backbone': 'backbone',
   }),
   new webpack.optimize.CommonsChunkPlugin({
-    names: ['vendor'],
-    minChunks: 2,
+    name: 'vendor',
+    filename: '[name].[hash].js',
+    minChunks: Infinity,
   }),
   new webpack.EnvironmentPlugin({
     NODE_ENV: 'development',
-  })
+  }),
 ];
 
-if (isProd) {
+if (isProd || isAnalyze) {
+  plugins.push(new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /en/));
   plugins.push(new webpack.optimize.UglifyJsPlugin({
       mangle: true,
       compress: {
@@ -64,10 +67,15 @@ if (isDev) {
 }
 
 const dependencies = Object.keys(require('./package.json').dependencies);
+const lazyDependencies = ['dropzone', 'socket.io-client', 'cropperjs'];
+
+const baseDependencies = dependencies.filter((dep) => {
+  return !lazyDependencies.find(authDep => authDep == dep);
+});
 
 module.exports = {
   entry: {
-    vendor: dependencies,
+    vendor: baseDependencies,
     index: path.resolve(__dirname, './src/index.js'),
   },
   output: {
@@ -91,7 +99,17 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loaders: ['style-loader', 'css-loader', 'resolve-url-loader'],
+        include: [
+          path.resolve(__dirname, './node_modules'),
+          path.resolve(__dirname, './src'),
+        ],
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            'css-loader',
+            'resolve-url-loader',
+          ],
+        }),
       },
       {
         test: /\.(scss|sass)$/i,
@@ -117,11 +135,7 @@ module.exports = {
         loader: 'pug-loader',
       },
       {
-       test: /\.(mp4|webm)$/,
-       loader: 'file-loader',
-     },
-     {
-       test: /\.(mp3|mp4)$/,
+       test: /\.(mp3|mp4|webm)$/,
        loader: 'file-loader',
      },
       {
@@ -176,6 +190,10 @@ module.exports = {
     historyApiFallback: true,
     port: 7070,
     host: '0.0.0.0',
+    disableHostCheck: true,
+    //this can be used only on local machine,
+    //to open app hosted on local machine from mobile phone you need to use disableHostCheck prop;
+    // public: 'local.growthfountain.com',
     hot: true,
     inline: true,
   },

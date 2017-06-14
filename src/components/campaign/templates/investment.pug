@@ -46,11 +46,11 @@ mixin confirmStatement(name, attr)
 .container.investment
   //START LEFT BLOCK
   .row
-    .col-xl-8.col-lg-7
+    .col-xl-8.col-lg-7.invest-left-p-0
       h2.text-uppercase.dosis.m-t-0.text-md-center.text-sm-center.text-xs-center.text-lg-left
         | Investment
       .form-section.clearfix
-        form(action="POST" data-method="POST" name="invest_form").invest_form.clearfix
+        form(action="POST" data-method="POST" name="invest_form")#investForm.invest_form.clearfix
           input(type="hidden" name="company_id" value=values.id)
           .row
             .col-xl-12.col-xs-8.col-sm-5.col-lg-8
@@ -132,30 +132,32 @@ mixin confirmStatement(name, attr)
           div.popover-content-amount-ok
             i.fa.fa-info-circle
             span Based on your updated annual income and net worth, you can invest up to $:amount.
-          section.hidden-sm-up
-            h2.text-uppercase.m-t-3.text-xs-center Investment Summary
-            .jumbotron.jumbotron-fluid.investment-summary
-              .container
-                .col-md-7.col-xs-6.text-xs-center
-                  .row
-                    span Target
-                    p.font-weight-bold
+          section.hidden-sm-up.investment-summary
+            h4.text-uppercase.section-bg-line.text-xs-center.m-b-0 Investment Summary
+            .investment-summary-wrap
+              table.table.table-bordered
+                tr.grey
+                  td
+                    p Type of security
+                  td
+                    p Offering deadline
+                tr
+                  td.big-h
+                    p.font-weight-bold #{values.campaign.security_type == 0 ? 'Common Equity' : 'Revenue Share'}
+                  td.big-h
+                    p.text-uppercase.font-weight-bold #{ values.campaign.expirationDate.format('MMM DD, YYYY') }
+                tr.grey
+                  td
+                    p Target
+                  td
+                    p Committed
+                tr
+                  td.big-h.target
+                    p.text-uppercase.font-weight-bold
                       | $#{values.campaign.minimum_raise.toLocaleString('en-US')} -
                       | $#{values.campaign.maximum_raise.toLocaleString('en-US')}
-                .col-md-5.col-xs-6.text-xs-center
-                  .row
-                    span Committed
-                    p.font-weight-bold $#{values.campaign.amount_raised.toLocaleString('en-US')}
-              .container
-                .col-md-7.col-xs-6.text-xs-center
-                  .row
-                    span Offering deadline
-                    p.font-weight-bold.m-b-0 #{values.campaign.expiration_date.toLocaleDateString('en-US', {timeZone: 'UTC'})}
-                .col-md-5.col-xs-6.text-xs-center
-                  .row
-                    span Type of security
-                    p.font-weight-bold.m-b-0
-                      | #{values.campaign.security_type == 0 ? 'Common Equity' : 'Revenue Share'}
+                  td.big-h
+                    p.text-uppercase.font-weight-bold $#{values.campaign.amount_raised.toLocaleString('en-US')}
           section.hidden-sm-up.invest-perks-mobile
             - var perks = values.campaign.perks;
             if perks && perks.length
@@ -225,22 +227,29 @@ mixin confirmStatement(name, attr)
                 'value': user.country,
                 'id': 'personal_information_data__country',
               }, this.fields.personal_information_data.schema.country));
-            -
-              pug_html += app.fields.nestedTextLabel(
-                'personal_information_data',
-                'street_address_1',
-                user,
-                -1, {
-                },
-                fields.personal_information_data.schema.street_address_1);
-            -
-              pug_html += app.fields.nestedTextLabel(
-                'personal_information_data',
-                'street_address_2',
-                user,
-                -1, {
-                },
-                fields.personal_information_data.schema.street_address_2);
+            .row
+              .col-lg-6.p-xl-0
+                -
+                  pug_html += app.fields.nestedTextLabel(
+                    'personal_information_data',
+                    'street_address_1',
+                    user,
+                    -1, {
+                      class1: 'col-xl-6 col-lg-12 text-lg-left text-xl-right m-b-lg-1',
+                      class2: 'col-xl-6 col-lg-12 p-r-xl-0',
+                    },
+                    fields.personal_information_data.schema.street_address_1);
+              .col-lg-6
+                -
+                  pug_html += app.fields.nestedTextLabel(
+                    'personal_information_data',
+                    'street_address_2',
+                    user,
+                    -1, {
+                      class1: 'text-xl-right text-lg-left col-xl-5 col-lg-12',
+                      class2: 'col-xl-7 col-lg-12',
+                    },
+                    fields.personal_information_data.schema.street_address_2);
 
             if user.country == 'US'
               | !{ snippets.us({ fields: fields, user: user }) }
@@ -297,42 +306,56 @@ mixin confirmStatement(name, attr)
                     class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right p-t-0 m-b-0 m-b-lg-1',
                   },
                   fields.payment_information_data.schema.name_on_bank_account);
-
-              -
-                pug_html += app.fields.nestedTextLabel(
-                  'payment_information_data',
-                  'account_number',
-                  user,
-                  -1, {
-                  },
-                  fields.payment_information_data.schema.account_number);
-
-              -
-                pug_html += app.fields.nestedTextLabel(
-                  'payment_information_data',
-                  'account_number_re',
-                  user,
-                  -1, {
-                    class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right p-t-0 m-b-0',
-                  },
-                  fields.payment_information_data.schema.account_number_re);
-
-              -
-                pug_html += app.fields.nestedTextLabel(
-                  'payment_information_data',
-                  'routing_number',
-                  user,
-                  -1, {
-                  },
-                  fields.payment_information_data.schema.routing_number);
-              -
-                pug_html += app.fields.nestedTextLabel(
-                  'payment_information_data',
-                  'routing_number_re',
-                  user,
-                  -1, {
-                  },
-                fields.payment_information_data.schema.routing_number_re);
+              .row
+                .col-lg-6.p-xl-0
+                  -
+                    pug_html += app.fields.nestedTextLabel(
+                      'payment_information_data',
+                      'account_number',
+                      user,
+                      -1, {
+                        'help_text': '<div class="img-routing-number"></div>',
+                        class1: 'col-xl-6 col-lg-12 text-lg-left text-xl-right m-b-lg-1',
+                        class2: 'col-xl-6 col-lg-12 p-r-xl-0',
+                      },
+                      fields.payment_information_data.schema.account_number);
+                .col-lg-6
+                  -
+                    pug_html += app.fields.nestedTextLabel(
+                      'payment_information_data',
+                      'account_number_re',
+                      user,
+                      -1, {
+                        class1: 'text-xl-right text-lg-left col-xl-5 col-lg-12 p-t-0 m-b-0 m-b-lg-1',
+                        class2: 'col-xl-7 col-lg-12',
+                        'help_text': '<div class="img-routing-number"></div>',
+                      },
+                      fields.payment_information_data.schema.account_number_re);
+              .row
+                .col-lg-6.p-xl-0
+                  -
+                    pug_html += app.fields.nestedTextLabel(
+                      'payment_information_data',
+                      'routing_number',
+                      user,
+                      -1, {
+                        class1: 'col-xl-6 col-lg-12 text-lg-left text-xl-right m-b-lg-1',
+                        class2: 'col-xl-6 col-lg-12 p-r-xl-0',
+                        'help_text': '<div class="img-routing-number"></div>',
+                      },
+                      fields.payment_information_data.schema.routing_number);
+                .col-lg-6
+                  -
+                    pug_html += app.fields.nestedTextLabel(
+                      'payment_information_data',
+                      'routing_number_re',
+                      user,
+                      -1, {
+                        class1: 'text-xl-right text-lg-left col-xl-5 col-lg-12 p-t-0 m-b-0 m-b-lg-1',
+                        class2: 'col-xl-7 col-lg-12',
+                        'help_text': '<div class="img-routing-number"></div>',
+                      },
+                    fields.payment_information_data.schema.routing_number_re);
 
               .form-group.row.radio.check-fields.required
                 label.text-md-right.col-lg-3 Account Type
@@ -475,19 +498,18 @@ mixin confirmStatement(name, attr)
             .form-group.row
               .col-md-12.text-md-center.text-sm-center.text-xs-center
                 .controls
-                  button(
-                  type="submit").btn.btn-lg.btn-primary.pull-lg-right.text-uppercase invest
+                  button#submitButton(data-method="POST" type="button").btn.btn-lg.btn-primary.pull-lg-right.text-uppercase invest
     //END LEFT BLOCK
     //START RIGHT BLOCK
-    .col-xl-4.col-lg-5.pull-right.hidden-xs-down.invest-perks
-      if values.campaign.perks
+    .col-xl-4.col-lg-5.col-md-12.col-sm-12.pull-right.hidden-xs-down.invest-perks.invest-right-p-0
+      if values.campaign.perks.length > 0 && values.campaign.perks.length != ''
         h2.text-uppercase.dosis.m-t-0 PERKS
           span.small-text.open-sans
             | Investor Perks are not intended to affect the value of the security and
             | investors should evaluate the merits of each investment without regard to any
             | Investor Perks.
 
-        .list-group.list-group-border-invest.invest-right-margin
+        .list-group.list-group-border-invest.invest-right-margin.m-b-3
           -
             values.campaign.perks = Object.keys(values.campaign.perks).map(function(key) {
               return values.campaign.perks[key];
@@ -504,30 +526,32 @@ mixin confirmStatement(name, attr)
                 |  Investment 
                 i.fa.fa-check(style="display:none;")
               p.list-group-item-text.text-justify #{v.perk}
-      section.hidden-xs-down
-        h2.text-uppercase Investment Summary
-        .jumbotron.jumbotron-fluid.investment-summary
-          .container
-            .col-md-7
-              .row
-                span Target
-                p.font-weight-bold
+      section.hidden-xs-down.investment-summary
+        h4.text-uppercase.section-bg-line.text-xs-center.m-b-0 Investment Summary
+        .investment-summary-wrap
+          table.table.table-bordered
+            tr.grey
+              td
+                p Type of security
+              td
+                p Offering deadline
+            tr
+              td.big-h
+                p.font-weight-bold #{values.campaign.security_type == 0 ? 'Common Equity' : 'Revenue Share'}
+              td.big-h
+                p.font-weight-bold #{ values.campaign.expirationDate.format('MMM DD, YYYY') }
+            tr.grey
+              td
+                p Target
+              td
+                p Committed
+            tr
+              td.big-h.target
+                p.text-uppercase.font-weight-bold
                   | $#{values.campaign.minimum_raise.toLocaleString('en-US')} -
                   | $#{values.campaign.maximum_raise.toLocaleString('en-US')}
-            .col-md-5
-              .row
-                span Committed
-                p.font-weight-bold $#{values.campaign.amount_raised.toLocaleString('en-US')}
-          .container
-            .col-md-7
-              .row
-                span Offering deadline
-                p.font-weight-bold.m-b-0 #{values.campaign.expiration_date.toLocaleDateString('en-US', {timeZone: 'UTC'})}
-            .col-md-5
-              .row
-                span Type of security
-                p.font-weight-bold.m-b-0
-                  | #{values.campaign.security_type == 0 ? 'Common Equity' : 'Revenue Share'}
+              td.big-h
+                p.text-uppercase.font-weight-bold $#{values.campaign.amount_raised.toLocaleString('en-US')}
 
 //MODAL
 div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#city_state_modal.modal.fade

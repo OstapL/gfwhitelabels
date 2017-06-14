@@ -387,7 +387,7 @@ section.formc-review
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Changes Are Possible In Certain Circumstances
         p.pb10.text-indent The Company reserves the right to modify any of the terms of the Offering at any time before the Offering closes. However, if any material changes are made, each investor will be notified and will be required to reconfirm their investment commitment within 5 days of such notice or their entire investment commitment shall be cancelled. Investors are also given the right to terminate an investment at any time prior to 48 hours from a notified closing date.  Additional
-          |  details on the procedures involved with this Offering are contained later in this Material.  Additional information relating to this Offering, including communication channels allowing investors to pose questions and receive answers, is available through the Intermediary on the Platform at https://growthfountain.com/#{ values.company.id }
+          |  details on the procedures involved with this Offering are contained later in this Material.  Additional information relating to this Offering, including communication channels allowing investors to pose questions and receive answers, is available through the Intermediary on the Platform at https://growthfountain.com/#{ values.slug }
 
       // page 5
       section.page-formc-review.m-t-1
@@ -775,15 +775,21 @@ section.formc-review
             |  as Issuer
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Distinguishing the Securities
-        p.pb10.text-indent Differences between the securities being offered and the other classes of securities:
-        p.p-l-2.pb10
+        //p.pb10.text-indent Differences between the securities being offered and the other classes of securities:
+        //p.p-l-2.pb10
           +frField('formc.security_differences', 'textarea')
         p.pb10.text-indent Ability of one class of security to materially limit, dilute or qualify the rights of another class:
         p.p-l-2.pb10
           +frField('formc.rights_of_securities', 'textarea')
-        p.pb10.text-indent Ability of any principal shareholders to affect the purchasers of the securities being offered:
-        p.p-l-2
+        //p.pb10.text-indent Ability of any principal shareholders to affect the purchasers of the securities being offered:
+        //p.p-l-2
           +frField('formc.exercise_of_rights', 'textarea')
+        p.pb10.text-indent Ability for the rights of the securities being offered to be modified:
+        p.p-l-2.pb10
+          +frField('formc.terms_of_securities', 'textarea')
+        p.pb10.text-indent Any additional risks:
+        p.p-l-2.pb10
+          +frField('formc.risks_to_purchasers', 'textarea')
         if values.campaign.security_type == 0 
           p.text-uppercase.m-t-3.m-b-0.pb10
             u Valuation of the Securities
@@ -1448,7 +1454,7 @@ section.formc-review
                             td
                               +frField('formc.team_members[' + k + '].experiences[' + k1 + '].start_date_of_service', 'text')
                             td
-                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].end_date_of_service', 'text')
+                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].end_date_of_service', 'text', 'Current')
               if v.positions && v.positions.length > 0
                 h4 Previously held positions with the issuer
                 .table-responsive.m-t-0
@@ -1662,6 +1668,6 @@ section.formc-review
           h3.m-t-0.text-xs-center.letter-spacing-normal.m-b-1 Once you submit, you will no longer have the ability to edit your Form C.
           h3.m-t-0.text-xs-center.letter-spacing-normal.m-b-2 Are you sure you want to submit?
           .col-lg-12.text-lg-center.m-b-2
-            a(href="/pg/formc_review_congratulations").btn.btn-primary.btn-sm.m-r-2 Yes
+            a(href="/pg/formc-review-congratulations").btn.btn-primary.btn-sm.m-r-2 Yes
             button(type="button" data-dismiss="modal" aria-label="Close").btn.btn-secondary.btn-sm cancel
                 .modal-footer

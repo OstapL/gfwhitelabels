@@ -18,29 +18,31 @@
             'image_data', 
             view.fields.image_image_id
           ).render().resultHTML;
-      .row.m-t-2.m-b-2
-        .col-xl-12.col-lg-12.col-md-6.offset-md-3.col-xs-8.offset-xs-2.offset-xl-0.offset-lg-0.p-l-0.p-r-0
+      .row
+        .col-xl-12.col-lg-12.col-md-6.offset-md-3.col-xs-12.offset-xl-0.offset-lg-0.credit-password-block
           -
             var roles = app.user.getRoles();
             var company = app.user.getCompany();
           if roles && roles.length
             each roleInfo, idx in roles
               .profile-type-user
-                if roleInfo.roles && roleInfo.roles.length && roleInfo.company.is_paid
-                  each role in roleInfo.roles
-                    span.user-type #{ role.title }
-                  .user-company
-                    | in
-                    a(href=app.getIssuerDashboardUrl(roleInfo.company.id)).link-3  #{ roleInfo.company.name }
-                    |  company.
-                  hr
+                .profile-type-user-wrap
+                  if roleInfo.roles && roleInfo.roles.length && roleInfo.company.is_paid
+                    each role in roleInfo.roles
+                      span.user-type #{ role.title }
+                    .user-company
+                      | in
+                      a(href=app.getIssuerDashboardUrl(roleInfo.company.id)).link-3  #{ roleInfo.company.name }
+                      |  company.
           else if company && company.name && company.is_paid
             .profile-type-user
-              .user-company
-                a(href="/dashboard/" + company.formc_id + "/issuer-dashboard").link-3  #{ company.name }
-                |  company.
+              .profile-type-user-wrap
+                .user-company
+                  a(href="/dashboard/" + company.formc_id + "/issuer-dashboard").link-3  #{ company.name }
+                  |  company.
           if user.credit > 0 && user.days_left > 0
-            .profile-type-user.credit-all.m-t-2
+            hr.profile-type-user-hr
+            .profile-type-user.credit-all
               
               h3.text-uppercase.m-t-0 your credit
                 .small-text Credit valid for #{ user.days_left } days.
@@ -49,10 +51,11 @@
                   h2.m-t-0.m-b-0 $#{ user.credit }
               .text-xs-center
                 a(href="/companies").btn.btn-secondary invest
-              hr.m-t-2
-          a(href="/account/change-password").link-3
-            i.fa.fa-lock
-            |  Need to change your password?
+          .profile-reset-password      
+            hr
+            a(href="/account/change-password").link-3
+              i.fa.fa-lock
+              |  Need to change your password?
     .col-xl-8.col-lg-8
       ul.nav.nav-tabs.profile-tabs
         li(aria-expanded="false").nav-item
@@ -274,26 +277,26 @@
                           }, fields.name_on_bank_account))
 
                         pug_html += app.fields.textLabel('account_number', _.extend({
-                            'help_text': '<img src=' + require('images/routing-number-on-check.png') + '>',
+                            'help_text': '<div class="img-routing-number"></div>',
                             'type': 'text',
                             'value': user.account_number
                           }, fields.account_number))
 
                         pug_html += app.fields.textLabel('account_number_re', _.extend({
                             'class1': 'col-xl-3 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 m-b-lg-1',
-                            'help_text': '<img src=' + require('images/routing-number-on-check.png') + '>',
+                            'help_text': '<div class="img-routing-number"></div>',
                             'type': 'text',
                             'value': user.account_number
                           }, fields.account_number_re))
 
                         pug_html += app.fields.textLabel('routing_number', _.extend({
-                            'help_text': '<img src=' + require('images/routing-number-on-check.png') + '>',
+                            'help_text': '<div class="img-routing-number"></div>',
                             'type': 'text',
                             'value': user.routing_number
                           }, fields.routing_number))
 
                         pug_html += app.fields.textLabel('routing_number_re', _.extend({
-                            'help_text': '<img src=' + require('images/routing-number-on-check.png') + '>',
+                            'help_text': '<div class="img-routing-number"></div>',
                             'type': 'text',
                             'class1': 'col-xl-3 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 m-b-lg-1',
                             'value': user.routing_number

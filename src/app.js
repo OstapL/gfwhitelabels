@@ -17,20 +17,32 @@ class App {
     this.helpers = require('./helpers.js');
     this.config = require('./config.js');
     this.cookies = require('cookies-js');
-    this.fields = require('./fields.js');
+    this.fields = require('./fields/fields.js');
     this.validation = require('components/validation/validation.js');
+    this.dialogs = require('directives/dialogs/index.js');
     this.models = require('./models.js');
     this.sites = require('./sites.js');
+    this.seo = require('./seo.js');
     this.user = new User();
-    _.extend(this, Backbone.Events);
+
+    this.utils = {};
+    this.utils.isBoolean = function(val) {
+      return val == 0 || val == 1 || val == true || val == false;
+    }
+
     return this;
   }
 
   start() {
     this.user.loadWithPromise().then(() => {
 
-      if(app.config.googleTagIdGeneral || app.config.googleTagId) {
-       this.initFacebookPixel();
+      // A trick for turn off statistics with GET param, for SEO issue
+      if(document.location.search.indexOf('nometrix=t') !== -1) {
+        delete this.config.googleTagID;
+      }
+
+      if (this.config.googleTagID) {
+        this.initFacebookPixel();
       }
 
       this.routers = new Router();
@@ -59,12 +71,18 @@ class App {
   }
 
   initFacebookPixel() {
+    if (!this.config.googleTagID || !this.config.facebookPixelID)
+      return;
+
     safeDataLayerPush({
       event: 'fb-pixel-init'
     });
   }
 
   emitFacebookPixelEvent(eventName='ViewContent', params={}) {
+    if (!this.config.googleTagID || !this.config.facebookPixelID)
+      return;
+
     const STANDARD_EVENTS = [
       'ViewContent',
       'Search',
@@ -87,6 +105,9 @@ class App {
   }
 
   emitGoogleAnalyticsEvent(eventName, params={}) {
+    if (!this.config.googleTagID)
+      return;
+
     if (!eventName)
       return console.error('eventName is not set');
 
@@ -99,6 +120,9 @@ class App {
   }
 
   emitCompanyAnalyticsEvent(trackerId) {
+    if (this.config.googleTagID)
+      return;
+
     if (!trackerId)
       return;
 
@@ -114,8 +138,7 @@ class App {
     $('.loader_overlay').show();
   }
 
-  hideLoading(time) {
-    time = time || 500;
+  hideLoading(time=500) {
     if (time > 0) {
       $('.loader_overlay').animate({
         opacity: 0,
@@ -214,41 +237,6 @@ class App {
 
   }
 
-  getVideoId(url) {
-    try {
-      let provider = url.match(/https:\/\/(:?www.)?(\w*)/)[2];
-      provider = provider.toLowerCase();
-      let id;
-      if (provider === 'youtube') {
-        id = url.match(/https:\/\/(?:www.)?(\w*).com\/.*v=([^\&]*)/)[2];
-      } else if (provider === 'youtu') {
-        provider = 'youtube';
-        id = url.match(/https:\/\/(?:www.)?(\w*).be\/(.*)/)[2];
-      } else if (provider === 'vimeo') {
-        id = url.match(/https:\/\/(?:www.)?(\w*).com\/(\d*)/)[2];
-      } else {
-        console.log(url, 'Takes a YouTube or Vimeo URL');
-      }
-
-      return { id: id, provider: provider };
-
-    } catch (err) {
-      console.log(url, 'Takes a YouTube or Vimeo URL');
-    }
-  }
-
-  getVideoUrl(videoInfo) {
-    var provider = videoInfo && videoInfo.provider ? videoInfo.provider : '';
-
-    if (provider === 'youtube')
-      return '//www.youtube.com/embed/' + videoInfo.id + '?rel=0&enablejsapi=1';
-
-    if (provider === 'vimeo')
-      return '//player.vimeo.com/video/' + videoInfo.id;
-
-    return '//www.youtube.com/embed/?rel=0';
-  }
-
   getVideoInfo(url) {
     try {
       let provider = url.match(/https:\/\/(:?www.)?(\w*)/)[2];
@@ -280,13 +268,6 @@ class App {
     return {};
   }
 
-  getThumbnail(size, thumbnails, _default) {
-    let thumb = thumbnails.find(function (el) {
-      return el.size == size;
-    });
-    return (thumb ? thumb.url : _default || require('images/default/Default_photo.png'))
-  }
-
   getUrl(data) {
     data = Array.isArray(data) ? data[0] : data;
 
@@ -306,7 +287,7 @@ class App {
     // ToDo
     // get bucket server base on the site_id of the file
     // i.e. app.sites[file.site_id] + file.origin;
-    return app.config.bucketServer + file.origin;
+    return this.config.bucketServer + file.origin;
   }
 
   breadcrumbs(title, subtitle, data) {
@@ -371,71 +352,40 @@ class App {
     }
   }
 
-  loadYoutubePlayerAPI() {
-    return new Promise((resolve, reject) => {
-      if (app.youtubeAPIReady)
-        return resolve();
+  setMeta(options) {
+      const { name, content } = options;
 
-      let tag = document.createElement('script');
-
-      tag.src = "https://www.youtube.com/iframe_api";
-      let firstScriptTag = document.getElementsByTagName('script')[0];
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-      this.on('youtube-api-ready', () => {
-        resolve()
-      });
-    });
+      let meta = document.head.querySelector('meta[name=' +name + ']');
+      if (meta) {
+          meta.setAttribute('content', content)
+      } else {
+          meta = document.createElement('meta');
+          meta.setAttribute('name', name);
+          meta.setAttribute('content', content);
+          document.head.appendChild(meta);
+      }
   }
 
-  loadVimeoPlayerAPI() {
-    return new Promise((resolve, reject) => {
-      if (window.Vimeo)
-        return resolve();
+  isElementInView(element, percentsInView) {
+    const $w = $(window);
+    const $el = $(element);
 
-      let tag = document.createElement('script');
+    const windowTop = $w.scrollTop();
+    const windowBottom = windowTop + $w.height();
+    const elementTop = $el.offset().top;
+    const elementBottom = elementTop + $el.height();
 
-      tag.src = "https://player.vimeo.com/api/player.js";
-      let firstScriptTag = document.getElementsByTagName('script')[0];
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    let visibleElementHeight = Math.min(windowBottom, elementBottom) - Math.max(windowTop, elementTop);
+    if (visibleElementHeight <= 0)
+      return false;
 
-      tag.onload = resolve;
-      tag.onerror = reject;
-    });
-  }
+    if (_.isNumber(percentsInView)) {
+      const visiblePercents = visibleElementHeight / $el.height();
+      return visiblePercents >= percentsInView;
+      // return ((windowTop < elementTop) && (windowBottom > elementBottom));
+    }
 
-  confirm(container, data) {
-    return new Promise((resolve, reject) => {
-      if (!data || !data.message)
-        return resolve(true);
-
-      let template = require('./templates/confirmPopup.pug');
-      let $container = $(container);
-
-      let $modal = $(template(data));
-
-      $modal.on('shown.bs.modal', () => {
-        $modal.on('click', '.confirm-yes', () => {
-          $modal.modal('hide');
-          resolve(true);
-        });
-
-        $modal.on('click', '.confirm-no', () => {
-          $modal.modal('hide');
-          resolve(false)
-        });
-      });
-
-      $modal.on('hidden.bs.modal', () => {
-        $modal.off('hidden.bs.modal');
-        $modal.off('show.bs.modal');
-        $modal.off('click');
-        $modal.remove();
-      });
-
-      $container.append($modal);
-
-      $modal.modal('show');
-    });
+    return ((elementTop <= windowBottom) && (elementBottom >= windowTop));
   }
 
 }

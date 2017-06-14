@@ -15,26 +15,13 @@ module.exports = {
   },
   methods: {
     accountProfile(activeTab) {
-      /*
-       * Do we need this?
-       * Vlad
-      if (app.user.is_anonymous()) {
-        app.routers.navigate('/account/login', { trigger: true, replace: true });
-        return;
-      }
-      */
-
       require.ensure([], (require) => {
-        const View = require('./views.js');
+        const View = require('components/accountProfile/views.js');
         const fieldsR = api.makeCacheRequest(app.config.authServer + '/rest-auth/data', 'OPTIONS');
         const dataR = api.makeCacheRequest(app.config.authServer + '/rest-auth/data');
 
         $.when(fieldsR, dataR).done((fields, data) => {
-          _.extend(app.user.data, data[0]);
-          app.user.data.image_image_id = new app.models.Image(
-            app.config.authServer + '/rest-auth/data',
-            data[0].image_data
-          );
+          app.user.updateUserData(data[0]);
           const i = new View.profile({
             el: '#content',
             model: app.user,
@@ -44,7 +31,7 @@ module.exports = {
           i.render();
           app.hideLoading();
         });
-      });
+      }, 'profile_chunk');
     },
 
     logout(id) {
@@ -54,24 +41,24 @@ module.exports = {
     },
 
     changePassword() {
-      require.ensure([], () => {
+      require.ensure([], (require) => {
         $('body').scrollTo();
-        const View = require('./views.js');
+        const View = require('components/accountProfile/views.js');
         let i = new View.changePassword({
           el: '#content',
           model: {},
         });
         i.render();
         app.hideLoading();
-      });
+      }, 'profile_chunk');
     },
 
     setNewPassword() {
-      require.ensure([], () => {
+      require.ensure([], (require) => {
         $('body').scrollTo();
         const fieldsR = api.makeCacheRequest(app.config.authServer + '/rest-auth/password/change', 'OPTIONS');
         $.when(fieldsR).done((data) => {
-          const View = require('./views.js');
+          const View = require('components/accountProfile/views.js');
           const i = new View.setNewPassword({
             el: '#content',
             //TODO: add fields from response
@@ -80,12 +67,13 @@ module.exports = {
           i.render();
           app.hideLoading();
         });
-      });
+      }, 'profile_chunk');
     },
 
     investorDashboard() {
-      require.ensure([], () => {
-        const View = require('./views.js');
+      require.ensure([], (require) => {
+        $('body').scrollTo();
+        const View = require('components/accountProfile/views.js');
 
         const fieldsR = api.makeCacheRequest(app.config.investmentServer, 'OPTIONS');
         const userDataR = api.makeCacheRequest(app.config.authServer + '/rest-auth/data');
@@ -100,7 +88,7 @@ module.exports = {
           i.render();
           app.hideLoading();
         });
-      });
+      }, 'profile_chunk');
     },
 
     companyDashboard() {
@@ -111,66 +99,66 @@ module.exports = {
         });
         i.render();
         app.hideLoading();
-      });
+      }, 'profile_chunk');
     },
 
     companyDashboardFirst() {
-      require.ensure([], () => {
+      require.ensure([], (require) => {
         const View = require('components/accountProfile/views.js');
         let i = new View.companyDashboardFirst({
           el: '#content',
         });
         i.render();
         app.hideLoading();
-      });
+      }, 'profile_chunk');
     },
 
     afterPaymentDashboard() {
-      require.ensure([], () => {
+      require.ensure([], (require) => {
         const View = require('components/accountProfile/views.js');
         let i = new View.afterPaymentDashboard({
           el: '#content',
         });
         i.render();
         app.hideLoading();
-      });
+      }, 'profile_chunk');
     },
 
     afterCompleteDashboard() {
-      require.ensure([], () => {
+      require.ensure([], (require) => {
         const View = require('components/accountProfile/views.js');
         let i = new View.afterCompleteDashboard({
           el: '#content',
         });
         i.render();
         app.hideLoading();
-      });
+      }, 'profile_chunk');
     },
 
     afterFinalDashboard() {
-      require.ensure([], () => {
+      require.ensure([], (require) => {
         const View = require('components/accountProfile/views.js');
         let i = new View.afterFinalDashboard({
           el: '#content',
         });
         i.render();
         app.hideLoading();
-      });
+      }, 'profile_chunk');
     },
 
     afterSubmittingGovermentDashboard() {
-      require.ensure([], () => {
+      require.ensure([], (require) => {
         const View = require('components/accountProfile/views.js');
         let i = new View.afterSubmittingGovermentDashboard({
           el: '#content',
         });
         i.render();
         app.hideLoading();
-      });
+      }, 'profile_chunk');
     },
 
     issuerDashboard(id) {
-      require.ensure([],() => {
+      require.ensure([],(require) => {
         $('body').scrollTo();
         let params = {
           el: '#content'
@@ -215,7 +203,7 @@ module.exports = {
           app.hideLoading();
 
         });
-      });
+      }, 'profile_chunk');
     },
 
   },
