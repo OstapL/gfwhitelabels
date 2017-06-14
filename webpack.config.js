@@ -13,7 +13,7 @@ const plugins = [
   new HtmlPlugin({
     title: 'GrowthFountain | Equity Crowdfunding Platform',
     template: './src/index.pug',
-    filename: 'index.html',
+    filename: 'error.html',
     inject: 'head',
   }),
   new ExtractTextPlugin({
