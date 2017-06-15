@@ -9,6 +9,7 @@
   position: relative
   top: 50%;
   left: 0;
+
 //======================================
 // show main menu list on mobile devaices
 html.show-menu
@@ -43,13 +44,9 @@ html.show-menu
 
     .mobile-menu.full-height
       right: 0
-      -webkit-transition: right 0.35s ease-in 200ms
-      -moz-transition: right 0.35s ease-in 200ms
-      -ms-transition: right 0.35s ease-in 200ms
-      -o-transition: right 0.35s ease-in 200ms
-      transition: right 0.35s ease-in 200ms
       overflow-y: auto
       background-color: $menu-backgound-mobile
+      display: block
 //================================
 
 //=================================
@@ -503,27 +500,27 @@ header
           position: relative
           top: 25%
       .mobile-menu.full-height
-        -webkit-transition: right 0.35s ease-in 200ms
-        -moz-transition: right 0.35s ease-in 200ms
-        -ms-transition: right 0.35s ease-in 200ms
-        -o-transition: right 0.35s ease-in 200ms
-        transition: right 0.35s ease-in 200ms
-        position: absolute
+        transition: right .6s
+        position: fixed
+        -webkit-backface-visibility: hidden
+        -webkit-transform: translateZ(0)
+        box-sizing: border-box
         z-index: 999
-        right: -240px
+        right: -260px
         min-height: 568px
         height: 100vh
         overflow: hidden
-        width: 240px
+        width: 260px
         overflow-y: auto
         top: $navbar_height_mobile
         background-color: $menu-backgound-mobile
+        display: block
       #menuList
         float: none!important
         margin: 0
         overflow: hidden
         overflow-y: auto
-        width: 240px
+        width: 260px
         box-sizing: border-box
         height: 80vh
         li
@@ -533,18 +530,18 @@ header
           position: relative
           &:after
             content: ''
-            width: 220px
+            width: 240px
             position: absolute
             margin-left: rem(10)
-            border-bottom: solid 1px $menu_text_color
+            border-bottom: solid 1px rgba($menu_text_color, .4)
           &:hover
             background-color: $menu-bgc-mobile-hover
             &:after
               border-bottom: none
           a
-            font-size: rem(13)
+            font-size: rem($menu-font-size-mobile)
             font-family: $font-family-menu
-            letter-spacing: 1.3px
+            letter-spacing: $menu-letter-spacing-mobile
             padding: 10px
             text-transform: uppercase
             text-align: left
@@ -563,6 +560,8 @@ header
             .user-info-name
               color: $white
               background-color: $menu-bgc-mobile-user
+              span
+                width: 45px
               div
                 display: inline-block
                 font-size: rem(15)
