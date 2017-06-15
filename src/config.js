@@ -13,7 +13,7 @@ var e = {
   notificationsServer: "https://notifications-dev.growthfountain.com/",
   teamName: 'Team',
   teamTitle: "Meet The Team",
-  siteName: '| GrowthFountain Equity Crowdfunding',
+  siteTitle: '| GrowthFountain Equity Crowdfunding',
 
   // Growth Fountain production keys:
   // facebookClientId: "191471871275050",

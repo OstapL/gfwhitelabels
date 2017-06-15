@@ -775,15 +775,21 @@ section.formc-review
             |  as Issuer
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Distinguishing the Securities
-        p.pb10.text-indent Differences between the securities being offered and the other classes of securities:
-        p.p-l-2.pb10
+        //p.pb10.text-indent Differences between the securities being offered and the other classes of securities:
+        //p.p-l-2.pb10
           +frField('formc.security_differences', 'textarea')
         p.pb10.text-indent Ability of one class of security to materially limit, dilute or qualify the rights of another class:
         p.p-l-2.pb10
           +frField('formc.rights_of_securities', 'textarea')
-        p.pb10.text-indent Ability of any principal shareholders to affect the purchasers of the securities being offered:
-        p.p-l-2
+        //p.pb10.text-indent Ability of any principal shareholders to affect the purchasers of the securities being offered:
+        //p.p-l-2
           +frField('formc.exercise_of_rights', 'textarea')
+        p.pb10.text-indent Ability for the rights of the securities being offered to be modified:
+        p.p-l-2.pb10
+          +frField('formc.terms_of_securities', 'textarea')
+        p.pb10.text-indent Any additional risks:
+        p.p-l-2.pb10
+          +frField('formc.risks_to_purchasers', 'textarea')
         if values.campaign.security_type == 0 
           p.text-uppercase.m-t-3.m-b-0.pb10
             u Valuation of the Securities
