@@ -769,7 +769,7 @@ module.exports = {
         ? Math.min(annualIncome, netWorth) * 0.1
         : Math.min(annualIncome, netWorth) * 0.05;
 
-      maxInvestmentsPerYear = maxInvestmentsPerYear < 2 ? 2 : maxInvestmentsPerYear;
+      maxInvestmentsPerYear = maxInvestmentsPerYear < 2 ? 2.2 : maxInvestmentsPerYear;
 
       return Math.round((maxInvestmentsPerYear * 1000 - investedPastYear - investedOtherSites));
     },
