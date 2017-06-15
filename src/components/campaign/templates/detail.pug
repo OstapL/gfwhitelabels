@@ -184,28 +184,6 @@ section.campaigndetail
           .pull-right
             p Minimum Investment
             h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.minimum_increment) }
-        div(style="display: none").row.col-lg-12.investors-block
-          .col-lg-2.p-l-0
-            p Investors
-            h2.font-weight-bold 17
-          .col-lg-10.p-l-0
-            ul
-              li
-                a(href="")
-                  img(src=require('images/avatar1.jpg') alt="...").img-circle
-              li
-                a(href="")
-                  img(src=require('images/avatar6.jpg') alt="...").img-circle
-              li
-                a(href="")
-                  img(src=require('images/avatar1.jpg') alt="...").img-circle
-              li
-                a(href="")
-                  img(src=require('images/avatar6.jpg') alt="...").img-circle
-              li
-                a(href="")
-                  img(src=require('images/avatar1.jpg') alt="...").img-circle
-              a(href="#" style="display: none").link-1 see all...
         .col-xl-12.hidden-xl-up.text-xs-center
           a(href=investURL disabled=disableInvest).btn.btn-primary.text-uppercase Invest
 
@@ -448,7 +426,7 @@ section
             p Official filing on SEC.gov
             if values.formc.link_to_formc
               a(href=values.formc.link_to_formc target="_blank")
-                img(src=require('images/lrg_US_Department_of_State35.gif')).img-document.d-inline-block
+                img(src=require('img/icons/lrg_US_Department_of_State35.gif')).img-document.d-inline-block
                 h3.d-inline-block  Form C
 
           .col-lg-4.text-xs-center
