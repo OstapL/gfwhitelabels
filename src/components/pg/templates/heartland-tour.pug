@@ -42,7 +42,7 @@ mixin renderPlaces(places)
 
 section.heartland-tour
   section.height-block-banner.scroll-paralax.no-paralax-mobile.m-t-0.top-baner
-    - var styleString = 'background: url(' + require('img/heartland-tour.jpg') + ')';
+    - var styleString = 'background: url(' + require('images/heartland_tour/heartland-tour.jpg') + ')';
     div(style=styleString + '; height:70vh').background
     .center-wrap.container
       .col-xl-12.p-x-0
@@ -77,7 +77,7 @@ section.heartland-tour
           .one-button
             a(href=infoProvider.nominateYourBusinessEmail()).btn.btn-block.btn-secondary nominate your favorite business and earn $500!
           .center-logo
-            img(src=require("img/gf_icon.png") alt="")
+            img(src=require("images/gf_icon.png") alt="")
           .one-button.two
             a(href="#heartland-tour-modal" data-toggle="modal" data-target="#heartland-tour-modal").btn.btn-block.btn-secondary RSVP to attend in person!
           
@@ -86,9 +86,9 @@ section.heartland-tour
         .col-xl-8.col-lg-8
           .map-center
             .bgi-xs
-              img(src=require("img/hearlend-map-bgi-mob.npg.png") alt="")
-            video(poster=require("images/hearlend-map-bgi.jpg") id="bgvid" playsinline autoplay muted loop)
-              source(src=require("images/video/cover-video.mp4"))
+              img(src=require("images/heartland_tour/hearlend-map-bgi-mob.png") alt="")
+            video(poster=require("images/heartland_tour/hearlend-map-bgi.jpg") id="bgvid" playsinline autoplay muted loop)
+              source(src=require("video/heartland-tour-video.mp4"))
             .text-wrap
               h1.text-uppercase APPLY TODAY TO PARTICIPATE
                 br
@@ -121,7 +121,7 @@ section.heartland-tour
             | !{ socialDirective.render(directiveKey, infoProvider) }
   .sities
     section.height-block-banner.scroll-paralax.no-paralax-mobile.sities-section
-      - var styleString = 'background: url(' + require('img/cities.png') + ')';
+      - var styleString = 'background: url(' + require('images/banners/cities.png') + ')';
       div(style=styleString + '; height:480px').background
       .center-wrap.container
         .row
