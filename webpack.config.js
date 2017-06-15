@@ -174,7 +174,6 @@ module.exports = {
     alias: {
       components: path.resolve(__dirname, 'src/components'),
       constants: path.resolve(__dirname, 'consts'),
-      //images: path.resolve(__dirname, 'src/img'),
       images: path.resolve(__dirname, 'staticdata/img'),
     },
     modules: [
