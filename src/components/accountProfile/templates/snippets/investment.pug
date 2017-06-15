@@ -101,14 +101,21 @@ div(data-investmentid=id).one_table
                     .row
                       - 
                         pug_html += app.fields.textareaLabel('cancelled_reason', {
+                          class1: 'col-xs-12 text-xs-left',
+                          class2: 'col-xs-12',
+                          placeholder: 'Type here...',
                           schema: fields.cancelled_reason
                         });
                         pug_html += app.fields.textareaLabel('feedback', {
+                          class1: 'col-xs-12 text-xs-left',
+                          class2: 'col-xs-12',
+                          placeholder: 'Type here...',
                           schema: fields.feedback
                         })
-                    .rating-wrap
+                    .rating-wrap.row
                       .row
-                        label.col-xl-12 Please evaluate GrowthFountain's platform
+                        .col-xl-12.text-xs-left
+                          label Please evaluate GrowthFountain's platform
                       .row
                         .col-xl-12
                           .rating
