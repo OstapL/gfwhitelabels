@@ -116,7 +116,15 @@ $(document).ready(function () {
       template: popoverTemplate.replace('divPopover', 'textareaPopover'),
     });
   });
-
+  // для скролл шапки та разшерениях меньше 991px класс "sticky-active" - меняет цвет шапки 
+  $(window).scroll(function() {
+    if ($(this).scrollTop() > 1){  
+      $('header').addClass("sticky-active");
+    }
+    else{
+      $('header').removeClass("sticky-active");
+    }
+  });
 // show bottom logo while scrolling page
   $(window).scroll(function () {
     var $bottomLogo = $('#fade_in_logo');
@@ -216,7 +224,7 @@ $(document).ready(function () {
       }
     }
   });
-
+  
   $('body').on('click', 'a', (event) => {
     const href = event.currentTarget.getAttribute('href');
 

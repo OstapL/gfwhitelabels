@@ -37,3 +37,5 @@ do
 done
 
 git checkout alpha
+cd staticdata && git checkout `cd .. && git rev-parse --abbrev-ref HEAD`
+cd ..
