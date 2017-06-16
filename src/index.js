@@ -216,7 +216,7 @@ $(document).ready(function () {
       }
     }
   });
-
+  
   $('body').on('click', 'a', (event) => {
     const href = event.currentTarget.getAttribute('href');
 
@@ -398,3 +398,11 @@ $(document).ready(function() {
   global.app = new App();
   app.start();
 });
+$(window).scroll(function() {
+  if ($(this).scrollTop() > 1){  
+      $('header').addClass("sticky-active");
+    }
+    else{
+      $('header').removeClass("sticky-active");
+    }
+  });
