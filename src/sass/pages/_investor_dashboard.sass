@@ -383,8 +383,9 @@
           clip: rect(0, 0, 0, 0)
         label
           float: right
-          width: 1em
+          width: auto
           padding: 0
+          padding-right: rem(4)
           overflow: hidden
           white-space: nowrap
           cursor: pointer
@@ -419,7 +420,3 @@
         &:hover ~ input:checked ~ label
           color: $rating-icon-color
       
-        &:active
-          position: relative
-          top: 2px
-          left: 2px
