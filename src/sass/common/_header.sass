@@ -20,10 +20,6 @@ html.show-menu
   body
     overflow: hidden !important 
     position: relative
-    height: 100% !important
-    -webkit-overflow-scrolling: auto!important
-    width: 100%
-    position: fixed
 
   header
     button.navbar-toggler
@@ -432,7 +428,6 @@ header
       -webkit-box-shadow: $sub-menu-box-shadov
       -moz-box-shadow: $sub-menu-box-shadov
       box-shadow: $sub-menu-box-shadov
-      background-color: rgba($menu_backgound_from, 0.96)
       &.two-columns
         left: -120px
         .submenu
@@ -468,7 +463,7 @@ header
       display: none
 
   @media screen and (max-width: 991px)    
-    position: absolute
+    position: fixed
     top: 0
     left: 0
     z-index: 999
@@ -477,8 +472,8 @@ header
     margin: 0
     max-height: none
     width: 100%
-    background-color: rgba($menu_backgound_from, .96)
-    background: rgba($menu_backgound_from, .96) $header_bg_image
+    &.sticky-active
+      background-color: rgba($menu_backgound_from, .93)
     .navbar .navbar-brand
       display: inline-block
       height: $navbar_height_mobile
@@ -522,6 +517,7 @@ header
         width: 260px
         box-sizing: border-box
         height: 80vh
+        margin-top: rem(20)
         li
           height: auto
           margin-left: 0
