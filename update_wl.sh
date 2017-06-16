@@ -7,9 +7,11 @@ do
     git checkout $b
     git pull origin $b
     # git submodule update --init
-    cd consts && git checkout alpha && git pull origin alpha && cd ..
+    cd consts && git checkout master && git pull origin alpha 
+    cd ..
     git add consts
-    cd staticdata && git checkout `git rev-parse --abbrev-ref HEAD` && git pull && cd ..
+    cd staticdata && git checkout `git rev-parse --abbrev-ref HEAD` && git pull 
+    cd ..
     git add staticdata
 
     if git branch --all | grep --quiet "remotes/vladyslav2/$b"; then
