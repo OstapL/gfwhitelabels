@@ -6,13 +6,11 @@ do
     echo "========================= branch $b =========================="
     git checkout $b
     git pull origin $b
-    # git submodule update --init
+    git submodule update --init
     cd consts && git checkout master && git pull origin alpha 
     cd ..
-    git add consts
     cd staticdata && git checkout `git rev-parse --abbrev-ref HEAD` && git pull 
     cd ..
-    git add staticdata
 
     if git branch --all | grep --quiet "remotes/vladyslav2/$b"; then
         echo "============ MERGE WITH VLADYSLAV/$b ============"
