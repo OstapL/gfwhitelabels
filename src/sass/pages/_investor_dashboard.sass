@@ -237,6 +237,12 @@
           line-height: rem(16)
           display: block
           float: none
+    .cancel
+      background-color: transparent
+      border: none
+      font-size: rem(11)
+      &:hover
+        background-color: transparent
 
     .progress[value]::-webkit-progress-value
       background-color: $progress_bar_background
@@ -362,3 +368,55 @@
       .small-text
         font-weight: normal!important
         font-family: $open-sans
+.rating-wrap
+  label
+    font-weight: bold
+    font-size: rem(14)
+  .rating
+    float: left
+
+    &:not(:checked)
+      >
+        input
+          position: absolute
+          top: -9999px
+          clip: rect(0, 0, 0, 0)
+        label
+          float: right
+          width: auto
+          padding: 0
+          padding-right: rem(4)
+          overflow: hidden
+          white-space: nowrap
+          cursor: pointer
+          font-size: rem(18)!important
+          line-height: 1.2
+          color: $rating-icon-color
+          font: normal normal normal 18px/1 FontAwesome
+          &:before
+            content: '\f006'
+      > label:hover
+        color: $rating-icon-color
+        &:before
+          content: '\f005'
+        ~ label
+          color: $rating-icon-color
+          &:before
+            content: '\f005'
+    > input:checked ~ label
+      color: $rating-icon-color
+        
+      &:before
+        content: '\f005'
+    >
+      input:checked
+        > label:hover
+
+        + label:hover, ~ label:hover
+          color: rgba($rating-icon-color, .7)
+          ~ label
+            color: $rating-icon-color
+      label
+        &:hover ~ input:checked ~ label
+          color: $rating-icon-color
+      
