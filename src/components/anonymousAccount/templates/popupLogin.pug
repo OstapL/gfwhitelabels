@@ -109,7 +109,7 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
         .modal-body
           .form-section
             form(novalidate autocomplete="off")#sign-in-form.login-form.col-lg-10.offset-lg-1
-              .col-lg-12
+              .col-lg-12.p-xs-0
                 -
                   pug_html += app.fields.fieldText('email', {
                     autocomplete: 'off',
@@ -130,7 +130,7 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
                   value=window.location.host
                   name="domain"
                 )
-              .col-lg-12
+              .col-lg-12.p-xs-0
                 .row.forgot
                   a(href="#").reset-password-link.link-3 Forgot Your Password?
               .col-lg-12
