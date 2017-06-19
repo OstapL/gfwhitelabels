@@ -141,6 +141,20 @@ module.exports = {
           path.resolve(__dirname, './staticdata'),
         ],
      },
+     {
+       test: /\.(pdf|doc|docx)$/,
+       include: [
+          path.resolve(__dirname, './staticdata'),
+        ],
+        loaders: [
+          {
+            loader: 'file-loader',
+            query: {
+              name: '[path][name].[hash].[ext]',
+            }
+          },
+        ],
+     },
       {
         test: /\.(gif|png|jpe?g|svg|ico)$/i,
         include:[
@@ -179,6 +193,7 @@ module.exports = {
       constants: path.resolve(__dirname, 'consts'),
       images: path.resolve(__dirname, 'staticdata/img'),
       video: path.resolve(__dirname, 'staticdata/video'),
+      doc: path.resolve(__dirname, 'staticdata/doc'),
     },
     modules: [
       path.resolve(__dirname, 'src'),
