@@ -75,7 +75,7 @@ module.exports = {
         $('body').scrollTo();
         const View = require('components/accountProfile/views.js');
 
-        const fieldsR = api.makeCacheRequest(app.config.investmentServer, 'OPTIONS');
+        const fieldsR = api.makeCacheRequest(app.config.investmentServer + '/1/decline', 'OPTIONS');
         const userDataR = api.makeCacheRequest(app.config.authServer + '/rest-auth/data');
         const dataR = api.makeCacheRequest(app.config.investmentServer);
 
