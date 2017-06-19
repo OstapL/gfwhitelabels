@@ -13,7 +13,7 @@ const plugins = [
   new HtmlPlugin({
     title: 'GrowthFountain | Equity Crowdfunding Platform',
     template: './src/index.pug',
-    filename: 'error.html',
+    filename: 'index.html',
     inject: 'head',
   }),
   new ExtractTextPlugin({
@@ -137,12 +137,29 @@ module.exports = {
       {
        test: /\.(mp3|mp4|webm)$/,
        loader: 'file-loader',
+       include: [
+          path.resolve(__dirname, './staticdata'),
+        ],
+     },
+     {
+       test: /\.(pdf|doc|docx)$/,
+       include: [
+          path.resolve(__dirname, './staticdata'),
+        ],
+        loaders: [
+          {
+            loader: 'file-loader',
+            query: {
+              name: '[path][name].[hash].[ext]',
+            }
+          },
+        ],
      },
       {
         test: /\.(gif|png|jpe?g|svg|ico)$/i,
         include:[
           path.resolve(__dirname, './node_modules'),
-          path.resolve(__dirname, './src'),
+          path.resolve(__dirname, './staticdata'),
         ],
         loaders: [
           {
@@ -174,7 +191,9 @@ module.exports = {
     alias: {
       components: path.resolve(__dirname, 'src/components'),
       constants: path.resolve(__dirname, 'consts'),
-      images: path.resolve(__dirname, 'src/img'),
+      images: path.resolve(__dirname, 'staticdata/img'),
+      video: path.resolve(__dirname, 'staticdata/video'),
+      doc: path.resolve(__dirname, 'staticdata/doc'),
     },
     modules: [
       path.resolve(__dirname, 'src'),

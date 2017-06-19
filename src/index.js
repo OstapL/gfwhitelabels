@@ -116,7 +116,15 @@ $(document).ready(function () {
       template: popoverTemplate.replace('divPopover', 'textareaPopover'),
     });
   });
-
+  // для скролл шапки та разшерениях меньше 991px класс "sticky-active" - меняет цвет шапки 
+  $(window).scroll(function() {
+    if ($(this).scrollTop() > 1){  
+      $('header').addClass("sticky-active");
+    }
+    else{
+      $('header').removeClass("sticky-active");
+    }
+  });
 // show bottom logo while scrolling page
   $(window).scroll(function () {
     var $bottomLogo = $('#fade_in_logo');
@@ -196,15 +204,6 @@ $(document).ready(function () {
     }
   });
 
-  $('body').on('click', '.user-info', function () {
-    if ($('.navbar-toggler:visible').length !== 0) {
-      $('html').removeClass('show-menu');
-      $('header').toggleClass('no-overflow');
-    }
-
-    return false;
-  });
-
   $('body').on('click', '.notification-bell', function () {
     if ($('.navbar-toggler:visible').length !== 0) {
       $('html').removeClass('show-menu');
@@ -218,14 +217,14 @@ $(document).ready(function () {
     var href = $(event.target).closest('a').attr('href');
 
     if ($('.navbar-toggler:visible').length !== 0) {
-      $(this).find('.list-container').slideToggle();
+      $(this).find('#menuList').slideToggle();
 
       if (href && href.indexOf('/') != -1) {
         $('html').toggleClass('show-menu');
       }
     }
   });
-
+  
   $('body').on('click', 'a', (event) => {
     const href = event.currentTarget.getAttribute('href');
 
