@@ -162,7 +162,37 @@
 .home-our-partners
   background-color: $alabaster
   padding: rem(25) 0 rem(20) 0
+  padding-bottom: rem(25)
   display: $home-our-partners-display
+  .partners-line
+    margin-bottom: rem(35)
+    hr
+      width: 97%
+      border-top: 2px solid #c4c4c4
+    .center-title
+      -ms-transform: translate(-50%,-50%)
+      -webkit-transform: translate(-50%,-50%)
+      transform: translate(-50%,-50%)
+      position: absolute
+      left: 50%
+      top: 12px
+      background-color: $alabaster
+      padding-left: rem(15)
+      padding-right: rem(15)
+      text-align: center
+      color: $small_text
+      @media only screen and (min-width : 1400px)
+        max-width: 60%
+        min-width: 50%
+      @media screen and (min-width : 1200px) and (max-width : 1400px)
+        min-width: 60%
+      @media only screen and (max-width : 1199px)
+        min-width: 70%
+        top: 0
+      @media only screen and (max-width : 768px)
+        min-width: 80%
+      @media only screen and (max-width : 440px)
+        min-width: 100%
   .item
     min-height: 70px
     @media only screen and (max-width : 544px)
@@ -313,7 +343,7 @@
   @media only screen and (max-width : 890px)
     height: auto
   @media only screen and (max-width : 768px)
-    background-image: url("img/main-before-video.jpg")
+    background-image: url("img/generals/main-before-video.jpg")
     width: 100%
     height: $main-video-table-height
     background-repeat: no-repeat

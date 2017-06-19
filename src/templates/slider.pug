@@ -1,7 +1,7 @@
 if app.config.indexPage.slider == 1
   .owl-carousel.owl-theme.carousel-test
       div
-        - var styleString = 'background: url(' + require('images/slide_1.jpg') + ')';
+        - var styleString = 'background: url(' + require('images/banners/slide_1.jpg') + ')';
         div(style=styleString + '; background-position: center center !important').slide_1.main-slider-item
         .slider-content.container
           .text-xs-center
@@ -22,9 +22,8 @@ if app.config.indexPage.slider == 1
                 a(href="/companies").btn.btn-lg.btn-primary INVEST
 
       div
-        - var styleString = 'background: url(' + require('images/slide_2.jpg') + ')';
+        - var styleString = 'background: url(' + require('images/banners/slide_2.jpg') + ')';
         div(style=styleString).main-slider-item.slide_2
-        //img(src=require('images/slide_2.jpg') alt="...")
         .slider-content.container
           .text-xs-center
             .col-lg-12
@@ -43,9 +42,8 @@ if app.config.indexPage.slider == 1
               .col-lg-12.hidden-md-up
                 a(href="/companies").btn.btn-lg.btn-primary INVEST
       div
-        - var styleString = 'background: url(' + require('images/slide_3.jpg') + ')';
+        - var styleString = 'background: url(' + require('images/banners/slide_3.jpg') + ')';
         div(style=styleString).main-slider-item.slide_3
-        //img(src=require('images/slide_3.jpg') alt="...")
         .slider-content.container
           .text-xs-center
             .col-lg-12
@@ -66,7 +64,7 @@ if app.config.indexPage.slider == 1
 else
   .main-top-baner
     section.height-block-banner.scroll-paralax.no-paralax-mobile.main-paralax-banner.m-t-0
-      - var styleString = 'background: url(' + require('img/slide_1.jpg') + ')';
+      - var styleString = 'background: url(' + require('images/banners/slide_1.jpg') + ')';
       div(style=styleString + '; height:75vh').background
       .center-wrap.container
         .col-lg-12
