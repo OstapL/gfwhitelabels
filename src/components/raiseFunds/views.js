@@ -307,7 +307,6 @@ module.exports = {
             aspectRatio: 1600/800,
             crop: function(e) {
               /*
-              debugger;
               if(event.detail.height < 1600) {
                 console.log('too small area ', event.detail.height);
                 throw('too small');

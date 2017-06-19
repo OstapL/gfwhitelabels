@@ -19,7 +19,7 @@ section.campaing-list.campaign-list-main-page
           i.fa.fa-angle-right
 
 section.main-video-wrap
-  video(poster=require("images/main-before-video.jpg") id="bgvid" playsinline autoplay muted loop)
+  video(poster=require("images/generals/main-before-video.jpg") id="bgvid" playsinline autoplay muted loop)
     source(src=require("staticdata/video/main_background_video.mp4") type="video/mp4")
   .center-wrap
     .text-wrap
@@ -39,6 +39,10 @@ section.main-video-wrap
       i.fa.fa-play
 section.home-our-partners
   .container-fluid
+    .col-xl-12
+      .partners-line
+        hr
+        h4.text-uppercase.center-title GrowthFountain Powers Equity Crowdfunding for these Partners:
     .col-xl-2.col-lg-4.col-md-4.col-sm-6.col-xs-12.item
       a(href="http://www.callahan.com/" target="_blank")
         img(src=require("images/partners-logo/callahan-logo.png") alt="").img-fluid.callahan
@@ -69,19 +73,19 @@ section.better
     .row
       .col-xl-4.better-item
         .photo
-          img(src=require('images/list-1.png'), alt="")
+          img(src=require('images/generals/list-1.png'), alt="")
         h4.title.text-uppercase List Your Fundraise
         .text
           p We want you to focus on what you do best: build your company. We’ll help you assess your valuation, prepare your offering docs and handle filings and all the heavy lifting.
       .col-xl-4.better-item
         .photo
-          img(src=require('images/network1.png'), alt="")
+          img(src=require('images/generals/network1.png'), alt="")
         h4.title.text-uppercase Activate Your Network
         .text
           p Think of our platform as a way to raise 150% or more of the money you can raise from your own network. Get your customer, community, friends and family to invest early and often. Once you create the momentum, our investor network can provide meaningful additional capital. 
       .col-xl-4.better-item
         .photo
-          img(src=require('images/invest-list.png'), alt="")
+          img(src=require('images/generals/invest-list.png'), alt="")
         h4.title.text-uppercase Everybody can Invest!
         .text
           p BRAND NEW! Everybody in the world can now invest in America’s entrepreneurs. Capture their interest with your story and use your network to get early traction – and our massive network will surely follow!
@@ -97,7 +101,7 @@ section.better
           .col-xl-6
             .item
               i.fa.fa-chevron-right
-              h3.font-weight-light Say goodbye to annoying legal fees
+              h3.font-weight-light Minimize annoying legal fees
         .row
           .col-xl-6
             .item
@@ -128,7 +132,7 @@ section.news-on-main-page
               .col-lg-4
                 .news-img.text-xs-center.mpb50
                   a(href="https://techcrunch.com/2017/01/23/growthfountain/" target="_blank")
-                    img(src=require("img/pages/TC.jpg") alt="techcrunch")
+                    img(src=require("images/pages/TC.jpg") alt="techcrunch")
                 
               .col-lg-8
                 h4.open-sans.letter-spacing-0.text-muted.m0
@@ -145,7 +149,7 @@ section.news-on-main-page
               .col-lg-4
                 .news-img.text-xs-center.mpb50
                   a(href="https://cheddar.vhx.tv/cheddar-archive/videos/cheddar-closing-bell-s3-e013017-j-full-mezz-hd-en-us" target="_blank")
-                    img(src=require("img/pages/cheddar.jpg") alt="cheddar")
+                    img(src=require("images/pages/cheddar.jpg") alt="cheddar")
                 
               .col-lg-8
                 h4.open-sans.letter-spacing-0.text-muted.m0
@@ -165,12 +169,12 @@ section.news-on-main-page
             .row
               .col-lg-4
                 .news-img.text-xs-center.mpb50
-                  a(href=app.config.bucketServer + '/docs/Credit.Union.Times.3_17_17-1.pdf' target="_blank")
-                    img(src=require("img/pages/news2.png") alt="")
+                  a(href="/staticdata/doc/Credit.Union.Times.3_17_17-1.pdf" target="_blank")
+                    img(src=require("images/pages/news2.png") alt="")
                 
               .col-lg-8
                 h4.open-sans.letter-spacing-0.text-muted.m0
-                  a(href=app.config.bucketServer + '/docs/Credit.Union.Times.3_17_17-1.pdf' target="_blank")
+                  a(href="/staticdata/doc/Credit.Union.Times.3_17_17-1.pdf" target="_blank")
                     b
                       | Crowdfunding: New Opportunity for Start-Ups & Credit Unions
                     .small-text
@@ -182,7 +186,7 @@ section.news-on-main-page
               .col-lg-4
                 .news-img.text-xs-center.mpb50
                   a(href="http://moneyinc.com/future-fundraising-extension-social-contract/" target="_blank")
-                    img(src=require("img/pages/moneyinc.jpg") alt="moneyinc")
+                    img(src=require("images/pages/moneyinc.jpg") alt="moneyinc")
                 
               .col-lg-8
                 h4.open-sans.letter-spacing-0.text-muted.m0

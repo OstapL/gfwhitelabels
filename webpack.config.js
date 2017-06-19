@@ -137,12 +137,15 @@ module.exports = {
       {
        test: /\.(mp3|mp4|webm)$/,
        loader: 'file-loader',
+       include: [
+          path.resolve(__dirname, './staticdata'),
+        ],
      },
       {
         test: /\.(gif|png|jpe?g|svg|ico)$/i,
         include:[
           path.resolve(__dirname, './node_modules'),
-          path.resolve(__dirname, './src'),
+          path.resolve(__dirname, './staticdata'),
         ],
         loaders: [
           {
@@ -174,7 +177,8 @@ module.exports = {
     alias: {
       components: path.resolve(__dirname, 'src/components'),
       constants: path.resolve(__dirname, 'consts'),
-      images: path.resolve(__dirname, 'src/img'),
+      images: path.resolve(__dirname, 'staticdata/img'),
+      video: path.resolve(__dirname, 'staticdata/video'),
     },
     modules: [
       path.resolve(__dirname, 'src'),
@@ -198,3 +202,4 @@ module.exports = {
     inline: true,
   },
 };
+
