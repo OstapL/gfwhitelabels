@@ -38,9 +38,10 @@ section.create-company.container.m-b-85
               span.color-red *
             .col-xl-9
               .prefix_input_prefix
-                span.form-control
+                //span.form-control
                   | https://
                   | #{ window.location.host }/
+                input(value=window.location.origin disabled="disabled").form-control
               .prefix_input_field
                 -
                   pug_html += app.fields.fieldText('slug', {
