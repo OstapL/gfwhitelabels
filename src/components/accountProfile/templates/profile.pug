@@ -200,7 +200,8 @@
                             type="checkbox"
                             id="accredited_investor_1m"
                             name="accredited_investor_1m"
-                            value='1'
+                            data-unchecked-value="0"
+                            value="1"
                             checked=!!user.accredited_investor_1m
                           ).col-xl-1.investor-1m.investor-item-checkbox
                           span.font-weight-normal.col-xl-10.p-l-0
@@ -210,7 +211,8 @@
                             type="checkbox"
                             name="accredited_investor_200k"
                             id="accredited_investor_200k"
-                            value='1'
+                            data-unchecked-value="0"
+                            value="1"
                             checked=!!user.accredited_investor_200k
                           ).col-xl-1.investor-200k.investor-item-checkbox
                           span.font-weight-normal.col-xl-10.p-l-0 I am an Accredited Investor because my annual income exceeds $200,000 or my joint annual income with my spouse exceeds $300,000 for each of the past two (2) years and expect the same this year
@@ -219,7 +221,8 @@
                             type="checkbox"
                             name="accredited_investor_5m"
                             id="accredited_investor_5m"
-                            value='1'
+                            data-unchecked-value="0"
+                            value="1"
                             checked=!!user.accredited_investor_5m
                           ).col-xl-1.investor-entity.investor-item-checkbox
                           span.font-weight-normal.col-xl-10.p-l-0 I am an Accredited Investor because I am authorized to invest on behalf of an entity with at least $5M in assets or an entity where all of the owners are Accredited Investors.
@@ -228,7 +231,8 @@
                             type="checkbox"
                             name="accredited_investor_poor"
                             id="accredited_investor_poor"
-                            value='1'
+                            data-unchecked-value="0"
+                            value="1"
                             checked=user.accredited_investor_poor
                           ).col-xl-1.investor-risk-agree.investor-item-checkbox
                           span.font-weight-normal.col-xl-10.p-l-0 I am an Accredited Investor because I am authorized to invest on behalf of a trust with at least $5M in assets and I acknowledge that I have sufficient knowledge to evaluate the merits and risks of private offerings.
@@ -238,6 +242,7 @@
                               type="checkbox"
                               checked=!user.accredited_investor_choice
                               name="accredited_investor_choice"
+                              data-unchecked-value="1"
                               value="0"
                             ).col-xl-1.investor-risk-agree#not-qualify
                             span.font-weight-normal.col-xl-11.p-l-0 I do not qualify.
