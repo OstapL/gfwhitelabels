@@ -795,8 +795,9 @@ section.formc-review
             u Valuation of the Securities
           p.pb10.text-indent The offering price of the securities in this Offering has been established by the Company and does not necessarily bear any specific relation to the assets, book value or potential earnings of the Company or any other recognized criteria of value. The Shares have not been registered under the Securities Exchange Act of 1934 and have not been traded or quoted on any exchange or quotation system. There is no public market in which shareholders may sell their Shares, and there can be no assurance given that such a market will ever develop. The securities offered hereby are restricted by law and the ability to transfer and interests in the Shares is severely limited.
           p.pb10.text-indent Method by which the offered securities are valued:
-          p.p-l-2.pb10
-            +frField('campaign.valuation_determination', 'select')
+          if values.campaign.valuation_determination != 2
+            p.p-l-2.pb10
+              +frField('campaign.valuation_determination', 'select')
           p.p-l-2.pb10
             if values.campaign.valuation_determination == 2
               +frField('campaign.valuation_determination_other', 'text')
