@@ -20,7 +20,7 @@ include fields_final_review.pug
 
 section.formc-review
   .container
-    .col-lg-3.sticky-side-menu
+    .col-xl-3.col-lg-3.p-xs-0.sticky-side-menu
       .page_title.border-bottom.mb25
         h4.text-uppercase.dosis TABLE OF CONTENTS
       ul.list-unstyled.m-b-1.custom
@@ -66,10 +66,10 @@ section.formc-review
       .col-lg-12.text-xs-center.m-t-1.no-print
         a(data-toggle="modal" data-target="#formc_review_popup" href="#formc_review_popup").btn.btn-primary submit Form C
 
-      .col-lg-12.text-xs-center.m-t-1.no-print
+      .col-lg-12.text-xs-center.m-t-1.m-b-3.no-print
         a(href=app.config.esignServer + "/final-review/" + formcId).btn.btn-primary export in pdf
-
-    .col-xl-9
+      .clear
+    .col-xl-9.col-lg-9.p-xs-0
       section.warning-formc-review.m-b-3
         .warning-block
           i.fa.fa-exclamation-triangle 
