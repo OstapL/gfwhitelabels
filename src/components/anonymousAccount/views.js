@@ -264,9 +264,17 @@ module.exports = {
         '<section class="reset">' +
           '<div class="container">' +
             '<div class="col-lg-12">' +
-              '<h2 class="dosis text-uppercase text-sm-center text-xs-center m-t-85">' +
-                'Please check your email for instructions. ' +
+              '<h2 class="text-uppercase text-sm-center text-xs-center m-t-85 m-b-2">' +
+                'reset password' +
               '</h2>' +
+              '<h3 class="font-weight-light m-t-0 text-xs-center"> Don\'t worry, you\'ll be up and running in seconds!</h3>' +
+              '<h2 class="text-xs-center m-b-1 font-weight-light m-t-3"> ' +
+                '<div class="icon-in-circle align-middle">' +
+                  '<i class="fa fa-paper-plane-o" aria-hidden="true"></i>' +
+                '</div>' +
+                'Email sent successfully' +
+              '</h2>' +
+              '<h3 class="font-weight-light m-t-2 m-b-0 text-xs-center">We sent you an email with instructions on how to reset your password</h3>' +
             '</div>' +
           '</div>' +
         '</section>'
