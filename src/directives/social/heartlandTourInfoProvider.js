@@ -16,7 +16,7 @@ class HeartlandInfoProvider extends ShareInfoProvider {
     this.places = [
       'New York, New York',
       'Portland, Maine',
-      'Boston, Massachusetts',
+      'Boston / Worcester, Massachusetts',
       'Jacksonville, Florida',
       'Chattanooga, Tennessee',
       'Waterloo, Iowa',
