@@ -3,8 +3,13 @@
     border: solid 1px $small-text
     width: 100%
     min-height: 950px
-    padding: 50px 65px
+    padding: rem(50) rem(65)
     position: relative
+    @media only screen and (max-width : 991px)
+      padding: rem(50) rem(30)
+    @media only screen and (max-width : 575px)
+      padding: rem(30) rem(15)
+       
     .top-intro
       color: $small-text
     .page-namder
