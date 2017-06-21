@@ -64,6 +64,22 @@ function hideOtherPopovers(popoverElement) {
   });
 }
 
+function scrollToTopHandler() {
+  function showScrollToTop() {
+    const $w = $(window);
+    const windowTop = $w.scrollTop();
+    return windowTop >= $w.height();
+  }
+
+  const scrollToTopElem = document.getElementById('scroll-to-top').parentNode;
+
+  if (showScrollToTop()) {
+    scrollToTopElem.classList.remove('collapse');
+  } else {
+    scrollToTopElem.classList.add('collapse');
+  }
+}
+
 const popoverTemplate = '<div class="popover  divPopover"  role="tooltip"><span class="popover-arrow"></span> <h3 class="popover-title"></h3> <span class="icon-popover"><i class="fa fa-info-circle" aria-hidden="true"></i></span> <span class="popover-content"> XXX </span></div>';
 
 function initPopover(elem, options={}) {
@@ -93,6 +109,7 @@ $(document).ready(function () {
     scrollLogoHandler(e);
     // scrollMenuItemsHandler(e);
     scrollAnimateHandler(e);
+    scrollToTopHandler(e);
   });
 
   //attach global event handlers
@@ -310,6 +327,7 @@ $(document).ready(function () {
 
   $('#page').on('click', '.showVideoModal', (e) => app.helpers.video.showVideoModal(e));
 
+  $('#scroll-to-top').on('click', e => $('body').scrollTo());
 });
 
 $.fn.scrollTo = function (padding=0) {
