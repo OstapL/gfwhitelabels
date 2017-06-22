@@ -228,9 +228,13 @@ class CropperDropzone {
     '</div>';
     this.element = document.createRange().createContextualFragment(this.element).firstChild;
 
-    document.querySelectorAll('.cropModal').forEach((el, i) => app.utils.removeElement(el));
+    document.querySelectorAll('.cropModal').forEach((el, i) => {
+      el.remove();
+    });
     /*
-    app.utils.removeElement(attacheTo.querySelector('.cropModal'));
+    if(attacheTo.querySelector('.cropModal') !== null) {
+      attacheTo.querySelector('.cropModal').remove();
+    }
     */
     attacheTo.appendChild(this.element)
 

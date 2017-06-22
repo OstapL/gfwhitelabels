@@ -162,8 +162,12 @@ class Formc {
   updateMenu(progress) {
     Object.keys(progress).forEach((k) => {
       let v = progress[k];
+      var el = null;
       if (v == false) {
-        app.utils.removeElement(document.querySelector('#menu_f_' + k + ' .icon-check'));
+        el = document.querySelector('#menu_f_' + k + ' .icon-check');
+        if(el != null) {
+          el.remove();
+        }
       } else {
         if(document.querySelector('#menu_f_' + k + ' .icon-check') == null) {
           document.querySelector('#menu_f_' + k).innerHTML += ' <div class="icon-check"><i class="fa fa-check-circle-o"></i></div>';
@@ -173,4 +177,4 @@ class Formc {
   }
 }
 
-module.exports = Formc;
+module.exports = Formc
