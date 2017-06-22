@@ -29,8 +29,10 @@ html(lang="en")
     div.loader_overlay
       div.loader Loading...
 
-    div(style="position: fixed; right: 50px; bottom: 100px; border: 2px solid green; width: auto; z-index: 9999; background-color: white; padding: 10px 25px;").collapse
-      a(href="#")#scroll-to-top Scroll to top
+    div.scrolling-top.collapse.animated.fadeIn
+      a(href="#")#scroll-to-top
+        i.fa.fa-caret-up
+        span.text Go up
 
     // Navigation panel
     header.header
