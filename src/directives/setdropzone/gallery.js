@@ -63,7 +63,7 @@ class GalleryElement extends imageDropzone.ImageElement {
       let indexFile = this.file.data.indexOf(this.file.data.filter((el) => {return fileId == el.id})[0]);
       this.file.data.splice(indexFile, 1);
       this.save().then(() => {
-        imageRender.element.remove()
+        app.utils.removeElement(imageRender.element);
         delete this.file.data[index];
         if(imageRender.options.onSaved) {
           imageRender.options.onSaved(this);
@@ -74,7 +74,7 @@ class GalleryElement extends imageDropzone.ImageElement {
       if(xhr.status == 503) {
         let indexFile = this.file.data.indexOf(this.file.data.filter((el) => {return fileId == el.id})[0]);
         this.file.data.splice(indexFile, 1);
-        this.save().then(() => imageRender.element.remove());
+        this.save().then(() => app.utils.removeElement(imageRender.element));
       }
     });
   }
