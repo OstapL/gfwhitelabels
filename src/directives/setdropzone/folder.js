@@ -61,13 +61,13 @@ class FolderElement extends fileDropzone.FileElement {
     this.files[index].file.delete().done(() => {
       let indexFile = this.file.data.indexOf(this.file.data.filter((el) => {return fileId == el.id})[0]);
       this.file.data.splice(indexFile, 1);
-      this.save().then(() => imageRender.element.remove());
+      this.save().then(() => app.utils.removeElement(imageRender.element));
     }).fail((xhr, error) => {
       // If file was already deleted in filer - just update model
       if(xhr.status == 503) {
         let indexFile = this.file.data.indexOf(this.file.data.filter((el) => {return fileId == el.id})[0]);
         this.file.data.splice(indexFile, 1);
-        this.save().then(() => imageRender.element.remove());
+        this.save().then(() => app.utils.removeElement(imageRender.element));
       }
     });
   }

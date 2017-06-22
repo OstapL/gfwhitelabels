@@ -28,7 +28,21 @@ class App {
     this.utils = {};
     this.utils.isBoolean = function(val) {
       return val == 0 || val == 1 || val == true || val == false;
-    }
+    };
+
+    //this is IE-compatible removing element from DOM
+    this.utils.removeElement = (element) => {
+      if (!element)
+        return;
+
+      if (element.remove)
+        return element.remove();
+
+      if (element.parentElement && element.parentElement.removeChild)
+        return element.parentElement.removeChild(element);
+
+      console.error('Element is not removed');
+    };
 
     return this;
   }

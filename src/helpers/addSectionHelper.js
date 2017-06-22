@@ -43,7 +43,7 @@ module.exports = {
 
         if($('.' + sectionName + ' .delete-section-container').length > 1) {
           $('.' + sectionName + ' .index_' + index).remove();
-          target.offsetParent.remove();
+          app.utils.removeElement(target.offsetParent);
         } else {
           $('.' + sectionName + ' .index_' + index + ' input').val('');
           $('.' + sectionName + ' .index_' + index + ' textarea').val('');
