@@ -327,13 +327,13 @@ $(document).ready(function () {
 
   $('#page').on('click', '.showVideoModal', (e) => app.helpers.video.showVideoModal(e));
 
-  $('#scroll-to-top').on('click', e => $('body').scrollTo());
+  $('#scroll-to-top').on('click', e => $('body').scrollTo(0, 350));
 });
 
-$.fn.scrollTo = function (padding=0) {
+$.fn.scrollTo = function (padding=0, duration='fast') {
   $('html, body').animate({
     scrollTop: $(this).offset().top - padding + 'px',
-  }, 'fast');
+  }, duration);
   return this;
 };
 
