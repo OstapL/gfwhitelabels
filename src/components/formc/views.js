@@ -421,7 +421,7 @@ module.exports = {
         then((data) => {
           let index = this.model.team_members.findIndex((el) => { return el.user_id == userId });
           this.model.team_members.splice(index, 1);
-          app.utils.removeElement(target.parentElement.parentElement);
+          target.parentElement.parentElement.remove()
           /*
            * ToDo
            * Create right notification error

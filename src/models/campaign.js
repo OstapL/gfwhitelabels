@@ -170,7 +170,9 @@ class Campaign {
       let el = null;
       if(v == false) {
         el = document.querySelector('#menu_c_' + k + ' .icon-check');
-        app.utils.removeElement(el);
+        if(el != null) {
+          el.remove();
+        }
       } else {
         if(k != 'perks') {
           complited ++;

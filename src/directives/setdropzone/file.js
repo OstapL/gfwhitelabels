@@ -23,7 +23,9 @@ class FileElement {
     //
 
     /*
-    app.utils.removeElement(this.element);
+    if(this.element !== null) {
+      this.element.remove();
+    }
     */
 
     this.template = this.getTemplate(); 
@@ -161,7 +163,10 @@ class FileDropzone {
 
       uploadprogress: function (file, progress, bytesSend) {
         let errorMessages = this.element.querySelector('.help-block');
-        app.utils.removeElement(errorMessages);
+
+        if(errorMessages) {
+          errorMessages.remove();
+        }
 
         $(this.element).find('.uploading').removeClass('collapse').show().css('z-index', 999);
       },
