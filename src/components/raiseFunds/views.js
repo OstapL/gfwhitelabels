@@ -432,7 +432,7 @@ module.exports = {
       const img = $videoContainer.find('img')[0];
 
       if (!e.target.value) {
-        img.src = require('images/default/255x153.png');
+        img.src = require('images/default/default-video.png');
         return;
       }
 
@@ -450,12 +450,12 @@ module.exports = {
     _updateYoutubeThumbnail(img, videoID) {
       img.src = videoID
         ? '//img.youtube.com/vi/' + videoID + '/0.jpg'
-        : require('images/default/255x153.png');
+        : require('images/default/default-video.png');
     },
 
     _updateVimeoThumbnail(img, videoID) {
       if (!videoID) {
-        img.src = require('images/default/255x153.png');
+        img.src = require('images/default/default-video.png');
         return;
       }
 
@@ -469,7 +469,7 @@ module.exports = {
         img.src = response[0].thumbnail_large;
       }).fail((err) => {
         console.error('Failed to load thumbnail from vimeo');
-        img.src = require('images/default/255x153.png');
+        img.src = require('images/default/default-video.png');
       });
     },
 
