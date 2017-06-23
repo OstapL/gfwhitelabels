@@ -519,10 +519,6 @@ module.exports = {
 
       this.model.campaign.expiration_date = new Date(this.model.campaign.expiration_date);
 
-      //sort perks asc
-      if (this.model.campaign.perks && this.model.campaign.perks.length)
-        this.model.campaign.perks.sort((p1, p2) => p1.amount - p2.amount);
-
       this.fields.personal_information_data.schema.country = _.extend(this.fields.personal_information_data.schema.country, {
         type: 'select',
         validate: {
@@ -857,12 +853,16 @@ module.exports = {
     updatePerks(amount) {
       function updatePerkElements($elms, amount) {
         $elms.removeClass('active').find('i.fa.fa-check').hide();
-        $elms.each((idx, el) => {
-          if(parseInt(el.dataset.amount) <= amount) {
-            $(el).addClass('active').find('i.fa.fa-check').show();
-            return false;
-          }
+        let filteredPerks = _($elms).filter(el =>  {
+          const perkAmount = parseInt(el.dataset.amount);
+          return perkAmount <= amount;
         });
+
+        let activePerk = _.last(filteredPerks);
+
+        if (activePerk) {
+          $(activePerk).addClass('active').find('i.fa.fa-check').show();
+        }
       }
 
       updatePerkElements($('.invest-perks-mobile .perk'), amount);
