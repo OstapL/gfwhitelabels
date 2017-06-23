@@ -519,10 +519,6 @@ module.exports = {
 
       this.model.campaign.expiration_date = new Date(this.model.campaign.expiration_date);
 
-      //sort perks asc
-      if (this.model.campaign.perks && this.model.campaign.perks.length)
-        this.model.campaign.perks.sort((p1, p2) => p1.amount - p2.amount);
-
       this.fields.personal_information_data.schema.country = _.extend(this.fields.personal_information_data.schema.country, {
         type: 'select',
         validate: {
