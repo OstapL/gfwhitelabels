@@ -69,6 +69,14 @@ module.exports = {
       }
   },
 
+  ensureLinkProtocol(link, https=false) {
+    if (!link)
+      return link;
+
+    let protocol = https ? 'https://' : 'http://';
+    return protocol + link.replace(/http(s?)\:\/\//, '');
+  },
+
   getWebsiteUrl(href) {
     var l = document.createElement("a");
     l.href = href;
@@ -93,5 +101,12 @@ module.exports = {
     return '$' + (amount / 1000000000).toFixed(2) + 'MM';
   },
 
+  formatMoneyValue(e) {
+    let val = parseInt(e.target.value.replace(/[\$\,]/g, ''));
+    if (val) {
+      e.target.value = '$' + val.toLocaleString('en-US');
+      e.target.dataset.currentValue = val;
+    }
+  },
 
 };

@@ -1,15 +1,12 @@
-const validation = require('components/validation/validation.js');
 
-const helpers = {
-  campaign: require('components/campaign/helpers.js'),
-};
-
-const moment = require('moment');
-
-const FINANCIAL_INFORMATION = require('consts/financialInformation.json');
+const InvestmentModel = require('src/models/investment.js');
+// ToDo
+// Refactor, this consts shouden't be here
+const FEES = require('consts/raisecapital/companyFees.json');
 
 import 'bootstrap-slider/dist/bootstrap-slider';
 import 'bootstrap-slider/dist/css/bootstrap-slider.css';
+
 
 module.exports = {
   profile: Backbone.View.extend(_.extend({
@@ -17,17 +14,19 @@ module.exports = {
     urlRoot: app.config.authServer + '/rest-auth/data',
     doNotExtendModel: true,
     events: _.extend({
-      'click #saveAccountInfo': 'saveAccountInfo',
+      'click #saveAccountInfo': api.submitAction,
       // 'click #saveFinancialInfo': api.submitAction,
       'change #not-qualify': 'changeQualify',
       'change .investor-item-checkbox': 'changeAccreditedInvestorItem',
-      'change #twitter,#facebook,#instagram,#linkedin': 'appendHttpsIfNecessary',
-
-      // 'change input[name=accredited_investor]': 'changeAccreditedInvestor',
-    }, app.helpers.phone.events, app.helpers.dropzone.events, app.helpers.yesNo.events),
+    },
+    app.helpers.phone.events,
+    app.helpers.yesNo.events,
+    app.helpers.social.events,
+    ),
 
     initialize(options) {
       this.activeTab = options.activeTab;
+      this.model = options.model.data;
 
       this.fields = options.fields;
 
@@ -36,18 +35,26 @@ module.exports = {
       });
 
       this.fields.image_image_id = _.extend(this.fields.image_image_id, {
+        templateDropzone: 'profileDropzone.pug',
+        defaultImage: require('images/default/Default_photo.png'),
+        onSaved: (data) => {
+          app.user.updateImage(data.file);
+        },
         crop: {
-          control: {
+          control:  {
             aspectRatio: 1 / 1,
           },
-          cropper: {
-            cssClass: 'img-profile-crop',
-            preview: true,
-          },
           auto: {
-            width: 600,
-            height: 600,
+            width: 300,
+            height: 300,
           },
+          resize: {
+            width: 50,
+            height: 50,
+          },
+          cssClass: 'img-profile-crop',
+          template: 'withpreview',
+          templateImage: 'profileImage.pug'
         },
       });
 
@@ -164,18 +171,13 @@ module.exports = {
           user: this.model,
           company: app.user.get('company'),
           fields: this.fields,
+          view: this
         })
       );
 
       this.el.querySelector('#saveFinancialInfo').addEventListener('click', (e) => { api.submitAction.call(this, e)});
 
       this._initSliders();
-
-      setTimeout(() => {
-        this.createDropzones();
-      }, 1000);
-
-      this.onImageCrop();
 
       this.cityStateArea = this.$('.js-city-state');
       this.cityField = this.$('.js-city');
@@ -187,45 +189,18 @@ module.exports = {
 
     changeAccreditedInvestorItem(e) {
       let $target = $(e.target);
-      let name = $target.data('name');
       let checked = $target.prop('checked');
-      this.$('input[name=' + name + ']').val(checked);
-      if (checked) {
-        this.$('#not-qualify').prop('checked', false).change();
-      }
+
+      if (checked)
+        this.$('#not-qualify').prop('checked', false);
     },
 
     changeQualify(e) {
       let $target = $(e.target);
-      if ($target.prop('checked')) {
-        this.$('.investor-item-checkbox').prop('checked', false).change();
-
-        this.$('input[name=accredited_investor_choice]').val(false);
-      } else {
-        this.$('input[name=accredited_investor_choice]').val(true);
+      const notQualify = $target.prop('checked');
+      if (notQualify) {
+        this.$('.investor-item-checkbox').prop('checked', false);
       }
-    },
-
-    onImageCrop(name) {
-      name = name || 'image_image_id';
-      let dataFieldName = this._getDataFieldName(name);
-      let data = this.model[dataFieldName][0];
-      let url = data && data.urls ? data.urls[0] : null;
-      if (url) {
-        $('.user-info-name > span')
-          .empty()
-          .append('<img src="' + url + '" id="user-thumbnail"' + ' class="img-fluid img-circle">');
-      }
-
-    },
-
-    onImageDelete(name) {
-      $('.user-info-name > span').empty().append('<i class="fa fa-user">');
-    },
-
-    saveInfo(e) {
-      let data = _.pick(this.model, ['image_image_id', 'image_data']);
-      return api.submitAction.call(this, e, data);
     },
 
     appendHttpsIfNecessary(e) {
@@ -246,10 +221,10 @@ module.exports = {
         }
       });
       this.$('.help-block').remove();
-      if (!validation.validate(fields, data)) {
+      if (!app.validation.validate(fields, data)) {
         e.preventDefault();
 
-        _(validation.errors).each((errors, key) => {
+        _(app.validation.errors).each((errors, key) => {
           validation.invalidMsg(this, key, errors);
         });
 
@@ -317,7 +292,7 @@ module.exports = {
       this.cityStateArea.text('City/State');
       this.cityField.val('');
       this.stateField.val('');
-      validation.invalidMsg(this, 'zip_code', 'Sorry your zip code is not found');
+      app.validation.invalidMsg(this, 'zip_code', 'Sorry your zip code is not found');
     },
 
     _updateUserInfo() {
@@ -353,7 +328,11 @@ module.exports = {
 
     },
 
-  }, app.helpers.phone.methods, app.helpers.dropzone.methods, app.helpers.yesNo.methods)),
+  },
+    app.helpers.phone.methods,
+    app.helpers.yesNo.methods,
+    app.helpers.social.methods,
+  )),
 
   changePassword: Backbone.View.extend({
     urlRoot: app.config.authServer + '/rest-auth/password/change',
@@ -394,25 +373,38 @@ module.exports = {
     template: require('./templates/investorDashboard.pug'),
     el: '#content',
     events: {
-      'click .cancel-investment': 'cancelInvestment',
+      'submit .cancelInvestment': 'cancelInvestment',
       'click .agreement-link': 'openAgreement',
       'click .financial-docs-link': 'showFinancialDocs',
     },
 
     initialize(options) {
       this.fields = options.fields;
+      this.fields.cancelled_reason.label = 'What is the main reason for your cancellation?';
+      this.fields.feedback.label = 'Do you have any suggestions to improve our platform?';
 
-      _.each(this.model.data, helpers.campaign.initInvestment);
+      _.each(this.model.data, (investment, idx) => {
+        this.model.data[idx] = new InvestmentModel(investment, this.fields);
+      });
 
       this.snippets = {
-        investment: require('./templates/investment.pug'),
+        investment: require('./templates/snippets/investment.pug'),
+        creditSection: require('./templates/snippets/creditSection.pug'),
       };
+
+      //this is auth cookie for downloadable files
+      app.cookies.set('token', app.user.data.token, {
+        domain: '.' + app.config.domainUrl,
+        expires: 1000 * 60 * 60 * 24 * 30 * 12,
+        path: '/',
+      });
     },
 
     render() {
       this.$el.html(this.template({
         investments: this.model.data,
         snippets: this.snippets,
+        fields: this.fields,
       }));
     },
 
@@ -432,11 +424,11 @@ module.exports = {
           {
             mime: 'application/pdf',
             name: 'Subscription Agreement.pdf',
-            urls: [subscriptionAgreementLink],
+            urls: { origin: subscriptionAgreementLink },
           }, {
             mime: 'application/pdf',
             name: 'Participation Agreement.pdf',
-            urls: [participationAgreementLink],
+            urls: { origin: participationAgreementLink },
           },
         ],
       };
@@ -472,6 +464,19 @@ module.exports = {
         i.campaign.amount_raised -= investment.amount;
         this.$('[data-investmentid=' + i.id + ']').replaceWith(this.snippets.investment(i));
       });
+
+      //update available credit section
+      if (app.user.get('days_left') > 0 && investment.comission < FEES.fees_to_investor) {
+        let credit = app.user.get('credit');
+        let creditReturn = FEES.fees_to_investor - investment.comission;
+        credit += creditReturn;
+        app.user.set('credit', credit)
+        let $creditSection = this.$('.credit-investor');
+        if ($creditSection.length)
+          $creditSection.html(this.snippets.creditSection());
+        else
+          this.$('.investor-dashboard').before(this.snippets.creditSection());
+      }
     },
 
     //TODO: sort investments in dom on historical tab after cancel investment
@@ -486,15 +491,20 @@ module.exports = {
 
       let investment = this._findInvestment(id);
 
-      if (!investment)
+      if (!investment) {
+        $target.closest('.modal').modal('hide');
         return console.error('Investment doesn\'t exist: ' + id);
+      }
 
-      if (!confirm('Are you sure?'))
-        return false;
+      let data = $target.serializeJSON();
 
-      api.makeRequest(app.config.investmentServer + '/' + id + '/decline', 'PUT').done((response) => {
-        investment.status = FINANCIAL_INFORMATION.INVESTMENT_STATUS.CancelledByUser;
-        helpers.campaign.initInvestment(investment);
+      if(data.rating == undefined) {
+        data.rating = 0;
+      }
+
+      $target.closest('.modal').modal('hide');
+      api.makeRequest(app.config.investmentServer + '/' + id + '/decline', 'PUT', data).done((response) => {
+        investment.deposit_cancelled_by_investor = true;
 
         $target.closest('.one_table').remove();
 
@@ -527,7 +537,7 @@ module.exports = {
 
         this.onCancel(investment);
       }).fail((err) => {
-        alert(err.error);
+        app.dialogs.error(err.error);
       });
     },
   }),
@@ -619,6 +629,13 @@ module.exports = {
       this.model = this.company;
       this.campaign = options.campaign;
       this.formc = options.formc;
+
+      //this is auth cookie for downloadable files
+      app.cookies.set('token', app.user.data.token, {
+        domain: '.' + app.config.domainUrl,
+        expires: 1000 * 60 * 60 * 24 * 30 * 12,
+        path: '/',
+      });
     },
 
     render() {
@@ -633,26 +650,17 @@ module.exports = {
 
       this.initComments();
 
-      try {
-        let script = document.createElement('script');
-        script.type = 'text/javascript';
-        script.src = '/js/graph/graph.js';
-        $(document.head).append(script);
-
-        script = document.createElement('script');
-        script.type = 'text/javascript';
-        script.src = '/js/graph_data.js';
-        $(document.head).append(script);
-      } catch (err) {
-        console.log(err);
-      }
+      require.ensure(['src/js/graph/graph.js', 'src/js/graph_data.js'], () => {
+        require('src/js/graph/graph.js');
+        require('src/js/graph_data.js');
+      }, 'graph_chunk');
 
       return this;
     },
 
     cancelCampaign(e) {
       e.preventDefault();
-      alert('Please, call us 646-759-8228');
+      app.dialogs.info('Please, call us 646-759-8228');
     },
 
     initComments() {

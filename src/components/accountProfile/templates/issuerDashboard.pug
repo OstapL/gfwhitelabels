@@ -1,22 +1,25 @@
 | !{ app.breadcrumbs('issuer dashboard', '', [ ['Home', '/'], ['issuer dashboard', ''],])}
-- var campaignHelpers = require('components/campaign/helpers.js');
-- var formcLinks = require('../../campaign/helpers.js').formcLinks
-- var moment = require('moment');
-- var socialDirective = require('directives/social/index.js');
+-
+  var formcLinks = require('../../campaign/helpers.js').formcLinks
+  var moment = require('moment');
+  var socialDirective = require('directives/social/index.js');
+  var CampaignInfoProvider = require('directives/social/CampaignInfoProvider.js');
+
+  var infoProvider = new CampaignInfoProvider(this.company);
+  var directiveKey = 'issuerDashboard';
 
 section.issuer-dashbord-top
   .container
     .row
-      .col-md-4
+      .col-xl-4.col-lg-4.col-md-12.text-xs-center.text-sm-center.text-md-center.text-lg-left.text-xl-left
         .img_under_text
-          img(src=campaignHelpers.getImageCampaign(campaign) alt="")
+          img(src=campaign.list_image_image_id.getUrl() alt="")
           h2.text-uppercase.dosis.m-t-0 #{company.name}
-          .timer_day #{campaignHelpers.daysLeft(campaign.expiration_date)} Days Left
+          .timer_day #{campaign.daysLeft(company.approved_date)} Days Left
         .share-block.d-inline-block.share
-          | !{ socialDirective.render(this.company) }
-
-      .col-md-2.col-sm-6.col-xs-6
-        a(href="").dashboard-stat
+          | !{ socialDirective.render(directiveKey, infoProvider) }
+      .col-xl-2.col-lg-2.col-md-3.col-sm-6.col-xs-6
+        .dashboard-stat
           .visual
             i.fa.fa-bar-chart
           .details
@@ -26,8 +29,8 @@ section.issuer-dashbord-top
                 data-value=campaign.amount_raised) $#{ campaign.amount_raised }
             .desc Amount Raised
 
-      .col-md-2.col-sm-6.col-xs-6
-        a(href="").dashboard-stat.dashboard-stat-v2.grey
+      .col-xl-2.col-lg-2.col-md-3.col-sm-6.col-xs-6
+        .dashboard-stat.dashboard-stat-v2.grey
           .visual
             i.fa.fa-briefcase
           .details
@@ -35,10 +38,10 @@ section.issuer-dashbord-top
               span(
                 data-counter="counterup"
                 data-value=company.number_of_investors) #{company.number_of_investors.toLocaleString('en-US')}
-            .desc Number of Investors
+            .desc Number of Investments
 
-      .col-md-2.col-sm-6.col-xs-6
-        a(href="").dashboard-stat.dashboard-stat-v2.grey
+      .col-xl-2.col-lg-2.col-md-3.col-sm-6.col-xs-6
+        .dashboard-stat.dashboard-stat-v2.grey
           .visual
             i.fa.fa-users
           .details
@@ -48,8 +51,8 @@ section.issuer-dashbord-top
                 data-value=0) #{ company.total_views } 
             .desc Page Views
 
-      .col-md-2.col-sm-6.col-xs-6
-        a(href="").dashboard-stat.dashboard-stat-v2.grey
+      .col-xl-2.col-lg-2.col-md-3.col-sm-6.col-xs-6
+        .dashboard-stat.dashboard-stat-v2.grey
           .visual
             i.fa.fa-comments
           .details
@@ -59,19 +62,17 @@ section.issuer-dashbord-top
                 data-value=0).interactions-count 0
             .desc New Interactions
 
-      .col-md-7.col-sm-10.p-r-0.col-xs-10.hidden-xs-down
+      .col-xl-7.col-lg-7.col-md-10.col-sm-10.p-r-0.col-xs-10.hidden-xs-down
         .tpl-progress
-          - 
-            var percentage_raised = campaignHelpers.daysLeftPercentage(company);
-            if(percentage_raised > 100) 
-              percentage_raised = 100;
+          -
+            var daysPassedPercents = campaign.daysPassedPercentage(company.approved_date);
           progress(
-            value=percentage_raised
-            max="100").progress.big_prog #{ percentage_raised }%
+            value=daysPassedPercents
+            max="100").progress.big_prog #{ daysPassedPercents }%
           span(
-            style="width:" + percentage_raised + "%").circle_progress
+            style="width:" + daysPassedPercents + "%").circle_progress
             i.fa.fa-circle-o
-          span(style="left:" + percentage_raised + "%").text_position
+          span(style="left:" +  (daysPassedPercents < 1 ? 1 : daysPassedPercents) + "%").text_position
             - var now = new Date();
             .font-weight-bold
               | #{now.toLocaleString('en-US', { month: "short" })} #{ now.getDate() }
@@ -88,11 +89,11 @@ section.issuer-dashbord-top
             p #{ moment(campaign.expiration_date).format('MM/DD/YYYY') }
             span End of campaign
           .clearfix
-      .col-md-1.col-sm-2.col-xs-2.hidden-xs-down
+      .col-xl-1.col-lg-1.col-md-2.col-sm-2.col-xs-2.hidden-xs-down
         .right_fixed_text.text-lg-center
           b #{ app.helpers.format.formatAmount(campaign.minimum_raise || campaign.maximum_raise)}
           span Goal
-      .col-md-8.col-sm-12.text-xs-center
+      .col-xl-8.col-lg-8.col-md-12.text-xs-center
         a(href="/" + company.slug).btn-sm.btn.btn-secondary.text-uppercase view Campaign
           i(aria-hidden="true").fa.fa-angle-right
     .col-lg-12.border-bottom-50
@@ -102,21 +103,21 @@ section.investors-dashbord-document
     .row
       .col-xl-12
         h2.text-uppercase documents with growthfountain
-        a(href=formcLinks[company.id] target="_blank").link-1
-          img(src=require('images/lrg_US_Department_of_State35.gif')).img-document.d-inline-block
-          h3.d-inline-block.m-t-0.m-b-0  Form C
+        a(href=formc.link_to_formc target="_blank").link-1
+          img(src=require('images/icons/lrg_US_Department_of_State35.gif')).img-document.d-inline-block
+          h3.d-inline-block.m-t-0.m-b-0.listing  Form C
         br
         a(href=app.config.esignServer + '/pdf-doc/investors/' + formc.id + '/' + 3 target="_blank").link-1
-          h2.d-inline-block.m-t-1.m-b-0
+          h2.d-inline-block.m-t-1.m-b-0.listing
             i.fa.fa-file-pdf-o
-          h3.d-inline-block.m-t-0.m-b-0  Listing Agreement
+          h3.d-inline-block.m-t-0.m-b-0.listing  Listing Agreement
         br
-        a(href=app.config.bucketServer + '/docs/GrowthFountain_Crowdfunding_Success_Checklist.pdf' target="_blank").link-1
+        a(href=require('doc/GrowthFountain_Crowdfunding_Success_Checklist.pdf') target="_blank").link-1
           h2.d-inline-block.m-t-1.m-b-0
             i.fa.fa-file-pdf-o
           h3.d-inline-block.m-t-0.m-b-0  GrowthFountain Crowdfunding Success Checklist
         br
-        a(href=app.config.bucketServer + '/docs/How_to_Run_a_Successful_Crowdfunding_Campaign_MoneyInc.pdf' target="_blank").link-1
+        a(href=require('doc/How_to_Run_a_Successful_Crowdfunding_Campaign_MoneyInc.pdf') target="_blank").link-1
           h2.d-inline-block.m-t-1.m-b-0
             i.fa.fa-file-pdf-o
           h3.d-inline-block.m-t-0.m-b-0  How to Run a Successful Crowdfunding Campaign
@@ -424,4 +425,3 @@ section.danger-zone-dashboard
     .row
       .col-lg-12.m-t-1
         a(href="#").btn.danger-cancel.text-uppercase.cancel-campaign Material change
-

@@ -1,4 +1,29 @@
+const Image = require('models/image.js');
 const YEAR = 1000 * 60 * 60 * 24 * 30 * 12;
+
+const fixImageData = (data) => {
+  if (data.image_data == null ||
+      !Array.isArray(data.image_data)) {
+    return data;
+  }
+
+  if(data.image_data.length == 0) {
+    data.image_data = {};
+    return data;
+  }
+
+  let originData = data.image_data[0];
+  let croppedData = data.image_data[1] || originData;
+
+  data.image_data = originData;
+  data.image_data.urls = {
+    origin: originData.urls ? (originData.urls[0] || '') : '',
+    main: croppedData.urls ? (croppedData.urls[0] || '') : '',
+    '50x50': croppedData.urls ? (croppedData.urls[0] || '') : '',
+  }
+
+  return data;
+};
 
 class User {
   constructor() {
@@ -7,8 +32,9 @@ class User {
     this.formc = null;
 
     this.data = { token: '', id: ''};
-    this.role_data = null;
     this.token = null;
+
+    this.next = null;
   }
 
   get(key) {
@@ -39,29 +65,93 @@ class User {
     return this.data.info || [];
   }
 
+  setFormcPaid(formcID) {
+    if (this.companiesMember.length <= 0)
+      return;
+
+    if (this.formc.id === formcID)
+      this.formc.is_paid = true;
+
+    const companyInfo = _.find(this.companiesMember, companyInfo => companyInfo.formc_id === formcID);
+    if (companyInfo)
+      companyInfo.is_paid = true;
+  }
+
+  updateImage(imageData) {
+    this.data.image_data = imageData;
+    this.data.image_image_id = new Image(
+      app.config.authServer + '/rest-auth/data',
+      this.data.image_data
+    );
+    document.getElementById('user-thumbnail').src = this.data.image_image_id.getUrl('50x50');
+    this.updateLocalStorage();
+  }
+
+  updateLocalStorage() {
+    localStorage.setItem('token', this.data.token);
+    localStorage.setItem('user', JSON.stringify(this.data));
+  }
+
   setData(data, next) {
 
-    if(next === undefined) {
-      next = app.getParams().next ? app.getParams().next : '/';
-    }
+    next = next || this.next || app.getParams().next || '/';
 
-    if(data.hasOwnProperty('token') && data.hasOwnProperty('info')) {
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('user', JSON.stringify(data));
+    this.next = null;
 
-      app.cookies.set('token', data.token, {
-        domain: '.' + app.config.domainUrl,
-        expires: YEAR,
-        path: '/',
+    if(data.hasOwnProperty('token')) {
+      let a = '';
+      if(data.hasOwnProperty('info') == false) {
+        a = api.makeRequest(app.config.authServer + '/info',  'GET'); //.done(() => {
+      }
+      $.when(a).done((responseData) => {
+        if(responseData) {
+          // we need to rerender menu
+          this.data = responseData;
+        } else {
+          this.data = data;
+        }
+        this.updateLocalStorage();
+
+        app.cookies.set('token', data.token, {
+          domain: '.' + app.config.domainUrl,
+          expires: YEAR,
+          path: '/',
+        });
+
+        delete data.token;
+        setTimeout(function() {
+          window.location = next;
+        }, 200);
+      }).fail(() => {
+        this.emptyLocalStorage();
+        setTimeout(function() {
+          window.location = '/account/login?next=' + document.location.pathname;
+        }, 100);
       });
-
-      delete data.token;
-      setTimeout(function() {
-        window.location = next;
-      }, 200);
     } else {
-      alert('no token or additional info providet');
+      app.dialogs.error('no token or additional info provided');
     }
+  }
+
+  updateUserData(data, next) {
+    const infoRequest = data.info ? null : api.makeRequest(app.config.authServer + '/info',  'GET');
+    $.when(infoRequest).done((responseData) => {
+      this.data = _.extend({}, this.data, responseData || data);
+      this.data.image_image_id = new app.models.Image(
+        app.config.authServer + '/rest-auth/data',
+        data.image_data
+      );
+      this.updateLocalStorage();
+      app.profile.render();
+      delete data.token;
+      if (next)
+        setTimeout(() => window.location = next, 100);
+    }).fail(() => {
+      this.emptyLocalStorage();
+      setTimeout(function() {
+        window.location = '/account/login?next=' + document.location.pathname;
+      }, 100);
+    });
   }
 
   emptyLocalStorage() {
@@ -72,46 +162,35 @@ class User {
     this.data = {};
   }
 
-  load() {
-    this.token = localStorage.getItem('token');
-    if (this.token === null) {
-      return app.trigger('userLoaded', { id: '' });
-    } else {
-      const data = JSON.parse(localStorage.getItem('user')) || {};
-      // Check if user have all required data
-      if(data.hasOwnProperty('info') == false || Array.isArray(data.info) == false) {
-        this.emptyLocalStorage();
-        setTimeout(function() {
-          window.location = '/account/login?next=' + document.location.pathname;
-        }, 100);
-        return;
-      }
-
-      this.data = data;
-
-      return app.trigger('userLoaded', data);
-    }
-  }
-
   loadWithPromise() {
     return new Promise((resolve, reject) => {
       this.token = localStorage.getItem('token');
       if (this.token === null)
-        return resolve({ id: '' });
+        return resolve();
 
-      const data = JSON.parse(localStorage.getItem('user')) || {};
-      // Check if user have all required data
-      if (!data.info || !Array.isArray(data.info)) {
+       const data = fixImageData(JSON.parse(localStorage.getItem('user')) || {});
+      //ensure user has all required data.info
+      let infoReq = !data.info || !Array.isArray(data.info)
+        ? api.makeRequest(app.config.authServer + '/info',  'GET')
+        : null;
+
+      $.when(infoReq).then((responseData) => {
+        this.data = responseData || data;
+        this.data.image_image_id = new Image(
+          app.config.authServer + '/rest-auth/data',
+          data.image_data
+        );
+        if (responseData) {
+          this.updateLocalStorage();
+        }
+        return resolve()
+      }).fail(() => {
         this.emptyLocalStorage();
         setTimeout(() => {
           window.location = '/account/login?next=' + document.location.pathname;
         }, 100);
-
-        return resolve(false);
-      }
-
-      this.data = data;
-      return resolve(this.data);
+        return resolve();
+      });
     });
   }
 
@@ -121,58 +200,64 @@ class User {
 
   toJSON() {
     const data = Object.assign({}, this.data, {'companiesMember': this.companiesMember});
+    if(this.data.image_image_id) {
+      data.image_image_id = data.image_image_id.id;
+    }
     return data;
   }
 
-  _initRoles() {
+  getRoles() {
     if (!this.companiesMember || !this.companiesMember.length)
-      return;
+      return [];
 
-    this.role_data = [];
+    const role_data = [];
 
     _.each(this.companiesMember, (data) => {
       let roles = app.helpers.role.extractRoles(data.role);
-      this.role_data.push({
+      role_data.push({
         company: {
           id: data.company_id,
           name: data.company,
+          is_paid: data.is_paid,
         },
         roles: roles,
       });
     });
 
+    return role_data;
   }
 
   getRolesInCompany(company_id) {
-    if (!this.role_data)
-      this._initRoles();
-
-    if (!_.isNumber(company_id))
+    if (!_.isNumber(company_id)) {
       return;
+    }
 
-    return _(this.role_data).find((data) => { return data.company.id == company_id; });
-  }
+    const role_data = this.getRoles();
 
-  getRoles() {
-    if (!this.role_data)
-      this._initRoles();
-
-    return this.role_data;
+    return _(role_data).find((data) => { return data.company.id == company_id; });
   }
 
   ensureLoggedIn(next) {
-    if (this.is_anonymous()) {
-      const pView = require('components/anonymousAccount/views.js');
-      let v = new pView.popupLogin({
-        next: next || window.location.pathname,
-      });
-      v.render();
-      app.hideLoading();
-
-      return false;
+    if (!this.is_anonymous()) {
+      return true;
     }
 
-    return true;
+    this.next = next || (window.location.pathname + window.location.search);
+    require.ensure(['components/anonymousAccount/views.js'], (require) => {
+      const pView = require('components/anonymousAccount/views.js');
+
+      let v = $('#content').is(':empty')
+        ? new pView.signup({
+          el: '#content',
+          model: {},
+        })
+        : new pView.popupLogin({});
+
+      v.render();
+      app.hideLoading();
+    }, 'anonymous_account_chunk');
+
+    return false;
   }
 
   logout() {

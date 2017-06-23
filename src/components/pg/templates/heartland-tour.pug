@@ -1,0 +1,134 @@
+-
+  var socialDirective = require('directives/social/index.js');
+  var HeartlandInfoProvider = require('directives/social/heartlandTourInfoProvider.js');
+  var infoProvider = new HeartlandInfoProvider();
+  var directiveKey = 'heartland-tour';
+
+mixin renderPlaces(places)
+  div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#heartland-tour-modal.modal.fade
+    div(role="document").modal-dialog
+      .modal-content
+        .modal-header
+          button(type="button" data-dismiss="modal" aria-label="Close").close
+            span(aria-hidden="true")
+              i.fa.fa-times
+          h2.text-uppercase.text-xs-center PLEASE CHOOSE YOUR
+            br
+            | LOCATION OF INTEREST
+        .modal-body
+          .container
+            .row.m-b-2
+              .col-xl-10.offset-xl-1.p-x-0
+                .col-xl-6
+                  ul
+                    each place, idx in places
+                      li
+                        a(href=infoProvider.rsvpToAttendInPersonEmail(place)).link-3
+                          i.fa.fa-map-marker
+                          | #{ place }
+                      if idx >= 4
+                        - break;
+                .col-xl-6
+                  ul
+                    each place, idx in places
+                      if (idx <= 4)
+                        - continue;
+                      li
+                        a(href=infoProvider.rsvpToAttendInPersonEmail(place)).link-3
+                          i.fa.fa-map-marker
+                          | #{ place }
+          .modal-footer.m-b-2
+
+
+section.heartland-tour
+  section.height-block-banner.scroll-paralax.no-paralax-mobile.m-t-0.top-baner
+    - var styleString = 'background: url(' + require('images/heartland_tour/heartland-tour.jpg') + ')';
+    div(style=styleString + '; height:70vh').background
+    .center-wrap.container
+      .col-xl-12.p-x-0
+        .top-baner-text.text-xs-right
+          h1.big-h1.text-uppercase The Heartland Tour
+          h3.m-t-0 We’re traveling across country on a quest for exciting companies that need to raise money to grow;
+            br
+            |  from tech startups to the restaurants, bars and bricks & mortar locations across America
+  .how-it-works
+    .container
+      .row
+        .col-xl-12
+          p.text-justify GrowthFountain, in coordination with select credit union and accelerator partners, is on a nationwide search to help businesses raise the capital they need to grow.  Whether you operate a local business, have a startup or the next big idea, if you’re looking to grow and could use financial backing, we can help.
+          h4.text-uppercase.m-t-2 Here’s how it works:
+          p.m-b-1
+            a(href="/company/create").link-3 Apply now
+            |  to create your campaign in advance of the live event.
+          p.m-b-2 At each event:
+          p 
+            .circle.red-circle
+            | We’ll host a fireside chat on stage with the founders of companies raising money
+          p 
+            .circle.white-circle
+            | We will broadcast these live discussions / presentations to thousands of investors online
+          p 
+            .circle.blue-circle
+            | The investors – both at the event and viewing remotely, can invest in real time through their devices
+  .map-apply
+    section.bgi-button-section
+      .background
+        .center-wrap.container.small-button
+          .one-button
+            a(href=infoProvider.nominateYourBusinessEmail()).btn.btn-block.btn-secondary nominate your favorite business and earn $500!
+          .center-logo
+            img(src=require("images/gf_icon.png") alt="")
+          .one-button.two
+            a(href="#heartland-tour-modal" data-toggle="modal" data-target="#heartland-tour-modal").btn.btn-block.btn-secondary RSVP to attend in person!
+          
+    .container
+      .row.all-map
+        .col-xl-8.col-lg-8
+          .map-center
+            .bgi-xs
+              img(src=require("images/heartland_tour/hearlend-map-bgi-mob.png") alt="")
+            video(poster=require("images/heartland_tour/hearlend-map-bgi.jpg") id="bgvid" playsinline autoplay muted loop)
+              source(src=require("video/heartland-tour-video.mp4"))
+            .text-wrap
+              h1.text-uppercase APPLY TODAY TO PARTICIPATE
+                br
+                | IN ONE OF OUR GREAT EVENTS!*
+          p.small.m-b-1.text-xs-center *Companies interested in participated must have a completed campaign and Form C.
+            br
+            | Call us with any questions: 646-759-8228.  Schedule subject to change.
+        .col-xl-4.col-lg-4.city
+          ul
+            each place in infoProvider.places
+              - placeParts = place.split(',');
+              li
+                i.fa.fa-map-marker
+                h3
+                  strong= placeParts[0]
+                    | ,
+                  .grey= placeParts[1]
+          h4.text-uppercase.m-t-2.m-b-2 All events will take place in
+          .calendar
+            i.fa.fa-calendar
+            h4.text-uppercase September
+          p.m-t-2
+            i We’re finalizing dates!
+
+          
+      .row
+        .col-xl-12
+          h2.font-weight-light.m-t-3.m-b-0.text-xs-center Share the Heartland Tour!
+          .share.text-xs-center
+            | !{ socialDirective.render(directiveKey, infoProvider) }
+  .sities
+    section.height-block-banner.scroll-paralax.no-paralax-mobile.sities-section
+      - var styleString = 'background: url(' + require('images/banners/cities.png') + ')';
+      div(style=styleString + '; height:480px').background
+      .center-wrap.container
+        .row
+          .col-xl-12
+            h2.m-t-0  Is your startup or business looking to fundraise?
+            h1.text-uppercase Join GrowthFountain’s Heartland Tour
+          .col-lg-12
+            a(href="/company/create").btn.btn-lg.btn-primary.m-t-2 apply now!
++renderPlaces(infoProvider.places)
+

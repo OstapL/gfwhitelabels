@@ -1,8 +1,12 @@
 const companyFees = require('consts/companyFees.json');
 const typeOfDocuments = require('consts/typeOfDocuments.json');
+const STATUSES = require('consts/raisecapital/companyStatuses.json').STATUS;
 
 const COUNTRIES = require('consts/countries.json');
 const validation = require('components/validation/validation.js');
+
+const CalculatorView = require('./revenueShareCalculator.js');
+
 
 module.exports = {
   list: Backbone.View.extend({
@@ -12,6 +16,11 @@ module.exports = {
       'change select.orderby': 'orderby',
     },
     initialize(options) {
+      let dataClass = [];
+      options.collection.data.forEach((el) => {
+        dataClass.push(new app.models.Company(el));
+      });
+      options.collection.data = dataClass;
       this.collection = options.collection;
     },
 
@@ -73,15 +82,6 @@ module.exports = {
       $(document).off("scroll", this.onScrollListener);
       $(document).on("scroll", this.onScrollListener);
 
-      let params = app.getParams();
-      this.edit = false;
-      if (params.preview == '1' && this.model.owner == app.user.get('id')) {
-        // see if owner match current user
-        this.edit = true;
-        this.previous = params.previous;
-      }
-      this.preview = params.preview ? true : false;
-
       this.companyDocsData = {
         title: 'Financials',
         files: this.model.formc
@@ -90,15 +90,17 @@ module.exports = {
           : []
       };
 
+      if (this.model.ga_id) {
+        app.emitCompanyAnalyticsEvent(this.model.ga_id);
+      }
     },
 
     submitCampaign(e) {
-
       api.makeRequest(
-        app.config.raiseCapitalServer + '/company/' + this.model.id + '/edit',
+        app.config.raiseCapitalServer + '/company/' + this.model.id,
         'GET'
       ).then(function(data) {
-        if(
+        if (
             data.progress.general_information == true &&
             data.progress.media == true &&
             data.progress.specifics == true &&
@@ -201,10 +203,110 @@ module.exports = {
       app.helpers.fileList.show(this.companyDocsData);
     },
 
-    render() {
-      const fancybox = require('components/fancybox/js/jquery.fancybox.js');
-      const fancyboxCSS = require('components/fancybox/css/jquery.fancybox.css');
+    initAsyncUI() {
+      this.initStickyToggle();
+      if (this.model.campaign.security_type == 1)
+        (new CalculatorView.calculator()).render();
 
+      Promise.all([
+        this.initFancyBox(),
+        this.initComments()
+      ]).then(() => {
+        app.hideLoading();
+      });
+    },
+
+    initFancyBox() {
+      return new Promise((resolve, reject) => {
+        const $fancyBox = this.$('.fancybox');
+
+        $fancyBox.on('click', (e) => { e.preventDefault(); return false; });
+
+        require.ensure([
+          'components/fancybox/js/jquery.fancybox.js',
+          'components/fancybox/css/jquery.fancybox.css',
+        ], (require) => {
+          const fancybox = require('components/fancybox/js/jquery.fancybox.js');
+          const fancyboxCSS = require('components/fancybox/css/jquery.fancybox.css');
+
+          $fancyBox.off('click');
+
+          $fancyBox.fancybox({
+            openEffect  : 'elastic',
+            closeEffect : 'elastic',
+
+            helpers : {
+              title : {
+                type : 'inside'
+              }
+            }
+          });
+          resolve();
+        }, 'fancybox_chunk');
+      });
+    },
+
+    initStickyToggle() {
+      var stickyToggle = function(sticky, stickyWrapper, scrollElement) {
+        var stickyHeight = sticky.outerHeight();
+        var stickyTop = stickyWrapper.offset().top;
+        if (scrollElement.scrollTop() >= stickyTop){
+          stickyWrapper.height(stickyHeight);
+          sticky.addClass("is-sticky");
+        }
+        else{
+          sticky.removeClass("is-sticky");
+          stickyWrapper.height('auto');
+        }
+      };
+
+      this.$el.find('[data-toggle="sticky-onscroll"]').each(function() {
+        var sticky = $(this);
+        var stickyWrapper = $('<div>').addClass('sticky-wrapper'); // insert hidden element to maintain actual top offset on page
+        sticky.before(stickyWrapper);
+        sticky.addClass('sticky');
+
+        // Scroll & resize events
+        $(window).on('scroll.sticky-onscroll resize.sticky-onscroll', function() {
+          stickyToggle(sticky, stickyWrapper, $(this));
+        });
+
+        // On page load
+        stickyToggle(sticky, stickyWrapper, $(window));
+      });
+    },
+
+    initComments() {
+      return new Promise((resolve, reject) => {
+        const View = require('components/comment/views.js');
+        const urlComments = app.config.commentsServer + '/company/' + this.model.id;
+        let optionsR = api.makeRequest(urlComments, 'OPTIONS');
+        let dataR = api.makeRequest(urlComments);
+
+        $.when(optionsR, dataR).done((options, data) => {
+          data[0].id = this.model.id;
+          data[0].owner_id = this.model.owner_id;
+
+          let comments = new View.comments({
+            // model: commentsModel,
+            model: data[0],
+            fields: options[0].fields,
+            cssClass: 'offset-xl-2',
+            readonly: this.model.is_approved != STATUSES.VERIFIED,
+          });
+          comments.render();
+
+          if (location.hash && location.hash.indexOf('comment') >= 0) {
+            let $comments = $(location.hash);
+            if ($comments.length)
+              $comments.scrollTo(65);
+          }
+          resolve();
+        }).fail(reject);
+      });
+    },
+
+    render() {
       this.$el.html(
         this.template({
           values: this.model,
@@ -220,58 +322,24 @@ module.exports = {
       });
 
       setTimeout(() => {
-
-        this.$('.fancybox').fancybox({
-          openEffect  : 'elastic',
-          closeEffect : 'elastic',
-
-          helpers : {
-            title : {
-              type : 'inside'
-            }
-          }
-        });
+        this.initAsyncUI();
       }, 100);
 
-      setTimeout(() => {
-        var stickyToggle = function(sticky, stickyWrapper, scrollElement) {
-          var stickyHeight = sticky.outerHeight();
-          var stickyTop = stickyWrapper.offset().top;
-          if (scrollElement.scrollTop() >= stickyTop){
-            stickyWrapper.height(stickyHeight);
-            sticky.addClass("is-sticky");
-          }
-          else{
-            sticky.removeClass("is-sticky");
-            stickyWrapper.height('auto');
-          }
-        };
+      $(window).scroll(function() {
+            var st = $(this).scrollTop() /15;
 
-        this.$el.find('[data-toggle="sticky-onscroll"]').each(function() {
-          var sticky = $(this);
-          var stickyWrapper = $('<div>').addClass('sticky-wrapper'); // insert hidden element to maintain actual top offset on page
-          sticky.before(stickyWrapper);
-          sticky.addClass('sticky');
-
-          // Scroll & resize events
-          $(window).on('scroll.sticky-onscroll resize.sticky-onscroll', function() {
-            stickyToggle(sticky, stickyWrapper, $(this));
+            $(".scroll-paralax .background").css({
+              "transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+              "-o-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+              "-webkit-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+              "-moz-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+              "-ms-transform" : "translate3d(0px, " + st /2 + "%, .01px)"
+              
+            });
           });
-
-          // On page load
-          stickyToggle(sticky, stickyWrapper, $(window));
-        });
-
-        this.initComments();
-
-      }, 1200);
-
       this.$el.find('.perks .col-xl-4 p').equalHeights();
       this.$el.find('.team .auto-height').equalHeights();
       this.$el.find('.card-inverse p').equalHeights();
-      this.$el.find('.modal').on('hidden.bs.modal', function(event) {
-        $(event.currentTarget).find('iframe').attr('src', $(event.currentTarget).find('iframe').attr('src'));
-      });
 
       // fetch vimeo
       $('.vimeo-thumbnail').each(function(elem, idx) {
@@ -294,26 +362,6 @@ module.exports = {
       return this;
     },
 
-    initComments() {
-      const View = require('components/comment/views.js');
-      const urlComments = app.config.commentsServer + '/company/' + this.model.id;
-      let optionsR = api.makeRequest(urlComments, 'OPTIONS');
-      let dataR = api.makeRequest(urlComments);
-
-      $.when(optionsR, dataR).done((options, data) => {
-        data[0].id = this.model.id;
-        data[0].owner_id = this.model.owner_id;
-
-        let comments = new View.comments({
-          // model: commentsModel,
-          model: data[0],
-          fields: options[0].fields,
-          cssClass: 'offset-xl-2',
-        });
-        comments.render();
-      });
-    },
-
     readMore(e) {
       e.preventDefault();
       $(e.target).parent().addClass('show-more-detail');
@@ -327,7 +375,7 @@ module.exports = {
     urlRoot: app.config.investmentServer + '/',
     doNotExtendModel: true,
     events: {
-      'submit form.invest_form': 'submit',
+      'click #submitButton': 'submit',
       'keyup #amount': 'updateAmount',
       'change #amount': 'roundAmount',
       'focusout #amount': 'triggerAmountChange',
@@ -444,13 +492,22 @@ module.exports = {
         amount = Number(amount);
         let min = this.model.campaign.minimum_increment;
         let max = this._maxAllowedAmount;
+        let validationMessage = '';
 
         if (amount < min) {
-          throw 'Sorry, minimum investment is $' + min;
+          validationMessage = 'Sorry, minimum investment is $' + min;
         }
 
         if (amount > max) {
-          throw 'Sorry, your amount is too high, please update your income or change amount';
+          validationMessage = 'Sorry, your amount is too high, please update your income or change amount';
+        }
+
+        if (validationMessage) {
+          setTimeout(() => {
+            this.$amount.popover('show');
+            this.$amount.scrollTo(200);
+          }, 700);
+          throw validationMessage;
         }
 
         return true;
@@ -461,6 +518,10 @@ module.exports = {
       };
 
       this.model.campaign.expiration_date = new Date(this.model.campaign.expiration_date);
+
+      //sort perks asc
+      if (this.model.campaign.perks && this.model.campaign.perks.length)
+        this.model.campaign.perks.sort((p1, p2) => p1.amount - p2.amount);
 
       this.fields.personal_information_data.schema.country = _.extend(this.fields.personal_information_data.schema.country, {
         type: 'select',
@@ -561,6 +622,9 @@ module.exports = {
       }
 
       this.initMaxAllowedAmount();
+
+      if (this.model.ga_id)
+        app.emitCompanyAnalyticsEvent(this.model.ga_id);
     },
 
     render() {
@@ -709,9 +773,16 @@ module.exports = {
         ? Math.min(annualIncome, netWorth) * 0.1
         : Math.min(annualIncome, netWorth) * 0.05;
 
-      maxInvestmentsPerYear = maxInvestmentsPerYear < 2 ? 2 : maxInvestmentsPerYear;
+      maxInvestmentsPerYear = maxInvestmentsPerYear < 2 ? 2.2 : maxInvestmentsPerYear;
 
-      return Math.round((maxInvestmentsPerYear * 1000 - investedPastYear - investedOtherSites));
+      let result = Math.round((maxInvestmentsPerYear * 1000 - investedPastYear - investedOtherSites));
+
+      // Investor cannot invest more that 107000 in a year
+      if(result > 107000) {
+        result = 107000;
+      }
+
+      return result;
     },
 
     initMaxAllowedAmount() {
@@ -724,11 +795,11 @@ module.exports = {
         investedPastYear, investedOnOtherSites);
     },
 
-    getInt(value) {
-      return parseInt(value.replace(/\,/g, ''));
+    getNumber(value) {
+      return Number(value.replace(/\,/g, ''));
     },
 
-    formatInt(value) {
+    formatNumber(value) {
       return value.toLocaleString('en-US');
     },
 
@@ -739,7 +810,7 @@ module.exports = {
       if (this.model.campaign.security_type == 1)
         return;
 
-      let amount = this.getInt(e.target.value);
+      let amount = this.getNumber(e.target.value);
       if (!amount)
         return;
 
@@ -752,7 +823,7 @@ module.exports = {
 
       let newAmount = Math.ceil(amount / pricePerShare) *  pricePerShare;
 
-      this.$amount.val(this.formatInt(newAmount));
+      this.$amount.val(this.formatNumber(newAmount));
       this._updateTotalAmount();
 
       if (newAmount > amount) {
@@ -764,11 +835,15 @@ module.exports = {
 
     updateAmount(e) {
 
-      let amount = this.getInt(e.currentTarget.value);
+      if(e.keyCode == 37 || e.keyCode == 39) {
+        return;
+      }
+
+      let amount = this.getNumber(e.currentTarget.value);
       if (!amount)
         return;
 
-      e.currentTarget.value = this.formatInt(amount);
+      e.currentTarget.value = this.formatNumber(amount);
 
       this.$amount.data('rounded', false);
 
@@ -797,8 +872,8 @@ module.exports = {
     _updateTotalAmount() {
       const feeInfo = this.calcFeeWithCredit();
 
-      let totalAmount = this.getInt(this.$amount.val()) + feeInfo.fee;
-      let formattedTotalAmount = '$' + this.formatInt(totalAmount)
+      let totalAmount = this.getNumber(this.$amount.val()) + feeInfo.fee;
+      let formattedTotalAmount = '$' + this.formatNumber(totalAmount)
       this.$el.find('.total-investment-amount').text(formattedTotalAmount);
       this.$el.find('[name=total_amount]').val(formattedTotalAmount);
 
@@ -809,10 +884,6 @@ module.exports = {
         return;
 
       this.$amount.popover('hide');
-    },
-
-    getSuccessUrl(data) {
-      return app.config.investmentServer + '/' + data.id + '/invest-thanks';
     },
 
     updateLimitInModal(e) {
@@ -894,7 +965,7 @@ module.exports = {
         this.$amount.keyup();
 
       }).fail((xhr, status, text) => {
-        alert('Update failed. Please try again!');
+        app.dialogs.error('Update failed. Please try again!');
       });
     },
 
@@ -949,7 +1020,7 @@ module.exports = {
     submit(e) {
       e.preventDefault();
 
-      let data = $(e.target).serializeJSON();
+      let data = $('#investForm').serializeJSON();
       // data.amount = data.amount.replace(/\,/g, '');
       if(data['payment_information_type'] == 1 || data['payment_information_type'] == 2) {
         delete data['payment_information_data'];
@@ -960,7 +1031,7 @@ module.exports = {
     },
 
     getSuccessUrl(data) {
-      return data.id + '/invest-thanks';
+      return (data.company.slug || data.company.id) + '/' + data.id + '/invest-thanks';
     },
 
     saveEsign(responseData) {
@@ -1114,7 +1185,8 @@ module.exports = {
     template: require('./templates/thankYou.pug'),
     el: '#content',
     initialize(options) {
-      // this.render();
+      if (this.model.company.ga_id)
+        app.emitCompanyAnalyticsEvent(this.model.company.ga_id);
     },
 
     render() {

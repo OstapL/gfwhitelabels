@@ -1,8 +1,12 @@
 
-- pug_html += app.breadcrumbs('investor dashboard', '', [ ['Home', '/'], ['investor dashboard', ''],]);
+-
+  pug_html += app.breadcrumbs('investor dashboard', '', [ ['Home', '/'], ['investor dashboard', ''],]);
+  pug_html += snippets.creditSection();
 
 section.investor-dashboard
   .container
+    .col-xl-12.p-x-0
+      h2.text-uppercase.m-t-0 Your investments
     .col-lg-12
       if (!investments && !investments.length)
         div(role="alert").alert.alert-warning
@@ -41,11 +45,16 @@ section.investor-dashboard
                 each i in investments
                   if i.active
                     - hasActiveInvestments = true;
+                    - i.fields = i.schema;
                     | !{ snippets.investment(i) }
 
                 if !hasActiveInvestments
-                  div(role="alert").alert.alert-warning
-                    strong You have no active investments
+                  .row
+                    .col-lg-12
+                      .warning-block.m-b-0
+                        i.fa.fa-info-circle
+                        span.warning-text
+                          | You have no active investments
 
             .tab-pane.fade#historical(
               role="tabpanel"
@@ -57,9 +66,13 @@ section.investor-dashboard
                 each i in investments
                   if i.historical
                     - hasHistoricalInvestments = true;
+                    - i.fields = i.schema;
                     | !{ snippets.investment(i) }
 
                 if !hasHistoricalInvestments
-                  div(role="alert").alert.alert-warning
-                    strong You have no historical investments
-
+                  .row
+                    .col-lg-12
+                      .warning-block.m-b-0
+                        i.fa.fa-info-circle
+                        span.warning-text
+                          | You have no historical investments

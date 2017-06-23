@@ -1,0 +1,29 @@
+if app.config.indexPage.bottomBunner == 1
+  section.height-block-banner.scroll-paralax.no-paralax-mobile.main-page-banner-raise.m-t-0
+    div.background
+    .center-wrap.container.small-button
+      .row
+        .col-xl-12
+          h2.text-uppercase.m-t-0.m-b-2  Raise capital with us
+        .col-xl-12.p-xs-0
+          if app.user.is_anonymous()
+            a(href="/raise-capital").btn.btn-lg.btn-primary.text-uppercase raise capital
+          else
+            a(href="/company/create").btn.btn-lg.btn-primary.text-uppercase raise capital
+          a(href="/pg/entrepreneurquestions").btn.btn-lg.btn-secondary.text-uppercase learn more
+else
+  section.height-block-banner.scroll-paralax.no-paralax-mobile.main-page-banner-invest.m-t-0
+    div.background
+    .center-wrap.container.small-button
+      .col-xl-12
+        h2.text-uppercase.m-t-0 INVEST IN YOUR LOCAL COMMUNITY
+            h3 Find companies in your neighborhood, and help them grow
+              br
+              | through your investment.
+      .col-lg-12.p-xs-0
+        if app.user.is_anonymous()
+          a(href="/account/signup").btn.btn-lg.btn-secondary.text-uppercase Sign up to start investing
+        else
+          a(href="/companies").btn.btn-lg.btn-secondary.text-uppercase Start investing
+        .row.link-bottom
+          a(href="/pg/education").link-6 Understand the Risks

@@ -4,10 +4,16 @@
     padding-bottom: rem(50)
   .share
     padding-top: 0!important
+    @media only screen and (max-width : 991px)
+      margin-bottom: rem(50)
+      margin-top: rem(50)
+
   .img_under_text
     position: relative
     margin-bottom: rem(20)
     height: 209px
+    @media only screen and (max-width : 768px)
+      margin-bottom: 0
     &:before
       &:before
       width: 100%
@@ -36,7 +42,10 @@
       -webkit-transform: translate(-50%,-50%)
       transform: translate(-50%,-50%)
       font-weight: 400
-
+    @media only screen and (max-width : 768px)
+      height: auto
+      img
+        height: 100%
     .timer_day
       position: absolute
       z-index: 1
@@ -62,6 +71,8 @@
     padding: rem(5) rem(10) rem(5) rem(5)
     background: $issuer-dashboard-bgc
     margin-bottom: rem(25)
+    @media only screen and (max-width : 768px)
+      max-height: 75px
     .visual
       float: left
       i
@@ -84,12 +95,19 @@
       position: absolute
       right: rem(25)
       text-align: right
+      @media only screen and (max-width : 768px)
+        max-width: 100px
       .number
         font-size: rem(18)
         color: $white
+        @media only screen and (max-width : 768px)
+          font-size: rem(16)
       .desc
         font-size: rem(13)
         color: $white
+        @media only screen and (max-width : 768px)
+          font-size: rem(12)
+          line-height: rem(12)
 
   .tpl-progress
     position: relative
@@ -135,9 +153,9 @@
       font-size: rem(11)
       line-height: rem(12)
       padding: 5px 10px
-      min-width: 90px
+      min-width: 95px
       background-color: $issue-raises-bgc
-      z-index: 999
+      z-index: 99
       color: $white
       &:after
         content: ''
@@ -201,6 +219,36 @@
       font-weight: normal
     &:hover
       color: $link-3-hover
+    @media only screen and (max-width : 768px)
+      h2
+        font-size: rem(16)
+        width: 6%
+        margin-top: rem(15)!important
+        margin-bottom: rem(15)!important
+        &.listing
+          margin-top: rem(30)!important
+      h3
+        font-size: rem(16)
+        width: 90%
+        vertical-align: middle
+      .img-document
+        width: 20px
+        height: 20px
+    @media only screen and (max-width : 360px)
+      h2
+        width: 9%
+        margin-top: rem(20)!important
+        margin-bottom: rem(20)!important
+        &.listing
+          margin-top: rem(20)!important
+          margin-bottom: 0!important
+
+      h3
+        width: 80%
+        vertical-align: bottom
+        &.listing
+          vertical-align: middle
+
 //end section top-line
 //start section Graphic
 .grafic-dashboard
@@ -324,18 +372,7 @@
   .issuer-dashbord-top
     .right_fixed_text
       top: rem(45)
-    .share
-  .investors-dashbord-document
-    a
-      h2
-        font-size: rem(16)
-      h3
-        font-size: rem(13)
 
-@media only screen and (max-width : 768px)
-  .issuer-dashbord-top
-    .share
-      margin-bottom: 25px   
 //import contact
 .dashboard-import
   .section-bg-line
@@ -414,8 +451,4 @@
         border-width: 0
       ::-webkit-scrollbar-track:hover
         border-left: none
-
-
-
-
 

@@ -1,6 +1,4 @@
-
-//TODO: ?????
-const socialAuth = require('./social-auth.js');
+// const socialAuth = require('./social-auth.js');
 
 module.exports = {
   routes: {
@@ -14,48 +12,42 @@ module.exports = {
     'code/:formcId/:code': 'membershipConfirmation',
   },
   methods: {
-    login(id) {
-      require.ensure([], () => {
-        const View = require('./views.js');
-        let optionsR = api.makeRequest(app.config.authServer + '/rest-auth/login', 'OPTIONS');
+    login() {
+      require.ensure([], (require) => {
         $('body').scrollTo();
-        $.when(optionsR).done((metaData) => {
-          let loginView = new View.login({
-            el: '#content',
-            fields: metaData.fields,
-            model: {},
-          });
-          loginView.render();
-          app.hideLoading();
-        }).fail((xhr, error) => {
-          // ToDo
-          // Show global error message
-          console.log(xhr, error);
-          app.hideLoading();
+
+        let paramsToken = app.getParams().token;
+        if(app.getParams().token) {
+          localStorage.setItem('token', paramsToken);
+          let data = {
+            'token': paramsToken
+          };
+          app.user.setData(data, '/account/profile');
+          return false;
+        }
+
+        const View = require('./views.js');
+        let loginView = new View.login({
+          el: '#content',
+          model: {},
         });
-      });
+        loginView.render();
+        app.hideLoading();
+      }, 'anonymous_account_chunk');
     },
 
     signup() {
-      require.ensure([], () => {
-        const View = require('./views.js');
-        const optionsR = api.makeRequest(app.config.authServer + '/rest-auth/registration', 'OPTIONS');
+      require.ensure([], (require) => {
         $('body').scrollTo();
-        $.when(optionsR).done((metaData) => {
-          const signView = new View.signup({
-            el: '#content',
-            fields: metaData.fields,
-            model: {},
-          });
-          signView.render();
-          app.hideLoading();
-        }).fail((xhr, error) => {
-          // ToDo
-          // Show global error message
-          console.log(xhr, error);
-          app.hideLoading();
+
+        const View = require('./views.js');
+        const signView = new View.signup({
+          el: '#content',
+          model: {},
         });
-      });
+        signView.render();
+        app.hideLoading();
+      }, 'anonymous_account_chunk');
     },
 
     // //TODO: ??????
@@ -87,7 +79,7 @@ module.exports = {
         const i = new View.reset();
         i.render();
         app.hideLoading();
-      });
+      }, 'anonymous_account_chunk');
     },
 
     //TODO: ????????
@@ -100,7 +92,7 @@ module.exports = {
       }).done((data) => {
         app.user.setData(data,  '/account/password/new');
       }).fail((data) => {
-        const template = require('./templates/expiredCode.pug');
+        // const template = require('./templates/expiredCode.pug');
         app.hideLoading();
       });
     },
@@ -135,7 +127,7 @@ module.exports = {
           $('#content').html(template());
           app.hideLoading();
         });
-      });
+      }, 'anonymous_account_chunk');
     },
   },
 };

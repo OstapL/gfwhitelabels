@@ -33,6 +33,7 @@
         .active
           background-color: $gallery
           color: $black
+
         .panel-heading
           a.list-group-item
             color: $small-text
@@ -52,10 +53,11 @@
             margin-right: rem(10)
             font-size: rem(14)
             line-height: 18px
-      .panel
-        .in
-          .list-group-item.active
-            color: $black
+      .panel-collapse
+        .list-group-item.active
+          color: $black
+          border-left: solid 5px $section-bg-line
+          padding-left: rem(25)
       .sub-menu
         .list-group-heading
           font-size: rem(12)
@@ -65,11 +67,16 @@
             background-color: $gallery
             color: $black
         .list-group-item-action
-          padding-left: rem(50)
+          padding-left: rem(55)
+          &.active
+            padding-left: rem(50)
+            &:before
+              left: 40px
           &:before
             content: '\f0c8'
             position: absolute
-            left: rem(40)
+            left: rem(45)
+            top: 45%
             font-family: FontAwesome
             font-size: rem(3)
   .raise-funds

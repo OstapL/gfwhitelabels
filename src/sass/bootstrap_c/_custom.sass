@@ -36,6 +36,17 @@
   padding: 10px 11px
   border-radius: 100px
   font-size: rem(24)
+  width: 40px
+  height: 40px
+  position: relative
+  vertical-align: middle
+  &:before
+    left: 50%
+    top: 50%
+    -ms-transform: translate(-50%, -50%)
+    -webkit-transform: translate(-50%, -50%)
+    transform: translate(-50%, -50%)
+    position: absolute
 //
 .m-d-p-r-5
   padding-right: 5px!important
@@ -46,6 +57,8 @@
 .form-group-m-b-0
   .form-group
     margin-bottom: 0
+.m-t-10
+  margin-top: rem(10)
 @media screen and (min-width: 1200px)
   .p-xl-0
     padding-right: 0!important
@@ -107,6 +120,13 @@
   transform: translate(-50%, -50%)
   position: absolute
   z-index: 999
+  i
+    padding-bottom: 0
+.userProfileDropzone
+  .uploading
+    @media screen and (max-width: 991px)
+      top: 100%
+      transform: translate(-50%, 400%)
 // на страницах
 .icon-color
   color: #aed07c
@@ -189,7 +209,7 @@
   .border-dropzone
     min-height: 155px
 //drop zone с одним файлом
-.fileDropzone
+.fileDropzone, .fileFolderDropzone
   .border-dropzone
     min-height: 155px
     width: 100%
@@ -207,9 +227,23 @@ p.drop-photo
   margin: auto
 .imageDropzone
   .p-dropzone
-    top: 45px!important
+    margin-top: 45px
+    top: 0!important
+    margin-bottom: 30px
+    &.header-media
+      margin-top: 30px
+      top: 0!important
+      margin-bottom: 30px
   .border-dropzone
     width: 100%
+  .has-error
+    .help-block
+      position: absolute!important
+      left: 34%
+  @media screen and (max-width: 768px)
+    .p-sm-0
+      padding-left: 0 !important
+      padding-left: 0 !important
   .one-photo
     .delete-image-container
       position: absolute
@@ -251,7 +285,7 @@ p.drop-photo
 
     .one-photo
       margin-top: 30px
-      height: 100px
+      height: 87px
       overflow: hidden
 
       .delete-image-container
@@ -283,6 +317,13 @@ p.drop-photo
     .one-photo
       height: auto!important
 .userProfileDropzone
+  @media screen and (min-width: 768px)
+    .p-sm-up-x-0
+      padding: 0
+  .p-dropzone
+    margin-top: 30px!important
+  .dropzone-profile.border-dropzone
+    min-height: auto!important
   .one-photo
     .delete-image-container
       position: absolute
@@ -314,16 +355,24 @@ p.drop-photo
 
   .border-dropzone
     min-height: 150px
-.teamMemberDropzone
+    border: none
+.team-members
   .p-dropzone
-    top: 35px!important
+    top: 0px!important
+    margin-top: rem(30)!important
+    margin-bottom: rem(25)!important
   .one-photo
-    background-color: $alabaster
-    .delete-image-container
-      right: 0
+    img
+      border-radius: 100px
+      width: 133px!important
+      height: 133px
+      margin: rem(10)
   @media screen and (max-width: 540px)
     .p-dropzone
       margin-bottom: rem(35)
+.crop-image-container
+  max-width: 100%!important
+  max-height: 400px!important
 //custom
 .campaign-specifics
   .btn-dropdown
@@ -357,8 +406,13 @@ p.drop-photo
   border-radius: 100px
   position: relative
   margin: auto
+  display: inline-block
+  margin-right: 15px
   @media screen and (max-width: 544px)
     margin-bottom: rem(20)
+    margin: 0 auto
+    text-align: center
+    display: block
   i
     font-size: rem(22)
     padding: 5px
@@ -370,3 +424,141 @@ p.drop-photo
     position: absolute
 .align-middle
   vertical-align: middle
+@media screen and (max-width: 1200px)
+  .hide-bg-fixed
+    background-attachment: initial!important
+
+//fancybox
+.fancybox-title
+  font-family: $open-sans!important
+  font-size: rem(15)!important
+  text-align: left!important
+  background-color: $fancy-nav-color!important
+  color: $white
+.fancybox-title-inside-wrap
+  padding: 5px!important
+.fancybox-next, .fancybox-prev
+  span
+    background-image: none!important
+    width: 30px!important
+    height: 30px!important
+    -webkit-box-shadow: 0px 0px 8px 1px rgba(0,0,0,0.75)
+    -moz-box-shadow: 0px 0px 8px 1px rgba(0,0,0,0.75)
+    box-shadow: 0px 0px 8px 1px rgba(0,0,0,0.75)
+    background-color: #fff
+    border-radius: 100px
+
+    &:before
+      content: '\f138'
+      position: absolute
+      font: normal normal normal 30px/1 FontAwesome
+      top: 0px
+      left: 2px
+      color: $fancy-nav-color
+.fancybox-prev
+  span
+    &:before
+      content: '\f137'!important
+.fancybox-skin
+  .fancybox-close
+    background-image: none!important
+    background-image: none!important
+    width: 30px!important
+    height: 30px!important
+    -webkit-box-shadow: 0px 0px 8px 1px rgba(0,0,0,0.75)
+    -moz-box-shadow: 0px 0px 8px 1px rgba(0,0,0,0.75)
+    box-shadow: 0px 0px 8px 1px rgba(0,0,0,0.75)
+    background-color: #fff
+    border-radius: 100px
+    &:before
+      content: '\f057'
+      position: absolute
+      font: normal normal normal 30px/1 FontAwesome
+      top: 0px
+      left: 2px
+      color: $fancy-nav-color
+#fancybox-loading, .fancybox-close, .fancybox-prev span, .fancybox-next span
+  background-image: url(img/fancybox/fancybox_sprite.png)
+#fancybox-loading div
+  width: 44px
+  height: 44px
+  background: url(img/fancybox/fancybox_loading.gif) center center no-repeat
+.fancybox-nav
+  position: absolute
+  top: 0
+  width: 40%
+  height: 100%
+  cursor: pointer
+  text-decoration: none
+  -webkit-tap-highlight-color: transparent
+  z-index: 8040
+.fancybox-overlay
+  position: absolute
+  top: 0
+  left: 0
+  overflow: hidden
+  display: none
+  z-index: 8010
+  background: url(img/fancybox/fancybox_overlay.png)
+
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5)
+  #fancybox-loading, .fancybox-close, .fancybox-prev span, .fancybox-next span
+    background-image: url(img/fancybox/fancybox_sprite@2x.png)
+    background-size: 44px 152px
+  #fancybox-loading div
+    background-image: url(img/fancybox/fancybox_loading@2x.gif)
+    background-size: 24px 24px
+//====
+
+.play-icon
+  background-color: rgba($white, .6)
+  border-radius: 100px
+  width: 85px
+  height: 85px
+  display: inline-block
+  margin-top: rem(60)
+  position: relative
+  @media only screen and (max-width : 544px)
+    width: 50px
+    height: 50px
+    margin-top: rem(35)
+  i
+    color: $play-icon-color
+    font-size: rem(30)
+    position: absolute 
+    left: 53%
+    top: 50%
+    -ms-transform: translate(-50%,-50%)
+    -webkit-transform: translate(-50%,-50%)
+    transform: translate(-50%,-50%)
+    @media only screen and (max-width : 544px)
+      font-size: rem(16)
+  +mt(.5s)
+  &:hover
+    +mt(.5s)
+    background-color: rgba($white, .9)
+  &.small-icon
+    width: 45px
+    height: 45px
+    i
+      font-size: 16px
+.scrolling-top
+  position: fixed
+  top: 20px
+  right: 50px
+  z-index: 100
+  a
+    font-size: rem(18)
+    color: rgba($small-text, .6)
+    i
+      font-size: rem(44)
+      margin-right: 10px
+      vertical-align: middle
+    .text
+      vertical-align: middle
+      font-weight: bold
+    &:hover
+      color: rgba($small-text, 1)
+  @media only screen and (max-width : 991px)
+    display: none
+

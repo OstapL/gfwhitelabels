@@ -1,6 +1,10 @@
 'use strict';
 const deepDiff = require('deep-diff').diff;
 
+//this code will work for deep-diff@0.3.8
+// const diff = require('deep-diff');
+// const deepDiff = diff.diff || diff.default || diff;
+
 module.exports = {
   makeCacheRequest(url, type, data) {
     return this.makeRequest(url, type, data);
@@ -87,26 +91,34 @@ module.exports = {
 
     let url = this.urlRoot || '';
     let method = e.target.dataset.method || 'POST';
+    let form = $(e.target).closest('form');
 
-    if(this.model && this.model.hasOwnProperty('id')) {
+    if(this.model&& Object.keys(this.model).length > 0 && this.model.id) {
       url = url.replace(':id', this.model.id);
       method = e.target.dataset.method || 'PATCH';
     }
 
-    newData = newData || $(e.target).closest('form').serializeJSON();
+    newData = newData || form.serializeJSON();
+
+    // issue 348, disable form for double posting
+    if(form.length > 0) {
+      form[0].setAttribute('disabled', true);
+    }
+    e.target.setAttribute('disabled', true);
+
     api.deleteEmptyNested.call(this, this.fields, newData);
     api.fixDateFields.call(this, this.fields, newData);
     // api.fixFieldTypes.call(this, this.fields, newData);
 
     // if view already have some data - extend that info
-    if(this.hasOwnProperty('model') && !this.doNotExtendModel && method != 'PATCH') {
-      newData = _.extend({}, this.model, newData);
+    if(this.hasOwnProperty('model') && Object.keys(this.model).length > 0 && !this.doNotExtendModel && method != 'PATCH') {
+      newData = _.extend({}, this.model.toJSON ? this.model.toJSON() : this.model, newData);
     }
 
     // for PATCH method we will send only difference
     if(method == 'PATCH') {
       let patchData = {};
-      let d = deepDiff(newData, this.model);
+      let d = deepDiff(newData, this.model.toJSON ? this.model.toJSON() : this.model);
       _(d).forEach((el, i) => {
         if(el.kind == 'E' || el.kind == 'A') {
           patchData[el.path[0]] = newData[el.path[0]];
@@ -162,11 +174,16 @@ module.exports = {
         app.validation.invalidMsg(this, key, errors);
       });
       this.$('.help-block').prev().scrollTo(5);
+      if(form.length > 0) {
+        form[0].removeAttribute('disabled');
+      }
+      e.target.removeAttribute('disabled');
       return false;
     } else {
 
       api.makeRequest(url, method, newData).
         then((responseData) => {
+
           // ToDo
           // Do we really need this ?!
           if(method != 'POST') {
@@ -180,9 +197,14 @@ module.exports = {
           // this.undelegateEvents();
           $('.popover').popover('hide');
 
+          if(form.length > 0) {
+            form[0].removeAttribute('disabled');
+          }
+          e.target.removeAttribute('disabled');
+
           let defaultAction  = 1;
           if (typeof this._success == 'function') {
-            defaultAction = this._success(responseData, newData);
+            defaultAction = this._success(responseData, newData, method);
           }
 
           if(defaultAction == 1) {
@@ -195,6 +217,10 @@ module.exports = {
           }
         }).
         fail((xhr, status, text) => {
+          if(form.length > 0) {
+            form[0].removeAttribute('disabled');
+          }
+          e.target.removeAttribute('disabled');
           api.errorAction(this, xhr, status, text, this.fields);
         });
     }
@@ -286,18 +312,24 @@ module.exports = {
           data[key].forEach((el, i) => {
             let emptyValues = 0;
             _(el).each((val, subkey) => {
-              if(val == '' || Number.isNaN(val)) {
+              if(val === '' || Number.isNaN(val)) {
                 emptyValues ++;
               }
             });
             if(Object.keys(el).length == emptyValues) {
               delete data[key][i];
               if(Object.keys(data[key]).length == 0) {
+                // Why do we doing this? Issue 417, impossible to delete press in campaign geleral
+                /*
                 if(this.model[key]) {
                   data[key] = this.model[key];
                 } else {
                   delete data[key];
                 }
+                */
+                // fix for 417
+                // this.model[key] = [];
+                data[key] = [];
               }
             };
           });
@@ -318,7 +350,7 @@ module.exports = {
         }
       } else if(el.type == 'nested' && data[key]) {
         _.each(data[key], (val, index, list) => {
-          api.fixMoneyFields.call(this, el.schema, data[key][index]);
+          api.fixFieldsTypes.call(this, el.schema, data[key][index]);
        });
       }
     });

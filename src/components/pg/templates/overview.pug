@@ -1,0 +1,92 @@
+- pug_html += app.breadcrumbs('Overview', '', [ ['Home', '/'], ['Overview', ''], ]);
+
+section.text_block 
+  .container
+    .row
+      .col-lg-3.hidden-md-down 
+        .page_title.border-bottom.mb25
+          h4.text-uppercase ABOUT US
+        ul.list-unstyled.custom.pages-left-menu
+          li.active
+            a(href='/pg/overview').d-inline-block.w-100 Overview
+          li
+            a(href='/pg/team').d-inline-block.w-100 #{app.config.teamName}
+          li.display-partners
+            a(href='/pg/partners').d-inline-block.w-100 Partners
+          li
+            a(href='/pg/contact').d-inline-block.w-100 Contact Us
+          li
+            a(href='/pg/careers').d-inline-block.w-100 Careers
+          li
+            a(href='/pg/news').d-inline-block.w-100 In the News
+          li
+            a(href='/pg/faq').d-inline-block.w-100 FAQ
+
+      .col-lg-9
+        .row
+          .col-lg-12.text-xs-center
+            h2.text-uppercase.dosis.m-t-0 Overview
+            
+        .row
+          .col-lg-12
+            img(src=require("images/pages/overview.jpg") alt="").m-b-3.fade-in
+            p.m-b-2.text-justify.fade-in We banded together with a simple mission – to connect small businesses to the tools they need to succeed – including financial, human and social capital. Our goal is to level the playing field and make things easy for entrepreneurs to focus on what matters – their product or service! Please feel free to take advantage of all of the tools, tutorials and calculators we have available on our platform, including:
+            .list-block
+              .row.m-b-2.text-xs-center.text-sm-left.text-md-left.text-lg-left.text-xl-left.fade-in
+                .col-xl-1.col-lg-1.col-md-1.col-sm-1.col-xs-12
+                  .icon-in-circle
+                    i.fa.fa-diamond
+                .col-xl-11.col-lg-11.col-md-11.col-sm-11.col-xs-12.text-block
+                  h4.text-uppercase Raise capital 
+                  p Access our investor network to raise financial capital for your company
+              .row.m-b-2.text-xs-center.text-sm-left.text-md-left.text-lg-left.text-xl-left.fade-in
+                .col-xl-1.col-lg-1.col-md-1.col-sm-1.col-xs-12
+                  .icon-in-circle
+                    i.fa.fa-book
+                .col-xl-11.col-lg-11.col-md-11.col-sm-11.col-xs-12.text-block
+                  h4.text-uppercase Education Material 
+                  p How does investing in Regulation Crowdfunding offerings actually work?
+              .row.m-b-2.text-xs-center.text-sm-left.text-md-left.text-lg-left.text-xl-left.fade-in
+                .col-xl-1.col-lg-1.col-md-1.col-sm-1.col-xs-12
+                  .icon-in-circle
+                    i.fa.fa-check-square-o
+                .col-xl-11.col-lg-11.col-md-11.col-sm-11.col-xs-12.text-block
+                  h4.text-uppercase Success Guide
+                  p This tool can help your company prepare your fundraising campaign
+              .row.m-b-2.text-xs-center.text-sm-left.text-md-left.text-lg-left.text-xl-left.fade-in
+                .col-xl-1.col-lg-1.col-md-1.col-sm-1.col-xs-12
+                  .icon-block
+                    .icon-in-circle
+                      i.fa.fa-list-ol
+                .col-xl-11.col-lg-11.col-md-11.col-sm-11.col-xs-12.text-block
+                  h4.text-uppercase Investor and Business Tutorials
+                  p Delve deeper into the rules and obligations of Regulation Crowdfunding
+              .row.m-b-2.text-xs-center.text-sm-left.text-md-left.text-lg-left.text-xl-left.fade-in
+                .col-xl-1.col-lg-1.col-md-1.col-sm-1.col-xs-12
+                  .icon-block
+                    .icon-in-circle
+                      i.fa.fa-line-chart
+                .col-xl-11.col-lg-11.col-md-11.col-sm-11.col-xs-12.text-block
+                  h4.text-uppercase Capital Raise Calculator
+                  p This tool helps you understand how much money you might need to raise to accomplish your goals
+              .row.m-b-2.text-xs-center.text-sm-left.text-md-left.text-lg-left.text-xl-left.fade-in
+                .col-xl-1.col-lg-1.col-md-1.col-sm-1.col-xs-12
+                  .icon-block
+                    .icon-in-circle
+                      i.fa.fa-briefcase
+                .col-xl-11.col-lg-11.col-md-11.col-sm-11.col-xs-12.text-block
+                  h4.text-uppercase What’s my Business Worth?
+                  p This tool helps you benchmark valuations for similar companies
+              .row.text-xs-center.text-sm-left.text-md-left.text-lg-left.text-xl-left.fade-in
+                .col-xl-1.col-lg-1.col-md-1.col-sm-1.col-xs-12
+                  .icon-block
+                    .icon-in-circle
+                      i.fa.fa-question
+                .col-xl-11.col-lg-11.col-md-11.col-sm-11.col-xs-12.text-block
+                  h4.text-uppercase FAQ
+                  p Scroll through our Frequently Asked Questions to gain additional insight into how it all works
+              .row.p-t-3
+                .col-xl-12.text-xs-center
+                  h3.font-weight-light Together, we can help support entrepreneurs and grow businesses
+                    br
+                    | that otherwise might not have had this opportunity.
