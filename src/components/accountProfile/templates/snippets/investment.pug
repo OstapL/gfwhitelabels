@@ -72,7 +72,8 @@ div(data-investmentid=id).one_table
     .progress_line_container
       progress(value=campaign.amount_raised max=(campaign.minimum_raise || campaign.maximum_raise)).progress
     .text-xs-center
-      a(href=('/' + company.id)).btn.btn-sm.btn-secondary.text-uppercase view campaign
+      - var campaignURL = '/' + (company.slug || company.id);
+      a(href=campaignURL).btn.btn-sm.btn-secondary.text-uppercase view campaign
         i.fa.fa-angle-right
     .cancel_invest
       if active
