@@ -299,6 +299,7 @@ module.exports = {
         title: 'Drop your photo here or click to upload',
         help_text: 'This is the image that will appear at the top of your campaign. A minimum size of 1600x800 is recommended.',
         templateDropzone: 'headerMedia.pug',
+        defaultImage: 'images/default/default-header.png',
         onSaved: (data) => {
           this.model.updateMenu(this.model.calcProgress(this.model));
         },
