@@ -3,7 +3,7 @@ require('babel-polyfill');
 require('jquery-serializejson');
 require('js/html5-dataset.js');
 require('classlist-polyfill');
-
+require('dom4');
 //fix for safari 9.1
 // if (!global.Intl) {
   require('intl');
