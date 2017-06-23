@@ -539,6 +539,8 @@ module.exports = {
       this.fields.photo_image_id = _.extend(this.fields.photo_image_id, {
         label: 'Profile Picture',
         help_text: 'A minimum size of 300x300 is recommended.',
+        defaultImage: require('images/default/Default_photo.png'),
+
         onSaved: (data) => {
           // delete newData.urlRoot;
           api.makeRequest(this.urlRoot, 'PUT', this.model.toJSON());
