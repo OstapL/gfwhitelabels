@@ -395,6 +395,7 @@ module.exports = {
     initialize(options) {
       this.fields = options.fields;
       this.user = options.user;
+      this.fields.amount.type = 'money';
       this.user.account_number_re = this.user.account_number;
       this.user.routing_number_re = this.user.routing_number;
       this.fields.payment_information_type.validate.choices = {
@@ -792,7 +793,7 @@ module.exports = {
     },
 
     getNumber(value) {
-      return Number(value.replace(/\,/g, ''));
+      return Number(value.replace(/[\$,]/g, ''));
     },
 
     formatNumber(value) {
@@ -830,16 +831,14 @@ module.exports = {
     },
 
     updateAmount(e) {
+      e.preventDefault();
+      e.stopPropagation();
 
-      if(e.keyCode == 37 || e.keyCode == 39) {
-        return;
-      }
+      app.helpers.format.formatMoneyInputOnKeyup(e);
 
-      let amount = this.getNumber(e.currentTarget.value);
+      let amount = this.getNumber(e.target.value);
       if (!amount)
         return;
-
-      e.currentTarget.value = this.formatNumber(amount);
 
       this.$amount.data('rounded', false);
 
@@ -848,6 +847,8 @@ module.exports = {
       this.updatePerks(amount);
 
       this._updateTotalAmount();
+
+      return false;
     },
 
     updatePerks(amount) {
