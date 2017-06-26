@@ -12,7 +12,7 @@
   
 
 section.company-header.scroll-paralax.no-paralax-mobile
-  div(style="background-image: url(" + values.campaign.getMainImage() + ")").background
+  div(style="background-image: url(" + (values.campaign.getMainImage() || require('images/default/default-header.png')) + ")").background
   .js-height-parent.container-fluid
     .home-content
       .home-text.text-lg-center
@@ -325,7 +325,7 @@ section
               each v in values.campaign.team_members.members
                 .col-xl-4.col-lg-4.col-md-6.col-sm-12.col-xs-12.team.team-detail.p-xs-0
                   .card.text-lg-center.text-xs-center
-                    img(src=v.photo_image_id.getUrl('350x209') alt="").img-circle
+                    img(src=v.photo_image_id.getUrl('Default_photo') alt="").img-circle
                     .card-block
                       h4.text-xs-center.card-title.text-uppercase #{v.first_name} #{v.last_name }
                       p.card-text
