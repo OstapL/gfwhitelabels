@@ -16,11 +16,7 @@ module.exports = {
       'change select.orderby': 'orderby',
     },
     initialize(options) {
-      let dataClass = [];
-      options.collection.data.forEach((el) => {
-        dataClass.push(new app.models.Company(el));
-      });
-      options.collection.data = dataClass;
+      options.collection.data = options.collection.data.map(companyData => new app.models.Company(companyData));
       this.collection = options.collection;
     },
 
