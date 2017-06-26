@@ -36,6 +36,7 @@ module.exports = {
 
       this.fields.image_image_id = _.extend(this.fields.image_image_id, {
         templateDropzone: 'profileDropzone.pug',
+        defaultImage: require('images/default/Default_photo.png'),
         onSaved: (data) => {
           app.user.updateImage(data.file);
         },

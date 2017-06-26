@@ -16,11 +16,7 @@ module.exports = {
       'change select.orderby': 'orderby',
     },
     initialize(options) {
-      let dataClass = [];
-      options.collection.data.forEach((el) => {
-        dataClass.push(new app.models.Company(el));
-      });
-      options.collection.data = dataClass;
+      options.collection.data = options.collection.data.map(companyData => new app.models.Company(companyData));
       this.collection = options.collection;
     },
 
@@ -854,12 +850,16 @@ module.exports = {
     updatePerks(amount) {
       function updatePerkElements($elms, amount) {
         $elms.removeClass('active').find('i.fa.fa-check').hide();
-        $elms.each((idx, el) => {
-          if(parseInt(el.dataset.amount) <= amount) {
-            $(el).addClass('active').find('i.fa.fa-check').show();
-            return false;
-          }
+        let filteredPerks = _($elms).filter(el =>  {
+          const perkAmount = parseInt(el.dataset.amount);
+          return perkAmount <= amount;
         });
+
+        let activePerk = _.last(filteredPerks);
+
+        if (activePerk) {
+          $(activePerk).addClass('active').find('i.fa.fa-check').show();
+        }
       }
 
       updatePerkElements($('.invest-perks-mobile .perk'), amount);
