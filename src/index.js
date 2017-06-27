@@ -176,7 +176,7 @@ $(document).ready(function () {
       if (currentVal !== selectionVal) {
         addPosition = (currentVal.match(/,/g) || []).length - (selectionVal.match(/,/g) || []).length;
       }
-      console.log(valStr.length, e.target.value.length, addPosition, e.target.selectionStart, e.target.selectionEnd);
+      // console.log(valStr.length, e.target.value.length, addPosition, e.target.selectionStart, e.target.selectionEnd);
 
       // debugger;
       e.target.setSelectionRange(selStart + addPosition, selEnd + addPosition);
