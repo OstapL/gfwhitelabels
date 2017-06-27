@@ -7,10 +7,10 @@ do
     git checkout $b
     git pull origin $b
     git submodule update --init
-    cd consts && git checkout master && git pull origin alpha 
+    cd consts && git checkout master && git pull
     cd ..
     cd staticdata && git fetch --all && git checkout `cd .. && git rev-parse --abbrev-ref HEAD` && git pull 
-    cd git merge alpha && git push
+    git merge alpha && git push
     cd ..
     git add staticdata
 
