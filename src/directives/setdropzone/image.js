@@ -70,6 +70,9 @@ class ImageDropzone extends file.FileDropzone {
     if(imageOptions.onSaved) {
       this.fileElement.options.onSaved = imageOptions.onSaved;
     }
+    if(imageOptions.defaultImage) {
+      this.fileElement.options.defaultImage = imageOptions.defaultImage;
+    }
   }
 
   getTemplate() {
