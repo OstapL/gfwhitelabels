@@ -58,6 +58,9 @@ class Campaign {
         set: function(value) { this.data[key] = value; },
       });
     }
+    //sort perks asc
+    if (this.perks && this.perks.length)
+      this.perks.sort((p1, p2) => p1.amount - p2.amount);
   }
 
   toJSON() {

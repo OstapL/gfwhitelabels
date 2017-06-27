@@ -406,8 +406,13 @@ p.drop-photo
   border-radius: 100px
   position: relative
   margin: auto
+  display: inline-block
+  margin-right: 15px
   @media screen and (max-width: 544px)
     margin-bottom: rem(20)
+    margin: 0 auto
+    text-align: center
+    display: block
   i
     font-size: rem(22)
     padding: 5px
@@ -537,4 +542,23 @@ p.drop-photo
     height: 45px
     i
       font-size: 16px
+.scrolling-top
+  position: fixed
+  top: 20px
+  right: 50px
+  z-index: 100
+  a
+    font-size: rem(18)
+    color: rgba($small-text, .6)
+    i
+      font-size: rem(44)
+      margin-right: 10px
+      vertical-align: middle
+    .text
+      vertical-align: middle
+      font-weight: bold
+    &:hover
+      color: rgba($small-text, 1)
+  @media only screen and (max-width : 991px)
+    display: none
 
