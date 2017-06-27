@@ -110,7 +110,6 @@ module.exports = {
   },
 
   formatMoneyInputOnKeyup(e) {
-    console.log('global keyup');
     const countChar = (str='', char='', to=str.length) => {
       let count = 0;
       for (let i = 0; i <= to; i += 1)
@@ -182,13 +181,6 @@ module.exports = {
     cursorPosition += cursorPositionFix;
     cursorPosition = cursorPosition <= 0 ? 1 : cursorPosition;
     e.target.setSelectionRange(cursorPosition, cursorPosition);
-
-    // console.clear();
-    // console.log('cursor: ' + cursorPosition);
-    // console.log('Raw value: ' + rawValueNumber);
-    // console.log('New value: ' + newValue);
-    // console.log('Cursor was at: ' + rawValueNumber.charAt(cursorPosition));
-    // console.log('Cursor is at: ' + newValue.charAt(cursorPosition));
   }
 
 };
