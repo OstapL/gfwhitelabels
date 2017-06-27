@@ -158,11 +158,10 @@ $(document).ready(function () {
   });
 
   $('body').on('focus', '[type="money"]', function (e) {
-    var valStr = e.target.value.replace(/[\$\,]/g, '');
+    var valStr = e.target.value.replace(/[\$,]/g, '');
     var val = parseFloat(valStr);
-    if (isNaN(val) || !val) {
+    if (isNaN(val) || !val)
       e.target.value = '';
-    }
   });
 
   $('body').on('blur', '[type="money"]', function (e) {

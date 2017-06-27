@@ -816,7 +816,7 @@ module.exports = {
 
       let newAmount = Math.ceil(amount / pricePerShare) *  pricePerShare;
 
-      this.$amount.val(this.formatNumber(newAmount));
+      this.$amount.val('$' + this.formatNumber(newAmount));
       this._updateTotalAmount();
 
       if (newAmount > amount) {
@@ -884,32 +884,41 @@ module.exports = {
     },
 
     updateLimitInModal(e) {
-      let annualIncome = Number(this.$('#annual_income').val().replace(/\,/g, '')) || 0,
-          netWorth = Number(this.$('#net_worth').val().replace(/\,/g, '')) || 0;
+      e.preventDefault();
+      e.stopPropagation();
 
+      app.helpers.format.formatMoneyInputOnKeyup(e);
+      const rx = /[\$,]/g;
+
+      let annualIncome = Number(this.$('#annual_income').val().replace(rx, ''));
+      let netWorth = Number(this.$('#net_worth').val().replace(rx, '')) || 0;
+      if (isNaN(annualIncome) || !annualIncome)
+        annualIncome = 0;
+      if (isNaN(netWorth) || !netWorth)
+        netWorth = 0;
 
       let investedOnOtherSites = this.user.invested_on_other_sites;
       let investedPastYear = this.user.invested_equity_past_year;
-
-      this.$('#annual_income').val(annualIncome.toLocaleString('en-US'));
-      this.$('#net_worth').val(netWorth.toLocaleString('en-US'));
 
       this.$('span.current-limit').text(
         this.maxInvestmentsPerYear(annualIncome / 1000, netWorth / 1000, investedPastYear, investedOnOtherSites)
           .toLocaleString('en-US')
       );
+
+      return false;
     },
 
     updateIncomeWorth(e) {
+      const rx = /[\$,]/g;
       let netWorth = $('#net_worth')
         .val()
         .trim()
-        .replace(/\,/g, '') / 1000;
+        .replace(rx, '') / 1000;
 
       let annualIncome = $('#annual_income')
         .val()
         .trim()
-        .replace(/\,/g, '') / 1000;
+        .replace(rx, '') / 1000;
 
       let data = {
         net_worth: netWorth,
