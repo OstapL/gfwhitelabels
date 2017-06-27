@@ -76,6 +76,7 @@ module.exports = {
           document.head.querySelector('meta[property="og:title"]').content = companyData[0].short_name || companyData[0].name;
           document.head.querySelector('meta[property="og:description"]').content = metaDescription;
           document.head.querySelector('meta[property="og:image"]').content = model.campaign.getMainImage();
+          document.head.querySelector('meta[property="og:url"]').content = window.location.href;
           // document.head.querySelector('meta[name="keywords"]').content = companyData[0].tagline.replace(/ /g,',');
 
           let i = new View.detail({

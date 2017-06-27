@@ -40,10 +40,10 @@ class InvestorInfoProvider extends ShareInfoProvider {
   twitter() {
     return 'https://twitter.com/share' +
       '?url=' + this.data.url +
-      '&text=' + this._format('title', {
+      '&text=' + encodeURIComponent(this._format('title', {
         company: this.data.companyName,
         siteName: '@GrowthFountain',
-      }) + '%0D%0A';
+      }) + '\r\n');
   }
 
   linkedin() {
