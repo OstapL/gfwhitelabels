@@ -59,13 +59,12 @@ module.exports = {
         name: 'Legal Name of Company',
         short_name: 'Doing Business as Another Name?',
         industry: 'Industry',
-        ga_id: 'Google Analytic ID',
+        ga_id: 'Google Analytic ID <a class="link-2" href="https://support.google.com/analytics/topic/2790009?hl=en&ref_topic=3544906" target="_blank">Set Up Google Analytics</a>',
         founding_state: 'Jurisdiction of Incorporation / Organization',
         tagline: 'Tagline',
         description: 'About Us',
         corporate_structure: 'Corporate Structure',
         founding_date: 'Founding date',
-        ga_id: 'Google Analytic ID',
         address_1: 'Street Address',
         address_2: 'Optional Address',
         zip_code: 'Zip code',
@@ -299,6 +298,7 @@ module.exports = {
         title: 'Drop your photo here or click to upload',
         help_text: 'This is the image that will appear at the top of your campaign. A minimum size of 1600x800 is recommended.',
         templateDropzone: 'headerMedia.pug',
+        defaultImage: require('images/default/default-header.png'),
         onSaved: (data) => {
           this.model.updateMenu(this.model.calcProgress(this.model));
         },
@@ -432,7 +432,7 @@ module.exports = {
       const img = $videoContainer.find('img')[0];
 
       if (!e.target.value) {
-        img.src = require('images/default/255x153.png');
+        img.src = require('images/default/default-video.png');
         return;
       }
 
@@ -450,12 +450,12 @@ module.exports = {
     _updateYoutubeThumbnail(img, videoID) {
       img.src = videoID
         ? '//img.youtube.com/vi/' + videoID + '/0.jpg'
-        : require('images/default/255x153.png');
+        : require('images/default/default-video.png');
     },
 
     _updateVimeoThumbnail(img, videoID) {
       if (!videoID) {
-        img.src = require('images/default/255x153.png');
+        img.src = require('images/default/default-video.png');
         return;
       }
 
@@ -469,7 +469,7 @@ module.exports = {
         img.src = response[0].thumbnail_large;
       }).fail((err) => {
         console.error('Failed to load thumbnail from vimeo');
-        img.src = require('images/default/255x153.png');
+        img.src = require('images/default/default-video.png');
       });
     },
 
@@ -538,6 +538,8 @@ module.exports = {
       this.fields.photo_image_id = _.extend(this.fields.photo_image_id, {
         label: 'Profile Picture',
         help_text: 'A minimum size of 300x300 is recommended.',
+        defaultImage: require('images/default/Default_photo.png'),
+
         onSaved: (data) => {
           // delete newData.urlRoot;
           api.makeRequest(this.urlRoot, 'PUT', this.model.toJSON());
