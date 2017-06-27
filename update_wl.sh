@@ -11,6 +11,9 @@ do
     cd ..
     cd staticdata && git checkout `cd .. && git rev-parse --abbrev-ref HEAD` && git pull && git fetch --all && git merge --no-ff alpha && git push
     cd ..
+    git add staticdata
+    git add consts
+    git commit -a -m "updated staticdata and consts"
 
     if git branch --all | grep --quiet "remotes/vladyslav2/$b"; then
         echo "============ MERGE WITH VLADYSLAV/$b ============"
