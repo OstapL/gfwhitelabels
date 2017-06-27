@@ -936,15 +936,15 @@ module.exports = {
       let fields = {
         net_worth: {
           required: true,
-          fn: function(name, value, attr, data, schema) {
-            return validateRange(value * 1000, 0, 5000000 * 2, 'Net Worth')
-          },
+          // fn: function(name, value, attr, data, schema) {
+          //   return validateRange(value * 1000, 0, 5000000 * 2, 'Net Worth')
+          // },
         },
         annual_income: {
           required: true,
-          fn: function(name, value, attr, data, schema) {
-            return validateRange(value * 1000, 0, 500000 * 2, 'Annual Income');
-          },
+          // fn: function(name, value, attr, data, schema) {
+          //   return validateRange(value * 1000, 0, 500000 * 2, 'Annual Income');
+          // },
         }
       };
 
