@@ -542,4 +542,23 @@ p.drop-photo
     height: 45px
     i
       font-size: 16px
+.scrolling-top
+  position: fixed
+  top: 20px
+  right: 50px
+  z-index: 100
+  a
+    font-size: rem(18)
+    color: rgba($small-text, .6)
+    i
+      font-size: rem(44)
+      margin-right: 10px
+      vertical-align: middle
+    .text
+      vertical-align: middle
+      font-weight: bold
+    &:hover
+      color: rgba($small-text, 1)
+  @media only screen and (max-width : 991px)
+    display: none
 
