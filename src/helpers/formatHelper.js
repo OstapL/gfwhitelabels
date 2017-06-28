@@ -109,4 +109,78 @@ module.exports = {
     }
   },
 
+  formatMoneyInputOnKeyup(e) {
+    const countChar = (str='', char='', to=str.length) => {
+      let count = 0;
+      for (let i = 0; i <= to; i += 1)
+        count += (str[i] === char) ? 1 : 0;
+
+      return count;
+    };
+
+    const findRemovedChar = (oldString, newString) => {
+      const numRx = /[^0-9\.]/g;
+      if (oldString.replace(numRx, '') !== newString.replace(numRx, ''))
+        return -1;
+
+      const length = Math.min(oldString.length, newString.length);
+      for (let i = 0; i < length; i += 1) {
+        if (oldString[i] !== newString[i])
+          return i;
+      }
+
+      return -1;
+    };
+
+    const SKIP_KEY_CODES = [
+      16,   //shift
+      17,   //ctrl
+      18,   //alt
+      35,   //end
+      36,   //home
+      37,   //left arrow
+      38,   //down arrow
+      39,   //right arrow
+      40,   //up arrow
+      91,   //left window
+      188,  //comma
+      190,  //period
+    ];
+
+    if (_.contains(SKIP_KEY_CODES, e.keyCode))
+      return;
+
+    let rawValue = e.target.value;
+    const rawValueNumber = rawValue.replace(/\$/g, '');
+    let valueString = rawValueNumber.replace(/,/g, '');
+
+    let number = parseFloat(valueString);
+    if (isNaN(number))
+      return e.target.value = valueString.replace(/[^0-9\$,\.]/g, '');
+
+    let cursorPosition = e.target.selectionStart;
+    let cursorPositionFix = rawValue.startsWith('$') ? 0 : 1;
+    const newValue = number.toLocaleString('en-US');
+    e.target.value = '$' + newValue;
+
+    const rawValueCommaCount = countChar(rawValue, ',', cursorPosition);
+    const newValueCommaCount = countChar(newValue, ',', cursorPosition);
+
+    if (rawValueCommaCount !== newValueCommaCount) {
+      cursorPositionFix += newValueCommaCount - rawValueCommaCount;
+    }
+
+    if (rawValueNumber.length < newValue.length) {
+      const removedCharIdx = findRemovedChar(rawValueNumber, newValue);
+      if (removedCharIdx >= 0) {
+        if ((cursorPosition - 1) <= removedCharIdx && newValue[removedCharIdx] === ',')
+          cursorPositionFix -= 1;
+      }
+    }
+
+    cursorPosition += cursorPositionFix;
+    cursorPosition = cursorPosition <= 0 ? 1 : cursorPosition;
+    e.target.setSelectionRange(cursorPosition, cursorPosition);
+  }
+
 };
