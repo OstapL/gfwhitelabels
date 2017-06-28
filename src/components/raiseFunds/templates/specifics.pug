@@ -10,11 +10,11 @@ section.campaign-specifics.container.m-b-85
   +menu('campaign', 'specifics')
 
   .col-xl-8.col-lg-8.col-md-12.p-sm-0
-    h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.m-b-0 specifics
+    h2.text-uppercase.text-lg-center.text-xs-center.m-t-0 specifics
     form.form-section
       .col-xl-12.p-sm-0
         .row
-          .form-group
+          .form-group.m-b-0
             .col-sm-12
               .warning-block 
                 i.fa.fa-info-circle  
@@ -67,7 +67,7 @@ section.campaign-specifics.container.m-b-85
 
         h3.text-lg-center.col-md-center.text-xs-center.col-lg-12.pre-money-terms Pre-Money Valuation and Equity Terms
         .col-lg-12.text-lg-center.text-md-center.text-xs-center.m-b-1.p-b-1
-          a(href=app.config.bucketServer + '/docs/GrowthFountain.Security.Description.pdf' target="_blank").link-2 Click here to see descriptions of Common Equity and Revenue Share
+          a(href=require('doc/GrowthFountain.Security.Description.pdf') target="_blank").link-2 Click here to see descriptions of Common Equity and Revenue Share
         .row.m-b-1
           .pre-money-terms.m-b-1
             -

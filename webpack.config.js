@@ -67,7 +67,7 @@ if (isDev) {
 }
 
 const dependencies = Object.keys(require('./package.json').dependencies);
-const lazyDependencies = ['dropzone', 'socket.io-client', 'cropperjs', 'hellojs'];
+const lazyDependencies = ['dropzone', 'socket.io-client', 'cropperjs'];
 
 const baseDependencies = dependencies.filter((dep) => {
   return !lazyDependencies.find(authDep => authDep == dep);
@@ -137,12 +137,29 @@ module.exports = {
       {
        test: /\.(mp3|mp4|webm)$/,
        loader: 'file-loader',
+       include: [
+          path.resolve(__dirname, './staticdata'),
+        ],
+     },
+     {
+       test: /\.(pdf|doc|docx)$/,
+       include: [
+          path.resolve(__dirname, './staticdata'),
+        ],
+        loaders: [
+          {
+            loader: 'file-loader',
+            query: {
+              name: '[path][name].[hash].[ext]',
+            }
+          },
+        ],
      },
       {
         test: /\.(gif|png|jpe?g|svg|ico)$/i,
         include:[
           path.resolve(__dirname, './node_modules'),
-          path.resolve(__dirname, './src'),
+          path.resolve(__dirname, './staticdata'),
         ],
         loaders: [
           {
@@ -174,7 +191,9 @@ module.exports = {
     alias: {
       components: path.resolve(__dirname, 'src/components'),
       constants: path.resolve(__dirname, 'consts'),
-      images: path.resolve(__dirname, 'src/img'),
+      images: path.resolve(__dirname, 'staticdata/img'),
+      video: path.resolve(__dirname, 'staticdata/video'),
+      doc: path.resolve(__dirname, 'staticdata/doc'),
     },
     modules: [
       path.resolve(__dirname, 'src'),
@@ -190,7 +209,12 @@ module.exports = {
     historyApiFallback: true,
     port: 7070,
     host: '0.0.0.0',
+    disableHostCheck: true,
+    //this can be used only on local machine,
+    //to open app hosted on local machine from mobile phone you need to use disableHostCheck prop;
+    // public: 'local.growthfountain.com',
     hot: true,
     inline: true,
   },
 };
+

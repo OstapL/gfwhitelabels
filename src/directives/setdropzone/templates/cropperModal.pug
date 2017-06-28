@@ -1,0 +1,27 @@
+-
+  cssClass = cssClass || '';
+  cssClass += ' modal fade cropModal modal-dropzone'
+
+div(
+  class=cssClass
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="cropper-modal-label"
+  aria-hidden="true"
+)
+  .modal-dialog(role="document")
+    .modal-content
+      .modal-header
+        button(
+          type="button"
+          data-dismiss="modal"
+          aria-label="Close"
+        ).close
+          span(aria-hidden="true")
+            i.fa.fa-times
+        h4.modal-title#cropper-modal-label
+
+      .modal-body
+        | !{ cropperHTML}
+
+      .modal-footer

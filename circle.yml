@@ -8,6 +8,8 @@ dependencies:
         - git submodule init
         - git submodule update
         - git submodule foreach git pull origin master
+        - cd staticdata && git checkout `echo $CIRCLE_BRANCH | sed -e 's/ostap/alpha/g' | sed -e 's/chagin/alpha/g'` && git pull
+        - cd ..
         - ls -la 
         - NODE_ENV=production ./node_modules/webpack/bin/webpack.js -p --config ./webpack.config.js
         - sudo apt-get update

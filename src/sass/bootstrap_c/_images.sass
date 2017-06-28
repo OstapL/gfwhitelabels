@@ -14,10 +14,15 @@ img
 		top: -450px
 		height: 100%
 		background-size: cover!important
+		-webkit-backface-visibility: hidden
+		backface-visibility: hidden
+		-webkit-transform-style: preserve-3d
+		transform-style: preserve-3d
+		z-index: 1
 		@media only screen and (max-width : 1024px)
 			top: -500px
 .scroll-paralax
-	&:after
+	&:before
 		position: absolute
 		width: 100%
 		height: 100%
@@ -25,6 +30,7 @@ img
 		background: rgba(17, 17, 17, .5)
 		left: 0
 		top: 0
+		z-index: 2
 	.center-wrap
 		position: absolute 
 		left: 50%
@@ -45,7 +51,7 @@ img
 			margin-bottom: rem(25)
 			margin-top: 0
 			font-weight: 300
-		.btn
+		a.btn
 			&:nth-child(2)
 				margin-left: rem(30)
 		&.small-button
@@ -70,7 +76,7 @@ img
       top: -200px
 // для подсказки в профайле и на странице инвест 
 .img-routing-number
-	background-image: url(../img/routing-number-on-check.png)
+	background-image: url(../img/generals/routing-number-on-check.png)
 	width: 251px
 	height: 156px
 	background-repeat: no-repeat

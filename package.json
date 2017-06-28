@@ -40,10 +40,10 @@
     "sinon": "^2.3.0",
     "style-loader": "^0.16.0",
     "url-loader": "^0.5.8",
-    "webpack": "^2.3.2",
+    "webpack": "^2.6.1",
     "webpack-bundle-analyzer": "^2.3.1",
     "webpack-bundle-size-analyzer": "^2.5.0",
-    "webpack-dev-server": "^2.4.2"
+    "webpack-dev-server": "^2.4.5"
   },
   "dependencies": {
     "babel-polyfill": "^6.23.0",
@@ -55,6 +55,7 @@
     "cookies-js": "^1.2.3",
     "cropperjs": "^0.8.1",
     "deep-diff": "^0.3.4",
+    "dom4": "^1.8.3",
     "dropzone": "^4.3.0",
     "hellojs": "^1.13.4",
     "intl": "^1.2.5",

@@ -72,39 +72,39 @@ section.formc.introduction.create-company-media.container
                     label Credit Card Number
                   .col-lg-9
                     input(type="text" data-stripe="number" id="card_number").form-control
-                    img(src=require('images/visa_logo_6.gif'), alt="")
-                    img(src=require('images/mastercard_logo_5.gif'), alt="")
-                    img(src=require('images/amex_512.png'), alt="")
-                    img(src=require('images/Discover-Logo.png'), alt="")
+                    img(src=require('images/icons/visa_logo_6.gif'), alt="")
+                    img(src=require('images/icons/mastercard_logo_5.gif'), alt="")
+                    img(src=require('images/icons/amex_512.png'), alt="")
+                    img(src=require('images/icons/Discover-Logo.png'), alt="")
 
               div(id="expiration-block").expiration
                 .form-group.row.m-b-0
-                  .col-xl-7
-                    .col-lg-5.text-lg-right
+                  .col-xl-7.col-lg-6.col-md-6.p-lg-l-0.expiration-form
+                    .col-xl-5.col-lg-12.text-xl-right.text-lg-left
                       label Expiration
-                    .col-lg-7
+                    .col-lg-12.col-xl-7
                       - 
                         pug_html += app.fields.dateMonth('card_exp_month', _.extend({
                         'empty': { '': 'Choose' },
-                        'class1': 'col-xl-6 p-l-0',
+                        'class1': 'col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-6 p-l-0',
                         'value': values.card_exp_month,
                         }, fields.card_exp_month));
                       - 
                         pug_html += app.fields.dateYear('card_exp_date_year', _.extend({
                         'value': values.card_exp_date_year,
-                        'class1': 'col-xl-6 p-r-0',
+                        'class1': 'col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-6 p-r-0',
                         'placeholder': 'YYYY',
                         }, fields.card_exp_date_year));
-                  .col-xl-5.p-r-0
-                    .col-lg-5
+                  .col-xl-5.col-lg-6.col-md-6.p-xl-r-0.p-lg-r-0.cvv-code
+                    .col-xl-5.col-lg-12
                       label CVV Code
-                    .col-lg-7.p-l-0
+                    .col-xl-7.col-lg-12
                       .input-icon
                         div.fa.fa-question-circle.showPopover(
-                        data-content="<p class='pb10'>For Visa, MasterCard and Discover (left), the <br> 3 digits on the <u>back</u> of your card.</p> <p class='pb10'>For American Express (right) the 4 digits on the <br> <u>front</u> of your card.</p><img class='m-r-1 m-l-1' src='/img/cart_pay_1.png' /> <img  src='/img/cart_pay_2.png' />")
+                        data-content="<p class='pb10'>For Visa, MasterCard and Discover (left), the <br> 3 digits on the <u>back</u> of your card.</p> <p class='pb10'>For American Express (right) the 4 digits on the <br> <u>front</u> of your card.</p><img class='m-r-1 m-l-1' src='images/generals/cart_pay_1.png' /> <img  src='images/generals/cart_pay_2.png' />")
                       input(type="text" data-stripe="cvc" id="card_cvc" placeholder="CVV Code").form-control
                 #electronically-sign-form.electronically-sign
-                  .col-xl-10.offset-xl-1.m-t-3.investment
+                  .col-xl-10.offset-xl-1.m-t-3.investment.p-x-0
                     .col-lg-12
                       h3.m-t-0.text-lg-center.m-b-2 Electronically Sign
                     .form-group.row
@@ -121,9 +121,8 @@ section.formc.introduction.create-company-media.container
                           span.by By:
                           span.name
               .row.btn-pay
-                .col-lg-12.m-t-2
-                  button#pay-btn.btn.btn-primary.text-uppercase Agree and Pay
-
+                .col-lg-12.m-t-2.text-xs-center.text-xl-right
+                  button#pay-btn.btn.btn-primary.text-uppercase Agree and Pay 
           div(class=(values.is_paid != true ? 'collapse' : '') id="save-button-block")
             .row
               .col-xl-12

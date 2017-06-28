@@ -233,7 +233,7 @@ module.exports = {
         this.disposePlot();
 
         let currentYear = new Date().getFullYear();
-        let ticks = Array(10).fill().map((_, i) => [i, 'Year ' + (currentYear + i)]);
+        let ticks = Array(10).fill().map((_, i) => [i, + (currentYear + i)]);
         let data = this.mapToPlot(this.data.outputData);
 
         this.$chart = $("#chart1");

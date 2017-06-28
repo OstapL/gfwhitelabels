@@ -3,16 +3,22 @@
   var STATUSES = require('consts/raisecapital/companyStatuses.json').STATUS;
   var CampaignInfoProvider = require('directives/social/CampaignInfoProvider.js');
   var SECURITY = require('consts/raisecapital/security_type.json');
+  var INDASTRY = require('consts/raisecapital/industry.json');
 
   var infoProvider = new CampaignInfoProvider(this.model);
   var directiveKey = 'campaign';
+  var disableInvest = values.is_approved != STATUSES.VERIFIED;
+  var investURL =  disableInvest ? '#' : '/' + values.slug + '/invest';
+  
 
 section.company-header.scroll-paralax.no-paralax-mobile
-  div(style="background-image: url(" + values.campaign.getMainImage() + ")").background
+  div(style="background-image: url(" + (values.campaign.getMainImage() || require('images/default/default-header.png')) + ")").background
   .js-height-parent.container-fluid
     .home-content
       .home-text.text-lg-center
         h1.company-name.mb-xs-30.big-h1.text-uppercase #{ values.short_name || values.name }
+        if values.tagline.length > 0
+          h2.font-weight-light.tagline #{ values.tagline }
         .local-scroll
           if values.campaign.video
             -
@@ -22,22 +28,8 @@ section.company-header.scroll-paralax.no-paralax-mobile
               data-provider=videoInfo.provider
               data-id=videoInfo.id
               data-url=videoInfo.url
-            ).big-icon.link-6.youtube_popup.show-video-modal
-              i.fa.fa-play-circle-o
-          a(href=values.website target="_blank").link-6.link-campaing-detail.hidden-xs-down #{ app.helpers.format.getWebsiteUrl(values.website) }
-          .row.social-link.hidden-xs-down
-            if values.facebook
-              a(href=values.facebook target="_blank").link-6.link-campaing-detail
-                i.fa.fa-facebook
-            if values.twitter
-              a(href=values.twitter target="_blank").link-6.link-campaing-detail
-                i.fa.fa-twitter
-            if values.instagram
-              a(href=values.instagram target="_blank").link-6.link-campaing-detail
-                i.fa.fa-instagram
-            if values.linkedin
-              a(href=values.linkedin target="_blank").link-6.link-campaing-detail
-                i.fa.fa-linkedin
+            ).big-icon.link-6.youtube_popup.showVideoModal.play-icon
+              i.fa.fa-play
 
         // End Hero Content
   .top-info
@@ -57,22 +49,22 @@ section.company-header.scroll-paralax.no-paralax-mobile
                     i(aria-hidden="true").fa.fa-question-circle.text-muted.detail-security-type-icon
 
           if values.campaign.security_type == 0
-            .col-xl-2.col-lg-3.col-md-3.col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left.one-block
+            .col-xl-2.col-lg-3.col-md-4.col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left.one-block
               p Pre-Money Valuation
               h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.premoney_valuation) }
           else
-            .col-xl-2.col-lg-3.col-md-3.col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left.one-block
+            .col-xl-2.col-lg-3.col-md-4.col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left.one-block
               p Percentage Revenue
               h2.font-weight-bold #{ values.campaign.percentage_revenue }%
-          .col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left.hidden-sm-up.one-block
+          .col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left.hidden-md-up.one-block
             p Minimum Investment
             h2.font-weight-bold.no-margin #{ app.helpers.format.formatPrice(values.campaign.minimum_increment) }
-          .col-xl-2.col-lg-2.col-md-2.col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left.one-block
+          .col-xl-2.col-lg-2.col-md-4.col-sm-6.col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left.one-block
             p Days Left
             h2.font-weight-bold.no-margin #{ values.campaign.daysLeft() }
-          .col-xl-4.col-lg-3.col-md-2.hidden-xs-down.p-sm-0.pull-lg-right.text-xs-center.one-block
-            if values.is_approved == STATUSES.VERIFIED
-              a(href="/" + values.slug + "/invest").btn.btn-primary.text-uppercase.pull-lg-right Invest
+          .col-xl-4.col-lg-3.col-md-12.col-xs-12.one-block.share.text-xl-right.text-lg-right.text-md-center.text-sm-center.text-xs-center.pull-xl-right
+            | !{ socialDirective.render(directiveKey, infoProvider) }
+            
 
 if app.getParams().preview == '1'
   div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#company_publish.modal.fade
@@ -143,22 +135,40 @@ if app.getParams().preview == '1'
 
 section.campaigndetail
   .container
-    .col-lg-6.p-md-0
-      if values.tagline.length > 0
-        h1.text-xs-center.text-lg-left.m-t-0.m-b-1 #{ values.tagline }
-      .row
-        .col-lg-4.col-xs-5
-          .sity-detail
-            i.fa.fa-map-marker
-            |  #{ values.city }, #{ values.state }
-        .col-lg-6.col-xs-7.text-xs-right.text-lg-left
-          .date-detail.pull-md-right.pull-lg-left
-            i.fa.fa-calendar-check-o
-            |  Founded #{ app.helpers.format.formatDate(values.founding_date) }
-      .row.hidden-xs-down
-        .col-lg-12.share
-          | !{ socialDirective.render(directiveKey, infoProvider) }
-    .col-lg-6.right-block-investors.p-l-0.p-sm-0
+    .col-xl-2.col-lg-4.col-md-5.col-sm-5.col-xs-12.col-xs-12.p-xs-0.p-r-0
+      .left-wrap-city
+        i.fa.fa-calendar-check-o.icon-city
+        p Founded #{ app.helpers.format.formatDate(values.founding_date) }
+        
+      .left-wrap-city
+        i.fa.fa-map-marker.icon-city
+        p #{ values.city }, #{ values.state }
+        .vertical-line
+      .left-wrap-city
+        i.fa.fa-tags.icon-city
+        p !{INDASTRY[values.industry] || "Other" }
+    .col-xl-4.col-lg-8.col-md-7.col-sm-7.col-xs-12.brif-block.p-xs-0
+      .brif
+        h4.text-uppercase.font-weight-bold Highlights
+        | !{values.brief}
+        .link-site.d-inline-block
+          a(href=values.website target="_blank").link-1.link-campaing-detail #{ app.helpers.format.getWebsiteUrl(values.website) }
+        .social-link.d-inline-block.pull-right
+          if values.facebook
+            a(href=values.facebook target="_blank").link-1.link-campaing-detail
+              i.fa.fa-facebook
+          if values.twitter
+            a(href=values.twitter target="_blank").link-1.link-campaing-detail
+              i.fa.fa-twitter
+          if values.instagram
+            a(href=values.instagram target="_blank").link-1.link-campaing-detail
+              i.fa.fa-instagram
+          if values.linkedin
+            a(href=values.linkedin target="_blank").link-1.link-campaing-detail
+              i.fa.fa-linkedin
+        .clear
+    
+    .col-xl-6.col-lg-12.col-md-12.col-sm-12.col-xs-12.right-block-investors.p-xs-0
       .progress_bar_container
         -
           var percentage_raised = values.campaign.fundedPercentage();
@@ -167,41 +177,17 @@ section.campaigndetail
           span.committed #{ app.helpers.format.formatPrice(values.campaign.amount_raised)}
         .clear
         progress(value=percentage_raised.value max="100").progress
-      .mt25
-        .row.col-xl-8.col-md-6.text-xs-center.text-sm-center.text-md-left
+      .progress-campaign-right.row
+        .col-xl-8.col-lg-8.col-md-6.col-sm-12.text-xs-center.text-sm-center.text-md-left
           p Target
           h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.minimum_raise) } - #{ app.helpers.format.formatPrice(values.campaign.maximum_raise) }
-        .row.col-xl-4.col-md-6.pull-lg-right.text-xs-center.text-sm-center.text-md-left.hidden-sm-down
-          p Minimum Investment
-          h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.minimum_increment) }
-        div(style="display: none").row.col-lg-12.investors-block
-          .col-lg-2.p-l-0
-            p Investors
-            h2.font-weight-bold 17
-          .col-lg-10.p-l-0
-            ul
-              li
-                a(href="")
-                  img(src=require('images/avatar1.jpg') alt="...").img-circle
-              li
-                a(href="")
-                  img(src=require('images/avatar6.jpg') alt="...").img-circle
-              li
-                a(href="")
-                  img(src=require('images/avatar1.jpg') alt="...").img-circle
-              li
-                a(href="")
-                  img(src=require('images/avatar6.jpg') alt="...").img-circle
-              li
-                a(href="")
-                  img(src=require('images/avatar1.jpg') alt="...").img-circle
-              a(href="#" style="display: none").link-1 see all...
-        .col-xl-4.col-lg-3.col-md-2.hidden-sm-up.p-sm-0.pull-lg-right.text-xs-center
-            if values.is_approved == STATUSES.VERIFIED
-              a(href="/" + values.slug + "/invest").btn.btn-primary.text-uppercase.pull-lg-right Invest
-        .row.social-share-mobile
-          .col-lg-12.share.hidden-sm-up.text-xs-center
-            | !{ socialDirective.render(directiveKey, infoProvider) }
+        .col-xl-4.col-lg-4.col-md-6.col-sm-6.pull-lg-right.text-xs-center.text-sm-center.text-md-left.hidden-sm-down
+          .pull-right
+            p Minimum Investment
+            h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.minimum_increment) }
+        .col-xl-12.hidden-xl-up.text-xs-center
+          a(href=investURL disabled=disableInvest).btn.btn-primary.text-uppercase Invest
+
 section.border-bottom-scroll.hidden-lg-down
   .container.tabs-scroll.p-t-2
     nav(data-toggle="sticky-onscroll").navbar.navbar-default.sticky
@@ -218,8 +204,7 @@ section.border-bottom-scroll.hidden-lg-down
           a(href="#faq").nav-link faq
         li.nav-item.text-uppercase
           a(href="#ask").nav-link Ask a Question
-        if values.is_approved == STATUSES.VERIFIED
-          a(href="/" + values.slug + "/invest").btn.btn-primary.text-uppercase.pull-xl-right.pull-lg-left invest
+        a(href=investURL disabled=disableInvest).btn.btn-primary.text-uppercase.pull-xl-right.pull-lg-left invest
 section
   div(data-spy="scroll"
   data-target="#navbar-example2"
@@ -228,7 +213,7 @@ section
   section.about-detail.border-bottom
     .container
       .col-lg-12.p-sm-0
-        h2#about.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-subheading About #{ values.short_name || values.name }
+        h2#about.text-uppercase.text-lg-center.text-xs-center.campaign-subheading.m-t-0 About #{ values.short_name || values.name }
         p !{ app.helpers.text.restoreLineBreak(values.description) }
 
         h2.dosis.our.text-uppercase.text-lg-center.text-xs-center.campaign-subheading Why You Should Invest
@@ -253,7 +238,7 @@ section
         else if values.campaign.gallery_group_id.data.length
           each v,k in values.campaign.gallery_group_id.data
             .col-lg-4.col-sm-12.col-xs-12.col-md-6.no-padding-img
-              a(href=(v.getUrl('main')) data-size='1440x900' rel="gallery1" title=(v.name) disabled="1").fancybox
+              a(href=(v.getUrl('main')) data-size='1440x900' rel="gallery1" title=(v.name)).fancybox
                 img(src=(v.getUrl('530x441')) alt=(v.name)).w-100.img-responsive
     .container
       .col-lg-12.p-sm-0
@@ -275,20 +260,20 @@ section
                       var videoInfo = app.getVideoInfo(v.link);
 
                     if videoInfo.provider === 'youtube'
-                      div(style="background-image: url(http://img.youtube.com/vi/" + videoInfo.id + "/0.jpg)").additional-video
+                      div(style="background-image: url(https://img.youtube.com/vi/" + videoInfo.id + "/0.jpg)").additional-video
                     else if videoInfo.provider === 'vimeo'
                       img(src="" alt="" style="width: 338px;" data-vimeo-id=videoInfo.id).card-img.w-100.vimeo-thumbnail
                     else
-                      div(style="background-image: url(http://img.youtube.com/vi/" + "/0.jpg)").additional-video
+                      div(style="background-image: url(https://img.youtube.com/vi/" + "/0.jpg)").additional-video
                     .card-img-overlays
-                      .card-title
+                      .card-title.m-b-0
                         a(
                           href='#'
                           data-provider=videoInfo.provider
                           data-url=videoInfo.url
                           data-id=videoInfo.id
-                        ).small-icon.link-6.m-y-0.show-video-modal
-                          i.fa.fa-play-circle-o
+                        ).small-icon.link-6.m-y-0.showVideoModal.play-icon
+                          i.fa.fa-play
                         h3.card-text.text-lg-center #{ v.headline }
 
           //-else
@@ -334,13 +319,13 @@ section
               return a.order > b.order;
             }
             values.campaign.team_members.members.sort(memberSort);
-          h2#team.dosis.text-uppercase.text-lg-center.text-xs-center.col-lg-12.campaign-subheading Team
+          h2#team.text-uppercase.text-lg-center.text-xs-center.col-lg-12.campaign-subheading.m-t-0 Team
           .row
             .col-lg-12.text-center-flex
               each v in values.campaign.team_members.members
                 .col-xl-4.col-lg-4.col-md-6.col-sm-12.col-xs-12.team.team-detail.p-xs-0
                   .card.text-lg-center.text-xs-center
-                    img(src=v.photo_image_id.getUrl('350x209') alt="").img-circle
+                    img(src=v.photo_image_id.getUrl('Default_photo') alt="").img-circle
                     .card-block
                       h4.text-xs-center.card-title.text-uppercase #{v.first_name} #{v.last_name }
                       p.card-text
@@ -359,24 +344,33 @@ section
                         if v.bio.length > 180
                           a(href="#").show-more-members.link-3 Read More
                       .d-block.text-lg-left.cite_education
-                        span.text-lg-left.text-xs-left.pull-left.color-grey
-                          if v.city
+                        if v.city && v.college
+                          p.color-grey.pull-left
                             i.fa.fa-home.p-l-0
                             |  #{v.city}
-                        span.pull-right.color-grey
-                          if v.college
+                          p.color-grey.pull-right
                             i.fa.fa-graduation-cap
                             |  #{v.college}
-  if values.campaign.press && Object.keys(values.campaign.press).length > 0 && values.campaign.press[0].headline != ''
+                        else
+                          .text-xs-center
+                            if v.city
+                              p.color-grey
+                                i.fa.fa-home.p-l-0
+                                |  #{v.city}
+                            if v.college
+                              p.color-grey
+                                i.fa.fa-graduation-cap
+                                |  #{v.college}
     .col-lg-12.border-bottom.m-t-0.m-b-3
-    section.articles
+  if values.campaign.press && Object.keys(values.campaign.press).length > 0 && values.campaign.press[0].headline != ''
+    section.articles#articles
       .container
         
           - var showMore = false;
-          h2.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-subheading.m-t-0 Articles and Press
+          h2.text-uppercase.text-lg-center.text-xs-center.campaign-subheading.m-t-0 Articles and Press
           .row
             .col-xl-8.offset-xl-2.articles_press
-              .card
+              .card.m-b-0
                 - var keys = Object.keys(values.campaign.press);
                 - var counter = 0;
                 - var lastArticleIdx = 0;
@@ -418,53 +412,53 @@ section
                 
 
               div(style="display:" + (showMore ? 'block' : 'none') + ";").row
-                .col-lg-12.text-xs-center.m-b-2
+                .col-lg-12.text-xs-center.see-all-article
                   a(href="#hidden-article-press" data-toggle="collapse").link-4.see-all-article-press Show More
-      .col-lg-12.border-bottom.m-t-0.m-b-3
+    .col-lg-12.border-bottom.m-t-0.m-b-0
   else
     .col-lg-12
 
   section.document.border-bottom
     .container
       .row
-        h2#documents.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-subheading.m-t-0 Documents
+        h2#documents.col-lg-12.text-uppercase.text-lg-center.text-xs-center.campaign-subheading.m-t-0 Documents
         .col-xl-8.offset-xl-2.col-lg-10.offset-lg-1.col-sm-12.offset-sm-0
-          .col-lg-4.text-xs-center
+          .col-xl-4.col-lg-4.col-md-6.col-sm-6.col-xs-12.text-xs-center
             p Official filing on SEC.gov
             if values.formc.link_to_formc
               a(href=values.formc.link_to_formc target="_blank")
-                img(src=require('images/lrg_US_Department_of_State35.gif')).img-document.d-inline-block
+                img(src=require('images/icons/lrg_US_Department_of_State35.gif')).img-document.d-inline-block
                 h3.d-inline-block  Form C
 
-          .col-lg-4.text-xs-center
+          .col-xl-4.col-lg-4.col-md-6.col-sm-6.col-xs-12.text-xs-center
             p Company documents
             a(href="#" target="_blank").company-documents
               i.fa.fa-file-pdf-o.d-inline-block
               h3.d-inline-block Financials
 
-          .col-lg-4.row.text-xs-center
+          .col-xl-4.col-lg-4.col-md-12.col-sm-12.col-xs-12.row.text-xs-center
             p Company documents
             if values.campaign.investor_presentation_file_id.id
               a(href=values.campaign.investor_presentation_file_id.getUrl('origin') target="_blank")
                 i.fa.fa-file-powerpoint-o.d-inline-block
                 h3.d-inline-block Investor Presentation
-  section.overview
+  section.overview-detail
     .container
       div
-        h2#overview.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-subheading overview and terms
+        h2#overview.col-lg-12.text-uppercase.text-xs-center.campaign-subheading.m-t-0 overview and terms
         .col-xl-8.offset-xl-2.col-lg-10.offset-lg-1.col-md-12.offset-md-0.fundraising.p-xs-0
           if values.campaign.security_type == 0
-            table.table.table-bordered.pb10
+            table.table.table-bordered.m-b-0
               tbody
                 tr.bgc-row-top
                   td(colspan="2").p-x-0.p-y-0
                     h4.text-uppercase.text-lg-center.text-xs-center.campaign-subheading.section-bg-line.m-y-0 Fundraising Description
-                tr.bgc-row-middle
+                tr.bgc-row-middle.text-xs-center
                   td.width-50
                     p Type of Security
                   td
                     p Pre-Money Valuation
-                tr
+                tr.text-xs-center
                   td.width-50
                     h2.font-weight-bold Common Equity
                       div.d-inline-block
@@ -472,38 +466,38 @@ section
                           i(aria-hidden="true").fa.fa-question-circle.text-muted.detail-security-type-icon
                   td
                     h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.premoney_valuation) }
-                tr.bgc-row-middle
+                tr.bgc-row-middle.text-xs-center
                   td.width-50
                     p Minimum Investment
                   td
                     p Price per Share
-                tr
+                tr.text-xs-center
                   td.width-50
                     h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.minimum_increment) }
                   td
                     h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.price_per_share) }
-                tr.bgc-row-middle
+                tr.bgc-row-middle.text-xs-center
                   td.width-50
                     p Minimum # of Shares
                   td
                     p Maximum # of Shares
-                tr
+                tr.text-xs-center
                   td.width-50
                     h2.font-weight-bold #{ (Math.round(values.campaign.minimum_raise / values.campaign.price_per_share)).toLocaleString('en-US') }
                   td
                     h2.font-weight-bold #{ (Math.round(values.campaign.maximum_raise / values.campaign.price_per_share)).toLocaleString('en-US') }
           else
-            table.table.table-bordered.pb10
+            table.table.table-bordered.m-b-0
               tbody
                 tr.bgc-row-top
                   td(colspan="2").p-x-0.p-y-0
                     h4.text-uppercase.text-lg-center.text-xs-center.campaign-subheading.section-bg-line.m-y-0  Fundraising Description
-                tr.bgc-row-middle
+                tr.bgc-row-middle.text-xs-center
                   td.width-50
                     p Type of Security
                   td
                     p Percentage Revenue
-                tr
+                tr.text-xs-center
                   td.width-50
                     h2.font-weight-bold Revenue Share
                       div.d-inline-block
@@ -511,49 +505,49 @@ section
                           i(aria-hidden="true").fa.fa-question-circle.text-muted.detail-security-type-icon
                   td
                     h2.font-weight-bold #{ values.campaign.percentage_revenue }%
-                tr.bgc-row-middle
+                tr.bgc-row-middle.text-xs-center
                   td.width-50
                     p Target Minimum Raise Amount
                   td
                     p Target Maximum Raise Amount
-                tr
+                tr.text-xs-center
                   td.width-50
                     h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.minimum_raise) }
                   td
                     h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.maximum_raise) }
-                tr.bgc-row-middle
+                tr.bgc-row-middle.text-xs-center
                   td.width-50
                     p Minimum Investment
                   td
                     p Cap
-                tr
+                tr.text-xs-center
                   td.width-50
                     h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.minimum_increment) }
                   td
                     h2.font-weight-bold #{ values.campaign.cap }X
 
-  if values.campaign.perks.length > 0 && values.campaign.perks[0].amount != ''
-    section#perks.overview
-      - values.campaign.perks = $.map(values.campaign.perks, function(value, index) {return [value];});
-      - values.campaign.perks = values.campaign.perks.filter(function(value) { return value && value.perk; });
-      - values.campaign.perks.sort(function (a, b) { return Number(a.amount) - Number(b.amount); });
-      .container
-        div
-          .col-xl-8.offset-xl-2.col-lg-10.offset-lg-1.col-md-12.offset-md-0.perks.p-xs-0
-            table.table.table-bordered.m-b-0
-              tbody
-                tr.bgc-row-top
-                  td(colspan="2").p-x-0.p-y-0
-                    h4.text-uppercase.text-lg-center.text-xs-center.campaign-subheading.section-bg-line.m-y-0 Perks
-              each v,k in values.campaign.perks
-                if v
-                  tr.perks-invest
-                    td.bgc-row-middle.w-35
-                      h3 Invest 
-                        span.font-weight-bold #{ app.helpers.format.formatPrice(v.amount) }
-                        |  or more
-                    td
-                      p.text-justify.perks-intro #{ v.perk }
+    if values.campaign.perks.length > 0 && values.campaign.perks[0].amount != ''
+      section#perks
+        - values.campaign.perks = $.map(values.campaign.perks, function(value, index) {return [value];});
+        - values.campaign.perks = values.campaign.perks.filter(function(value) { return value && value.perk; });
+        - values.campaign.perks.sort(function (a, b) { return Number(a.amount) - Number(b.amount); });
+        .container
+          div
+            .col-xl-8.offset-xl-2.col-lg-10.offset-lg-1.col-md-12.offset-md-0.perks.p-xs-0
+              table.table.table-bordered.m-b-0
+                tbody
+                  tr.bgc-row-top
+                    td(colspan="2").p-x-0.p-y-0
+                      h4.text-uppercase.text-lg-center.text-xs-center.campaign-subheading.section-bg-line.m-y-0 Perks
+                each v,k in values.campaign.perks
+                  if v
+                    tr.perks-invest
+                      td.bgc-row-middle.w-35
+                        h3 Invest 
+                          span.font-weight-bold #{ app.helpers.format.formatPrice(v.amount) }
+                          |  or more
+                      td
+                        p.text-justify.perks-intro #{ v.perk }
 
   //-section(style="display: none").investors-all.border-bottom
     .container
@@ -626,10 +620,10 @@ section
         .col-lg-12.text-lg-center
           a(href="" style="display: none").link-4 See All Investors
   if values.campaign.faq && Object.keys(values.campaign.faq).length > 0 && values.campaign.faq[0].question != '' 
-    .border-bottom.m-t-3
-    section.faq.p-b-0
+    .border-bottom.m-t-0
+    section.faq#faq-section
       .container
-        h2#faq.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-subheading FAQ
+        h2#faq.col-lg-12.text-uppercase.text-lg-center.text-xs-center.campaign-subheading.m-t-0 FAQ
         .col-lg-8.offset-lg-2.p-xs-0
           div(role="tablist" aria-multiselectable="true").accordion
             - var counter = 0
@@ -654,17 +648,16 @@ section
                   - counter ++;
         
   #comments
-  .border-bottom.m-t-3
-  section.ask.border-bottom
+  .border-bottom.m-t-0
+  section.ask.border-bottom#ask-section
     .container.comments-container
 
   section.like-detail
     .container
       .col-lg-12
           .like-text-wrap
-            h2
+            h2.font-weight-light
               .like-detail-icon.d-inline-block
                 i.fa.fa-thumbs-o-up.like-icon-circle
               |  I’d Like to Invest in #{ values.short_name || values.name }!
-            if values.is_approved == STATUSES.VERIFIED
-              a(href="/" + values.slug + "/invest").btn.btn-lg.btn-primary.text-uppercase.m-t-2.large-btn-mobile-main invest in this company
+            a(href=investURL disabled=disableInvest).btn.btn-lg.btn-primary.text-uppercase.m-t-2.large-btn-mobile-main invest in this company

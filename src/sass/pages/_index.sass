@@ -1,414 +1,474 @@
 .clear
-	clear: both
+  clear: both
+// slider or img
+.slider-main
+  position: relative
+  .heartland-tour-in-main
+    position: absolute
+    top: 0
+    left: 0
+    width: 100%
+    background-color: rgba($heartland-tour-in-main, .8)
+    padding: rem(10)
+    text-align: center
+    z-index: 2
+    p 
+      color: $white
+    a
+      color: $white
+      text-decoration: underline
+      font-weight: bold
+      &:hover
+        +mt(.3s)
+        color: rgba($white, .7)
+        text-decoration: none
+.main-top-baner
+  .height-block-banner
+    height: $height-block-banner
+    overflow: hidden
+    &.scroll-paralax
+      &:before
+        background: transparent
+        z-index: 0
 
-.main_block
-	background: url(../img/bg_img.png)
-	background-repeat: no-repeat
-	min-height: 397px
-	background-size: cover
-	
-	.red_opacity
-		min-height: 397px
-		background: $red_opacity_color
-		position: relative
+    &:after
+      position: absolute
+      width: 100%
+      height: 100%
+      content: ''
+      background: rgba(17, 17, 17, .5)
+      left: 0
+      top: 0
+      z-index: 1
+    .background
+      position: absolute
+      width: 100%
+      top: -20px
+      height: 105%
+      background-size: cover!important
+      background-position: center
+.slider-content,
+.main-top-baner
+  h1
+    color: $white
+    margin-bottom: 15px
+    margin-top: 0
+    letter-spacing: normal
+    font-weight: bold
+    @media only screen and (max-width : 576px)
+      font-size: rem(24)
+      line-height: rem(26)
+  .small-text
+    line-height: 26px
+    color: $white
+    letter-spacing: .6px
+    font-size: 24px
+    font-weight: 300
+    @media only screen and (max-width : 576px)
+      font-size: rem(16)
+      line-height: rem(22)
+  .link-6
+    font-size: 15px
+    color: #d7d7d7
+    text-decoration: none
+    &:hover
+      color: $white
+    @media only screen and (max-width : 576px)
+      font-size: rem(13)
+  .center-wrap
+    @media only screen and (max-width : 576px)
+      top: 60%
+//slider main
+.slider-main
+  .slider-content
+    top: 50%;
+    -ms-transform: translate(-50%,-50%);
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    position: absolute;
+    left: 50%
+    z-index: 999
+    width: 100%
+    
+  .owl-carousel
+    .owl-item
+      &:before
+        content: ''
+        width: 100%
+        height: 100%
+        position: absolute
+        top: 0
+        z-index: 1
+        left: 0
+        background: rgba(17, 17, 17, .4)
+      &:nth-child(3)
+        &:before
+          background: rgba(17, 17, 17, 0)
+      h1.big-h1
+        @media screen and (max-width: 576px)
+          font-size: 24px
+          letter-spacing: normal
+          line-height: 26px!important
+    .owl-nav
+      margin-top: 0
 
-		.vertical_align_container
-			width: 90%
-			position: absolute 
-			left: 50%
-			top: 50%
-			-ms-transform: translate(-50%,-50%)
-			-webkit-transform: translate(-50%,-50%)
-			transform: translate(-50%,-50%)
-			color: $white
-			-webkit-font-smoothing: antialiased
-			
-			p
-
-				a
-					color: $yellow
-			ul
-				li
-					list-style: none
-	
-	.logo_container
-		min-height: 397px
-		position: relative
-
-		.vertical_align_container
-			width: 100%
-			position: absolute 
-			left: 50%
-			top: 60%
-			-ms-transform: translate(-50%,-60%)
-			-webkit-transform: translate(-50%,-60%)
-			transform: translate(-50%,-60%)
-			color: $white
-			text-transform: uppercase
+    .owl-prev
+      position: absolute
+      left: 10px
+      top: 50%
+      border-radius: 100px
+      border-radius: 100px!important
+      opacity: .6
+    .owl-next
+      position: absolute
+      right: 10px
+      top: 50%
+      border-radius: 100px!important
+      opacity: .6
+    .owl-dots
+      bottom: 0
+      -ms-transform: translate(-50%,-50%);
+      -webkit-transform: translate(-50%,-50%);
+      transform: translate(-50%,-50%);
+      position: absolute;
+      left: 50%
+      opacity: .6
 
 
-			img
-				margin: 0 auto
-				display: block
+@-webkit-keyframes fadeOuts
+  from
+    opacity: 1
+  to
+    opacity: 0
 
-.text_block_white
-	position: relative
-	z-index: 5
-	min-height: 61px
-	background: $white
-	-webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.75)
-	-moz-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.75)
-	box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.75)
-	padding: 9px 0 0px 0
-	font-size: 12px
+@keyframes fadeOuts
+  from
+    opacity: 1
+  to
+    opacity: 0
 
-	p
-		margin-left: 25px
+.fadeOuts
+  -webkit-animation-name: fadeOuts
+  animation-name: fadeOuts
+@-webkit-keyframes fadeOutsDown
+  from
+    opacity: 1
+  to
+    opacity: 0
+    -webkit-transform: translate3d(0, 100%, 0)
+    transform: translate3d(0, 100%, 0)
 
-	a
-		width: 180px
 
-	.btn-info
-		color: $white
-		border-color: $light_green
-		background: $light_green
-		&:hover
-			background: $dark_green
-			border-color: $dark_green
-			color: $white
-			+mt(.2s)
-
-	.btn-info-dark
-		color: $white
-		border-color: $dark_green
-		background: $dark_green
-		+mt(.2s)
-		&:hover
-			background: $light_green
-			border-color: $light_green
-			color: $white
-			+mt(.2s)
-		
-	.circle_or
-		width: 46px
-		height: 42px
-		border-radius: 21px
-		background: $white
-		line-height: 42px
-		font-style: 14px
-		text-transform: uppercase
-		color: $dark_green
-		text-align: center
-		display: inline-block
-		vertical-align: middle
-		position: relative
-		z-index: 5
-		margin: 0 -20px 0 -20px
-
-.jeanne_footer
-	min-height: 221px
-	background: url(../img/footer_bg.png)
-	background-repeat: repeat
-
-	.container_block
-		margin: 50px 0
-		border-right: 1px solid $grey_bg
-		padding-right: 15px
-
-		img
-			max-width: 95%
-			display: block
-			margin: 0
-
-		h5
-			color: $blue_dark
-			font-weight: bold
-
-	.small_container_block
-		margin: 50px auto
-		color: $light_green
-
-		h6
-			font-weight: bold
-
-			b
-				color: $blue
-
-.light-blue
-	color: $white
-	background: $blue_dark
-	border-color: $blue_dark
-	+mt(.2s)
-	&:hover
-		background: $blue_light
-		border-color: $blue_light
-		color: $white
-		+mt(.2s)
-
-.js-height-full
-	height: 70vh
-//main page
-.home-section
-	&:before
-		content: " "
-		width: 100%
-		height: 100%
-		position: absolute
-		top: 0
-		left: 0
-		background: rgba(17, 17, 17, .4)
-	
-	.home-text-main
-		vertical-align: middle
-		display: table-cell
-		height: 100%
-		h1
-			color: $white
-			margin-bottom: rem(50)
-		.small-text
-			line-height: rem(26)
-			color: $white
-			letter-spacing: rem(.6)
-			font-size: rem(24)
-			font-weight: 300
-		.btn
-			&:first-child
-				margin-right: 30px
-		.link-6
-			font-size: rem(14)
-
-.home-wrap-text-block
-	position: relative
-	margin-top: rem(50)
-	.opasity-block
-		&:before
-			content: " "
-			width: 100%
-			height: 100%
-			position: absolute
-			top: 0
-			left: 0
-			background: rgba(17, 17, 17, .5)
-	h2
-		color: $alabaster
-		margin-bottom: rem(20)
-	h3
-		color: $alabaster
-		letter-spacing: rem(.45)
-		line-height: rem(24)
-		margin-top: 0
-		font-weight: 300
-	.learn-link
-		margin-top: rem(20)
-		margin-bottom: rem(45)
-	.m-l-30
-		margin-left: rem(30)
-.raise-wrap
-	.btn
-		&:first-child
-			margin-right: rem(30)
-.home-what-is
-	h3
-		color: $cod_gray
-		letter-spacing: rem(.45)
-		line-height: rem(24)
-		font-weight: lighter
 .home-our-partners
-	img
-		width: 255px
-	.momentum-img
-		img
-			width: 220px
+  background-color: $alabaster
+  padding: rem(25) 0 rem(20) 0
+  padding-bottom: rem(25)
+  display: $home-our-partners-display
+  .partners-line
+    margin-bottom: rem(35)
+    .title
+      color: $small-text
+      overflow: hidden
+      text-align: center
+      width: 97%
+      margin: auto
+      &:before,
+      &:after
+        content: ''
+        display: inline-block
+        vertical-align: middle
+        width: 100%
+        height: 1px
+        background-color: #c4c4c4
+        position: relative
+      &:before
+        margin-left: -100%
+        left: -14px
+      &:after
+        margin-right: -100%
+        right: -14px
+      @media only screen and (max-width : 767px)
+        &:before,
+        &:after
+          background-color: transparent
 
-.home-wrap-text-block
-	.wrap
-		position: absolute 
-		left: 50%
-		top: 50%
-		-ms-transform: translate(-50%,-50%)
-		-webkit-transform: translate(-50%,-50%)
-		transform: translate(-50%,-50%)
-		width: 100%
-@media only screen and (max-width : 992px)
-	.home-text-main
-		h1
-			line-height: rem(42)
-	.home-wrap-text-block
-		padding-top: rem(5)
+
+  .item
+    min-height: 70px
+    @media only screen and (max-width : 544px)
+      margin: rem(10) 0
+      img
+        margin-top: 0!important
+        margin-bottom: 0
+  img
+    margin: 0 auto
+    &.callahan
+      width: 160px
+      margin-top: rem(12)
+    &.jdcu
+      width: 160px
+      margin-top: rem(12)
+    &.river-mark
+      width: 160px
+      margin-top: rem(15)
+    &.dcu
+      width: 140px
+      margin-top: rem(7)
+    &.momentum3
+      width: 125px
+    &.infinity
+      width: 160px
 
 @media only screen and (max-width : 768px)
-	.home-text-main
-		h1
-			line-height: rem(42)
-	.owl-carousel
-		.owl-dots
-			display: none
+  .owl-carousel
+    .owl-dots
+      display: none
 
 @media only screen and (max-width : 580px)
-	.home-text-main
-		.btn
-			font-size: rem(12)!important
-			padding: rem(8) rem(15)!important
-			&:first-child
-				margin-right: 5px!important
-		.small-text
-			font-size: rem(18)
-		h1
-			line-height: rem(28)
-			font-size: rem(24)!important
-	.home-wrap-text-block
-		padding-top: rem(5)
-		h2
-			line-height: rem(28)
-		.btn
-			font-size: rem(12)!important
-			padding: rem(8) rem(15)
-	.home-what-is
-		h2
-			line-height: rem(28)
-	.raise-wrap
-		.container
-			padding-left: 0
-			padding-right: 0
-		.btn
-			&:first-child
-				margin-right: 5px
-	.slider-main 
-		.slider-content 
-			.small-text
-				font-size: rem(18)
-				line-height: 20px
-	.momentum-img
-		img
-			margin-top: 30px
-@media only screen and (max-width : 360px)
-	.raise-wrap
-		.btn
-			&:first-child
-				margin-right: 10px
-
-@media only screen and (max-width : 320px)
-	.raise-wrap
-		.container
-			padding-left: 0
-			padding-right: 0
-		.btn
-			&:first-child
-				margin-right: 5px
-
+  .slider-main 
+    .slider-content
+      top: 60%!important
+      .small-text
+        font-size: rem(16)!important
+        line-height: 22px!important
 
 @-webkit-keyframes zoomOut
   from
     opacity: 1
-
   50%
     opacity: 0
     -webkit-transform: scale3d(0.3, 0.3, 0.3)
     transform: scale3d(0.3, 0.3, 0.3)
-
   to
     opacity: 0
-
 
 @keyframes zoomOut
   from
     opacity: 1
-
   50%
     opacity: 0
     -webkit-transform: scale3d(0.3, 0.3, 0.3)
     transform: scale3d(0.3, 0.3, 0.3)
-
   to
     opacity: 0
-
 
 .zoomOut
   -webkit-animation-name: zoomOut
   animation-name: zoomOut
 
 .main-slider-item
-	height: 70vh!important
-	background-size: cover!important
-	background-repeat: no-repeat!important
-	background-position: center center!important
+  height: 70vh!important
+  background-size: cover!important
+  background-repeat: no-repeat!important
+  background-position: center center!important
 @media only screen and (max-width : 480px)
-	.slide_1
-		background-position-x: -60px!important
-	.slide_2
-		background-position-x: -60px!important
-	.slide_3
-		background-position-x: -400px!important
-	.main-slider-item
-		height: 420px!important
+  .slide_1
+    background-position-x: $background-position-x-sl-1
+  .slide_2
+    background-position-x: $background-position-x-sl-2
+  .slide_3
+    background-position-x: $background-position-x-sl-3
+  .main-slider-item
+    height: 420px!important
 @media only screen and (max-width : 320px)
-	.slide_3
-		background-position-x: -400px!important
+  .slide_3
+    background-position-x: -400px!important
 @media only screen and (max-width : 768px)
-	.slider-main
-		.slider-content
-			top: 60%
+  .slider-main
+    .slider-content
+      top: 60%
+
 .main-video
-	height: 75vh
-	overflow: hidden
-	.slider-main 
-		.slider-content
-			top: 35%!important
-			z-index: 1!important
-	.homepage-hero-module
-		border-right: none
-		border-left: none
-		position: relative
+  height: 75vh
+  overflow: hidden
+  .slider-main 
+    .slider-content
+      top: 35%!important
+      z-index: 1!important
+  .homepage-hero-module
+    border-right: none
+    border-left: none
+    position: relative
 
-	.no-video .video-container video, .touch .video-container video
-		display: none
+  .no-video .video-container video, .touch .video-container video
+    display: none
 
-	.no-video .video-container .poster, .touch .video-container .poster
-		display: block !important
+  .no-video .video-container .poster, .touch .video-container .poster
+    display: block !important
 
-	.video-container
-		position: relative
-		bottom: 0%
-		left: 0%
-		height: 100%
-		width: 100%
-		overflow: hidden
-		background: #000
-		.poster img
-			width: 100%
-			bottom: 0
-			position: absolute
-		.filter
-			z-index: 1
-			position: absolute
-			background: rgba(0, 0, 0, 0.4)
-			width: 100%
-			height: 100%
-		video
-			position: absolute
-			z-index: 0
-			bottom: 0
-		&.fillWidth
-			width: 100%
-.slider-main
-	position: relative
-	.heartland-tour-in-main
-		position: absolute
-		top: 0
-		left: 0
-		width: 100%
-		background-color: rgba($heartland-tour-in-main, .8)
-		padding: rem(10)
-		text-align: center
-		z-index: 2
-		p 
-			color: $white
-		a
-			color: $white
-			text-decoration: underline
-			font-weight: bold
-			&:hover
-				+mt(.3s)
-				color: rgba($white, .7)
-				text-decoration: none
+  .video-container
+    position: relative
+    bottom: 0%
+    left: 0%
+    height: 100%
+    width: 100%
+    overflow: hidden
+    background: #000
+    .poster img
+      width: 100%
+      bottom: 0
+      position: absolute
+    .filter
+      z-index: 1
+      position: absolute
+      background: rgba(0, 0, 0, 0.4)
+      width: 100%
+      height: 100%
+    video
+      position: absolute
+      z-index: 0
+      bottom: 0
+    &.fillWidth
+      width: 100%
 
+.campaign-list-main-page
+  margin-top: rem($margin-section-main-top-list)
+  margin-bottom: rem($margin-section-main-bottom-list)
+  .btn-see-all
+    i
+      font-size: rem(12)
+
+.main-video-wrap
+  height: 500px
+  position: relative
+  overflow: hidden
+  &:before
+    content: " "
+    width: 100%
+    height: 100%
+    position: absolute
+    top: 0
+    left: 0
+    background: rgba(17, 17, 17, .5)
+  @media only screen and (max-width : 890px)
+    height: auto
+  @media only screen and (max-width : 768px)
+    background-image: url("img/generals/main-before-video.jpg")
+    width: 100%
+    height: $main-video-table-height
+    background-repeat: no-repeat
+    background-size: cover
+  @media only screen and (max-width : 575px)
+    height: $main-video-mobile-height
+  @media only screen and (max-width : 375px)
+    height: $main-video-xs-height
+  video
+    width: 100%
+    position: absolute
+    z-index: -1
+    top: -250px
+    @media only screen and (max-width : 1340px)
+      top: -100px
+    @media only screen and (max-width : 1100px)
+      top: 0
+    @media screen and (min-width : 768px) and (max-width : 890px)
+      width: 120%
+    @media only screen and (max-width : 768px)
+      display: none
+  .center-wrap
+    position: relative
+    margin-top: rem($video-center-wrap-margin-top)
+    margin-bottom: rem($video-center-wrap-margin-bottom)
+    text-align: center
+    .play-icon
+      margin-top: rem($play-icon-margin-top-video)
+    .text-wrap
+      background-color: $video-center-wrap-bgc
+      width: 100%
+      text-align: center
+      padding-top: rem(30)
+      padding-bottom: rem(30)
+      color: $white
+      h2
+        margin-top: rem($margin-top-h2-title-video)
+        margin-bottom: rem($margin-bottom-h2-title-video)
+      .text-video-wrap
+        *
+          margin-top: rem($margin-top-text-video)
+          margin-bottom: rem($margin-bottom-text-video)
+          font-weight: $font-weight-text-video
+          letter-spacing: $letter-spacing-text-video
+          &:last-child
+            margin-bottom: rem($margin-bottom-last-child-text-video)
+    
+.better
+  margin-top: rem($margin-section-main-top-better)
+  margin-bottom: rem($margin-section-main-bottom-better)
+  h2
+    margin-bottom: rem(15)
+  h3
+    margin-bottom: 0
+  .titile-better
+    color: $titile-better-color
+    font-size: rem(36)
+    display: inline-block
+    letter-spacing: $titile-better-ls
+    @media only screen and (max-width : 544px)
+      font-size: rem(26)
+  .better-item
+    margin-top: rem(50)
+    .photo
+      text-align: center
+    .title
+      text-align: center
+      margin-top: rem(30)
+  .bottom-wrap
+    margin-top: rem(50)
+    .item
+      margin-bottom: rem(30)
+      h3
+        font-style: italic
+        width: 90%
+        display: inline-block
+        vertical-align: top
+        margin: 0
+      i
+        font-size: rem(18)
+        color: $better-icon-color
+        width: 9%
+        display: inline-block
+  .powered-by
+    text-align: center
+    display: $powered-by-display
+    h4
+      font-size: rem($powered-by-title-fz)
+      letter-spacing: $powered-by-title-ls
+      margin-bottom: 0
+      margin-top: rem(15)
+      color: $powered-by-title-color
+    .small-powered-by
+      color: $powered-by-small-color
+      font-weight: $powered-by-small-font-weight
+      margin-bottom: rem(20)
+      font-size: $small-powered-by-font-size
+.main-page-banner-raise
+  .background
+    top: $main-page-banner-bottom-top
+    height: $main-page-banner-bottom-height
+    background-image: url($main-page-banner-bottom-image)
+    @media only screen and (max-width : 1200px)
+      top: $main-page-banner-bottom-top-mw
+.main-page-banner-invest
+  .background
+    top: $main-page-banner-bottom-top
+    height: $main-page-banner-bottom-height
+    background-image: url($main-page-banner-bottom-image)
+    @media only screen and (max-width : 1200px)
+      top: $main-page-banner-bottom-top-mw
+  .center-wrap
+    .link-bottom
+      margin-top: rem(20)
+      a
+        font-size: rem(14)
+.news-on-main-page
+  margin-top: rem($margin-section-main-top-news)
+  h4
+    a
+      color: $black
+      +mt(.5s)
+      &:hover
+        +mt(.5s)
+        color: rgba($black, .7)
+  .news-img
+    @media only screen and (max-width : 576px)
+      padding-bottom: 30px!important

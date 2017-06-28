@@ -17,18 +17,18 @@ section.formc.use_of_proceeds.create-company-media.container
       .form-group.intended
         .col-lg-12.p-xs-0
           textarea(rows="3" placeholder="Intended Use of Proceeds" name="intended_use_of_proceeds").form-control= values.intended_use_of_proceeds
-      .table.table-responsive
+      .table
         .col-lg-12.table-responsive.p-xs-0
           table.table.table-bordered.use-of-proceeds-table.expense-table.m-b-0
             thead
               tr
                 th.w-50
-                th.w-25.text-lg-center.font-size-12 If target offering amount sold
-                th.w-25.text-lg-center.font-size-12 If maximum amount sold
+                th.w-25.text-xs-center.font-size-12 If target offering amount sold
+                th.w-25.text-xs-center.font-size-12 If maximum amount sold
               tr.color-grey.row-gray
                 td.w-50.p-l-r-20.p-t-b-5 Total Proceeds
-                td.w-25.text-lg-center.font-size-12.p-t-b-5 $#{ app.helpers.format.formatNumber(minRaise) }
-                td.w-25.text-lg-center.font-size-12.p-t-b-5 $#{ app.helpers.format.formatNumber(maxRaise) }
+                td.w-25.text-xs-center.font-size-12.p-t-b-5 $#{ app.helpers.format.formatNumber(minRaise) }
+                td.w-25.text-xs-center.font-size-12.p-t-b-5 $#{ app.helpers.format.formatNumber(maxRaise) }
               |!{ templates.less_offering_express }
 
           table.table.table-bordered.use-of-proceeds-table.use-table.m-b-0.m-t-0
@@ -37,8 +37,8 @@ section.formc.use_of_proceeds.create-company-media.container
                 td.w-50.p-l-r-20 Net Proceeds
                   .pull-right.icon.showPopover(data-content="Minimum and maximum net proceeds is calculated automatically: <br> Net Proceeds = Total Proceeds - Sum (A+B+C)")
                     i.fa.fa-question-circle.m-r-0
-                td.w-25.text-lg-center.font-size-12.min-net-proceeds
-                td.w-25.text-lg-center.font-size-12.max-net-proceeds
+                td.w-25.text-xs-center.font-size-12.min-net-proceeds
+                td.w-25.text-xs-center.font-size-12.max-net-proceeds
             |!{ templates.use_of_net_proceeds }
           table.table.table-bordered.m-t-0
             tbody
@@ -46,8 +46,8 @@ section.formc.use_of_proceeds.create-company-media.container
                 td.w-50 Total Use of Net Proceeds
                   .pull-right.icon.showPopover(data-content="Minimum and maximum total use of net proceeds is calculated automatically: <br>  Total Use of Net Proceeds = Sum (A+B+C)")
                     i.fa.fa-question-circle
-                td.w-25.text-lg-center.font-size-12.min-total-use(data-content="Minimum Total Use of Net Proceeds must be equal to Minimum Net Proceeds." data-placement="bottom" data-toggle="popover" data-container="body" data-trigger="manual")
-                td.w-25.text-lg-center.font-size-12.max-total-use(data-content="Maximum Total Use of Net Proceeds must be equal to Maximum Net Proceeds." data-placement="bottom" data-toggle="popover" data-container="body" data-trigger="manual")
+                td.w-25.text-xs-center.font-size-12.min-total-use(data-content="Minimum Total Use of Net Proceeds must be equal to Minimum Net Proceeds." data-placement="bottom" data-toggle="popover" data-container="body" data-trigger="manual")
+                td.w-25.text-xs-center.font-size-12.max-total-use(data-content="Maximum Total Use of Net Proceeds must be equal to Maximum Net Proceeds." data-placement="bottom" data-toggle="popover" data-container="body" data-trigger="manual")
       .col-lg-12.p-xs-0
         .border-bottom.m-b-3
         h3.text-xs-center Business Plan

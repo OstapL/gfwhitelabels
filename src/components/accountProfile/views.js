@@ -18,7 +18,6 @@ module.exports = {
       // 'click #saveFinancialInfo': api.submitAction,
       'change #not-qualify': 'changeQualify',
       'change .investor-item-checkbox': 'changeAccreditedInvestorItem',
-      // 'change input[name=accredited_investor]': 'changeAccreditedInvestor',
     },
     app.helpers.phone.events,
     app.helpers.yesNo.events,
@@ -37,6 +36,7 @@ module.exports = {
 
       this.fields.image_image_id = _.extend(this.fields.image_image_id, {
         templateDropzone: 'profileDropzone.pug',
+        defaultImage: require('images/default/Default_photo.png'),
         onSaved: (data) => {
           app.user.updateImage(data.file);
         },
@@ -189,22 +189,17 @@ module.exports = {
 
     changeAccreditedInvestorItem(e) {
       let $target = $(e.target);
-      let name = $target.data('name');
       let checked = $target.prop('checked');
-      this.$('input[name=' + name + ']').val(checked);
-      if (checked) {
-        this.$('#not-qualify').prop('checked', false).change();
-      }
+
+      if (checked)
+        this.$('#not-qualify').prop('checked', false);
     },
 
     changeQualify(e) {
       let $target = $(e.target);
-      if ($target.prop('checked')) {
-        this.$('.investor-item-checkbox').prop('checked', false).change();
-
-        this.$('input[name=accredited_investor_choice]').val(false);
-      } else {
-        this.$('input[name=accredited_investor_choice]').val(true);
+      const notQualify = $target.prop('checked');
+      if (notQualify) {
+        this.$('.investor-item-checkbox').prop('checked', false);
       }
     },
 
@@ -378,16 +373,18 @@ module.exports = {
     template: require('./templates/investorDashboard.pug'),
     el: '#content',
     events: {
-      'click .cancel-investment': 'cancelInvestment',
+      'submit .cancelInvestment': 'cancelInvestment',
       'click .agreement-link': 'openAgreement',
       'click .financial-docs-link': 'showFinancialDocs',
     },
 
     initialize(options) {
       this.fields = options.fields;
+      this.fields.cancelled_reason.label = 'What is the main reason for your cancellation?';
+      this.fields.feedback.label = 'Do you have any suggestions to improve our platform?';
 
       _.each(this.model.data, (investment, idx) => {
-        this.model.data[idx] = new InvestmentModel(investment);
+        this.model.data[idx] = new InvestmentModel(investment, this.fields);
       });
 
       this.snippets = {
@@ -407,6 +404,7 @@ module.exports = {
       this.$el.html(this.template({
         investments: this.model.data,
         snippets: this.snippets,
+        fields: this.fields,
       }));
     },
 
@@ -493,52 +491,54 @@ module.exports = {
 
       let investment = this._findInvestment(id);
 
-      if (!investment)
+      if (!investment) {
+        $target.closest('.modal').modal('hide');
         return console.error('Investment doesn\'t exist: ' + id);
+      }
 
-      app.dialogs.confirm('Are you sure?').then((confirmed) => {
-        if (!confirmed)
-          return;
+      let data = $target.serializeJSON();
 
-        api.makeRequest(app.config.investmentServer + '/' + id + '/decline', 'PUT').done((response) => {
-          investment.deposit_cancelled_by_investor = true;
+      if(data.rating == undefined) {
+        data.rating = 0;
+      }
 
-          $target.closest('.one_table').remove();
+      $target.closest('.modal').modal('hide');
+      api.makeRequest(app.config.investmentServer + '/' + id + '/decline', 'PUT', data).done((response) => {
+        investment.deposit_cancelled_by_investor = true;
 
-          let hasActiveInvestments = _.some(this.model.data, i => i.active);
-          if (!hasActiveInvestments)
-            $('#active .investor_table')
-              .append(
-                '<div role="alert" class="alert alert-warning">' +
-                '<strong>You have no active investments</strong>' +
-                '</div>');
+        $target.closest('.one_table').remove();
 
-          let historicalInvestmentsBlock = this.$el.find('#historical .investor_table');
-          let historicalInvestmentElements = historicalInvestmentsBlock.find('.one_table');
-          let cancelledInvestmentElem = this.snippets.investment(investment);
+        let hasActiveInvestments = _.some(this.model.data, i => i.active);
+        if (!hasActiveInvestments)
+          $('#active .investor_table')
+            .append(
+              '<div role="alert" class="alert alert-warning">' +
+              '<strong>You have no active investments</strong>' +
+              '</div>');
 
-          if (historicalInvestmentElements.length) {
-            //find investment to insert after it
-            let block = _.find(historicalInvestmentElements, (elem) => {
-              const investmentId = Number(elem.dataset.investmentid);
-              return investmentId > investment.id;
-            });
-            if (block)
-              $(block).after(cancelledInvestmentElem);
-            else
-              historicalInvestmentsBlock.prepend(cancelledInvestmentElem);
-          } else {
-            historicalInvestmentsBlock.empty();
-            historicalInvestmentsBlock.append(cancelledInvestmentElem);
-          }
+        let historicalInvestmentsBlock = this.$el.find('#historical .investor_table');
+        let historicalInvestmentElements = historicalInvestmentsBlock.find('.one_table');
+        let cancelledInvestmentElem = this.snippets.investment(investment);
 
-          this.onCancel(investment);
-        }).fail((err) => {
-          app.dialogs.error(err.error);
-        });
+        if (historicalInvestmentElements.length) {
+          //find investment to insert after it
+          let block = _.find(historicalInvestmentElements, (elem) => {
+            const investmentId = Number(elem.dataset.investmentid);
+            return investmentId > investment.id;
+          });
+          if (block)
+            $(block).after(cancelledInvestmentElem);
+          else
+            historicalInvestmentsBlock.prepend(cancelledInvestmentElem);
+        } else {
+          historicalInvestmentsBlock.empty();
+          historicalInvestmentsBlock.append(cancelledInvestmentElem);
+        }
 
+        this.onCancel(investment);
+      }).fail((err) => {
+        app.dialogs.error(err.error);
       });
-
     },
   }),
 
@@ -629,6 +629,13 @@ module.exports = {
       this.model = this.company;
       this.campaign = options.campaign;
       this.formc = options.formc;
+
+      //this is auth cookie for downloadable files
+      app.cookies.set('token', app.user.data.token, {
+        domain: '.' + app.config.domainUrl,
+        expires: 1000 * 60 * 60 * 24 * 30 * 12,
+        path: '/',
+      });
     },
 
     render() {

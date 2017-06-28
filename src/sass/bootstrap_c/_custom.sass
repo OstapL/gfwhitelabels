@@ -36,6 +36,17 @@
   padding: 10px 11px
   border-radius: 100px
   font-size: rem(24)
+  width: 40px
+  height: 40px
+  position: relative
+  vertical-align: middle
+  &:before
+    left: 50%
+    top: 50%
+    -ms-transform: translate(-50%, -50%)
+    -webkit-transform: translate(-50%, -50%)
+    transform: translate(-50%, -50%)
+    position: absolute
 //
 .m-d-p-r-5
   padding-right: 5px!important
@@ -109,6 +120,13 @@
   transform: translate(-50%, -50%)
   position: absolute
   z-index: 999
+  i
+    padding-bottom: 0
+.userProfileDropzone
+  .uploading
+    @media screen and (max-width: 991px)
+      top: 100%
+      transform: translate(-50%, 400%)
 // на страницах
 .icon-color
   color: #aed07c
@@ -344,15 +362,6 @@ p.drop-photo
     margin-top: rem(30)!important
     margin-bottom: rem(25)!important
   .one-photo
-    &:before
-      background-color: $alabaster
-      position: absolute
-      content: ''
-      top: 0
-      width: 90%
-      height: 100%
-      left: 5%
-      z-index: -1
     img
       border-radius: 100px
       width: 133px!important
@@ -397,8 +406,13 @@ p.drop-photo
   border-radius: 100px
   position: relative
   margin: auto
+  display: inline-block
+  margin-right: 15px
   @media screen and (max-width: 544px)
     margin-bottom: rem(20)
+    margin: 0 auto
+    text-align: center
+    display: block
   i
     font-size: rem(22)
     padding: 5px
@@ -463,3 +477,88 @@ p.drop-photo
       top: 0px
       left: 2px
       color: $fancy-nav-color
+#fancybox-loading, .fancybox-close, .fancybox-prev span, .fancybox-next span
+  background-image: url(img/fancybox/fancybox_sprite.png)
+#fancybox-loading div
+  width: 44px
+  height: 44px
+  background: url(img/fancybox/fancybox_loading.gif) center center no-repeat
+.fancybox-nav
+  position: absolute
+  top: 0
+  width: 40%
+  height: 100%
+  cursor: pointer
+  text-decoration: none
+  -webkit-tap-highlight-color: transparent
+  z-index: 8040
+.fancybox-overlay
+  position: absolute
+  top: 0
+  left: 0
+  overflow: hidden
+  display: none
+  z-index: 8010
+  background: url(img/fancybox/fancybox_overlay.png)
+
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5)
+  #fancybox-loading, .fancybox-close, .fancybox-prev span, .fancybox-next span
+    background-image: url(img/fancybox/fancybox_sprite@2x.png)
+    background-size: 44px 152px
+  #fancybox-loading div
+    background-image: url(img/fancybox/fancybox_loading@2x.gif)
+    background-size: 24px 24px
+//====
+
+.play-icon
+  background-color: rgba($white, .6)
+  border-radius: 100px
+  width: 85px
+  height: 85px
+  display: inline-block
+  margin-top: rem(60)
+  position: relative
+  @media only screen and (max-width : 544px)
+    width: 50px
+    height: 50px
+    margin-top: rem(35)
+  i
+    color: $play-icon-color
+    font-size: rem(30)
+    position: absolute 
+    left: 53%
+    top: 50%
+    -ms-transform: translate(-50%,-50%)
+    -webkit-transform: translate(-50%,-50%)
+    transform: translate(-50%,-50%)
+    @media only screen and (max-width : 544px)
+      font-size: rem(16)
+  +mt(.5s)
+  &:hover
+    +mt(.5s)
+    background-color: rgba($white, .9)
+  &.small-icon
+    width: 45px
+    height: 45px
+    i
+      font-size: 16px
+.scrolling-top
+  position: fixed
+  top: 20px
+  right: 50px
+  z-index: 100
+  a
+    font-size: rem(18)
+    color: rgba($small-text, .6)
+    i
+      font-size: rem(44)
+      margin-right: 10px
+      vertical-align: middle
+    .text
+      vertical-align: middle
+      font-weight: bold
+    &:hover
+      color: rgba($small-text, 1)
+  @media only screen and (max-width : 991px)
+    display: none
+

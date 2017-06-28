@@ -144,6 +144,7 @@ module.exports = {
         attr.label += '<span class="color-red">*</span>';
       }
     }
+    attr.id = attr.id || name;
   },
 
   textLabel(name, attr) {

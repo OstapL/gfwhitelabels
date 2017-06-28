@@ -1,6 +1,9 @@
 section.raise-capital-landing
+  .raise-landing-top-line
+    a(href="/pg/heartland-tour") Click Here
+    span  to learn about The Heartland Tour and present your fundraise live!
   section.height-block-banner.scroll-paralax.top-baner.m-t-0.no-paralax-mobile
-    - var styleString = 'background: url(' + require('img/raise-landing/raise-landing-top.jpg') + ')';
+    - var styleString = 'background: url(' + require('images/raise-landing/raise-landing-top.jpg') + ')';
     div(style=styleString + '; height:80vh').background
     .center-wrap
       .col-xl-10.offset-xl-1
@@ -38,20 +41,22 @@ section.raise-capital-landing
         .col-xl-4.col-md-6
           .one-item.text-xs-center
             h4.title.font-weight-bold.text-uppercase VALUATION?
-            p.text Want to learn what your
+            p.text Want to learn what your business 
               br
-              | business might be worth?
+              | might be worth? Register to
               br
-              | Use our free calculators
+              | use our 
+              a(href="/calculator/BusinessValuation" target="_blank").link-3 free calculators
             img(src=require('images/raise-landing/icon/icon-1.png'))
         .col-xl-4.col-md-6
           .one-item.text-xs-center
             h4.title.font-weight-bold.text-uppercase HOW MUCH SHOULD I RAISE?
-            p.text Want a ballpark estimate of
+            p.text Want a ballpark estimate of how 
               br
-              | how much money to raise?
+              | much money to raise? Register to
               br
-              | Use our free calculator
+              | use our 
+              a(href="/calculator/whatmybusinessworth/intro" target="_blank").link-3 free calculators
             img(src=require('images/raise-landing/icon/icon-2.png'))
         .col-xl-4.col-md-6
           .one-item.text-xs-center
@@ -153,7 +158,7 @@ section.raise-capital-landing
                   a(href="/pg/entrepreneurquestions").link-3 Click here
       
 section.height-block-banner.scroll-paralax.no-paralax-mobile.raise-landing-banner
-  - var styleString = 'background: url(' + require('img/raise-landing/RS2.png') + ')';
+  - var styleString = 'background: url(' + require('images/raise-landing/RS2.png') + ')';
   div(style=styleString + '; height:600px').background
   .center-wrap
     .col-lg-12

@@ -1,8 +1,14 @@
 
 .calculator-container
+    .help-block
+        font-size: rem(12)
+        line-height: rem(14)
+    p
+        font-size: rem(14)
+        line-height: 18px
     label
-        font-size: 15px
-        line-height: 22px
+        font-size: 14px
+        line-height: 18px
     h3,h2,h4 
         line-height: 1.35!important
 
@@ -19,24 +25,55 @@
     .top-breadcrambs
         li 
             display: inline-block
-            margin-right: .5%
             width: 33%
-
+            position: relative
             &:last-child
                 margin-right: 0
-
+                a
+                    &:after
+                        display: none
             a 
                 padding: rem(11)
                 width: 100%
-
+                position: relative
                 border-color: $calc_tabs_bg
                 background: $calc_tabs_bg
-
+                border: solid 1px $gallery
                 text-align: center
                 color: $small-text
-
+                
                 &.btn
+                    h4
+                        margin-left: 15px
+                        @media screen and (max-width:575px)
+                            margin-left: 0
                     border-radius: $calc_tabs_radius
+                    @media screen and (max-width:575px)
+                        h4
+                            font-size: rem(10)
+                            position: relative
+                            z-index: 2
+                
+                
+                &:after
+                    content: ""
+                    width: 30px
+                    height: 31px
+                    position: absolute
+                    background: inherit
+                    top: 0
+                    bottom: 0
+                    right: -15px
+                    margin: auto
+                    border: 1px solid $gallery
+                    border-left: none
+                    border-bottom: none
+                    transform: rotate(45deg)
+                    z-index: 1
+                    @media screen and (max-width:575px)
+                        width: 27px
+                        height: 27px
+                        right: -13px
 
 
                 &.current
@@ -45,16 +82,59 @@
                     border-color: $calc_tabs_current_bg
                     color: $white
                     cursor: default
+            @media screen and (max-width:360px)
 
+                &:nth-child(1n+1)
+                    h4
+                        left: 8px
+                &:first-of-type
+                    width: 24%!important
+                &:last-of-type
+                    width: 28%!important
+                    h4
+                        left: 5px
         &.capitalraise
             padding: 0 2%
 
             li
                 width: 24.6%
+                @media screen and (max-width:360px)
+                    width: 20%!important
+                    &:nth-child(1n+1)
+                        width: 25%!important
+                        h4
+                            left: 10px
+                    &:first-of-type
+                        width: 23%!important
+                        h4
+                            left: 0
+                    &:last-of-type
+                        width: 27%!important
+                        h4
+                            left: 7px
 
         &.established-business
             li
                 width: 19.6%
+                @media screen and (max-width:360px)
+                    width: 20%!important
+                    &:nth-child(1n+1)
+                        width: 20%
+                        h4
+                            left: 10px
+                    &:first-of-type
+                        width: 18%!important
+                        h4
+                            left: 0
+                    &:last-of-type
+                        width: 22%!important
+                        h4
+                            left: 7px
+        &.revenue-share-calculator
+            li
+              @media screen and (max-width:360px)
+                width: 33%!important
+
 
     .simple-list
         padding-left: rem(17)
@@ -68,7 +148,10 @@
     .jqplot-title
         display: none
 
-    table 
+    table
+        .bgc-row
+            background-color: $table-bgc-row-calculator
+            color: $white
         thead tr th 
             padding: rem(15)
 
@@ -77,20 +160,23 @@
         tbody tr td,
         tbody tr th
             text-align: center
-
+    .table-revenue-finish
+        td,
+        th
+            font-size: rem(12)
     @media screen and (max-width: 992px)
         .mb30xs    
             margin-bottom: rem(30)
+    
+    &.select-business
+        @media screen and (max-width: 767px)
+            .btn
+                display: block
+        @media screen and (max-width: 380px)
+            .btn
+                font-size: rem(10)!important
 
     @media screen and (max-width:543px)
-        &.select-business
-            .btn-lg
-                padding-left: rem(9)
-                padding-right: rem(9)
-
-            .sm-font-xs
-                font-size: 9px!important
-
         .p-r-0
             padding-right: rem(9)!important
         .p-l-0
@@ -100,24 +186,50 @@
             &.capitalraise
                 padding: 0
 
-            &.established-business
-                li a
-                    letter-spacing: 1px
-                    padding: rem(14) rem(5)
-
-    @media screen and (max-width:380px)
-        &.select-business
-            .btn-lg.p0btn
-                padding-left: rem(0)
-                padding-right: rem(0)
     .grey-text-help
         color: $small-text
         font-size: rem(11)
-
-.table-custom-data
-    table-layout: fixed
-    max-width: 400px
-    margin: 0 auto 20px
+    &.select-calculator-two
+        .row-button
+            div
+                margin: auto
+                text-align: center
+                float: none
+            .btn
+                display: block
+                margin-top: rem(25)
+                @media screen and (max-width:440px)
+                    font-size: rem(10)!important
+                @media screen and (max-width:370px)
+                    padding-left: 10px
+                    padding-right: 10px
+                    text-align: center
+    &.established-business-finish
+        #chart
+            .flot-x-axis
+                .flot-tick-label
+                    width: 74px
+                    &:last-child
+                        text-align: center!important
+                    @media screen and (max-width:575px)
+                        font-size: 6px
+                        width: 30px
+                        margin-left: 25px
+    &.revenue-calculator
+        .graf-responsive
+            .flot-x-axis
+                .flot-tick-label
+                    margin-left: rem(35)
+            .plot-x-title
+                text-align: center
+                margin-top: rem(10)
+                color: $small-text
+            .plot-title
+                color: $small-text
+    .table-custom-data
+        table-layout: fixed
+        max-width: 400px
+        margin: 0 auto 20px
 
 .lead
     margin-bottom: 10px
@@ -133,51 +245,36 @@
     padding: 3px 5px
     border-radius: 4px
     font-size: 12px
-
-.tooltip
-    &.tooltip-custom
-        opacity: 1
-
-        .tooltip-inner
-            padding: 5px 10px 10px 25px
-            background: #fff
-            color: #3cbdb9
-            text-align: left
-            border: 1px solid
-            max-width: 100%
-            .formula
-                position: absolute
-                top: 30px
-            .fraction
-                margin-left: 180px
-                display: inline-block
-                width: 150px
-                text-align: center
-            .fraction, .top, .bottom
-                padding: 0 5px
-                .bottom
-                    border-top: 1px solid #3cbdb9
-                    display: block
-
-        .tooltip-arrow
-            border-width: 8px 10px 0
-            border-top-color: #3cbdb9
-            bottom: -2px
-
-            &:after
-                content: ''
-                position: absolute
-                width: 0
-                height: 0
-                border-color: transparent
-                border-style: solid
-                top: -8px
-                left: -9px
-                border-width: 7px 9px 0
-                border-top-color: #fff
-
-        .fa.fa-info-circle
+.graf-responsive
+    overflow: auto!important
+    #chart1   
+        width: 100%
+        @media screen and (max-width: 767px)
+            width: 768px!important
+    .data-point-label
+        transform: translate(-50%, -50%)
+        position: absolute
+        left: 50%!important
+        top: 20%!important
+.what-my-business-worth
+    .large
+        width: 340px
+        position: relative
+        height: 50px
+        .formula
             position: absolute
-            top: 14px
-            left: 10px
-            color: #3cbdb9
+            top: 50%
+            left: 0
+        .fraction
+            margin-left: 180px
+            display: inline-block
+            width: 150px
+            text-align: center
+            position: absolute
+            left: 0
+            top: 15%
+        .fraction, .top, .bottom
+            padding: 0 5px
+            .bottom
+                border-top: 1px solid $white
+                display: block

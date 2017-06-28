@@ -24,7 +24,7 @@ div(id=('comment' + comment.uid) data-id=comment.uid data-level=level).single-co
           else
             if comment.related
               span.kvalificatio-comments #{ comment.related }
-          p.date-comments.hidden-xs-down #{ passedTime }
+          p.date-comments #{ passedTime }
     .row
       .col-xl-12
         .author-comment
@@ -39,7 +39,7 @@ div(id=('comment' + comment.uid) data-id=comment.uid data-level=level).single-co
               span.reply-right |
           if level <= 3
             li.reply
-              a(href="#").link-1.link-reply Reply
+              a(href="#" disabled=attr.readonly).link-1.link-reply Reply
           //-
             li
               a(href="#").link-1.link-like

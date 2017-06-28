@@ -1,187 +1,202 @@
 - var GENERAL = require('consts/general.json');
 
 section.slider-main
-  //-.heartland-tour-in-main
+  .heartland-tour-in-main
     p GrowthFountain is coming to your town. 
       a(href="/pg/heartland-tour") Apply Now
-      |  to present your fundraise live!
-  .owl-carousel.owl-theme.carousel-test
-    div
-      - var styleString = 'background: url(' + require('images/slide_5.png') + ')';
-      div(style=styleString + '; background-position: center center !important').slide_1.main-slider-item
-      .slider-content.container
-        .text-xs-center
-          .col-lg-12
-            h1.big-h1 Own a Piece of Your Favorite Company
-          .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
-            span.small-text Invest in local businesses and entrepreneurs you believe in, starting at $100
-          .col-lg-12.mt20.mb30
-            a(href="/pg/education").link-6 Learn the Risks
-          if app.user.is_anonymous()
-            .col-lg-12
-              a(href="/account/signup").btn.btn-lg.btn-primary sign up + get $25
-          else
-            .col-lg-12.hidden-sm-down
-              a(href="/companies").btn.btn-lg.btn-primary.m-r-2 INVEST
-              a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
-            .col-lg-12.hidden-md-up
-              a(href="/companies").btn.btn-lg.btn-primary INVEST
-
-    div
-      - var styleString = 'background: url(' + require('images/slide_2.jpg') + ')';
-      div(style=styleString).main-slider-item.slide_2
-      //img(src=require('images/slide_2.jpg') alt="...")
-      .slider-content.container
-        .text-xs-center
-          .col-lg-12
-            h1.big-h1 Own a Piece of Your Favorite Company
-          .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
-            span.small-text Invest in local businesses and entrepreneurs you believe in, starting at $100
-          .col-lg-12.mt20.mb30
-            a(href="/pg/education").link-6 Learn the Risks
-          if app.user.is_anonymous()
-            .col-lg-12
-              a(href="/account/signup").btn.btn-lg.btn-primary sign up + get $25
-          else
-            .col-lg-12.hidden-sm-down
-              a(href="/companies").btn.btn-lg.btn-primary.m-r-2 INVEST
-              a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
-            .col-lg-12.hidden-md-up
-              a(href="/companies").btn.btn-lg.btn-primary INVEST
-    div
-      - var styleString = 'background: url(' + require('images/slide_3.jpg') + ')';
-      div(style=styleString).main-slider-item.slide_3
-      //img(src=require('images/slide_3.jpg') alt="...")
-      .slider-content.container
-        .text-xs-center
-          .col-lg-12
-            h1.big-h1 Own a Piece of Your Favorite Company
-          .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
-            span.small-text Invest in local businesses and entrepreneurs you believe in, starting at $100
-          .col-lg-12.mt20.mb30
-            a(href="/pg/education").link-6 Learn the Risks
-          if app.user.is_anonymous()
-            .col-lg-12
-              a(href="/account/signup").btn.btn-lg.btn-primary sign up + get $25
-          else
-            .col-lg-12.hidden-sm-down
-              a(href="/companies").btn.btn-lg.btn-primary.m-r-2 INVEST
-              a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
-            .col-lg-12.hidden-md-up
-              a(href="/companies").btn.btn-lg.btn-primary INVEST
-//section.main-video
-  .homepage-hero-module
-    .video-container
-      .filter
-      video(autoplay loop).fillWidth
-        source(src=require("img/video/In-And-Out/MP4/In-And-Out.mp4") type="video/mp4")
-        //source(src=require("img/video/In-And-Out/WEBM/In-And-Out.webm") type="video/webm")
-      .slider-main
-        .slider-content.container
-          .text-xs-center
-            .col-lg-12
-              h1.big-h1.hidden-sm-down Own a Piece of Your Favorite Company
-            .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
-              span.small-text Invest in local businesses and entrepreneurs you believe in, starting at $100
-            .col-lg-12.mt20.mb30
-              a(href="/pg/education").link-6 Learn the Risks
-            if app.user.is_anonymous()
-              .col-lg-12
-                a(href="/account/signup").btn.btn-lg.btn-primary sign up + get $25
-            else
-              .col-lg-12.hidden-sm-down
-                a(href="/companies").btn.btn-lg.btn-primary.m-r-2 INVEST
-                a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
-              .col-lg-12.hidden-md-up
-                a(href="/companies").btn.btn-lg.btn-primary INVEST
-
-section.campaing-list
+      |  to join The Heartland Tour and present your fundraise live!
+  include slider
+include topbanner
+section.campaing-list.campaign-list-main-page
   .container#campaignList
     .col-lg-12
-      h2.dosis.text-uppercase.text-sm-center.text-xs-center.mt50 CURRENT CAMPAIGNS
+      h2.text-uppercase.text-sm-center.text-xs-center.m-t-0 !{app.config.indexPage.campaignListTitle}
     include ../components/campaign/templates/_list
     .col-lg-12.text-lg-center.text-md-center.text-xs-center
-      if collection && collection.count && collection.count > GENERAL.COMPANIES_PER_PAGE
-        a(href="/companies").link-4 See All
+      if collection && collection.count && collection.count > GENERAL.COMPANIES_ON_MAINPAGE
+        a(href="/companies").btn.btn-sm.btn-secondary.btn-see-all 
+          | See All
+          i.fa.fa-angle-right
 
-
-section.height-block-banner.scroll-paralax.no-paralax-mobile
-  - var styleString = 'background: url(' + require('images/main-bg-section-one.jpg') + ')';
-  div(style=styleString + '; height:600px').background
-  .center-wrap.container.small-button
+section.main-video-wrap
+  video(poster=require("images/generals/main-before-video.jpg") id="bgvid" playsinline autoplay muted loop)
+    source(src=require("staticdata/video/main_background_video.mp4") type="video/mp4")
+  .center-wrap
+    .text-wrap
+      .container
+        .col-xl-12
+          h2.text-uppercase !{app.config.indexPage.videoTitle}
+        .col-xl-12.text-video-wrap.p-x-0
+          | !{app.config.indexPage.videoText}
+    a(
+      href='#'
+      data-provider=app.config.indexPage.dataProviderVideoPopup
+      data-id=app.config.indexPage.dataVideoIdPopup
+      data-url=app.config.indexPage.videoPopupUrl
+      data-hide-page='true'
+      data-modal-class='main-video-modal'
+    ).showVideoModal.play-icon
+      i.fa.fa-play
+section.home-our-partners
+  .container-fluid
     .col-xl-12
-      h2.text-uppercase.m-t-0 NOW ACCESSIBLE TO EVERYBODY
-          h3 It’s the evolution of investing. Receive a financial stake
-            br
-            | in the companies you support.
-    .col-lg-12.p-xs-0
-      if app.user.is_anonymous()
-        a(href="/account/signup").btn.btn-lg.btn-secondary.text-uppercase Sign up to start investing
-      else
-        a(href="/companies").btn.btn-lg.btn-secondary.text-uppercase Start investing
+      .partners-line
+        h4.title.text-uppercase GrowthFountain Powers Equity Crowdfunding for these Partners:
+    .col-xl-2.col-lg-4.col-md-4.col-sm-6.col-xs-12.item
+      a(href="http://www.callahan.com/" target="_blank")
+        img(src=require("images/partners-logo/callahan-logo.png") alt="").img-fluid.callahan
+    .col-xl-2.col-lg-4.col-md-4.col-sm-6.col-xs-12.item
+      a(href="https://www.jdcu.org/" target="_blank")
+        img(src=require('images/partners-logo/jdcu-logo.png') alt="").img-fluid.jdcu
+    .col-xl-2.col-lg-4.col-md-4.col-sm-6.col-xs-12.item
+      a(href="https://www.rivermarkcu.org/" target="_blank")
+        img(src=require('images/partners-logo/river-logo.png') alt="").img-fluid.river-mark
+    .col-xl-2.col-lg-4.col-md-4.col-sm-6.col-xs-12.item
+      a(href="https://www.dcu.org/" target="_blank")
+        img(src=require('images/partners-logo/dcu-logo.png') alt="").img-fluid.dcu
+    .col-xl-2.col-lg-4.col-md-4.col-sm-6.col-xs-12.item
+      a(href="http://momentum3growth.com/" target="_blank")
+        img(src=require('images/partners-logo/momentum-logo.png') alt="").img-fluid.momentum3
+    .col-xl-2.col-lg-4.col-md-4.col-sm-6.col-xs-12.item
+      a(href="https://www.infinityfcu.com/" target="_blank")
+        img(src=require('images/partners-logo/infinityfcu-logo.png') alt="").img-fluid.infinity
 
-section.home-what-is
+section.better
   .container
-    .col-lg-8.offset-lg-2.p-xs-0
-      h2.dosis.text-uppercase.text-sm-center.text-xs-center.m-t-3.mb20 WHAT IS GROWTHFOUNTAIN?
-      .row
-        .col-lg-12
-          h3.m-t-0.m-b-1.text-xs-center We banded together with a simple mission: to simplify fundraising
-            br
-            | and help businesses raise capital.
-          h3.m-t-0.text-xs-center Everybody in the world now has the ability to invest directly
-            br
-            | in America’s entrepreneurs!
-      .row
-        .col-lg-12
-          .embed-responsive.embed-responsive-16by9.boxshadow
-
-            iframe(
-              embed-responsive-item="true" 
-              src="https://player.vimeo.com/video/198101157?title=0&amp;byline=0&amp;portrait=0" 
-              data-webkitallowfullscreen="" 
-              data-mozallowfullscreen="" 
-              data-allowfullscreen=""
-            )
-
-section.height-block-banner.scroll-paralax.no-paralax-mobile
-  - var styleString = 'background: url(' + require('images/main-bg-section-raise.jpg') + ')';
-  div(style=styleString + '; height:450px').background
-  .center-wrap.container.small-button
+    .row
+      .col-xl-12.text-xs-center
+        h2.text-uppercase.m-t-0 You deserve a 
+          .titile-better better 
+          |  way to raise the money you need to grow.
+        h3.font-weight-light.m-t-0 Our technology stack was built to maximize your exposure and minimize your costs.
+    .row
+      .col-xl-4.better-item
+        .photo
+          img(src=require('images/generals/list-1.png'), alt="")
+        h4.title.text-uppercase List Your Fundraise
+        .text
+          p We want you to focus on what you do best: build your company. We’ll help you assess your valuation, prepare your offering docs and handle filings and all the heavy lifting.
+      .col-xl-4.better-item
+        .photo
+          img(src=require('images/generals/network1.png'), alt="")
+        h4.title.text-uppercase Activate Your Network
+        .text
+          p Think of our platform as a way to raise 150% or more of the money you can raise from your own network. Get your customer, community, friends and family to invest early and often. Once you create the momentum, our investor network can provide meaningful additional capital. 
+      .col-xl-4.better-item
+        .photo
+          img(src=require('images/generals/invest-list.png'), alt="")
+        h4.title.text-uppercase Everybody can Invest!
+        .text
+          p BRAND NEW! Everybody in the world can now invest in America’s entrepreneurs. Capture their interest with your story and use your network to get early traction – and our massive network will surely follow!
+    .row
+      .col-xl-8.offset-xl-2.bottom-wrap
+        .row
+          .col-xl-6
+            .item
+              i.fa.fa-chevron-right
+              h3.font-weight-light Time to raise money on
+                strong.font-weight-bold  your terms 
+                | and keep control
+          .col-xl-6
+            .item
+              i.fa.fa-chevron-right
+              h3.font-weight-light Minimize annoying legal fees
+        .row
+          .col-xl-6
+            .item
+              i.fa.fa-chevron-right
+              h3.font-weight-light Pitch to thousands of people from the comfort of your own home
+          .col-xl-6
+            .item
+              i.fa.fa-chevron-right
+              h3.font-weight-light Turn your customers and users into brand ambassadors and evangelists
     .row
       .col-xl-12
-        h2.text-uppercase.m-t-0  Raise capital with us
-        h3 Now you can turn your customers
-          br
-          | into owners, who can become your brand
-          br
-          | ambassadors and evangelists
-      .col-xl-12.p-xs-0
-        if app.user.is_anonymous()
-          a(href="/raise-capital").btn.btn-lg.btn-primary.text-uppercase raise capital
-        else
-          a(href="/company/create").btn.btn-lg.btn-primary.text-uppercase raise capital
-        a(href="/pg/entrepreneurquestions").btn.btn-lg.btn-secondary.text-uppercase learn more
+        .powered-by
+          h4.text-uppercase equity crowdfunding
+          p.small-powered-by Powered by
+          img(src=require('images/pages/news4.png'), alt="")
+include bottombanner
 
-
-section.home-our-partners
+section.news-on-main-page
   .container
     .row
-      .col-lg-12
-        h2.dosis.text-uppercase.text-xs-center OUR PARTNERS
-    .row.text-center-flex
-      .col-lg-4.col-sm-6.col-xs-12.text-xs-center.p-b-3
-        a(href="http://www.callahan.com/" target="_blank")
-          img(src=require("images/callahan.png") alt="").img-fluid.text-lg-right.text-xs-center.m-x-auto
-      .col-lg-4.col-sm-6.col-xs-12.text-lg-center.text-xs-center.m-x-auto.p-b-3
-        a(href="https://www.jdcu.org/" target="_blank")
-          img(src=require('images/logo_jd.png') alt="").img-fluid.text-xs-center.m-x-auto
-      .col-lg-4.col-sm-6.col-xs-12.text-lg-left.m-x-auto.p-b-3
-        a(href="https://www.rivermarkcu.org/" target="_blank")
-          img(src=require('images/logo_rivermark.png') alt="").img-fluid.text-xs-center.m-x-auto
-      .col-lg-3.col-sm-6.col-xs-12.text-xs-center
-        a(href="https://www.dcu.org/" target="_blank")
-          img(src=require('images/logo_dcu.jpg') alt="").img-fluid.text-xs-center.m-x-auto
-      .col-lg-3.col-sm-6.col-xs-12.p-l-0.text-xs-center.momentum-img
-        a(href="http://momentum3growth.com/" target="_blank")
-          img(src=require('images/momentum3growth.png') alt="").img-fluid.text-xs-center.m-x-auto
+      .col-xl-12
+        h2.text-uppercase.text-xs-center.m-t-0 LATEST news
+    .row
+      ul.list-unstyled.m0
+        .col-xl-6
+          li.mb50
+            .row
+              .col-lg-4
+                .news-img.text-xs-center.mpb50
+                  a(href="https://techcrunch.com/2017/01/23/growthfountain/" target="_blank")
+                    img(src=require("images/pages/TC.jpg") alt="techcrunch")
+                
+              .col-lg-8
+                h4.open-sans.letter-spacing-0.text-muted.m0
+                  a(href="https://techcrunch.com/2017/01/23/growthfountain/" target="_blank")
+                    b
+                      | New equity crowdfunding platform GrowthFountain launched today
+                    .small-text
+                      | January 23, 2017
+                
+                p.pt10 There’s no shortage of equity crowdfunding sites out there, but GrowthFountain thinks it has the special sauce to cut through the...
+        .col-xl-6
+          li.mb50
+            .row
+              .col-lg-4
+                .news-img.text-xs-center.mpb50
+                  a(href="https://cheddar.vhx.tv/cheddar-archive/videos/cheddar-closing-bell-s3-e013017-j-full-mezz-hd-en-us" target="_blank")
+                    img(src=require("images/pages/cheddar.jpg") alt="cheddar")
+                
+              .col-lg-8
+                h4.open-sans.letter-spacing-0.text-muted.m0
+                  a(href="https://cheddar.vhx.tv/cheddar-archive/videos/cheddar-closing-bell-s3-e013017-j-full-mezz-hd-en-us" target="_blank")
+                    b
+                      | Growthfountain on The Launch of its New Equity Crowdfunding Campaign
+                    .small-text
+                      | February 4, 2017
+                
+                p.pt10.pb10 Check out our interview on 
+                  a(href="https://cheddar.vhx.tv/cheddar-archive/videos/cheddar-closing-bell-s3-e013017-j-full-mezz-hd-en-us" target="_blank").link-3 Cheddar TV
+                p Newly launched Growthfountain talks about equity crowdfunding and its latest campaign.
+    .row
+      ul.list-unstyled.m0
+        .col-xl-6
+          li.mb50
+            .row
+              .col-lg-4
+                .news-img.text-xs-center.mpb50
+                  a(href=require("doc/Credit.Union.Times.3_17_17-1.pdf") target="_blank")
+                    img(src=require("images/pages/news2.png") alt="")
+                
+              .col-lg-8
+                h4.open-sans.letter-spacing-0.text-muted.m0
+                  a(href=require("doc/Credit.Union.Times.3_17_17-1.pdf") target="_blank")
+                    b
+                      | Crowdfunding: New Opportunity for Start-Ups & Credit Unions
+                    .small-text
+                      | March 17, 2017
+                p.pt10 A partnership between New York City based GrowthFountain, an equity crowdfunding platform, and $7.6... 
+        .col-xl-6
+          li.mb50
+            .row
+              .col-lg-4
+                .news-img.text-xs-center.mpb50
+                  a(href="http://moneyinc.com/future-fundraising-extension-social-contract/" target="_blank")
+                    img(src=require("images/pages/moneyinc.jpg") alt="moneyinc")
+                
+              .col-lg-8
+                h4.open-sans.letter-spacing-0.text-muted.m0
+                  a(href="http://moneyinc.com/future-fundraising-extension-social-contract/" target="_blank")
+                    b
+                      | The Future of Fundraising: An Extension of the Social Contract
+                    .small-text
+                      | March 20, 2017
+                p.pt10 When you walk down main street anywhere in America – whether you’re in Sioux Falls, South Dakota or New York City, you’re sure to notice... 
+    .row
+      .col-xl-12.text-xs-center
+        a(href="/pg/news").btn.btn-sm.btn-secondary.btn-see-all 
+          | See All
+          i.fa.fa-angle-right

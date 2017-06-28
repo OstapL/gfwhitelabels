@@ -35,13 +35,13 @@ section.singup.m-t-85
                 input(type="hidden" name="domain" value=window.location.host)
                 .row
                   .social-btn.col-lg-12.p-xs-0
-                    a(data-original-title="facebook" data-network="facebook" href="#").btn.btn-block.btn-social-network.btn-facebook.text-uppercase
+                    a(data-original-title="facebook" data-network="facebook" href="#")#signup-facebook.btn.btn-block.btn-social-network.btn-facebook.text-uppercase
                       i.fa.fa-facebook
                       |  SIGN UP with Facebook
-                    a(data-original-title="Linkedin" data-network="linkedin" href="#").btn.btn-block.btn-social-network.btn-linkedin.text-uppercase
+                    a(data-original-title="Linkedin" data-network="linkedin" href="#")#signup-linkedin.btn.btn-block.btn-social-network.btn-linkedin.text-uppercase
                       i.fa.fa-linkedin
                       |  SIGN UP with linkedin
-                    a(data-original-title="Google Plus" data-network="google" href="#").btn.btn-block.btn-social-network.btn-google.text-uppercase
+                    a(data-original-title="Google Plus" data-network="google" href="#")#signup-google.btn.btn-block.btn-social-network.btn-google.text-uppercase
                       i.fa.fa-google-plus
                       |  SIGN UP with Google
                 .form-group.row.clearfix.required
@@ -58,29 +58,37 @@ section.singup.m-t-85
                 .row
                   .col-lg-12.border-bottom.or
                     span or
-                .form-group.row.clearfix.required
-                  input(type="text"
-                  placeholder="First Name"
-                  name="first_name").form-control
-                .form-group.row.clearfix.required
-                  input(type="text"
-                  placeholder="Last Name"
-                  name="last_name").form-control
-                .form-group.row.clearfix.required
-                  input(type="email"
-                  placeholder="E-mail"
-                  data-value-type="email"
-                  name="email").form-control
-                .form-group.row.clearfix.required
-                  input(type="password"
-                  placeholder="Password"
-                  data-value-type="password"
-                  name="password1").form-control
-                .form-group.row.clearfix.required
-                  input(type="password"
-                  placeholder="Re-enter Password"
-                  data-value-type="password"
-                  name="password2").form-control
+                -
+                  pug_html += app.fields.fieldText('first_name', {
+                    required: true,
+                    type: 'text',
+                    placeholder: 'First Name',
+                    'class': 'form-group row clearfix',
+                  });
+                  pug_html += app.fields.fieldText('last_name', {
+                    required: true,
+                    type: 'text',
+                    placeholder: 'Last Name',
+                    'class': 'form-group row clearfix',
+                  });
+                  pug_html += app.fields.fieldText('email', {
+                    require: true,
+                    type: 'email',
+                    placeholder: 'E-mail',
+                    'class': 'form-group row clearfix',
+                  });
+                  pug_html += app.fields.fieldText('password1', {
+                    required: true,
+                    type: 'password',
+                    placeholder: 'Password',
+                    'class': 'form-group row clearfix',
+                  });
+                  pug_html += app.fields.fieldText('password2', {
+                    required: true,
+                    type: 'password',
+                    placeholder: 'Re-enter Password',
+                    'class': 'form-group row clearfix',
+                  });
                 
               .col-lg-12.m-t-1
                 .row.text-xs-center

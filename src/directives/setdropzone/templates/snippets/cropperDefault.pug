@@ -1,0 +1,21 @@
+.form-group
+  .row
+    .col-xl-10.offset-xl-1
+      .crop-image-container
+      input(
+        type="text"
+        placeholder="Add image’s title here..."
+        name="name"
+        id="name"
+        value=name
+      ).m-t-0.w-100.form-control
+  .row
+    .col-xl-11.m-t-3.m-b-0.text-xs-center.text-sm-center.text-md-right.text-lg-right.text-xl-right
+      button(
+        type="button"
+        data-dismiss="modal"
+      ).btn.btn-secondary.m-r-2.cropper-cancel Cancel
+      button(
+        type="button"
+        data-dissmiss="modal"
+      ).btn.btn-primary.cropper-ok Save

@@ -8,7 +8,7 @@
   background: rgba(17, 17, 17, .5)
 
 .border-bottom-scroll
-  box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.1)
+  box-shadow: 0px 1px 0px 0px rgba(0,0,0,0.1)
   padding-top: rem(25)
   background-color: #fdfdfd
 
@@ -39,24 +39,26 @@
   height: 82vh
   overflow: hidden
   position: relative
-  @media only screen and (max-width : 576px)
-    height: 90vh
+  @media only screen and (max-width : 767px)
+    height: 650px
+  &.scroll-paralax
+    &:after
+      z-index: 1
   .company-name
     margin-top: 0
     position: relative
     font-weight: $campain_main_name_font_weight
     color: $white
     padding-left: rem(4)
+  .tagline
+    font-style: italic
+    margin-top: 15px
 
   .big-icon
     display: block
     margin: rem(20) auto rem(15)
     text-align: center
-    line-height: rem(88)
-    font-size: rem(72)
-    width: 60px
-    text-decoration: none
-    outline: none
+
   .background
     position: absolute
     width: 100%
@@ -87,14 +89,6 @@
   font-size: rem(36)
   color: rgba(255,255,255, .97)
 
-.link-campaing-detail
-  +calc-rem(18)
-  color: $white
-  padding: rem(10)
-
-.social-link
-  padding: rem(15) 0
-
 .top-info
   position: relative
   padding-bottom: rem(20)
@@ -122,6 +116,8 @@
         color: $white
         margin-bottom: 0
         margin-top: 0
+        @media only screen and (max-width : 767px)
+          margin-bottom: rem(25)
         @media only screen and (max-width : 575px)
           font-size: rem(16)
       p
@@ -129,7 +125,14 @@
         margin-bottom: rem(3)
         @media only screen and (max-width : 575px)
           font-size: rem(13)
-
+      .share
+        margin-top: rem(13)
+        padding-top: 0
+        span
+          position: relative
+          top: -5px
+        @media screen and (min-width : 992px) and (max-width : 1199px)
+          margin-top: 0
     .btn
       margin-top: rem(8)
 .edit-campaign-wrap
@@ -143,6 +146,15 @@
 .campaigndetail
   background-color: #fdfdfd
   padding-top: rem(50)
+  @media only screen and (max-width : 1199px)
+    box-shadow: 0px 1px 0px 0px rgba(0,0,0,0.1)
+    padding-bottom: rem(25)
+    .btn
+      margin-top: rem(25)
+  @media only screen and (max-width : 991px)
+    .btn
+      margin-top: 0
+      margin-bottom: rem(15)
   h1
     letter-spacing: rem(.75)
     margin-bottom: 0
@@ -154,16 +166,83 @@
     margin-bottom: rem(3)
     color: $small-text
     line-height: rem(14)
-  .sity-detail
-    color: $small-text
-    text-transform: capitalize
-  .date-detail
-    color: $small-text
+  .left-wrap-city
+    margin-bottom: rem(25)
+    margin-top: rem(5)
+    p
+      color: $small-text
+      text-transform: capitalize
+      vertical-align: middle
+      display: inline-block
+      width: 83%
+      line-height: 15px
+    .icon-city
+      font-size: rem(12)
+      width: 22px
+      height: 22px
+      background-color: $campaign-like-bgc
+      position: relative
+      vertical-align: middle
+      border-radius: 100px
+      color: $white
+      margin-right: rem(3)
+      z-index: 2
+      &:before
+        transform: translate(-50%, -50%)
+        position: absolute
+        left: 50%
+        top: 50%
+    .vertical-line
+      height: 75%
+      border-left: 3px solid $alabaster
+      margin: 0 rem(10)
+      position: absolute
+      bottom: 25px
+  .brif-block
+    @media only screen and (min-width : 1200px)
+      padding-right: 0
+  .brif
+    border-left: solid 1px #e7e7e7
+    border-right: solid 1px #e7e7e7
+    padding: 0 rem(15)
+    @media only screen and (max-width : 543px)
+      border-left: none
+      border-right: none
+      border-top: solid 1px #e7e7e7
+      border-bottom: solid 1px #e7e7e7
+      padding: rem(10) 0 rem(15) 0
+    .link-campaing-detail
+      font-size: rem(12)
+      text-decoration: underline
+    h4
+      margin-top: rem(5)
+    ul
+      padding-left: rem(20)
+      margin-bottom: 0
+    p,
+    li
+      font-size: rem(12)
+      color: $black
+      line-height: 18px
+    .social-link
+      .link-campaing-detail
+        font-size: rem(15)
+        padding: 0 rem(7)
+        &:last-child
+          padding-right: 0
+      @media only screen and (max-width : 375px)
+        width: 100%
+        display: block
+        margin-top: rem(10)
+        position: relative
+        left: -6px
   .mt25
     margin-top: rem(25)
   .mt20
     margin-top: rem(20)
   .right-block-investors
+    @media only screen and (max-width : 991px)
+      margin-top: rem(30)
     h2
       margin-top: 0
       margin-bottom: 0
@@ -190,6 +269,13 @@
     .progress_bar_container
       span
         margin-bottom: rem(5)
+        font-size: rem(14)
+        &.committed
+          font-size: rem(24)
+  .progress-campaign-right
+    margin-top: rem(25)
+    p
+      font-size: rem(14)
 .share
   span
     color: $small-text
@@ -228,7 +314,8 @@
 
 
 .about-detail
-  padding-bottom: rem(50)
+  margin-top: rem($margin-top-section-campaign)
+  padding-bottom: rem($padding-bottom-section-campaign)
 
   .no-padding-img
     padding: 5px
@@ -283,6 +370,14 @@
     text-align: center
   .plot-title
     left: -10px!important
+    color: $small-text
+  .flot-x-axis
+    .flot-tick-label
+      margin-left: rem(40)
+  .plot-x-title
+    text-align: center
+    color: $small-text
+    margin-top: 10px
   
   @media only screen and (max-width : 991px)
     .js-jq-plot-area
@@ -293,6 +388,8 @@
 
 
 #members
+  margin-top: rem($margin-top-section-campaign)
+  padding-bottom: rem($padding-bottom-section-campaign-members)
   .hide-more-detail
     height: 83px
     overflow: hidden
@@ -317,12 +414,15 @@
       color: $black
 
 
-
+#articles
+  margin-top: rem($margin-top-section-campaign)
+  padding-bottom: rem($padding-bottom-section-campaign)
+  .see-all-article
+    margin-top: rem(30)
 .articles_press
   .card
     margin-top: 0
     background-color: $alabaster
-    margin-bottom: rem(50)
     border: none
 
     .articles-press-item
@@ -349,9 +449,8 @@
       .border-top
         border-top: solid 1px $light_grey
   .see-all-article-press
-    position: relative
-    top: -20px
-      
+    margin-top: rem(30)
+
 
 .team.team-detail
   padding-bottom: rem(15)
@@ -384,7 +483,8 @@
       i
         padding: 0 rem(4) rem(15)
       .cite_education
-        margin-top: rem(5)
+        margin-top: rem(15)
+
     .card-title
       margin-bottom: 0
     .img-circle
@@ -394,8 +494,10 @@
       color: $small-text
       font-size: rem(12)
 
+
 .document
-  padding-bottom: rem(45)
+  padding-bottom: rem($padding-bottom-section-campaign)
+  margin-top: rem($margin-top-section-campaign)
   h2
     margin-bottom: rem(25)
   h3
@@ -427,13 +529,19 @@
     margin-bottom: rem(25)
     a
       font-size: rem(11)
-.overview
+.overview-detail
+  margin-top: rem($margin-top-section-campaign)
+  padding-bottom: rem($padding-bottom-section-campaign)
   h3
     margin-top: 0 
   .fundraising, .perks, .thankyou-page
     text-align: center
     .bgc-row-top
-      background-color: $detail-overview-background //переменная находится в файле /unique/variables
+      background-color: $detail-overview-background //переменная находится в файле /unique/variablesев
+      td
+        padding-left: 0!important
+        padding-right: 0!important
+
     .bgc-row-middle
       background-color: $alabaster
       td
@@ -464,6 +572,8 @@
       padding-right: 20px
 
 #perks
+  margin-top: rem(10)
+  
   table
     th, td
       border: 1px solid #ebebeb
@@ -492,7 +602,14 @@
     margin-bottom: rem(20)
   a.see-all
     margin-top: rem(25)
-
+#faq-section
+  margin-top: rem($margin-top-section-campaign)
+  padding-bottom: rem($padding-bottom-section-campaign)
+#ask-section
+  margin-top: rem($margin-top-section-campaign)
+  padding-bottom: rem($padding-bottom-section-campaign)
+  h2
+    margin-top: 0
 .like-detail
   .like-text-wrap
     text-align: center
@@ -571,7 +688,6 @@
       font-size: rem(16)!important
     h2
       font-size: rem(16)
-      margin-bottom: rem(30)!important
   .campaigndetail
     border-bottom: solid 1px $gallery
     .share

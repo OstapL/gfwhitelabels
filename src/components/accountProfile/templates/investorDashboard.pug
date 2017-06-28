@@ -45,6 +45,7 @@ section.investor-dashboard
                 each i in investments
                   if i.active
                     - hasActiveInvestments = true;
+                    - i.fields = i.schema;
                     | !{ snippets.investment(i) }
 
                 if !hasActiveInvestments
@@ -65,6 +66,7 @@ section.investor-dashboard
                 each i in investments
                   if i.historical
                     - hasHistoricalInvestments = true;
+                    - i.fields = i.schema;
                     | !{ snippets.investment(i) }
 
                 if !hasHistoricalInvestments
@@ -74,4 +76,3 @@ section.investor-dashboard
                         i.fa.fa-info-circle
                         span.warning-text
                           | You have no historical investments
-

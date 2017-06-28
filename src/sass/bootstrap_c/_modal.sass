@@ -26,14 +26,26 @@
 					color: $white
 					opacity: .7
 			.title-header-signup
+				margin-top: rem(20)!important
 				text-align: center
-				margin-left: rem(15)
+				margin-bottom: rem(20)
 				h1
-					font-size: rem(35)
+					font-size: rem(24)
 					color: $white
 					display: inline-block
+					margin-bottom: 0
 					&.number
-						font-size: rem(52)
+						font-size: rem(36)
+				.border-left
+					border-left: solid 1px $white
+					@media only screen and (max-width : 545px)
+						border: none
+				.text
+					p
+						margin-top: 0
+						margin-bottom: 0
+						@media only screen and (min-width : 544px)
+							margin-right: 10px
 			.title-header-bottom
 				font-size: rem(20)
 				text-align: center
@@ -119,10 +131,22 @@
 	.radio-input
 		label
 			font-weight: normal
-@media only screen and (max-width : 768px)
-	.modal-dialog	
-		.modal-body
-			padding: rem(10) rem(0)!important
+#sign_up,
+#sign_in
+  .modal-dialog
+    max-width: 540px
+    .modal-body
+      padding: rem(15) rem(45) 0
+      @media only screen and (max-width : 480px)
+      	padding: rem(15) rem(15) 0
+      @media only screen and (max-width : 360px)
+      	padding: rem(15) 0 0
+
+      .label-text
+        line-height: 14px
+        font-size: rem(12)
+	
+
 @media only screen and (max-width : 991px)
 	[id^="videoModal"]
 		top: 5%!important
@@ -143,11 +167,49 @@
 		.close
 			position: absolute
 			right: -40px
-			top: -40px
+			top: -30px
 			z-index: 999
 			color: $white
-			font-size: rem(33)
+			font-size: rem(30)!important
 			opacity: .7
+.main-video-modal
+	top: 30px
+	.modal-content
+		background-color: transparent
+	.modal-dialog
+		.embed-responsive-16by9
+			padding-bottom: 0
+			height: 93vh
+			@media only screen and (max-width : 575px)
+				height: 75vh
+		max-width: 100%
+		margin-top: 0
+		background: #000
+		.close
+			position: absolute
+			right: 5px
+			top: 5px
+			z-index: 1051
+			color: $black
+			font-size: rem(26)
+			opacity: 1
+			background: #fff
+			width: 50px
+			height: 50px
+			border-radius: 100px
+			+mt(.2s)
+			&:hover
+				+mt(.2s)
+				color: rgba($black, .7)
+		.player
+			.sidedock
+				display: none !important
+
+
+.show-video-modal
+	.modal-backdrop.in
+		opacity: 1
+
 .modal-dropzone
 	top: 15%
 	.modal-dialog
@@ -192,3 +254,22 @@
 		.close
 			position: absolute
 			right: 15px
+#investor_popup
+	.modal-dialog
+		max-width: 730px
+	.modal-body
+		padding: rem(20) rem(97) rem(5) rem(97)
+		@media only screen and (max-width : 575px)
+			padding: rem(20) rem(30) rem(5) rem(30)
+
+		.btn
+			margin-top: rem(25)
+		label
+			font-size: rem(14)
+			font-weight: bold
+			margin-bottom: rem(5)
+			padding-top: 0
+		textarea
+			height: 70px
+		.form-group
+			margin-bottom: rem(20)

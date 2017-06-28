@@ -1,5 +1,6 @@
 const companyFees = require('consts/companyFees.json');
 const typeOfDocuments = require('consts/typeOfDocuments.json');
+const STATUSES = require('consts/raisecapital/companyStatuses.json').STATUS;
 
 const COUNTRIES = require('consts/countries.json');
 const validation = require('components/validation/validation.js');
@@ -15,11 +16,7 @@ module.exports = {
       'change select.orderby': 'orderby',
     },
     initialize(options) {
-      let dataClass = [];
-      options.collection.data.forEach((el) => {
-        dataClass.push(new app.models.Company(el));
-      });
-      options.collection.data = dataClass;
+      options.collection.data = options.collection.data.map(companyData => new app.models.Company(companyData));
       this.collection = options.collection;
     },
 
@@ -62,7 +59,6 @@ module.exports = {
       'shown.bs.collapse #hidden-article-press' :'onArticlePressCollapse',
       'click .submit_form': 'submitCampaign',
       'click .company-documents': 'showDocumentsModal',
-      'click .show-video-modal': 'showVideoModal',
     },
 
     onCollapse (e) {
@@ -278,9 +274,6 @@ module.exports = {
 
     initComments() {
       return new Promise((resolve, reject) => {
-        if (this.model.is_approved != 6)
-          return resolve();
-
         const View = require('components/comment/views.js');
         const urlComments = app.config.commentsServer + '/company/' + this.model.id;
         let optionsR = api.makeRequest(urlComments, 'OPTIONS');
@@ -295,6 +288,7 @@ module.exports = {
             model: data[0],
             fields: options[0].fields,
             cssClass: 'offset-xl-2',
+            readonly: this.model.is_approved != STATUSES.VERIFIED,
           });
           comments.render();
 
@@ -342,9 +336,6 @@ module.exports = {
       this.$el.find('.perks .col-xl-4 p').equalHeights();
       this.$el.find('.team .auto-height').equalHeights();
       this.$el.find('.card-inverse p').equalHeights();
-      this.$el.find('.modal').on('hidden.bs.modal', function(event) {
-        $(event.currentTarget).find('iframe').attr('src', $(event.currentTarget).find('iframe').attr('src'));
-      });
 
       // fetch vimeo
       $('.vimeo-thumbnail').each(function(elem, idx) {
@@ -370,104 +361,6 @@ module.exports = {
     readMore(e) {
       e.preventDefault();
       $(e.target).parent().addClass('show-more-detail');
-    },
-
-    showVideoModal(e) {
-
-      const attachYoutubeEvents = ($modal, callback) => {
-        let player = null;
-        let eventSent = false;
-
-        $modal.on('show.bs.modal', () => {
-          player = new YT.Player('video-iframe-container', {
-            // videoId: videoInfo.id,
-            events: {
-              onReady(e){},
-              onStateChange(e) {
-                if (e.data == YT.PlayerState.PLAYING && !eventSent) {
-                  eventSent = true;
-                  callback();
-                }
-              },
-              onError(err) {
-                console.error(err);
-              },
-            }
-          });
-        });
-
-        $modal.on('hidden.bs.modal', () => {
-          player.stopVideo();
-          player.destroy();
-          player = null;
-          $modal.empty();
-          $modal.remove();
-        });
-      };
-
-      const attachVimeoEvents = ($modal, callback) => {
-        let player = null;
-        let eventSent = false;
-        $modal.on('show.bs.modal', () => {
-          player = new Vimeo.Player('video-iframe-container');
-          player.on('play', () => {
-            if (!eventSent) {
-              eventSent = true;
-              callback();
-            }
-          });
-        });
-        $modal.on('hidden.bs.modal', () => {
-          player.off('play');
-          player.unload().then(() => {
-            player = null;
-            $modal.empty();
-            $modal.remove();
-          }).catch(console.error);
-        });
-      };
-
-      const loadPlayer = (provider) => {
-        if (provider == 'youtube')
-          return app.helpers.scripts.loadYoutubePlayerAPI();
-
-        if (provider == 'vimeo')
-          return app.helpers.scripts.loadVimeoPlayerAPI();
-      };
-
-      let $target = $(e.target).closest('a');
-
-      const provider = $target.data('provider');
-      const id = $target.data('id');
-      const url = $target.data('url');
-
-      loadPlayer(provider).then((Player) => {
-        let $content = $('#content');
-        const template = require('templates/videoModal.pug');
-
-        $content.append(template({
-          provider,
-          id,
-          url,
-        }));
-
-        const sendVideoPlayEvent = () => {
-          app.emitGoogleAnalyticsEvent('company-video-play', {
-            eventCategory: 'Video',
-            eventAction: 'play',
-            //eventLabel: 'Youtube Video',
-            eventValue: url,
-          });
-        };
-
-        let $modal = $('#videoModal');
-
-        if (provider === 'youtube')
-          attachYoutubeEvents($modal, sendVideoPlayEvent);
-        else if (provider === 'vimeo')
-          attachVimeoEvents($modal, sendVideoPlayEvent)
-        $modal.modal('show');
-      });
     },
 
   }),
@@ -498,6 +391,7 @@ module.exports = {
     initialize(options) {
       this.fields = options.fields;
       this.user = options.user;
+      this.fields.amount.type = 'money';
       this.user.account_number_re = this.user.account_number;
       this.user.routing_number_re = this.user.routing_number;
       this.fields.payment_information_type.validate.choices = {
@@ -872,9 +766,16 @@ module.exports = {
         ? Math.min(annualIncome, netWorth) * 0.1
         : Math.min(annualIncome, netWorth) * 0.05;
 
-      maxInvestmentsPerYear = maxInvestmentsPerYear < 2 ? 2 : maxInvestmentsPerYear;
+      maxInvestmentsPerYear = maxInvestmentsPerYear < 2 ? 2.2 : maxInvestmentsPerYear;
 
-      return Math.round((maxInvestmentsPerYear * 1000 - investedPastYear - investedOtherSites));
+      let result = Math.round((maxInvestmentsPerYear * 1000 - investedPastYear - investedOtherSites));
+
+      // Investor cannot invest more that 107000 in a year
+      if(result > 107000) {
+        result = 107000;
+      }
+
+      return result;
     },
 
     initMaxAllowedAmount() {
@@ -888,7 +789,7 @@ module.exports = {
     },
 
     getNumber(value) {
-      return Number(value.replace(/\,/g, ''));
+      return Number(value.replace(/[\$,]/g, ''));
     },
 
     formatNumber(value) {
@@ -915,7 +816,7 @@ module.exports = {
 
       let newAmount = Math.ceil(amount / pricePerShare) *  pricePerShare;
 
-      this.$amount.val(this.formatNumber(newAmount));
+      this.$amount.val('$' + this.formatNumber(newAmount));
       this._updateTotalAmount();
 
       if (newAmount > amount) {
@@ -926,16 +827,14 @@ module.exports = {
     },
 
     updateAmount(e) {
+      e.preventDefault();
+      e.stopPropagation();
 
-      if(e.keyCode == 37 || e.keyCode == 39) {
-        return;
-      }
+      app.helpers.format.formatMoneyInputOnKeyup(e);
 
-      let amount = this.getNumber(e.currentTarget.value);
+      let amount = this.getNumber(e.target.value);
       if (!amount)
         return;
-
-      e.currentTarget.value = this.formatNumber(amount);
 
       this.$amount.data('rounded', false);
 
@@ -944,17 +843,23 @@ module.exports = {
       this.updatePerks(amount);
 
       this._updateTotalAmount();
+
+      return false;
     },
 
     updatePerks(amount) {
       function updatePerkElements($elms, amount) {
         $elms.removeClass('active').find('i.fa.fa-check').hide();
-        $elms.each((idx, el) => {
-          if(parseInt(el.dataset.amount) <= amount) {
-            $(el).addClass('active').find('i.fa.fa-check').show();
-            return false;
-          }
+        let filteredPerks = _($elms).filter(el =>  {
+          const perkAmount = parseInt(el.dataset.amount);
+          return perkAmount <= amount;
         });
+
+        let activePerk = _.last(filteredPerks);
+
+        if (activePerk) {
+          $(activePerk).addClass('active').find('i.fa.fa-check').show();
+        }
       }
 
       updatePerkElements($('.invest-perks-mobile .perk'), amount);
@@ -979,32 +884,41 @@ module.exports = {
     },
 
     updateLimitInModal(e) {
-      let annualIncome = Number(this.$('#annual_income').val().replace(/\,/g, '')) || 0,
-          netWorth = Number(this.$('#net_worth').val().replace(/\,/g, '')) || 0;
+      e.preventDefault();
+      e.stopPropagation();
 
+      app.helpers.format.formatMoneyInputOnKeyup(e);
+      const rx = /[\$,]/g;
+
+      let annualIncome = Number(this.$('#annual_income').val().replace(rx, ''));
+      let netWorth = Number(this.$('#net_worth').val().replace(rx, '')) || 0;
+      if (isNaN(annualIncome) || !annualIncome)
+        annualIncome = 0;
+      if (isNaN(netWorth) || !netWorth)
+        netWorth = 0;
 
       let investedOnOtherSites = this.user.invested_on_other_sites;
       let investedPastYear = this.user.invested_equity_past_year;
-
-      this.$('#annual_income').val(annualIncome.toLocaleString('en-US'));
-      this.$('#net_worth').val(netWorth.toLocaleString('en-US'));
 
       this.$('span.current-limit').text(
         this.maxInvestmentsPerYear(annualIncome / 1000, netWorth / 1000, investedPastYear, investedOnOtherSites)
           .toLocaleString('en-US')
       );
+
+      return false;
     },
 
     updateIncomeWorth(e) {
+      const rx = /[\$,]/g;
       let netWorth = $('#net_worth')
         .val()
         .trim()
-        .replace(/\,/g, '') / 1000;
+        .replace(rx, '') / 1000;
 
       let annualIncome = $('#annual_income')
         .val()
         .trim()
-        .replace(/\,/g, '') / 1000;
+        .replace(rx, '') / 1000;
 
       let data = {
         net_worth: netWorth,
@@ -1022,15 +936,15 @@ module.exports = {
       let fields = {
         net_worth: {
           required: true,
-          fn: function(name, value, attr, data, schema) {
-            return validateRange(value * 1000, 0, 5000000 * 2, 'Net Worth')
-          },
+          // fn: function(name, value, attr, data, schema) {
+          //   return validateRange(value * 1000, 0, 5000000 * 2, 'Net Worth')
+          // },
         },
         annual_income: {
           required: true,
-          fn: function(name, value, attr, data, schema) {
-            return validateRange(value * 1000, 0, 500000 * 2, 'Annual Income');
-          },
+          // fn: function(name, value, attr, data, schema) {
+          //   return validateRange(value * 1000, 0, 500000 * 2, 'Annual Income');
+          // },
         }
       };
 

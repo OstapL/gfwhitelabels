@@ -96,7 +96,7 @@ module.exports = {
         if (!confirmed)
           return;
 
-        if(this.$el.find('.' + sectionName).length > 1) {
+        if(this.$el.find('.' + sectionName + '.addSectionBlock').length > 1) {
           $(target).parents('.addSectionBlock').remove();
         } else {
           this.$el.find('.' + sectionName + '[data-index=' + index + '] input').val('');

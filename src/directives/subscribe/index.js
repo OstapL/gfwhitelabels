@@ -17,17 +17,19 @@ class MailSubscriber {
       // Origin 'http://alpha.growthfountain.com:7070' is therefore not allowed access.
       $.ajax({
         url: url,
-        type: 'POST',
         data: data,
-        dataType: 'json',
+        dataType: 'jsonp',
       }).then((response) => {
-        app.dialogs.info('Check your email to proceed with your subscription.');
+        if (response.result == 'success') {
+          app.dialogs.info(response.msg || 'Check your email to proceed with your subscription.');
+          return;
+        }
+        app.dialogs.error(response.msg);
       }).fail((jqXHR, textStatus, errorThrown) => {
-        //TODO: this is temporary solution
-        app.dialogs.info('Check your email to proceed with your subscription.');
+        console.error(errorThrown);
+        app.dialogs.error('An error occurred, try again later.');
       });
-      console.log('subscribe');
-      console.log(data);
+
       return false;
     });
   }

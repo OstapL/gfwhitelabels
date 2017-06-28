@@ -22,6 +22,7 @@ class App {
     this.dialogs = require('directives/dialogs/index.js');
     this.models = require('./models.js');
     this.sites = require('./sites.js');
+    this.seo = require('./seo.js');
     this.user = new User();
 
     this.utils = {};
@@ -35,9 +36,13 @@ class App {
   start() {
     this.user.loadWithPromise().then(() => {
 
-      if (app.config.googleTagID) {
+      // A trick for turn off statistics with GET param, for SEO issue
+      if(document.location.search.indexOf('nometrix=t') !== -1) {
+        delete this.config.googleTagID;
+      }
+
+      if (this.config.googleTagID) {
         this.initFacebookPixel();
-        this.initYandexMetrica();
       }
 
       this.routers = new Router();
@@ -65,26 +70,8 @@ class App {
     });
   }
 
-  initYandexMetrica() {
-    if (!app.config.googleTagID || !app.config.yandexMetricaID)
-      return;
-
-    safeDataLayerPush({
-      event: 'yandex-metrica-init',
-    })
-  }
-
-  emitYandexMetricaEvent() {
-    if (!app.config.googleTagID || !app.config.yandexMetricaID)
-      return;
-
-    safeDataLayerPush({
-      event: 'yandex-metrica-hit',
-    });
-  }
-
   initFacebookPixel() {
-    if (!app.config.googleTagID || !app.config.facebookPixelID)
+    if (!this.config.googleTagID || !this.config.facebookPixelID)
       return;
 
     safeDataLayerPush({
@@ -93,7 +80,7 @@ class App {
   }
 
   emitFacebookPixelEvent(eventName='ViewContent', params={}) {
-    if (!app.config.googleTagID || !app.config.facebookPixelID)
+    if (!this.config.googleTagID || !this.config.facebookPixelID)
       return;
 
     const STANDARD_EVENTS = [
@@ -118,7 +105,7 @@ class App {
   }
 
   emitGoogleAnalyticsEvent(eventName, params={}) {
-    if (!app.config.googleTagID)
+    if (!this.config.googleTagID)
       return;
 
     if (!eventName)
@@ -133,7 +120,7 @@ class App {
   }
 
   emitCompanyAnalyticsEvent(trackerId) {
-    if (app.config.googleTagID)
+    if (!this.config.googleTagID)
       return;
 
     if (!trackerId)
@@ -300,7 +287,7 @@ class App {
     // ToDo
     // get bucket server base on the site_id of the file
     // i.e. app.sites[file.site_id] + file.origin;
-    return app.config.bucketServer + file.origin;
+    return this.config.bucketServer + file.origin;
   }
 
   breadcrumbs(title, subtitle, data) {
@@ -377,6 +364,28 @@ class App {
           meta.setAttribute('content', content);
           document.head.appendChild(meta);
       }
+  }
+
+  isElementInView(element, percentsInView) {
+    const $w = $(window);
+    const $el = $(element);
+
+    const windowTop = $w.scrollTop();
+    const windowBottom = windowTop + $w.height();
+    const elementTop = $el.offset().top;
+    const elementBottom = elementTop + $el.height();
+
+    let visibleElementHeight = Math.min(windowBottom, elementBottom) - Math.max(windowTop, elementTop);
+    if (visibleElementHeight <= 0)
+      return false;
+
+    if (_.isNumber(percentsInView)) {
+      const visiblePercents = visibleElementHeight / $el.height();
+      return visiblePercents >= percentsInView;
+      // return ((windowTop < elementTop) && (windowBottom > elementBottom));
+    }
+
+    return ((elementTop <= windowBottom) && (elementBottom >= windowTop));
   }
 
 }

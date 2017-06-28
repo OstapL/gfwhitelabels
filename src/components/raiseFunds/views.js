@@ -19,18 +19,27 @@ const snippets = {
   team_members: require('./templates/snippets/team_members.pug'),
 };
 
+const fixGATrackerID = (data) => {
+  if (!data || !data.ga_id)
+    return;
+
+  if (!data.ga_id.startsWith('UA-'))
+    data.ga_id = 'UA-' + data.ga_id;
+};
+
 module.exports = {
   company: Backbone.View.extend(_.extend({
     urlRoot: app.config.raiseCapitalServer + '/company',
     template: require('./templates/company.pug'),
     events: _.extend({
-      'click #submitForm': api.submitAction,
+      'click #submitForm': 'submitCompanyInfo',
       'keyup #zip_code': 'changeZipCode',
       'click .update-location': 'updateLocation',
       'click .onPreview': raiseHelpers.onPreviewAction,
       'click .submit_form': raiseHelpers.submitCampaign,
       'click #postForReview': raiseHelpers.postForReview,
       'keyup #slug': 'fixSlug',
+      'keyup #ga_id': 'fixTrackerIDForUI',
       'change #website': 'appendHttpIfNecessary',
     },
       /*app.helpers.confirmOnLeave.events,*/
@@ -59,13 +68,12 @@ module.exports = {
         name: 'Legal Name of Company',
         short_name: 'Doing Business as Another Name?',
         industry: 'Industry',
-        ga_id: 'Google Analytic ID',
+        ga_id: 'Google Analytic ID <a class="link-2" href="https://support.google.com/analytics/topic/2790009?hl=en&ref_topic=3544906" target="_blank">Set Up Google Analytics</a>',
         founding_state: 'Jurisdiction of Incorporation / Organization',
         tagline: 'Tagline',
         description: 'About Us',
         corporate_structure: 'Corporate Structure',
         founding_date: 'Founding date',
-        ga_id: 'Google Analytic ID',
         address_1: 'Street Address',
         address_2: 'Optional Address',
         zip_code: 'Zip code',
@@ -84,6 +92,36 @@ module.exports = {
       }
     },
 
+    submitCompanyInfo(e) {
+      let $form = $(e.target).closest('form');
+
+      const data = $form.serializeJSON();
+      fixGATrackerID(data);
+      
+      api.submitAction.call(this, e, data);
+    },
+
+    fixTrackerIDForUI(e) {
+      const SKIP_KEY_CODES = [
+        16,   //shift
+        17,   //ctrl
+        18,   //alt
+        35,   //end
+        36,   //home
+        37,   //left arrow
+        38,   //down arrow
+        39,   //right arrow
+        40,   //up arrow
+        91,   //left window
+      ];
+
+      if (_.contains(SKIP_KEY_CODES, e.keyCode))
+        return;
+
+      e.target.value = e.target.value.replace(/^UA-/, '');
+    },
+    
+    
     fixSlug(e) {
       if(e.currentTarget.value) {
         e.currentTarget.value = e.currentTarget.value.replace(/\s+/g,'-').replace(/[^a-zA-Z0-9\-]/g,'').toLowerCase();
@@ -299,6 +337,7 @@ module.exports = {
         title: 'Drop your photo here or click to upload',
         help_text: 'This is the image that will appear at the top of your campaign. A minimum size of 1600x800 is recommended.',
         templateDropzone: 'headerMedia.pug',
+        defaultImage: require('images/default/default-header.png'),
         onSaved: (data) => {
           this.model.updateMenu(this.model.calcProgress(this.model));
         },
@@ -307,7 +346,6 @@ module.exports = {
             aspectRatio: 1600/800,
             crop: function(e) {
               /*
-              debugger;
               if(event.detail.height < 1600) {
                 console.log('too small area ', event.detail.height);
                 throw('too small');
@@ -433,7 +471,7 @@ module.exports = {
       const img = $videoContainer.find('img')[0];
 
       if (!e.target.value) {
-        img.src = require('images/default/255x153.png');
+        img.src = require('images/default/default-video.png');
         return;
       }
 
@@ -451,12 +489,12 @@ module.exports = {
     _updateYoutubeThumbnail(img, videoID) {
       img.src = videoID
         ? '//img.youtube.com/vi/' + videoID + '/0.jpg'
-        : require('images/default/255x153.png');
+        : require('images/default/default-video.png');
     },
 
     _updateVimeoThumbnail(img, videoID) {
       if (!videoID) {
-        img.src = require('images/default/255x153.png');
+        img.src = require('images/default/default-video.png');
         return;
       }
 
@@ -470,7 +508,7 @@ module.exports = {
         img.src = response[0].thumbnail_large;
       }).fail((err) => {
         console.error('Failed to load thumbnail from vimeo');
-        img.src = require('images/default/255x153.png');
+        img.src = require('images/default/default-video.png');
       });
     },
 
@@ -539,6 +577,8 @@ module.exports = {
       this.fields.photo_image_id = _.extend(this.fields.photo_image_id, {
         label: 'Profile Picture',
         help_text: 'A minimum size of 300x300 is recommended.',
+        defaultImage: require('images/default/Default_photo.png'),
+
         onSaved: (data) => {
           // delete newData.urlRoot;
           api.makeRequest(this.urlRoot, 'PUT', this.model.toJSON());

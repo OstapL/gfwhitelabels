@@ -70,6 +70,9 @@ class ImageDropzone extends file.FileDropzone {
     if(imageOptions.onSaved) {
       this.fileElement.options.onSaved = imageOptions.onSaved;
     }
+    if(imageOptions.defaultImage) {
+      this.fileElement.options.defaultImage = imageOptions.defaultImage;
+    }
   }
 
   getTemplate() {
@@ -114,19 +117,8 @@ class ImageDropzone extends file.FileDropzone {
 const CROP_IMG_CLASS = 'img-crop';
 const CROP_IMG_PROFILE_CLASS = 'img-profile-crop';
 
-const getCropper = () => {
-  return new Promise((resolve, reject) => {
-    require.ensure([
-      'cropperjs/dist/cropper.css',
-      'cropperjs',
-    ], () => {
-      require('cropperjs/dist/cropper.css');
-      const Cropper = require('cropperjs').default;
-      resolve(Cropper);
-    }, 'cropperjs_chunk');
-  });
-};
-
+require('cropperjs/dist/cropper.css');
+const Cropper = require('cropperjs').default;
 
 
 class CropperDropzone {
@@ -247,7 +239,7 @@ class CropperDropzone {
       attacheTo.querySelector('.cropModal').remove();
     }
     */
-    attacheTo.appendChild(this.element);
+    attacheTo.appendChild(this.element)
 
     let img = new Image();
     var self = this;
@@ -263,20 +255,19 @@ class CropperDropzone {
     });
 
     img.addEventListener("load", function() {
-      // setTimeout(() => {
+      setTimeout(() => {
       // self.$modal.on('shown.bs.modal', () => {
-        getCropper().then((Cropper) => {
-          self.cropper = new Cropper(this, self.options.control);
-          const cropData = self.options.auto ? _.extend({x: 0, y: 0}, self.options.auto) : null;
-          self.$modal.modal('show');
-          if (cropData) {
-            self.cropper.setData(cropData);
-          }
 
-          self.attacheEvents();
-        });
+        self.cropper = new Cropper(this, self.options.control);
+        const cropData = self.options.auto ? _.extend({x: 0, y: 0}, self.options.auto) : null;
+        self.$modal.modal('show');
+        if (cropData) {
+          self.cropper.setData(cropData);
+        }
+
+        self.attacheEvents();
       // });
-      // }, 400);
+      }, 400);
       self.$modal.modal('show');
     }, false);
 

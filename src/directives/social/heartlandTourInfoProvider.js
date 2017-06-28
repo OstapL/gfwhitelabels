@@ -16,10 +16,10 @@ class HeartlandInfoProvider extends ShareInfoProvider {
     this.places = [
       'New York, New York',
       'Portland, Maine',
-      'Boston, Massachusetts',
+      'Boston / Worcester, Massachusetts',
       'Jacksonville, Florida',
       'Chattanooga, Tennessee',
-      'Waterloo, Indiana',
+      'Waterloo, Iowa',
       'New Orleans, Louisiana',
       'Tulsa, Oklahoma',
       'Portland, Oregon',
@@ -43,14 +43,14 @@ class HeartlandInfoProvider extends ShareInfoProvider {
     this.data = {
       title: this._format('title'),
       url: window.location.href,
-      picture: window.location.origin + require('images/cities.png'),
+      picture: window.location.origin + require('images/banners/cities.png'),
     };
   }
 
   twitter() {
     return 'https://twitter.com/share' +
       '?url=' + this.data.url +
-      '&text=' + this._format('title') + '%0D%0A@GrowthFountain%0D%0A';
+      '&text=' + encodeURIComponent(this._format('title') + '\r\n@GrowthFountain\r\n');
   }
 
   linkedin() {
@@ -103,7 +103,7 @@ class HeartlandInfoProvider extends ShareInfoProvider {
       to: 'info@growthfountain.com',
       subject: 'I\'d like to nominate my favorite business for The Heartland Tour',
       body: 'Here is the contact information for the business I\'d like to nominate! ' +
-        'I understand that if they list on GrowthFountain, I\'ll receive $500!' +
+        'I understand that if I\'m the first to introduce this business and they list on GrowthFountain, I\'ll receive $500!' +
         SPECIAL_SYMBOLS.NEW_LINE + SPECIAL_SYMBOLS.NEW_LINE +
         'Come take a look: https://growthfountain.com/pg/heartland-tour',
     });

@@ -1,11 +1,33 @@
 .raise-capital-landing
   position: relative
+  .raise-landing-top-line
+    position: absolute
+    top: 0
+    left: 0
+    width: 100%
+    background-color: rgba($heartland-tour-in-main, .8)
+    padding: rem(10)
+    text-align: center
+    z-index: 3
+    span 
+      color: $white
+    a
+      color: $white
+      text-decoration: underline
+      font-weight: bold
+      &:hover
+        +mt(.3s)
+        color: rgba($white, .7)
+        text-decoration: none
   .top-baner
     height: 70vh
     background-size: cover
     .background
       top: -50px
       height: 80vh
+    .center-wrap
+      @media only screen and (max-width : 768px)
+        top: 55%
     h1
       color: $white
       line-height: rem(60)
@@ -22,8 +44,14 @@
       width: 145px
       position: relative
       top: -10px
+      @media screen and (min-width : 1200px) and (max-width : 1300px)
+        top: 0
+      @media only screen and (max-width : 768px)
+        width: 70px
+        top: 0
       @media only screen and (max-width : 375px)
         width: 50px
+        top: 0
     @media only screen and (max-width : 768px)
       background-attachment: initial
   .top-section
@@ -168,6 +196,9 @@
         div:first-child
           margin-bottom: rem(20)
 .raise-landing-banner
+  .background
+    @media screen and (min-width : 768px) and (max-width : 1200px)
+      top: -550px
   @media only screen and (max-width : 375px)
     h2
       line-height: rem(24)!important

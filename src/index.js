@@ -3,7 +3,7 @@ require('babel-polyfill');
 require('jquery-serializejson');
 require('js/html5-dataset.js');
 require('classlist-polyfill');
-
+require('dom4');
 //fix for safari 9.1
 // if (!global.Intl) {
   require('intl');
@@ -28,109 +28,120 @@ function scrollLogoHandler() {
   }
 }
 
-//TODO: move this to separate view
-function scrollMenuItemsHandler() {
-  let lastId = '';
-  let topMenu = $(".pages-left-menu");
-  if (!topMenu.length)
+function scrollAnimateHandler() {
+  const defaultAnimateClasses = ['animated', 'fadeInLeft'];
+  const animateSelector = '[data-animate-class]';
+
+  const animateElements = document.querySelectorAll(animateSelector);
+  if (!animateElements || !animateElements.length)
     return;
 
-  let topMenuHeight = topMenu.outerHeight();
-  let menuItems = topMenu.find("a");
-  let scrollItems = menuItems.map(function() {
-    let href = $(this).attr("href");
-    if (href && href.startsWith('#')) {
-      let item = $(href);
-      if (item.length) {
-        return item;
+  animateElements.forEach((element) => {
+    if (!app.isElementInView(element, 0)) {
+      return;
+    }
+    const animateClasses = element.dataset.animateClass
+      ? element.dataset.animateClass.split('|')
+      : defaultAnimateClasses;
+
+    animateClasses.forEach((animateClass) => {
+      if (!element.classList.contains(animateClass))
+        element.classList.add(animateClass);
+    });
+  });
+}
+
+function hideOtherPopovers(popoverElement) {
+  // hide other popovers
+  const $popoverElements = $('.showPopover');
+  $popoverElements.each((idx, elem) => {
+    if (elem != popoverElement) {
+      const $elem = $(elem);
+      if ($elem.attr('aria-describedby')) {
+        $(elem).popover('hide');
       }
     }
   });
+}
 
-  let fromTop = $(window).scrollTop() + topMenuHeight;
-  let cur = scrollItems.map(function() {
-    if ($(this).offset().top < fromTop)
-      return this;
-  });
-  cur = cur[cur.length - 1];
-  let id = cur && cur.length ? cur[0].id : "";
-  if (lastId !== id) {
-    lastId = id;
-    menuItems
-      .parent().removeClass("active")
-      .end().filter("[href='#" + id + "']").parent().addClass("active");
+function scrollToTopHandler() {
+  function showScrollToTop() {
+    const $w = $(window);
+    const windowTop = $w.scrollTop();
+    return windowTop >= $w.height();
+  }
+
+  const scrollToTopElem = document.getElementById('scroll-to-top').parentNode;
+
+  if (showScrollToTop()) {
+    scrollToTopElem.classList.remove('collapse');
+  } else {
+    scrollToTopElem.classList.add('collapse');
   }
 }
 
+const popoverTemplate = '<div class="popover  divPopover"  role="tooltip"><span class="popover-arrow"></span> <h3 class="popover-title"></h3> <span class="icon-popover"><i class="fa fa-info-circle" aria-hidden="true"></i></span> <span class="popover-content"> XXX </span></div>';
+
+function initPopover(elem, options={}) {
+  if (!elem)
+    return;
+
+  if (elem.getAttribute('aria-describedby'))
+    return;
+
+  const $popoverElem = $(elem);
+  $popoverElem.popover({
+    html: true,
+    template: options.template || popoverTemplate,
+    placement: 'top',
+    trigger: 'hover',
+  });
+  $popoverElem.on('show.bs.popover', (e) => {
+    hideOtherPopovers(elem);
+  });
+
+  $popoverElem.popover('show');
+}
 
 $(document).ready(function () {
   // show bottom logo while scrolling page
   $(window).scroll((e) => {
     scrollLogoHandler(e);
-    scrollMenuItemsHandler(e);
+    // scrollMenuItemsHandler(e);
+    scrollAnimateHandler(e);
+    scrollToTopHandler(e);
   });
 
   //attach global event handlers
-
-//TODO: do we need this template and popover logic?
-  const popoverTemplate = '<div class="popover  divPopover"  role="tooltip"><span class="popover-arrow"></span> <h3 class="popover-title"></h3> <span class="icon-popover"><i class="fa fa-info-circle" aria-hidden="true"></i></span> <span class="popover-content"> XXX </span></div>';
-
-  $('body').on('mouseover', 'div.showPopover', function () {
-    var $el = $(this);
-    if ($el.attr('aria-describedby') == null) {
-      $(this).popover({
-        html: true,
-        template: popoverTemplate,
-        placement: 'top',
-        trigger: 'hover',
-      });
-      $(this).popover('show');
-    }
-  });
-
-  $('body').on('mouseout', 'div.showPopover', function () {
+  $('body').on('mouseout', '.showPopover', function () {
     //$(this).popover('hide');
+  }).on('focusout', '.showPopover', function() {
+    //hide all popovers
+    hideOtherPopovers();
+  }).on('mouseover', 'div.showPopover', function () {
+    initPopover(this);
+  }).on('focus', 'input.showPopover', function () {
+    initPopover(this, {
+      template: popoverTemplate.replace('divPopover', 'inputPopover'),
+    })
+  }).on('focus', 'textarea.showPopover', function () {
+    initPopover(this, {
+      template: popoverTemplate.replace('divPopover', 'textareaPopover'),
+    });
+  }).on('focus', 'i.showPopover', function () {
+    initPopover(this, {
+      template: popoverTemplate.replace('divPopover', 'textareaPopover'),
+    });
   });
-
-  $('body').on('focus', 'input.showPopover', function () {
-    var $el = $(this);
-    if ($el.attr('aria-describedby') == null) {
-      $(this).popover({
-        html: true,
-        template: popoverTemplate.replace('divPopover', 'inputPopover'),
-        placement: 'top',
-        trigger: 'hover',
-      });
-      $(this).popover('show');
+  // для скролл шапки та разшерениях меньше 991px класс "sticky-active" - меняет цвет шапки 
+  $(window).scroll(function() {
+    if ($(this).scrollTop() > 1){  
+      $('header').addClass("sticky-active");
+    }
+    else{
+      $('header').removeClass("sticky-active");
     }
   });
-
-  $('body').on('focus', 'textarea.showPopover', function () {
-    var $el = $(this);
-    if ($el.attr('aria-describedby') == null) {
-      $(this).popover({
-        html: true,
-        template: popoverTemplate.replace('divPopover', 'textareaPopover'),
-        placement: 'top',
-        trigger: 'hover',
-      });
-      $(this).popover('show');
-    }
-  });
-
-  $('body').on('focus', 'i.showPopover', function () {
-    var $el = $(this);
-    if ($el.attr('aria-describedby') == null) {
-      $(this).popover({
-        html: true,
-        template: popoverTemplate.replace('divPopover', 'textareaPopover'),
-        placement: 'top',
-        trigger: 'hover',
-      });
-      $(this).popover('show');
-    }
-  });
-
 // show bottom logo while scrolling page
   $(window).scroll(function () {
     var $bottomLogo = $('#fade_in_logo');
@@ -141,35 +152,21 @@ $(document).ready(function () {
     }
   });
 
-
-// Money field auto correction
-  $('body').on('keyup', '[type="money"]', function (e) {
-
-    if(e.keyCode == 37 || e.keyCode == 39 || e.keyCode == 190 || e.keyCode == 188 || e.keyCode == 91) {
-      return;
-    }
-
-    var valStr = e.target.value.replace(/[\$\,]/g, '');
-    var val = parseFloat(valStr);
-    if (val) {
-      var selStart = e.target.selectionStart;
-      var selEnd = e.target.selectionEnd;
-      e.target.value = '$' + val.toLocaleString('en-US');
-      e.target.setSelectionRange(selStart, selEnd);
-    }
+  // Money field auto correction
+  $('body').on('keyup', '[type="money"]', (e) => {
+    app.helpers.format.formatMoneyInputOnKeyup(e);
   });
 
   $('body').on('focus', '[type="money"]', function (e) {
-    var valStr = e.target.value.replace(/[\$\,]/g, '');
+    var valStr = e.target.value.replace(/[\$,]/g, '');
     var val = parseFloat(valStr);
-    if (val == 0 || val == NaN) {
+    if (isNaN(val) || !val)
       e.target.value = '';
-    }
   });
 
   $('body').on('blur', '[type="money"]', function (e) {
-    var valStr = e.target.value.replace(/[\$\,]/g, '');
-    if (e.target.value == '') {
+    // var valStr = e.target.value.replace(/[\$\,]/g, '');
+    if (!e.target.value) {
       e.target.value = '$0';
     }
   });
@@ -197,15 +194,6 @@ $(document).ready(function () {
     }
   });
 
-  $('body').on('click', '.user-info', function () {
-    if ($('.navbar-toggler:visible').length !== 0) {
-      $('html').removeClass('show-menu');
-      $('header').toggleClass('no-overflow');
-    }
-
-    return false;
-  });
-
   $('body').on('click', '.notification-bell', function () {
     if ($('.navbar-toggler:visible').length !== 0) {
       $('html').removeClass('show-menu');
@@ -219,18 +207,20 @@ $(document).ready(function () {
     var href = $(event.target).closest('a').attr('href');
 
     if ($('.navbar-toggler:visible').length !== 0) {
-      $(this).find('.list-container').slideToggle();
+      $(this).find('#menuList').slideToggle();
 
       if (href && href.indexOf('/') != -1) {
         $('html').toggleClass('show-menu');
       }
     }
   });
-
+  
   $('body').on('click', 'a', (event) => {
     const href = event.currentTarget.getAttribute('href');
 
-    if (href == window.location.pathname) {
+    if (href === (window.location.pathname + window.location.search || '')) {
+    // if (href && href.startsWith(window.location.pathname)) {
+    // if (href == window.location.pathname) {
       window.location.reload();
       return;
     }
@@ -308,12 +298,15 @@ $(document).ready(function () {
     }
   });
 
+  $('#page').on('click', '.showVideoModal', (e) => app.helpers.video.showVideoModal(e));
+
+  $('#scroll-to-top').on('click', e => $('body').scrollTo(0, 350));
 });
 
-$.fn.scrollTo = function (padding=0) {
+$.fn.scrollTo = function (padding=0, duration='fast') {
   $('html, body').animate({
     scrollTop: $(this).offset().top - padding + 'px',
-  }, 'fast');
+  }, duration);
   return this;
 };
 
@@ -394,7 +387,7 @@ $.serializeJSON.defaultOptions = _.extend($.serializeJSON.defaultOptions, {
 //TODO: remove this on next iteration
 global.api = require('./helpers/forms.js');
 global.onYouTubeIframeAPIReady = () => {
-  app.helpers.scripts.onYoutubeAPILoaded()
+  app.helpers.scripts.onYoutubeAPILoaded();
 };
 
 

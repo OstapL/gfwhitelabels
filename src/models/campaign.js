@@ -58,6 +58,9 @@ class Campaign {
         set: function(value) { this.data[key] = value; },
       });
     }
+    //sort perks asc
+    if (this.perks && this.perks.length)
+      this.perks.sort((p1, p2) => p1.amount - p2.amount);
   }
 
   toJSON() {
@@ -116,19 +119,22 @@ class Campaign {
   }
 
   getMainImage () {
+    // Vlad
+    console.debug('Use campaign.header_image_id.getUrl("main")');
     const link = this.header_image_data && this.header_image_data.urls ? 
       this.header_image_image_id.getUrl('main') : '';
     return link;
   }
 
   getInvestorPresentationURL() {
+    // Vlad
+    console.debug('Use campaign.investor_presentation_id.getUrl("origin")');
     if (!this.investor_presentation_data ||
         !this.investor_presentation_data.urls ||
         !this.investor_presentation_data.urls.origin
     )
       return '';
-
-    return app.getFilerUrl(this.investor_presentation_data.urls);
+    return this.investor_presentation_data.getUrl();
   }
 
   calcProgress(data) {

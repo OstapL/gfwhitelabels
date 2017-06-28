@@ -98,14 +98,14 @@
 	z-index: 2
 	
 	&:hover~.one_block
-		+mt(0.2s)
+		+mt(0.3s)
 		-webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
 		-moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
 		box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
 		.for_img
 			.more_inform
 				opacity: 1
-				+mt(0.2s)
+				+mt(0.3s)
 
 				.ico_cont
 					z-index: 3
@@ -129,11 +129,11 @@
 		img
 			width: 100%
 
-		.timer_day
+		.timer_day,
+		.deys-left
 			position: absolute
-			z-index: 1
-			background: $red
-			padding: 0 rem(10)
+			background: $date-issuer-dashboard-bgc
+			padding: 0 rem(13)
 			color: $white
 			border-radius: rem(3)
 			position: absolute
@@ -153,7 +153,7 @@
 			background: $more_inform-bgc
 			text-align: center
 			color: $white
-			+mt(0.2s)
+			+mt(0.3s)
 			hr
 				color: $white
 				width: 50%
@@ -218,9 +218,12 @@
 					line-height: rem(18)
 					margin: 0
 	&:hover
+		+mt(0.2s)
 		.more_inform
-			opacity: 1
 			+mt(0.2s)
+			opacity: 1
+
+			
 	
 	.title
 		margin: 0 rem(10)

@@ -1,11 +1,16 @@
 #!/usr/bin/env bash
 git fetch -q --all
 git checkout alpha > /dev/null
-for b in alpha-dcu alpha-momentum3 alpha-infinityfcu alpha-rivermarkcu alpha-jdcu
+for b in alpha-dcu alpha-momentum3 alpha-rivermarkcu alpha-jdcu alpha-infinityfcu
 do
     echo "========================= branch $b =========================="
     git checkout $b
     git pull origin $b
+    git submodule update --init
+    cd consts && git checkout master && git pull origin alpha 
+    cd ..
+    cd staticdata && git checkout `cd .. && git rev-parse --abbrev-ref HEAD` && git pull 
+    cd ..
 
     if git branch --all | grep --quiet "remotes/vladyslav2/$b"; then
         echo "============ MERGE WITH VLADYSLAV/$b ============"
@@ -32,3 +37,5 @@ do
 done
 
 git checkout alpha
+cd staticdata && git checkout `cd .. && git rev-parse --abbrev-ref HEAD`
+cd ..

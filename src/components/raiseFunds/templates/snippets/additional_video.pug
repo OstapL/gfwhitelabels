@@ -17,13 +17,13 @@ mixin row(value, index)
 
           if videoInfo.provider === 'youtube'
             .img-media.youtube-media
-              img(src="http://img.youtube.com/vi/" + videoInfo.id + "/0.jpg")
+              img(src="https://img.youtube.com/vi/" + videoInfo.id + "/0.jpg")
           else if videoInfo.provider === 'vimeo'
             .img-media
               img(src="" data-vimeo-id=videoInfo.id).card-img.w-100.vimeo-thumbnail
           else
             .img-media
-              img(src="/img/default/255x153.png")
+              img(src=require("images/default/default-video.png"))
 
 mixin run()
   if first_run

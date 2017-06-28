@@ -1,6 +1,6 @@
 .container.p-x-0
   if attr.allowQuestion
-    | !{ snippets.add() }
+    | !{ snippets.add({ attr: attr }) }
   -
     var cssClass = 'comments col-xl-8 p-xs-0 ' + (attr.cssClass || '');
 

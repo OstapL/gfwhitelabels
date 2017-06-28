@@ -48,14 +48,27 @@ module.exports = Backbone.Router.extend(_.extend({
 
   execute(callback, args, name) {
     //as we send custom events to pixel default events we will sent explicitly
+    //
+    if(
+        window.location.pathname.substr(window.location.pathname.length-1, 1) == '/' &&
+        window.location.pathname != '/'
+        ) {
+      window.location = window.location.pathname.substr(0, window.location.pathname.length-1);
+    }
     app.emitFacebookPixelEvent();
-    //metrica stats are tracked in GTM
-    // app.emitYandexMetricaEvent();
 
     app.clearClasses('#page', ['page']);
 
     if (_.contains(routesMap.auth, name) && !app.user.ensureLoggedIn()) {
       return false;
+    }
+
+    if(app.seo.title[window.location.pathname]) {
+      document.title = app.seo.title[window.location.pathname];
+      document.head.querySelector('meta[name="description"]').content = app.seo.meta[window.location.pathname];
+      document.head.querySelector('meta[property="og:title"]').content = app.seo.title[window.location.pathname];
+      document.head.querySelector('meta[property="og:description"]').content = app.seo.meta[window.location.pathname];
+      document.head.querySelector('meta[property="og:url"]').content = window.location.href;
     }
 
     if (!app.user.is_anonymous()) {

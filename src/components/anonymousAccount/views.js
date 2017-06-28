@@ -34,14 +34,38 @@ module.exports = {
 
     render() {
       $('body').scrollTo();
+
       this.$el.html(
         this.template()
       );
+
+      // clear previous modal elements from DOM
+      $('#sign_in').remove();
+      $('#sign_up').remove();
 
       $('body').append(this.$el);
 
       this.$signIn = $('#sign_in');
       this.$signUp = $('#sign_up');
+
+      this.$signIn.off('hidden.bs.modal');
+      this.$signUp.off('hidden.bs.modal');
+      this.$signIn.off('shown.bs.modal');
+      this.$signUp.off('shown.bs.modal');
+
+      this.$signIn.on('hidden.bs.modal', () => {
+        if (this.showModal) {
+          this.$signUp.modal('show');
+          this.showModal = false;
+        }
+      });
+
+      this.$signUp.on('hidden.bs.modal', () => {
+        if (this.showModal) {
+          this.$signIn.modal('show');
+          this.showModal = false;
+        }
+      });
 
       this.$signUp.modal('show');
 
@@ -50,19 +74,15 @@ module.exports = {
 
     switchToLogin(e) {
       e.preventDefault();
-
+      this.showModal = true;
       this.$signUp.modal('hide');
-      this.$signIn.modal();
-
       return false;
     },
 
     switchToSignup(e) {
       e.preventDefault();
-
+      this.showModal = true;
       this.$signIn.modal('hide');
-      this.$signUp.modal();
-
       return false;
     },
 
@@ -244,9 +264,17 @@ module.exports = {
         '<section class="reset">' +
           '<div class="container">' +
             '<div class="col-lg-12">' +
-              '<h2 class="dosis text-uppercase text-sm-center text-xs-center m-t-85">' +
-                'Please check your email for instructions. ' +
+              '<h2 class="text-uppercase text-sm-center text-xs-center m-t-85 m-b-2">' +
+                'reset password' +
               '</h2>' +
+              '<h3 class="font-weight-light m-t-0 text-xs-center"> Don\'t worry, you\'ll be up and running in seconds!</h3>' +
+              '<h2 class="text-xs-center m-b-1 font-weight-light m-t-3"> ' +
+                '<div class="icon-in-circle align-middle">' +
+                  '<i class="fa fa-paper-plane-o" aria-hidden="true"></i>' +
+                '</div>' +
+                'Email sent successfully' +
+              '</h2>' +
+              '<h3 class="font-weight-light m-t-2 m-b-0 text-xs-center">We sent you an email with instructions on how to reset your password</h3>' +
             '</div>' +
           '</div>' +
         '</section>'

@@ -6,23 +6,20 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
           span(aria-hidden="true")
             i.fa.fa-times
         .title-header-signup.m-t-1
-          h1.title.text-uppercase Get
-          h1.number.text-uppercase.font-weight-bold &nbsp;$25&nbsp;
-          h1.title.text-uppercase Credit
-        .title-header-bottom
-          span.font-weight-light If You Sign Up Now*
-        .col-xl-12
-          hr
-        .text.col-xl-8.offset-xl-2.text-xs-center
-          p *Limited time offer for new accounts only.
-            br
-            | Credit valid for 90 days and can be used
-            br
-            | only for investments made on this platform.
-            br
-            | Other conditions apply, see 
-            span
-              a(href="/pg/terms_of_use").link-6 Terms of Use.
+          .row
+            .col-xl-6.col-lg-6.col-md-6.col-sm-6.col-xs-12.p-l-0
+              .text-xs-center.text-sm-right.text-md-right.text-lg-left.text-xl-right
+                h1.title.text-uppercase Get
+                h1.number.text-uppercase.font-weight-bold
+                  | &nbsp;$25&nbsp;
+                h1.title.text-uppercase Credit
+              .title-header-bottom.text-xs-center.text-sm-right.text-md-right.text-lg-left.text-xl-right
+                span.font-weight-light If You Sign Up Now*
+            .col-xl-6.col-lg-6.col-md-6.col-sm-6.col-xs-12.border-left 
+              .text.text-xs-left
+                p *Limited time offer for new accounts only. Credit valid for 90 days and can be used only for investments made on this platform. Other conditions apply, see 
+                  span
+                    a(href="/pg/terms_of_use").link-6 Terms of Use.
       .modal-body
         .container.form-section
           h2.text-xs-center.text-uppercase.dosis.modal-title Sign up
@@ -33,13 +30,13 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
             input(type="hidden" name="domain" value=window.location.host)
             .row
               .social-btn.m-t-2.m-b-2
-                button(data-network="facebook").btn.btn-block.btn-social-network.btn-facebook.text-uppercase.m-t-0
+                button(data-network="facebook")#signup-facebook.btn.btn-block.btn-social-network.btn-facebook.text-uppercase.m-t-0
                   i.fa.fa-facebook
                   |  SIGN UP with Facebook
-                button(data-network="linkedin").btn.btn-block.btn-social-network.btn-linkedin.text-uppercase
+                button(data-network="linkedin")#signup-linkedin.btn.btn-block.btn-social-network.btn-linkedin.text-uppercase
                   i.fa.fa-linkedin
                   |  SIGN UP with linkedin
-                button(data-network="google").btn.btn-block.btn-social-network.btn-google.text-uppercase
+                button(data-network="google")#signup-google.btn.btn-block.btn-social-network.btn-google.text-uppercase
                   i.fa.fa-google-plus
                   |  SIGN UP with Google
             .form-group.row.clearfix.required
@@ -56,37 +53,45 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
                 
               .col-lg-12.border-bottom.or
                 span or
-            .form-group.row.clearfix.required
-              input(type="text"
-              placeholder="First Name"
-              data-value-type="text"
-              name="first_name").form-control
-            .form-group.row.clearfix.required
-              input(type="text"
-              placeholder="Last Name"
-              data-value-type="text"
-              name="last_name").form-control
-            .form-group.row.clearfix.required
-              input(type="email"
-              placeholder="E-mail"
-              name="email"
-              data-value-type="email"
-              ).form-control
-            .form-group.row.clearfix.required
-              input(type="password"
-              placeholder="Password"
-              data-value-type="password"
-              name="password1").form-control
-            .form-group.row.clearfix.required
-              input(type="password"
-              placeholder="Re-enter Password"
-              data-value-type="password"
-              name="password2").form-control
-              input(type="hidden"
+
+            -
+              pug_html += app.fields.fieldText('first_name', {
+                required: true,
+                placeholder: 'First Name',
+                type: 'text',
+                'class': 'form-group row clearfix',
+              });
+              pug_html += app.fields.fieldText('last_name', {
+                required: true,
+                placeholder: 'Last Name',
+                type: 'text',
+                'class': 'form-group row clearfix',
+              });
+              pug_html += app.fields.fieldText('email', {
+                required: true,
+                placeholder: 'E-mail',
+                type: 'email',
+                'class': 'form-group row clearfix',
+              });
+              pug_html += app.fields.fieldText('password1', {
+                required: true,
+                placeholder: 'Password',
+                type: 'password',
+                'class': 'form-group row clearfix',
+              });
+              pug_html += app.fields.fieldText('password2', {
+                required: true,
+                placeholder: 'Re-enter Password',
+                type: 'password',
+                'class': 'form-group row clearfix',
+              });
+            input(
+              type="hidden"
               value=window.location.host
-              name="domain")
+              name="domain"
+            )
             .col-lg-12.text-xs-center
-              button(type="submit").btn.btn-primary.text-uppercase Sign up
+              button(type="submit")#signup-btn.btn.btn-primary.text-uppercase Sign up
             
         .modal-footer
 
@@ -104,40 +109,44 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
         .modal-body
           .form-section
             form(novalidate autocomplete="off")#sign-in-form.login-form.col-lg-10.offset-lg-1
-              .col-lg-12
-                .form-group.row.clearfix.required
-                  input(type="email"
-                    autocomplete='off'
-                    placeholder="E-mail"
-                    name="email"
-                    data-value-type="email"
-                  ).form-control
-                .form-group.row.clearfix.required
-                  input(type="password"
-                  autocomplete='off'
-                  placeholder="Password"
-                  data-value-type="password"
-                  name="password").form-control
-                  input(type="hidden"
+              .col-lg-12.p-xs-0
+                -
+                  pug_html += app.fields.fieldText('email', {
+                    autocomplete: 'off',
+                    required: true,
+                    placeholder: 'E-mail',
+                    type: 'email',
+                    'class': 'form-group row clearfix',
+                  });
+                  pug_html += app.fields.fieldText('password', {
+                    required: true,
+                    autocomplete: 'off',
+                    placeholder: 'Password',
+                    type: 'password',
+                  'class': 'form-group row clearfix',
+                  });
+                input(
+                  type="hidden"
                   value=window.location.host
-                  name="domain")
-              .col-lg-12
+                  name="domain"
+                )
+              .col-lg-12.p-xs-0
                 .row.forgot
                   a(href="#").reset-password-link.link-3 Forgot Your Password?
               .col-lg-12
                 .row.text-sm-center.text-xs-center
-                  button(type="submit").btn.btn-primary.btn-login.text-uppercase Log In
+                  button(type="submit")#login-btn.btn.btn-primary.btn-login.text-uppercase Log In
             //-
               .col-lg-12.border-bottom.or
                 span or
               .social-btn.col-lg-12
-                a(data-original-title="facebook" href="#").btn.btn-block.btn-facebook.text-uppercase
+                a(data-original-title="facebook" href="#")#login-facebook.btn.btn-block.btn-facebook.text-uppercase
                   i.fa.fa-facebook
                   |  Log In with Facebook
-                a(data-original-title="Linkedin" href="#").btn.btn-block.btn-linkedin.text-uppercase
+                a(data-original-title="Linkedin" href="#")#login-linkedin.btn.btn-block.btn-linkedin.text-uppercase
                   i.fa.fa-linkedin
                   |  Log In with linkedin
-                a(data-original-title="Google Plus" href="#").btn.btn-block.btn-google.text-uppercase
+                a(data-original-title="Google Plus" href="#")#login-google.btn.btn-block.btn-google.text-uppercase
                   i.fa.fa-google-plus
                   |  Log In with Google
     .modal-footer

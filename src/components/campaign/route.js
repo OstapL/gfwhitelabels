@@ -62,8 +62,25 @@ module.exports = {
           api.makeCacheRequest(app.config.raiseCapitalServer + '/company', 'OPTIONS'),
           api.makeCacheRequest(app.config.raiseCapitalServer + '/' + name)
         ).done((companyFields, companyData) => {
+
+          let model = new app.models.Company(companyData[0], companyFields[0]);
+          let metaDescription = companyData[0].tagline + '. ';
+          try {
+            metaDescription += companyData[0].description.split('.')[0];
+          } catch(e) {
+          }
+
+          document.title = companyData[0].short_name || companyData[0].name;
+          document.head.querySelector('meta[name="description"]').content = metaDescription;
+
+          document.head.querySelector('meta[property="og:title"]').content = companyData[0].short_name || companyData[0].name;
+          document.head.querySelector('meta[property="og:description"]').content = metaDescription;
+          document.head.querySelector('meta[property="og:image"]').content = model.campaign.getMainImage();
+          document.head.querySelector('meta[property="og:url"]').content = window.location.href;
+          // document.head.querySelector('meta[name="keywords"]').content = companyData[0].tagline.replace(/ /g,',');
+
           let i = new View.detail({
-            model: new app.models.Company(companyData[0], companyFields[0]),
+            model: model
           });
           i.render();
           $('body').scrollTo();
