@@ -152,48 +152,21 @@ $(document).ready(function () {
     }
   });
 
-
-// Money field auto correction
-  $('body').on('keyup', '[type="money"]', function (e) {
-
-    if(e.keyCode == 37 || e.keyCode == 39 || e.keyCode == 190 || e.keyCode == 188 || e.keyCode == 91) {
-      return;
-    }
-
-    var addPosition = 0;
-    var valStr = e.target.value.replace(/[\$\,]/g, '');
-
-
-    var val = parseFloat(valStr);
-    if (val) {
-      let selStart = e.target.selectionStart;
-      let selEnd = e.target.selectionEnd;
-      let selectionVal = e.target.value.substring(0, selEnd);
-
-      e.target.value = '$' + val.toLocaleString('en-US');
-      let currentVal = e.target.value.substring(0, selEnd);
-
-      if (currentVal !== selectionVal) {
-        addPosition = (currentVal.match(/,/g) || []).length - (selectionVal.match(/,/g) || []).length;
-      }
-      console.log(valStr.length, e.target.value.length, addPosition, e.target.selectionStart, e.target.selectionEnd);
-
-      // debugger;
-      e.target.setSelectionRange(selStart + addPosition, selEnd + addPosition);
-    }
+  // Money field auto correction
+  $('body').on('keyup', '[type="money"]', (e) => {
+    app.helpers.format.formatMoneyInputOnKeyup(e);
   });
 
   $('body').on('focus', '[type="money"]', function (e) {
-    var valStr = e.target.value.replace(/[\$\,]/g, '');
+    var valStr = e.target.value.replace(/[\$,]/g, '');
     var val = parseFloat(valStr);
-    if (val == 0 || val == NaN) {
+    if (isNaN(val) || !val)
       e.target.value = '';
-    }
   });
 
   $('body').on('blur', '[type="money"]', function (e) {
-    var valStr = e.target.value.replace(/[\$\,]/g, '');
-    if (e.target.value == '') {
+    // var valStr = e.target.value.replace(/[\$\,]/g, '');
+    if (!e.target.value) {
       e.target.value = '$0';
     }
   });
