@@ -33,15 +33,15 @@ module.exports = {
     },
 
     render() {
+      // clear previous modal elements from DOM
+      $('#sign_in').remove();
+      $('#sign_up').remove();
+
       $('body').scrollTo();
 
       this.$el.html(
         this.template()
       );
-
-      // clear previous modal elements from DOM
-      $('#sign_in').remove();
-      $('#sign_up').remove();
 
       $('body').append(this.$el);
 

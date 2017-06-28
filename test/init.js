@@ -32,12 +32,13 @@ global._ = require('underscore');
 global.Backbone = require('backbone');
 global.Tether = window.Tether = require('tether');
 require('bootstrap');
+global.Element = window.Element;
+global.Node = window.Node;
 require('babel-polyfill');
-global.Node = {ELEMENT_NODE: 1}
-// require('js/html5-dataset.js');
-// require('classlist-polyfill');
+require('js/html5-dataset.js');
+require('classlist-polyfill');
 // global.require = require;
-global.api = require('src/helpers/forms.js');
+global.api = require('../src/helpers/forms.js');
 const App = require('../src/app.js');
 global.app = App();
 app.user = {};
@@ -48,6 +49,7 @@ $.fn.scrollTo = function (padding=0) {
   return this;
 };
 require('jquery-serializejson');
+
 $.serializeJSON.defaultOptions = _.extend($.serializeJSON.defaultOptions, {
   customTypes: {
     decimal(val) {
