@@ -19,18 +19,27 @@ const snippets = {
   team_members: require('./templates/snippets/team_members.pug'),
 };
 
+const fixGATrackerID = (data) => {
+  if (!data || !data.ga_id)
+    return;
+
+  if (!data.ga_id.startsWith('UA-'))
+    data.ga_id = 'UA-' + data.ga_id;
+};
+
 module.exports = {
   company: Backbone.View.extend(_.extend({
     urlRoot: app.config.raiseCapitalServer + '/company',
     template: require('./templates/company.pug'),
     events: _.extend({
-      'click #submitForm': api.submitAction,
+      'click #submitForm': 'submitCompanyInfo',
       'keyup #zip_code': 'changeZipCode',
       'click .update-location': 'updateLocation',
       'click .onPreview': raiseHelpers.onPreviewAction,
       'click .submit_form': raiseHelpers.submitCampaign,
       'click #postForReview': raiseHelpers.postForReview,
       'keyup #slug': 'fixSlug',
+      'keyup #ga_id': 'fixTrackerIDForUI',
       'change #website': 'appendHttpIfNecessary',
     },
       /*app.helpers.confirmOnLeave.events,*/
@@ -83,6 +92,36 @@ module.exports = {
       }
     },
 
+    submitCompanyInfo(e) {
+      let $form = $(e.target).closest('form');
+
+      const data = $form.serializeJSON();
+      fixGATrackerID(data);
+      
+      api.submitAction.call(this, e, data);
+    },
+
+    fixTrackerIDForUI(e) {
+      const SKIP_KEY_CODES = [
+        16,   //shift
+        17,   //ctrl
+        18,   //alt
+        35,   //end
+        36,   //home
+        37,   //left arrow
+        38,   //down arrow
+        39,   //right arrow
+        40,   //up arrow
+        91,   //left window
+      ];
+
+      if (_.contains(SKIP_KEY_CODES, e.keyCode))
+        return;
+
+      e.target.value = e.target.value.replace(/^UA-/, '');
+    },
+    
+    
     fixSlug(e) {
       if(e.currentTarget.value) {
         e.currentTarget.value = e.currentTarget.value.replace(/\s+/g,'-').replace(/[^a-zA-Z0-9\-]/g,'').toLowerCase();
