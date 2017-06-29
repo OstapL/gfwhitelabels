@@ -29,9 +29,6 @@ var e = {
 
   //analytics services settings
   googleTagID: 'GTM-WP7K455',
-  googleAnalyticsID: 'UA-97185485-1',
-  googleAnalyticsIDGeneral: 'UA-97185485-3',
-  facebookPixelID: 1020185798119090,
 
   indexPage: {
     //main slider or img (slider - 1/ img - 0)
