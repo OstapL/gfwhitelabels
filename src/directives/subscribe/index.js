@@ -1,3 +1,4 @@
+
 class MailSubscriber {
   constructor() {
     this.template = require('./templates/subscribe.pug');
