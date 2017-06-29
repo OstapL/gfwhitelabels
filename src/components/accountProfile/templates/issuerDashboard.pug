@@ -76,7 +76,7 @@ section.issuer-dashbord-top
             - var now = new Date();
             .font-weight-bold
               | #{now.toLocaleString('en-US', { month: "short" })} #{ now.getDate() }
-            | #{ app.helpers.format.formatAmount(campaign.amount_raised) } Raised
+            | #{ '$' + (campaign.amount_raised || 0).toLocaleString('en-US') } Raised
             //br
             //| #{ app.helpers.format.formatAmount(campaign.amount_commited) } Approved
             //br

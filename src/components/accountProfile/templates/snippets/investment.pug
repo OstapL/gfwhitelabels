@@ -22,7 +22,7 @@ div(data-investmentid=id).one_table
       .col40
         span.light_grey Amount Invested
       .col60
-        span.bold-grey.font-weight-bold #{'$' + amount}
+        span.bold-grey.font-weight-bold #{'$' + (amount || 0).toLocaleString('en-US') }
     .one_line
       .col40
         span.light_grey Investment Day
