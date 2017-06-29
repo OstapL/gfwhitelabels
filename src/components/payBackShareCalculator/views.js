@@ -38,12 +38,12 @@ module.exports = {
             this.fields = {
                 raiseMoney: {
                     required: true,
-                    type: 'integer',
+                    type: 'money',
                     validate: {},
                 },
                 nextYearRevenue: {
                     required: true,
-                    type: 'integer',
+                    type: 'money',
                     validate: {},
                 },
                 growLevel: {
