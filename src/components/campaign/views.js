@@ -769,8 +769,8 @@ module.exports = {
       maxInvestmentsPerYear = maxInvestmentsPerYear < 2 ? 2.2 : maxInvestmentsPerYear;
 
       // Investor cannot invest more that 107000 in a year
-      if(maxInvestmentsPerYear > 107000) {
-        maxInvestmentsPerYear = 107000;
+      if(maxInvestmentsPerYear > 107) {
+        maxInvestmentsPerYear = 107;
       }
 
       let result = Math.round((maxInvestmentsPerYear * 1000 - investedPastYear - investedOtherSites));
