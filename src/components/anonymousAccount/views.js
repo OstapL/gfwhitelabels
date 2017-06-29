@@ -134,6 +134,19 @@ module.exports = {
     },
 
     initialize(options) {
+      this.fields = {
+        email: {
+          required: true,
+          type: 'email',
+        },
+        password: {
+          required: true,
+          type: 'password',
+          minLength: 8,
+          //needed for validation message
+          label: 'Password',
+        }
+      };
     },
 
     render() {

@@ -115,32 +115,6 @@ describe('Log-in/Sign-up', () => {
   //   });
   // });
 
-  describe('Login with invalid data', () => {
-    it('Login page invalid email', () => {
-      new Views.login({
-        el: '#content',
-        model: {}
-      }).render();
-
-      const $loginForm = $('.login-form');
-
-      $loginForm.find('input[name=email]').val('123');
-      $loginForm.find('input[name=password]').val(userData.password);
-
-      $loginForm.submit();
-
-      expect(app.validation.errors).to.be.greaterThan(0);
-    });
-
-    it('Login page invalid password', () => {
-
-    });
-
-    it('Login popup invalid email', () => {
-
-    });
-  });
-
   describe('Sign up with invalid data', () => {
     it('Sign up with empty first name', () => {
 
