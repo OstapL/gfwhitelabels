@@ -339,6 +339,8 @@ module.exports = {
         templateDropzone: 'headerMedia.pug',
         defaultImage: require('images/default/default-header.png'),
         onSaved: (data) => {
+          this.model.header_image_image_id = data.file;
+          this.model.header_image_data = data.file.toJSON();
           this.model.updateMenu(this.model.calcProgress(this.model));
         },
         crop: {
@@ -374,6 +376,8 @@ module.exports = {
         title: 'Drop your photo here or click to upload',
         help_text: ' This image entices investors to view your campaign. A minimum size of 350x209 is recommended.',
         onSaved: (data) => {
+          this.model.list_image_image_id = data.file;
+          this.model.list_image_data = data.file.toJSON();
           this.model.updateMenu(this.model.calcProgress(this.model));
         },
         crop: {
@@ -775,6 +779,8 @@ module.exports = {
       this.fields.investor_presentation_file_id = _.extend(this.fields.investor_presentation_file_id, {
         label: 'Upload an Investor Presentation',
         onSaved: (data) => {
+          this.model.investor_presentation_file_id = data.file;
+          this.model.investor_presentation_data = data.file.toJSON();
           this.model.updateMenu(this.model.calcProgress(this.model));
         },
       });
