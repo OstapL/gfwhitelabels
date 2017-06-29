@@ -18,7 +18,7 @@
                 label(for="raiseMoney").font-weight-bold How much is the company raising?
               input(
                 value=(data.raiseMoney ? app.helpers.calculator.formatPrice(data.raiseMoney) : ''),
-                type='text',
+                type='money',
                 placeholder='$0',
                 autocomplete="off"
                 data-input-mask='price',
@@ -33,7 +33,7 @@
                 label(for="nextYearRevenue").font-weight-bold What do you expect next year's revenue to be?
               input(
                 value=(data.nextYearRevenue ? app.helpers.calculator.formatPrice(data.nextYearRevenue) : ''),
-                type='text',
+                type='money',
                 placeholder='$0',
                 autocomplete="off"
                 data-input-mask='price',

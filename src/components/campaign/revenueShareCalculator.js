@@ -30,8 +30,6 @@ module.exports = {
       // 'keydown [name=growLevel]': 'filterKeyCodeForPercentage',
       'focusin [name=growLevel]': 'setCaretPosition',
       'click [name=growLevel]': 'setCaretPosition',
-      'keyup [name=raiseMoney]': app.helpers.format.formatMoneyValue,
-      'keyup [name=nextYearRevenue]': app.helpers.format.formatMoneyValue,
       // 'blur [data-input-mask="percent"]': 'cutZeros',
     }, app.helpers.calculatorValidation.events),
 
@@ -47,13 +45,13 @@ module.exports = {
       this.fields = {
         raiseMoney: {
           required: true,
-          type: 'integer',
+          type: 'money',
           validate: {},
           label: 'How much is the company raising?'
         },
         nextYearRevenue: {
           required: true,
-          type: 'integer',
+          type: 'money',
           validate: {},
           label: 'What do you expect next year\'s revenue share to be?',
         },
