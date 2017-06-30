@@ -712,6 +712,7 @@ module.exports = {
           model: data[0],
           fields: options[0].fields,
           allowQuestion: false,
+          readonly: this.campaign.expired,
           cssClass: 'col-xl-8 offset-xl-0',
         });
         comments.render();
