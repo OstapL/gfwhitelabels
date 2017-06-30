@@ -26,7 +26,7 @@ section.issuer-dashbord-top
             .number
               span(
                 data-counter="counterup"
-                data-value=campaign.amount_raised) $#{ campaign.amount_raised }
+                data-value=campaign.amount_raised) #{ app.helpers.format.formatPrice(campaign.amount_raised) }
             .desc Amount Raised
 
       .col-xl-2.col-lg-2.col-md-3.col-sm-6.col-xs-6
