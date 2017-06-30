@@ -540,7 +540,8 @@ module.exports = {
 
         data.rating = data.rating || 0;
 
-        api.makeRequest(app.config.investmentServer + '/' + id + '/decline', 'PUT', data).done((response) => {
+        // api.makeRequest(app.config.investmentServer + '/' + id + '/decline', 'PUT', data).done((response) => {
+        setTimeout(() => {
           investment.deposit_cancelled_by_investor = true;
 
           $target.closest('.one_table').remove();
@@ -558,25 +559,25 @@ module.exports = {
           let cancelledInvestmentElem = this.snippets.investment(investment);
 
           if (historicalInvestmentElements.length) {
-            //find investment to insert after it
+            //find investment to insert before it
             let block = _.find(historicalInvestmentElements, (elem) => {
               const investmentId = Number(elem.dataset.investmentid);
-              return investmentId > investment.id;
+              return investment.id > investmentId;
             });
             if (block)
-              $(block).after(cancelledInvestmentElem);
+              $(block).before(cancelledInvestmentElem);
             else
-              historicalInvestmentsBlock.prepend(cancelledInvestmentElem);
+              historicalInvestmentsBlock.append(cancelledInvestmentElem);
           } else {
             historicalInvestmentsBlock.empty();
             historicalInvestmentsBlock.append(cancelledInvestmentElem);
           }
 
           this.onCancel(investment);
-        }).fail((err) => {
-          app.dialogs.error(err.error);
-        });
-
+        // }).fail((err) => {
+        //   app.dialogs.error(err.error);
+        // });
+        }, 100);
       });
     },
   }),
