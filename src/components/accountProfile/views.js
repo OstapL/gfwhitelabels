@@ -540,8 +540,7 @@ module.exports = {
 
         data.rating = data.rating || 0;
 
-        // api.makeRequest(app.config.investmentServer + '/' + id + '/decline', 'PUT', data).done((response) => {
-        setTimeout(() => {
+        api.makeRequest(app.config.investmentServer + '/' + id + '/decline', 'PUT', data).done((response) => {
           investment.deposit_cancelled_by_investor = true;
 
           $target.closest('.one_table').remove();
@@ -574,10 +573,9 @@ module.exports = {
           }
 
           this.onCancel(investment);
-        // }).fail((err) => {
-        //   app.dialogs.error(err.error);
-        // });
-        }, 100);
+        }).fail((err) => {
+          app.dialogs.error(err.error);
+        });
       });
     },
   }),
