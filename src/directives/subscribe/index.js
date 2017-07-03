@@ -35,8 +35,8 @@ class MailSubscriber {
     });
   }
 
-  render() {
-    let html = this.template();
+  render(options) {
+    let html = this.template(options);
     this.attachEvents();
     return html;
   }
