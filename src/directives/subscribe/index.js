@@ -27,6 +27,7 @@ class MailSubscriber {
       }).then((response) => {
         if (response.result == 'success') {
           app.dialogs.info(removeHTMLFromMessage(response.msg || 'Check your email to proceed with your subscription.'));
+          $form.find('[type=email]').val('');
           return;
         }
         app.dialogs.error(removeHTMLFromMessage(response.msg));
