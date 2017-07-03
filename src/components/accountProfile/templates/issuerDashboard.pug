@@ -94,8 +94,9 @@ section.issuer-dashbord-top
           b #{ app.helpers.format.formatAmount(campaign.minimum_raise || campaign.maximum_raise)}
           span Goal
       .col-xl-8.col-lg-8.col-md-12.text-xs-center
-        a(href="/" + company.slug).btn-sm.btn.btn-secondary.text-uppercase view Campaign
-          i(aria-hidden="true").fa.fa-angle-right
+        if !campaign.expired
+          a(href="/" + company.slug).btn-sm.btn.btn-secondary.text-uppercase view Campaign
+            i(aria-hidden="true").fa.fa-angle-right
     .col-lg-12.border-bottom-50
 
 section.investors-dashbord-document

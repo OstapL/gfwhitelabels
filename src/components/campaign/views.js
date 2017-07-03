@@ -17,6 +17,7 @@ module.exports = {
     },
     initialize(options) {
       options.collection.data = options.collection.data.map(companyData => new app.models.Company(companyData));
+      options.collection.data = options.collection.data.filter(companyData => !companyData.campaign.expired);
       this.collection = options.collection;
     },
 
@@ -303,6 +304,13 @@ module.exports = {
     },
 
     render() {
+      if (this.model.campaign.expired) {
+        const template = require('templates/errorPage.pug');
+        this.$el.html(template());
+        app.hideLoading();
+        return this;
+      }
+
       this.$el.html(
         this.template({
           values: this.model,

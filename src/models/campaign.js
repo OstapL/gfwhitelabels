@@ -204,6 +204,10 @@ class Campaign {
   get expired() {
     return this.expirationDate.isBefore(today);
   }
+
+  get successful() {
+    return this.amount_raised >= this.minimum_raise;
+  }
 }
 
-module.exports = Campaign
+module.exports = Campaign;
