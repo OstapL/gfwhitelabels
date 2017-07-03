@@ -1,3 +1,7 @@
+const removeHTMLFromMessage = (msg) => {
+  msg = msg || '';
+  return msg.replace(/(<(.+)>)/ig, '');
+};
 
 class MailSubscriber {
   constructor() {
@@ -22,10 +26,10 @@ class MailSubscriber {
         dataType: 'jsonp',
       }).then((response) => {
         if (response.result == 'success') {
-          app.dialogs.info(response.msg || 'Check your email to proceed with your subscription.');
+          app.dialogs.info(removeHTMLFromMessage(response.msg || 'Check your email to proceed with your subscription.'));
           return;
         }
-        app.dialogs.error(response.msg);
+        app.dialogs.error(removeHTMLFromMessage(response.msg));
       }).fail((jqXHR, textStatus, errorThrown) => {
         console.error(errorThrown);
         app.dialogs.error('An error occurred, try again later.');
