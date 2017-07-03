@@ -51,6 +51,7 @@
     "cookies-js": "^1.2.3",
     "cropperjs": "^0.8.1",
     "deep-diff": "^0.3.4",
+    "dom4": "^1.8.3",
     "dropzone": "^4.3.0",
     "hellojs": "^1.13.4",
     "intl": "^1.2.5",
