@@ -123,7 +123,11 @@ secetion.email-subscription
   p Sign up and be the first to hear about new investment opportunities
   -
     var subscriber = require('directives/subscribe/index.js');
-    pug_html += subscriber.render();
+    pug_html += subscriber.render({
+      containerClass: '1',
+      emailClass: '1',
+      subscribeClass: '1'
+    });
 
 section.campaing-list
   .container#campaignList
