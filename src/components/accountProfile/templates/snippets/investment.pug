@@ -49,7 +49,7 @@ div(data-investmentid=id).one_table
       li
         a(href=campaign.investor_presentation_file_id.getUrl('origin') target="_blank").link-3 Investor Presentation
       li
-        a(href=formc.link_to_formc data-id=id target="_blank").link-3.formc-docs-link Form C
+        a(href=(formc.link_to_formc || "#") data-id=id target="_blank" disabled=formc.link_to_formc).link-3.formc-docs-link Form C
       li
         a(href="#" data-id=id target="_blank").link-3.financial-docs-link Financials
       li
@@ -72,7 +72,8 @@ div(data-investmentid=id).one_table
     .progress_line_container
       progress(value=campaign.amount_raised max=(campaign.minimum_raise || campaign.maximum_raise)).progress
     .text-xs-center
-      a(href=('/' + company.id)).btn.btn-sm.btn-secondary.text-uppercase view campaign
+      - var campaignURL = '/' + (company.slug || company.id);
+      a(href=campaignURL).btn.btn-sm.btn-secondary.text-uppercase view campaign
         i.fa.fa-angle-right
     .cancel_invest
       if active
