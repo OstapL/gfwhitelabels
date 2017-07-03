@@ -4,6 +4,8 @@
 
 .row
   for company in collection.data
+    if company.campaign.expired
+      - continue;
     .col-xl-4.col-lg-6.col-md-6.col-xs-12.col-sm-12
       a(href="/" + company.slug).block_link
       .one_block
