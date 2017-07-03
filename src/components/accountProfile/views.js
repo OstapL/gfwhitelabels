@@ -382,10 +382,7 @@ module.exports = {
       this.fields = options.fields;
       this.fields.cancelled_reason.label = 'What is the main reason for your cancellation?';
       this.fields.feedback.label = 'Do you have any suggestions to improve our platform?';
-
-      _.each(this.model.data, (investment, idx) => {
-        this.model.data[idx] = new InvestmentModel(investment, this.fields);
-      });
+      this.model.data = (this.model.data || []).map(investment => new InvestmentModel(investment, this.fields));
 
       this.snippets = {
         investment: require('./templates/snippets/investment.pug'),
@@ -715,6 +712,7 @@ module.exports = {
           model: data[0],
           fields: options[0].fields,
           allowQuestion: false,
+          readonly: this.campaign.expired,
           cssClass: 'col-xl-8 offset-xl-0',
         });
         comments.render();
