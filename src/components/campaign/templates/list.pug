@@ -119,6 +119,12 @@ section.small-section.filter.p-b-0
                 else
                   option(value=k)= v
 
+secetion.email-subscription
+  p Sign up and be the first to hear about new investment opportunities
+  -
+    var subscriber = require('directives/subscribe/index.js');
+    pug_html += subscriber.render();
+
 section.campaing-list
   .container#campaignList
     include _list.pug
