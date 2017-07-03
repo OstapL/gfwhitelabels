@@ -14,6 +14,7 @@ html(lang="en")
     meta(property="og:title" content=htmlWebpackPlugin.options.title)
     meta(property="og:image" content=require("images/logo.png"))
     meta(property="og:description" content="Invest in Start-ups and small businesses for as little as $100. Support entrepreneurs locally and nationally.")
+    meta(property="og:url" content="")
 
     <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
     meta(name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0")
@@ -28,7 +29,12 @@ html(lang="en")
     div.loader_overlay
       div.loader Loading...
 
-    //Navigation panel
+    div.scrolling-top.collapse.animated.fadeIn
+      a(href="#")#scroll-to-top
+        i.fa.fa-caret-up
+        span.text Go up
+
+    // Navigation panel
     header.header
       nav.navbar.bg-invere.navbar-dark
         a(href="/").navbar-brand
