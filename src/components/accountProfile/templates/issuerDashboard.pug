@@ -15,9 +15,16 @@ section.issuer-dashbord-top
         .img_under_text
           img(src=(campaign.list_image_image_id.getUrl() || require('images/default/350x282.png')) alt="")
           h2.text-uppercase.dosis.m-t-0 #{company.name}
-          .timer_day #{campaign.daysLeft(company.approved_date)} Days Left
-        .share-block.d-inline-block.share
-          | !{ socialDirective.render(directiveKey, infoProvider) }
+          .timer_day
+            if campaign.expired
+              .text-xs-center
+                p #{ moment(campaign.expiration_date).format('MM.DD.YYYY') }
+                p End Date
+            else
+              | #{campaign.daysLeft(company.approved_date)} Days Left
+        if !campaign.expired
+          .share-block.d-inline-block.share
+            | !{ socialDirective.render(directiveKey, infoProvider) }
       .col-xl-2.col-lg-2.col-md-3.col-sm-6.col-xs-6
         .dashboard-stat
           .visual
@@ -70,17 +77,21 @@ section.issuer-dashbord-top
             value=daysPassedPercents
             max="100").progress.big_prog #{ daysPassedPercents }%
           span(
-            style="width:" + daysPassedPercents + "%").circle_progress
+            style="left:" + daysPassedPercents + "%").circle_progress
             i.fa.fa-circle-o
-          span(style="left:" +  (daysPassedPercents < 1 ? 1 : daysPassedPercents) + "%").text_position
-            - var now = new Date();
-            .font-weight-bold
-              | #{now.toLocaleString('en-US', { month: "short" })} #{ now.getDate() }
-            | #{ '$' + (campaign.amount_raised || 0).toLocaleString('en-US') } Raised
-            //br
-            //| #{ app.helpers.format.formatAmount(campaign.amount_commited) } Approved
-            //br
-            //| Chances: #{ Math.round(percentage_raised / (campaign.minimum_raise  / campaign.amount_commited) * 100) }%
+          div(style="left:" +  (daysPassedPercents < 1 ? 1 : daysPassedPercents) + "%").text_position
+            .text-wrap
+              - var now = new Date();
+              .font-weight-bold
+                if campaign.expired
+                  | #{ moment(campaign.expiration_date).format('DD MMMM') }
+                else
+                  | #{now.toLocaleString('en-US', { month: "short" })} #{ now.getDate() }
+              | #{ '$' + (campaign.amount_raised || 0).toLocaleString('en-US') } Raised
+              //br
+              //| #{ app.helpers.format.formatAmount(campaign.amount_commited) } Approved
+              //br
+              //| Chances: #{ Math.round(percentage_raised / (campaign.minimum_raise  / campaign.amount_commited) * 100) }%
         .progress_description
           .pull-left
             p #{ moment(company.approved_date).format('MM/DD/YYYY') }
@@ -218,4 +229,7 @@ section.danger-zone-dashboard
         p Do you have new information that a reasonable investor would consider important in deciding whether or not to purchase your securities?  If so, click here to amend your offering.
     .row
       .col-lg-12.m-t-1
-        a(href="#").btn.danger-cancel.text-uppercase.cancel-campaign Material change
+        if campaign.expired
+          a(href="#").btn.danger-cancel.text-uppercase.disabled Material change
+        else
+          a(href="#").btn.danger-cancel.text-uppercase.cancel-campaign Material change
