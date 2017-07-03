@@ -150,6 +150,8 @@ module.exports = {
     if (_.contains(SKIP_KEY_CODES, e.keyCode))
       return;
 
+    const positiveOnly = !!e.target.dataset.positiveOnly;
+
     let rawValue = e.target.value;
     const rawValueNumber = rawValue.replace(/\$/g, '');
     let valueString = rawValueNumber.replace(/,/g, '');
@@ -157,6 +159,9 @@ module.exports = {
     let number = parseFloat(valueString);
     if (isNaN(number))
       return e.target.value = valueString.replace(/[^0-9\$,\.]/g, '');
+
+    if (positiveOnly)
+      number = number < 0 ? Math.abs(number) : number;
 
     let cursorPosition = e.target.selectionStart;
     let cursorPositionFix = rawValue.startsWith('$') ? 0 : 1;

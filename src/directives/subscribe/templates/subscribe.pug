@@ -1,25 +1,29 @@
-
+-
+  containerClass = containerClass || '';
+  emailClass = emailClass || 'col-xl-12 col-lg-12 p-x-xl-0 p-xs-0';
+  subscribeClass = subscribeClass || 'col-xl-12 col-lg-12 p-x-xl-0 p-xs-0'
 form(
   action="//Growthfountain.us3.list-manage.com/subscribe/post-json?u=50ee1beec395ee0f981299099&id=aa35949664&c=?"
   method="post"
   name="mc-embedded-subscribe-form"
 ).email-subscribe.form-section
-  .col-xl-12.col-lg-12.p-x-xl-0.p-xs-0
-    input(
-      type="email"
-      placeholder="Email Address"
-      name="EMAIL"
-      value=""
-    ).required.email.form-control.w-100
-    input(
-      type="hidden"
-      name="b_50ee1beec395ee0f981299099_aa35949664"
-      tabindex="-1"
-      value=""
-    )
-  .col-xl-12.col-lg-12.p-x-xl-0.p-xs-0
-    input(
-      type="submit"
-      value="Subscribe"
-      name="subscribe"
-    ).button.btn.btn-block.btn-primary
+  div(class=containerClass)
+    div(class=emailClass)
+      input(
+        type="email"
+        placeholder="Email Address"
+        name="EMAIL"
+        value=""
+      ).required.email.form-control.w-100
+      input(
+        type="hidden"
+        name="b_50ee1beec395ee0f981299099_aa35949664"
+        tabindex="-1"
+        value=""
+      )
+    div(class=subscribeClass)
+      input(
+        type="submit"
+        value="Subscribe"
+        name="subscribe"
+      ).button.btn.btn-block.btn-primary
