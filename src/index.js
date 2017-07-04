@@ -170,16 +170,18 @@ $(document).ready(function () {
   $('body').on('keyup', '[type=percent]', (e) => {
     app.helpers.format.formatPercentFieldOnKeyUp(e);
   }).on('focus', '[type=percent]', (e) => {
-    const value = e.target.value;
-    const numberValue = value.replace(/[^0-9\-\.]/g, '');
+    const input = e.target;
+    const numberValue = input.value.replace(/[^0-9\-\.]/g, '');
     const number = Number(numberValue);
     if (isNaN(number) || number === 0) {
-      e.target.value = '';
+      input.value = '';
       return;
     }
-    e.target.value = number + '%';
-    const cursorPosition = e.target.value.length - 1;
-    e.target.setSelectionRange(cursorPosition, cursorPosition);
+    input.value = number + '%';
+    const cursorPosition = input.value.length - 1;
+    setTimeout(() => {
+      input.setSelectionRange(cursorPosition, cursorPosition);
+    }, 100);
   }).on('blur', '[type=percent]', (e) => {
     const value = e.target.value;
     const numberValue = value.replace(/[^0-9\.\-]/g, '');
