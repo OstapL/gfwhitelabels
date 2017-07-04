@@ -42,6 +42,9 @@ const SKIP_KEY_CODES = [
   190,  //period
 ];
 
+const filterNumberRx = /[^0-9\.]/g;
+
+
 module.exports = {
   formatPrice: formatPrice,
   formatNumber: formatNumber,
@@ -196,11 +199,15 @@ module.exports = {
     return numberValue.toString() + '%';
   },
 
-  unformatPercentValue(value) {
-    if (typeof(value) !== 'string')
-      return value;
+  unformatPercent(value) {
+    if (!value)
+      return 0;
 
-    return Number(value.replace(/[^0-9\.\-]/g, ''));
+    const stringValue = String(value).replace(filterNumberRx, '');
+    if (!stringValue)
+      return 0;
+
+    return Number(stringValue);
   },
 
   formatPercentFieldOnKeyUp(e) {

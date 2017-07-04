@@ -57,41 +57,11 @@ module.exports = {
         events: _.extend({
             // calculate your income
             'submit .js-calc-form': 'doCalculation',
-            'keyup [data-input-mask="percent"]': 'savePercents',
-            'keydown [data-input-mask="percent"]': 'filterKeyCodeForPercentage',
-            'blur [data-input-mask="percent"]': 'cutZeros',
+            'blur [name=growLevel]': 'savePercents'
         }, app.helpers.calculatorValidation.events),
 
         validate: app.helpers.calculator.validate,
         validateForLinks: app.helpers.calculator.validateForLinks,
-
-        filterKeyCodeForPercentage(e) {
-            let value = e.target.value.replace(/\%/g, '');
-            if (!((((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105)) && !(value.match(/\.\d{2}$/))) ||
-                    ((e.keyCode == 110 || e.keyCode == 190) && !(value.match(/\./))))
-                && !(e.keyCode == settings.BACKSPACEKEYCODE ||
-                        e.keyCode == settings.TABKEYCODE ||
-                        e.keyCode == settings.LEFTARROWKEYCODE ||
-                        e.keyCode == settings.RIGHTARROWKEYCODE ||
-                        e.keyCode == settings.HOMEKEYCODE ||
-                        e.keyCode == settings.ENDKEYCODE ||
-                        e.keyCode == settings.F5KEYCODE ||
-                        e.keyCode == settings.ENTERKEYCODE ||
-                        ((e.ctrlKey || e.metaKey) && e.keyCode == settings.CKEYCODE) ||
-                        ((e.ctrlKey || e.metaKey) && e.keyCode == settings.AKEYCODE) ||
-                        ((e.ctrlKey || e.metaKey) && e.keyCode == settings.VKEYCODE)
-                    )
-                ) {
-                e.preventDefault();
-                e.stopPropagation();
-            }
-            if (e.keyCode == settings.BACKSPACEKEYCODE) {
-                e.preventDefault();
-                e.stopPropagation();
-                value = value.substring(0, value.length - 1);
-                e.target.value = value;
-            }
-        },
 
         savePercents(e) {
             let target = e.target,
@@ -105,22 +75,10 @@ module.exports = {
             target.value = formatPercentage(value, withDot);
         },
 
-        cutZeros(e) {
-            let elem = e.target,
-                value = elem.value.replace('$', '').replace(/,/g, '');
-
-            if (!value) {
-                elem.dataset.currentValue = 0;
-                elem.value = '';
-            } else {
-                elem.dataset.currentValue = parseFloat(value);
-                elem.value = formatPercentage(elem.dataset.currentValue);
-            }
-        },
-
         doCalculation(e) {
             e.preventDefault();
-            if (!this.validate(e)) return;
+            if (!this.validate(e))
+                return;
 
             let maxOfMultipleReturned = 0,
                 countOfMultipleReturned = 0,

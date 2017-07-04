@@ -170,9 +170,24 @@ $(document).ready(function () {
   $('body').on('keyup', '[type=percent]', (e) => {
     app.helpers.format.formatPercentFieldOnKeyUp(e);
   }).on('focus', '[type=percent]', (e) => {
-
+    const value = e.target.value;
+    const numberValue = value.replace(/[^0-9\-\.]/g, '');
+    const number = Number(numberValue);
+    if (isNaN(number) || number === 0) {
+      e.target.value = '';
+      return;
+    }
+    e.target.value = number + '%';
+    const cursorPosition = e.target.value.length - 1;
+    e.target.setSelectionRange(cursorPosition, cursorPosition);
   }).on('blur', '[type=percent]', (e) => {
-    e.target.value = app.helpers.format.formatPercentValue(e.target.value);
+    const value = e.target.value;
+    const numberValue = value.replace(/[^0-9\.\-]/g, '');
+    let number = Number(numberValue);
+    if (isNaN(number) || !number)
+      e.target.value = '0%';
+    else
+      e.target.value = number + '%';
   });
 
 // для показа биографии на стр. pg/team
@@ -363,6 +378,9 @@ $.serializeJSON.defaultOptions = _.extend($.serializeJSON.defaultOptions, {
   customTypes: {
     decimal(val) {
       return app.helpers.format.unformatPrice(val);
+    },
+    percent(val) {
+      return app.helpers.format.unformatPercent(val);
     },
     money(val) {
       return app.helpers.format.unformatPrice(val);
