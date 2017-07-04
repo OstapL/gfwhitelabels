@@ -64,7 +64,7 @@ describe('Log-in/Sign-up', () => {
         const userObj = JSON.parse(userStr);
 
         expect(responseObj).to.deep.equal(userObj);
-
+        expect(responseObj.token).to.equal(tokenStr);
         done();
       });
       $loginForm.submit();
