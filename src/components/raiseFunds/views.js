@@ -38,7 +38,7 @@ module.exports = {
       'click .onPreview': raiseHelpers.onPreviewAction,
       'click .submit_form': raiseHelpers.submitCampaign,
       'click #postForReview': raiseHelpers.postForReview,
-      'keyup #slug': 'fixSlug',
+      'keyup #slugField': 'fixSlug',
       'keyup #ga_id': 'fixTrackerIDForUI',
       'change #website': 'appendHttpIfNecessary',
     },
@@ -101,7 +101,7 @@ module.exports = {
       api.submitAction.call(this, e, data);
     },
 
-    fixTrackerIDForUI(e) {
+    fixTrackerIDForUI (e) {
       const SKIP_KEY_CODES = [
         16,   //shift
         17,   //ctrl
@@ -114,14 +114,41 @@ module.exports = {
         40,   //up arrow
         91,   //left window
       ];
-
+      
+      
       if (_.contains(SKIP_KEY_CODES, e.keyCode))
         return;
 
-      e.target.value = e.target.value.replace(/^UA-/, '');
+      const rx = /^[0-9]{8}\-[0-9]{1,2}$/;
+      if (rx.test(e.target.value))
+        return;
+
+      const rawValue = e.target.value;
+
+      let cursorPosition = e.target.selectionStart;
+      let digitsValue = rawValue.replace(/[^0-9]/g, '');
+      if (digitsValue.length < 8) {
+        e.target.value = digitsValue;
+        return;
+      }
+
+      let firstPart = digitsValue.substr(0, 8);
+      let secondPart = digitsValue.substr(8, 2);
+      let newValue = firstPart;
+      if (secondPart) {
+        newValue += '-' + secondPart;
+        if (newValue.charAt(cursorPosition) === '-' && rawValue.indexOf('-') < 0) {
+          ;// cursorPosition -= 1;
+        } else {
+          if (newValue.indexOf('-') < cursorPosition) {
+            cursorPosition += 1;
+          }
+        }
+      }
+      e.target.value = newValue;
+      e.target.setSelectionRange(cursorPosition, cursorPosition);
     },
-    
-    
+
     fixSlug(e) {
       if(e.currentTarget.value) {
         e.currentTarget.value = e.currentTarget.value.replace(/\s+/g,'-').replace(/[^a-zA-Z0-9\-]/g,'').toLowerCase();

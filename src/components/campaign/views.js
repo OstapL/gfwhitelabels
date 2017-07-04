@@ -17,6 +17,7 @@ module.exports = {
     },
     initialize(options) {
       options.collection.data = options.collection.data.map(companyData => new app.models.Company(companyData));
+      options.collection.data = options.collection.data.filter(companyData => !companyData.campaign.expired);
       this.collection = options.collection;
     },
 
@@ -303,6 +304,13 @@ module.exports = {
     },
 
     render() {
+      if (this.model.campaign.expired) {
+        const template = require('templates/errorPage.pug');
+        this.$el.html(template());
+        app.hideLoading();
+        return this;
+      }
+
       this.$el.html(
         this.template({
           values: this.model,
@@ -513,6 +521,7 @@ module.exports = {
       this.fields.amount.fn = function(name, value, attr, data, computed) {
         return validateAmount(value);
       };
+      this.fields.amount.positiveOnly = true;
 
       this.model.campaign.expiration_date = new Date(this.model.campaign.expiration_date);
 
@@ -762,20 +771,16 @@ module.exports = {
     },
 
     maxInvestmentsPerYear(annualIncome, netWorth, investedPastYear, investedOtherSites) {
-      let maxInvestmentsPerYear = (annualIncome >= 100 && netWorth >= 100)
-        ? Math.min(annualIncome, netWorth) * 0.1
-        : Math.min(annualIncome, netWorth) * 0.05;
+      const coef = (annualIncome >= 100 && netWorth >= 100) ? 0.1 : 0.05;
+      let maxInvestmentsPerYear = Math.min(annualIncome, netWorth) * coef;
 
-      maxInvestmentsPerYear = maxInvestmentsPerYear < 2 ? 2.2 : maxInvestmentsPerYear;
+      if (maxInvestmentsPerYear < 2)
+        maxInvestmentsPerYear = 2.2;
 
-      // Investor cannot invest more that 107000 in a year
-      if(maxInvestmentsPerYear > 107000) {
-        maxInvestmentsPerYear = 107000;
-      }
+      if (maxInvestmentsPerYear > 107)
+        maxInvestmentsPerYear = 107;
 
-      let result = Math.round((maxInvestmentsPerYear * 1000 - investedPastYear - investedOtherSites));
-
-      return result;
+      return Math.round((maxInvestmentsPerYear * 1000 - investedPastYear - investedOtherSites));
     },
 
     initMaxAllowedAmount() {
