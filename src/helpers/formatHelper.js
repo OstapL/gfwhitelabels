@@ -191,12 +191,14 @@ module.exports = {
     e.target.setSelectionRange(cursorPosition, cursorPosition);
   },
 
-  formatPercentValue(value) {
-    let numberValue = Number(value);
-    if (isNaN(numberValue))
-      return '';
+  formatPercent(value) {
+    let numberString = String(value).replace(filterNumberRx, '');
 
-    return numberValue.toString() + '%';
+    let numberValue = Number(numberString);
+    if (isNaN(numberValue) || !numberValue)
+      return '0%';
+
+    return numberValue + '%';
   },
 
   unformatPercent(value) {

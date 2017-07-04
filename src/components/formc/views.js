@@ -526,6 +526,8 @@ module.exports = {
       this.fields = options.fields[this.role].fields;
       this.campaign = options.campaign;
 
+      this.allFields.shareholder.fields.voting_power_percent.type = 'percent';
+
       this.labels = {
         first_name: 'First name',
         last_name: 'Last name',
@@ -1842,6 +1844,8 @@ module.exports = {
       this.fields.outstanding_securities.schema.amount_authorized.required = true;
       this.fields.outstanding_securities.schema.amount_outstanding.type = 'money';
       this.fields.outstanding_securities.schema.amount_outstanding.required = true;
+
+      this.fields.business_loans_or_debt.schema.interest_rate.type = 'percent';
 
       this.labels = {
         outstanding_securities: {
