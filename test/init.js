@@ -16,7 +16,7 @@ if (require.extensions) {
   require.extensions['.pug'] = compile
 }
 
-const LocalStorage = require('node-localstorage').LocalStorage;
+const { LocalStorage } = require('node-localstorage');
 const { JSDOM } = require('jsdom');
 
 global.localStorage = new LocalStorage('./test/localStorageTemp');
@@ -24,8 +24,9 @@ global.window = (new JSDOM('<body><div id="page"><div id="content"></div></div><
   url: 'https://alpha.growthfountain.com'
 })).window;
 global.document = window.document;
-
 global.window.localStorage = global.localStorage;
+window.__defineSetter__('location', (val) => {});
+global.location = window.location;
 global.navigator = {userAgent: 'node.js'};
 global.$ = global.jQuery = require('jquery');
 global._ = require('underscore');
@@ -41,7 +42,6 @@ require('classlist-polyfill');
 global.api = require('../src/helpers/forms.js');
 const App = require('../src/app.js');
 global.app = App();
-app.user = {};
 $.fn.scrollTo = function (padding=0) {
   $('html, body').animate({
     scrollTop: $(this).offset().top - padding + 'px',
