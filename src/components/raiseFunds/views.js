@@ -38,7 +38,7 @@ module.exports = {
       'click .onPreview': raiseHelpers.onPreviewAction,
       'click .submit_form': raiseHelpers.submitCampaign,
       'click #postForReview': raiseHelpers.postForReview,
-      'keyup #slug': 'fixSlug',
+      'keyup #slugField': 'fixSlug',
       'keyup #ga_id': 'fixTrackerIDForUI',
       'change #website': 'appendHttpIfNecessary',
     },
