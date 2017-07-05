@@ -305,7 +305,7 @@ module.exports = {
 
     render() {
       if (this.model.campaign.expired) {
-        const template = require('templates/errorPage.pug');
+        const template = require('./templates/detailNotAvailable.pug');
         this.$el.html(template());
         app.hideLoading();
         return this;
