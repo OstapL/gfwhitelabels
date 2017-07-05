@@ -28,12 +28,10 @@
     margin: 25px 0 49px 0
     .img_column
       width: 33%
-      height: 288px
+      height: 285px
       overflow: hidden;
       position: relative
       float: left
-      @media only screen and (max-width : 576px)
-        height: 240px
       &:before
         content: ''
         background-color: #000
@@ -124,9 +122,17 @@
         font-weight: bold
         .like-icon-circle
           margin-right: 10px
-
+    .right-block
+      height: 285px
+      border: 1px solid $border_color
+      border-left: none
+      float: right
+      width: 67%
+      @media only screen and (max-width : 992px)
+        width: 100%
+        height: auto
     .right-columns
-      width: 42%
+      width: 65%
       float: left
       .one_line
         .col40
@@ -135,12 +141,16 @@
           border-left: none
           float: left
           margin-bottom: -1px
+          border-top: none
         .col60
           width: 60%
           border: 1px solid $border_color
           border-left: none
           float: left
           margin-bottom: -1px
+          border-top: none
+          @media only screen and (max-width : 992px)
+            border-right: none
         .col-perks
           height: 35px
           overflow: hidden
@@ -165,17 +175,24 @@
     .right-columns.small-column
       width: 43.27%
     .right_buttons
-      min-height: 167px
-      width: 25%
+      width: 35%
       border: 1px solid $border_color
       border-left: none
       float: left
-      @media only screen and (max-width : 576px)
-        min-height: 155px
+      border-top: none
+      padding-bottom: rem(12)
+      border-right: none
+      @media only screen and (max-width : 992px)
+        border-right: none
+        border-left: 1px solid $border_color
+        width: 100%
+
+
       h3
         text-align: center
         margin-top: 14px
         margin-bottom: 0
+        line-height: rem(24)
       ul
         margin-left: 0
         padding: 0
@@ -188,9 +205,8 @@
             font-size: rem(14)
 
   .bottom_column
-    width: 67%
+    width: 100%
     float: right
-    border: 1px solid $border_color
     border-top: none
     border-left: none
     padding: 0 29px
@@ -319,9 +335,6 @@
         width: 100%
       .right-columns.small-column
         width: 70%
-      .right_buttons
-        width: 100%
-        border-left: 1px solid $border-color
     .bottom_column
       width: 100%
       border-left: 1px solid $border-color

@@ -1,2 +1,9 @@
-.col-xl-12
-  | Campaign is not available for review
+.container
+	.row
+		.col-xl-12.text-xs-center.m-t-85
+			img(src=require("images/generals/campaign_expired.png"), alt="campaign expired")
+		.col-xl-12
+			h2.text-uppercase.text-xs-center This campaign has already finished
+			h3.font-weight-light.text-xs-center.m-t-0 Please click here to discover our other current offerings.
+		.col-xl-12.text-xs-center
+			a(href="/companies").btn.btn-secondary BROWSE CURRENT OFFERINGS
