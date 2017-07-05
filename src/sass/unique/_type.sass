@@ -1,9 +1,6 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,500,700,300);
-@font-face
-  font-family: 'BrandonGrotesque-Medium'
-  src: url('~fonts/brandon_grotesque/brandon_med.otf')
-  font-weight: normal
-  font-style: normal
+@import url('https://fonts.googleapis.com/css?family=Alegreya+Sans:300,400,700');
+
 /*Typhography*/
 body
 	-webkit-font-smoothing: antialiased
@@ -12,6 +9,7 @@ a
 	color: $small-text
 	+mt(.2s)
 	&:hover
+		+mt(.2s)
 		text-decoration: none
 		color: $link-1-hover
 	&:focus
@@ -21,6 +19,7 @@ a
 	letter-spacing: .35px
 	+mt(.2s)
 	&:hover
+		+mt(.2s)
 		color: $link-1-hover
 		outline: none
 	&:focus
@@ -28,21 +27,23 @@ a
 		outline: none
 
 .link-2
-	color: $wild_willow
+	color: $flame-pea
 	letter-spacing: .35px
 	text-decoration: underline
 	+mt(.2s)
 	&:hover
+		+mt(.2s)
 		color: $link-2-hover
 		outline: none
 	&:focus
 		color: $wild_willow
 		outline: none
 .link-3
-	color: $puerto_rico
+	color: $flame-pea
 	letter-spacing: .35px
 	+mt(.2s)
 	&:hover
+		+mt(.2s)
 		color: $link-3-hover
 		text-decoration: underline
 		outline: none
@@ -55,6 +56,7 @@ a
 	font-weight: 700
 	+mt(.2s)
 	&:hover
+		+mt(.2s)
 		color: $link-4-hover
 		outline: none
 	&:focus
@@ -62,11 +64,12 @@ a
 		outline: none
 .link-5
 	color: $black_text
-	+calc-rem(11)
+	font-size: rem(11)
 	letter-spacing: .35px
 	font-weight: 700
 	+mt(.2s)
 	&:hover
+		+mt(.2s)
 		color: $link-4-hover
 		outline: none
 	&:focus
@@ -75,11 +78,12 @@ a
 
 .link-6
 	color: $white
-	+calc-rem(11)
+	font-size: rem(11)
 	letter-spacing: .35px
 	text-decoration: underline
 	+mt(.2s)
 	&:hover
+		+mt(.2s)
 		color: $link-6-hover
 		outline: none
 	&:focus
@@ -97,7 +101,7 @@ h1,h2,h3,h4,h5,h6
 	font-family: $open-sans
 	letter-spacing: normal
 	&.text-uppercase
-		font-family: BrandonGrotesque-Medium
+		font-family: 'Alegreya Sans', sans-serif
 		font-weight: bold
 h1
 	&.text-uppercase
