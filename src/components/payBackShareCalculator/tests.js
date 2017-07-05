@@ -51,7 +51,7 @@ describe('Payback Share Calculator', () => {
 
     $form.submit();
 
-    expect(app.validation.errors).to.equal({
+    expect(app.validation.errors).to.deep.equal({
       raiseMoney: ['Please, enter positive number'],
       nextYearRevenue: ['Please, enter positive number'],
       growLevel: ['Please, enter positive number'],
@@ -59,6 +59,15 @@ describe('Payback Share Calculator', () => {
   });
 
   it('Calculate Capital raise', () => {
-
+    // const $form = $('form.js-calc-form');
+    // $form.find('[name=raiseMoney]').val(invalidCalculatorData.raiseMoney);
+    // $form.find('[name=nextYearRevenue]').val(invalidCalculatorData.nextYearRevenue);
+    // $form.find('[name=growLevel]').val(invalidCalculatorData.growLevel);
+    //
+    // $form.submit();
+    //
+    // expect(app.cache.payBackShareCalculator).to.deep.equal({
+    //
+    // });
   });
 });

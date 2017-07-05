@@ -42,7 +42,7 @@ const SKIP_KEY_CODES = [
   190,  //period
 ];
 
-const filterNumberRx = /[^0-9\.]/g;
+const filterNumberRx = /[^0-9\.\-]/g;
 
 
 module.exports = {
