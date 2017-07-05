@@ -1,4 +1,14 @@
-module.exports = {
+
+const formatValue = (type, value) => {
+  if (type === 'money')
+    return app.helpers.format.formatPrice(value);
+  if (type === 'percent')
+    return app.helpers.format.formatPercent(value);
+
+  return value;
+};
+
+let exports = {
   prepareNestedField(nestedName, name, value, index, myAttr, schema) {
     if(value == null) {
       console.log('value for ' + name + ' is null ')
@@ -152,9 +162,7 @@ module.exports = {
     this.prepareField(name, attr);
 
     attr.type = attr.type || 'text';
-    attr.value = attr.type == 'money'
-      ? app.helpers.format.formatPrice(attr.value)
-      : attr.value
+    attr.value = formatValue(attr.type, attr.value);
 
     attr.class1 = attr.class1 || 'col-xl-3 col-lg-12 text-lg-left text-xl-right';
     attr.class2 = attr.class2 || 'col-xl-9 col-lg-12';
@@ -248,3 +256,5 @@ module.exports = {
   },
 
 };
+
+module.exports = exports;
