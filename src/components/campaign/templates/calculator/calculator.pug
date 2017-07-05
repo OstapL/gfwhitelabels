@@ -18,11 +18,12 @@
                 label(for="raiseMoney").font-weight-bold How much is the company raising?
               input(
                 value=(data.raiseMoney ? app.helpers.calculator.formatPrice(data.raiseMoney) : ''),
-                type='text',
+                type='money',
                 placeholder='$0',
                 autocomplete="off"
-                data-input-mask='price',
-                data-model-value='raiseMoney',
+                data-value-type='money'
+                data-input-mask='price'
+                data-model-value='raiseMoney'
                 data-current-value= data.raiseMoney
                 name="raiseMoney"
               )#raiseMoney.form-control.js-field
@@ -33,12 +34,13 @@
                 label(for="nextYearRevenue").font-weight-bold What do you expect next year's revenue to be?
               input(
                 value=(data.nextYearRevenue ? app.helpers.calculator.formatPrice(data.nextYearRevenue) : ''),
-                type='text',
+                type='money',
                 placeholder='$0',
                 autocomplete="off"
                 data-input-mask='price',
                 data-model-value='nextYearRevenue',
                 name="nextYearRevenue",
+                data-value-type='money'
                 data-current-value= data.nextYearRevenue
               )#nextYearRevenue.form-control.js-field
 
@@ -48,9 +50,10 @@
                 label(for="growLevel").font-weight-bold At what rate to you expect revenue to grow each year?
               input(
                 value=(data.growLevel ? data.growLevel + '%' : ''),
-                type='text',
+                type='percent',
                 placeholder='0%',
                 autocomplete="off"
+                data-value-type='percent'
                 data-input-mask='percent',
                 name="growLevel",
                 data-model-value='growLevel'

@@ -1,0 +1,46 @@
+div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#investor_popup.modal.fade
+  div(role="document").modal-dialog
+    .modal-content
+      .container
+        .modal-header.p-x-0.p-b-0
+          button(type="button" data-dismiss="modal" aria-label="Close").close
+            span(aria-hidden="true")
+              i.fa.fa-times
+          h2.text-uppercase.text-xs-center.mt50 Are you sure?
+
+        .modal-body
+          form(data-id=id)
+            .row
+              -
+                pug_html += app.fields.textareaLabel('cancelled_reason', {
+                class1: 'col-xs-12 text-xs-left',
+                class2: 'col-xs-12',
+                placeholder: 'Type here...',
+                schema: fields.cancelled_reason
+                });
+                pug_html += app.fields.textareaLabel('feedback', {
+                class1: 'col-xs-12 text-xs-left',
+                class2: 'col-xs-12',
+                placeholder: 'Type here...',
+                schema: fields.feedback
+                })
+            .rating-wrap.row
+              .row
+                .col-xl-12.text-xs-left
+                  label Please evaluate our platform
+              .row
+                .col-xl-12
+                  .rating#rating
+                    input(type="radio" id="star5" name="rating" value="5")
+                    label(for="star5")
+                    input(type="radio" id="star4" name="rating" value="4")
+                    label(for="star4")
+                    input(type="radio" id="star3" name="rating" value="3")
+                    label(for="star3")
+                    input(type="radio" id="star2" name="rating" value="2")
+                    label(for="star2")
+                    input(type="radio" id="star1" name="rating" value="1")
+                    label(for="star1")
+              .row.text-xs-center
+                button(type="submit").btn.btn-primary Cancel Investment
+    .modal-footer
