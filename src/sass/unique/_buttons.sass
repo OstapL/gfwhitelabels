@@ -1,27 +1,21 @@
-
-$btn-color: $puerto_rico
-$btn-border: $puerto_rico
+$btn-color: $flame-pea
+$btn-border: $flame-pea
 $btn-bg: transparent
-$btn-hover-bg: $puerto_rico
+$btn-hover-bg: $flame-pea
 $btn-hover-color: #fff
 
-$btn-primary-bg: $puerto_rico
-$btn-primary-hover-bg: rgba(60, 189, 185, 0.6)
-$btn-primary-border: $puerto_rico
-$btn-primary-hover-border: #44d4cf
+$btn-primary-bg: $flame-pea
+$btn-primary-hover-bg: #f67848
+$btn-primary-border: $flame-pea
+$btn-primary-hover-border: #f67848
 $btn-primary-color: $white
-$btn-primary-active-border: $puerto_rico
-$btn-primary-active-bg: $puerto_rico
+$btn-primary-active-border: #f67848
+$btn-primary-active-bg: $flame-pea
 
-$btn-primary-bg-bottom: #38a8a5
-$btn-primary-bg-top: $puerto_rico
-$btn-primary-hover-bg: #40c8c4
-$btn-primary-color: $white
-
-$btn-secondary-hover-color: #000
+$btn-secondary-hover-color: #e8e8e8
 $btn-secondary-border: #e8e8e8
 $btn-secondary-bg: #e8e8e8
-$btn-secondary-hover-bg: #cccccc
+$btn-secondary-hover-bg: transparent
 $btn-secondary-color: $black
 
 $btn-success-bg: #5cb85c
@@ -49,17 +43,18 @@ $btn-google-hover-bg: rgba(212,67,48, .6)
 $btn-twitter-bg: #55acee
 $btn-twitter-hover-bg: rgba(93,180,245, .6)
 
-$btn-email-bg: $puerto_rico
-$btn-email-hover-bg: rgba(76,212,208, .6)
+$btn-email-bg: $wild_willow
+$btn-email-hover-bg: rgba($wild_willow, .6)
 .btn
 	background: $btn-bg
 	color: $btn-color
 	border-color: $btn-border
-	letter-spacing: rem(1.3)
-	border: 2px solid $btn-border
-	font-size: rem(13)
+	letter-spacing: 1.5px
+	border: 3px solid $btn-border
+	font-size: rem(15)
 	text-transform: uppercase
-	font-family: $brandon-grotesque-medium
+	font-family: $second-font-family
+	font-weight: bold
 	+mt(.2s)
 	
 	&:hover
@@ -70,49 +65,37 @@ $btn-email-hover-bg: rgba(76,212,208, .6)
 	.fa-angle-right
 		padding-left: 5px
 	&:focus
-		color: #fff
+		color: $btn-color
 
 .btn-primary
-	background: $btn-primary-bg-top
-	background-image: -webkit-linear-gradient(top, $btn-primary-bg-top,  $btn-primary-bg-bottom)
-	background-image: -moz-linear-gradient(top, $btn-primary-bg-top,  $btn-primary-bg-bottom)
-	background-image: -ms-linear-gradient(top, $btn-primary-bg-top,  $btn-primary-bg-bottom)
-	background-image: -o-linear-gradient(top, $btn-primary-bg-top,  $btn-primary-bg-bottom)
-	background-image: linear-gradient(to bottom, $btn-primary-bg-top,  $btn-primary-bg-bottom)
+	background: $btn-primary-bg
 	color: $btn-primary-color
-	border: none
-	padding-top: rem(12)
-	padding-bottom: rem(12)
+	border-color: $btn-primary-border
 	
 	+mt(.2s)
 	&:hover
 		+mt(.2s)
 		background: $btn-primary-hover-bg
+		border-color: $btn-primary-hover-border
 	+mt(.2s)
 	&:active,
 	&:focus
 		+mt(.2s)
 		color: $btn-primary-color
 		background: $btn-primary-active-bg
+		border-color: $btn-primary-active-border
 		+mt(.2s)
 		&:focus,
 		&:hover
 			+mt(.2s)
 			color: $btn-primary-color
 			background: $btn-primary-active-bg
+			border-color: $btn-primary-active-border
 .btn-lg
-	letter-spacing: rem(1.4)
-	font-weight: bold
-	&.btn-primary
-		border: none
-		padding-top: rem(16)
-		padding-bottom: rem(16)
-.btn-sm
-	&.btn-primary
-		border: none
-		padding-top: rem(8)
-		padding-bottom: rem(8)
+	letter-spacing: 1.8px
 
+.btn-sm
+	letter-spacing: 1.2px
 .btn-secondary
 	background: $btn-secondary-bg
 	color: $btn-secondary-color
@@ -121,17 +104,17 @@ $btn-email-hover-bg: rgba(76,212,208, .6)
 	&:hover
 		background: $btn-secondary-hover-bg
 		color: $btn-secondary-hover-color
-		border-color: $btn-secondary-hover-bg
+		border-color: $btn-secondary-border
 
 	&.inverse
 		background: $btn-secondary-hover-bg
 		color: $btn-secondary-hover-color
-		border-color: $btn-secondary-hover-bg
+		border-color: $btn-secondary-border
 
 		&:hover
 			background: $btn-secondary-bg
 			color: $btn-secondary-color
-			border-color: $btn-secondary-hover-bg
+			border-color: $btn-secondary-border
 
 .btn-success
 	background: $btn-success-bg
@@ -155,7 +138,7 @@ $btn-email-hover-bg: rgba(76,212,208, .6)
 	background: $btn-facebook-bg
 	border: none
 	color: $white
-	border-radius: 50px
+	border-radius: 2px
 	padding-top: 11px
 	padding-bottom: 11px
 	&:hover
@@ -165,7 +148,7 @@ $btn-email-hover-bg: rgba(76,212,208, .6)
 	background: $btn-linkedin-bg
 	border: none
 	color: $white
-	border-radius: 50px
+	border-radius: 2px
 	padding-top: 11px
 	padding-bottom: 11px
 	&:hover
@@ -175,7 +158,7 @@ $btn-email-hover-bg: rgba(76,212,208, .6)
 	background: $btn-google-bg
 	border: none
 	color: $white
-	border-radius: 50px
+	border-radius: 2px
 	padding-top: 11px
 	padding-bottom: 11px
 	&:hover
