@@ -593,10 +593,10 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
                 var annualIncomeValue = '$' + (user.annual_income * 1000).toLocaleString('en-US');
                 var netWorthValue = '$' + (user.net_worth * 1000).toLocaleString('en-US');
               label Net Worth
-              input(type="money" placeholder="Net Worth" name="net_worth" value=netWorthValue)#net_worth.net-worth.form-control
+              input(type="money" placeholder="Net Worth" name="net_worth" value=netWorthValue data-positive-only='1')#net_worth.net-worth.form-control
             .form-group.row.clearfix.required
               label Annual Income
-              input(type="money" placeholder="Annual Income" name="annual_income" value=annualIncomeValue)#annual_income.annual_income.form-control
+              input(type="money" placeholder="Annual Income" name="annual_income" data-positive-only='1' value=annualIncomeValue)#annual_income.annual_income.form-control
             .form-group.row.clearfix.required.m0
               .row
                 .col-lg-12

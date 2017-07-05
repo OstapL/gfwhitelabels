@@ -32,9 +32,10 @@
             .col-lg-12
               input(
                 value= formatPrice(data.raiseMoney),
-                type='text',
+                type='money',
                 placeholder='$0',
                 autocomplete="off"
+                data-value-type='money'
                 data-input-mask='price',
                 data-model-value='raiseMoney',
                 data-current-value= data.raiseMoney
@@ -46,9 +47,10 @@
             .col-lg-12
               input(
                 value= formatPrice(data.nextYearRevenue),
-                type='text',
+                type='money',
                 placeholder='$0',
                 autocomplete="off"
+                data-value-type='money'
                 data-input-mask='price',
                 data-model-value='nextYearRevenue',
                 name="nextYearRevenue",
@@ -60,9 +62,10 @@
             .col-lg-12
               input(
                 value=(data.growLevel ? data.growLevel + '%' : ''),
-                type='text',
+                type='percent',
                 placeholder='0%',
                 autocomplete="off"
+                data-value-type='percent'
                 data-input-mask='percent',
                 name="growLevel",
                 data-model-value='growLevel')#growLevel.form-control.js-field
