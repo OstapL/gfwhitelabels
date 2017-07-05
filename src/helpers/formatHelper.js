@@ -27,6 +27,24 @@ function formatNumber(price = '') {
     return result;
 };
 
+const SKIP_KEY_CODES = [
+  16,   //shift
+  17,   //ctrl
+  18,   //alt
+  35,   //end
+  36,   //home
+  37,   //left arrow
+  38,   //down arrow
+  39,   //right arrow
+  40,   //up arrow
+  91,   //left window
+  188,  //comma
+  190,  //period
+];
+
+const filterNumberRx = /[^0-9\.]/g;
+
+
 module.exports = {
   formatPrice: formatPrice,
   formatNumber: formatNumber,
@@ -132,23 +150,10 @@ module.exports = {
       return -1;
     };
 
-    const SKIP_KEY_CODES = [
-      16,   //shift
-      17,   //ctrl
-      18,   //alt
-      35,   //end
-      36,   //home
-      37,   //left arrow
-      38,   //down arrow
-      39,   //right arrow
-      40,   //up arrow
-      91,   //left window
-      188,  //comma
-      190,  //period
-    ];
-
     if (_.contains(SKIP_KEY_CODES, e.keyCode))
       return;
+
+    const positiveOnly = !!e.target.dataset.positiveOnly;
 
     let rawValue = e.target.value;
     const rawValueNumber = rawValue.replace(/\$/g, '');
@@ -157,6 +162,9 @@ module.exports = {
     let number = parseFloat(valueString);
     if (isNaN(number))
       return e.target.value = valueString.replace(/[^0-9\$,\.]/g, '');
+
+    if (positiveOnly)
+      number = number < 0 ? Math.abs(number) : number;
 
     let cursorPosition = e.target.selectionStart;
     let cursorPositionFix = rawValue.startsWith('$') ? 0 : 1;
@@ -180,6 +188,45 @@ module.exports = {
 
     cursorPosition += cursorPositionFix;
     cursorPosition = cursorPosition <= 0 ? 1 : cursorPosition;
+    e.target.setSelectionRange(cursorPosition, cursorPosition);
+  },
+
+  formatPercent(value) {
+    let numberString = String(value).replace(filterNumberRx, '');
+
+    let numberValue = Number(numberString);
+    if (isNaN(numberValue) || !numberValue)
+      return '0%';
+
+    return numberValue + '%';
+  },
+
+  unformatPercent(value) {
+    if (!value)
+      return 0;
+
+    const stringValue = String(value).replace(filterNumberRx, '');
+    if (!stringValue)
+      return 0;
+
+    return Number(stringValue);
+  },
+
+  formatPercentFieldOnKeyUp(e) {
+    if (_.contains(SKIP_KEY_CODES, e.keyCode))
+      return;
+
+    const rawValue = e.target.value;
+    const rawValueNumber = rawValue.replace(/[^0-9\,\.]/g, '');
+
+    let number = parseFloat(rawValueNumber);
+    if (isNaN(number))
+      return e.target.value = '';
+
+    let cursorPosition = e.target.selectionStart;
+
+    let newValue = number + '%';
+    e.target.value = newValue;
     e.target.setSelectionRange(cursorPosition, cursorPosition);
   }
 
