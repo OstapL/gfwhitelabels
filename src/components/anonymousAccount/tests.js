@@ -183,9 +183,9 @@ describe('Sign-up/Log-in popups', () => {
   });
 
   beforeEach(() => {
-    api.makeRequestSpy = new sinon.spy();
+    inst.makeRequestSpy = new sinon.spy();
     api.makeRequest = (url, method, data) => {
-      api.makeRequestSpy(data);
+      inst.makeRequestSpy(data);
       return {
         then(cb) {
           cb(JSON.parse(fakeLoginResponse));
@@ -204,6 +204,7 @@ describe('Sign-up/Log-in popups', () => {
     inst.SignupPopup.undelegateEvents();
     $('#content').empty();
     delete inst.SignupPopup;
+    delete inst.makeRequestSpy;
     eventEmitter.off('done');
   });
 
@@ -213,7 +214,7 @@ describe('Sign-up/Log-in popups', () => {
     $loginForm.find('input[name=password]').val(userData.password);
 
     eventEmitter.on('done', () => {
-      const data = api.makeRequestSpy.args[0][0];
+      const data = inst.makeRequestSpy.args[0][0];
 
       expect(data.domain).to.equal('alpha.growthfountain.com');
       expect(data.email).to.equal(userData.email);
@@ -249,6 +250,17 @@ describe('Sign-up/Log-in popups', () => {
       expect(data.password1).to.equal(userData.password1);
       expect(data.password2).to.equal(data.password2);
       expect(data.checkbox1).to.equal(1);
+
+      const userStr = localStorage.getItem('user');
+      const tokenStr = localStorage.getItem('token');
+
+      const diff = require('deep-diff').diff;
+      const responseObj = JSON.parse(fakeLoginResponse);
+      const userObj = JSON.parse(userStr);
+
+      expect(responseObj).to.deep.equal(userObj);
+      expect(responseObj.token).to.equal(tokenStr);
+
       done();
     });
 
@@ -256,102 +268,47 @@ describe('Sign-up/Log-in popups', () => {
   });
 
   it('Log-in with empty email/password', () => {
+    const $loginForm = $('#sign-in-form');
+    $loginForm.find('[name=email]').val('');
+    $loginForm.find('[name=password]').val('');
 
+    $loginForm.submit();
+
+    const data = inst.makeRequestSpy.args[0][0];
+
+    expect(data).to.deep.equal({
+      email: '',
+      password:'',
+      domain: 'alpha.growthfountain.com',
+      checkbox1: 1,
+    });
   });
 
-  it('Sign-up with empty credentials', () => {
+  it('Sign-up with not checked checkbox', () => {
+    const $signupForm = $('#sign-up-form');
 
+    $signupForm.submit();
+
+    expect(app.validation.errors).to.deep.equal({
+      checkbox1: ['You must agree to the terms before creating an account'],
+    });
+  });
+
+  it('Sign-up with checked checkbox and empty credentials', () => {
+    const $signupForm = $('#sign-up-form');
+    $signupForm.find('input[name="checkbox1"]').prop('checked', true);
+
+    $signupForm.submit();
+    const data = inst.makeRequestSpy.args[0][0];
+
+    expect(data).to.deep.equal({
+      checkbox1: 1,
+      domain: 'alpha.growthfountain.com',
+      first_name: '',
+      last_name: '',
+      email: '',
+      password1: '',
+      password2: '',
+    });
   });
 });
-
-// describe('Log-in/Sign-up popup', () => {
-//   beforeEach(() => {
-//     const updateLocalStorage = app.user.updateLocalStorage;
-//
-//     app.user.updateLocalStorage = function(...args) {
-//       updateLocalStorage.call(app.user, args);
-//       eventEmitter.trigger('done');
-//     };
-//
-//     api.makeRequestSpy = new sinon.spy();
-//     api.makeRequest = (url, method, data) => {
-//       api.makeRequestSpy(data);
-//       return {
-//         then(cb) {
-//           cb(JSON.parse(fakeLoginResponse));
-//           return {
-//             fail() {}
-//           };
-//         }
-//       };
-//     };
-//   });
-//
-//   describe('Log in with valid data', () => {
-//
-//     it('Popup Login form succeed', () => {
-//       const v = new Views.popupLogin({
-//         el: '#content',
-//         model: {}
-//       }).render();
-//
-//       const $loginForm = $('#sign-in-form');
-//       $loginForm.find('input[name=email]').val(userData.email);
-//       $loginForm.find('input[name=password]').val(userData.password);
-//
-//       $loginForm.submit();
-//
-//       const data = api.makeRequestSpy.args[0][0];
-//
-//       expect(data.domain).to.equal('alpha.growthfountain.com');
-//       expect(data.email).to.equal(userData.email);
-//       expect(data.password).to.equal(userData.password);
-//     });
-//   });
-
-//   describe('Sign up with invalid data', () => {
-//     beforeEach(() => {
-//       new Views.signup({
-//         el: '#content',
-//         model: {}
-//       }).render();
-//     });
-//
-//     it('Sign up with empty requried fields', () => {
-//       const $signupForm = $('.signup-form');
-//
-//       $signupForm.find('input[name=first_name]').val('');
-//       $signupForm.find('input[name=last_name]').val('');
-//       $signupForm.find('input[name=email]').val('');
-//       $signupForm.find('input[name=password1]').val('');
-//       $signupForm.find('input[name=password2]').val('');
-//       $signupForm.find('input[name="checkbox1"]').prop('checked', false);
-//
-//       $signupForm.submit();
-//
-//       expect(app.validation.errors.first_name).to.include('Is required');
-//       expect(app.validation.errors.last_name).to.include('Is required');
-//       expect(app.validation.errors.email).to.include('Is required');
-//       expect(app.validation.errors.password1).to.include('Is required');
-//       expect(app.validation.errors.password2).to.include('Is required');
-//       expect(app.validation.errors.checkbox1).to.include('You must agree to the terms before creating an account');
-//
-//     });
-//
-//     it('Sign up with invalid email', () => {
-//       const $signupForm = $('.signup-form');
-//
-//       $signupForm.find('input[name=first_name]').val(userData.firstName);
-//       $signupForm.find('input[name=last_name]').val(userData.lastName);
-//       $signupForm.find('input[name=email]').val('qwer');
-//       $signupForm.find('input[name="checkbox1"]').prop('checked', true);
-//
-//       $signupForm.submit();
-//
-//       expect(app.validation.errors.email).to.include('Invalid email');
-//       expect(app.validation.errors.password1).to.include('Is required');
-//       expect(app.validation.errors.password2).to.include('Is required');
-//     });
-//   });
-//
-// });
