@@ -8,7 +8,7 @@ const formatValue = (type, value) => {
   return value;
 };
 
-let exports = {
+module.exports = {
   prepareNestedField(nestedName, name, value, index, myAttr, schema) {
     if(value == null) {
       console.log('value for ' + name + ' is null ')
@@ -256,5 +256,3 @@ let exports = {
   },
 
 };
-
-module.exports = exports;
