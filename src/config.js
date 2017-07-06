@@ -42,6 +42,7 @@ var e = {
     dataProviderVideoPopup: 'vimeo',
     // top banner (none - 0 / dcu - 1 / river - 2)
     topBanner: 0,
+    topBannerText: '',
     //bottom banner (1 - raise capital/ 0 - INVEST)
     bottomBunner: 1,
   },
