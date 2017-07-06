@@ -81,3 +81,5 @@ $.serializeJSON.defaultOptions = _.extend($.serializeJSON.defaultOptions, {
   parseNulls: true,
   parseNumbers: true
 });
+
+global.testHelpers = require('./testHelpers.js');
