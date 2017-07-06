@@ -43,7 +43,7 @@ describe('Payback Share Calculator', () => {
     delete inst.View;
   });
 
-  it('Process invalid input data', () => {
+  it('Calculator ViewProcess invalid input data', () => {
     const $form = $('form.js-calc-form');
     $form.find('[name=raiseMoney]').val(invalidCalculatorData.raiseMoney);
     $form.find('[name=nextYearRevenue]').val(invalidCalculatorData.nextYearRevenue);
@@ -56,6 +56,14 @@ describe('Payback Share Calculator', () => {
       nextYearRevenue: ['Please, enter positive number'],
       growLevel: ['Please, enter positive number'],
     });
+  });
+
+  it('Calculator component on valid data', () => {
+
+  });
+
+  it('Calculator component on invalid data', () => {
+
   });
 
   it('Calculate Capital raise', () => {
