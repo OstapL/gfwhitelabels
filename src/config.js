@@ -11,7 +11,7 @@ var e = {
   blogServer: "https://api-blog-dev.growthfountain.com",
   bucketServer: "https://s3.amazonaws.com/growthfountain-alpha-storage",
   notificationsServer: "https://notifications-dev.growthfountain.com/",
-  teamName: 'Team',
+  teamName: 'GrowthFountain Team',
   teamTitle: "Meet The Team",
   siteTitle: '| GrowthFountain Equity Crowdfunding',
 
