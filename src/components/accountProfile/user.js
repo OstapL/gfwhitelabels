@@ -101,7 +101,7 @@ class User {
       if (!data.token)
         return app.dialogs.error('no token or additional info provided');
 
-      const req = data.hasOwnProperty('info')
+      const req = data.info
         ? ''
         : api.makeRequest(app.config.authServer + '/info',  'GET');
 
@@ -110,7 +110,7 @@ class User {
           // we need to rerender menu
           this.data = responseData;
         } else {
-          this.data = data;
+          this.data = JSON.parse(JSON.stringify(data));
         }
 
         this.updateLocalStorage();
@@ -121,7 +121,8 @@ class User {
           path: '/',
         });
 
-        delete data.token;
+        delete this.data.token;
+
         setTimeout(function() {
           window.location = next;
         }, 200);
