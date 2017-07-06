@@ -93,23 +93,26 @@ class User {
   }
 
   setData(data, next) {
+    return new Promise((resolve, reject) => {
+      next = next || this.next || app.getParams().next || '/';
 
-    next = next || this.next || app.getParams().next || '/';
+      this.next = null;
 
-    this.next = null;
+      if (!data.token)
+        return app.dialogs.error('no token or additional info provided');
 
-    if(data.hasOwnProperty('token')) {
-      let a = '';
-      if(data.hasOwnProperty('info') == false) {
-        a = api.makeRequest(app.config.authServer + '/info',  'GET'); //.done(() => {
-      }
-      $.when(a).done((responseData) => {
+      const req = data.hasOwnProperty('info')
+        ? ''
+        : api.makeRequest(app.config.authServer + '/info',  'GET');
+
+      $.when(req).done((responseData) => {
         if(responseData) {
           // we need to rerender menu
           this.data = responseData;
         } else {
           this.data = data;
         }
+
         this.updateLocalStorage();
 
         app.cookies.set('token', data.token, {
@@ -122,15 +125,15 @@ class User {
         setTimeout(function() {
           window.location = next;
         }, 200);
+        resolve();
       }).fail(() => {
         this.emptyLocalStorage();
         setTimeout(function() {
           window.location = '/account/login?next=' + document.location.pathname;
         }, 100);
+        reject('Failed to get user info');
       });
-    } else {
-      app.dialogs.error('no token or additional info provided');
-    }
+    });
   }
 
   updateUserData(data, next) {
