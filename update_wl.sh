@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 git fetch -q --all
 git checkout alpha > /dev/null
-for b in alpha-dcu alpha-momentum3 alpha-rivermarkcu alpha-jdcu alpha-infinityfcu
+for b in alpha-dcu alpha-momentum3 alpha-rivermarkcu alpha-jdcu alpha-infinityfcu alpha-tvfcu
 do
     echo "========================= branch $b =========================="
     git checkout $b
