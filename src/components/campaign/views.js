@@ -615,10 +615,13 @@ module.exports = {
 
       this.assignLabels();
 
-      if(window.location.hostname == 'dcu.growthfountain.com') {
+      if(window.location.hostname == 'dcu.growthfountain.com' || window.location.hostname == 'tvfcu.growthfountain.com') {
       //if(window.location.hostname == 'localhost') {
         this.fields.is_understand_securities_related = Object.assign({}, this.fields.is_reviewed_educational_material);
         this.fields.is_understand_securities_related.label = this.labels.is_understand_securities_related;
+        if(window.location.hostname == 'tvfcu.growthfountain.com') {
+          this.fields.is_understand_securities_related.label = this.fields.is_understand_securities_related.label.replace(/DCU \(Digital Federal Credit Union\)/ig, 'TVFCU (Tennessee Valley Federal Credit Union) ')
+        }
       } else {
         delete this.fields.is_understand_securities_related;
       }
