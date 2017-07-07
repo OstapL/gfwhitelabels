@@ -21,12 +21,12 @@ div(class=klass)
     div(class=klass1)
       label(for=fileElement.file.id || fileElement.fieldName)!= options.label
     div(class=klass2)
-      div(class="col-lg-12 p-x-0 border-dropzone")
+      div(class="col-lg-12 p-x-0 border-dropzone" id=fileElement.fieldName)
         div(class="uploading collapse")
           i.fa.fa-spinner.fa-pulse.fa-3x.fa-fw
         span
           div.col-lg-12.col-md-12.col-sm-12.col-xs-12.p-x-0.text-xs-center.text-md-center.text-lg-center.p-dropzone.header-media
-            .row(id=fileElement.fieldName)
+            .row
               a(class='link-1' href="#" onclick="return false")
                 p.drop-photo #{title}
                 i(class="fa fa-file-image-o")
