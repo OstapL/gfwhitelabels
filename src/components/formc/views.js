@@ -526,6 +526,8 @@ module.exports = {
       this.fields = options.fields[this.role].fields;
       this.campaign = options.campaign;
 
+      this.allFields.shareholder.fields.voting_power_percent.type = 'percent';
+
       this.labels = {
         first_name: 'First name',
         last_name: 'Last name',
@@ -1838,8 +1840,12 @@ module.exports = {
         1: 'Yes',
         0: 'No',
       };
+      this.fields.outstanding_securities.schema.amount_authorized.type = 'money';
       this.fields.outstanding_securities.schema.amount_authorized.required = true;
+      this.fields.outstanding_securities.schema.amount_outstanding.type = 'money';
       this.fields.outstanding_securities.schema.amount_outstanding.required = true;
+
+      this.fields.business_loans_or_debt.schema.interest_rate.type = 'percent';
 
       this.labels = {
         outstanding_securities: {
@@ -1916,8 +1922,8 @@ module.exports = {
 
       this.el.querySelector('#security_type').selectedIndex = data.security_type;
       this.el.querySelector('#terms_and_rights').value = data.terms_and_rights;
-      this.el.querySelector('#amount_authorized').value = data.amount_authorized;
-      this.el.querySelector('#amount_outstanding').value = data.amount_outstanding;
+      this.el.querySelector('#amount_authorized').value = app.helpers.format.formatPrice(data.amount_authorized);
+      this.el.querySelector('#amount_outstanding').value = app.helpers.format.formatPrice(data.amount_outstanding);
       this.el.querySelector('input[name="voting_right"][value="' + (+data.voting_right) + '"]').checked = true;
       this.el.querySelector('#custom_security_type').value = data.custom_security_type;
       this.el.querySelector('#security_model_form').dataset.update = e.currentTarget.dataset.index;
