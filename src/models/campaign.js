@@ -83,8 +83,19 @@ class Campaign {
     return data;
   }
 
-  daysLeft(dateTo) {
-    return moment(this.expiration_date).diff(moment(), 'days') + 1;
+  daysLeft() {
+    let days = moment(this.expiration_date).diff(moment(), 'days') + 1;
+    if (days < 0)
+      days = 0;
+
+    return days;
+  }
+
+  daysLeftText() {
+    const daysLeft = this.daysLeft();
+    return daysLeft === 1
+      ? `${daysLeft} Day Left`
+      : `${daysLeft} Days Left`;
   }
 
   daysPassedPercentage(approved_date) {

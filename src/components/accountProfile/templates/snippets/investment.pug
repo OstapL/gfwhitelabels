@@ -5,7 +5,7 @@ div(data-investmentid=id).one_table
   .img_column.text-lg-center.text-sm-center(style=background)
 
     if active
-      span.img_tab #{campaign.daysLeft() + ' Days Left'}
+      span.img_tab #{campaign.daysLeftText()}
       if processed
         span.investment-processed
           i.fa.fa-check.like-icon-circle
