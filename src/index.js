@@ -3,7 +3,7 @@ require('babel-polyfill');
 require('jquery-serializejson');
 require('js/html5-dataset.js');
 require('classlist-polyfill');
-
+require('dom4');
 //fix for safari 9.1
 // if (!global.Intl) {
   require('intl');
@@ -64,6 +64,22 @@ function hideOtherPopovers(popoverElement) {
   });
 }
 
+function scrollToTopHandler() {
+  function showScrollToTop() {
+    const $w = $(window);
+    const windowTop = $w.scrollTop();
+    return windowTop >= $w.height();
+  }
+
+  const scrollToTopElem = document.getElementById('scroll-to-top').parentNode;
+
+  if (showScrollToTop()) {
+    scrollToTopElem.classList.remove('collapse');
+  } else {
+    scrollToTopElem.classList.add('collapse');
+  }
+}
+
 const popoverTemplate = '<div class="popover  divPopover"  role="tooltip"><span class="popover-arrow"></span> <h3 class="popover-title"></h3> <span class="icon-popover"><i class="fa fa-info-circle" aria-hidden="true"></i></span> <span class="popover-content"> XXX </span></div>';
 
 function initPopover(elem, options={}) {
@@ -93,6 +109,7 @@ $(document).ready(function () {
     scrollLogoHandler(e);
     // scrollMenuItemsHandler(e);
     scrollAnimateHandler(e);
+    scrollToTopHandler(e);
   });
 
   //attach global event handlers
@@ -135,50 +152,44 @@ $(document).ready(function () {
     }
   });
 
-
-// Money field auto correction
-  $('body').on('keyup', '[type="money"]', function (e) {
-
-    if(e.keyCode == 37 || e.keyCode == 39 || e.keyCode == 190 || e.keyCode == 188 || e.keyCode == 91) {
-      return;
-    }
-
-    var addPosition = 0;
-    var valStr = e.target.value.replace(/[\$\,]/g, '');
-
-
+  // Money field auto correction
+  $('body').on('keyup', '[type="money"]', (e) => {
+    app.helpers.format.formatMoneyInputOnKeyup(e);
+  }).on('focus', '[type="money"]', function (e) {
+    var valStr = e.target.value.replace(/[\$,]/g, '');
     var val = parseFloat(valStr);
-    if (val) {
-      let selStart = e.target.selectionStart;
-      let selEnd = e.target.selectionEnd;
-      let selectionVal = e.target.value.substring(0, selEnd);
-
-      e.target.value = '$' + val.toLocaleString('en-US');
-      let currentVal = e.target.value.substring(0, selEnd);
-
-      if (currentVal !== selectionVal) {
-        addPosition = (currentVal.match(/,/g) || []).length - (selectionVal.match(/,/g) || []).length;
-      }
-      console.log(valStr.length, e.target.value.length, addPosition, e.target.selectionStart, e.target.selectionEnd);
-
-      // debugger;
-      e.target.setSelectionRange(selStart + addPosition, selEnd + addPosition);
-    }
-  });
-
-  $('body').on('focus', '[type="money"]', function (e) {
-    var valStr = e.target.value.replace(/[\$\,]/g, '');
-    var val = parseFloat(valStr);
-    if (val == 0 || val == NaN) {
+    if (isNaN(val) || !val)
       e.target.value = '';
-    }
-  });
-
-  $('body').on('blur', '[type="money"]', function (e) {
-    var valStr = e.target.value.replace(/[\$\,]/g, '');
-    if (e.target.value == '') {
+  }).on('blur', '[type="money"]', function (e) {
+    // var valStr = e.target.value.replace(/[\$\,]/g, '');
+    if (!e.target.value) {
       e.target.value = '$0';
     }
+  });
+
+  $('body').on('keyup', '[type=percent]', (e) => {
+    app.helpers.format.formatPercentFieldOnKeyUp(e);
+  }).on('focus', '[type=percent]', (e) => {
+    const input = e.target;
+    const numberValue = input.value.replace(/[^0-9\-\.]/g, '');
+    const number = Number(numberValue);
+    if (isNaN(number) || number === 0) {
+      input.value = '';
+      return;
+    }
+    input.value = number + '%';
+    const cursorPosition = input.value.length - 1;
+    setTimeout(() => {
+      input.setSelectionRange(cursorPosition, cursorPosition);
+    }, 100);
+  }).on('blur', '[type=percent]', (e) => {
+    const value = e.target.value;
+    const numberValue = value.replace(/[^0-9\.\-]/g, '');
+    let number = Number(numberValue);
+    if (isNaN(number) || !number)
+      e.target.value = '0%';
+    else
+      e.target.value = number + '%';
   });
 
 // для показа биографии на стр. pg/team
@@ -310,12 +321,13 @@ $(document).ready(function () {
 
   $('#page').on('click', '.showVideoModal', (e) => app.helpers.video.showVideoModal(e));
 
+  $('#scroll-to-top').on('click', e => $('body').scrollTo(0, 350));
 });
 
-$.fn.scrollTo = function (padding=0) {
+$.fn.scrollTo = function (padding=0, duration='fast') {
   $('html, body').animate({
     scrollTop: $(this).offset().top - padding + 'px',
-  }, 'fast');
+  }, duration);
   return this;
 };
 
@@ -368,6 +380,9 @@ $.serializeJSON.defaultOptions = _.extend($.serializeJSON.defaultOptions, {
   customTypes: {
     decimal(val) {
       return app.helpers.format.unformatPrice(val);
+    },
+    percent(val) {
+      return app.helpers.format.unformatPercent(val);
     },
     money(val) {
       return app.helpers.format.unformatPrice(val);

@@ -119,6 +119,16 @@ class File {
       data
     )
   }
+
+  toJSON() {
+    return {
+      id: this.id,
+      name: this.name,
+      mime: this.mime,
+      site_id: this.site_id,
+      urls: this.urls
+    }
+  }
 }
 
 module.exports = File

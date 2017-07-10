@@ -35,7 +35,10 @@ mixin frfieldNestedTextLabel(nestedName, name, value, index, myAttr)
 
 
 mixin frField(name, type, defaultValue)
-  - var value = ggetData(name) || defaultValue;
+  -
+    var value = ggetData(name);
+    value = (typeof value === 'undefined') ? defaultValue : value;
+
   if type == 'select'
     - var schemaName = name;
     if name.indexOf('[') !== -1

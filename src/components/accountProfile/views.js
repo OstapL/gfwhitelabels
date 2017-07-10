@@ -18,7 +18,6 @@ module.exports = {
       // 'click #saveFinancialInfo': api.submitAction,
       'change #not-qualify': 'changeQualify',
       'change .investor-item-checkbox': 'changeAccreditedInvestorItem',
-      // 'change input[name=accredited_investor]': 'changeAccreditedInvestor',
     },
     app.helpers.phone.events,
     app.helpers.yesNo.events,
@@ -37,6 +36,7 @@ module.exports = {
 
       this.fields.image_image_id = _.extend(this.fields.image_image_id, {
         templateDropzone: 'profileDropzone.pug',
+        defaultImage: require('images/default/Default_photo.png'),
         onSaved: (data) => {
           app.user.updateImage(data.file);
         },
@@ -189,22 +189,17 @@ module.exports = {
 
     changeAccreditedInvestorItem(e) {
       let $target = $(e.target);
-      let name = $target.data('name');
       let checked = $target.prop('checked');
-      this.$('input[name=' + name + ']').val(checked);
-      if (checked) {
-        this.$('#not-qualify').prop('checked', false).change();
-      }
+
+      if (checked)
+        this.$('#not-qualify').prop('checked', false);
     },
 
     changeQualify(e) {
       let $target = $(e.target);
-      if ($target.prop('checked')) {
-        this.$('.investor-item-checkbox').prop('checked', false).change();
-
-        this.$('input[name=accredited_investor_choice]').val(false);
-      } else {
-        this.$('input[name=accredited_investor_choice]').val(true);
+      const notQualify = $target.prop('checked');
+      if (notQualify) {
+        this.$('.investor-item-checkbox').prop('checked', false);
       }
     },
 
@@ -378,7 +373,7 @@ module.exports = {
     template: require('./templates/investorDashboard.pug'),
     el: '#content',
     events: {
-      'submit .cancelInvestment': 'cancelInvestment',
+      'click .cancelInvestment': 'cancelInvestment',
       'click .agreement-link': 'openAgreement',
       'click .financial-docs-link': 'showFinancialDocs',
     },
@@ -387,14 +382,12 @@ module.exports = {
       this.fields = options.fields;
       this.fields.cancelled_reason.label = 'What is the main reason for your cancellation?';
       this.fields.feedback.label = 'Do you have any suggestions to improve our platform?';
-
-      _.each(this.model.data, (investment, idx) => {
-        this.model.data[idx] = new InvestmentModel(investment, this.fields);
-      });
+      this.model.data = (this.model.data || []).map(investment => new InvestmentModel(investment, this.fields));
 
       this.snippets = {
         investment: require('./templates/snippets/investment.pug'),
         creditSection: require('./templates/snippets/creditSection.pug'),
+        confirmCancel: require('./templates/snippets/confirm-cancel.pug'),
       };
 
       //this is auth cookie for downloadable files
@@ -484,65 +477,102 @@ module.exports = {
       }
     },
 
+    confirmCancellation($container) {
+      return new Promise((resolve) => {
+        $container.append(this.snippets.confirmCancel({
+          fields: this.fields,
+        }));
+
+        const $modal = $container.find('#investor_popup');
+
+        let data = null;
+
+        $modal.on('shown.bs.modal', () => {
+          const $form = $modal.find('form');
+          $form.off('submit');
+          $form.on('submit', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            data = $form.serializeJSON();
+
+            $modal.modal('hide');
+
+            return false;
+          });
+        });
+
+        $modal.on('hidden.bs.modal', () => {
+          $modal.find('form').off('submit');
+          setTimeout(() => $modal.remove(), 100);
+          resolve(data);
+        });
+
+        $modal.modal({
+          backdrop: 'static',
+        });
+
+      });
+    },
+
     //TODO: sort investments in dom on historical tab after cancel investment
     cancelInvestment(e) {
       e.preventDefault();
 
       let $target = $(e.target);
-      let id = $target.data('id');
+      let id = $target.closest('[data-investmentid]').data('investmentid');
 
       if (!id)
         return false;
 
       let investment = this._findInvestment(id);
 
-      if (!investment) {
-        $target.closest('.modal').modal('hide');
+      if (!investment)
         return console.error('Investment doesn\'t exist: ' + id);
-      }
 
-      let data = $target.serializeJSON();
 
-      if(data.rating == undefined) {
-        data.rating = 0;
-      }
+      this.confirmCancellation($target.closest('div')).then((data) => {
+        if (data === null)
+          return;
 
-      $target.closest('.modal').modal('hide');
-      api.makeRequest(app.config.investmentServer + '/' + id + '/decline', 'PUT', data).done((response) => {
-        investment.deposit_cancelled_by_investor = true;
+        data.rating = data.rating || 0;
 
-        $target.closest('.one_table').remove();
+        api.makeRequest(app.config.investmentServer + '/' + id + '/decline', 'PUT', data).done((response) => {
+          investment.deposit_cancelled_by_investor = true;
 
-        let hasActiveInvestments = _.some(this.model.data, i => i.active);
-        if (!hasActiveInvestments)
-          $('#active .investor_table')
-            .append(
-              '<div role="alert" class="alert alert-warning">' +
-              '<strong>You have no active investments</strong>' +
-              '</div>');
+          $target.closest('.one_table').remove();
 
-        let historicalInvestmentsBlock = this.$el.find('#historical .investor_table');
-        let historicalInvestmentElements = historicalInvestmentsBlock.find('.one_table');
-        let cancelledInvestmentElem = this.snippets.investment(investment);
+          let hasActiveInvestments = _.some(this.model.data, i => i.active);
+          if (!hasActiveInvestments)
+            $('#active .investor_table')
+              .append(
+                '<div role="alert" class="alert alert-warning">' +
+                '<strong>You have no active investments</strong>' +
+                '</div>');
 
-        if (historicalInvestmentElements.length) {
-          //find investment to insert after it
-          let block = _.find(historicalInvestmentElements, (elem) => {
-            const investmentId = Number(elem.dataset.investmentid);
-            return investmentId > investment.id;
-          });
-          if (block)
-            $(block).after(cancelledInvestmentElem);
-          else
-            historicalInvestmentsBlock.prepend(cancelledInvestmentElem);
-        } else {
-          historicalInvestmentsBlock.empty();
-          historicalInvestmentsBlock.append(cancelledInvestmentElem);
-        }
+          let historicalInvestmentsBlock = this.$el.find('#historical .investor_table');
+          let historicalInvestmentElements = historicalInvestmentsBlock.find('.one_table');
+          let cancelledInvestmentElem = this.snippets.investment(investment);
 
-        this.onCancel(investment);
-      }).fail((err) => {
-        app.dialogs.error(err.error);
+          if (historicalInvestmentElements.length) {
+            //find investment to insert before it
+            let block = _.find(historicalInvestmentElements, (elem) => {
+              const investmentId = Number(elem.dataset.investmentid);
+              return investment.id > investmentId;
+            });
+            if (block)
+              $(block).before(cancelledInvestmentElem);
+            else
+              historicalInvestmentsBlock.append(cancelledInvestmentElem);
+          } else {
+            historicalInvestmentsBlock.empty();
+            historicalInvestmentsBlock.append(cancelledInvestmentElem);
+          }
+
+          this.onCancel(investment);
+        }).fail((err) => {
+          app.dialogs.error(err.error);
+        });
       });
     },
   }),
@@ -682,6 +712,7 @@ module.exports = {
           model: data[0],
           fields: options[0].fields,
           allowQuestion: false,
+          readonly: this.campaign.expired,
           cssClass: 'col-xl-8 offset-xl-0',
         });
         comments.render();
