@@ -164,8 +164,7 @@ module.exports = {
     const prevValue = e.target.dataset.prev || rawValue;
     let cursorPosition = e.target.selectionStart;
     const prevCursorPosition = Number(e.target.dataset.prevCursor || cursorPosition);
-    const rawValueNumber = rawValue.replace(/\$/g, '');
-    let valueString = rawValueNumber.replace(/,/g, '');
+    const valueString = rawValue.replace(/[\$,]/g, '');
 
     let number = parseFloat(valueString);
     if (isNaN(number)) {
