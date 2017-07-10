@@ -633,6 +633,12 @@ module.exports = {
     },
 
     render() {
+      if (this.model.campaign.expired) {
+        const template = require('./templates/detailNotAvailable.pug');
+        this.$el.html(template());
+        return this;
+      }
+
       this.$el.html(
         this.template({
           snippets: this.snippets,
