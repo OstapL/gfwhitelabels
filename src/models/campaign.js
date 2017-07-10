@@ -84,7 +84,7 @@ class Campaign {
   }
 
   daysLeft(dateTo) {
-    return moment(this.expiration_date).diff(moment(), 'days');
+    return moment(this.expiration_date).diff(moment(), 'days') + 1;
   }
 
   daysPassedPercentage(approved_date) {
