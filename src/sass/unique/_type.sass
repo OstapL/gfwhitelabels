@@ -1,13 +1,12 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,500,700,300);
-@font-face
-  font-family: 'BrandonGrotesque-Medium'
-  src: url('~fonts/brandon_grotesque/brandon_med.otf')
-  font-weight: normal
-  font-style: normal
+@import url(https://fonts.googleapis.com/css?family=Allura);
+@import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
+
 /*Typhography*/
 body
 	-webkit-font-smoothing: antialiased
-	font-size: rem(15)
+	font-size: 15px
+	line-height: 22px
 a
 	color: $small-text
 	+mt(.2s)
@@ -27,27 +26,28 @@ a
 		color: $small-text
 		outline: none
 
+
 .link-2
-	color: $wild_willow
+	color: $black
+	letter-spacing: .35px
+	+mt(.2s)
+	&:hover
+		color: $link-2-hover
+		text-decoration: underline
+		outline: none
+	&:focus
+		color: $black
+		outline: none
+.link-3
+	color: $crusta
 	letter-spacing: .35px
 	text-decoration: underline
 	+mt(.2s)
 	&:hover
-		color: $link-2-hover
-		outline: none
-	&:focus
-		color: $wild_willow
-		outline: none
-.link-3
-	color: $puerto_rico
-	letter-spacing: .35px
-	+mt(.2s)
-	&:hover
 		color: $link-3-hover
-		text-decoration: underline
 		outline: none
 	&:focus
-		color: $puerto_rico
+		color: $crusta
 		outline: none
 .link-4
 	color: $small-text
@@ -88,7 +88,7 @@ a
 
 
 h1,h2,h3,h4,h5,h6
-	font-weight: 500
+	font-weight: 700
  // line-height: 18px
 
 	@media screen and (max-width:640px)
@@ -97,26 +97,23 @@ h1,h2,h3,h4,h5,h6
 	font-family: $open-sans
 	letter-spacing: normal
 	&.text-uppercase
-		font-family: BrandonGrotesque-Medium
-		font-weight: bold
+		font-family: Montserrat
 h1
 	&.text-uppercase
 		letter-spacing: 3px
 	&.big-h1
 		font-size: rem(48)
-		letter-spacing: rem(4.8)
+		letter-spacing: 4.8px
 h2
 	&.text-uppercase
-		letter-spacing: rem(2.4)
+		letter-spacing: 2.4px
 h3
 	&.text-uppercase
-		letter-spacing: rem(1.8)
+		letter-spacing: 1.8px
 h4
 	&.text-uppercase
-		letter-spacing: rem(1.5)
-h6
-	&.text-uppercase
-		letter-spacing: rem(1.1)
+		letter-spacing: 1.5px
+
 h1
 	color: $black
 	.small-text
@@ -139,7 +136,6 @@ h2
 h3
 	margin-top: rem(50)
 	margin-bottom: rem(25)
-	line-height: rem(24)
 	.small-text
 		+calc-rem(11)
 		letter-spacing: .25px
@@ -162,8 +158,8 @@ h5
 	letter-spacing: 1px
 p
 	margin-bottom: 0
-	font-size: rem(15)
-	line-height: rem(22)
+	font-size: 15px
+	line-height: 22px
 //дополнительный клас 
 //.dosis
 //	font-family: $dosis
@@ -184,3 +180,6 @@ p
 	font-weight: 400
 .line-height-1
 	line-height: 1!important
+.document
+	h3
+		font-weight: normal
