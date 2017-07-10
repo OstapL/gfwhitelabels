@@ -1730,6 +1730,8 @@ module.exports = {
     events: _.extend({
       'submit form': api.submitAction,
       'click .submit_formc': submitFormc,
+      'click .xeroConnect': 'xeroConnect',
+      'click .xeroGrabData': 'xeroGrabData',
     }, app.helpers.menu.events, app.helpers.yesNo.events, app.helpers.section.events, /*app.helpers.confirmOnLeave.events*/),
 
     preinitialize() {
@@ -1795,6 +1797,35 @@ module.exports = {
       this.campaign.updateMenu(this.campaign.calcProgress());
       return this;
     },
+
+    xeroConnect(e) {
+      api.makeRequest(app.config.formcServer + '/' + this.model.id + '/financial-condition/xero').
+        then((data) => {
+          console.log(data);
+          let popupHTML = `<div class="modal fade xeroModal in" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: block;"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times"> </i></span> </button><h4 class="modal-title" id="exampleModalLabel"></h4></div><div class="modal-body"><form><input text="text" name="code" data-token="${data.token}"><input type="button" class="btn btn-primary xeroGrabData" value="Grab data"></form><iframe src="${data.url}" height="100%" width="100%"></iframe></div></div><div class="modal-footer "></div></div></div>`;
+          this.$el.append(popupHTML);
+          this.$el.find('.xeroModal').modal('show');
+        });
+    },
+
+    xeroGrabData(e) {
+
+      debugger;
+      let code = e.currentTarget.previousElementSibling.value;
+      api.makeRequest(
+          app.config.formcServer + '/' + this.model.id + '/financial-condition/xero',
+          'PUT',
+          {
+            'code': code,
+            'token': e.currentTarget.previousElementSibling.dataset.token,
+          }
+      ).then((data) => {
+        console.log('get data ', data);
+      }).fail((xhr, message) => {
+        this.$el.find('.xeroModal .modal-body').html('<h3>' + xhr.responseJSON.message + '</h3>');
+      });
+    },
+
   }, app.helpers.menu.methods, app.helpers.yesNo.methods, app.helpers.section.methods, app.helpers.confirmOnLeave.methods)),
 
   outstandingSecurity: Backbone.View.extend(_.extend({
