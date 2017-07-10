@@ -38,8 +38,8 @@ do
         echo ""
     else
         echo "$b failed to checkout. Update script stopped"
-        git status
-        git branch
+        git st;
+        exit 1;
     fi
 done
 
