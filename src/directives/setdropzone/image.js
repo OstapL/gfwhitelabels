@@ -70,6 +70,9 @@ class ImageDropzone extends file.FileDropzone {
     if(imageOptions.onSaved) {
       this.fileElement.options.onSaved = imageOptions.onSaved;
     }
+    if(imageOptions.defaultImage) {
+      this.fileElement.options.defaultImage = imageOptions.defaultImage;
+    }
   }
 
   getTemplate() {
@@ -185,13 +188,13 @@ class CropperDropzone {
 
       'regular': '<div class="form-group">' +
         '<div class="row">' +
-          '<div class="col-xl-10 offset-xl-1">' +
+          '<div class="col-xl-12 image-crop-padding">' +
             '<div class="crop-image-container"></div>' +
             '<input type="text" placeholder="Add image’s title here..." name="name" id="name" class="m-t-0 w-100 form-control" value="{name}" />' +
           '</div>' +
         '</div>' +
         '<div class="row">' +
-          '<div class="col-xl-11 m-t-3 m-b-0 text-xs-right">' +
+          '<div class="col-xl-12 m-t-3 m-b-0 text-xs-right image-crop-padding">' +
             '<button type="button" class="btn btn-secondary m-r-2 cropper-cancel" data-dismiss="modal">' +
               'Cancel' +
             '</button>' +

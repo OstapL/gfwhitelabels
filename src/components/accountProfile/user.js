@@ -178,7 +178,7 @@ class User {
         this.data = responseData || data;
         this.data.image_image_id = new Image(
           app.config.authServer + '/rest-auth/data',
-          data.image_data
+          data.image_data || {}
         );
         if (responseData) {
           this.updateLocalStorage();

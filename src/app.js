@@ -120,7 +120,7 @@ class App {
   }
 
   emitCompanyAnalyticsEvent(trackerId) {
-    if (this.config.googleTagID)
+    if (!this.config.googleTagID)
       return;
 
     if (!trackerId)
