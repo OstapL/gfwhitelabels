@@ -11,14 +11,14 @@
 section.issuer-dashbord-top
   .container
     .row
-      .col-md-4.text-xs-center.text-sm-center.text-md-left.text-lg-left.text-xl-left
+      .col-xl-4.col-lg-4.col-md-12.text-xs-center.text-sm-center.text-md-center.text-lg-left.text-xl-left
         .img_under_text
-          img(src=campaign.list_image_image_id.getUrl() alt="")
+          img(src=(campaign.list_image_image_id.getUrl() || require('images/default/350x282.png')) alt="")
           h2.text-uppercase.dosis.m-t-0 #{company.name}
           .timer_day #{campaign.daysLeft(company.approved_date)} Days Left
         .share-block.d-inline-block.share
           | !{ socialDirective.render(directiveKey, infoProvider) }
-      .col-md-2.col-sm-6.col-xs-6
+      .col-xl-2.col-lg-2.col-md-3.col-sm-6.col-xs-6
         .dashboard-stat
           .visual
             i.fa.fa-bar-chart
@@ -29,7 +29,7 @@ section.issuer-dashbord-top
                 data-value=campaign.amount_raised) $#{ campaign.amount_raised }
             .desc Amount Raised
 
-      .col-md-2.col-sm-6.col-xs-6
+      .col-xl-2.col-lg-2.col-md-3.col-sm-6.col-xs-6
         .dashboard-stat.dashboard-stat-v2.grey
           .visual
             i.fa.fa-briefcase
@@ -40,7 +40,7 @@ section.issuer-dashbord-top
                 data-value=company.number_of_investors) #{company.number_of_investors.toLocaleString('en-US')}
             .desc Number of Investments
 
-      .col-md-2.col-sm-6.col-xs-6
+      .col-xl-2.col-lg-2.col-md-3.col-sm-6.col-xs-6
         .dashboard-stat.dashboard-stat-v2.grey
           .visual
             i.fa.fa-users
@@ -51,7 +51,7 @@ section.issuer-dashbord-top
                 data-value=0) #{ company.total_views } 
             .desc Page Views
 
-      .col-md-2.col-sm-6.col-xs-6
+      .col-xl-2.col-lg-2.col-md-3.col-sm-6.col-xs-6
         .dashboard-stat.dashboard-stat-v2.grey
           .visual
             i.fa.fa-comments
@@ -62,7 +62,7 @@ section.issuer-dashbord-top
                 data-value=0).interactions-count 0
             .desc New Interactions
 
-      .col-md-7.col-sm-10.p-r-0.col-xs-10.hidden-xs-down
+      .col-xl-7.col-lg-7.col-md-10.col-sm-10.p-r-0.col-xs-10.hidden-xs-down
         .tpl-progress
           -
             var daysPassedPercents = campaign.daysPassedPercentage(company.approved_date);
@@ -89,11 +89,11 @@ section.issuer-dashbord-top
             p #{ moment(campaign.expiration_date).format('MM/DD/YYYY') }
             span End of campaign
           .clearfix
-      .col-md-1.col-sm-2.col-xs-2.hidden-xs-down
+      .col-xl-1.col-lg-1.col-md-2.col-sm-2.col-xs-2.hidden-xs-down
         .right_fixed_text.text-lg-center
           b #{ app.helpers.format.formatAmount(campaign.minimum_raise || campaign.maximum_raise)}
           span Goal
-      .col-md-8.col-sm-12.text-xs-center
+      .col-xl-8.col-lg-8.col-md-12.text-xs-center
         a(href="/" + company.slug).btn-sm.btn.btn-secondary.text-uppercase view Campaign
           i(aria-hidden="true").fa.fa-angle-right
     .col-lg-12.border-bottom-50
