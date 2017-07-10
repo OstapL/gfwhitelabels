@@ -210,6 +210,13 @@
     min-height: 155px
 //drop zone с одним файлом
 .fileDropzone, .fileFolderDropzone
+  .has-error
+    .border-dropzone
+      border-color: #ed1c24
+      box-shadow: 0px 0px 3px 2px rgba(237,28,36, 0.1)
+    .help-block
+      float: left
+
   .border-dropzone
     min-height: 155px
     width: 100%
@@ -237,9 +244,14 @@ p.drop-photo
   .border-dropzone
     width: 100%
   .has-error
+    margin-bottom: 25px
+    .border-dropzone
+      border-color: #ed1c24
+      box-shadow: 0px 0px 3px 2px rgba(237,28,36, 0.1)
     .help-block
       position: absolute!important
-      left: 34%
+      left: 15px
+      top: 100%
   @media screen and (max-width: 768px)
     .p-sm-0
       padding-left: 0 !important
@@ -275,6 +287,10 @@ p.drop-photo
 .galleryDropzone
   .border-dropzone
     min-height: 155px
+  .has-error
+    .border-dropzone
+      border-color: #ed1c24
+      box-shadow: 0px 0px 3px 2px rgba(237,28,36, 0.1)
   .dropzone-text
     margin-top: 30px
     .icon-gallery
@@ -356,6 +372,12 @@ p.drop-photo
   .border-dropzone
     min-height: 150px
     border: none
+    &.has-error
+      border-color: #ed1c24
+      box-shadow: 0px 0px 3px 2px rgba(237,28,36, 0.1)
+      .help-block
+        left: 0
+
 .team-members
   .p-dropzone
     top: 0px!important
@@ -406,8 +428,13 @@ p.drop-photo
   border-radius: 100px
   position: relative
   margin: auto
+  display: inline-block
+  margin-right: 15px
   @media screen and (max-width: 544px)
     margin-bottom: rem(20)
+    margin: 0 auto
+    text-align: center
+    display: block
   i
     font-size: rem(22)
     padding: 5px
@@ -537,4 +564,23 @@ p.drop-photo
     height: 45px
     i
       font-size: 16px
+.scrolling-top
+  position: fixed
+  top: 55px
+  right: 50px
+  z-index: 100
+  a
+    font-size: rem(18)
+    color: rgba($small-text, .6)
+    i
+      font-size: rem(44)
+      margin-right: 10px
+      vertical-align: middle
+    .text
+      vertical-align: middle
+      font-weight: bold
+    &:hover
+      color: rgba($small-text, 1)
+  @media only screen and (max-width : 991px)
+    display: none
 

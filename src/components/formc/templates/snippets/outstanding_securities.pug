@@ -24,10 +24,10 @@ mixin row(value, index)
           if value.amount_authorized == null 
             | n/a
           else
-            | #{value.amount_authorized}
+            | #{ app.helpers.format.formatPrice(value.amount_authorized) }
           .collapse
       td
-          | #{value.amount_outstanding}
+          | #{ app.helpers.format.formatPrice(value.amount_outstanding) }
           .collapse
       td
           | #{Number(value.voting_right) ? 'Yes' : 'No'}

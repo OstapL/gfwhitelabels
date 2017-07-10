@@ -161,7 +161,6 @@ mixin confirmStatement(name, attr)
           section.hidden-sm-up.invest-perks-mobile
             - var perks = values.campaign.perks;
             if perks && perks.length
-              - perks.sort(function (a, b) { return Number(b.amount) - Number(a.amount); });
               h2.text-uppercase.dosis.m-t-3.text-xs-center PERKS
                 span.small-text.open-sans.hidden-xs-up
                   | Investor Perks are not intended to affect the value of the security and
@@ -483,12 +482,13 @@ mixin confirmStatement(name, attr)
             .col-lg-12.m-t-2
               .row
                 #signature__full_name.form-group.row
-                  - var fullName = user.first_name + ' ' + user.last_name;
+                  //- var fullName = user.first_name + ' ' + user.last_name;
                   .col-xl-5.col-lg-6.col-md-6
                     input(
                       type="text"
                       placeholder="Type Your Name"
                       name='signature[full_name]'
+                      id='signature_full_name_input'
                     ).form-control.typed-name
                   .col-xl-5.col-lg-6.col-md-6
                     .electronically
@@ -502,7 +502,7 @@ mixin confirmStatement(name, attr)
     //END LEFT BLOCK
     //START RIGHT BLOCK
     .col-xl-4.col-lg-5.col-md-12.col-sm-12.pull-right.hidden-xs-down.invest-perks.invest-right-p-0
-      if values.campaign.perks.length > 0 && values.campaign.perks.length != ''
+      if values.campaign.perks.length
         h2.text-uppercase.dosis.m-t-0 PERKS
           span.small-text.open-sans
             | Investor Perks are not intended to affect the value of the security and
@@ -510,15 +510,6 @@ mixin confirmStatement(name, attr)
             | Investor Perks.
 
         .list-group.list-group-border-invest.invest-right-margin.m-b-3
-          -
-            values.campaign.perks = Object.keys(values.campaign.perks).map(function(key) {
-              return values.campaign.perks[key];
-            });
-
-            values.campaign.perks.sort(function (a, b) {
-              return Number(b.amount) - Number(a.amount);
-            });
-
           each v,k in values.campaign.perks
             a(href="#" data-amount=v.amount).list-group-item.list-group-item-action.perk
               h3.list-group-item-heading
@@ -598,11 +589,14 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
                 span.current-limit.color-green 1000
               | .
             .form-group.row.clearfix.required
+              -
+                var annualIncomeValue = '$' + (user.annual_income * 1000).toLocaleString('en-US');
+                var netWorthValue = '$' + (user.net_worth * 1000).toLocaleString('en-US');
               label Net Worth
-              input(type="text" placeholder="Net Worth" name="net_worth" value=(user.net_worth * 1000).toLocaleString('en-US'))#net_worth.net-worth.form-control
+              input(type="money" placeholder="Net Worth" name="net_worth" value=netWorthValue data-positive-only='1')#net_worth.net-worth.form-control
             .form-group.row.clearfix.required
               label Annual Income
-              input(type="text" placeholder="Annual Income" name="annual_income" value=(user.annual_income * 1000).toLocaleString('en-US'))#annual_income.annual_income.form-control
+              input(type="money" placeholder="Annual Income" name="annual_income" data-positive-only='1' value=annualIncomeValue)#annual_income.annual_income.form-control
             .form-group.row.clearfix.required.m0
               .row
                 .col-lg-12
