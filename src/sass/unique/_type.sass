@@ -1,8 +1,4 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,500,700,300);
-<<<<<<< HEAD
-=======
-@import url('https://fonts.googleapis.com/css?family=Alegreya+Sans:300,400,700');
->>>>>>> 62a970b954fcd0e8215b39c29f738cfe18fa992e
 
 /*Typhography*/
 body
@@ -12,7 +8,6 @@ a
 	color: $small-text
 	+mt(.2s)
 	&:hover
-		+mt(.2s)
 		text-decoration: none
 		color: $link-1-hover
 	&:focus
@@ -22,7 +17,6 @@ a
 	letter-spacing: .35px
 	+mt(.2s)
 	&:hover
-		+mt(.2s)
 		color: $link-1-hover
 		outline: none
 	&:focus
@@ -30,31 +24,21 @@ a
 		outline: none
 
 .link-2
-<<<<<<< HEAD
 	color: $conifer
-=======
-	color: $flame-pea
->>>>>>> 62a970b954fcd0e8215b39c29f738cfe18fa992e
 	letter-spacing: .35px
 	text-decoration: underline
 	+mt(.2s)
 	&:hover
-		+mt(.2s)
 		color: $link-2-hover
 		outline: none
 	&:focus
 		color: $conifer
 		outline: none
 .link-3
-<<<<<<< HEAD
 	color: $monza
-=======
-	color: $flame-pea
->>>>>>> 62a970b954fcd0e8215b39c29f738cfe18fa992e
 	letter-spacing: .35px
 	+mt(.2s)
 	&:hover
-		+mt(.2s)
 		color: $link-3-hover
 		text-decoration: underline
 		outline: none
@@ -67,7 +51,6 @@ a
 	font-weight: 700
 	+mt(.2s)
 	&:hover
-		+mt(.2s)
 		color: $link-4-hover
 		outline: none
 	&:focus
@@ -75,12 +58,11 @@ a
 		outline: none
 .link-5
 	color: $black_text
-	font-size: rem(11)
+	+calc-rem(11)
 	letter-spacing: .35px
 	font-weight: 700
 	+mt(.2s)
 	&:hover
-		+mt(.2s)
 		color: $link-4-hover
 		outline: none
 	&:focus
@@ -89,12 +71,11 @@ a
 
 .link-6
 	color: $white
-	font-size: rem(11)
+	+calc-rem(11)
 	letter-spacing: .35px
 	text-decoration: underline
 	+mt(.2s)
 	&:hover
-		+mt(.2s)
 		color: $link-6-hover
 		outline: none
 	&:focus
@@ -112,11 +93,7 @@ h1,h2,h3,h4,h5,h6
 	font-family: $open-sans
 	letter-spacing: normal
 	&.text-uppercase
-<<<<<<< HEAD
 		font-family: Helvetica
-=======
-		font-family: 'Alegreya Sans', sans-serif
->>>>>>> 62a970b954fcd0e8215b39c29f738cfe18fa992e
 		font-weight: bold
 h1
 	&.text-uppercase
