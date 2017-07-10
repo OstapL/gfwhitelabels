@@ -58,6 +58,7 @@ module.exports = {
 		dataProviderVideoPopup: 'vimeo',
 		// top banner (none - 0 / dcu - 1 / river - 2)
 		topBanner: 1,
+    topBannerText: 'DCU (Digital Federal Credit Union) is not a registered broker/dealer, nor is it affiliated with GrowthFountain LLC, GrowthFountain Capital LLC, or the issuers of securities on this site.  Neither DCU nor its officers, directors, or employees make any warranty, express or implied, of any kind whatsoever related to the adequacy, accuracy, or completeness of any information on this site or the use of information on this site.  DCU does not give investment advice or recommendations for any investment offered on this platform and no communication, through this web site or otherwise, should be construed as such.',
 		//bottom banner (1 - raise capital/ 0 - INVEST)
 		bottomBunner: 0,
 	},
