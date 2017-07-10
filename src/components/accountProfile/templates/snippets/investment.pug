@@ -15,18 +15,8 @@ div(data-investmentid=id).one_table
         span.successfull Successfully
           br
           | funded campaign
-        br
-        span.end-date
-          | #{campaign.expirationDate.format('MM/DD/YYYY')}
-          br
-          | End Date
       else if cancelled
         span.unsuccessfull Cancelled
-        br
-        span.end-date
-          | #{campaign.expirationDate.format('MM/DD/YYYY')}
-          br
-          | End Date
       else if expired
         span.unsuccessfull Unsuccessfully
           br
