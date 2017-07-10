@@ -155,20 +155,41 @@ $(document).ready(function () {
   // Money field auto correction
   $('body').on('keyup', '[type="money"]', (e) => {
     app.helpers.format.formatMoneyInputOnKeyup(e);
-  });
-
-  $('body').on('focus', '[type="money"]', function (e) {
+  }).on('focus', '[type="money"]', function (e) {
     var valStr = e.target.value.replace(/[\$,]/g, '');
     var val = parseFloat(valStr);
     if (isNaN(val) || !val)
       e.target.value = '';
-  });
-
-  $('body').on('blur', '[type="money"]', function (e) {
+  }).on('blur', '[type="money"]', function (e) {
     // var valStr = e.target.value.replace(/[\$\,]/g, '');
     if (!e.target.value) {
       e.target.value = '$0';
     }
+  });
+
+  $('body').on('keyup', '[type=percent]', (e) => {
+    app.helpers.format.formatPercentFieldOnKeyUp(e);
+  }).on('focus', '[type=percent]', (e) => {
+    const input = e.target;
+    const numberValue = input.value.replace(/[^0-9\-\.]/g, '');
+    const number = Number(numberValue);
+    if (isNaN(number) || number === 0) {
+      input.value = '';
+      return;
+    }
+    input.value = number + '%';
+    const cursorPosition = input.value.length - 1;
+    setTimeout(() => {
+      input.setSelectionRange(cursorPosition, cursorPosition);
+    }, 100);
+  }).on('blur', '[type=percent]', (e) => {
+    const value = e.target.value;
+    const numberValue = value.replace(/[^0-9\.\-]/g, '');
+    let number = Number(numberValue);
+    if (isNaN(number) || !number)
+      e.target.value = '0%';
+    else
+      e.target.value = number + '%';
   });
 
 // для показа биографии на стр. pg/team
@@ -359,6 +380,9 @@ $.serializeJSON.defaultOptions = _.extend($.serializeJSON.defaultOptions, {
   customTypes: {
     decimal(val) {
       return app.helpers.format.unformatPrice(val);
+    },
+    percent(val) {
+      return app.helpers.format.unformatPercent(val);
     },
     money(val) {
       return app.helpers.format.unformatPrice(val);
