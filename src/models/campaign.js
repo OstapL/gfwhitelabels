@@ -202,7 +202,7 @@ class Campaign {
   }
 
   get expired() {
-    return this.expirationDate.isBefore(today);
+    return this.expirationDate.isSameOrBefore(today);
   }
 
   get successful() {
