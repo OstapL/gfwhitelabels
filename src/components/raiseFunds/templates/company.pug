@@ -16,6 +16,7 @@ section.create-company.container.m-b-85
         -
           pug_html += app.fields.fieldChoiceLabel('tour', _.extend({
               'empty': { '': 'Choose option' },
+              'reverse': 1,
               'value': values.tour,
             }, fields.tour));
         - 
@@ -38,15 +39,13 @@ section.create-company.container.m-b-85
               span.color-red *
             .col-xl-9
               .prefix_input_prefix
-                //span.form-control
-                  | https://
-                  | #{ window.location.host }/
                 input(value=window.location.origin disabled="disabled").form-control
               .prefix_input_field
                 -
                   pug_html += app.fields.fieldText('slug', {
                   class: '',
-                  schema: fields.slug, 
+                  schema: fields.slug,
+                  id: 'slugField',
                   placeholder: 'Your Custom URL', 
                   value: values.slug,})
         .custom-ga-fields
@@ -166,7 +165,7 @@ section.create-company.container.m-b-85
               class1:'col-xl-6 col-lg-12 text-lg-left text-xl-right', 
               class2:'col-xl-6 col-lg-12', 
               schema: fields.twitter, 
-              placeholder: 'http://www.',
+              placeholder: 'https://www.',
               value: values.twitter,})
           .col-xl-6.col-lg-6
             - 
@@ -174,7 +173,7 @@ section.create-company.container.m-b-85
               class1:'col-xl-5 col-lg-12 text-lg-left text-xl-right', 
               class2:'col-xl-7 col-lg-12', 
               schema: fields.facebook, 
-              placeholder: 'http://www.',
+              placeholder: 'https://www.',
               value: values.facebook,})
         .row.m-b-0
           .col-lg-6.col-l-65
@@ -183,7 +182,7 @@ section.create-company.container.m-b-85
               class1:'col-xl-6 col-lg-12 text-lg-left text-xl-right', 
               class2:'col-xl-6 col-lg-12', 
               schema: fields.instagram, 
-              placeholder: 'http://www.',
+              placeholder: 'https://www.',
               value: values.instagram,})
           .col-lg-6
             - 
@@ -191,7 +190,7 @@ section.create-company.container.m-b-85
               class1:'col-xl-5 col-lg-12 text-lg-left text-xl-right', 
               class2:'col-xl-7 col-lg-12', 
               schema: fields.linkedin, 
-              placeholder: 'http://www.',
+              placeholder: 'https://www.',
               value: values.linkedin,})
         .row.m-t-2.pull-lg-right.text-md-center.text-sm-center.text-xs-center
           .col-xl-12
