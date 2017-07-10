@@ -7,10 +7,13 @@ do
     git checkout $b
     git pull origin $b
     git submodule update --init
-    cd consts && git checkout master && git pull origin alpha 
+    cd consts && git checkout master && git pull origin master 
     cd ..
-    cd staticdata && git checkout `cd .. && git rev-parse --abbrev-ref HEAD` && git pull 
+    cd staticdata && git checkout `cd .. && git rev-parse --abbrev-ref HEAD` && git pull && git fetch --all && git merge --no-ff alpha && git push
     cd ..
+    git add staticdata
+    git add consts
+    git commit -a -m "updated staticdata and consts"
 
     if git branch --all | grep --quiet "remotes/vladyslav2/$b"; then
         echo "============ MERGE WITH VLADYSLAV/$b ============"

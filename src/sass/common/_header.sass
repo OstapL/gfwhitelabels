@@ -183,6 +183,8 @@ header
 
               a 
                 color: rgba($menu_text_color, 1)
+                span.title
+                  opacity: 1
             a
               padding-left: 10px
               padding-right: 10px
@@ -190,9 +192,31 @@ header
               color: rgba($menu_text_color, 0.7)
               font-size: $font-size-sub-menu
               text-align: left
+              position: relative
               .fa
                 margin-top: rem(4)
                 margin-left: 10px
+              span.title
+                position: absolute
+                top: 5px
+                left: 105%
+                line-height: 12px
+                font-size: 10px
+                color: $small-text
+                background-color: $alabaster
+                border-radius: 2px
+                width: 100%
+                opacity: 0
+                padding: rem(3)
+                padding-left: rem(7)
+                &:before
+                  position: absolute
+                  top: 10px
+                  content: ''
+                  left: -10px
+                  border: 5px solid transparent
+                  border-right: 5px solid $alabaster
+
             p 
               margin-bottom: 0
               font-weight: 600
@@ -510,6 +534,7 @@ header
         top: $navbar_height_mobile
         background-color: $menu-backgound-mobile
         display: block
+        box-shadow: $mobile-menu-box-shadow
       #menuList
         float: none!important
         margin: 0

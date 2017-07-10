@@ -166,33 +166,33 @@
   display: $home-our-partners-display
   .partners-line
     margin-bottom: rem(35)
-    hr
-      width: 97%
-      border-top: 2px solid #c4c4c4
-    .center-title
-      -ms-transform: translate(-50%,-50%)
-      -webkit-transform: translate(-50%,-50%)
-      transform: translate(-50%,-50%)
-      position: absolute
-      left: 50%
-      top: 12px
-      background-color: $alabaster
-      padding-left: rem(15)
-      padding-right: rem(15)
+    .title
+      color: $small-text
+      overflow: hidden
       text-align: center
-      color: $small_text
-      @media only screen and (min-width : 1400px)
-        max-width: 60%
-        min-width: 50%
-      @media screen and (min-width : 1200px) and (max-width : 1400px)
-        min-width: 60%
-      @media only screen and (max-width : 1199px)
-        min-width: 70%
-        top: 0
-      @media only screen and (max-width : 768px)
-        min-width: 80%
-      @media only screen and (max-width : 440px)
-        min-width: 100%
+      width: 97%
+      margin: auto
+      &:before,
+      &:after
+        content: ''
+        display: inline-block
+        vertical-align: middle
+        width: 100%
+        height: 1px
+        background-color: #c4c4c4
+        position: relative
+      &:before
+        margin-left: -100%
+        left: -14px
+      &:after
+        margin-right: -100%
+        right: -14px
+      @media only screen and (max-width : 767px)
+        &:before,
+        &:after
+          background-color: transparent
+
+
   .item
     min-height: 70px
     @media only screen and (max-width : 544px)
