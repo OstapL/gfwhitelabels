@@ -10,32 +10,32 @@ div(data-investmentid=id).one_table
         span.investment-processed
           i.fa.fa-check.like-icon-circle
           | Investment Processed
-
-    if campaign.successful
-      span.successfull Successfully
+    else
+      if campaign.successful
+        span.successfull Successfully
+          br
+          | funded campaign
         br
-        | funded campaign
-      br
-      span.end-date
-        | #{campaign.expirationDate.format('MM/DD/YYYY')}
+        span.end-date
+          | #{campaign.expirationDate.format('MM/DD/YYYY')}
+          br
+          | End Date
+      else if cancelled
+        span.unsuccessfull Cancelled
         br
-        | End Date
-    else if cancelled
-      span.unsuccessfull Cancelled
-      br
-      span.end-date
-        | #{campaign.expirationDate.format('MM/DD/YYYY')}
+        span.end-date
+          | #{campaign.expirationDate.format('MM/DD/YYYY')}
+          br
+          | End Date
+      else if expired
+        span.unsuccessfull Unsuccessfully
+          br
+          | funded campaign
         br
-        | End Date
-    else if expired
-      span.unsuccessfull Unsuccessfully
-        br
-        | funded campaign
-      br
-      span.end-date
-        | #{campaign.expirationDate.format('MM/DD/YYYY')}
-        br
-        | End Date
+        span.end-date
+          | #{campaign.expirationDate.format('MM/DD/YYYY')}
+          br
+          | End Date
 
     h2.text-uppercase #{company.name}
   .right-block
