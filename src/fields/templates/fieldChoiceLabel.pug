@@ -14,5 +14,14 @@ div(class=cssClass)
       if attr.hasOwnProperty('empty')
         option(value=attr.empty.value) #{attr.empty['']}
 
+
+      // Trick to do a reverse order for select box
+      - var keysOrder = [];
       each v,k in attr.validate.choices
-        option(value=k selected=(k == attr.value ? "selected" : void(0) )) #{ v }
+        - keysOrder.push(k);
+
+      if attr.reverse == 1
+        - keysOrder = keysOrder.reverse()
+
+      each key in keysOrder
+        option(value=key selected=(key == attr.value ? "selected" : void(0) )) #{ attr.validate.choices[key] }
