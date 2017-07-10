@@ -28,7 +28,7 @@
           .form-group.row
             label(for='industry').col-lg-12.col-form-label.font-weight-normal Please provide the industry to which your business belongs.
             .col-lg-12
-              select(data-model-value='industry' name="industry")#industry.form-control.js-select
+              select(name="industry")#industry.form-control.js-select
                 each val, index in industryData
                   if val == data.industry
                     option(selected)= val

@@ -152,23 +152,10 @@ module.exports = {
       return sum;
     },
 
-    ui() {
-      // get inputs by inputmask category
-      this.inputPercent = this.$('[data-input-mask="percent"]');
-      this.inputPrice = this.$('[data-input-mask="price"]');
-    },
-
     render() {
       this.$el.html(this.template({
         data: app.cache.payBackShareCalculator
       }));
-
-      // declare ui elements for the view
-      this.ui();
-
-      app.helpers.flyPrice(this.inputPrice, ({modelValue, currentValue}) => {
-        app.cache.payBackShareCalculator[modelValue] = +currentValue;
-      });
       return this;
     }
   }, app.helpers.calculatorValidation.methods)),
