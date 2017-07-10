@@ -21,8 +21,8 @@ div(class=klass)
     div(class=klass1)
       label(for=(this.folderElement.file.id || this.folderElement.name))!= options.label
 
-    div(class=klass2 id=(this.folderElement.file.id))
-      div(class=" col-lg-12 border-dropzone p-r-0")
+    div(class=klass2)
+      div(class=" col-lg-12 border-dropzone p-r-0" id=(this.folderElement.file.id))
         div(class="uploading collapse")
           i.fa.fa-spinner.fa-pulse.fa-3x.fa-fw
         span.filescroll
