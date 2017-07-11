@@ -21,7 +21,7 @@ section.issuer-dashbord-top
                 p #{ moment(campaign.expiration_date).format('MM.DD.YYYY') }
                 p End Date
             else
-              | #{campaign.daysLeft(company.approved_date)} Days Left
+              | #{campaign.daysLeftText()}
         if !campaign.expired
           .share-block.d-inline-block.share
             | !{ socialDirective.render(directiveKey, infoProvider) }

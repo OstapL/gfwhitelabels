@@ -14,7 +14,7 @@
             var alternate = company.short_name || company.name;
           img(src=company.campaign.list_image_image_id.getUrl('350x209') alt=alternate)
           if company.campaign.daysLeft() < 30
-            .deys-left #{ company.campaign.daysLeft() } Days Left
+            .deys-left #{ company.campaign.daysLeftText() }
           .more_inform
             .title.text-center
               if company.campaign.security_type == 0
