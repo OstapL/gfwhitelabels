@@ -1,5 +1,4 @@
-// require('./styles/style.sass');
-const Calculator = require('./calculator.js');
+import './styles/style.sass'
 
 const minPersents = 200;
 
@@ -17,72 +16,146 @@ module.exports = {
 
   step2: Backbone.View.extend(_.extend({
     el: '#content',
+
     template: require('./templates/step2.pug'),
-    events: _.extend({
-      // calculate your income
-      'submit .js-calc-form': 'doCalculation',
-      'blur [name=growLevel]': 'savePercents'
-    }, app.helpers.calculatorValidation.events),
 
     initialize() {
+      // data which contains calculated income
+      this.outputData = [];
+
+      if (!app.cache.payBackShareCalculator) {
+        app.cache.payBackShareCalculator = {
+          'raiseMoney': '',
+          'nextYearRevenue': '',
+          'growLevel': ''
+        };
+      }
       this.fields = {
         raiseMoney: {
           required: true,
           type: 'money',
-          fn(name, fn, attr, data, schema) {
-            const value = this.getData(data, name);
-            if (value <= 0)
-              throw 'Please, enter positive number';
-          },
+          validate: {},
         },
         nextYearRevenue: {
           required: true,
           type: 'money',
-          fn(name, fn, attr, data, schema) {
-            const value = this.getData(data, name);
-            if (value <= 0)
-              throw 'Please, enter positive number';
-          },
+          validate: {},
         },
         growLevel: {
           required: true,
-          type: 'percent',
-          fn(name, fn, attr, data, schema) {
-            const value = this.getData(data, name);
-            if (value <= 0)
-              throw 'Please, enter positive number';
-          },
+          type: 'integer',
+          validate: {},
         },
       };
     },
 
+    events: _.extend({
+      // calculate your income
+      'submit .js-calc-form': 'doCalculation',
+      'blur [name=growLevel]': 'savePercents',
+      'blur [name=raiseMoney]': 'saveMoney',
+      'blur [name=nextYearRevenue]': 'saveMoney',
+    }, app.helpers.calculatorValidation.events),
+
     validate: app.helpers.calculator.validate,
     validateForLinks: app.helpers.calculator.validateForLinks,
 
+    saveMoney(e) {
+      const value = app.helpers.format.unformatPrice(e.target.value);
+      const name = e.target.getAttribute('name');
+      app.cache.payBackShareCalculator[name] = Number(value);
+    },
+
+    savePercents(e) {
+      const value = app.helpers.format.unformatPercent(e.target.value);
+      const name = e.target.getAttribute('name');
+      app.cache.payBackShareCalculator[name] = Number(value);
+    },
+
     doCalculation(e) {
       e.preventDefault();
-
       if (!this.validate(e))
         return;
 
-      const $form = $(e.target).closest('form');
-      const data = $form.serializeJSON();
+      let maxOfMultipleReturned = 0,
+        countOfMultipleReturned = 0,
+        {raiseMoney, nextYearRevenue, growLevel} = app.cache.payBackShareCalculator;
 
-      let processedData = Calculator.doCalculation(this.fields, data);
-      if (!processedData)
-        return false;
+      // calculate income for 10 years
+      // set the first year
+      this.outputData[0] = {};
+      this.outputData[0].fundraise = raiseMoney;
 
-      app.cache.payBackShareCalculator = _.extend(data, processedData);
+      // set the second year
+      this.outputData[1] = {};
+      this.outputData[1].revenue = nextYearRevenue;
+
+      // set all other year
+      for (var i = 2; i < 11; i++) {
+        this.outputData[i] = {};
+
+        this.outputData[i].revenue = Math.ceil(this.outputData[i - 1].revenue * (1 + growLevel / 100));
+        this.outputData[i].annual = Math.ceil(0.05 * this.outputData[i].revenue);
+
+        let helper = {
+          sum: this.getPreviousSum(i),
+          divided: this.getPreviousSum(i) / raiseMoney
+        };
+        this.outputData[i].multiple = Math.min(parseFloat(helper.divided.toFixed(1)), 2);
+
+        // change max value of multiple returned
+        if (this.outputData[i].multiple > maxOfMultipleReturned) {
+          maxOfMultipleReturned = this.outputData[i].multiple;
+        }
+
+        // skip adding maximum "multiple returned" value more then one time
+        if (this.outputData[i].multiple >= 2) {
+          countOfMultipleReturned++;
+          if (countOfMultipleReturned > 1) {
+            this.outputData[i].multiple = "";
+            this.outputData[i].annual = "";
+          } else if (countOfMultipleReturned == 1) {
+            this.outputData[i].annual = (function (data) {
+              let sum = 0,
+                length = data.length;
+
+              for (let k = 2; k < length - 1; k++) {
+                sum += data[k].annual;
+              }
+              return raiseMoney * 2 - sum;
+            })(this.outputData);
+          }
+        }
+
+        this.outputData[i].total = Math.min(parseFloat(helper.sum).toFixed(1), 2 * raiseMoney);
+      }
+
+      // save data
+      app.cache.payBackShareCalculator.outputData = this.outputData;
+      app.cache.payBackShareCalculator.nextYearRevenue = app.helpers.format.unformatPrice(e.target.querySelector('#nextYearRevenue').value);
+      app.cache.payBackShareCalculator.maxOfMultipleReturned = maxOfMultipleReturned;
 
       // navigate to the finish step
       app.routers.navigate('/calculator/paybackshare/step-3', {trigger: true});
     },
 
+    // get sum of last Annual Distributions
+    getPreviousSum(index) {
+
+      let selectedRange = this.outputData.slice(2, index + 1),
+        sum = 0;
+
+      _.each(selectedRange, (el) => {
+        sum += el.annual;
+      });
+
+      return sum;
+    },
+
     render() {
       this.$el.html(this.template({
-        data: app.cache.payBackShareCalculator || {},
+        data: app.cache.payBackShareCalculator
       }));
-
       return this;
     }
   }, app.helpers.calculatorValidation.methods)),
