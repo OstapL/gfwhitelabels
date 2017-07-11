@@ -195,6 +195,81 @@
       @media only screen and (max-width : 544px)
         div:first-child
           margin-bottom: rem(20)
+  .raise-landing-table
+    margin-top: rem(70)
+    .table-bordered
+      border: none
+    h3
+      margin-top: 0
+      margin-bottom: 0
+    td.full-width
+      width: 210px
+      position: relative
+      h3.growth
+        font-weight: bold
+      img
+        position: absolute
+        top: 50%
+        left: 50%
+        -ms-transform: translate(-50%, -50%)
+        -webkit-transform: translate(-50%, -50%)
+        transform: translate(-50%, -50%)
+        width: 110px
+        z-index: 1
+        filter: grayscale(1) brightness(2)
+        -webkit-filter: grayscale(1) brightness(2)
+        opacity: .2
+      h3
+        position: relative
+        z-index: 2
+    td.big-title
+      width: 200px
+    td
+      text-align: center
+      vertical-align: middle
+      padding: rem(8)
+      min-width: 105px
+    thead
+      width: 100%
+      td
+        font-size: rem(12)
+        line-height: rem(15)
+        border-bottom: none
+        background-color: $alabaster
+      .full-width
+        background-color: transparent
+    tr
+      height: 105px
+    i
+      font-size: rem(30)
+      &.fa-times
+        color: #d44330
+      &.fa-check
+        color: $wild_willow
+    span
+      font-size: rem(18)
+      font-weight: bold
+      &.red-text
+        color: #d44330
+      &.black-text
+        color: $black
+    tbody
+      td.full-width
+        background-color: $raise-landing-table-bgc
+        color: $raise-landing-table-text-color
+    .dashed
+      td
+        border-top-style: dashed
+    .dashed-first
+      td
+        border-bottom-style: dashed
+    .dashed-two
+      td
+        border-bottom-style: dashed
+        border-top-style: dashed
+
+      
+
 .raise-landing-banner
   .background
     @media screen and (min-width : 768px) and (max-width : 1200px)
