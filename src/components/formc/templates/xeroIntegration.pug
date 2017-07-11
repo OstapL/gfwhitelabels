@@ -1,0 +1,39 @@
+.xero-formc.col-xs-12
+  .xero-logo.col-xl-1.col-lg-1.col-md-1.col-sm-2.col-xs-12.text-xs-center
+    img(src=require("images/icons/xero-logo.png"), alt="")
+  .xero-text.col-xl-8.col-lg-7.col-md-7.col-sm-10.col-xs-12.text-xs-center.text-sm-left.text-md-left.text-lg-left.text-xl-left
+    p
+      | Do you use 
+      a(href="https://www.xero.com/" target="_blank").link-3 XERO
+      |  online accounting software? Quickly upload your financials with a click of a button.
+  .xero-btn.col-xl-3.p-x-0.col-lg-4.col-md-4.col-sm-12.col-xs-12.text-xs-center
+    a(href="#").btn-xero.xeroConnect 
+      span.text-btn-xero Connect to XERO
+
+
+<div class="modal fade xeroModal in" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+<div class="modal-dialog" role="document">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">
+<i class="fa fa-times"> </i>
+</span> 
+</button>
+<h4 class="modal-title" id="exampleModalLabel"></h4>
+</div>
+
+<div class="modal-body">
+  <form>
+    <input type="checkbox" name="data[]" value="balance_sheet" />
+    <input type="checkbox" name="data[]" value="balance_sheet" />
+    <a href="" id="url">Get access code</a>
+    <input text="text" name="code" id="code" data-token="">
+    <input type="button" class="btn btn-primary xeroGrabData" value="Grab data">
+  </form>
+</div>
+
+</div>
+<div class="modal-footer "></div>
+</div>
+</div>
