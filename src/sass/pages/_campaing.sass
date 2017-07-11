@@ -350,6 +350,11 @@
 	.create-alert-block
 		.pull-right
 			float: left
+	.block_link
+		&:hover~.one_block
+			.for_img
+				.more_inform
+					opacity: 0
 	
 @media only screen and (max-width : 545px)
 	.create-alert-block
@@ -365,11 +370,6 @@
 		.description
 			min-height: 120px
 			height: 100%
-	.block_link
-		&:hover~.one_block
-			.for_img
-				.more_inform
-					opacity: 0
 
 @media only screen and (max-width : 360px)
 	.campaing-list
