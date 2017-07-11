@@ -31,44 +31,39 @@
 
             .col-lg-12
               input(
-                value= formatPrice(data.raiseMoney),
+                value= app.helpers.format.formatPrice(data.raiseMoney),
                 type='money',
                 placeholder='$0',
                 autocomplete="off"
                 data-value-type='money'
-                data-input-mask='price',
-                data-model-value='raiseMoney',
-                data-current-value= data.raiseMoney
-                name="raiseMoney")#raiseMoney.form-control.js-field
+                name="raiseMoney"
+              )#raiseMoney.form-control.js-field
 
           .form-group.row
             label(for="nextYearRevenue").col-lg-12.font-weight-normal What do you expect your revenue to be next year?
 
             .col-lg-12
               input(
-                value= formatPrice(data.nextYearRevenue),
+                value= app.helpers.format.formatPrice(data.nextYearRevenue),
                 type='money',
                 placeholder='$0',
                 autocomplete="off"
                 data-value-type='money'
-                data-input-mask='price',
-                data-model-value='nextYearRevenue',
                 name="nextYearRevenue",
-                data-current-value= data.nextYearRevenue)#nextYearRevenue.form-control.js-field
+              )#nextYearRevenue.form-control.js-field
 
           .form-group.row
             label(for="growLevel").col-lg-12.font-weight-normal At what rate do you expect your revenue to grow each year?
 
             .col-lg-12
               input(
-                value=(data.growLevel ? data.growLevel + '%' : ''),
-                type='percent',
-                placeholder='0%',
+                value=app.helpers.format.formatPercent(data.growLevel)
+                type='percent'
+                placeholder='0%'
                 autocomplete="off"
                 data-value-type='percent'
-                data-input-mask='percent',
-                name="growLevel",
-                data-model-value='growLevel')#growLevel.form-control.js-field
+                name="growLevel"
+              )#growLevel.form-control.js-field
 
           .form-group.row.clearfix.m0
             .col-xs-6.p-t-2.m-t-1

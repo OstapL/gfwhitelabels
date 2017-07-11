@@ -16,15 +16,70 @@ if (require.extensions) {
   require.extensions['.pug'] = compile
 }
 
-const LocalStorage = require('node-localstorage').LocalStorage;
+const { LocalStorage } = require('node-localstorage');
+const { JSDOM } = require('jsdom');
+
 global.localStorage = new LocalStorage('./test/localStorageTemp');
-
-const jsdom = require('jsdom');
-
-global.document = jsdom.jsdom('<body><div id="content"></div></body>');
-global.window = document.defaultView;
+global.window = (new JSDOM('<body><div id="page"><div id="content"></div></div></body>', {
+  url: 'https://alpha.growthfountain.com'
+})).window;
+global.document = window.document;
 global.window.localStorage = global.localStorage;
+window.__defineSetter__('location', (val) => {});
+global.location = window.location;
 global.navigator = {userAgent: 'node.js'};
+global.$ = global.jQuery = require('jquery');
+global._ = require('underscore');
+global.Backbone = require('backbone');
+global.Tether = window.Tether = require('tether');
+require('bootstrap');
+global.Element = window.Element;
+global.Node = window.Node;
+require('babel-polyfill');
+require('js/html5-dataset.js');
+require('classlist-polyfill');
+// global.require = require;
+global.api = require('../src/helpers/forms.js');
+const App = require('../src/app.js');
+global.app = App();
+$.fn.scrollTo = function (padding=0) {
+  $('html, body').animate({
+    scrollTop: $(this).offset().top - padding + 'px',
+  }, 'fast');
+  return this;
+};
+require('jquery-serializejson');
 
-require('../src/app.js');
-global.require = require;
+$.serializeJSON.defaultOptions = _.extend($.serializeJSON.defaultOptions, {
+  customTypes: {
+    decimal(val) {
+      return app.helpers.format.unformatPrice(val);
+    },
+    percent(val) {
+      return app.helpers.format.unformatPercent(val);
+    },
+    money(val) {
+      return app.helpers.format.unformatPrice(val);
+    },
+    integer(val) {
+      return parseInt(val);
+    },
+    url(val) {
+      return String(val);
+    },
+    text(val) {
+      return String(val);
+    },
+    email(val) {
+      return String(val);
+    },
+    password(val) {
+      return String(val);
+    },
+  },
+  useIntKeysAsArrayIndex: true,
+  parseNulls: true,
+  parseNumbers: true
+});
+
+global.testHelpers = require('./testHelpers.js');
