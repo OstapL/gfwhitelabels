@@ -11,29 +11,43 @@
       span.text-btn-xero Connect to XERO
 
 
-<div class="modal fade xeroModal in" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-<div class="modal-dialog" role="document">
-<div class="modal-content">
-<div class="modal-header">
-<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-<span aria-hidden="true">
-<i class="fa fa-times"> </i>
-</span> 
-</button>
-<h4 class="modal-title" id="exampleModalLabel"></h4>
-</div>
-
-<div class="modal-body">
-  <form>
-    <input type="checkbox" name="data[]" value="balance_sheet" /> Balance sheet <br />
-    <input type="checkbox" name="data[]" value="document2" /> Document2 <br />
-    <a href="" id="url">Get access code</a> <br />
-    <input text="text" name="code" id="code" data-token=""> <br />
-    <input type="button" class="btn btn-primary xeroGrabData" value="Grab data"> <br />
-  </form>
-</div>
-
-</div>
-<div class="modal-footer "></div>
-</div>
-</div>
+div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#xeroModal.modal.fade
+  div(role="document").modal-dialog
+    .modal-content
+      .modal-header.sign-up-header
+        button(type="button" data-dismiss="modal" aria-label="Close").close
+          span(aria-hidden="true")
+            i.fa.fa-times
+        .title-header-signup.m-t-1
+          .row
+            p bla bla bla
+      .modal-body
+        form
+          input(type="checkbox" name="documents[]" value="balance_sheet")
+          | Balance sheet 
+          br
+          input(type="checkbox" name="documents[]" value="bank_statement")
+          | Bank statement
+          br
+          input(type="checkbox" name="documents[]" value="bank_summary")
+          | Bank Summary
+          br
+          input(type="checkbox" name="documents[]" value="budget_summary")
+          | Budget Summary
+          br
+          input(type="checkbox" name="documents[]" value="executive_summary")
+          | Executive Summary
+          br
+          input(type="checkbox" name="documents[]" value="profit_and_loss")
+          | Profit and Loss
+          br
+          input(type="checkbox" name="documents[]" value="trial_balance")
+          | Trial Balance
+          br
+          a(href="" id="url" target="_blank") Get access code
+          br
+          input(text="text" name="code" id="code" data-token="" data-secret="")
+          br
+          input(type="button" class="btn btn-primary xeroGrabData" value="Grab data")
+          br
+      .modal-footer

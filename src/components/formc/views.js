@@ -1747,26 +1747,32 @@ module.exports = {
       api.makeRequest(this.urlRoot.replace(':id', this.model.id)).
         then((data) => {
           this.el.querySelector('#code').dataset.token = data.token;
-          this.el.querySelector('#url').value = data.url;
-          this.$el.find('.xeroModal').modal('show');
+          this.el.querySelector('#code').dataset.secret = data.token_secret;
+          this.el.querySelector('#url').href = data.url;
+          this.$el.find('#xeroModal').modal('show');
         });
     },
 
     xeroGrabData(e) {
 
-      debugger;
-      let code = e.currentTarget.previousElementSibling.value;
+      let code = e.currentTarget.parentElement.querySelector('#code');
+      let data = {};
+      data.token = code.dataset.token;
+      data.token_secret = code.dataset.secret;
+      data.id = this.model.id;
+      data.documents = [];
+      this.el.querySelectorAll('[name="documents[]"]').forEach((el) => { 
+        data.documents.push(el.value)
+      })
+
       api.makeRequest(
           app.config.formcServer + '/' + this.model.id + '/financial-condition/xero',
           'PUT',
-          {
-            'code': code,
-            'token': e.currentTarget.previousElementSibling.dataset.token,
-          }
+          data
       ).then((data) => {
-        console.log('get data ', data);
+        window.location.reload();
       }).fail((xhr, message) => {
-        this.$el.find('.xeroModal .modal-body').html('<h3>' + xhr.responseJSON.message + '</h3>');
+        this.$el.find('#xeroModal .modal-body').html('<h3>' + xhr.responseJSON.message + '</h3>');
       });
     },
 
