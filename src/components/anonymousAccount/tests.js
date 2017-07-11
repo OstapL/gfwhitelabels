@@ -195,7 +195,96 @@ describe('Sign-up page', () => {
   });
 });
 
-describe('Sign-up/Log-in popups', () => {
+describe('Sign-up popup', () => {
+  const fakeSignupResponse = {
+    token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxNzYsImZpcnN0X25hbWUiOiJWbGFkaW1pciIsImxhc3RfbmFtZSI6IkNoYWdpbiIsInVzZXJfaXAiOiIxNzIuMTcuMC4xIiwic2l0ZV9pZCI6NH0.kXh56z80TpRL0wwztKlPZ9en1YnTe2Hy22pbD_aiG6E',
+    id: 176,
+    first_name:'Vladimir',
+    last_name: 'Chagin',
+    image_data: {
+      id: 6862,
+      mime:'image/jpeg',
+      name:'reportazh-dromru-s-pervogo-v-istorii-formuly-1-gran-pri-rossii-avtonovosti_9952.jpg',
+      urls: {
+        main: '/9a4a37906118be57e46c5a3fe77936d37f59056d.jpg',
+        '50x50': '/ba4c924fbda4d92aea02686263c60d15369d4a74.jpg',
+        origin: '/baa6377228bf7c661cc1f4465f47561306a9368c.jpg',
+      },
+      site_id:12
+    },
+    info:[{
+      company_id: 940,
+      campaign_id:940,
+      formc_id: 940,
+      owner_id:176,
+      user_id: 176,
+      is_paid: false,
+      company: 'mac',
+      role: 0
+    }]
+  };
+
+  beforeEach(() => {
+    stubMakeRequest(fakeSignupResponse);
+    inst.SignupPopup = new Views.popupSignup();
+    inst.SignupPopup.render();
+  });
+
+  afterEach(() => {
+    inst.SignupPopup.destroy();
+    delete inst.SignupPopup;
+    api.makeRequest.restore();
+    eventEmitter.off('done');
+  });
+
+  it('Sign-up with valid data', (done) => {
+    const userData ={
+      first_name: 'Test',
+      last_name: 'Test',
+      email: 'test@test.com',
+      password1: 'qweqwe123',
+      password2: 'qweqwe123',
+      domain: 'alpha.growthfountain.com',
+      checkbox1: 1
+    };
+    const $signupForm = $('#sign-up-form');
+
+    testHelpers.fillForm($signupForm, _.omit(userData, 'checkbox1', 'domain'));
+    $signupForm.find('input[name=checkbox1]').prop('checked', true);
+
+    eventEmitter.on('done', () => {
+      const data = api.makeRequest.args[0][2];
+      expect(data).to.deep.equal(userData);
+
+      const actual = readUserData();
+
+      expect(actual.user).to.deep.equal(fakeSignupResponse);
+      expect(actual.token).to.equal(fakeSignupResponse.token);
+      expect(actual.cookieToken).to.equal(fakeSignupResponse.token);
+
+      done();
+    });
+    debugger;
+    $signupForm.submit();
+  });
+
+  it('Sign-up with empty credentials', () => {
+    const $signupForm = $('#sign-up-form');
+    $signupForm.find('input[name="checkbox1"]').prop('checked', true);
+
+    $signupForm.submit();
+
+    expect(app.validation.errors).to.deep.equal({
+      first_name: ['Is required', 'First Name must be at least 2 characters'],
+      last_name: ['Is required', 'Last Name must be at least 2 characters'],
+      email: ['Is required'],
+      password1: ['Is required', 'Password must be at least 8 characters'],
+      password2: ['Is required', 'Re-enter Password must be at least 8 characters'],
+    });
+  });
+});
+
+describe('Log-in popup', () => {
   const fakeLoginResponse = {
     token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxNzYsImZpcnN0X25hbWUiOiJWbGFkaW1pciIsImxhc3RfbmFtZSI6IkNoYWdpbiIsInVzZXJfaXAiOiIxNzIuMTcuMC4xIiwic2l0ZV9pZCI6NH0.kXh56z80TpRL0wwztKlPZ9en1YnTe2Hy22pbD_aiG6E',
     id: 176,
@@ -231,16 +320,15 @@ describe('Sign-up/Log-in popups', () => {
   });
 
   afterEach(() => {
-    inst.SignupPopup.undelegateEvents();
+    inst.SignupPopup.destroy();
     delete inst.SignupPopup;
-    $('#content').empty();
     api.makeRequest.restore();
     eventEmitter.off('done');
   });
 
   it('Log-in with valid data', (done) => {
     const userData = {
-      email: 'test@test.com11111',
+      email: 'test@test.com',
       password: 'qweqwe123',
       domain: 'alpha.growthfountain.com',
     };
@@ -251,9 +339,6 @@ describe('Sign-up/Log-in popups', () => {
 
     eventEmitter.on('done', () => {
       const data = api.makeRequest.args[0][2];
-
-      console.log(data);
-      console.log(userData);
 
       expect(data).to.deep.equal(userData);
 
@@ -269,78 +354,14 @@ describe('Sign-up/Log-in popups', () => {
     $loginForm.submit();
   });
 
-  it('Sign-up with valid data', (done) => {
-    const userData ={
-      email: 'test@test.com',
-      password1: 'qweqwe123',
-      password2: 'qweqwe123',
-      domain: 'alpha.growthfountain.com',
-      checkbox1: 1
-    };
-    const $signupForm = $('#sign-up-form');
+  it('Log-in with empty email/password', () => {
+    const $loginForm = $('#sign-in-form');
 
-    testHelpers.fillForm($signupForm, _.omit(userData, 'checkbox1', 'domain'));
-    $signupForm.find('input[name="checkbox1"]').prop('checked', true);
+    $loginForm.submit();
 
-    eventEmitter.on('done', () => {
-      const data = api.makeRequest.args[0][2];
-      expect(data).to.deep.equal(userData);
-
-      const actual = readUserData();
-
-      expect(actual.user).to.deep.equal(fakeLoginResponse);
-      expect(actual.token).to.equal(fakeLoginResponse.token);
-      expect(actual.cookieToken).to.equal(fakeLoginResponse.token);
-
-      done();
+    expect(app.validation.errors).to.deep.equal({
+      email: ['Is required'],
+      password: ['Is required', 'Password must be at least 8 characters'],
     });
-
-    $signupForm.submit();
   });
-
-  // it('Log-in with empty email/password', () => {
-  //   const $loginForm = $('#sign-in-form');
-  //
-  //   $loginForm.find('[name=email]').val('');
-  //   $loginForm.find('[name=password]').val('');
-  //
-  //   $loginForm.submit();
-  //
-  //   const data = inst.makeRequestSpy.args[0][0];
-  //
-  //   expect(data).to.deep.equal({
-  //     email: '',
-  //     password:'',
-  //     domain: 'alpha.growthfountain.com',
-  //     checkbox1: 1,
-  //   });
-  // });
-  //
-  // it('Sign-up with not checked checkbox', () => {
-  //   const $signupForm = $('#sign-up-form');
-  //
-  //   $signupForm.submit();
-  //
-  //   expect(app.validation.errors).to.deep.equal({
-  //     checkbox1: ['You must agree to the terms before creating an account'],
-  //   });
-  // });
-  //
-  // it('Sign-up with checked checkbox and empty credentials', () => {
-  //   const $signupForm = $('#sign-up-form');
-  //   $signupForm.find('input[name="checkbox1"]').prop('checked', true);
-  //
-  //   $signupForm.submit();
-  //   const data = inst.makeRequestSpy.args[0][0];
-  //
-  //   expect(data).to.deep.equal({
-  //     checkbox1: 1,
-  //     domain: 'alpha.growthfountain.com',
-  //     first_name: '',
-  //     last_name: '',
-  //     email: '',
-  //     password1: '',
-  //     password2: '',
-  //   });
-  // });
 });

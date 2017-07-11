@@ -3,10 +3,17 @@ const socialAuth = require('./social-auth.js');
 const LOGIN_FIELDS = {
   email: {
     type: 'email',
-    required: true,
+    required: true
   },
   password: {
     type: 'password',
+    required: true,
+    minLength: 8,
+    //needed for validation message
+    label: 'Password',
+  },
+  domain: {
+    type: 'string',
     required: true,
   },
 };
@@ -14,55 +21,25 @@ const LOGIN_FIELDS = {
 const SIGNUP_FIELDS = {
   first_name: {
     type: 'string',
-    validate: {
-      _Length: 'Length',
-    },
     required: true,
+    minLength: 2,
+    label: 'First Name',
   },
   last_name: {
     type: 'string',
-    validate: {
-      _Length: 'Length',
-    },
     required: true,
-  },
-  email: {
-    type: 'email',
-    validate: {
-      _Email: 'Email',
-      _Length: 'Length',
-    },
-    required: true
-  },
-  domain: {
-    type: 'string',
-    validate: {
-      _Length: 'Length',
-    },
-    required: true,
+    minLength: 2,
+    label: 'Last Name',
   },
   checkbox1: {
     type: 'boolean',
-    validate: {
-      _OneOf: 'OneOf'
-    },
     required: true,
     messageRequired: 'You must agree to the terms before creating an account',
   },
-  password1: {
-    type: 'string',
-    'validate': {
-      _Length: 'Length',
-    },
-    required: true,
-  },
-  password2: {
-    type: 'string',
-    validate: {
-      _Length: 'Length'
-    },
-    required: true,
-  },
+  email: LOGIN_FIELDS.email,
+  domain: LOGIN_FIELDS.domain,
+  password1: _.extend({}, LOGIN_FIELDS.password, { label: 'Password' }),
+  password2: _.extend({}, LOGIN_FIELDS.password, { label: 'Re-enter Password'}),
 };
 
 const popupAuthHelper = {
