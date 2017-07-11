@@ -1831,10 +1831,12 @@ module.exports = {
       let template = require('./templates/financialCondition.pug');
 
       const View = require('components/formc/views.js');
+
+
       this.$el.html(
         template({
           view: this,
-          xeroIntegration: new View.xeroIntegration({models:this.model}).render(),
+          xeroIntegration: xeroIntegration,
           fields: this.fields,
           values: this.model,
           campaignId: this.campaign.id,
@@ -1843,6 +1845,13 @@ module.exports = {
       );
       app.helpers.disableEnter.disableEnter.call(this);
       this.campaign.updateMenu(this.campaign.calcProgress());
+
+      let xeroIntegration =  new View.xeroIntegration({
+        model: this.model,
+        el: this.el.querySelector('#xeroBlock')
+      });
+      xeroIntegration.render();
+      xeroIntegration.delegateEvents();
       return this;
     },
 
