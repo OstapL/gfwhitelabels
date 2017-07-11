@@ -5,37 +5,27 @@ div(data-investmentid=id).one_table
   .img_column.text-lg-center.text-sm-center(style=background)
 
     if active
-      span.img_tab #{campaign.daysLeft() + ' Days Left'}
+      span.img_tab #{campaign.daysLeftText()}
       if processed
         span.investment-processed
           i.fa.fa-check.like-icon-circle
           | Investment Processed
-
-    if campaign.successful
-      span.successfull Successfully
+    else
+      if cancelled
+        span.unsuccessfull Cancelled
+      else if campaign.successful
+        span.successfull Successfully
+          br
+          | funded campaign
+      else if expired
+        span.unsuccessfull Unsuccessfully
+          br
+          | funded campaign
         br
-        | funded campaign
-      br
-      span.end-date
-        | #{campaign.expirationDate.format('MM/DD/YYYY')}
-        br
-        | End Date
-    else if cancelled
-      span.unsuccessfull Cancelled
-      br
-      span.end-date
-        | #{campaign.expirationDate.format('MM/DD/YYYY')}
-        br
-        | End Date
-    else if expired
-      span.unsuccessfull Unsuccessfully
-        br
-        | funded campaign
-      br
-      span.end-date
-        | #{campaign.expirationDate.format('MM/DD/YYYY')}
-        br
-        | End Date
+        span.end-date
+          | #{campaign.expirationDate.format('MM/DD/YYYY')}
+          br
+          | End Date
 
     h2.text-uppercase #{company.name}
   .right-block
