@@ -251,7 +251,7 @@ class User {
           el: '#content',
           model: {},
         })
-        : new pView.popupLogin({});
+        : new pView.popupSignup({});
 
       v.render();
       app.hideLoading();
