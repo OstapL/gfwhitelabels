@@ -1,130 +1,192 @@
 const socialAuth = require('./social-auth.js');
 
-module.exports = {
-  popupLogin: Backbone.View.extend({
-    urlRoot: app.config.authServer + '/rest-auth/login',
-    template: require('./templates/popupLogin.pug'),
-    events: {
-      'submit #sign-in-form': 'signinSubmit',
-      'click #sign-in-form .reset-password-link': 'resetPassword',
+const LOGIN_FIELDS = {
+  email: {
+    type: 'email',
+    required: true,
+  },
+  password: {
+    type: 'password',
+    required: true,
+  },
+};
 
-      'submit #sign-up-form': 'signupSubmit',
-      'click #sign-up-form .btn-social-network': 'loginWithSocial',
-
-      'click .link-show-login': 'switchToLogin',
-      'click .link-show-sign-up': 'switchToSignup',
+const SIGNUP_FIELDS = {
+  first_name: {
+    type: 'string',
+    validate: {
+      _Length: 'Length',
     },
-
-    initialize(options) {
-      this.fields = {
-        checkbox1: {
-          type: 'boolean',
-          validate: {
-            OneOf: {
-              choices: [true, '1'],
-              labels: [],
-            },
-            choices: {},
-          },
-          required: true,
-          messageRequired: 'You must agree to the terms before creating an account',
-        },
-      };
+    required: true,
+  },
+  last_name: {
+    type: 'string',
+    validate: {
+      _Length: 'Length',
     },
+    required: true,
+  },
+  email: {
+    type: 'email',
+    validate: {
+      _Email: 'Email',
+      _Length: 'Length',
+    },
+    required: true
+  },
+  domain: {
+    type: 'string',
+    validate: {
+      _Length: 'Length',
+    },
+    required: true,
+  },
+  checkbox1: {
+    type: 'boolean',
+    validate: {
+      _OneOf: 'OneOf'
+    },
+    required: true,
+    messageRequired: 'You must agree to the terms before creating an account',
+  },
+  password1: {
+    type: 'string',
+    'validate': {
+      _Length: 'Length',
+    },
+    required: true,
+  },
+  password2: {
+    type: 'string',
+    validate: {
+      _Length: 'Length'
+    },
+    required: true,
+  },
+};
 
-    render() {
-      // clear previous modal elements from DOM
-      $('#sign_in').remove();
-      $('#sign_up').remove();
-
+const popupAuthHelper = {
+  events: {
+    'submit form': api.submitAction,
+    'click .reset-password-link': 'resetPassword',
+    'click .switchAuthPopup': 'switchPopupView',
+    'click .btn-social-network': 'loginWithSocial',
+  },
+  methods: {
+    renderModal(selector, switchToView) {
       $('body').scrollTo();
 
-      this.$el.html(
-        this.template()
-      );
+      this.$el.html(this.template({
+        fields: this.fields,
+      }));
+
+      $(selector).remove();
 
       $('body').append(this.$el);
 
-      this.$signIn = $('#sign_in');
-      this.$signUp = $('#sign_up');
-
-      this.$signIn.off('hidden.bs.modal');
-      this.$signUp.off('hidden.bs.modal');
-      this.$signIn.off('shown.bs.modal');
-      this.$signUp.off('shown.bs.modal');
-
-      this.$signIn.on('hidden.bs.modal', () => {
-        if (this.showModal) {
-          this.$signUp.modal('show');
-          this.showModal = false;
-        }
-      });
-
-      this.$signUp.on('hidden.bs.modal', () => {
-        if (this.showModal) {
-          this.$signIn.modal('show');
-          this.showModal = false;
-        }
-      });
-
-      this.$signUp.modal('show');
+      this.initModal(selector, switchToView);
 
       return this;
-    },
-
-    switchToLogin(e) {
-      e.preventDefault();
-      this.showModal = true;
-      this.$signUp.modal('hide');
-      return false;
-    },
-
-    switchToSignup(e) {
-      e.preventDefault();
-      this.showModal = true;
-      this.$signIn.modal('hide');
-      return false;
-    },
-
-    _success(data) {
-      if (this.urlRoot.indexOf('registration') >= 0)
-        app.emitFacebookPixelEvent('CompleteRegistration');
-
-      app.user.setData(data);
-
-      this.$signIn.modal('hide');
-      this.$signUp.modal('hide');
     },
 
     loginWithSocial(e) {
       socialAuth.loginWithSocialNetwork.call(this, e);
     },
 
-    signupSubmit(e) {
-      this.urlRoot = `${app.config.authServer}/rest-auth/registration`;
-      let data = $(e.target).closest('form').serializeJSON({ useIntKeysAsArrayIndex: true });
-      api.submitAction.call(this, e, data);
-    },
-
-    signinSubmit(e) {
-      this.urlRoot = `${app.config.authServer}/rest-auth/login`;
-      let data = $(e.target).closest('form').serializeJSON({ useIntKeysAsArrayIndex: true });
-      data.checkbox1 = 1;
-      api.submitAction.call(this, e, data);
-    },
-
     resetPassword(e) {
       e.preventDefault();
-
-      setTimeout(() => {
-        window.location = '/account/reset';
-      }, 100);
-
-      this.$signIn.modal('hide');
-
+      this.reset = true;
+      this.$modal.modal('hide');
       return false;
     },
-  }),
+
+    switchPopupView(e) {
+      e.preventDefault();
+      this.showModal = true;
+      this.$modal.modal('hide');
+      return false;
+    },
+
+    initModal(selector, switchToView) {
+      this.$modal = $(selector);
+      this.$modal.off('hidden.bs.modal');
+      this.$modal.on('hidden.bs.modal', () => {
+        this.destroy();
+        if (this.showModal) {
+          this.showModal = false;
+          (new switchToView()).render();
+        } else if (this.reset) {
+          this.reset = false;
+          setTimeout(() => {
+            window.location = '/account/reset';
+          }, 100);
+        }
+      });
+
+      this.$modal.modal({
+        backdrop: 'static',
+      });
+    },
+    destroy() {
+      this.$modal.off('hidden.bs.modal');
+      this.$modal.remove();
+      this.undelegateEvents();
+      this.$el.remove();
+    },
+  },
+};
+
+const Views = {
+  popupLogin: Backbone.View.extend(_.extend({
+    urlRoot: app.config.authServer + '/rest-auth/login',
+    template: require('./templates/popupLogin.pug'),
+    events: popupAuthHelper.events,
+
+    initialize(options) {
+      this.fields = LOGIN_FIELDS;
+    },
+
+    render() {
+      return this.renderModal('#sign_in', Views.popupSignup);
+    },
+
+    _success(data) {
+      app.user.setData(data);
+      this.$modal.modal('hide');
+    },
+
+    loginWithSocial(e) {
+      socialAuth.loginWithSocialNetwork.call(this, e);
+    },
+
+  },
+    popupAuthHelper.methods
+  )),
+
+  popupSignup: Backbone.View.extend(_.extend({
+    urlRoot: `${app.config.authServer}/rest-auth/registration`,
+    template: require('./templates/popupSignup.pug'),
+
+    events: popupAuthHelper.events,
+
+    initialize() {
+      this.fields = SIGNUP_FIELDS;
+    },
+
+    render() {
+      return this.renderModal('#sign_up', Views.popupLogin);
+    },
+
+    _success(data) {
+      app.emitFacebookPixelEvent('CompleteRegistration');
+
+      app.user.setData(data);
+      this.$modal.modal('hide');
+    },
+
+  },
+    popupAuthHelper.methods
+  )),
 
   login: Backbone.View.extend({
     urlRoot: app.config.authServer + '/rest-auth/login',
@@ -133,20 +195,8 @@ module.exports = {
       'submit .login-form': api.submitAction,
     },
 
-    initialize(options) {
-      this.fields = {
-        email: {
-          required: true,
-          type: 'email',
-        },
-        password: {
-          required: true,
-          type: 'password',
-          minLength: 8,
-          //needed for validation message
-          label: 'Password',
-        }
-      };
+    initialize() {
+      this.fields = LOGIN_FIELDS;
     },
 
     render() {
@@ -172,60 +222,8 @@ module.exports = {
       'click .btn-social-network': 'loginWithSocial',
     },
 
-    initialize(options) {
-      this.fields = {
-        first_name: {
-          type: 'string',
-          validate: {
-            _Length: 'Length',
-          },
-          required: true,
-        },
-        last_name: {
-          type: 'string',
-          validate: {
-            _Length: 'Length',
-          },
-          required: true,
-        },
-        email: {
-          type: 'email',
-          validate: {
-            _Email: 'Email',
-            _Length: 'Length',
-          },
-          required: true
-        },
-        domain: {
-          type: 'string',
-          validate: {
-            _Length: 'Length',
-          },
-          required: true,
-        },
-        checkbox1: {
-          type: 'boolean',
-          validate: {
-            _OneOf: 'OneOf'
-          },
-          required: true,
-          messageRequired: 'You must agree to the terms before creating an account',
-        },
-        password1: {
-          type: 'string',
-          'validate': {
-            _Length: 'Length',
-          },
-          required: true,
-        },
-        password2: {
-          type: 'string',
-          validate: {
-            _Length: 'Length'
-          },
-          required: true,
-        },
-      };
+    initialize() {
+      this.fields = SIGNUP_FIELDS;
     },
 
     render() {
@@ -366,3 +364,5 @@ module.exports = {
   }),
 
 };
+
+module.exports = Views;
