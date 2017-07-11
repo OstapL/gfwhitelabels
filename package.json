@@ -12,7 +12,7 @@
     "lint": "jshint src/**/*.js",
     "jscs": "jscs src/**/*.js",
     "sass-lint": "sass-lint -c ./.sass-link.yml  '**/*.scss' -v -q",
-    "test": "source ./.env.testing && mocha --require babel-polyfill --compilers js:babel-core/register -r test/init.js",
+    "test": "export NODE_PATH=./src:./ &&  && mocha --require babel-polyfill --compilers js:babel-core/register -r test/init.js",
     "dist": "./node_modules/gulp/bin/gulp.js styles && cp -rf src/img dist/ && cp -rf src/js dist/ && cp src/BingSiteAuth.xml dist/"
   },
   "devDependencies": {
