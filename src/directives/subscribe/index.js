@@ -38,6 +38,8 @@ class MailSubscriber {
 
       return false;
     });
+
+    this.eventsAttached = true;
   }
 
   render(options) {
