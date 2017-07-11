@@ -1,3 +1,5 @@
 --harmony
 --harmony_shipping
 src/components/validation/tests.js
+src/components/anonymousAccount/tests.js
+src/components/payBackShareCalculator/tests.js

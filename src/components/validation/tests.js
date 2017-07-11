@@ -4,7 +4,7 @@ const should    = chai.should();
 const expect    = chai.expect;
 const rules     = require('./rules.js');
 
-describe('Attribute validation', function () {
+describe('Attribute validation', function () {``
   it('Required', function () {
     let attr = {
       label: 'City',
@@ -233,8 +233,10 @@ describe('Attribute validation', function () {
     };
 
     validation.validate(fields, dataJson);
-    expect(validation.errors.title[0]).to.be.equal('Title is required');
-    expect(validation.errors.state[0]).to.be.equal(' is required');
+    expect(validation.errors.title[0]).to.be.equal('Is required');
+    expect(validation.errors.state[0]).to.be.equal('Is required');
+    dataJson.title = 'Title';
+    dataJson.state = 'State';
     expect(validation.validate(fields, dataJson)).to.be.true;
 
     // // if required = true we should see error
