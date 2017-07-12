@@ -12,7 +12,7 @@
     "lint": "jshint src/**/*.js",
     "jscs": "jscs src/**/*.js",
     "sass-lint": "sass-lint -c ./.sass-link.yml  '**/*.scss' -v -q",
-    "test": "export NODE_PATH=./src:./ && mocha --require babel-polyfill --compilers js:babel-core/register -r test/init.js",
+    "test": "export NODE_PATH=./src:./ && mocha --opts test/mocha.opts",
     "dist": "./node_modules/gulp/bin/gulp.js styles && cp -rf src/img dist/ && cp -rf src/js dist/ && cp src/BingSiteAuth.xml dist/"
   },
   "devDependencies": {
@@ -30,6 +30,7 @@
     "html-webpack-plugin": "^2.28.0",
     "image-webpack-loader": "^3.3.0",
     "jsdom": "^11.0.0",
+    "mocha": "^3.4.2",
     "node-localstorage": "^1.3.0",
     "node-sass": "^4.5.1",
     "pug": "^2.0.0-beta11",

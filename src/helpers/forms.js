@@ -30,7 +30,7 @@ module.exports = {
   },
 
   makeRequest(url, type, data, options) {
-    return new Promise((resolve, reject) => {
+    // return new Promise((resolve, reject) => {
       options = options || {};
       // We can pass type as a string
       // or we can pass dict with type and data
@@ -82,11 +82,11 @@ module.exports = {
         app.hideLoading();
       });
       
-      promise.then(resolve);
-      promise.fail(reject);
+      // promise.then(resolve);
+      // promise.fail(reject);
 
       return promise;
-    });
+    // });
   },
 
   submitAction(e, newData) {
@@ -220,7 +220,7 @@ module.exports = {
             );
           }
         })
-        .catch((xhr, status, text) => {
+        .fail((xhr, status, text) => {
           if(form.length > 0) {
             form[0].removeAttribute('disabled');
           }
