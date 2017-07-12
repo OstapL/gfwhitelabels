@@ -31,11 +31,11 @@
 
             .col-lg-12
               input(
-                value= app.helpers.format.formatPrice(data.raiseMoney),
-                type='money',
-                placeholder='$0',
-                autocomplete="off"
+                value= app.helpers.format.formatPrice(data.raiseMoney)
+                type='money'
                 data-value-type='money'
+                placeholder='$0'
+                autocomplete="off"
                 name="raiseMoney"
               )#raiseMoney.form-control.js-field
 
@@ -44,12 +44,12 @@
 
             .col-lg-12
               input(
-                value= app.helpers.format.formatPrice(data.nextYearRevenue),
-                type='money',
-                placeholder='$0',
-                autocomplete="off"
+                value= app.helpers.format.formatPrice(data.nextYearRevenue)
+                type='money'
                 data-value-type='money'
-                name="nextYearRevenue",
+                placeholder='$0'
+                autocomplete="off"
+                name="nextYearRevenue"
               )#nextYearRevenue.form-control.js-field
 
           .form-group.row
@@ -59,9 +59,9 @@
               input(
                 value=app.helpers.format.formatPercent(data.growLevel)
                 type='percent'
+                data-value-type='percent'
                 placeholder='0%'
                 autocomplete="off"
-                data-value-type='percent'
                 name="growLevel"
               )#growLevel.form-control.js-field
 
