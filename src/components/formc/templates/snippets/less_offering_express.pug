@@ -14,10 +14,22 @@ mixin row(value, index)
               i.fa.fa-times
     td.border-b-t-none.w-25.font-size-12
       .form-section
-        input(type="money" data-value-type="money" value=('$' + (value.min || 0)) name="less_offering_express[" + index + "][min]" readonly=isFee).input-border-bottom.form-control.text-xs-center.min-expense
+        input(
+          type="money"
+          data-value-type="money"
+          value=app.helpers.format.formatPrice(value.min || 0)
+          name="less_offering_express[" + index + "][min]"
+          readonly=isFee
+        ).input-border-bottom.form-control.text-xs-center.min-expense
     td.border-b-t-none.w-25.font-size-12
       .form-section
-        input(type="money" data-value-type="money" value=('$' + (value.max || 0)) name="less_offering_express[" + index + "][max]" readonly=isFee).input-border-bottom.form-control.text-xs-center.max-expense
+        input(
+          type="money"
+          data-value-type="money"
+          value=app.helpers.format.formatPrice(value.max || 0)
+          name="less_offering_express[" + index + "][max]"
+          readonly=isFee
+        ).input-border-bottom.form-control.text-xs-center.max-expense
 
 
 mixin run()
