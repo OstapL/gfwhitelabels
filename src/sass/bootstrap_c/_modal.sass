@@ -293,6 +293,52 @@
 			height: 70px
 		.form-group
 			margin-bottom: rem(20)
+.detail-video-popup
+	top: 0!important
+	background-color: #000
+	overflow-y: hidden!important	
+
+	.modal-dialog
+		position: relative
+		margin-top: 0
+		max-width: 90vw
+		width: 100%
+		height: 100%
+		.close
+			position: absolute
+			right: -60px!important
+			top: 10px
+			z-index: 1051
+			color: $black
+			font-size: rem(26)
+			opacity: 1
+			background: #fff
+			width: 50px
+			height: 50px
+			border-radius: 100px
+			+mt(.2s)
+			&:hover
+				+mt(.2s)
+				color: rgba($black, .7)
+			@media only screen and (max-width : 1280px)
+				right: -30px!important
+			@media only screen and (max-width : 767px)
+				font-size: rem(18)!important
+				width: 30px
+				height: 30px
+			@media only screen and (max-width : 567px)
+				right: 0!important
+
+
+		.modal-content
+			top: 50%
+			left: 50%
+			margin: 0
+			width: 100%
+			-ms-transform: translate(-50%, -50%)
+			-webkit-transform: translate(-50%, -50%)
+			transform: translate(-50%, -50%)
+
 #xeroModal
 	.modal-dialog
 		max-width: 730px
