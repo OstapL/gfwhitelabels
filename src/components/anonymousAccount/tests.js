@@ -16,9 +16,9 @@ app.user.setData = function(...args) {
 
 const stubMakeRequest = (response) => {
   api.makeRequest = sinon.stub(api, 'makeRequest');
-  api.makeRequest.returns(new Promise((resolve) => {
-    resolve(response);
-  }));
+  const dfr = $.Deferred();
+  dfr.resolve(response);
+  api.makeRequest.returns(dfr);
 };
 
 const readUserData = () => {
