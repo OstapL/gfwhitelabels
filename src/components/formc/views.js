@@ -1750,7 +1750,7 @@ module.exports = {
 
     xeroGrabData(e) {
 
-      let code = e.currentTarget.parentElement.querySelector('#code');
+      let code = e.currentTarget.parentElement.parentElement.querySelector('#code');
       let data = {};
       data.token = code.dataset.token;
       data.token_secret = code.dataset.secret;
