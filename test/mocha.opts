@@ -1,5 +1,6 @@
 --harmony
 --harmony_shipping
+--require ignore-styles
 src/components/validation/tests.js
 src/components/anonymousAccount/tests.js
 src/components/payBackShareCalculator/tests.js
