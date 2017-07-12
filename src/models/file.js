@@ -4,6 +4,7 @@ const mimetypeIconMap = {
   'pdf': 'pdf',
   'doc': 'doc',
   'msword': 'doc',
+  'application/xml': 'xml',
   'vnd.openxmlformats-officedocument.wordprocessingml.document': 'docx',
   'vnd.ms-powerpoint': 'ppt',
   'vnd.openxmlformats-officedocument.presentationml.presentation': 'pptx',

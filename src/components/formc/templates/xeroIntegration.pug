@@ -14,40 +14,51 @@
 div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#xeroModal.modal.fade
   div(role="document").modal-dialog
     .modal-content
-      .modal-header.sign-up-header
+      .modal-header
         button(type="button" data-dismiss="modal" aria-label="Close").close
           span(aria-hidden="true")
             i.fa.fa-times
-        .title-header-signup.m-t-1
-          .row
-            p bla bla bla
+        h2.text-uppercase.text-xs-center Connect to XERO
       .modal-body
-        form
-          input(type="checkbox" name="documents[]" value="balance_sheet")
-          | Balance sheet 
-          br
-          input(type="checkbox" name="documents[]" value="bank_statement")
-          | Bank statement
-          br
-          input(type="checkbox" name="documents[]" value="bank_summary")
-          | Bank Summary
-          br
-          input(type="checkbox" name="documents[]" value="budget_summary")
-          | Budget Summary
-          br
-          input(type="checkbox" name="documents[]" value="executive_summary")
-          | Executive Summary
-          br
-          input(type="checkbox" name="documents[]" value="profit_and_loss")
-          | Profit and Loss
-          br
-          input(type="checkbox" name="documents[]" value="trial_balance")
-          | Trial Balance
-          br
-          a(href="" id="url" target="_blank") Get access code
-          br
-          input(text="text" name="code" id="code" data-token="" data-secret="")
-          br
-          input(type="button" class="btn btn-primary xeroGrabData" value="Grab data")
-          br
+        .row
+          .col-xl-12
+            .warning-block  
+              i.fa.fa-info-circle
+              span.warning-text Choose appropriate data which you want to upload from your XERO account and write the access code below.
+        form.form-section
+          .row
+            .col-xl-12.text-xs-center
+              p.font-weight-bold.what-xero What do you want to upload from XERO?
+            .bank
+              .form-group
+                label Balance sheet
+                  input(type="checkbox" name="documents[]" value="balance_sheet")
+              .form-group
+                label Bank statement
+                  input(type="checkbox" name="documents[]" value="bank_statement")
+              .form-group
+                label Bank Summary
+                  input(type="checkbox" name="documents[]" value="bank_summary")
+              .form-group
+                label Budget Summary
+                  input(type="checkbox" name="documents[]" value="budget_summary")
+              .form-group
+                label Executive Summary
+                  input(type="checkbox" name="documents[]" value="executive_summary")
+              .form-group
+                label Profit and Loss
+                  input(type="checkbox" name="documents[]" value="profit_and_loss")
+              .form-group
+                label Trial Balance
+                  input(type="checkbox" name="documents[]" value="trial_balance")
+          .row
+            .col-xl-8.offset-xl-2
+              .form-group.row
+                .col-xl-12
+                  label
+                    a(href="" id="url" target="_blank").link-2 Get the access code here
+                    |  and write below
+                  input(text="text" name="code" id="code" data-token="" data-secret="").col-xl-12.form-control
+            .col-xl-12.text-xs-center
+              input(type="button" class="btn btn-primary xeroGrabData" value="upload files")
       .modal-footer
