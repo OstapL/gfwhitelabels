@@ -1,3 +1,5 @@
+--require ignore-styles
+--require test/init.js
 --harmony
 --harmony_shipping
 src/components/validation/tests.js
