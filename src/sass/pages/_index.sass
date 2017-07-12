@@ -26,6 +26,11 @@
   .height-block-banner
     height: $height-block-banner
     overflow: hidden
+    @media screen and (min-width : 440px) and (max-width : 767px)
+      height: 420px!important
+    @media only screen and (max-width : 439px)
+      height: 92vh!important
+
     &.scroll-paralax
       &:before
         background: transparent
@@ -261,6 +266,11 @@
   background-size: cover!important
   background-repeat: no-repeat!important
   background-position: center center!important
+  @media screen and (min-width : 440px) and (max-width : 767px)
+    height: 420px!important
+  @media only screen and (max-width : 439px)
+    height: 92vh!important
+
 @media only screen and (max-width : 480px)
   .slide_1
     background-position-x: $background-position-x-sl-1
@@ -268,15 +278,14 @@
     background-position-x: $background-position-x-sl-2
   .slide_3
     background-position-x: $background-position-x-sl-3
-  .main-slider-item
-    height: 420px!important
+
 @media only screen and (max-width : 320px)
   .slide_3
     background-position-x: -400px!important
 @media only screen and (max-width : 768px)
   .slider-main
     .slider-content
-      top: 60%
+      top: 55%
 
 .main-video
   height: 75vh
@@ -471,5 +480,5 @@
         +mt(.5s)
         color: rgba($black, .7)
   .news-img
-    @media only screen and (max-width : 576px)
+    @media only screen and (max-width : 767px)
       padding-bottom: 30px!important

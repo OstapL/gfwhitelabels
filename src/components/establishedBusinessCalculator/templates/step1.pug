@@ -28,7 +28,7 @@
           .form-group.row
             label(for='industry').col-lg-12.col-form-label.font-weight-normal Please provide the industry to which your business belongs.
             .col-lg-12
-              select(data-model-value='industry' name="industry")#industry.form-control.js-select
+              select(name="industry")#industry.form-control.js-select
                 each val, index in industryData
                   if val == data.industry
                     option(selected)= val
@@ -40,42 +40,39 @@
 
             .col-lg-12
               input(
-                value= formatPrice(data.raiseCash),
-                type='text',
-                placeholder='Raise Amount',
+                value= app.helpers.format.formatPrice(data.raiseCash)
+                type='money'
+                data-value-type='money'
+                placeholder='Raise Amount'
                 autocomplete='off'
-                data-input-mask='price',
-                data-model-value='raiseCash',
                 name="raiseCash"
-                data-current-value= data.raiseCash)#raiseCash.form-control.js-field
+              )#raiseCash.form-control.js-field
 
           .form-group.row
             label(for="ownCache").col-lg-12.font-weight-normal How much cash, beyond what's needed for immediate operating needs, does your business currently have?
 
             .col-lg-12
               input(
-                value= formatPrice(data.ownCache),
-                type='text',
-                placeholder='Cash Holdings',
+                value=app.helpers.format.formatPrice(data.ownCache)
+                type='money'
+                data-value-type='money'
+                placeholder='Cash Holdings'
                 autocomplete='off'
-                data-input-mask='price',
-                data-model-value='ownCache',
-                name="ownCache",
-                data-current-value= data.ownCache)#ownCache.form-control.js-field
+                name="ownCache"
+              )#ownCache.form-control.js-field
 
           .form-group.row
             label(for="currentDebt").col-lg-12.font-weight-normal How much debt is your business currently carrying?
 
             .col-lg-12
               input(
-                value= formatPrice(data.currentDebt),
-                type='text',
-                placeholder='Current Debt',
+                value= app.helpers.format.formatPrice(data.currentDebt)
+                type='money'
+                data-value-type='money'
+                placeholder='Current Debt'
                 autocomplete='off'
-                data-input-mask='price',
-                data-model-value='currentDebt',
-                name="currentDebt",
-                data-current-value= data.currentDebt)#currentDebt.form-control.js-field
+                name="currentDebt"
+              )#currentDebt.form-control.js-field
 
           .form-group.row.clearfix.m0
             .col-xs-6.p-t-2.m-t-1
