@@ -49,6 +49,34 @@ module.exports = {
   formatPrice: formatPrice,
   formatNumber: formatNumber,
 
+  formatMoney(value) {
+    const moneyString = (value || '').replace(filterNumberRx, '');
+    if (!moneyString)
+      return '$0';
+
+    const moneyValue = Number(moneyString);
+    if (isNaN(moneyValue) || !moneyValue)
+      return '$0';
+
+    return '$' + moneyValue.toLocaleString('en-US');
+
+  },
+
+  unformatMoney(value) {
+    if (!value)
+      return 0;
+
+    const numberString = value.replace(filterNumberRx, '');
+    if (!numberString)
+      return 0;
+
+    const number = Number(numberString);
+    if (isNaN(number))
+      return 0;
+
+    return number;
+  },
+
   unformatPrice(price) {
     return parseFloat(price.replace(/[\$\,]/g, ''));
   },
