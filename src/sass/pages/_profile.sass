@@ -32,7 +32,7 @@ hr.profile-type-user-hr
       background-image: url("img/generals/empty_small.png")
       position: absolute
       top: -6px
-      left: 126px
+      left: 125px
       width: 129px
       background-repeat: no-repeat
       height: 48px
@@ -204,7 +204,10 @@ hr.profile-type-user-hr
         float: none
     .m-b-md-25
       margin-bottom: rem(25)
-
+  @media screen and (max-width: 768px)
+    .profile-tabs
+      li.nav-item
+        display: block!important
   @media screen and (max-width: 543px)
     .profile-tabs
       li.nav-item
