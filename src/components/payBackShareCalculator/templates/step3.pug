@@ -45,11 +45,11 @@
               each val, index in data.outputData
                 tr
                   td(scope='row')= 'Year ' + index
-                  td= formatPrice(val.fundraise)
-                  td= formatPrice(val.revenue)
-                  td= formatPrice(val.annual)
+                  td= app.helpers.format.formatPrice(val.fundraise)
+                  td= app.helpers.format.formatPrice(val.revenue)
+                  td= app.helpers.format.formatPrice(val.annual)
                   td= val.multiple
-                  td= formatPrice(val.total)
+                  td= app.helpers.format.formatPrice(val.total)
 
     .row
       .offset-lg-4.col-lg-4.offset-sm-3.col-sm-6.text-sm-center
