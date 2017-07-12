@@ -1729,10 +1729,27 @@ module.exports = {
 
     render() {
       let template = require('./templates/xeroIntegration.pug');
+      this.fields = {
+        code: {
+          type: 'number',
+          required: true
+        },
+        documents: {
+          type: 'json',
+          required: true,
+          fn: function checkNotEmpty(name, value, attr, data, computed) {
+            if(value.length == 0) {
+              throw 'Please select at least on document';
+            }
+          },
+        }
+
+      }
 
       this.$el.html(
         template({
           view: this,
+          fields: this.fields
         })
       );
       return this;
@@ -1750,28 +1767,43 @@ module.exports = {
 
     xeroGrabData(e) {
 
+      e.preventDefault();
+      this.$('.help-block').remove();
+
       let code = e.currentTarget.parentElement.parentElement.querySelector('#code');
       let data = {};
       data.token = code.dataset.token;
       data.token_secret = code.dataset.secret;
       data.id = this.model.id;
       data.documents = [];
+      data.code = code.value;
       this.el.querySelectorAll('[name="documents[]"]').forEach((el) => { 
         if(el.checked == true) {
           data.documents.push(el.value)
         }
       })
 
-      app.showLoading();
-      api.makeRequest(
-          app.config.formcServer + '/' + this.model.id + '/financial-condition/xero',
-          'PUT',
-          data
-      ).then((data) => {
-        window.location.reload();
-      }).fail((xhr, message) => {
-        this.$el.find('#xeroModal .modal-body').html('<h3>' + xhr.responseJSON.message + '</h3>');
-      });
+      if(!app.validation.validate(this.fields, data, this)) {
+        _(app.validation.errors).each((errors, key) => {
+          app.validation.invalidMsg(this, key, errors);
+        });
+        this.$('.help-block').prev().scrollTo(5);
+        e.target.removeAttribute('disabled');
+        return false;
+      } else {
+        app.showLoading();
+        api.makeRequest(
+            app.config.formcServer + '/' + this.model.id + '/financial-condition/xero',
+            'PUT',
+            data
+        ).then((data) => {
+          window.location.reload();
+        }).fail((xhr, message) => {
+          app.hideLoading();
+          this.$el.find('#xeroModal .modal-body').html('<h3>' + xhr.responseJSON.message + '</h3>');
+        });
+      }
+
     },
 
   }),
