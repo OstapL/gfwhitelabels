@@ -936,11 +936,6 @@ module.exports = {
         template: '<div class="popover  divPopover" style="width:160px"  role="tooltip"><span class="popover-arrow"></span> <h3 class="popover-title"></h3> <span class="icon-popover"><i class="fa fa-info-circle" aria-hidden="true"></i></span> <span class="popover-content"> XXX </span></div>'
       });
 
-      this.$('.min-expense,.max-expense,.min-use,.max-use').each(function (idx, elem) {
-        let $this = $(this);
-        $this.val(app.helpers.format.formatNumber($this.val()));
-      });
-
       this.calculate(null, false);
       app.helpers.disableEnter.disableEnter.call(this);
       this.campaign.updateMenu(this.campaign.calcProgress());
@@ -1724,6 +1719,63 @@ module.exports = {
     },
   }, app.helpers.menu.methods, app.helpers.section.methods, riskFactors.methods, app.helpers.confirmOnLeave.methods)),
 
+  xeroIntegration: Backbone.View.extend({
+    urlRoot: app.config.formcServer + '/:id/financial-condition/xero',
+
+    events: _.extend({
+      'click .xeroConnect': 'xeroConnect',
+      'click .xeroGrabData': 'xeroGrabData',
+    }),
+
+    render() {
+      let template = require('./templates/xeroIntegration.pug');
+
+      this.$el.html(
+        template({
+          view: this,
+        })
+      );
+      return this;
+    },
+
+    xeroConnect(e) {
+      api.makeRequest(this.urlRoot.replace(':id', this.model.id)).
+        then((data) => {
+          this.el.querySelector('#code').dataset.token = data.token;
+          this.el.querySelector('#code').dataset.secret = data.token_secret;
+          this.el.querySelector('#url').href = data.url;
+          this.$el.find('#xeroModal').modal('show');
+        });
+    },
+
+    xeroGrabData(e) {
+
+      let code = e.currentTarget.parentElement.parentElement.querySelector('#code');
+      let data = {};
+      data.token = code.dataset.token;
+      data.token_secret = code.dataset.secret;
+      data.id = this.model.id;
+      data.documents = [];
+      this.el.querySelectorAll('[name="documents[]"]').forEach((el) => { 
+        if(el.checked == true) {
+          data.documents.push(el.value)
+        }
+      })
+
+      app.showLoading();
+      api.makeRequest(
+          app.config.formcServer + '/' + this.model.id + '/financial-condition/xero',
+          'PUT',
+          data
+      ).then((data) => {
+        window.location.reload();
+      }).fail((xhr, message) => {
+        this.$el.find('#xeroModal .modal-body').html('<h3>' + xhr.responseJSON.message + '</h3>');
+      });
+    },
+
+  }),
+
   financialCondition: Backbone.View.extend(_.extend({
     urlRoot: app.config.formcServer + '/:id/financial-condition',
 
@@ -1782,9 +1834,13 @@ module.exports = {
     render() {
       let template = require('./templates/financialCondition.pug');
 
+      const View = require('components/formc/views.js');
+
+
       this.$el.html(
         template({
           view: this,
+          xeroIntegration: xeroIntegration,
           fields: this.fields,
           values: this.model,
           campaignId: this.campaign.id,
@@ -1793,8 +1849,16 @@ module.exports = {
       );
       app.helpers.disableEnter.disableEnter.call(this);
       this.campaign.updateMenu(this.campaign.calcProgress());
+
+      let xeroIntegration =  new View.xeroIntegration({
+        model: this.model,
+        el: this.el.querySelector('#xeroBlock')
+      });
+      xeroIntegration.render();
+      xeroIntegration.delegateEvents();
       return this;
     },
+
   }, app.helpers.menu.methods, app.helpers.yesNo.methods, app.helpers.section.methods, app.helpers.confirmOnLeave.methods)),
 
   outstandingSecurity: Backbone.View.extend(_.extend({
