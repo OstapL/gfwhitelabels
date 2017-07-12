@@ -124,6 +124,7 @@ class User {
         delete this.data.token;
 
         setTimeout(function() {
+          //TODO: replace this with app.routers.navigate
           window.location = next;
         }, 200);
         resolve();
