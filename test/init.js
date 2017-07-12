@@ -1,3 +1,5 @@
+require('./registerBabel.js');
+
 const pug = require('pug');
 
 function compile(module, filename) {
@@ -35,9 +37,10 @@ global.Tether = window.Tether = require('tether');
 require('bootstrap');
 global.Element = window.Element;
 global.Node = window.Node;
-require('babel-polyfill');
+
 require('js/html5-dataset.js');
 require('classlist-polyfill');
+
 // global.require = require;
 global.api = require('../src/helpers/forms.js');
 const App = require('../src/app.js');
