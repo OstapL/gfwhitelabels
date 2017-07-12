@@ -61,7 +61,9 @@ class File {
   }
 
   getIcon() {
-    return mimetypeIconMap[this.mime.split('/').reverse()[0]] || defaultIcon
+    return mimetypeIconMap[this.mime] ||
+      mimetypeIconMap[this.mime.split('/').reverse()[0]] || 
+      defaultIcon;
   }
 
   getIconUrl(icon) {
