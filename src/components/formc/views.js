@@ -1762,9 +1762,12 @@ module.exports = {
       data.id = this.model.id;
       data.documents = [];
       this.el.querySelectorAll('[name="documents[]"]').forEach((el) => { 
-        data.documents.push(el.value)
+        if(el.checked == true) {
+          data.documents.push(el.value)
+        }
       })
 
+      app.showLoading();
       api.makeRequest(
           app.config.formcServer + '/' + this.model.id + '/financial-condition/xero',
           'PUT',
