@@ -247,10 +247,32 @@
     font-size: 12px
 .graf-responsive
     overflow: auto!important
+    @media screen and (max-width: 375px)
+        .plot-title
+            left: 0
     #chart1   
         width: 100%
         @media screen and (max-width: 767px)
-            width: 768px!important
+            width: 600px!important
+            .flot-x-axis .flot-tick-label
+                font-size: 12px
+                margin-left: 20px
+        @media screen and (max-width: 567px)
+            width: 520px!important
+            margin-left: rem(5)
+        @media screen and (max-width: 414px)
+            width: 380px!important
+            margin-left: rem(5)
+            .flot-x-axis .flot-tick-label
+                margin-left: 7px
+        @media screen and (max-width: 375px)
+            width: 345px!important
+            margin-left: rem(5)
+            .flot-x-axis .flot-tick-label
+                font-size: 10px
+                margin-left: 10px
+            
+
     .data-point-label
         transform: translate(-50%, -50%)
         position: absolute
