@@ -1,0 +1,64 @@
+.xero-formc.col-xs-12
+  .xero-logo.col-xl-1.col-lg-1.col-md-1.col-sm-2.col-xs-12.text-xs-center.p-x-0
+    img(src=require("images/icons/xero-logo.png"), alt="")
+  .xero-text.col-xl-8.col-lg-7.col-md-7.col-sm-10.col-xs-12.text-xs-center.text-sm-left.text-md-left.text-lg-left.text-xl-left
+    p
+      | Do you use 
+      a(href="https://www.xero.com/" target="_blank").link-3 XERO
+      |  online accounting software? Quickly upload your financials with a click of a button.
+  .xero-btn.col-xl-3.p-x-0.col-lg-4.col-md-4.col-sm-12.col-xs-12.text-xs-center
+    a(href="#").btn-xero.xeroConnect 
+      span.text-btn-xero Connect to XERO
+
+
+div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#xeroModal.modal.fade
+  div(role="document").modal-dialog
+    .modal-content
+      .modal-header
+        button(type="button" data-dismiss="modal" aria-label="Close").close
+          span(aria-hidden="true")
+            i.fa.fa-times
+        h2.text-uppercase.text-xs-center Connect to XERO
+      .modal-body
+        .row
+          .col-xl-12
+            .warning-block  
+              i.fa.fa-info-circle
+              span.warning-text Choose appropriate data which you want to upload from your XERO account and write the access code below.
+        form.form-section
+          .row
+            .col-xl-12.text-xs-center
+              p.font-weight-bold.what-xero What do you want to upload from XERO?
+            .bank#documents
+              .form-group
+                label Balance sheet
+                  input(type="checkbox" name="documents[]" value="balance_sheet")
+              .form-group
+                label Bank statement
+                  input(type="checkbox" name="documents[]" value="bank_statement")
+              .form-group
+                label Bank Summary
+                  input(type="checkbox" name="documents[]" value="bank_summary")
+              .form-group
+                label Budget Summary
+                  input(type="checkbox" name="documents[]" value="budget_summary")
+              .form-group
+                label Executive Summary
+                  input(type="checkbox" name="documents[]" value="executive_summary")
+              .form-group
+                label Profit and Loss
+                  input(type="checkbox" name="documents[]" value="profit_and_loss")
+              .form-group
+                label Trial Balance
+                  input(type="checkbox" name="documents[]" value="trial_balance")
+          .row
+            .col-xl-8.offset-xl-2
+              .form-group.row
+                .col-xl-12
+                  label
+                    a(href="" id="url" target="_blank").link-2 Get the access code here
+                    |  and write below
+                  input(text="text" name="code" id="code" data-token="" data-secret="").col-xl-12.form-control
+            .col-xl-12.text-xs-center
+              input(type="button" class="btn btn-primary xeroGrabData" value="upload files")
+      .modal-footer
