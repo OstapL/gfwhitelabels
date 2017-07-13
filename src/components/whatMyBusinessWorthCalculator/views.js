@@ -2,25 +2,42 @@ import './styles/style.sass'
 import 'bootstrap-slider/dist/bootstrap-slider'
 import 'bootstrap-slider/dist/css/bootstrap-slider.css'
 
-if (!app.cache.whatMyBusinessWorthCalculator) {
-  app.cache.whatMyBusinessWorthCalculator = {
-    excessCash: 0,
-    ownCache: 0,
-    projectedRevenueYear: 0,
-    projectedRevenueTwoYears: 0,
-    grossMargin: 0,
-    monthlyOperatingYear: 0,
-    monthlyOperatingTwoYears: 0,
-    workingCapital: 0,
-    additionalOperating: 0,
-    capitalExpenditures: 0,
-    taxRate: 0,
-    annualInterest: 0,
-  }
-}
+const CALCULATOR_NAME = 'WhatMyBusinessWorthCalculator';
+
+const defaultCalculatorData = {
+  excessCash: 0,
+  ownCache: 0,
+  projectedRevenueYear: 0,
+  projectedRevenueTwoYears: 0,
+  grossMargin: 0,
+  monthlyOperatingYear: 0,
+  monthlyOperatingTwoYears: 0,
+  workingCapital: 0,
+  additionalOperating: 0,
+  capitalExpenditures: 0,
+  taxRate: 0,
+  annualInterest: 0,
+};
+
+// if (!app.cache.whatMyBusinessWorthCalculator) {
+//   app.cache.whatMyBusinessWorthCalculator = {
+//     excessCash: 0,
+//     ownCache: 0,
+//     projectedRevenueYear: 0,
+//     projectedRevenueTwoYears: 0,
+//     grossMargin: 0,
+//     monthlyOperatingYear: 0,
+//     monthlyOperatingTwoYears: 0,
+//     workingCapital: 0,
+//     additionalOperating: 0,
+//     capitalExpenditures: 0,
+//     taxRate: 0,
+//     annualInterest: 0,
+//   }
+// }
 
 const saveValue = (e) => {
-  app.helpers.calculator.saveCalculatorField(app.cache.whatMyBusinessWorthCalculator, e.target);
+  app.helpers.calculator.saveCalculatorField(CALCULATOR_NAME, e.target);
 };
 
 module.exports = {
@@ -38,7 +55,7 @@ module.exports = {
   step1: Backbone.View.extend(_.extend({
     el: '#content',
     template: require('./templates/step1.pug'),
-    initialize(options) {
+    initialize() {
       this.fields = {
         excessCash: {
           required: true,
@@ -88,8 +105,9 @@ module.exports = {
     },
 
     render: function () {
+      const data = app.helpers.calculator.readCalculatorData(CALCULATOR_NAME, defaultCalculatorData);
       this.$el.html(this.template({
-        data: app.cache.whatMyBusinessWorthCalculator,
+        data,
       }));
 
       // bootstrap slider
@@ -175,23 +193,24 @@ module.exports = {
         return;
       }
 
+      const data = app.helpers.calculator.readCalculatorData(CALCULATOR_NAME);
+
       // "Baseline Capital Needs" calculations
-      this.calculateWithDelta();
+      this.calculateWithDelta(data);
 
       // "50% over Baseline Capital Needs" calculations
-      this.calculateWithDelta('overBaseline');
-
-      let data = app.cache.whatMyBusinessWorthCalculator;
+      this.calculateWithDelta(data, 'overBaseline');
 
       // calculate final amount of raise
-      data.finalRaiseAmount = Math.round(data.raiseAmount > data.raiseAmount2 ? data.raiseAmount : data.raiseAmount2);
+      data.finalRaiseAmount = Math.round(Math.max(data.raiseAmount, data.raiseAmount2));
 
-      app.routers.navigate('/calculator/whatmybusinessworth/finish', {trigger: true});
+      app.helpers.calculator.saveCalculatorData(CALCULATOR_NAME, data);
+
+      setTimeout(() => app.routers.navigate('/calculator/whatmybusinessworth/finish', {trigger: true}), 100);
     },
 
-    calculateWithDelta(type = 'default') {
-      let data = app.cache.whatMyBusinessWorthCalculator,
-        calculatedData = {},
+    calculateWithDelta(data, type = 'default') {
+      let calculatedData = {},
         // convert values into percents
         grossMargin = data.grossMargin / 100,
         workingCapital = data.workingCapital / 100,
@@ -256,7 +275,7 @@ module.exports = {
       calculatedData[finalKey] = calculatedData.addCashNeeded1Year1 + calculatedData.addCashNeeded1Year2;
 
       // save calculated data
-      _.extend(app.cache.whatMyBusinessWorthCalculator, calculatedData);
+      _.extend(data, calculatedData);
     },
 
     isFirstStepFilled() {
@@ -282,7 +301,7 @@ module.exports = {
       // }
 
       this.$el.html(this.template({
-        data: app.cache.whatMyBusinessWorthCalculator,
+        data: app.helpers.calculator.readCalculatorData(CALCULATOR_NAME, defaultCalculatorData),
       }));
 
       // bootstrap slider
@@ -306,7 +325,8 @@ module.exports = {
       $('body').scrollTop(0);
 
       return this;
-    }
+    },
+
   }, app.helpers.calculatorValidation.methods)),
 
   finish: Backbone.View.extend({
@@ -316,13 +336,14 @@ module.exports = {
 
     render: function () {
       // disable enter to the final step of whatmybusinessworth calculator without data
-      if (!app.cache.whatMyBusinessWorthCalculator) {
-        app.routers.navigate('/calculator/whatmybusinessworth/step-1', {trigger: true});
-        return false;
+      const data = app.helpers.calculator.readCalculatorData(CALCULATOR_NAME);
+      if (!data || !data.grossMargin) {
+        setTimeout(() => app.routers.navigate('/calculator/whatmybusinessworth/step-1', { trigger: true }), 100);
+        return this;
       }
 
       this.$el.html(this.template({
-        data: app.cache.whatMyBusinessWorthCalculator,
+        data,
       }));
 
       $('body').scrollTop(0);

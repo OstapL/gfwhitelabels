@@ -1,23 +1,7 @@
 // import './styles/style.sass'
 //import 'jquery.inputmask/dist/jquery.inputmask.bundle.js';
 
-const settings = app.helpers.calculator.settings;
 const minPersents = 200;
-
-const setCaretPosKeyCodes = [
-  48,
-  49,
-  50,
-  51,
-  52,
-  53,
-  54,
-  55,
-  56,
-  57,
-  58,
-  8,
-];
 
 module.exports = {
   calculator: Backbone.View.extend(_.extend({
