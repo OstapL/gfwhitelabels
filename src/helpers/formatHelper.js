@@ -50,7 +50,7 @@ module.exports = {
   formatNumber: formatNumber,
 
   formatMoney(value) {
-    const moneyString = (value || '').replace(filterNumberRx, '');
+    const moneyString = String(value).replace(filterNumberRx, '');
     if (!moneyString)
       return '$0';
 

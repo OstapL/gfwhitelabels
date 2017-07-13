@@ -1,17 +1,16 @@
 import './styles/style.sass'
 
 const minPersents = 200;
+const defaultCalculatorData = {
+  raiseMoney: 0,
+  nextYearRevenue: 0,
+  growLevel: 0,
+};
 
-if (!app.cache.payBackShareCalculator) {
-  app.cache.payBackShareCalculator = {
-    raiseMoney: 0,
-    nextYearRevenue: 0,
-    growLevel: 0,
-  };
-}
+const CALCULATOR_NAME = 'RevenueShareCalculator';
 
 const saveValue = (e) => {
-  app.helpers.calculator.saveCalculatorField(app.cache.payBackShareCalculator, e.target);
+  app.helpers.calculator.saveCalculatorField(CALCULATOR_NAME, e.target);
 };
 
 module.exports = {
@@ -32,9 +31,6 @@ module.exports = {
     template: require('./templates/step2.pug'),
 
     initialize() {
-      // data which contains calculated income
-      this.outputData = [];
-
       this.fields = {
         raiseMoney: {
           required: true,
@@ -79,45 +75,51 @@ module.exports = {
       if (!this.validate(e))
         return;
 
-      let maxOfMultipleReturned = 0,
-        countOfMultipleReturned = 0,
-        { raiseMoney, nextYearRevenue, growLevel } = app.cache.payBackShareCalculator;
+      const calculatorData = app.helpers.calculator.readCalculatorData(CALCULATOR_NAME);
+      let maxOfMultipleReturned = 0;
+      let countOfMultipleReturned = 0;
 
-      // calculate income for 10 years
+      const { raiseMoney, nextYearRevenue, growLevel } = calculatorData;
+
+      const outputData = [];
+        // calculate income for 10 years
       // set the first year
-      this.outputData[0] = {};
-      this.outputData[0].fundraise = raiseMoney;
+      outputData[0] = {};
+      outputData[0].fundraise = raiseMoney;
 
       // set the second year
-      this.outputData[1] = {};
-      this.outputData[1].revenue = nextYearRevenue;
+      outputData[1] = {};
+      outputData[1].revenue = nextYearRevenue;
 
       // set all other year
       for (var i = 2; i < 11; i++) {
-        this.outputData[i] = {};
+        outputData[i] = {};
 
-        this.outputData[i].revenue = Math.ceil(this.outputData[i - 1].revenue * (1 + growLevel / 100));
-        this.outputData[i].annual = Math.ceil(0.05 * this.outputData[i].revenue);
+        outputData[i].revenue = Math.ceil(outputData[i - 1].revenue * (1 + growLevel / 100));
+        outputData[i].annual = Math.ceil(0.05 * outputData[i].revenue);
+
+        const prevSum = this.getPreviousSum(outputData, i);
 
         let helper = {
-          sum: this.getPreviousSum(i),
-          divided: this.getPreviousSum(i) / raiseMoney
+          sum: prevSum,
+          divided: prevSum / raiseMoney,
         };
-        this.outputData[i].multiple = Math.min(parseFloat(helper.divided.toFixed(1)), 2);
+
+        outputData[i].multiple = Math.min(parseFloat(helper.divided.toFixed(1)), 2);
 
         // change max value of multiple returned
-        if (this.outputData[i].multiple > maxOfMultipleReturned) {
-          maxOfMultipleReturned = this.outputData[i].multiple;
+        if (outputData[i].multiple > maxOfMultipleReturned) {
+          maxOfMultipleReturned = outputData[i].multiple;
         }
 
         // skip adding maximum "multiple returned" value more then one time
-        if (this.outputData[i].multiple >= 2) {
+        if (outputData[i].multiple >= 2) {
           countOfMultipleReturned++;
           if (countOfMultipleReturned > 1) {
-            this.outputData[i].multiple = "";
-            this.outputData[i].annual = "";
+            outputData[i].multiple = "";
+            outputData[i].annual = "";
           } else if (countOfMultipleReturned == 1) {
-            this.outputData[i].annual = (function (data) {
+            outputData[i].annual = (function (data) {
               let sum = 0,
                 length = data.length;
 
@@ -125,25 +127,26 @@ module.exports = {
                 sum += data[k].annual;
               }
               return raiseMoney * 2 - sum;
-            })(this.outputData);
+            })(outputData);
           }
         }
 
-        this.outputData[i].total = Math.min(parseFloat(helper.sum).toFixed(1), 2 * raiseMoney);
+        outputData[i].total = Math.min(parseFloat(helper.sum).toFixed(1), 2 * raiseMoney);
       }
 
       // save data
-      app.cache.payBackShareCalculator.outputData = this.outputData;
-      app.cache.payBackShareCalculator.maxOfMultipleReturned = maxOfMultipleReturned;
+      calculatorData.outputData = outputData;
+      calculatorData.maxOfMultipleReturned = maxOfMultipleReturned;
 
-      // navigate to the finish step
-      app.routers.navigate('/calculator/paybackshare/step-3', {trigger: true});
+      app.helpers.calculator.saveCalculatorData(CALCULATOR_NAME, calculatorData);
+
+      setTimeout(() => app.routers.navigate('/calculator/paybackshare/step-3', {trigger: true}), 100);
     },
 
     // get sum of last Annual Distributions
-    getPreviousSum(index) {
+    getPreviousSum(data, index) {
 
-      let selectedRange = this.outputData.slice(2, index + 1),
+      let selectedRange = data.slice(2, index + 1),
         sum = 0;
 
       _.each(selectedRange, (el) => {
@@ -154,8 +157,9 @@ module.exports = {
     },
 
     render() {
+      const data = app.helpers.calculator.readCalculatorData(CALCULATOR_NAME, defaultCalculatorData);
       this.$el.html(this.template({
-        data: app.cache.payBackShareCalculator
+        data,
       }));
       return this;
     }
@@ -202,24 +206,19 @@ module.exports = {
 
     render() {
       // disable enter to the final step of paybackshare calculator without data
-      if (app.cache.payBackShareCalculator) {
-        let {growLevel, nextYearRevenue, raiseMoney} = app.cache.payBackShareCalculator;
-        if (!growLevel || !nextYearRevenue || !raiseMoney) {
-          this.goToStep1();
-          return false;
-        }
-      } else {
-        this.goToStep1();
-        return false;
+      const data = app.helpers.calculator.readCalculatorData(CALCULATOR_NAME);
+      if (!data || !data.growLevel || !data.nextYearRevenue || !data.raiseMoney) {
+        setTimeout(this.goToStep1, 100);
+        return this;
       }
 
       // get data for drawing jQPlot
-      let {outputData, maxOfMultipleReturned} = app.cache.payBackShareCalculator,
+      let { outputData, maxOfMultipleReturned } = data,
         lastStep = false;
 
 
       // prepare data for drawing jQPlot
-      let dataRendered = function () {
+      const dataRendered = function () {
         let data = [];
         let hasNotEmpty = false;
         for (let i = 0, size = outputData.length; i < size; i++) {
@@ -237,7 +236,7 @@ module.exports = {
 
 
       this.$el.html(this.template({
-        data: app.cache.payBackShareCalculator,
+        data,
         dataRendered: dataRendered(),
       }));
 

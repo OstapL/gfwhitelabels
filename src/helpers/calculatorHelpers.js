@@ -1,21 +1,39 @@
-const getTypedValue = (input) => {
-  const type = input.dataset.valueType || input.type;
-  if (type === 'money')
-    return app.helpers.format.unformatMoney(input.value);
+const helper = {
+  readCalculatorData(calculatorName, defaultData={}) {
+    const stringData = localStorage.getItem(calculatorName);
+    return stringData ? JSON.parse(stringData) : defaultData;
+  },
 
-  if (type === 'percent')
-    return app.helpers.format.unformatPercent(input.value);
+  saveCalculatorData(calculatorName, data) {
+    if (!data)
+      return;
 
-  return input.value;
-};
+    localStorage.setItem(calculatorName, JSON.stringify(data));
+  },
 
-module.exports = {
+  getTypedValue(input) {
+    const type = input.dataset.valueType || input.type;
+    if (type === 'money')
+      return app.helpers.format.unformatMoney(input.value);
+
+    if (type === 'percent')
+      return app.helpers.format.unformatPercent(input.value);
+
+    return input.value;
+  },
+
   calculateRevenueShare(data) {
     return data;
   },
-  saveCalculatorField(saveTo, input) {
-    const value = getTypedValue(input);
+
+  saveCalculatorField(calculatorName, input) {
+    const data = helper.readCalculatorData(calculatorName);
+    const value = helper.getTypedValue(input);
     const name = input.getAttribute('name');
-    saveTo[name] = value;
+    data[name] = value;
+    helper.saveCalculatorData(calculatorName, data);
   },
+
 };
+
+module.exports = helper;
