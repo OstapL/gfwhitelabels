@@ -171,33 +171,6 @@ module.exports = {
     template: require("./templates/step3.pug"),
 
     initialize() {
-      this.jQPlot = null;
-      // $(window).on("resize", $.proxy(this.resizeJqPlot, this));
-    },
-
-    resizeJqPlot: function () {
-      if (!this.jQPlot) return;
-      this.jQPlot.replot({
-        resetAxes: true,
-        legend: {
-          show: false
-        },
-        axes: {
-          xaxis: {
-            min: 0,
-            max: 10,
-            tickInterval: 1,
-            label: 'Years'
-          },
-          yaxis: {
-            min: 0,
-            max: 2.5,
-            tickInterval: 0.5,
-            label: 'Multiple Returned',
-            labelRenderer: $.jqplot.CanvasAxisLabelRenderer
-          }
-        }
-      });
     },
 
     goToStep1() {
@@ -257,7 +230,7 @@ module.exports = {
         require('src/js/graph/graph.js');
         require('src/js/graph/jquery.flot.growraf');
 
-        var plotApi = $.plot($chart, [{
+        const $plot = $.plot($chart, [{
           data: dataRendered(),
           animator: {start: 0, steps: 100, duration: 500, direction: "right", lines: true},
           label: "Invested amount",
@@ -321,19 +294,22 @@ module.exports = {
           }
         });
 
-        $chart.on("growFinished", function () {
+        $chart.on("growFinished", () => {
           //options.series.points.show = true;
           //$.plot($chart, dataArr, options);
 
-          let last = plotApi.getData()[0].data.pop();
-          let o = plotApi.pointOffset({x: last[0], y: last[1]});
-          if (last[1] * 100 >= minPersents) {
-            $('<div class="data-point-label">Congratulations, Payback Share Contract is complete</div>').css({
-              position: 'absolute',
-              left: o.left - 500,
-              top: o.top - 30,
-              display: 'none'
-            }).appendTo(plotApi.getPlaceholder()).fadeIn('slow');
+          let last = _.last($plot.getData()[0].data);
+          if (last && last.length > 1) {
+            let o = $plot.pointOffset({x: last[0], y: last[1]});
+            if (last[1] * 100 >= minPersents) {
+              $('.data-point-label').remove();
+              $('<div class="data-point-label">Congratulations, Payback Share Contract is complete</div>').css({
+                position: 'absolute',
+                left: o.left - 500,
+                top: o.top - 30,
+                display: 'none'
+              }).appendTo($plot.getPlaceholder()).fadeIn('slow');
+            }
           }
         });
 
@@ -360,9 +336,14 @@ module.exports = {
             $flotTooltip.hide();
           }
         });
+
+        app.helpers.calculator.bindResizeTo($plot);
+
       }, 'graph_chunk');
 
       return this;
-    }
+    },
+
+
   })
 };

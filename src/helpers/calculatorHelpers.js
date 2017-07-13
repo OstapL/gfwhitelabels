@@ -1,4 +1,26 @@
+let __$plot = null;
+
+const resizeHandler = (e) => {
+  if (!__$plot)
+    return;
+
+  __$plot.resize();
+  __$plot.setupGrid();
+  __$plot.draw();
+};
+
+
 const helper = {
+  bindResizeTo($plot) {
+    if (__$plot)
+      $(window).off('resize', resizeHandler);
+
+    if ($plot) {
+      __$plot = $plot;
+      $(window).on('resize', resizeHandler);
+    }
+  },
+
   readCalculatorData(calculatorName, defaultData={}) {
     const stringData = localStorage.getItem(calculatorName);
     return stringData ? JSON.parse(stringData) : defaultData;

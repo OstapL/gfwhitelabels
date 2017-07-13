@@ -52,11 +52,11 @@ module.exports = {
   formatMoney(value) {
     const moneyString = String(value).replace(filterNumberRx, '');
     if (!moneyString)
-      return '$0';
+      return '';
 
     const moneyValue = Number(moneyString);
     if (isNaN(moneyValue) || !moneyValue)
-      return '$0';
+      return '';
 
     return '$' + moneyValue.toLocaleString('en-US');
 
@@ -64,15 +64,15 @@ module.exports = {
 
   unformatMoney(value) {
     if (!value)
-      return 0;
+      return '';
 
     const numberString = value.replace(filterNumberRx, '');
     if (!numberString)
-      return 0;
+      return '';
 
     const number = Number(numberString);
     if (isNaN(number))
-      return 0;
+      return '';
 
     return number;
   },
@@ -243,7 +243,7 @@ module.exports = {
 
     let numberValue = Number(numberString);
     if (isNaN(numberValue) || !numberValue)
-      return '0%';
+      return '';
 
     return numberValue + '%';
   },
@@ -254,7 +254,7 @@ module.exports = {
 
     const stringValue = String(value).replace(filterNumberRx, '');
     if (!stringValue)
-      return 0;
+      return '';
 
     return Number(stringValue);
   },

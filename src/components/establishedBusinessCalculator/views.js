@@ -506,8 +506,7 @@ module.exports = {
         require('src/js/graph/jquery.flot.categories.js');
         require('src/js/graph/jquery.flot.growraf');
 
-
-        $.plot($("#chart"), data, {
+        const $plot = $.plot($("#chart"), data, {
           series: {
             lines: {
               fill: false
@@ -548,6 +547,9 @@ module.exports = {
             borderWidth: 1
           }
         });
+
+        app.helpers.calculator.bindResizeTo($plot);
+
       }, 'graph_chunk');
     }
   })

@@ -3,9 +3,6 @@
 
 const minPersents = 200;
 
-let eventsAttached = false;
-
-
 module.exports = {
   calculator: Backbone.View.extend(_.extend({
     el: '#revenue-share-calculator',
@@ -44,11 +41,6 @@ module.exports = {
           label: 'At what rate do you expect revenues to grow each year?',
         },
       };
-
-      if (!eventsAttached){
-        $(window).on('resize', this.resizeJqPlot.bind(this));
-        eventsAttached = true;
-      }
     },
 
     doCalculation(e) {
@@ -220,6 +212,8 @@ module.exports = {
           }
         });
 
+        app.helpers.calculator.bindResizeTo(this.$plot);
+
         this.$chart.on('growFinished', () => {
           //options.series.points.show = true;
           //$.plot(this.$chart, dataArr, options);
@@ -280,15 +274,6 @@ module.exports = {
 
       this.$plot.shutdown();
       this.$chart.empty();
-    },
-
-    resizeJqPlot() {
-      if (!this.$plot)
-        return;
-
-      this.$plot.resize();
-      this.$plot.setupGrid();
-      this.$plot.draw();
     },
 
     mapToPlot(data) {
