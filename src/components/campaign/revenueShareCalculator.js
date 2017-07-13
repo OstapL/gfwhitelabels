@@ -3,6 +3,9 @@
 
 const minPersents = 200;
 
+let eventsAttached = false;
+
+
 module.exports = {
   calculator: Backbone.View.extend(_.extend({
     el: '#revenue-share-calculator',
@@ -41,6 +44,11 @@ module.exports = {
           label: 'At what rate do you expect revenues to grow each year?',
         },
       };
+
+      if (!eventsAttached){
+        $(window).on('resize', this.resizeJqPlot.bind(this));
+        eventsAttached = true;
+      }
     },
 
     doCalculation(e) {
@@ -217,15 +225,19 @@ module.exports = {
           //$.plot(this.$chart, dataArr, options);
 
           let plotData = this.$plot.getData();
-          let last = plotData[0].data.pop();
-          let o = this.$plot.pointOffset({x: last[0], y: last[1]});
-          if (last[1] * 100 >= minPersents) {
-            $('<div class="data-point-label">Congratulations, Payback Share Contract is complete</div>').css({
-              position: 'absolute',
-              left: o.left - 500,
-              top: o.top - 30,
-              display: 'none'
-            }).appendTo(this.$plot.getPlaceholder()).fadeIn('slow');
+          let last = _.last(plotData[0].data);
+          if (last && last.length > 1) {
+            let o = this.$plot.pointOffset({x: last[0], y: last[1]});
+            if (last[1] * 100 >= minPersents) {
+              $('.data-point-label').remove();
+
+              $('<div class="data-point-label">Congratulations, Payback Share Contract is complete</div>').css({
+                position: 'absolute',
+                left: o.left - 500,
+                top: o.top - 30,
+                display: 'none'
+              }).appendTo(this.$plot.getPlaceholder()).fadeIn('slow');
+            }
           }
         });
 
@@ -252,6 +264,7 @@ module.exports = {
             $flotTooltip.hide();
           }
         });
+
       }, 'graph_chunk');
 
       return this;
@@ -269,29 +282,13 @@ module.exports = {
       this.$chart.empty();
     },
 
-    resizeJqPlot: function() {
-      if (!this.jQPlot) return;
-      this.jQPlot.replot({
-        resetAxes: true,
-        legend: {
-          show: false
-        },
-        axes: {
-          xaxis: {
-            min: 0,
-            max: 10,
-            tickInterval: 1,
-            label: 'Years'
-          },
-          yaxis: {
-            min: 0,
-            max: 2.5,
-            tickInterval: 0.5,
-            label: 'Multiple Returned',
-            labelRenderer: $.jqplot.CanvasAxisLabelRenderer
-          }
-        }
-      });
+    resizeJqPlot() {
+      if (!this.$plot)
+        return;
+
+      this.$plot.resize();
+      this.$plot.setupGrid();
+      this.$plot.draw();
     },
 
     mapToPlot(data) {
