@@ -65,12 +65,21 @@
         .expiration-form
           padding-bottom: rem(50)
           padding-right: 0
+      .expiration-form
+        .has-error
+          .help-block
+            position: absolute
+            width: 200px
   .btn-pay
     text-align: right
     margin-top: rem(45)
   .expiration-block-hide
     display: none
-
+.payment-block.has-error
+  position: relative
+  .help-block
+    position: absolute
+    bottom: 0
 
   .border-top-none
     input
