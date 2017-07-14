@@ -249,9 +249,6 @@ module.exports = {
   },
 
   unformatPercent(value) {
-    if (!value)
-      return 0;
-
     const stringValue = String(value).replace(filterNumberRx, '');
     if (!stringValue)
       return '';

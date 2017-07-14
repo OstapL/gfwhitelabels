@@ -35,29 +35,14 @@ module.exports = {
         raiseMoney: {
           required: true,
           type: 'money',
-          fn(name, fn, attr, data, schema) {
-            const value = this.getData(data, name);
-            if (value <= 0)
-              throw 'Please, enter positive number';
-          },
         },
         nextYearRevenue: {
           required: true,
           type: 'money',
-          fn(name, fn, attr, data, schema) {
-            const value = this.getData(data, name);
-            if (value <= 0)
-              throw 'Please, enter positive number';
-          },
         },
         growLevel: {
           required: true,
           type: 'percent',
-          fn(name, fn, attr, data, schema) {
-            const value = this.getData(data, name);
-            if (value <= 0)
-              throw 'Please, enter positive number';
-          },
         },
       };
     },
