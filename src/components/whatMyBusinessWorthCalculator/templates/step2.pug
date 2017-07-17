@@ -30,7 +30,7 @@
 
             .col-lg-12
               input(
-                value= app.helpers.format.formatPrice(data.monthlyOperatingTwoYears)
+                value= app.helpers.format.formatMoney(data.monthlyOperatingTwoYears)
                 type='money'
                 data-value-type='money'
                 placeholder='Second Year Expenses'
@@ -61,7 +61,7 @@
 
             .col-lg-12
               input(
-                value= app.helpers.format.formatPrice(data.additionalOperating)
+                value= app.helpers.format.formatMoney(data.additionalOperating)
                 type='money'
                 data-value-type='money'
                 placeholder='Annual Expenses'
@@ -77,7 +77,7 @@
 
             .col-lg-12
               input(
-                value= app.helpers.format.formatPrice(data.capitalExpenditures)
+                value= app.helpers.format.formatMoney(data.capitalExpenditures)
                 type='money'
                 data-value-type='money'
                 placeholder='Capital Expenditures'
@@ -100,7 +100,7 @@
 
             .col-lg-12
               input(
-                value= app.helpers.format.formatPrice(data.annualInterest)
+                value= app.helpers.format.formatMoney(data.annualInterest)
                 type='money'
                 data-value-type='money'
                 placeholder='Annual Interest Expense'

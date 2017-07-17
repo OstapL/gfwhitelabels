@@ -1,59 +1,113 @@
 import './styles/style.sass'
 
-if (!app.cache.establishedBusinessCalculator) {
-  app.cache.establishedBusinessCalculator = {
-    // 1st page
-    'industry': 'Machinery',
-    'raiseCash': '',
-    'ownCache': '',
-    'currentDebt': '',
+const CALCULATOR_NAME = 'EstablishedBusinessCalculator';
 
+const defaultCalculatorData = {
+  // 1st page
+  industry: 'Machinery',
+  raiseCash: 0,
+  ownCache: 0,
+  currentDebt: 0,
+
+  // 2nd page
+  revenue: '',
+  goodsCost: '',
+  operatingExpense: '',
+  oneTimeExpenses: '',
+  depreciationAmortization: '',
+  interestPaid: '',
+  taxesPaid: '',
+
+  // 3rd page
+  revenue2: '',
+  goodsCost2: '',
+  operatingExpense2: '',
+  oneTimeExpenses2: '',
+  depreciationAmortization2: '',
+  interestPaid2: '',
+  taxesPaid2: '',
+
+  // calculations
+  grossprofit: null,
+  grossprofit2: null,
+  totalExpenses: null,
+  totalExpenses2: null,
+  ebit: null,
+  ebit2: null,
+  ebittda: null,
+  ebittda2: null,
+  preTaxIncome: null,
+  preTaxIncome2: null,
+  netIncome: null,
+  netIncome2: null,
+
+  // data for the graph on the final page
+  graphData: null,
+};
+
+//TODO: it is reasonable to add validation on each step
+
+const checkStep1Data = (data) => {
+  return {
+    industry: 'Machinery',
+    raiseCash: 0,
+    ownCache: 0,
+    currentDebt: 0,
+  }
+};
+
+const checkStep2Data = (data) => {
+  return {
     // 2nd page
-    'revenue': '',
-    'goodsCost': '',
-    'operatingExpense': '',
-    'oneTimeExpenses': '',
-    'depreciationAmortization': '',
-    'interestPaid': '',
-    'taxesPaid': '',
-
-    // 3rd page
-    'revenue2': '',
-    'goodsCost2': '',
-    'operatingExpense2': '',
-    'oneTimeExpenses2': '',
-    'depreciationAmortization2': '',
-    'interestPaid2': '',
-    'taxesPaid2': '',
-
-    // calculations
-    'grossprofit': null,
-    'grossprofit2': null,
-    'totalExpenses': null,
-    'totalExpenses2': null,
-    'ebit': null,
-    'ebit2': null,
-    'ebittda': null,
-    'ebittda2': null,
-    'preTaxIncome': null,
-    'preTaxIncome2': null,
-    'netIncome': null,
-    'netIncome2': null,
-
-    // data for the graph on the final page
-    'graphData': null
+    revenue: '',
+    goodsCost: '',
+    operatingExpense: '',
+    oneTimeExpenses: '',
+    depreciationAmortization: '',
+    interestPaid: '',
+    taxesPaid: '',
   };
-}
+};
+
+const checkStep3Data = (data) => {
+  return {// 3rd page
+    revenue2: '',
+    goodsCost2: '',
+    operatingExpense2: '',
+    oneTimeExpenses2: '',
+    depreciationAmortization2: '',
+    interestPaid2: '',
+    taxesPaid2: '',}
+};
+
+const checkCalculations = (data) => {
+  return {
+    // calculations
+    grossprofit: null,
+    grossprofit2: null,
+    totalExpenses: null,
+    totalExpenses2: null,
+    ebit: null,
+    ebit2: null,
+    ebittda: null,
+    ebittda2: null,
+    preTaxIncome: null,
+    preTaxIncome2: null,
+    netIncome: null,
+    netIncome2: null,
+  }
+};
+
+const checkFinishData = (data) => {
+  return {
+    graphData: null,
+  }
+};
 
 const industryData = app.helpers.capitalraiseData();
 
 const saveValue = (e) => {
-  const name = e.target.getAttribute('name');
-  const type = e.target.dataset.valueType || 'text';
-  const value = type === 'money'
-    ? app.helpers.format.unformatPrice(e.target.value)
-    : e.target.value;
-  app.cache.establishedBusinessCalculator[name] = value;
+  app.helpers.calculator.saveCalculatorField(CALCULATOR_NAME, e.target);
 };
 
 module.exports = {
@@ -77,9 +131,9 @@ module.exports = {
       'change .js-select': saveValue,
       'blur [type=money]': saveValue,
       'submit form': 'nextStep',
-    }, app.helpers.calculatorValidation.events),
+    }),
 
-    initialize(options) {
+    initialize() {
       this.fields = {
         raiseCash: {
           required: true,
@@ -101,13 +155,18 @@ module.exports = {
 
     nextStep(e) {
       e.preventDefault();
-      if (!this.validate(e)) return;
+
+      if (!this.validate(e))
+        return;
+
       app.routers.navigate('/calculator/establishedBusiness/step-2', {trigger: true});
     },
 
     render: function () {
+      const data = app.helpers.calculator.readCalculatorData(CALCULATOR_NAME, defaultCalculatorData);
+
       this.$el.html(this.template({
-        data: app.cache.establishedBusinessCalculator,
+        data,
         industryData: Object.keys(industryData),
       }));
 
@@ -173,7 +232,10 @@ module.exports = {
 
     nextStep(e) {
       e.preventDefault();
-      if (!this.validate(e)) return;
+
+      if (!this.validate(e))
+        return;
+
       app.routers.navigate('/calculator/establishedBusiness/step-3', {trigger: true});
     },
 
@@ -194,8 +256,10 @@ module.exports = {
       //     return false;
       // }
 
+      const data = app.helpers.calculator.readCalculatorData(CALCULATOR_NAME, defaultCalculatorData);
+
       this.$el.html(this.template({
-        data: app.cache.establishedBusinessCalculator,
+        data,
       }));
 
       this.$('[data-toggle="tooltip"]').tooltip({
@@ -219,7 +283,7 @@ module.exports = {
       $('#content').undelegate();
     },
 
-    initialize(options) {
+    initialize() {
       this.fields = {
         revenue2: {
           required: true,
@@ -272,10 +336,12 @@ module.exports = {
     doCalculation(e) {
       e.preventDefault();
 
-      if (!this.validate(e)) return;
+      if (!this.validate(e))
+        return;
 
-      let data = app.cache.establishedBusinessCalculator,
-        calculatedData = {},
+      const data = app.helpers.calculator.readCalculatorData(CALCULATOR_NAME);
+
+      let calculatedData = {},
         industry = data.industry,
         row = industryData[industry],
         ntmPs = row[4],
@@ -359,7 +425,9 @@ module.exports = {
       ];
 
       // save calculated data
-      _.extend(app.cache.establishedBusinessCalculator, calculatedData);
+      _.extend(data, calculatedData);
+
+      app.helpers.calculator.saveCalculatorData(CALCULATOR_NAME, data);
 
       app.routers.navigate('/calculator/establishedBusiness/finish', {trigger: true});
     },
@@ -379,8 +447,10 @@ module.exports = {
       //     return false;
       // }
 
+      const data = app.helpers.calculator.readCalculatorData(CALCULATOR_NAME);
+
       this.$el.html(this.template({
-        data: app.cache.establishedBusinessCalculator,
+        data,
       }));
 
       this.$('[data-toggle="tooltip"]').tooltip({
@@ -404,35 +474,29 @@ module.exports = {
 
     render: function () {
       // disable enter to the final step of the establishedBusiness calculator without data
-      if (app.cache.establishedBusinessCalculator) {
-        if (!app.cache.establishedBusinessCalculator.graphData) {
-          this.goToStep3();
-          return false;
-        }
-      } else {
-        this.goToStep3();
-        return false;
+      const data = app.helpers.calculator.readCalculatorData(CALCULATOR_NAME);
+      if (!data || !data.graphData) {
+        setTimeout(this.goToStep3, 100);
+        return this;
       }
 
-      let graphData = app.cache.establishedBusinessCalculator.graphData;
-      let estimate = graphData[0].data[0][1];
-      let data = app.cache.establishedBusinessCalculator;
-      let raiseCash = data.raiseCash;
+      const { graphData, raiseCash } = data;
+      const estimate = graphData[0].data[0][1];
 
       this.$el.html(this.template({
-        estimate: app.helpers.calculator.formatPrice(estimate),
-        raise: app.helpers.calculator.formatPrice(raiseCash),
+        estimate: app.helpers.format.formatMoney(estimate),
+        raise: app.helpers.format.formatMoney(raiseCash),
         offer: (raiseCash * 100 / (estimate + raiseCash)).toFixed(2)
       }));
 
-      this.buildGraph();
+      this.buildGraph(graphData);
 
       $('body').scrollTop(0);
 
       return this;
     },
 
-    buildGraph() {
+    buildGraph(data) {
       require.ensure([
         'src/js/graph/graph.js',
         'src/js/graph/jquery.flot.categories.js',
@@ -442,9 +506,7 @@ module.exports = {
         require('src/js/graph/jquery.flot.categories.js');
         require('src/js/graph/jquery.flot.growraf');
 
-        let data = app.cache.establishedBusinessCalculator.graphData;
-
-        $.plot($("#chart"), data, {
+        const $plot = $.plot($("#chart"), data, {
           series: {
             lines: {
               fill: false
@@ -485,6 +547,9 @@ module.exports = {
             borderWidth: 1
           }
         });
+
+        app.helpers.calculator.bindResizeTo($plot);
+
       }, 'graph_chunk');
     }
   })

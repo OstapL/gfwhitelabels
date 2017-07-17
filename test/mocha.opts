@@ -1,3 +1,5 @@
+--compilers js:babel-register
+--require babel-polyfill
 --require ignore-styles
 --require test/init.js
 --harmony

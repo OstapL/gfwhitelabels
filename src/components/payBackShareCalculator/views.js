@@ -1,6 +1,17 @@
 import './styles/style.sass'
 
 const minPersents = 200;
+const defaultCalculatorData = {
+  raiseMoney: 0,
+  nextYearRevenue: 0,
+  growLevel: 0,
+};
+
+const CALCULATOR_NAME = 'RevenueShareCalculator';
+
+const saveValue = (e) => {
+  app.helpers.calculator.saveCalculatorField(CALCULATOR_NAME, e.target);
+};
 
 module.exports = {
   step1: Backbone.View.extend({
@@ -20,31 +31,18 @@ module.exports = {
     template: require('./templates/step2.pug'),
 
     initialize() {
-      // data which contains calculated income
-      this.outputData = [];
-
-      if (!app.cache.payBackShareCalculator) {
-        app.cache.payBackShareCalculator = {
-          'raiseMoney': '',
-          'nextYearRevenue': '',
-          'growLevel': ''
-        };
-      }
       this.fields = {
         raiseMoney: {
           required: true,
           type: 'money',
-          validate: {},
         },
         nextYearRevenue: {
           required: true,
           type: 'money',
-          validate: {},
         },
         growLevel: {
           required: true,
-          type: 'integer',
-          validate: {},
+          type: 'percent',
         },
       };
     },
@@ -52,70 +50,61 @@ module.exports = {
     events: _.extend({
       // calculate your income
       'submit .js-calc-form': 'doCalculation',
-      'blur [name=growLevel]': 'savePercents',
-      'blur [name=raiseMoney]': 'saveMoney',
-      'blur [name=nextYearRevenue]': 'saveMoney',
-    }, app.helpers.calculatorValidation.events),
-
-    validate: app.helpers.calculator.validate,
-    validateForLinks: app.helpers.calculator.validateForLinks,
-
-    saveMoney(e) {
-      const value = app.helpers.format.unformatPrice(e.target.value);
-      const name = e.target.getAttribute('name');
-      app.cache.payBackShareCalculator[name] = Number(value);
-    },
-
-    savePercents(e) {
-      const value = app.helpers.format.unformatPercent(e.target.value);
-      const name = e.target.getAttribute('name');
-      app.cache.payBackShareCalculator[name] = Number(value);
-    },
+      'blur [name=growLevel]': saveValue,
+      'blur [name=raiseMoney]': saveValue,
+      'blur [name=nextYearRevenue]': saveValue,
+    }),
 
     doCalculation(e) {
       e.preventDefault();
       if (!this.validate(e))
         return;
 
-      let maxOfMultipleReturned = 0,
-        countOfMultipleReturned = 0,
-        {raiseMoney, nextYearRevenue, growLevel} = app.cache.payBackShareCalculator;
+      const calculatorData = app.helpers.calculator.readCalculatorData(CALCULATOR_NAME);
+      let maxOfMultipleReturned = 0;
+      let countOfMultipleReturned = 0;
 
-      // calculate income for 10 years
+      const { raiseMoney, nextYearRevenue, growLevel } = calculatorData;
+
+      const outputData = [];
+        // calculate income for 10 years
       // set the first year
-      this.outputData[0] = {};
-      this.outputData[0].fundraise = raiseMoney;
+      outputData[0] = {};
+      outputData[0].fundraise = raiseMoney;
 
       // set the second year
-      this.outputData[1] = {};
-      this.outputData[1].revenue = nextYearRevenue;
+      outputData[1] = {};
+      outputData[1].revenue = nextYearRevenue;
 
       // set all other year
       for (var i = 2; i < 11; i++) {
-        this.outputData[i] = {};
+        outputData[i] = {};
 
-        this.outputData[i].revenue = Math.ceil(this.outputData[i - 1].revenue * (1 + growLevel / 100));
-        this.outputData[i].annual = Math.ceil(0.05 * this.outputData[i].revenue);
+        outputData[i].revenue = Math.ceil(outputData[i - 1].revenue * (1 + growLevel / 100));
+        outputData[i].annual = Math.ceil(0.05 * outputData[i].revenue);
+
+        const prevSum = this.getPreviousSum(outputData, i);
 
         let helper = {
-          sum: this.getPreviousSum(i),
-          divided: this.getPreviousSum(i) / raiseMoney
+          sum: prevSum,
+          divided: prevSum / raiseMoney,
         };
-        this.outputData[i].multiple = Math.min(parseFloat(helper.divided.toFixed(1)), 2);
+
+        outputData[i].multiple = Math.min(parseFloat(helper.divided.toFixed(1)), 2);
 
         // change max value of multiple returned
-        if (this.outputData[i].multiple > maxOfMultipleReturned) {
-          maxOfMultipleReturned = this.outputData[i].multiple;
+        if (outputData[i].multiple > maxOfMultipleReturned) {
+          maxOfMultipleReturned = outputData[i].multiple;
         }
 
         // skip adding maximum "multiple returned" value more then one time
-        if (this.outputData[i].multiple >= 2) {
+        if (outputData[i].multiple >= 2) {
           countOfMultipleReturned++;
           if (countOfMultipleReturned > 1) {
-            this.outputData[i].multiple = "";
-            this.outputData[i].annual = "";
+            outputData[i].multiple = "";
+            outputData[i].annual = "";
           } else if (countOfMultipleReturned == 1) {
-            this.outputData[i].annual = (function (data) {
+            outputData[i].annual = (function (data) {
               let sum = 0,
                 length = data.length;
 
@@ -123,26 +112,26 @@ module.exports = {
                 sum += data[k].annual;
               }
               return raiseMoney * 2 - sum;
-            })(this.outputData);
+            })(outputData);
           }
         }
 
-        this.outputData[i].total = Math.min(parseFloat(helper.sum).toFixed(1), 2 * raiseMoney);
+        outputData[i].total = Math.min(parseFloat(helper.sum).toFixed(1), 2 * raiseMoney);
       }
 
       // save data
-      app.cache.payBackShareCalculator.outputData = this.outputData;
-      app.cache.payBackShareCalculator.nextYearRevenue = app.helpers.format.unformatPrice(e.target.querySelector('#nextYearRevenue').value);
-      app.cache.payBackShareCalculator.maxOfMultipleReturned = maxOfMultipleReturned;
+      calculatorData.outputData = outputData;
+      calculatorData.maxOfMultipleReturned = maxOfMultipleReturned;
 
-      // navigate to the finish step
-      app.routers.navigate('/calculator/paybackshare/step-3', {trigger: true});
+      app.helpers.calculator.saveCalculatorData(CALCULATOR_NAME, calculatorData);
+
+      setTimeout(() => app.routers.navigate('/calculator/paybackshare/step-3', {trigger: true}), 100);
     },
 
     // get sum of last Annual Distributions
-    getPreviousSum(index) {
+    getPreviousSum(data, index) {
 
-      let selectedRange = this.outputData.slice(2, index + 1),
+      let selectedRange = data.slice(2, index + 1),
         sum = 0;
 
       _.each(selectedRange, (el) => {
@@ -153,8 +142,9 @@ module.exports = {
     },
 
     render() {
+      const data = app.helpers.calculator.readCalculatorData(CALCULATOR_NAME, defaultCalculatorData);
       this.$el.html(this.template({
-        data: app.cache.payBackShareCalculator
+        data,
       }));
       return this;
     }
@@ -166,33 +156,6 @@ module.exports = {
     template: require("./templates/step3.pug"),
 
     initialize() {
-      this.jQPlot = null;
-      // $(window).on("resize", $.proxy(this.resizeJqPlot, this));
-    },
-
-    resizeJqPlot: function () {
-      if (!this.jQPlot) return;
-      this.jQPlot.replot({
-        resetAxes: true,
-        legend: {
-          show: false
-        },
-        axes: {
-          xaxis: {
-            min: 0,
-            max: 10,
-            tickInterval: 1,
-            label: 'Years'
-          },
-          yaxis: {
-            min: 0,
-            max: 2.5,
-            tickInterval: 0.5,
-            label: 'Multiple Returned',
-            labelRenderer: $.jqplot.CanvasAxisLabelRenderer
-          }
-        }
-      });
     },
 
     goToStep1() {
@@ -201,24 +164,19 @@ module.exports = {
 
     render() {
       // disable enter to the final step of paybackshare calculator without data
-      if (app.cache.payBackShareCalculator) {
-        let {growLevel, nextYearRevenue, raiseMoney} = app.cache.payBackShareCalculator;
-        if (!growLevel || !nextYearRevenue || !raiseMoney) {
-          this.goToStep1();
-          return false;
-        }
-      } else {
-        this.goToStep1();
-        return false;
+      const data = app.helpers.calculator.readCalculatorData(CALCULATOR_NAME);
+      if (!data || !data.growLevel || !data.nextYearRevenue || !data.raiseMoney) {
+        setTimeout(this.goToStep1, 100);
+        return this;
       }
 
       // get data for drawing jQPlot
-      let {outputData, maxOfMultipleReturned} = app.cache.payBackShareCalculator,
+      let { outputData, maxOfMultipleReturned } = data,
         lastStep = false;
 
 
       // prepare data for drawing jQPlot
-      let dataRendered = function () {
+      const dataRendered = function () {
         let data = [];
         let hasNotEmpty = false;
         for (let i = 0, size = outputData.length; i < size; i++) {
@@ -236,7 +194,7 @@ module.exports = {
 
 
       this.$el.html(this.template({
-        data: app.cache.payBackShareCalculator,
+        data,
         dataRendered: dataRendered(),
       }));
 
@@ -257,7 +215,7 @@ module.exports = {
         require('src/js/graph/graph.js');
         require('src/js/graph/jquery.flot.growraf');
 
-        var plotApi = $.plot($chart, [{
+        const $plot = $.plot($chart, [{
           data: dataRendered(),
           animator: {start: 0, steps: 100, duration: 500, direction: "right", lines: true},
           label: "Invested amount",
@@ -321,19 +279,22 @@ module.exports = {
           }
         });
 
-        $chart.on("growFinished", function () {
+        $chart.on("growFinished", () => {
           //options.series.points.show = true;
           //$.plot($chart, dataArr, options);
 
-          let last = plotApi.getData()[0].data.pop();
-          let o = plotApi.pointOffset({x: last[0], y: last[1]});
-          if (last[1] * 100 >= minPersents) {
-            $('<div class="data-point-label">Congratulations, Payback Share Contract is complete</div>').css({
-              position: 'absolute',
-              left: o.left - 500,
-              top: o.top - 30,
-              display: 'none'
-            }).appendTo(plotApi.getPlaceholder()).fadeIn('slow');
+          let last = _.last($plot.getData()[0].data);
+          if (last && last.length > 1) {
+            let o = $plot.pointOffset({x: last[0], y: last[1]});
+            if (last[1] * 100 >= minPersents) {
+              $('.data-point-label').remove();
+              $('<div class="data-point-label">Congratulations, Payback Share Contract is complete</div>').css({
+                position: 'absolute',
+                left: o.left - 500,
+                top: o.top - 30,
+                display: 'none'
+              }).appendTo($plot.getPlaceholder()).fadeIn('slow');
+            }
           }
         });
 
@@ -360,9 +321,14 @@ module.exports = {
             $flotTooltip.hide();
           }
         });
+
+        app.helpers.calculator.bindResizeTo($plot);
+
       }, 'graph_chunk');
 
       return this;
-    }
+    },
+
+
   })
 };

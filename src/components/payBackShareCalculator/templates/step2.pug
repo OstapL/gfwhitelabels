@@ -31,7 +31,7 @@
 
             .col-lg-12
               input(
-                value= app.helpers.format.formatPrice(data.raiseMoney)
+                value=app.helpers.format.formatMoney(data.raiseMoney)
                 type='money'
                 data-value-type='money'
                 placeholder='$0'
@@ -44,7 +44,7 @@
 
             .col-lg-12
               input(
-                value= app.helpers.format.formatPrice(data.nextYearRevenue)
+                value=app.helpers.format.formatMoney(data.nextYearRevenue)
                 type='money'
                 data-value-type='money'
                 placeholder='$0'

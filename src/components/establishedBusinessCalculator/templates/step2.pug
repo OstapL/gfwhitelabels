@@ -37,7 +37,7 @@
 
             .col-lg-12
               input(
-                value= app.helpers.format.formatPrice(data.revenue)
+                value= app.helpers.format.formatMoney(data.revenue)
                 type='money'
                 data-value-type='money'
                 placeholder='Revenue'
@@ -50,7 +50,7 @@
 
             .col-lg-12
               input(
-                value= app.helpers.format.formatPrice(data.goodsCost)
+                value= app.helpers.format.formatMoney(data.goodsCost)
                 type='money'
                 data-value-type='money'
                 placeholder='Cost of Goods Sold'
@@ -66,7 +66,7 @@
 
             .col-lg-12
               input(
-                value= app.helpers.format.formatPrice(data.operatingExpense)
+                value= app.helpers.format.formatMoney(data.operatingExpense)
                 type='money'
                 data-value-type='money'
                 placeholder='SG&A Operating Expense'
@@ -82,7 +82,7 @@
 
             .col-lg-12
               input(
-                value= app.helpers.format.formatPrice(data.oneTimeExpenses)
+                value= app.helpers.format.formatMoney(data.oneTimeExpenses)
                 type='money'
                 data-value-type='money'
                 placeholder='One Time (Extraordinary) Expenses'
@@ -99,7 +99,7 @@
 
             .col-lg-12
               input(
-                value= app.helpers.format.formatPrice(data.depreciationAmortization)
+                value= app.helpers.format.formatMoney(data.depreciationAmortization)
                 type='money'
                 data-value-type='money'
                 placeholder='Depreciation & Amortization'
@@ -112,7 +112,7 @@
 
             .col-lg-12
               input(
-                value= app.helpers.format.formatPrice(data.interestPaid)
+                value= app.helpers.format.formatMoney(data.interestPaid)
                 type='money'
                 data-value-type='money'
                 placeholder='Interest Paid'
@@ -125,7 +125,7 @@
 
             .col-lg-12
               input(
-                value= app.helpers.format.formatPrice(data.taxesPaid)
+                value= app.helpers.format.formatMoney(data.taxesPaid)
                 type='money'
                 data-value-type='money'
                 placeholder='Taxes Paid'

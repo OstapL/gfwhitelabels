@@ -29,7 +29,7 @@ global.document = window.document;
 global.window.localStorage = global.localStorage;
 window.__defineSetter__('location', (val) => {});
 global.location = window.location;
-global.navigator = {userAgent: 'node.js'};
+global.navigator = { userAgent: 'node.js' };
 global.$ = global.jQuery = require('jquery');
 global._ = require('underscore');
 global.Backbone = require('backbone');
@@ -45,6 +45,8 @@ require('classlist-polyfill');
 global.api = require('../src/helpers/forms.js');
 const App = require('../src/app.js');
 global.app = App();
+const Router = require('src/router.js');
+app.routers = new Router();
 $.fn.scrollTo = function (padding=0) {
   $('html, body').animate({
     scrollTop: $(this).offset().top - padding + 'px',
@@ -62,7 +64,7 @@ $.serializeJSON.defaultOptions = _.extend($.serializeJSON.defaultOptions, {
       return app.helpers.format.unformatPercent(val);
     },
     money(val) {
-      return app.helpers.format.unformatPrice(val);
+      return app.helpers.format.unformatMoney(val);
     },
     integer(val) {
       return parseInt(val);

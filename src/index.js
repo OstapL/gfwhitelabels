@@ -156,15 +156,15 @@ $(document).ready(function () {
   $('body').on('keyup', '[type="money"]', (e) => {
     app.helpers.format.formatMoneyInputOnKeyup(e);
   }).on('focus', '[type="money"]', function (e) {
-    var valStr = e.target.value.replace(/[\$,]/g, '');
-    var val = parseFloat(valStr);
-    if (isNaN(val) || !val)
-      e.target.value = '';
+    // var valStr = e.target.value.replace(/[\$,]/g, '');
+    // var val = parseFloat(valStr);
+    // if (isNaN(val) || !val)
+    //   e.target.value = '';
   }).on('blur', '[type="money"]', function (e) {
     // var valStr = e.target.value.replace(/[\$\,]/g, '');
-    if (!e.target.value) {
-      e.target.value = '$0';
-    }
+    // if (!e.target.value) {
+    //   e.target.value = '$0';
+    // }
   });
 
   $('body').on('keyup', '[type=percent]', (e) => {
@@ -183,13 +183,13 @@ $(document).ready(function () {
       input.setSelectionRange(cursorPosition, cursorPosition);
     }, 100);
   }).on('blur', '[type=percent]', (e) => {
-    const value = e.target.value;
-    const numberValue = value.replace(/[^0-9\.\-]/g, '');
-    let number = Number(numberValue);
-    if (isNaN(number) || !number)
-      e.target.value = '0%';
-    else
-      e.target.value = number + '%';
+    // const value = e.target.value;
+    // const numberValue = value.replace(/[^0-9\.\-]/g, '');
+    // let number = Number(numberValue);
+    // if (isNaN(number) || !number)
+    //   e.target.value = '0%';
+    // else
+    //   e.target.value = number + '%';
   });
 
 // для показа биографии на стр. pg/team
@@ -385,7 +385,7 @@ $.serializeJSON.defaultOptions = _.extend($.serializeJSON.defaultOptions, {
       return app.helpers.format.unformatPercent(val);
     },
     money(val) {
-      return app.helpers.format.unformatPrice(val);
+      return app.helpers.format.unformatMoney(val);
     },
     integer(val) {
       return parseInt(val);
