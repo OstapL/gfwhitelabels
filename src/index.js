@@ -1,6 +1,6 @@
 require('src/sass/mixins_all.sass');
 require('./shims.js');
-
+require('./extensions.js');
 //TODO: remove this on next iteration
 global.api = require('./helpers/forms.js');
 global.onYouTubeIframeAPIReady = () => {
