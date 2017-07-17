@@ -55,7 +55,7 @@
             label(for='projectedRevenue').col-lg-12.col-form-label.font-weight-normal How much revenue do you expect your business will produce in Year 1?
             .col-lg-12
               input(
-                value= app.helpers.format.formatPrice(data.projectedRevenue)
+                value= app.helpers.format.formatMoney(data.projectedRevenue)
                 type='money'
                 data-value-type='money'
                 placeholder='Revenue Year One'
@@ -67,7 +67,7 @@
             label(for='operatingProfit').col-lg-12.col-form-label.font-weight-normal How much operating profit do you expect to earn in Year 1?
             .col-lg-12
               input(
-                value= app.helpers.format.formatPrice(data.operatingProfit)
+                value= app.helpers.format.formatMoney(data.operatingProfit)
                 type='money'
                 data-value-type='money'
                 placeholder='Profit Year One '
@@ -79,7 +79,7 @@
             label(for='projectedRevenueTwo').col-lg-12.col-form-label.font-weight-normal How much revenue do you expect your business will produce in Year 5?
             .col-lg-12
               input(
-                value= app.helpers.format.formatPrice(data.projectedRevenueTwo)
+                value= app.helpers.format.formatMoney(data.projectedRevenueTwo)
                 type='money'
                 data-value-type='money'
                 placeholder='Revenue Year Five'
@@ -91,7 +91,7 @@
             label(for='operatingProfitTwo').col-lg-12.col-form-label.font-weight-normal How much operating profit do you expect to earn in Year 5?
             .col-lg-12
               input(
-                value= app.helpers.format.formatPrice(data.operatingProfitTwo)
+                value= app.helpers.format.formatMoney(data.operatingProfitTwo)
                 type='money'
                 data-value-type='money'
                 placeholder='Profit Year Five'
@@ -103,7 +103,7 @@
             label(for='CashOnHand').col-lg-12.col-form-label.font-weight-normal How much cash, beyond what's needed for immediate operating needs, does your business currently have?
             .col-lg-12
               input(
-                value= app.helpers.format.formatPrice(data.CashOnHand)
+                value= app.helpers.format.formatMoney(data.CashOnHand)
                 type='money'
                 data-value-type='money'
                 placeholder='Cash Holdings'
@@ -115,7 +115,7 @@
             label(for='yourDebt').col-lg-12.col-form-label.font-weight-normal How much debt is your business currently carrying?
             .col-lg-12
               input(
-                value= app.helpers.format.formatPrice(data.yourDebt)
+                value= app.helpers.format.formatMoney(data.yourDebt)
                 type='money'
                 data-value-type='money'
                 placeholder='Current Debt'
@@ -127,7 +127,7 @@
             label(for='cashRaise').col-lg-12.col-form-label.font-weight-normal How much cash do you plan to raise?
             .col-lg-12
               input(
-                value=app.helpers.format.formatPrice(data.cashRaise)
+                value=app.helpers.format.formatMoney(data.cashRaise)
                 type='money'
                 data-value-type='money'
                 placeholder='Raise Amount'

@@ -124,6 +124,7 @@ class User {
         delete this.data.token;
 
         setTimeout(function() {
+          //TODO: replace this with app.routers.navigate
           window.location = next;
         }, 200);
         resolve();
@@ -159,8 +160,9 @@ class User {
   }
 
   emptyLocalStorage() {
-    localStorage.removeItem('user');
-    localStorage.removeItem('token');
+    localStorage.clear();
+    // localStorage.removeItem('user');
+    // localStorage.removeItem('token');
     app.cookies.expire('token');
     this.token = null;
     this.data = {};
