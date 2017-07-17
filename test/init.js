@@ -64,7 +64,7 @@ $.serializeJSON.defaultOptions = _.extend($.serializeJSON.defaultOptions, {
       return app.helpers.format.unformatPercent(val);
     },
     money(val) {
-      return app.helpers.format.unformatPrice(val);
+      return app.helpers.format.unformatMoney(val);
     },
     integer(val) {
       return parseInt(val);
