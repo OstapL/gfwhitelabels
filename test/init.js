@@ -1,5 +1,3 @@
-require('./registerBabel.js');
-
 const pug = require('pug');
 
 function compile(module, filename) {
