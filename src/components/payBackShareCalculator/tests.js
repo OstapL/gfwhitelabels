@@ -45,16 +45,12 @@ describe('Payback Share Calculator', () => {
 
   it('Calculator ViewProcess invalid input data', () => {
     const $form = $('form.js-calc-form');
-    $form.find('[name=raiseMoney]').val(invalidCalculatorData.raiseMoney);
-    $form.find('[name=nextYearRevenue]').val(invalidCalculatorData.nextYearRevenue);
-    $form.find('[name=growLevel]').val(invalidCalculatorData.growLevel);
-
     $form.submit();
 
     expect(app.validation.errors).to.deep.equal({
-      raiseMoney: ['Please, enter positive number'],
-      nextYearRevenue: ['Please, enter positive number'],
-      growLevel: ['Please, enter positive number'],
+      raiseMoney: ['Is required'],
+      nextYearRevenue: ['Is required'],
+      growLevel: ['Is required'],
     });
   });
 
