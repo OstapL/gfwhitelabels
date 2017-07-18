@@ -32,4 +32,5 @@ module.exports = {
       }, 'raise_capital_calculator_chunk');
     },
   },
+  auth: ['calculatorCapitalraiseFinish'],
 };

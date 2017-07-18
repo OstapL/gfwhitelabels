@@ -30,7 +30,7 @@
 
             .col-lg-12
               input(
-                value= app.helpers.format.formatPrice(data.monthlyOperatingTwoYears)
+                value= app.helpers.format.formatMoney(data.monthlyOperatingTwoYears)
                 type='money'
                 data-value-type='money'
                 placeholder='Second Year Expenses'
@@ -44,7 +44,7 @@
                 div.showPopover(data-content="<u>Working Capital.</u> The amount of capital needed to carry on a business.  This represents the operating liquidity and is calculated as current assets minus current liabilities; accounts receivable plus inventory minus accounts payable.")
                   i(aria-hidden="true").fa.fa-question-circle.text-muted
 
-            .col-lg-12.mb20
+            .col-lg-12.mb20.text-xs-center.bootstrap-slider-calc
               input(
                 type='text',
                 data-slider-value= data.workingCapital,
@@ -61,7 +61,7 @@
 
             .col-lg-12
               input(
-                value= app.helpers.format.formatPrice(data.additionalOperating)
+                value= app.helpers.format.formatMoney(data.additionalOperating)
                 type='money'
                 data-value-type='money'
                 placeholder='Annual Expenses'
@@ -77,7 +77,7 @@
 
             .col-lg-12
               input(
-                value= app.helpers.format.formatPrice(data.capitalExpenditures)
+                value= app.helpers.format.formatMoney(data.capitalExpenditures)
                 type='money'
                 data-value-type='money'
                 placeholder='Capital Expenditures'
@@ -88,7 +88,7 @@
           .form-group.row
             label(for="taxRate").col-lg-12.font-weight-normal What Tax Rate do you expect to pay on your operating profit? (including federal, state, local, and any other taxes applicable to the operation of your business)
 
-            .col-lg-12.mb20
+            .col-lg-12.mb20.text-xs-center.bootstrap-slider-calc
               input(
                 type='text',
                 data-slider-value= data.taxRate,
@@ -100,7 +100,7 @@
 
             .col-lg-12
               input(
-                value= app.helpers.format.formatPrice(data.annualInterest)
+                value= app.helpers.format.formatMoney(data.annualInterest)
                 type='money'
                 data-value-type='money'
                 placeholder='Annual Interest Expense'
