@@ -578,7 +578,7 @@ module.exports = {
           city: 'City',
         },
         payment_information_data: {
-          name_on_bank_account: 'Name on Bank Account',
+          name_on_bank_account: 'Name As It Appears On Bank Account',
           account_number: 'Account Number',
           account_number_re: 'Re-enter Account Number',
           routing_number: 'Routing Number',
