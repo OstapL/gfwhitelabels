@@ -16,8 +16,6 @@ module.exports = {
       'change select.orderby': 'orderby',
     },
     initialize(options) {
-      options.collection.data = options.collection.data.map(companyData => new app.models.Company(companyData));
-      options.collection.data = options.collection.data.filter(companyData => !companyData.campaign.expired);
       this.collection = options.collection;
     },
 

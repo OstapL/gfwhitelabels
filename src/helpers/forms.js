@@ -178,7 +178,7 @@ module.exports = {
       _(app.validation.errors).each((errors, key) => {
         app.validation.invalidMsg(this, key, errors);
       });
-      this.$('.help-block').prev().scrollTo(5);
+      this.$('.help-block').prev().scrollTo(25);
       if(form.length > 0) {
         form[0].removeAttribute('disabled');
       }

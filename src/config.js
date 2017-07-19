@@ -29,6 +29,9 @@ var e = {
 
   //analytics services settings
   googleTagID: 'GTM-WP7K455',
+  googleAnalyticsID: 'UA-97185485-1',
+  googleAnalyticsIDGeneral: 'UA-97185485-3',
+  facebookPixelID: 1020185798119090,
 
   indexPage: {
     //main slider or img (slider - 1/ img - 0)
@@ -42,7 +45,6 @@ var e = {
     dataProviderVideoPopup: 'vimeo',
     // top banner (none - 0 / dcu - 1 / river - 2)
     topBanner: 0,
-    topBannerText: '',
     //bottom banner (1 - raise capital/ 0 - INVEST)
     bottomBunner: 1,
   },
