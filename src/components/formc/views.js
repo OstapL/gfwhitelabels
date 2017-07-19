@@ -2044,7 +2044,7 @@ module.exports = {
 
     _success(data, newData) {
       this.model.updateMenu(this.model.calcProgress());
-      return 1;
+      return true;
     },
 
     getSuccessUrl() {
