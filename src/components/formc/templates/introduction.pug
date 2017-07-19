@@ -31,8 +31,8 @@ section.formc.introduction.create-company-media.container
         form(action="").form-section
           .certify-checkbox
             .form-group.required
-              label#certify
-                input(type="checkbox" name="certify" value="true" data-value-type="boolean" checked=(values['certify']))
+              label
+                input#certify(type="checkbox" name="certify" value="true" data-value-type="boolean" checked=(values['certify']))
                 | Check this box to certify that all the following statements are true:
           .list
             ul
