@@ -95,4 +95,14 @@ module.exports = Backbone.Router.extend(_.extend({
     $('.popover').popover('hide');
   },
 
+  navigateWithReload(href, options) {
+    const currentLocation = window.location.pathname + (window.location.search || '');
+    if (href === currentLocation) {
+      setTimeout(() => { window.location.reload(); }, 10);
+      return true;
+    }
+
+    this.navigate(href, options);
+  },
+
 }, routesMap.methods));
