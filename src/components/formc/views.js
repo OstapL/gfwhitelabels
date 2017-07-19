@@ -350,15 +350,12 @@ module.exports = {
       let $submitBtn = $form.find('#pay-btn');
       $submitBtn.prop('disabled', true);
 
-      let data = $form.serializeJSON({ checkboxUncheckedValue: 'false', useIntKeysAsArrayIndex: true });
-
+      let data = $form.serializeJSON();
       if (data.certify == 0) {
         delete data.certify;
       }
 
-      api.submitAction.call(this, e, data);
-
-      return false;
+      return api.submitAction.call(this, e, data);
     },
 
     changeSign() {
@@ -1802,7 +1799,7 @@ module.exports = {
     events: _.extend({
       'submit #security_model_form': 'addOutstanding',
       'change #security_type': 'outstandingSecurityUpdate',
-      'click #submitForm': api.submitAction,
+      'click #submitForm': 'submit',
       'click .submit_formc': submitFormc,
       'click .newOustanding': 'newOustanding',
       'click .editOutstanding': 'editOutstanding',
@@ -2044,7 +2041,7 @@ module.exports = {
 
     _success(data, newData) {
       this.model.updateMenu(this.model.calcProgress());
-      return 1;
+      return true;
     },
 
     getSuccessUrl() {
@@ -2071,6 +2068,22 @@ module.exports = {
       app.helpers.disableEnter.disableEnter.call(this);
       this.campaign.updateMenu(this.campaign.calcProgress());
       return this;
+    },
+
+    submit(e) {
+      e.preventDefault();
+
+      let data = $(e.currentTarget).closest('form').serializeJSON();
+
+      if (data.business_loans_or_debt_choice === false) {
+        delete data.business_loans_or_debt;
+      }
+
+      if (data.exempt_offering_choice === false) {
+        delete data.exempt_offering;
+      }
+
+      return api.submitAction.call(this, e, data);
     },
   }, app.helpers.section.methods, app.helpers.menu.methods, app.helpers.yesNo.methods, app.helpers.confirmOnLeave.methods)),
 
