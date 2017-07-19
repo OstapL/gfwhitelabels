@@ -206,7 +206,7 @@ module.exports = {
 
       app.helpers.calculator.saveCalculatorData(CALCULATOR_NAME, data);
 
-      setTimeout(() => app.routers.navigate('/calculator/whatmybusinessworth/finish', {trigger: true}), 100);
+      setTimeout(() => app.routers.navigateWithReload('/calculator/whatmybusinessworth/finish', {trigger: true}), 10);
     },
 
     calculateWithDelta(data, type = 'default') {
