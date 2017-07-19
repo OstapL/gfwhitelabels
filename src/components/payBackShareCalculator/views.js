@@ -125,7 +125,7 @@ module.exports = {
 
       app.helpers.calculator.saveCalculatorData(CALCULATOR_NAME, calculatorData);
 
-      setTimeout(() => app.routers.navigate('/calculator/paybackshare/step-3', {trigger: true}), 100);
+      setTimeout(() => app.routers.navigateWithReload('/calculator/paybackshare/step-3', { trigger: true }), 10);
     },
 
     // get sum of last Annual Distributions

@@ -211,7 +211,7 @@ module.exports = {
       // save calculated data
       _.extend(app.cache.capitalRaiseCalculator, calculatedData);
 
-      app.routers.navigate('/calculator/capitalraise/finish', {trigger: true});
+      setTimeout(() => app.routers.navigateWithReload('/calculator/capitalraise/finish', {trigger: true}), 10);
     },
 
     render: function () {
