@@ -2076,11 +2076,11 @@ module.exports = {
       let data = $(e.currentTarget).closest('form').serializeJSON();
 
       if (data.business_loans_or_debt_choice === false) {
-        delete data.business_loans_or_debt;
+        data.business_loans_or_debt = [];
       }
 
       if (data.exempt_offering_choice === false) {
-        delete data.exempt_offering;
+        data.exempt_offering = [];
       }
 
       return api.submitAction.call(this, e, data);
