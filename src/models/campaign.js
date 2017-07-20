@@ -219,9 +219,7 @@ class Campaign {
   get successful() {
     return this.amount_raised >= this.minimum_raise;
   }
-  get isNew() {
-    return true;
-  }
+
 }
 
 module.exports = Campaign;

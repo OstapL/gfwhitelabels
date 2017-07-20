@@ -18,8 +18,9 @@
               .deys-left #{ company.campaign.daysLeftText() }
             if company.campaign.fundedPercentage().actual > 50
               .funded #{ company.campaign.fundedPercentage().actual }% Funded
-          .is-new
-            img(src=require("images/generals/is-new.png"), alt="")
+          if company.isNew()
+            .is-new
+              img(src=require("images/generals/is-new.png"), alt="")
           .more_inform
             .title.text-center
               if company.campaign.security_type == 0
