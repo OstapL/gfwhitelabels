@@ -16,7 +16,7 @@
           .label
             if company.campaign.daysLeft() < 30
               .deys-left.label-one #{ company.campaign.daysLeftText() }
-            if company.campaign.fundedPercentage().actual > 50
+            if company.campaign.fundedPercentage().actual >= 50
               .funded.label-one #{ company.campaign.fundedPercentage().actual }% Funded
           if company.isNew()
             .is-new
