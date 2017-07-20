@@ -1,4 +1,5 @@
 // import './styles/style.sass'
+
 // app.cache.capitalRaiseCalculator = {
 //   // 'excessCash': '',
 //   'CashOnHand': '',
@@ -22,6 +23,16 @@
 //   // 'Be revolutionary and disruptive to the market' - 4
 //   'typeOfEstablishment': 0
 // }
+
+const defaultCalculatorData = {
+  'liquidityAdjustment': 0,
+  // 'New and potentially growing quickly' - 1
+  // 'Fairly well established' - 2
+  'industryEstablishment': 0,
+  // 'Be an improvement to what is currently on the market' - 3
+  // 'Be revolutionary and disruptive to the market' - 4
+  'typeOfEstablishment': 0,
+};
 
 let industryData = app.helpers.capitalraiseData();
 
@@ -128,6 +139,11 @@ module.exports = {
       this.selects = {
         industryEstablishment: this.industryEstablishment,
         typeOfEstablishment: this.typeOfEstablishment
+      };
+
+      const data = app.helpers.calculator.readCalculatorData(CALCULATOR_NAME);
+      if (!data || _.isEmpty(data)) {
+        app.helpers.calculator.saveCalculatorData(CALCULATOR_NAME, defaultCalculatorData);
       }
     },
 
@@ -137,12 +153,14 @@ module.exports = {
 
       'change .js-select': saveValue,
       'blur input[type=money]': saveValue,
+
     }, app.helpers.calculatorValidation.events),
 
     doCalculation(e) {
       e.preventDefault();
 
-      if (!this.validate(e)) return;
+      if (!this.validate(e))
+        return;
 
       const data = app.helpers.calculator.readCalculatorData(CALCULATOR_NAME),
         calculatedData = {},
@@ -184,7 +202,7 @@ module.exports = {
       calculatedData.liquidityAdjustmentAverageNPV = calculatedData.averageNPV / (1 - data.liquidityAdjustment);
 
       // calculate probability of failure (depends on Industry/Product Permutation)
-      let mathHelper = {
+      const mathHelper = {
         '2:3': 0.3,
         '2:4': 0.5,
         '1:3': 0.5,
@@ -197,12 +215,12 @@ module.exports = {
       calculatedData.PreMoneyValuation = Math.ceil(calculatedData.liquidityAdjustmentAverageNPV / (1 + calculatedData.probabilityOfFailure))
 
       // save calculated data
-      _.extend(app.cache.capitalRaiseCalculator, calculatedData);
+      app.helpers.calculator.saveCalculatorData(CALCULATOR_NAME, _.extend(data, calculatedData));
 
       setTimeout(() => app.routers.navigateWithReload('/calculator/capitalraise/finish', {trigger: true}), 10);
     },
 
-    render: function () {
+    render() {
       const data = app.helpers.calculator.readCalculatorData(CALCULATOR_NAME);
 
       this.$el.html(this.template({
@@ -212,17 +230,29 @@ module.exports = {
       }));
 
       return this;
-    }
+    },
+
   }, app.helpers.calculatorValidation.methods)),
 
   finish: Backbone.View.extend({
     el: '#content',
     template: require('./templates/finish.pug'),
 
-    render: function () {
+    render() {
       const data = app.helpers.calculator.readCalculatorData(CALCULATOR_NAME);
+      let dataSameAsDefault = true;
+      _.each(data || {}, (value, key) => {
+        if (data[key] === defaultCalculatorData[key]) {
+          ;
+        } else if (data[key] === '') {
+          ;
+        } else {
+          dataSameAsDefault = false;
+        }
+      });
+
       //TODO: add data validation
-      if (!data || _.isEmpty(data)) {
+      if (dataSameAsDefault || !data.PreMoneyValuation) {
         setTimeout(() => app.routers.navigate('/calculator/capitalraise/step-1', {trigger: true}), 100);
         return this;
       }
