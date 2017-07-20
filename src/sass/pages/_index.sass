@@ -169,6 +169,7 @@
   padding: rem(25) 0 rem(20) 0
   padding-bottom: rem(25)
   display: $home-our-partners-display
+  text-align: center
   .partners-line
     margin-bottom: rem(35)
     .title
@@ -200,6 +201,11 @@
 
   .item
     min-height: 70px
+    display: inline-block
+    padding-left: 30px
+    padding-right: 30px
+    @media only screen and (min-width : 1440px)
+      width: 14.25%
     @media only screen and (max-width : 544px)
       margin: rem(10) 0
       img
@@ -208,21 +214,23 @@
   img
     margin: 0 auto
     &.callahan
-      width: 160px
+      min-width: 155px
       margin-top: rem(12)
     &.jdcu
-      width: 160px
+      min-width: 155px
       margin-top: rem(12)
     &.river-mark
-      width: 160px
+      min-width: 155px
       margin-top: rem(15)
     &.dcu
-      width: 140px
+      min-width: 135px
       margin-top: rem(7)
     &.momentum3
-      width: 125px
+      min-width: 120px
     &.infinity
-      width: 160px
+      min-width: 155px
+    &.tvfcu
+      min-width: 110px
 
 @media only screen and (max-width : 768px)
   .owl-carousel
