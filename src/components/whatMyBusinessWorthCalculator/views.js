@@ -49,7 +49,7 @@ module.exports = {
     render: function () {
       this.$el.html(this.template());
       return this;
-    }
+    },
   }),
 
   step1: Backbone.View.extend(_.extend({
@@ -129,14 +129,13 @@ module.exports = {
       });
 
       return this;
-    }
+    },
+
   }, app.helpers.calculatorValidation.methods)),
 
   step2: Backbone.View.extend(_.extend({
     el: '#content',
-
     template: require('./templates/step2.pug'),
-
     events: _.extend({
       // calculate your income
       'submit .js-calc-form': 'doCalculation',
@@ -147,7 +146,7 @@ module.exports = {
       $('#content').undelegate();
     },
 
-    initialize(options) {
+    initialize() {
       this.fields = {
         monthlyOperatingTwoYears: {
           required: true,
@@ -279,18 +278,13 @@ module.exports = {
     },
 
     isFirstStepFilled() {
-      if (app.cache.whatMyBusinessWorthCalculator) {
-        let {excessCash, ownCache, projectedRevenueYear, projectedRevenueTwoYears, grossMargin, monthlyOperatingYear} = app.cache.whatMyBusinessWorthCalculator,
-          valid = false;
-
-        if (excessCash && ownCache && projectedRevenueYear &&
-          projectedRevenueTwoYears && grossMargin && monthlyOperatingYear) {
-          valid = true;
-        }
-        return valid;
-      } else {
+      const data = app.helpers.calculator.readCalculatorData(CALCULATOR_NAME);
+      if (!data || _.isEmpty(data))
         return false;
-      }
+
+      const props = ['excessCash', 'ownCache', 'projectedRevenueYear', 'projectedRevenueTwoYears', 'grossMargin', 'monthlyOperatingYear'];
+      const fieldsWithValue = props.filter(name => !!data[name]);
+      return fieldsWithValue && fieldsWithValue.length;
     },
 
     render: function () {
@@ -300,8 +294,9 @@ module.exports = {
       //     return false;
       // }
 
+      const data = app.helpers.calculator.readCalculatorData(CALCULATOR_NAME, defaultCalculatorData);
       this.$el.html(this.template({
-        data: app.helpers.calculator.readCalculatorData(CALCULATOR_NAME, defaultCalculatorData),
+        data,
       }));
 
       // bootstrap slider
