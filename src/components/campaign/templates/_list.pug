@@ -15,9 +15,9 @@
           img(src=company.campaign.list_image_image_id.getUrl('350x209') alt=alternate)
           .label
             if company.campaign.daysLeft() < 30
-              .deys-left #{ company.campaign.daysLeftText() }
+              .deys-left.label-one #{ company.campaign.daysLeftText() }
             if company.campaign.fundedPercentage().actual > 50
-              .funded #{ company.campaign.fundedPercentage().actual }% Funded
+              .funded.label-one #{ company.campaign.fundedPercentage().actual }% Funded
           if company.isNew()
             .is-new
               img(src=require("images/generals/is-new.png"), alt="")
