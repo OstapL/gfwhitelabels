@@ -1,21 +1,20 @@
 .row.us-fields
   input(type="hidden" name="personal_information_data[state]" id="personal_information_data__state" value=user.state)
   input(type="hidden" name="personal_information_data[city]" id="personal_information_data__city" value=user.city)
-  .col-xl-7.col-lg-6.p-r-xl-0
+  .col-xl-6.col-lg-6.p-xl-0
     -
       pug_html += app.fields.nestedTextLabel(
         'personal_information_data',
         'zip_code',
         user,
         -1, {
-          class1: 'col-xl-5 col-lg-12 text-lg-left text-xl-right',
-          class2: 'col-xl-7 col-lg-12',
+          class1: 'col-xl-6 col-lg-12 text-lg-left text-xl-right',
+          class2: 'col-xl-6 col-lg-12 p-r-xl-0',
           id: 'personal_information_data__zip_code',
         }, fields.personal_information_data.schema.zip_code);
-  .col-xl-5.col-lg-6.city_states.col-md-12
-    label.col-xl-5.col-md-6.col-sm-6.col-xs-6.p-l-0 City/State
-      span.color-red *
-    .col-xl-7.col-lg-12.col-md-6.col-sm-6.col-xs-6.p-l-0
+  .col-xl-6.col-lg-6.city_states.col-md-12
+    label.col-xl-5.col-md-6.col-sm-6.col-xs-6.p-l-0.text-xl-right City/State
+    .col-xl-7.col-lg-12.col-md-6.col-sm-6.col-xs-6
       span(data-toggle="modal" data-target="#city_state_modal" href="#city_state_modal").change_state_city
         span.input-value.js-city-state #{user.city}, #{user.state}
         i.fa.fa-pencil-square-o
