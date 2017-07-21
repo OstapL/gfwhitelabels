@@ -38,9 +38,9 @@ class Company {
   }
 
   isNew() {
-    const today = moment.utc();
-    const approvedDate = moment.utc(this.approved_date);
-    return today.diff(approvedDate, 'days') <= 10;
+    const today = moment();
+    const approvedDate = moment(this.approved_date);
+    return Math.ceil(today.diff(approvedDate, 'days', true)) <= 10;
   }
 }
 
