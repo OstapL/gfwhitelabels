@@ -52,4 +52,5 @@ module.exports = {
       }, 'establish_business_calculator_chunk');
     },
   },
+  auth: ['calculatorEstablishedBusinessFinish'],
 };

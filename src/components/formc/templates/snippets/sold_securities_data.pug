@@ -1,6 +1,6 @@
 
 .col-lg-6.col-md-12.p-xs-0
-  h3.text-xs-center Most Recent Fiscal Year
+  h3.text-xs-center.m-t-2 Most Recent Fiscal Year
   | !{app.fields.nestedTextLabel(name, 'total_assets', values[0] ? values[0] : '', 0, {class1: 'col-xl-12 text-xl-left', class2: 'col-xl-12'}, attr.schema.total_assets)}
 
   | !{app.fields.nestedTextLabel(name, 'cash_and_equivalents', values[0] ? values[0] : '', 0, {class1: 'col-xl-12 text-xl-left', class2: 'col-xl-12'}, attr.schema.cash_and_equivalents)}
@@ -23,7 +23,7 @@
     | !{app.fields.nestedTextLabel(name, 'total_tax', values[0] ? values[0] : '', 0, {class1: 'col-xl-12 text-xl-left', class2: 'col-xl-12'}, attr.schema.total_tax)}
 
 .col-lg-6.col-md-12.p-xs-0
-  h3.text-xs-center Prior Fiscal Year
+  h3.text-xs-center.m-t-2 Prior Fiscal Year
   | !{app.fields.nestedTextLabel(name, 'total_assets', values[1] ? values[1] : '', 1, {class1: 'col-xl-12 text-xl-left', class2: 'col-xl-12'}, attr.schema.total_assets)}
 
   | !{app.fields.nestedTextLabel(name, 'cash_and_equivalents', values[1] ? values[1] : '', 1, {class1: 'col-xl-12 text-xl-left', class2: 'col-xl-12'}, attr.schema.cash_and_equivalents)}
