@@ -16,5 +16,5 @@
     label.col-xl-5.col-md-6.col-sm-6.col-xs-6.p-l-0.text-xl-right City/State
     .col-xl-7.col-lg-12.col-md-6.col-sm-6.col-xs-6
       span(data-toggle="modal" data-target="#city_state_modal" href="#city_state_modal").change_state_city
-        span.input-value.js-city-state #{user.city}, #{user.state}
+        span.input-value.js-city-state #{user.city || '(City)'}, #{user.state || '(State)'}
         i.fa.fa-pencil-square-o
