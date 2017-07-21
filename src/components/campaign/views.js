@@ -86,7 +86,7 @@ module.exports = {
       };
 
       if (this.model.ga_id) {
-        app.emitCompanyAnalyticsEvent(this.model.ga_id);
+        app.analytics.emitCompanyCustomEvent(this.model.ga_id);
       }
     },
 
@@ -628,7 +628,7 @@ module.exports = {
       this.initMaxAllowedAmount();
 
       if (this.model.ga_id)
-        app.emitCompanyAnalyticsEvent(this.model.ga_id);
+        app.analytics.emitCompanyCustomEvent(this.model.ga_id);
     },
 
     render() {
@@ -1193,8 +1193,7 @@ module.exports = {
     _success(data) {
       const feeInfo = this.calcFeeWithCredit();
       this.user.credit = feeInfo.remainingCredit;
-
-      app.emitFacebookPixelEvent('MakeInvestment');
+      app.analytics.emitEvent(app.analytics.events.InvestmentMade, {});
       this.saveEsign(data);
     },
 
@@ -1205,7 +1204,7 @@ module.exports = {
     el: '#content',
     initialize(options) {
       if (this.model.company.ga_id)
-        app.emitCompanyAnalyticsEvent(this.model.company.ga_id);
+        app.analytics.emitCompanyCustomEvent(this.model.company.ga_id);
     },
 
     render() {
