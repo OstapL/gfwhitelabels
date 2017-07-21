@@ -36,7 +36,7 @@ class InfoProvider {
     let emailString = `mailto:${email.to || ''}`;
 
     emailString += `?subject=${email.subject || ''}`;
-    emailString += `&body='${email.body || ''}`;
+    emailString += `&body=${email.body || ''}`;
 
     return emailString;
   }
