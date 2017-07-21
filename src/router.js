@@ -1,14 +1,14 @@
 const componentRoutes = [
-  require('components/payBackShareCalculator/route'),
-  require('components/capitalRaiseCalculator/route'),
-  require('components/whatMyBusinessWorthCalculator/route'),
-  require('components/raiseFunds/route'),
-  require('components/pg/route'),
-  require('components/campaign/route'),
-  require('components/anonymousAccount/route'),
-  require('components/accountProfile/route'),
-  require('components/establishedBusinessCalculator/route'),
-  require('components/formc/route'),
+  require('components/payBackShareCalculator/route.js'),
+  require('components/capitalRaiseCalculator/route.js'),
+  require('components/whatMyBusinessWorthCalculator/route.js'),
+  require('components/raiseFunds/route.js'),
+  require('components/pg/route.js'),
+  require('components/campaign/route.js'),
+  require('components/anonymousAccount/route.js'),
+  require('components/accountProfile/route.js'),
+  require('components/establishedBusinessCalculator/route.js'),
+  require('components/formc/route.js'),
   // require('components/blog/route'),
 ];
 
@@ -93,6 +93,16 @@ module.exports = Backbone.Router.extend(_.extend({
     $('#content').off('click');
     //$('form').undelegate();
     $('.popover').popover('hide');
+  },
+
+  navigateWithReload(href, options) {
+    const currentLocation = window.location.pathname + (window.location.search || '');
+    if (href === currentLocation) {
+      setTimeout(() => { window.location.reload(); }, 10);
+      return true;
+    }
+
+    this.navigate(href, options);
   },
 
 }, routesMap.methods));
