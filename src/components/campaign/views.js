@@ -531,6 +531,7 @@ module.exports = {
           },
           choices: COUNTRIES
         },
+        messageRequired: 'Not a valid choice',
       });
 
       this.fields.personal_information_data.schema.phone = _.extend(this.fields.personal_information_data.schema.phone, {
