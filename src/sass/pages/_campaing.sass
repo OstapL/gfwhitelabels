@@ -122,27 +122,34 @@
 
 	.for_img
 		margin: 0 -1px
-		//height: rem(209)
-		overflow: hidden
 		position: relative
-
 		img
 			width: 100%
 
 		.timer_day,
-		.deys-left
+		.deys-left,
+		.funded
 			position: absolute
 			background: $date-issuer-dashboard-bgc
 			padding: 0 rem(13)
 			color: $white
 			border-radius: rem(3)
-			position: absolute
 			right: rem(11)
 			top: rem(11)
 			font-weight: bold
 			font-size: rem(14)
 			line-height: rem(27)
-
+		.funded
+			background: $funded-campaign-bgc
+		.label
+			.label-one
+				&:nth-child(2)
+					top: 44px
+		.is-new
+			position: absolute
+			top: -2px
+			left: -3px
+			z-index: 1
 		.more_inform
 			opacity: 0
 			position: absolute
@@ -305,30 +312,25 @@
 			border-bottom-left-radius: none
 	
 	.bottom_text
-		margin: 0 rem(10)
-
-		.left_desc
+		border-top: solid 1px $border-color
+		margin-top: rem(15)
+		.left_desc,
+		.right_desc
 			float: left
 			color: $small-text
 			font-size: rem(11)
 			line-height: rem(10)
 			letter-spacing: rem(0.275)
-			margin-top: rem(19)
-			margin-bottom: rem(19)
+			padding: 13px 10px
 			h6
 				color: $black_text
-
+				display: inline-block
+				margin-bottom: 0
+			i
+				margin-right: rem(3)
 		.right_desc
 			float: right
-			text-align: right
-			color: $small-text
-			font-size: rem(11)
-			line-height: rem(10)
-			letter-spacing: rem(0.275)
-			margin-top: rem(19)
-			margin-bottom: rem(19)
-			h6
-				color: $black_text
+
 .subscription-campaing-list
 	margin-bottom: rem(70)
 	display: block
@@ -350,6 +352,11 @@
 	.create-alert-block
 		.pull-right
 			float: left
+	.block_link
+		&:hover~.one_block
+			.for_img
+				.more_inform
+					opacity: 0
 	
 @media only screen and (max-width : 545px)
 	.create-alert-block
@@ -365,11 +372,6 @@
 		.description
 			min-height: 120px
 			height: 100%
-	.block_link
-		&:hover~.one_block
-			.for_img
-				.more_inform
-					opacity: 0
 
 @media only screen and (max-width : 360px)
 	.campaing-list
@@ -391,7 +393,6 @@
 			.place
 				text-align: left!important
 		.bottom_text
-			margin: 0 rem(9)
 			.left_desc, .right_desc
 				font-size: rem(10)
 				letter-spacing: normal
@@ -407,14 +408,3 @@
 			text-align: center
 			float: none!important
 			margin-left: 0!important
-@media only screen and (max-width : 320px)
-	.campaing-list
-		.one_block
-			.bottom_text
-				.left_desc, .right_desc
-					display: block
-					width: 100%
-					text-align: center
-					margin: rem(10) 0
-				.left_desc
-					margin-bottom: 0
