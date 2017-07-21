@@ -1,6 +1,5 @@
-const File = require('./file.js');
 
-
+const moment = require('moment');
 class Company {
   constructor(data={}, schema={}, url=null) {
     //
@@ -37,6 +36,12 @@ class Company {
     let data = Object.assign({}, this.data);
     return data;
   }
+
+  isNew() {
+    const today = moment.utc();
+    const approvedDate = moment.utc(this.approved_date);
+    return today.diff(approvedDate, 'days') <= 10;
+  }
 }
 
-module.exports = Company
+module.exports = Company;

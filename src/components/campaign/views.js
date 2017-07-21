@@ -16,8 +16,6 @@ module.exports = {
       'change select.orderby': 'orderby',
     },
     initialize(options) {
-      options.collection.data = options.collection.data.map(companyData => new app.models.Company(companyData));
-      options.collection.data = options.collection.data.filter(companyData => !companyData.campaign.expired);
       this.collection = options.collection;
     },
 
@@ -578,7 +576,7 @@ module.exports = {
           city: 'City',
         },
         payment_information_data: {
-          name_on_bank_account: 'Name on Bank Account',
+          name_on_bank_account: 'Name As It Appears on Bank Account',
           account_number: 'Account Number',
           account_number_re: 'Re-enter Account Number',
           routing_number: 'Routing Number',

@@ -31,14 +31,14 @@
                     each role in roleInfo.roles
                       span.user-type #{ role.title }
                     .user-company
-                      | in
-                      a(href=app.getIssuerDashboardUrl(roleInfo.company.id)).link-3  #{ roleInfo.company.name }
+                      | in 
+                      a(href=app.getIssuerDashboardUrl(roleInfo.company.id)).link-3 #{ roleInfo.company.name }
                       |  company.
           else if company && company.name && company.is_paid
             .profile-type-user
               .profile-type-user-wrap
                 .user-company
-                  a(href="/dashboard/" + company.formc_id + "/issuer-dashboard").link-3  #{ company.name }
+                  a(href="/dashboard/" + company.formc_id + "/issuer-dashboard").link-3 #{ company.name }
                   |  company.
           if user.credit > 0 && user.days_left > 0
             hr.profile-type-user-hr

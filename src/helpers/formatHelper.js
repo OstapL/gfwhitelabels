@@ -42,12 +42,40 @@ const SKIP_KEY_CODES = [
   190,  //period
 ];
 
-const filterNumberRx = /[^0-9\.]/g;
+const filterNumberRx = /[^0-9\.\-]/g;
 
 
 module.exports = {
   formatPrice: formatPrice,
   formatNumber: formatNumber,
+
+  formatMoney(value) {
+    const moneyString = String(value).replace(filterNumberRx, '');
+    if (!moneyString)
+      return '';
+
+    const moneyValue = Number(moneyString);
+    if (isNaN(moneyValue) || !moneyValue)
+      return '';
+
+    return '$' + moneyValue.toLocaleString('en-US');
+
+  },
+
+  unformatMoney(value) {
+    if (!value)
+      return '';
+
+    const numberString = value.replace(filterNumberRx, '');
+    if (!numberString)
+      return '';
+
+    const number = Number(numberString);
+    if (isNaN(number))
+      return '';
+
+    return number;
+  },
 
   unformatPrice(price) {
     return parseFloat(price.replace(/[\$\,]/g, ''));
@@ -130,15 +158,14 @@ module.exports = {
   formatMoneyInputOnKeyup(e) {
     const countChar = (str='', char='', to=str.length) => {
       let count = 0;
-      for (let i = 0; i <= to; i += 1)
+      for (let i = 0; i < to; i += 1)
         count += (str[i] === char) ? 1 : 0;
 
       return count;
     };
 
     const findRemovedChar = (oldString, newString) => {
-      const numRx = /[^0-9\.]/g;
-      if (oldString.replace(numRx, '') !== newString.replace(numRx, ''))
+      if (oldString.length <= newString.length)
         return -1;
 
       const length = Math.min(oldString.length, newString.length);
@@ -150,45 +177,65 @@ module.exports = {
       return -1;
     };
 
-    if (_.contains(SKIP_KEY_CODES, e.keyCode))
+    const isDigit = (str) => {
+      return /^[0-9]$/.test(str);
+    };
+
+    if (_.contains(SKIP_KEY_CODES, e.keyCode)) {
+      e.target.dataset.prevCursor = e.target.selectionStart;
       return;
+    }
 
     const positiveOnly = !!e.target.dataset.positiveOnly;
 
     let rawValue = e.target.value;
-    const rawValueNumber = rawValue.replace(/\$/g, '');
-    let valueString = rawValueNumber.replace(/,/g, '');
+    const prevValue = e.target.dataset.prev || rawValue;
+    let cursorPosition = e.target.selectionStart;
+    const prevCursorPosition = Number(e.target.dataset.prevCursor || cursorPosition);
+    const valueString = rawValue.replace(/[\$,]/g, '');
 
     let number = parseFloat(valueString);
-    if (isNaN(number))
+    if (isNaN(number)) {
+      e.target.dataset.prevCursor = e.target.selectionStart;
       return e.target.value = valueString.replace(/[^0-9\$,\.]/g, '');
+    }
 
     if (positiveOnly)
       number = number < 0 ? Math.abs(number) : number;
 
-    let cursorPosition = e.target.selectionStart;
     let cursorPositionFix = rawValue.startsWith('$') ? 0 : 1;
-    const newValue = number.toLocaleString('en-US');
-    e.target.value = '$' + newValue;
+    const newValue = '$' + number.toLocaleString('en-US');
 
-    const rawValueCommaCount = countChar(rawValue, ',', cursorPosition);
-    const newValueCommaCount = countChar(newValue, ',', cursorPosition);
+    e.target.value = newValue;
+    e.target.dataset.prev = newValue;
+    e.target.dataset.prevCursor = cursorPosition;
 
-    if (rawValueCommaCount !== newValueCommaCount) {
-      cursorPositionFix += newValueCommaCount - rawValueCommaCount;
-    }
-
-    if (rawValueNumber.length < newValue.length) {
-      const removedCharIdx = findRemovedChar(rawValueNumber, newValue);
-      if (removedCharIdx >= 0) {
-        if ((cursorPosition - 1) <= removedCharIdx && newValue[removedCharIdx] === ',')
-          cursorPositionFix -= 1;
+    const removedCharIdx = findRemovedChar(prevValue, rawValue);
+    if (removedCharIdx >= 0) {
+      const removedChar = prevValue[removedCharIdx];
+      if (isDigit(removedChar)) {
+        const prevValueCommaCount = countChar(prevValue, ',');
+        const newValueCommaCount = countChar(newValue, ',');
+        if (prevValueCommaCount !== newValueCommaCount) {
+          cursorPositionFix += newValueCommaCount - prevValueCommaCount;
+        }
+      } else if (removedChar === ',') {
+        //removed with delete
+        if (prevCursorPosition === cursorPosition)
+          cursorPositionFix += 1;
+      }
+    } else {  //char added
+      const prevValueCommaCount = countChar(prevValue, ',');
+      const newValueCommaCount = countChar(newValue, ',');
+      if (prevValueCommaCount !== newValueCommaCount) {
+        cursorPositionFix += newValueCommaCount - prevValueCommaCount;
       }
     }
 
     cursorPosition += cursorPositionFix;
     cursorPosition = cursorPosition <= 0 ? 1 : cursorPosition;
     e.target.setSelectionRange(cursorPosition, cursorPosition);
+    e.target.dataset.prevCursor = cursorPosition;
   },
 
   formatPercent(value) {
@@ -196,18 +243,15 @@ module.exports = {
 
     let numberValue = Number(numberString);
     if (isNaN(numberValue) || !numberValue)
-      return '0%';
+      return '';
 
     return numberValue + '%';
   },
 
   unformatPercent(value) {
-    if (!value)
-      return 0;
-
     const stringValue = String(value).replace(filterNumberRx, '');
     if (!stringValue)
-      return 0;
+      return '';
 
     return Number(stringValue);
   },
