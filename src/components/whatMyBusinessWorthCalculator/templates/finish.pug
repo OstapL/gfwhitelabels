@@ -25,7 +25,7 @@
         .like-detail-icon.d-inline-block
           i(aria-hidden="true").fa.fa-diamond.like-icon-circle
         | &nbsp;Based on your inputs, you may want to consider raising
-        strong.font-weight-bold &nbsp;#{formatPrice(Math.round(data.finalRaiseAmount / 1000) * 1000)}
+        strong.font-weight-bold &nbsp;#{app.helpers.format.formatMoney(Math.round(data.finalRaiseAmount / 1000) * 1000)}
 
   .row
     .offset-md-3.col-md-6.text-sm-center
