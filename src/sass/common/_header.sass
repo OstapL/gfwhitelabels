@@ -489,17 +489,24 @@ header
       display: none
 
   @media screen and (max-width: 991px)    
-    position: fixed
+    position: relative
     top: 0
     left: 0
     z-index: 999
     display: block
-    height: 65px;
     margin: 0
     max-height: none
     width: 100%
     &.sticky-active
       background-color: rgba($menu_backgound_from, .93)
+      position: fixed
+      height: 65px
+      -webkit-animation-name: fadeInDown
+      animation-name: fadeInDown
+      -webkit-animation-duration: 0.5s
+      animation-duration: 0.5s
+      -webkit-animation-fill-mode: both
+      animation-fill-mode: both
     .navbar .navbar-brand
       display: inline-block
       height: $navbar_height_mobile
@@ -675,10 +682,6 @@ header
         .list-container.user-info-drop.notification-container
           top: rem(35)
 
-@media screen and (max-width: 991px)
-  // on mobile devaices main menu absolute positioned so we need set top padding for main content
-  .page
-    padding-top: 65px
 
 @media screen and (max-width: 991px)
   #menuProfile
