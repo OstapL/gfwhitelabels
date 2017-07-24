@@ -352,6 +352,20 @@ class User {
     return this.companiesMember;
   }
 
+  get stats() {
+    const full_name = ((this.data.first_name || this.data.last_name) ? (`${this.data.first_name} ${this.data.last_name}`) : '').trim();
+    if (this.data.email) {
+      return {
+        user: {
+          id: this.data.id,
+          email: this.data.email,
+          full_name,
+        },
+      };
+    }
+    return {};
+  }
+
 }
 
 module.exports = User;

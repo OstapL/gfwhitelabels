@@ -455,6 +455,8 @@ module.exports = {
     },
 
     onCancel(investment) {
+      app.analytics.emitEvent(app.analytics.events.InvestmentCancelled, app.user.stats);
+
       _.each(this.model.data, (i) => {
         if (i.campaign_id != investment.campaign_id)
           return;
