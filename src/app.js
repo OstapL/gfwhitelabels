@@ -2,18 +2,10 @@ const Router = require('./router.js');
 const User = require('components/accountProfile/user.js');
 const Menu = require('components/menu/views.js');
 
-const safeDataLayerPush = (...args) => {
-  if (!window.dataLayer) {
-    console.warn('No data layer found! It looks like GTM scripts blocked');
-    return;
-  }
-
-  dataLayer.push(...args);
-};
-
 class App {
   constructor() {
     this.cache = {};
+    this.analytics = require('./helpers/analytics.js');
     this.helpers = require('./helpers.js');
     this.config = require('./config.js');
     this.cookies = require('cookies-js');
@@ -41,10 +33,6 @@ class App {
         delete this.config.googleTagID;
       }
 
-      if (this.config.googleTagID) {
-        this.initFacebookPixel();
-      }
-
       this.routers = new Router();
       Backbone.history.start({ pushState: true });
       window.addEventListener('popstate', this.routers.back);
@@ -70,15 +58,7 @@ class App {
     });
   }
 
-  initFacebookPixel() {
-    if (!this.config.googleTagID || !this.config.facebookPixelID)
-      return;
-
-    safeDataLayerPush({
-      event: 'fb-pixel-init'
-    });
-  }
-
+  //move this logic to GTM side
   emitFacebookPixelEvent(eventName='ViewContent', params={}) {
     if (!this.config.googleTagID || !this.config.facebookPixelID)
       return;
@@ -132,6 +112,16 @@ class App {
       eventAction: 'ViewPage',
       trackerId,
     });
+  }
+
+  emitAnalyticsEvent(eventName, eventData={}) {
+    if (!this.config.googleTagID)
+      return;
+
+    if (!eventName)
+      return console.error('Event Name is not set');
+
+    safeDataLayerPush();
   }
 
   showLoading() {

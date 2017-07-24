@@ -1,7 +1,7 @@
 div(data-investmentid=id).one_table
   -
     var url = campaign.getMainImage();
-    var background = 'background: url(' + url + ') center center no-repeat; background-size: cover;';
+    var background = 'background: url(' + (url || require('images/default/350x282.png')) + ') center center no-repeat; background-size: cover;';
   .img_column.text-lg-center.text-sm-center(style=background)
 
     if active
@@ -11,12 +11,12 @@ div(data-investmentid=id).one_table
           i.fa.fa-check.like-icon-circle
           | Investment Processed
     else
-      if campaign.successful
+      if cancelled
+        span.unsuccessfull Cancelled
+      else if campaign.successful
         span.successfull Successfully
           br
           | funded campaign
-      else if cancelled
-        span.unsuccessfull Cancelled
       else if expired
         span.unsuccessfull Unsuccessfully
           br
