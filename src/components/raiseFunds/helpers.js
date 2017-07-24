@@ -45,6 +45,7 @@ let exports = {
               { trigger: true, replace: false }
             );
           }, 500);
+          app.analytics.emitEvent(app.analytics.events.CampaignSubmitted, app.user.stats);
         });
     } else if(app.user.company.is_approved == 1) {
       app.routers.navigate(

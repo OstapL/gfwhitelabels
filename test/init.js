@@ -1,30 +1,49 @@
 const pug = require('pug');
 
-function compile(module, filename) {
-  // ToDo
-  // Why does globals require is not working ?!
-  var template = pug.compileFile(filename, { 
-    pretty: false,
-    client: true,
-    inlineRuntimeFunctions: true,
-    globals: ['require', 'app'],
-  });
-  module.exports = template
-}
-
 if (require.extensions) {
-  require.extensions['.pug'] = compile
+  require.extensions['.pug'] = function compile(module, filename) {
+    var template = pug.compileFile(filename, {
+      pretty: false,
+      client: true,
+      inlineRuntimeFunctions: true,
+      globals: ['require', 'app'],
+    });
+    module.exports = template
+  }
 }
 
-const LocalStorage = require('node-localstorage').LocalStorage;
+const { LocalStorage } = require('node-localstorage');
+const { JSDOM } = require('jsdom');
+
 global.localStorage = new LocalStorage('./test/localStorageTemp');
+global.window = (new JSDOM('<body><div id="page"><div id="content"></div></div></body>', {
+  url: 'https://alpha.growthfountain.com'
+})).window;
 
-const jsdom = require('jsdom');
-
-global.document = jsdom.jsdom('<body><div id="content"></div></body>');
-global.window = document.defaultView;
+global.document = window.document;
 global.window.localStorage = global.localStorage;
-global.navigator = {userAgent: 'node.js'};
+window.__defineSetter__('location', (val) => {});
+global.location = window.location;
+global.navigator = { userAgent: 'node.js' };
+global.$ = global.jQuery = require('jquery');
+global._ = require('underscore');
+global.Backbone = require('backbone');
+global.Tether = window.Tether = require('tether');
+require('bootstrap');
+global.Element = window.Element;
+global.Node = window.Node;
 
-require('../src/app.js');
-global.require = require;
+require('babel-polyfill');
+require('jquery-serializejson');
+require('js/html5-dataset.js');
+require('classlist-polyfill');
+
+require('../src/extensions.js');
+
+global.api = require('../src/helpers/forms.js');
+const App = require('../src/app.js');
+global.app = App();
+const Router = require('src/router.js');
+app.routers = new Router();
+
+global.testHelpers = require('./testHelpers.js');
