@@ -6,7 +6,8 @@ app/dist/css
 *.css.map
 .idea/*
 .dist/*
-
+#localstorage dir for tests\
+test/localStorageTemp/*
 # Logs
 logs
 *.log
