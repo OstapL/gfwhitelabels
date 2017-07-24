@@ -100,15 +100,7 @@ module.exports = {
       }));
 
       const sendVideoPlayEvent = () => {
-        app.analytics.emitEvent(app.analytics.events.VideoViewed, {
-          url,
-        });
-        // app.emitGoogleAnalyticsEvent('company-video-play', {
-        //   eventCategory: 'Video',
-        //   eventAction: 'play',
-        //   //eventLabel: 'Youtube Video',
-        //   eventValue: url,
-        // });
+        app.analytics.emitEvent(app.analytics.events.VideoViewed, app.user.stats);
       };
 
       let $modal = $('#videoModal');

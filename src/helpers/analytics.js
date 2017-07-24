@@ -18,6 +18,7 @@ const analytics = {
   events: {
     RegistrationCompleted: 'RegistrationCompleted',
     InvestmentMade: 'InvestmentMade',
+    InvestmentClicked: 'InvestmentClicked',
     InvestmentCancelled: 'InvestmentCancelled',
     CampaignStarted: 'CampaignStarted',
     CampaignSubmitted: 'CampaignSubmitted',

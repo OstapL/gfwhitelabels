@@ -46,15 +46,7 @@ module.exports = {
       if (!this.validate(e))
         return;
 
-      app.analytics.emitEvent(app.analytics.events.CalculatorUsed, {});
-
-      // app.emitGoogleAnalyticsEvent('calculate-revenue-share', {
-      //   eventCategory: 'Calculator',
-      //   eventAction: 'calculate',
-      //   eventLabel: 'Company',
-      //   eventValue: window.location.pathname,
-      // });
-
+      app.analytics.emitEvent(app.analytics.events.CalculatorUsed, app.user.stats);
       const filterNumberRx = /[^0-9\.]/g;
       this.data.raiseMoney = Number(this.$raiseMoney.val().replace(filterNumberRx, ''));
       this.data.nextYearRevenue = Number(this.$nextYearRevenue.val().replace(filterNumberRx, ''));
