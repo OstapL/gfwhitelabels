@@ -18,8 +18,8 @@ module.exports = {
     myAttr.value = value.hasOwnProperty(name) ? value[name]: '';
 
     // Fix for nested fields not to be required in html
-    myAttr._required = myAttr.required;
-    myAttr.required = false;
+    // myAttr._required = myAttr.required;
+    // myAttr.required = false;
 
     if(index != -1) {
       myAttr.id = nestedName + '__' + index + '__' + name + '';
