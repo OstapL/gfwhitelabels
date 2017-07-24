@@ -348,6 +348,13 @@
 
 	input[type="email"]
 		height: $subscription-campaing-height-input
+		max-width: 80%
+		padding-right: 50px
+		@media only screen and (max-width : 442px)
+			padding-right: 50px
+			max-width: 75%
+		@media only screen and (max-width : 330px)
+			padding-right: 60px
 @media only screen and (max-width : 768px)
 	.create-alert-block
 		.pull-right
