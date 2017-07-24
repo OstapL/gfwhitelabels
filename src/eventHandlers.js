@@ -235,13 +235,13 @@ $('body').on('click', 'a', (event) => {
     let $target = $(event.currentTarget);
     let $leftMenu = $(' .pages-left-menu');
     if (!$leftMenu.length)
-      return;
+      return true;
 
     let $activeItem = $target.closest('li');
     let $menuItems = $activeItem.siblings();
     $menuItems.each((_, elem) => $(elem).removeClass('active'));
     $activeItem.addClass('active');
-    return;
+    return true;
   }
 
   if (!href ||
