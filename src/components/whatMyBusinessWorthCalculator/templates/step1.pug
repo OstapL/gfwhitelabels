@@ -30,68 +30,65 @@
 
             .col-lg-12
               input(
-                value= formatPrice(data.excessCash),
-                type='text',
-                placeholder='Excess Cash',
-                data-input-mask='price',
+                value= app.helpers.format.formatMoney(data.excessCash)
+                type='money'
+                data-value-type='money'
+                placeholder='Excess Cash'
                 autocomplete='off'
-                data-model-value='excessCash',
-                data-current-value= data.excessCash
-                name='excessCash')#excessCash.form-control.js-field
+                name='excessCash'
+              )#excessCash.form-control.js-field
 
           .form-group.row
             label(for="ownCache").col-lg-12.font-weight-normal How much cash does your business currently have?
 
             .col-lg-12
               input(
-                value= formatPrice(data.ownCache),
-                type='text',
-                placeholder='Cash on Hands',
+                value= app.helpers.format.formatMoney(data.ownCache)
+                type='money'
+                data-value-type='money'
+                placeholder='Cash on Hands'
                 autocomplete='off'
-                data-input-mask='price',
-                data-model-value='ownCache',
-                data-current-value= data.ownCache
-                name='ownCache')#ownCache.form-control.js-field
+                name='ownCache'
+              )#ownCache.form-control.js-field
 
           .form-group.row
             label(for="projectedRevenueYear").col-lg-12.font-weight-normal What is your business’s projected revenue for the next 12 months?
 
             .col-lg-12
               input(
-                value= formatPrice(data.projectedRevenueYear),
-                type='text',
-                placeholder='Year One Projected Revenue',
+                value= app.helpers.format.formatMoney(data.projectedRevenueYear)
+                type='money'
+                data-value-type='money'
+                placeholder='Year One Projected Revenue'
                 autocomplete='off'
-                data-input-mask='price',
-                data-model-value='projectedRevenueYear',
-                data-current-value= data.projectedRevenueYear
-                name="projectedRevenueYear")#projectedRevenueYear.form-control.js-field
+                name="projectedRevenueYear"
+              )#projectedRevenueYear.form-control.js-field
 
           .form-group.row
             label(for="projectedRevenueTwoYears").col-lg-12.font-weight-normal What is your business’s projected revenue for the subsequent 12 months? (i.e. months 13 - 24)
 
             .col-lg-12
               input(
-                value= formatPrice(data.projectedRevenueTwoYears),
-                type='text',
-                placeholder='Year Two Projected Revenue',
+                value= app.helpers.format.formatMoney(data.projectedRevenueTwoYears)
+                type='money'
+                data-value-type='money'
+                placeholder='Year Two Projected Revenue'
                 autocomplete='off'
-                data-input-mask='price',
-                data-model-value='projectedRevenueTwoYears',
-                data-current-value= data.projectedRevenueTwoYears
-                name="projectedRevenueTwoYears")#projectedRevenueTwoYears.form-control.js-field
+                name="projectedRevenueTwoYears"
+              )#projectedRevenueTwoYears.form-control.js-field
 
           .form-group.row
             label(for="grossMargin").col-lg-12.font-weight-normal.d-inline-block Let's focus on Cost of Goods Sold, or COGS: What gross margin  do you expect to earn on your business’s sales over the next 2 years?&nbsp;&nbsp;
               div.d-inline-block
                 div.showPopover(data-content="<b class=\"what-my-business-worth\"><div class=\"large\"><span class=\"formula\">Gross Margin (:%) = Revenue - </span><span class=\"fraction\"><span class=\"top\">Cost of Goods Sold</span><span class=\"bottom\">Revenue</span></span></div></b>")
                   i(aria-hidden="true").fa.fa-question-circle.text-muted
-            .col-lg-12.mb20
+            .col-lg-12.mb20.text-xs-center.bootstrap-slider-calc
               input(
-                type='text',
+                type='percent',
+                data-value-type='percent'
                 data-slider-value= data.grossMargin
                 name="grossMargin"
-                data-model-value='grossMargin')#grossMargin.form-control.js-bootstrap-slider
+              )#grossMargin.form-control.js-bootstrap-slider
 
           .form-group.row
             label(for="monthlyOperatingYear").col-lg-12.font-weight-normal.d-inline-block What do you expect your monthly operating expenses to average over the next 12 months?&nbsp;&nbsp;
@@ -101,14 +98,13 @@
 
             .col-lg-12
               input(
-                value= formatPrice(data.monthlyOperatingYear),
-                type='text',
-                placeholder='Profit Year Five',
+                value= app.helpers.format.formatMoney(data.monthlyOperatingYear)
+                type='money'
+                data-value-type='money'
+                placeholder='Profit Year Five'
                 autocomplete='off'
-                data-input-mask='price',
-                data-model-value='monthlyOperatingYear',
-                data-current-value= data.monthlyOperatingYear
-                name="monthlyOperatingYear")#monthlyOperatingYear.form-control.js-field
+                name="monthlyOperatingYear"
+              )#monthlyOperatingYear.form-control.js-field
 
           .form-group.row.clearfix.m0
             .col-xs-6.p-t-2.m-t-1
