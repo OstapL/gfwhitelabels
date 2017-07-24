@@ -367,7 +367,7 @@ class User {
       };
     }
     return {};
-  },
+  }
 
 }
 
