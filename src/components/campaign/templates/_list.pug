@@ -13,10 +13,14 @@
           -
             var alternate = company.short_name || company.name;
           img(src=company.campaign.list_image_image_id.getUrl('350x209') alt=alternate)
-          if company.campaign.daysLeft() < 30
-            .deys-left #{ company.campaign.daysLeftText() }
-          if company.campaign.fundedPercentage().actual > 50
-            .deys-left #{ company.campaign.fundedPercentage().actual }
+          .label
+            if company.campaign.daysLeft() <= 30
+              .deys-left.label-one #{ company.campaign.daysLeftText() }
+            if company.campaign.fundedPercentage().actual >= 50
+              .funded.label-one #{ company.campaign.fundedPercentage().actual }% Funded
+          if company.isNew()
+            .is-new
+              img(src=require("images/generals/is-new.png"), alt="")
           .more_inform
             .title.text-center
               if company.campaign.security_type == 0
@@ -48,9 +52,9 @@
 
         .bottom_text
           span.left_desc
-            h6.text-uppercase.d-inline-block.m-b-0 Security:
-            |  #{company.campaign.security_type == security_type.CommonEquity ? 'Common Equity' : 'Revenue Share'}
+            i.fa.fa-get-pocket
+            h6.text-uppercase  #{company.campaign.security_type == security_type.CommonEquity ? 'Common Equity' : 'Revenue Share'}
           span.right_desc
-            h6.text-uppercase.d-inline-block.m-b-0 Industry:&nbsp;
-            | !{ industry[company.industry] || "Other" }
+            i.fa.fa-tags
+            h6.text-uppercase  !{ industry[company.industry] || "Other" }
           .clear

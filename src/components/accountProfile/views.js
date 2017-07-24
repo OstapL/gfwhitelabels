@@ -151,7 +151,7 @@ module.exports = {
         instagram: 'Your Instagram Link',
         linkedin: 'Your LinkedIn Link',
         bank_name: 'Bank Name',
-        name_on_bank_account: 'Name on Bank Account',
+        name_on_bank_account: 'Name As It Appears on Bank Account',
         ssn: 'Social Security Number (SSN) or Tax ID (ITIN/EIN)',
         ssn_re: 'Re-enter SSN',
       };
@@ -455,6 +455,8 @@ module.exports = {
     },
 
     onCancel(investment) {
+      app.analytics.emitEvent(app.analytics.events.InvestmentCancelled, app.user.stats);
+
       _.each(this.model.data, (i) => {
         if (i.campaign_id != investment.campaign_id)
           return;

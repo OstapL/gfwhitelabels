@@ -218,6 +218,8 @@ module.exports = {
         localStorage.setItem('user', JSON.stringify(app.user.toJSON()));
       }
 
+      app.analytics.emitEvent(app.analytics.events.CampaignStarted, app.users.stats);
+
       app.routers.navigate(
         '/campaign/' + data.campaign_id + '/general_information',
         { trigger: true, replace: false }

@@ -1,106 +1,117 @@
 // import './styles/style.sass'
 
+// app.cache.capitalRaiseCalculator = {
+//   // 'excessCash': '',
+//   'CashOnHand': '',
+//   'projectedRevenue': '',
+//   'projectedRevenueTwo': '',
+//   // 'firstYearExpenses': '',
+//   'operatingProfit': '',
+//   'operatingProfitTwo': '',
+//   'yourDebt': '',
+//   'cashRaise': '',
+//   'liquidityAdjustment': 0, // 0 %
+//
+//   // select boxes
+//   'industry': '',
+//
+//   // 'New and potentially growing quickly' - 1
+//   // 'Fairly well established' - 2
+//   'industryEstablishment': 0,
+//
+//   // 'Be an improvement to what is currently on the market' - 3
+//   // 'Be revolutionary and disruptive to the market' - 4
+//   'typeOfEstablishment': 0
+// }
+
+const defaultCalculatorData = {
+  'liquidityAdjustment': 0,
+  // 'New and potentially growing quickly' - 1
+  // 'Fairly well established' - 2
+  'industryEstablishment': 0,
+  // 'Be an improvement to what is currently on the market' - 3
+  // 'Be revolutionary and disruptive to the market' - 4
+  'typeOfEstablishment': 0,
+};
+
 let industryData = app.helpers.capitalraiseData();
+
+const CALCULATOR_NAME = 'CapitalRaiseCalculator';
+
+const saveValue = (e) => {
+  app.helpers.calculator.saveCalculatorField(CALCULATOR_NAME, e.target);
+};
 
 module.exports = {
   intro: Backbone.View.extend({
     el: '#content',
-
     template: require('./templates/intro.pug'),
-
     render: function () {
       this.$el.html(this.template());
       return this;
-    }
+    },
   }),
 
   step1: Backbone.View.extend(_.extend({
     el: '#content',
-
     template: require('./templates/step1.pug'),
-
     preinitialize() {
       $('#content').undelegate();
     },
 
     initialize() {
-      if (!app.cache.capitalRaiseCalculator) {
-        app.cache.capitalRaiseCalculator = {
-          // 'excessCash': '',
-          'CashOnHand': '',
-          'projectedRevenue': '',
-          'projectedRevenueTwo': '',
-          // 'firstYearExpenses': '',
-          'operatingProfit': '',
-          'operatingProfitTwo': '',
-          'yourDebt': '',
-          'cashRaise': '',
-          'liquidityAdjustment': 0, // 0 %
-
-          // select boxes
-          'industry': '',
-
-          // 'New and potentially growing quickly' - 1
-          // 'Fairly well established' - 2
-          'industryEstablishment': 0,
-
-          // 'Be an improvement to what is currently on the market' - 3
-          // 'Be revolutionary and disruptive to the market' - 4
-          'typeOfEstablishment': 0
-        }
-        this.fields = {
-          industry: {
-            required: true,
-            type: 'integer',
-            validate: {},
-          },
-          industryEstablishment: {
-            required: true,
-            type: 'integer',
-            validate: {},
-          },
-          typeOfEstablishment: {
-            required: true,
-            type: 'integer',
-            validate: {},
-          },
-          projectedRevenue: {
-            required: true,
-            type: 'integer',
-            validate: {},
-          },
-          operatingProfit: {
-            required: true,
-            type: 'integer',
-            validate: {},
-          },
-          projectedRevenueTwo: {
-            required: true,
-            type: 'integer',
-            validate: {},
-          },
-          operatingProfitTwo: {
-            required: true,
-            type: 'integer',
-            validate: {},
-          },
-          CashOnHand: {
-            required: true,
-            type: 'integer',
-            validate: {},
-          },
-          yourDebt: {
-            required: true,
-            type: 'integer',
-            validate: {},
-          },
-          cashRaise: {
-            required: true,
-            type: 'integer',
-            validate: {},
-          },
-        };
-      }
+      this.fields = {
+        industry: {
+          required: true,
+          type: 'integer',
+          validate: {},
+        },
+        industryEstablishment: {
+          required: true,
+          type: 'integer',
+          validate: {},
+        },
+        typeOfEstablishment: {
+          required: true,
+          type: 'integer',
+          validate: {},
+        },
+        projectedRevenue: {
+          required: true,
+          type: 'integer',
+          validate: {},
+        },
+        operatingProfit: {
+          required: true,
+          type: 'integer',
+          validate: {},
+        },
+        projectedRevenueTwo: {
+          required: true,
+          type: 'integer',
+          validate: {},
+        },
+        operatingProfitTwo: {
+          required: true,
+          type: 'integer',
+          validate: {},
+        },
+        CashOnHand: {
+          required: true,
+          type: 'integer',
+          validate: {},
+        },
+        yourDebt: {
+          required: true,
+          type: 'integer',
+          validate: {},
+        },
+        cashRaise: {
+          required: true,
+          type: 'integer',
+          validate: {},
+        },
+      };
 
       // declare data for two selects
       this.industryEstablishment = [
@@ -128,6 +139,11 @@ module.exports = {
       this.selects = {
         industryEstablishment: this.industryEstablishment,
         typeOfEstablishment: this.typeOfEstablishment
+      };
+
+      const data = app.helpers.calculator.readCalculatorData(CALCULATOR_NAME);
+      if (!data || _.isEmpty(data)) {
+        app.helpers.calculator.saveCalculatorData(CALCULATOR_NAME, defaultCalculatorData);
       }
     },
 
@@ -135,28 +151,18 @@ module.exports = {
       // calculate your income
       'submit .js-calc-form': 'doCalculation',
 
-      'change .js-select': 'saveValue',
-      'blur input[type=money]': 'saveMoneyValue',
+      'change .js-select': saveValue,
+      'blur input[type=money]': saveValue,
+
     }, app.helpers.calculatorValidation.events),
-
-    saveValue(e) {
-      const select = e.target;
-      const name = select.getAttribute('name');
-      app.cache.capitalRaiseCalculator[name] = select.value;
-    },
-
-    saveMoneyValue(e) {
-      const value = app.helpers.format.unformatPrice(e.target.value);
-      const name = e.target.getAttribute('name');
-      app.cache.capitalRaiseCalculator[name] = value;
-    },
 
     doCalculation(e) {
       e.preventDefault();
 
-      if (!this.validate(e)) return;
+      if (!this.validate(e))
+        return;
 
-      let data = app.cache.capitalRaiseCalculator,
+      const data = app.helpers.calculator.readCalculatorData(CALCULATOR_NAME),
         calculatedData = {},
         industry = data.industry,
         row = industryData[industry],
@@ -196,7 +202,7 @@ module.exports = {
       calculatedData.liquidityAdjustmentAverageNPV = calculatedData.averageNPV / (1 - data.liquidityAdjustment);
 
       // calculate probability of failure (depends on Industry/Product Permutation)
-      let mathHelper = {
+      const mathHelper = {
         '2:3': 0.3,
         '2:4': 0.5,
         '1:3': 0.5,
@@ -209,36 +215,50 @@ module.exports = {
       calculatedData.PreMoneyValuation = Math.ceil(calculatedData.liquidityAdjustmentAverageNPV / (1 + calculatedData.probabilityOfFailure))
 
       // save calculated data
-      _.extend(app.cache.capitalRaiseCalculator, calculatedData);
+      app.helpers.calculator.saveCalculatorData(CALCULATOR_NAME, _.extend(data, calculatedData));
 
       setTimeout(() => app.routers.navigateWithReload('/calculator/capitalraise/finish', {trigger: true}), 10);
     },
 
-    render: function () {
+    render() {
+      const data = app.helpers.calculator.readCalculatorData(CALCULATOR_NAME);
+
       this.$el.html(this.template({
-        data: app.cache.capitalRaiseCalculator,
+        data,
         industryData: Object.keys(industryData),
         selects: this.selects,
       }));
 
       return this;
-    }
+    },
+
   }, app.helpers.calculatorValidation.methods)),
 
   finish: Backbone.View.extend({
     el: '#content',
-
     template: require('./templates/finish.pug'),
 
-    render: function () {
-      // disable enter to the final step of capitalraise calculator without data
-      if (!app.cache.capitalRaiseCalculator) {
-        app.routers.navigate('/calculator/capitalraise/step-1', {trigger: true});
-        return false;
+    render() {
+      const data = app.helpers.calculator.readCalculatorData(CALCULATOR_NAME);
+      let dataSameAsDefault = true;
+      _.each(data || {}, (value, key) => {
+        if (data[key] === defaultCalculatorData[key]) {
+          ;
+        } else if (data[key] === '') {
+          ;
+        } else {
+          dataSameAsDefault = false;
+        }
+      });
+
+      //TODO: add data validation
+      if (dataSameAsDefault || !data.PreMoneyValuation) {
+        setTimeout(() => app.routers.navigate('/calculator/capitalraise/step-1', {trigger: true}), 100);
+        return this;
       }
 
       this.$el.html(this.template({
-        data: app.cache.capitalRaiseCalculator,
+        data,
       }));
 
       $('body').scrollTop(0);
