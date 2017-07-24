@@ -34,6 +34,13 @@ module.exports = {
         let orderBy = app.getParams().orderby;
         if (orderBy) params += '&orderby=' + orderBy;
         api.makeCacheRequest(app.config.raiseCapitalServer + params).then((data) => {
+          let modelData = [];
+          data.data.forEach((d) => {
+            modelData.push(new app.models.Company(d));
+          });
+          modelData = modelData.filter(d => !d.campaign.expired);
+          data.data = modelData;
+
           let i = new View.list({
             el: '#content',
             collection: data,
@@ -108,6 +115,7 @@ module.exports = {
           i.render();
           $('body').scrollTo();
           app.hideLoading();
+          app.analytics.emitEvent(app.analytics.events.InvestmentClicked, app.user.stats);
         });
 
         //TODO: fixme
