@@ -189,6 +189,9 @@ class User {
         if (responseData) {
           this.updateLocalStorage();
         }
+
+        app.analytics.emitEvent(app.analytics.events.LoggedIn, app.user.stats);
+
         return resolve()
       }).fail(() => {
         this.emptyLocalStorage();
