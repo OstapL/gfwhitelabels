@@ -5,20 +5,20 @@ if app.config.indexPage.slider == 1
         div(style=styleString + '; background-position: center center !important').slide_1.main-slider-item
         .slider-content.container
           .text-xs-center
-            .col-lg-12
+            .col-lg-12.p-xs-0
               h1.big-h1 Own a Piece of Your Favorite Company
-            .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
+            .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center.p-xs-0
               span.small-text Invest in local businesses and entrepreneurs you believe in, starting at $100
-            .col-lg-12.mt20.mb30
+            .col-lg-12.mt20.mb30.p-xs-0
               a(href="/pg/education").link-6 Learn the Risks
             if app.user.is_anonymous()
-              .col-lg-12
+              .col-lg-12.p-xs-0
                 a(href="/account/signup").btn.btn-lg.btn-primary sign up + get $25
             else
-              .col-lg-12.hidden-sm-down
+              .col-lg-12.hidden-sm-down.p-xs-0
                 a(href="/companies").btn.btn-lg.btn-primary.m-r-2 INVEST
                 a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
-              .col-lg-12.hidden-md-up
+              .col-lg-12.hidden-md-up.p-xs-0
                 a(href="/companies").btn.btn-lg.btn-primary INVEST
 
       div
@@ -26,40 +26,40 @@ if app.config.indexPage.slider == 1
         div(style=styleString).main-slider-item.slide_2
         .slider-content.container
           .text-xs-center
-            .col-lg-12
+            .col-lg-12.p-xs-0
               h1.big-h1 Own a Piece of Your Favorite Company
-            .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
+            .col-lg-6.offset-lg-3.p-xs-0.text-lg-center.text-sm-center.text-xs-center
               span.small-text Invest in local businesses and entrepreneurs you believe in, starting at $100
-            .col-lg-12.mt20.mb30
+            .col-lg-12.mt20.mb30.p-xs-0
               a(href="/pg/education").link-6 Learn the Risks
             if app.user.is_anonymous()
-              .col-lg-12
+              .col-lg-12.p-xs-0
                 a(href="/account/signup").btn.btn-lg.btn-primary sign up + get $25
             else
-              .col-lg-12.hidden-sm-down
+              .col-lg-12.hidden-sm-down.p-xs-0
                 a(href="/companies").btn.btn-lg.btn-primary.m-r-2 INVEST
                 a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
-              .col-lg-12.hidden-md-up
+              .col-lg-12.hidden-md-up.p-xs-0
                 a(href="/companies").btn.btn-lg.btn-primary INVEST
       div
         - var styleString = 'background: url(' + require('images/banners/slide_3.jpg') + ')';
         div(style=styleString).main-slider-item.slide_3
         .slider-content.container
           .text-xs-center
-            .col-lg-12
+            .col-lg-12.p-xs-0
               h1.big-h1 Own a Piece of Your Favorite Company
-            .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
+            .col-lg-6.offset-lg-3.p-xs-0.text-lg-center.text-sm-center.text-xs-center
               span.small-text Invest in local businesses and entrepreneurs you believe in, starting at $100
-            .col-lg-12.mt20.mb30
+            .col-lg-12.mt20.mb30.p-xs-0
               a(href="/pg/education").link-6 Learn the Risks
             if app.user.is_anonymous()
-              .col-lg-12
+              .col-lg-12.p-xs-0
                 a(href="/account/signup").btn.btn-lg.btn-primary sign up + get $25
             else
-              .col-lg-12.hidden-sm-down
+              .col-lg-12.hidden-sm-down.p-xs-0
                 a(href="/companies").btn.btn-lg.btn-primary.m-r-2 INVEST
                 a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
-              .col-lg-12.hidden-md-up
+              .col-lg-12.hidden-md-up.p-xs-0
                 a(href="/companies").btn.btn-lg.btn-primary INVEST
 else
   .main-top-baner
@@ -67,17 +67,17 @@ else
       - var styleString = 'background: url(' + require('images/banners/slide_1.jpg') + ')';
       div(style=styleString + '; height:75vh').background
       .center-wrap.container
-        .col-lg-12
+        .col-lg-12.p-xs-0
           h1.big-h1 Own a piece of your favorite company
         .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
           span.small-text Invest in local businesses and entrepreneurs you believe in, starting at $100
-        .col-lg-12.mt20.mb30
+        .col-lg-12.mt20.mb30.p-xs-0
           a(href="/pg/education").link-6 Learn the Risks
         if app.user.is_anonymous()
-          .col-lg-12
+          .col-lg-12.p-xs-0
             a(href="/account/signup").btn.btn-lg.btn-primary sign up + get $25
         else
-          .col-lg-12.hidden-sm-down
+          .col-lg-12.hidden-sm-down.p-xs-0
             a(href="/companies").btn.btn-lg.btn-primary INVEST
             a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
           .col-lg-12.hidden-md-up

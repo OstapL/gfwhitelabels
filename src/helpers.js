@@ -9,7 +9,6 @@ module.exports = {
   disableEnter: require('./helpers/disableEnterHelper.js'),
   errorPage: require('./helpers/errorPageHelper.js'),
   fileList: require('./helpers/fileList.js'),
-  flyPrice: require('./helpers/flyPriceFormatter.js'),
   location: require('./helpers/getCityStateByZipCode.js'),
   icons: require('./helpers/iconsHelper.js'),
   confirmOnLeave: require('./helpers/leavingConfirmationHelper.js'),

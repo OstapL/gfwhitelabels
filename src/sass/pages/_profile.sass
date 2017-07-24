@@ -15,7 +15,7 @@
 
 hr.profile-type-user-hr
   margin-bottom: rem(30)
-  margin-top: 0
+  margin-top: rem(20)
 
 .profile-type-user.credit-all
     position: relative
@@ -32,13 +32,12 @@ hr.profile-type-user-hr
       background-image: url("img/generals/empty_small.png")
       position: absolute
       top: -6px
-      left: 126px
+      left: 125px
       width: 129px
       background-repeat: no-repeat
       height: 48px
-      @media screen and (max-width: 640px)
+      @media screen and (max-width: 767px)
         top: -10px
-        left: 113px
       .wrap
         width: 75px
         height: 48px
@@ -199,18 +198,21 @@ hr.profile-type-user-hr
     .profile-tabs.nav-tabs
       text-align: center
       margin-left: 0
+      margin-top: rem(50)
       li.nav-item
-        display: inline
+        display: inline-block
         float: none
     .m-b-md-25
       margin-bottom: rem(25)
-
+  @media screen and (max-width: 768px)
+    .profile-tabs
+      li.nav-item
+        display: block!important
   @media screen and (max-width: 543px)
     .profile-tabs
       li.nav-item
         margin-right: 3%
         margin-left: 0
-        margin-top: 1.5rem
         min-width: rem(150)
         width: 100%
         max-width: 100%
