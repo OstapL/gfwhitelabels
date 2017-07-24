@@ -86,7 +86,7 @@ module.exports = {
       };
 
       if (this.model.ga_id) {
-        app.emitCompanyAnalyticsEvent(this.model.ga_id);
+        app.analytics.emitCompanyCustomEvent(this.model.ga_id);
       }
     },
 
@@ -531,37 +531,38 @@ module.exports = {
           },
           choices: COUNTRIES
         },
+        messageRequired: 'Not a valid choice',
       });
 
       this.fields.personal_information_data.schema.phone = _.extend(this.fields.personal_information_data.schema.phone, {
-        required: false,
-        fn: function(name, value, attr, data, schema) {
-          let country = this.getData(data, 'personal_information_data.country');
-          if (country == 'US')
-            return;
-
-          return this.required(name, true, attr, data);
-        },
+        // required: false,
+        // fn: function(name, value, attr, data, schema) {
+        //   let country = this.getData(data, 'personal_information_data.country');
+        //   if (country == 'US')
+        //     return;
+        //
+        //   return this.required(name, true, attr, data);
+        // },
       });
 
       this.fields.personal_information_data.schema.city = _.extend(this.fields.personal_information_data.schema.city, {
-        fn: function(name, value, attr, data, schema) {
-          let country = this.getData(data, 'personal_information_data.country');
-          if (country == 'US')
-            return;
-          return this.required(name, true, attr, data);
-        },
-        required: false,
+        // fn: function(name, value, attr, data, schema) {
+        //   let country = this.getData(data, 'personal_information_data.country');
+        //   if (country == 'US')
+        //     return;
+        //   return this.required(name, true, attr, data);
+        // },
+        // required: false,
       });
 
       this.fields.personal_information_data.schema.state = _.extend(this.fields.personal_information_data.schema.state, {
         required: false,
-        fn: function(name, value, attr, data, schema) {
-          let country = this.getData(data, 'personal_information_data.country');
-          if (country == 'US')
-            return;
-          return this.required(name, true, attr, data);
-        },
+        // fn: function(name, value, attr, data, schema) {
+        //   let country = this.getData(data, 'personal_information_data.country');
+        //   if (country == 'US')
+        //     return;
+        //   return this.required(name, true, attr, data);
+        // },
       });
 
       // this.user.ssn_re = this.user.ssn;
@@ -627,7 +628,7 @@ module.exports = {
       this.initMaxAllowedAmount();
 
       if (this.model.ga_id)
-        app.emitCompanyAnalyticsEvent(this.model.ga_id);
+        app.analytics.emitCompanyCustomEvent(this.model.ga_id);
     },
 
     render() {
@@ -1192,8 +1193,7 @@ module.exports = {
     _success(data) {
       const feeInfo = this.calcFeeWithCredit();
       this.user.credit = feeInfo.remainingCredit;
-
-      app.emitFacebookPixelEvent('MakeInvestment');
+      app.analytics.emitEvent(app.analytics.events.InvestmentMade, app.user.stats);
       this.saveEsign(data);
     },
 
@@ -1204,7 +1204,7 @@ module.exports = {
     el: '#content',
     initialize(options) {
       if (this.model.company.ga_id)
-        app.emitCompanyAnalyticsEvent(this.model.company.ga_id);
+        app.analytics.emitCompanyCustomEvent(this.model.company.ga_id);
     },
 
     render() {
