@@ -359,23 +359,24 @@ mixin confirmStatement(name, attr)
               .form-group.row.radio.check-fields.required
                 label.text-md-right.col-lg-3 Account Type
                   span.color-red *
-                #payment_information_data__bank_account_type.col-lg-9.radio-input
-                  label 
-                    input(
-                      type="radio"
-                      name="payment_information_data[bank_account_type]"
-                      value=auth.bank_account_type.Checking
-                      checked=(user.bank_account_type == auth.bank_account_type.Checking)
-                    )
-                    |  Checking
-                  label
-                    input(
-                      type="radio"
-                      name="payment_information_data[bank_account_type]"
-                      value=auth.bank_account_type.Savings
-                      checked=(user.bank_account_type == auth.bank_account_type.Savings)
-                    )
-                    |  Savings
+                .col-lg-9.radio-input
+                  .div#payment_information_data__bank_account_type
+                    label 
+                      input(
+                        type="radio"
+                        name="payment_information_data[bank_account_type]"
+                        value=auth.bank_account_type.Checking
+                        checked=(user.bank_account_type == auth.bank_account_type.Checking)
+                      )
+                      |  Checking
+                    label
+                      input(
+                        type="radio"
+                        name="payment_information_data[bank_account_type]"
+                        value=auth.bank_account_type.Savings
+                        checked=(user.bank_account_type == auth.bank_account_type.Savings)
+                      )
+                      |  Savings
             // IF CHECK
             .row.check-fields.payment-fields(style="display:none;")
               .col-lg-12
@@ -479,6 +480,7 @@ mixin confirmStatement(name, attr)
                   a(href="#" data-path=app.config.esignServer + "/pdf-doc/invest/subscription_agreement.pdf" target="_blank").link-2 Subscription Agreement
                   |  and 
                   a(href="#" data-path=app.config.esignServer + "/pdf-doc/invest/participation_agreement.pdf" target="_blank").link-2 Participation Agreement
+                  | .
             .col-lg-12.m-t-2
               .row
                 #signature__full_name.form-group.row
