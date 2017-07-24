@@ -115,6 +115,7 @@ module.exports = {
           i.render();
           $('body').scrollTo();
           app.hideLoading();
+          app.analytics.emitEvent(app.analytics.events.InvestmentClicked, app.user.stats);
         });
 
         //TODO: fixme
