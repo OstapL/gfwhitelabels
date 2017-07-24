@@ -62,7 +62,6 @@ module.exports = {
       this.fields.founding_state.validate.choices = require('consts/usaStatesChoices.json');
       this.fields.corporate_structure.validate.choices = require('consts/raisecapital/corporate_structure.json');
       this.fields.tour.validate.choices = require('consts/raisecapital/tour.json').TOUR;
-      debugger;
 
       this.labels = {
         tour: 'Would You Like to Participate in The <a class="link-2" href="/pg/heartland-tour" target="_blank">Heartland Tour</a>',
@@ -219,7 +218,7 @@ module.exports = {
         localStorage.setItem('user', JSON.stringify(app.user.toJSON()));
       }
 
-      app.analytics.emitEvent(app.analytics.events.CampaignStarted, app.users.stats);
+      app.analytics.emitEvent(app.analytics.events.CampaignStarted, app.user.stats);
 
       app.routers.navigate(
         '/campaign/' + data.campaign_id + '/general_information',
