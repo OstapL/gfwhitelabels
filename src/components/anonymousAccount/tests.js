@@ -9,7 +9,7 @@ const eventEmitter = _.extend({}, Backbone.Events);
 const inst = {};
 const setData = app.user.setData;
 app.user.setData = function(...args) {
-  setData.call(app.user, ...args).then(() => {
+  return setData.call(app.user, ...args).then(() => {
     eventEmitter.trigger('done');
   });
 };
