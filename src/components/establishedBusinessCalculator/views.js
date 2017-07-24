@@ -162,8 +162,10 @@ module.exports = {
     nextStep(e) {
       e.preventDefault();
 
-      if (!this.validate(e))
+      if (!this.validate(e)) {
+        this.$('.help-block').prev().scrollTo(50);
         return;
+      }
 
       app.routers.navigate('/calculator/establishedBusiness/step-2', {trigger: true});
     },
@@ -239,8 +241,10 @@ module.exports = {
     nextStep(e) {
       e.preventDefault();
 
-      if (!this.validate(e))
+      if (!this.validate(e)) {
+        this.$('.help-block').prev().scrollTo(50);
         return;
+      }
 
       app.routers.navigate('/calculator/establishedBusiness/step-3', {trigger: true});
     },
@@ -342,8 +346,10 @@ module.exports = {
     doCalculation(e) {
       e.preventDefault();
 
-      if (!this.validate(e))
+      if (!this.validate(e)) {
+        this.$('.help-block').prev().scrollTo(50);
         return;
+      }
 
       const data = app.helpers.calculator.readCalculatorData(CALCULATOR_NAME);
 
