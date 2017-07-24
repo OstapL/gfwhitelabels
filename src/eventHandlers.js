@@ -114,13 +114,11 @@ $('body').on('mouseout', '.showPopover', function () {
 });
 // для скролл шапки та разшерениях меньше 991px класс "sticky-active" - меняет цвет шапки
 $(window).scroll(function() {
-  if ($(this).scrollTop() > 70){
+  if ($(this).scrollTop() > 1){
     $('header').addClass("sticky-active");
-    $('#page').addClass("padding-t-65");
   }
   else{
     $('header').removeClass("sticky-active");
-    $('#page').removeClass("padding-t-65");
   }
 });
 // show bottom logo while scrolling page
