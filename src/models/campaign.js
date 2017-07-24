@@ -84,7 +84,7 @@ class Campaign {
   }
 
   daysLeft() {
-    let days = moment(this.expiration_date).diff(moment(), 'days') + 1;
+    let days = Math.ceil(moment(this.expiration_date).diff(moment(), 'days', true));
     if (days < 0)
       days = 0;
 
@@ -219,6 +219,7 @@ class Campaign {
   get successful() {
     return this.amount_raised >= this.minimum_raise;
   }
+
 }
 
 module.exports = Campaign;
