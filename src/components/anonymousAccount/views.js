@@ -128,7 +128,9 @@ const Views = {
     },
 
     _success(data) {
-      app.user.setData(data);
+      app.user.setData(data).then(() => {
+        app.analytics.emitEvent(app.analytics.events.LoggedIn, app.user.stats);
+      });
       this.$modal.modal('hide');
     },
 
@@ -155,9 +157,9 @@ const Views = {
     },
 
     _success(data) {
-      app.analytics.emitEvent(app.analytics.events.RegistrationCompleted, app.user.stats)
-
-      app.user.setData(data);
+      app.user.setData(data).then(() => {
+        app.analytics.emitEvent(app.analytics.events.RegistrationCompleted, app.user.stats);
+      });
       this.$modal.modal('hide');
     },
 
@@ -186,7 +188,9 @@ const Views = {
     },
 
     _success(data) {
-      app.user.setData(data);
+      app.user.setData(data).then(() => {
+        app.analytics.emitEvent(app.analytics.events.LoggedIn, app.user.stats);
+      });
     },
 
   }),
@@ -211,13 +215,14 @@ const Views = {
     },
 
     _success(data) {
-      app.analytics.emitEvent(app.analytics.events.RegistrationCompleted, app.user.stats)
-      app.user.setData(data);
+      app.user.setData(data).then(() => {
+        app.analytics.emitEvent(app.analytics.events.RegistrationCompleted, app.user.stats);
+      });
     },
 
     loginWithSocial(e) {
       socialAuth.loginWithSocialNetwork.call(this, e);
-    }
+    },
 
   }),
 
