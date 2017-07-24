@@ -16,6 +16,7 @@ const safeDataLayerPush = (eventName, eventData) => {
 
 const analytics = {
   events: {
+    LoggedIn: 'LoggedIn',
     RegistrationCompleted: 'RegistrationCompleted',
     InvestmentMade: 'InvestmentMade',
     InvestmentClicked: 'InvestmentClicked',
