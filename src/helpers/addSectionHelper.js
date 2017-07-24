@@ -40,13 +40,15 @@ module.exports = {
         if (!confirmed)
           return;
 
-
         if($('.' + sectionName + ' .delete-section-container').length > 1) {
           $('.' + sectionName + ' .index_' + index).remove();
           target.offsetParent.remove();
         } else {
           $('.' + sectionName + ' .index_' + index + ' input').val('');
           $('.' + sectionName + ' .index_' + index + ' textarea').val('');
+          this.el.querySelectorAll('.' + sectionName + '[data-index="' + index + '"] select').forEach((el) => {
+            el.querySelector('option').selected = true;
+          });
         }
         // ToDo
         // Fix index counter
@@ -101,6 +103,9 @@ module.exports = {
         } else {
           this.$el.find('.' + sectionName + '[data-index=' + index + '] input').val('');
           this.$el.find('.' + sectionName + '[data-index=' + index + '] textarea').val('');
+          this.el.querySelectorAll('.' + sectionName + '[data-index="' + index + '"] select').forEach((el) => {
+            el.querySelector('option').selected = true;
+          });
           if (sectionName == 'additional_video') {
             this.$el.find('.' + sectionName + '[data-index=' + index + '] input').trigger('change');
           }
