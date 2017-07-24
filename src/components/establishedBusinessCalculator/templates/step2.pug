@@ -37,28 +37,26 @@
 
             .col-lg-12
               input(
-                value= formatPrice(data.revenue),
-                type='text',
-                placeholder='Revenue',
+                value= app.helpers.format.formatMoney(data.revenue)
+                type='money'
+                data-value-type='money'
+                placeholder='Revenue'
                 autocomplete='off'
-                data-input-mask='price',
-                data-model-value='revenue',
-                name="revenue",
-                data-current-value= data.revenue)#revenue.form-control.js-field
+                name="revenue"
+              )#revenue.form-control.js-field
 
           .form-group.row
             label(for="goodsCost").col-lg-12.font-weight-normal Cost of Goods Sold
 
             .col-lg-12
               input(
-                value= formatPrice(data.goodsCost),
-                type='text',
-                placeholder='Cost of Goods Sold',
+                value= app.helpers.format.formatMoney(data.goodsCost)
+                type='money'
+                data-value-type='money'
+                placeholder='Cost of Goods Sold'
                 autocomplete='off'
-                data-input-mask='price',
-                data-model-value='goodsCost',
-                name="goodsCost",
-                data-current-value= data.goodsCost)#goodsCost.form-control.js-field
+                name="goodsCost"
+              )#goodsCost.form-control.js-field
 
           .form-group.row
             label(for="operatingExpense").col-lg-12.font-weight-normal SG&A, and other Operating Expenses&nbsp;&nbsp;
@@ -68,14 +66,13 @@
 
             .col-lg-12
               input(
-                value= formatPrice(data.operatingExpense),
-                type='text',
-                placeholder='SG&A Operating Expense',
+                value= app.helpers.format.formatMoney(data.operatingExpense)
+                type='money'
+                data-value-type='money'
+                placeholder='SG&A Operating Expense'
                 autocomplete='off'
-                data-input-mask='price',
-                data-model-value='operatingExpense',
-                name="operatingExpense",
-                data-current-value= data.operatingExpense)#operatingExpense.form-control.js-field
+                name="operatingExpense"
+              )#operatingExpense.form-control.js-field
 
           .form-group.row
             label(for="oneTimeExpenses").col-lg-12.font-weight-normal One Time (Extraordinary) Expenses&nbsp;&nbsp;
@@ -85,14 +82,13 @@
 
             .col-lg-12
               input(
-                value= formatPrice(data.oneTimeExpenses),
-                type='text',
-                placeholder='One Time (Extraordinary) Expenses',
+                value= app.helpers.format.formatMoney(data.oneTimeExpenses)
+                type='money'
+                data-value-type='money'
+                placeholder='One Time (Extraordinary) Expenses'
                 autocomplete='off'
-                data-input-mask='price',
-                data-model-value='oneTimeExpenses',
-                name="oneTimeExpenses",
-                data-current-value= data.oneTimeExpenses)#oneTimeExpenses.form-control.js-field
+                name="oneTimeExpenses"
+              )#oneTimeExpenses.form-control.js-field
 
           .form-group.row
             label(for="depreciationAmortization").col-lg-12.font-weight-normal Depreciation  & Amortization&nbsp;&nbsp;
@@ -103,42 +99,39 @@
 
             .col-lg-12
               input(
-                value= formatPrice(data.depreciationAmortization),
-                type='text',
-                placeholder='Depreciation & Amortization',
+                value= app.helpers.format.formatMoney(data.depreciationAmortization)
+                type='money'
+                data-value-type='money'
+                placeholder='Depreciation & Amortization'
                 autocomplete='off'
-                data-input-mask='price',
-                data-model-value='depreciationAmortization',
                 name="depreciationAmortization"
-                data-current-value= data.depreciationAmortization)#depreciationAmortization.form-control.js-field
+              )#depreciationAmortization.form-control.js-field
 
           .form-group.row
             label(for="interestPaid").col-lg-12.font-weight-normal Interest Paid
 
             .col-lg-12
               input(
-                value= formatPrice(data.interestPaid),
-                type='text',
-                placeholder='Interest Paid',
+                value= app.helpers.format.formatMoney(data.interestPaid)
+                type='money'
+                data-value-type='money'
+                placeholder='Interest Paid'
                 autocomplete='off'
-                data-input-mask='price',
-                data-model-value='interestPaid',
-                name="interestPaid",
-                data-current-value= data.interestPaid)#interestPaid.form-control.js-field
+                name="interestPaid"
+              )#interestPaid.form-control.js-field
 
           .form-group.row
             label(for="taxesPaid").col-lg-12.font-weight-normal Taxes Paid
 
             .col-lg-12
               input(
-                value= formatPrice(data.taxesPaid),
-                type='text',
-                placeholder='Taxes Paid',
+                value= app.helpers.format.formatMoney(data.taxesPaid)
+                type='money'
+                data-value-type='money'
+                placeholder='Taxes Paid'
                 autocomplete='off'
-                data-input-mask='price',
-                data-model-value='taxesPaid',
                 name="taxesPaid"
-                data-current-value= data.taxesPaid)#taxesPaid.form-control.js-field
+              )#taxesPaid.form-control.js-field
 
           .form-group.row.clearfix.m0
             .col-xs-6.p-t-2.m-t-1
