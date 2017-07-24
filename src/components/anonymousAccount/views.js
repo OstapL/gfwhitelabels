@@ -155,7 +155,7 @@ const Views = {
     },
 
     _success(data) {
-      app.emitFacebookPixelEvent('CompleteRegistration');
+      app.analytics.emitEvent(app.analytics.events.RegistrationCompleted, app.user.stats)
 
       app.user.setData(data);
       this.$modal.modal('hide');
@@ -211,7 +211,7 @@ const Views = {
     },
 
     _success(data) {
-      app.emitFacebookPixelEvent('CompleteRegistration');
+      app.analytics.emitEvent(app.analytics.events.RegistrationCompleted, app.user.stats)
       app.user.setData(data);
     },
 
@@ -244,7 +244,7 @@ const Views = {
     },
 
     _success(data) {
-      app.emitFacebookPixelEvent('CompleteRegistration');
+      app.analytics.emitEvent(app.analytics.events.RegistrationCompleted, app.user.stats);
 
       app.hideLoading();
       $('body').scrollTo();
