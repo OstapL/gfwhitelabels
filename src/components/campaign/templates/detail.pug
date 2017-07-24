@@ -239,7 +239,7 @@ section
         else if values.campaign.gallery_group_id.data.length
           each v,k in values.campaign.gallery_group_id.data
             .col-lg-4.col-sm-12.col-xs-12.col-md-6.no-padding-img
-              a(href=(v.getUrl('main')) data-size='1440x900' rel="gallery1" title=(v.name)).fancybox
+              a(href=(v.getUrl('main')) data-size='1440x900' rel="gallery1" title=(v.name) onclick="return false;").fancybox
                 img(src=(v.getUrl('530x441')) alt=(v.name)).w-100.img-responsive
     .container
       .col-lg-12.p-sm-0
