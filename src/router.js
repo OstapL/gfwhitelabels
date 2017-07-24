@@ -55,7 +55,6 @@ module.exports = Backbone.Router.extend(_.extend({
         ) {
       window.location = window.location.pathname.substr(0, window.location.pathname.length-1);
     }
-    app.emitFacebookPixelEvent();
 
     app.clearClasses('#page', ['page']);
 
