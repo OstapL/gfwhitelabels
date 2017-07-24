@@ -101,6 +101,8 @@ module.exports = {
       e.preventDefault();
       if (this.validate(e)) {
         app.routers.navigate('/calculator/whatmybusinessworth/step-2', {trigger: true});
+      } else {
+        this.$('.help-block').prev().scrollTo(50);
       }
     },
 
