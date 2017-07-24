@@ -128,9 +128,7 @@ const Views = {
     },
 
     _success(data) {
-      app.user.setData(data).then(() => {
-        app.analytics.emitEvent(app.analytics.events.LoggedIn, app.user.stats);
-      });
+      app.user.setData(data);
       this.$modal.modal('hide');
     },
 
@@ -188,9 +186,7 @@ const Views = {
     },
 
     _success(data) {
-      app.user.setData(data).then(() => {
-        app.analytics.emitEvent(app.analytics.events.LoggedIn, app.user.stats);
-      });
+      app.user.setData(data);
     },
 
   }),
