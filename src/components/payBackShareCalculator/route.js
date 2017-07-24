@@ -32,5 +32,5 @@ module.exports = {
       }, 'payback_share_calculator_chunk');
     },
   },
-  auth: ['calculatorPaybackshareStep1'],
+  auth: ['calculatorPaybackshareStep3'],
 };

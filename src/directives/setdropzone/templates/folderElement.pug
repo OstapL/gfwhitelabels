@@ -2,5 +2,6 @@
   .delete-file-container.deleteFile(style="position: absolute;")
     a(href="#" class="delete-file" data-fileid=file.file.id)
       i.fa.fa-times
-  img(src=file.file.getIconUrl() alt=file.file.name class="img-file img-folderFile")
-  a(class=("link-file a-" + name) target="_blank" href=file.file.getOriginal() title=file.file.name) #{ file.file.shortenFileName() }
+  a(class=("link-file a-" + name) target="_blank" href=file.file.getOriginal() title=file.file.name)
+    img(src=file.file.getIconUrl() alt=file.file.name class="img-file img-folderFile")
+    | #{ file.file.shortenFileName() }

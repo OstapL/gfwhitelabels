@@ -7,7 +7,7 @@
 		box-shadow: none;
 		border-radius: 0!important;
 	}
-
+	
 	.tooltip.top {
 		margin-top: rem(20);
 		opacity: 1;
@@ -104,6 +104,12 @@
 }
 @media only screen and (max-width:767px) {
 	.slider.slider-horizontal {
-		width: 95%!important;
+		width: 92%!important;
+	}
+}
+.bootstrap-slider-calc.has-error {
+	.help-block {
+		text-align: left;
+		float: left;
 	}
 }
