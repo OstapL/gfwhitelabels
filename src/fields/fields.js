@@ -30,8 +30,8 @@ module.exports = {
 
   nestedTextLabel(nestedName, name, value, index, myAttr, schema) {
     this.prepareNestedField(nestedName, name, value, index, myAttr, schema);
-    myAttr.class1 = myAttr.class1 || 'col-xl-3 col-lg-12 text-lg-left text-xl-right';
-    myAttr.class2 = myAttr.class2 || 'col-xl-9 col-lg-12';
+    myAttr.class1 = myAttr.class1 || 'col-xl-12 text-xl-left';
+    myAttr.class2 = myAttr.class2 || 'col-xl-12';
     if(index != -1) {
       return this.textLabel(
         nestedName + '[' + index + '][' + name + ']',
@@ -47,8 +47,8 @@ module.exports = {
 
   nestedTextareaLabel(nestedName, name, value, index, myAttr, schema) {
     this.prepareNestedField(nestedName, name, value, index, myAttr, schema);
-    myAttr.class1 = myAttr.class1 ? myAttr.class1 : 'text-lg-right col-lg-3 col-md-12 text-md-left';
-    myAttr.class2 = myAttr.class2 ? myAttr.class2 : 'col-lg-9 col-md-12';
+    myAttr.class1 = myAttr.class1 ? myAttr.class1 : 'col-xl-12 text-xl-left';
+    myAttr.class2 = myAttr.class2 ? myAttr.class2 : 'col-xl-12';
     if(index != -1) {
       return this.textareaLabel(
         nestedName + '[' + index + '][' + name + ']',
@@ -64,8 +64,8 @@ module.exports = {
 
   nestedChoiceLabel(nestedName, name, value, index, myAttr, schema) {
     this.prepareNestedField(nestedName, name, value, index, myAttr, schema);
-    myAttr.class1 = myAttr.class1 ? myAttr.class1 : 'text-lg-right col-lg-3 col-md-12 text-md-left';
-    myAttr.class2 = myAttr.class2 ? myAttr.class2 : 'col-lg-9 col-md-12';
+    myAttr.class1 = myAttr.class1 ? myAttr.class1 : 'col-xl-12 text-xl-left';
+    myAttr.class2 = myAttr.class2 ? myAttr.class2 : 'col-xl-12';
     if(index != -1) {
       return this.choiceLabel(
         nestedName + '[' + index + '][' + name + ']',
@@ -81,8 +81,8 @@ module.exports = {
 
   nestedRadioLabel(nestedName, name, value, index, myAttr, schema) {
     this.prepareNestedField(nestedName, name, value, index, myAttr, schema);
-    myAttr.class1 = myAttr.class1 ? myAttr.class1 : 'text-lg-right col-lg-3 col-md-12 text-md-left';
-    myAttr.class2 = myAttr.class2 ? myAttr.class2 : 'col-lg-9 col-md-12';
+    myAttr.class1 = myAttr.class1 ? myAttr.class1 : 'col-xl-12 text-xl-left';
+    myAttr.class2 = myAttr.class2 ? myAttr.class2 : 'col-xl-12';
     if(index != -1) {
       return this.radioLabel(
         nestedName + '[' + index + '][' + name + ']',
