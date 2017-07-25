@@ -1,4 +1,6 @@
 .create-company,.create-company-general
+  .title
+    margin-bottom: rem(25)
   .custom-link-company,
   .custom-ga-fields // page /company/create
     .prefix_input_prefix
@@ -28,8 +30,6 @@
       margin-bottom: 0
     .custom-select
       width: 100%
-    label
-      line-height: rem(18)
   .form-section
     .date-input
       input
@@ -41,53 +41,15 @@
   input
     min-width: rem(185)
 .create-company
-  .custom-link-company
-    .help-block
-      position: relative
-      left: rem(15)
   .custom-ga-fields
     .prefix_input_prefix
-      width: 11%
+      width: 15%
+      @media screen and (min-width : 992px) and (max-width : 1200px)
+        width: 20%
     .prefix_input_field
-      width: 89%
-    @media only screen and (min-width : 1200px)
-      label
-        position: relative
-        top: -15px
-        margin-bottom: 0
-      .form-group
-        margin-bottom: 10px
-        margin-top: 10px
-  .tour
-    @media only screen and (min-width : 1200px)
-      margin-bottom: 0
-      .help-block
-        margin-bottom: rem(20)
-    label
-      position: relative
-      top: -18px
-      margin-bottom: 0
-      @media only screen and (max-width : 1200px)
-        top: -5px
-  .custom-link-company
-    @media only screen and (min-width : 1200px)
-      margin-bottom: rem(5)
-      .help-block
-        margin-bottom: rem(20)
-    label
-      position: relative
-      top: -10px
-      @media only screen and (max-width : 1200px)
-        top: 0
-  .form-group.founding_state
-    @media only screen and (min-width : 1200px)
-      margin-bottom: rem(5)
-      .help-block
-        margin-bottom: rem(20)
-    label
-      top: -10px
-      @media only screen and (max-width : 1200px)
-        top: 0
+      width: 85%
+      @media screen and (min-width : 992px) and (max-width : 1200px)
+        width: 80%
 @media only screen and (max-width : 1200px)
   .create_compaign
     margin-top: 50px
@@ -97,11 +59,6 @@
         width: 50%
       .prefix_input_field
         width: 50%
-    .custom-ga-fields
-      .prefix_input_field
-        width: 90%
-      .prefix_input_prefix
-        width: 10%
 
 @media only screen and (max-width : 992px)
   .create-company

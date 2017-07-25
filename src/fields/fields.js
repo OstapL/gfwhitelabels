@@ -164,8 +164,8 @@ module.exports = {
     attr.type = attr.type || 'text';
     attr.value = formatValue(attr.type, attr.value);
 
-    attr.class1 = attr.class1 || 'col-xl-3 col-lg-12 text-lg-left text-xl-right';
-    attr.class2 = attr.class2 || 'col-xl-9 col-lg-12';
+    attr.class1 = attr.class1 || 'col-xl-12 text-xl-left';
+    attr.class2 = attr.class2 || 'col-xl-12';
     const template = require('./templates/textLabel.pug');
     return template(attr);
   },
@@ -173,8 +173,8 @@ module.exports = {
   textareaLabel(name, attr) {
     attr.name = name;
     this.prepareField(name, attr);
-    attr.class1 = attr.class1 || 'col-xl-3 col-lg-12 text-lg-left text-xl-right';
-    attr.class2 = attr.class2 || 'col-xl-9 col-lg-12 big-textarea';
+    attr.class1 = attr.class1 || 'col-xl-12 text-xl-left';
+    attr.class2 = attr.class2 || 'col-xl-12 big-textarea';
     const template = require('./templates/textareaLabel.pug');
     return template(attr);
   },
@@ -232,8 +232,8 @@ module.exports = {
   fieldChoiceLabel(name, attr) {
     this.prepareField(name, attr);
     attr.type = attr.type || 'select';
-    attr.class1 = attr.class1 || 'col-xl-3 col-lg-12 text-lg-left text-xl-right';
-    attr.class2 = attr.class2 || 'col-xl-9 col-lg-12';
+    attr.class1 = attr.class1 || 'col-xl-12 text-xl-left';
+    attr.class2 = attr.class2 || 'col-xl-12';
     const template = require('./templates/fieldChoiceLabel.pug');
 
     return template({
@@ -245,8 +245,8 @@ module.exports = {
   radioLabel(name, attr) {
     this.prepareField(name, attr);
     attr.type = attr.type || 'radio';
-    attr.class1 = attr.class1 || 'col-xl-3 text-xl-right text-lg-left';
-    attr.class2 = attr.class2 || 'col-xl-9';
+    attr.class1 = attr.class1 || 'col-xl-12 text-xl-left';
+    attr.class2 = attr.class2 || 'col-xl-12';
     const template = require('./templates/radioLabel.pug');
 
     return template({
