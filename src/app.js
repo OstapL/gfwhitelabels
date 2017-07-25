@@ -28,11 +28,6 @@ class App {
   start() {
     this.user.loadWithPromise().then(() => {
 
-      // A trick for turn off statistics with GET param, for SEO issue
-      if(document.location.search.indexOf('nometrix=t') !== -1) {
-        delete this.config.googleTagID;
-      }
-
       this.routers = new Router();
       Backbone.history.start({ pushState: true });
       window.addEventListener('popstate', this.routers.back);
@@ -56,72 +51,6 @@ class App {
       });
       this.profile.render();
     });
-  }
-
-  //move this logic to GTM side
-  emitFacebookPixelEvent(eventName='ViewContent', params={}) {
-    if (!this.config.googleTagID || !this.config.facebookPixelID)
-      return;
-
-    const STANDARD_EVENTS = [
-      'ViewContent',
-      'Search',
-      'AddToCart',
-      'AddToWishlist',
-      'InitiateCheckout',
-      'AddPaymentInfo',
-      'Purchase',
-      'Lead',
-      'CompleteRegistration',
-    ];
-
-    let trackType = (_.contains(STANDARD_EVENTS, eventName)) ? 'track' : 'trackCustom';
-
-    safeDataLayerPush({
-      event: 'fb-pixel-event',
-      trackType,
-      eventName,
-    });
-  }
-
-  emitGoogleAnalyticsEvent(eventName, params={}) {
-    if (!this.config.googleTagID)
-      return;
-
-    if (!eventName)
-      return console.error('eventName is not set');
-
-    let hasRequiredParams = ['eventAction', 'eventCategory'].every(paramName => !!params[paramName]);
-    if (!hasRequiredParams)
-      return console.error('Required params are not set');
-    
-    params.event = eventName;
-    safeDataLayerPush(params);
-  }
-
-  emitCompanyAnalyticsEvent(trackerId) {
-    if (!this.config.googleTagID)
-      return;
-
-    if (!trackerId)
-      return;
-
-    safeDataLayerPush({
-      event: 'company-custom-event',
-      eventCategory: 'Company',
-      eventAction: 'ViewPage',
-      trackerId,
-    });
-  }
-
-  emitAnalyticsEvent(eventName, eventData={}) {
-    if (!this.config.googleTagID)
-      return;
-
-    if (!eventName)
-      return console.error('Event Name is not set');
-
-    safeDataLayerPush();
   }
 
   showLoading() {
