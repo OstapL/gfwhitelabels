@@ -28,11 +28,6 @@ class App {
   start() {
     this.user.loadWithPromise().then(() => {
 
-      // A trick for turn off statistics with GET param, for SEO issue
-      if(document.location.search.indexOf('nometrix=t') !== -1) {
-        delete this.config.googleTagID;
-      }
-
       this.routers = new Router();
       Backbone.history.start({ pushState: true });
       window.addEventListener('popstate', this.routers.back);
