@@ -7,6 +7,18 @@ const validation = require('components/validation/validation.js');
 
 const CalculatorView = require('./revenueShareCalculator.js');
 
+const preventBodyScrolling = (preventScroll) => {
+  const preventScrollHandler = (e) => {
+    e.preventDefault();
+    return false;
+  };
+
+  if (preventScroll === true) {
+    document.body.addEventListener("touchmove", preventScrollHandler, false);
+  } else {
+    document.body.removeEventListener("touchmove", preventScrollHandler, false);
+  }
+}
 
 module.exports = {
   list: Backbone.View.extend({
@@ -245,6 +257,7 @@ module.exports = {
                   $html.addClass(cssClass);
                 }
               });
+              preventBodyScrolling(true);
               // $('html').css('overflowX', 'visible');
               // $('body').css('overflowY', 'hidden');
             },
@@ -252,6 +265,7 @@ module.exports = {
               $('html').removeClass('fancybox-margin fancybox-lock');
               // $('html').css('overflowX', 'hidden');
               // $('body').css('overflowY', 'visible');
+              preventBodyScrolling(false);
             }
           });
 
