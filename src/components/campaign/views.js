@@ -7,18 +7,18 @@ const validation = require('components/validation/validation.js');
 
 const CalculatorView = require('./revenueShareCalculator.js');
 
-const preventBodyScrolling = (preventScroll) => {
-  const preventScrollHandler = (e) => {
-    e.preventDefault();
-    return false;
-  };
+const preventScrollHandler = (e) => {
+  e.preventDefault();
+  return false;
+};
 
+const preventBodyScrolling = (preventScroll) => {
   if (preventScroll === true) {
-    document.body.addEventListener("touchmove", preventScrollHandler, false);
+    document.body.addEventListener("touchmove", preventScrollHandler);
   } else {
-    document.body.removeEventListener("touchmove", preventScrollHandler, false);
+    document.body.removeEventListener("touchmove", preventScrollHandler);
   }
-}
+};
 
 module.exports = {
   list: Backbone.View.extend({
