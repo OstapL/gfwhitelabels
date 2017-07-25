@@ -230,12 +230,41 @@ module.exports = {
             openEffect  : 'elastic',
             closeEffect : 'elastic',
 
-            helpers : {
+            helpers: {
               title : {
                 type : 'inside'
-              }
+              },
+              // overlay: {
+              //   locked: false
+              // }
+            },
+            beforeShow(){
+              const $html = $('html');
+              ['fancybox-margin', 'fancybox-lock'].forEach((cssClass) => {
+                if (!$html.hasClass(cssClass)) {
+                  $html.addClass(cssClass);
+                }
+              });
+              // $('html').css('overflowX', 'visible');
+              // $('body').css('overflowY', 'hidden');
+            },
+            afterClose(){
+              $('html').removeClass('fancybox-margin fancybox-lock');
+              // $('html').css('overflowX', 'hidden');
+              // $('body').css('overflowY', 'visible');
             }
           });
+
+          // $fancyBox.fancybox({
+          //   openEffect  : 'elastic',
+          //   closeEffect : 'elastic',
+          //
+          //   helpers : {
+          //     title : {
+          //       type : 'inside'
+          //     }
+          //   }
+          // });
           resolve();
         }, 'fancybox_chunk');
       });
