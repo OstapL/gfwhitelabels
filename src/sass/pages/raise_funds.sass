@@ -121,11 +121,6 @@
     width: 155px
     height: 155px
     margin: auto
-@media only screen and (min-width : 1200px)
-  .add-link-additional-video
-    position: relative
-    top: -45px!important
-    left: 0!important
 @media only screen and (min-width : 992px)
   .add-link-additional-video
     position: relative
@@ -163,11 +158,25 @@
     .m-l-30
       margin-left: 0
       padding-left: 0
+  .create-company-media
+    .add-link-additional-video
+      position: relative
+      top: 25px
+      margin-bottom: rem(25)
 @media only screen and (max-width : 340px)
   .team-members
     .btn.m-r-3
       margin-right: 10px!important  
 .create-company-media
+  .additional-video-block
+    margin-bottom: rem(5)
+    .one-video
+      .delete-section-container
+        margin-top: rem(20)
+      &:first-child
+        .delete-section-container
+          margin-top: 0
+
   .main-video-block, .additional-video-block
     .img-media
       height: 160px!important

@@ -8,13 +8,13 @@ include menu.pug
 section.create-company-media.container.media-container
   - var campaignId = values.id;
   - var formcId = formc.id;
-  +menu('campaign', 'media')
+  .row
+    +menu('campaign', 'media')
 
-  //START RIGHT BLOCK
-  .col-xl-8.col-lg-8.col-md-12
-    h2.text-uppercase.dosis.text-lg-center.text-xs-center.m-t-0 Media
-    form.form-section
-      .col-xl-12.p-sm-0
+    //START RIGHT BLOCK
+    .col-xl-8.col-lg-8.col-md-12
+      h2.text-uppercase.dosis.text-lg-center.text-xs-center.m-t-0 Media
+      form.form-section
         -
           pug_html += new imageDropzone.ImageDropzone(view, 
             'header_image_image_id', 
@@ -37,17 +37,17 @@ section.create-company-media.container.media-container
               view.fields.gallery_group_id
             ).render().resultHTML;
         .row
-          .col-lg-12.m-t-2.m-b-3.p-sm-0
-            hr
+          .col-xl-12
+            .border-bottom.m-t-2.m-b-3
         .col-lg-12
           h3.text-lg-center.col-md-center.col-xs-center.m-t-0 Recommended Additional Media
 
-        .row.m-b-2.recommended.p-sm-0.main-video-block
-          .p-sm-0.video-container
+        .row.m-b-2.recommended.main-video-block
+          .video-container
             .col-xl-7.col-lg-6
-              - pug_html += app.fields.textLabel('video', {class1:'col-xl-5 col-lg-12 p-t-0 m-b-0 p-sm-0 text-xl-right text-lg-left', class2:'col-xl-7 col-lg-12 p-sm-0', placeholder: 'http://www.', help_text: 'YouTube or Vimeo links only please.', schema: fields.video, value: values.video,})
+              - pug_html += app.fields.textLabel('video', {placeholder: 'http://www.', help_text: 'YouTube or Vimeo links only please.', schema: fields.video, value: values.video,})
 
-            #video_source.col-xl-5.col-lg-6.p-sm-0
+            #video_source.col-xl-5.col-lg-6
               -
                 var videoInfo = app.getVideoInfo(values.video);
               if videoInfo.provider === 'youtube'
@@ -61,10 +61,10 @@ section.create-company-media.container.media-container
                   img(src=require("images/default/default-video.png"))
 
 
-        .row.m-b-0.additional-video-block
+        .row.additional-video-block
           |!{ templates.additional_video }
         .row
-          .col-xl-12.p-sm-0
+          .col-xl-12
             .border-bottom.m-t-2.m-b-3
         |!{ templates.press}
         .row
