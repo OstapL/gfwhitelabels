@@ -29,16 +29,15 @@ section.create-company-media.container.media-container
               view.fields.list_image_image_id
             ).render().resultHTML;
 
-        .m-b-2
-          -
-            pug_html += new galleryDropzone.GalleryDropzone(view, 
-              'gallery_group_id', 
-              'gallery_group_data', 
-              view.fields.gallery_group_id
-            ).render().resultHTML;
+        -
+          pug_html += new galleryDropzone.GalleryDropzone(view, 
+            'gallery_group_id', 
+            'gallery_group_data', 
+            view.fields.gallery_group_id
+          ).render().resultHTML;
         .row
           .col-xl-12
-            .border-bottom.m-t-2.m-b-3
+            .border-bottom.m-t-3.m-b-3
         .col-lg-12
           h3.text-lg-center.col-md-center.col-xs-center.m-t-0 Recommended Additional Media
 

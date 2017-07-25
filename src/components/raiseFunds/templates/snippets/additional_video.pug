@@ -10,7 +10,7 @@ mixin row(value, index)
         .col-xl-7.col-lg-6.videoInteractive.text-xl-left
           
           | !{app.fields.nestedTextLabel(name, 'headline', value, index,{class1: 'col-xl-12', class2: 'col-xl-12', placeholder: 'Title',}, attr.schema.headline)}
-          | !{app.fields.nestedText(name, 'link', value, index,{class1: 'col-xl-12', class2: 'col-xl-12 additional-video-link', placeholder: 'http://www.',}, attr.schema.link)}
+          | !{app.fields.nestedText(name, 'link', value, index,{class: 'm-b-2 additional-video-link', placeholder: 'http://www.',}, attr.schema.link)}
           
         .col-xl-5.col-lg-6
           -
