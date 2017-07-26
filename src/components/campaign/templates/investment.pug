@@ -56,7 +56,7 @@ mixin confirmStatement(name, attr)
             .col-xl-12.col-xs-8.col-sm-5.col-lg-8
               -
                 pug_html += app.fields.textLabel("amount", _.extend({
-                    class1: 'col-xl-3 col-lg-4 text-md-left text-lg-right text-xl-right',
+                    class1: 'col-xl-3 col-lg-4 text-md-left text-lg-right text-xl-right p-t-6',
                     class2: 'col-xl-4 col-lg-8',
                     placeholder: '$',
                     text: "$10 of payment processing fee. Your money will be returned to you if the " +
@@ -65,7 +65,7 @@ mixin confirmStatement(name, attr)
           .row
             .col-xl-12.col-xs-7.col-sm-5.col-lg-8
               .form-group.row.fee.text
-                label.col-xl-3.col-lg-4.text-md-left.text-lg-right.text-xl-right Commission
+                label.col-xl-3.col-lg-4.text-md-left.text-lg-right.text-xl-right.p-t-6 Commission
                 .commission-group
                     .col-xl-4.col-lg-8.col-xs-10.col-sm-12
                       if feeInfo.waived
