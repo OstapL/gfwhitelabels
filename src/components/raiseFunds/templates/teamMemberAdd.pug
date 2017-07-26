@@ -15,7 +15,7 @@ section.team-members.container.m-b-85
 
     //START RIGHT BLOCK
     .col-xl-8.col-lg-8.col-md-12
-      h2.text-uppercase.text-lg-center.text-xs-center.m-t-0 #{type == 'advisor' ? 'advisor' : 'team member'}
+      h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.title #{type == 'advisor' ? 'advisor' : 'team member'}
       form.form-section
         .row
           .col-xl-6.col-lg-6.col-md-6
@@ -31,21 +31,14 @@ section.team-members.container.m-b-85
               value: model.last_name, 
               label: 'Last name',})
         .row
-          .col-xl-4.col-lg-4.col-md-4
+          .col-xl-6.col-lg-6.col-md-6
             -
               pug_html += app.fields.textLabel('email', {
               schema: fields.email, 
               value: model.email, 
               label: 'Email',})
-          .col-xl-4.col-lg-4.col-md-4
-            -
-              pug_html += app.fields.textLabel('order', {
-              schema: fields.order, 
-              value: model.order, 
-              placeholder: "Order",
-              help_text: 'Enter a number. Team members will be displayed in ascending order.',
-              label: 'Order',})
-          .col-xl-4.col-lg-4.col-md-4
+          
+          .col-xl-6.col-lg-6.col-md-6
             if type == 'advisor'
               -
                 pug_html += app.fields.textLabel('title', {
@@ -59,6 +52,14 @@ section.team-members.container.m-b-85
                 schema: fields.title, 
                 value: model.title, 
                 label: 'Title',})
+          //.col-xl-6.col-lg-6.col-md-6
+            -
+              pug_html += app.fields.textLabel('order', {
+              schema: fields.order, 
+              value: model.order, 
+              placeholder: "Order",
+              help_text: 'Enter a number. Team members will be displayed in ascending order.',
+              label: 'Order',})
         -
           pug_html += app.fields.textareaLabel('bio', {
           schema: fields.bio, 

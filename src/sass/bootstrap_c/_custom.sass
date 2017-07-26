@@ -400,12 +400,22 @@ p.drop-photo
   .btn-dropdown
     min-width: rem(160)
   .btn-group
-    min-width: 250px
+    min-width: 100%
+    .btn
+      font-family: $open-sans
+      color: $small-text
     .dropdown-toggle
       padding-left: rem(8)
       padding-right: rem(8)
       &:after
         margin-top: 0
+    .btn-dropdown
+      width: 87%
+    .btn-dropdown-click
+      width: 13%
+    &.open
+      .btn-dropdown-click
+        margin-left: -1px
   .btn-dropdown
     font-size: rem(14)
   .btn-dropdown-click
