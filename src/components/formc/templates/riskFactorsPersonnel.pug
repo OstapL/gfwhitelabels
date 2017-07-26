@@ -8,67 +8,68 @@ include riskFactorsMixins.pug
 
 section.formc-team-members-director.container.m-b-85
   - var campaignId = values.campaign_id;
-  +menu('formc', 'risk-factors-personnel')
-
-
-
-  //START RIGHT BLOCK
-  .col-lg-8.p-xs-0
-    h2.text-uppercase.text-lg-center.text-xs-center.m-t-0 risk factors (PERSONNEL AND THIRD PARTIES)
-    .col-lg-12.p-xs-0
-      p.pb10.pb10.text-justify Please review the following statements that relate to common operational risk factors.  If any of these statements reflect potential risks for your company, then you should edit and add such statement so that they are personalized to your company.  Please note that the rules
-        b 
-          u require you to add specificity
-        |  to each risk statement to ensure that an investor understands how the risk applies to your business. 
-    .col-sm-12.m-t-2.p-xs-0
-      .warning-block.m-t-1
-        i.fa.fa-info-circle
-        span.warning-text You are free use any statement that applies to your business, provided that in each case you customize the final language to be specific to your company.
-    .form-section
-      section.risks
-        .col-lg-12.p-xs-0
-          #accordion-risk.pannel-group.accordion.accordion-risk(role="tablist" aria-multiselectable="true")
-            each v, k in defaultRisks
-              +showRiskForm(v, k, 'personnel_and_third_parties_risk')
-
-            - var disabled = false;
-            each v, k in values['personnel_and_third_parties_risk']
-              - if (k != 99 && !disabled)
-                - disabled = true;
-              - if (!(k < Object.keys(defaultRisks).length) && k != 99)
-                +showRiskForm(v, k, 'personnel_and_third_parties_risk')
-
-    .col-lg-12.m-t-3.p-xs-0
-      p.pb10
-        b In the text box below, please include those personnel and third-party risks that are specific to your business.
-        |  In brainstorming the proper risks to disclose, you can reference the language above or consider the following questions for guidance:
-      ul
-        li.pb10 Are there supplier or distributor risks or third party failures that could harm your business?
-        li.pb10 Are there employees that are not subject to employment or IP ownership agreements? 
-        li.pb10 Is there any risk that employees may strike, unionize or collectively demand more benefits?
-        li.pb10 Are there conflicts of interest with management or affiliates that could harm your business?
-      .pb10 In the text box below, please write in full sentences consistent with the sample language provided above.
-    .col-lg-12.p-xs-0
-      form(data-method="PATCH").form-section.add-risk-form.clearfix
-        - 
-          pug_html += app.fields.textLabel('title', {
-          schema: fields.title, 
-          value: values.title,})
-        - 
-          pug_html += app.fields.textareaLabel('risk', {
-          schema: fields.risk,
-          class2: 'col-lg-9 col-md-12 big-textarea',
-          placeholder: 'Describe Your Risk', 
-          value: values.risk,})
-        button(data-method="PATCH" data-concat="false").btn.btn-secondary.btn-sm.text-uppercase.pull-lg-right.m-b-3.add-risk save and Add this Risk
-
+  .row
+    +menu('formc', 'risk-factors-personnel')
+    //START RIGHT BLOCK
+    .col-xl-8.col-lg-8.col-md-12
+      h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.m-b-3 risk factors (PERSONNEL AND THIRD PARTIES)
+      .row
+        .col-lg-12
+          p.pb10.pb10.text-justify Please review the following statements that relate to common operational risk factors.  If any of these statements reflect potential risks for your company, then you should edit and add such statement so that they are personalized to your company.  Please note that the rules
+            b 
+              u require you to add specificity
+            |  to each risk statement to ensure that an investor understands how the risk applies to your business. 
+      .row
+        .col-sm-12.m-t-2
+          .warning-block.m-t-1
+            i.fa.fa-info-circle
+            span.warning-text You are free use any statement that applies to your business, provided that in each case you customize the final language to be specific to your company.
       .form-section
-        .form-group
-          label.d-block
-            - var complete = values.personnel_and_third_parties_risk[99] ? true : false
-            input(type="checkbox" name="complete" disabled=disabled data-previous=String(complete) checked=complete)#complete
-            span.p-l-2 None of these risks apply. This page is complete.
+        section.risks
+          .row
+            .col-lg-12
+              #accordion-risk.pannel-group.accordion.accordion-risk(role="tablist" aria-multiselectable="true")
+                each v, k in defaultRisks
+                  +showRiskForm(v, k, 'personnel_and_third_parties_risk')
 
+                - var disabled = false;
+                each v, k in values['personnel_and_third_parties_risk']
+                  - if (k != 99 && !disabled)
+                    - disabled = true;
+                  - if (!(k < Object.keys(defaultRisks).length) && k != 99)
+                    +showRiskForm(v, k, 'personnel_and_third_parties_risk')
+      .row
+        .col-lg-12.m-t-3
+          p.pb10
+            b In the text box below, please include those personnel and third-party risks that are specific to your business.
+            |  In brainstorming the proper risks to disclose, you can reference the language above or consider the following questions for guidance:
+          ul
+            li.pb10 Are there supplier or distributor risks or third party failures that could harm your business?
+            li.pb10 Are there employees that are not subject to employment or IP ownership agreements? 
+            li.pb10 Is there any risk that employees may strike, unionize or collectively demand more benefits?
+            li.pb10 Are there conflicts of interest with management or affiliates that could harm your business?
+          .pb10 In the text box below, please write in full sentences consistent with the sample language provided above.
+      .row
+        .col-lg-12
+          form(data-method="PATCH").form-section.add-risk-form.clearfix
+            - 
+              pug_html += app.fields.textLabel('title', {
+              schema: fields.title, 
+              value: values.title,})
+            - 
+              pug_html += app.fields.textareaLabel('risk', {
+              schema: fields.risk,
+              class2: 'col-lg-9 col-md-12 big-textarea',
+              placeholder: 'Describe Your Risk', 
+              value: values.risk,})
+            button(data-method="PATCH" data-concat="false").btn.btn-secondary.btn-sm.text-uppercase.pull-lg-right.m-b-3.add-risk save and Add this Risk
+        .col-xl-12
+          .form-section
+            .form-group.m-b-0
+              label.d-block
+                - var complete = values.personnel_and_third_parties_risk[99] ? true : false
+                input(type="checkbox" name="complete" disabled=disabled data-previous=String(complete) checked=complete)#complete
+                span.p-l-2 None of these risks apply. This page is complete.
       .row.m-t-3
         .col-lg-12.text-lg-right.text-sm-center.text-xs-center
           a(href="/formc/" + values.id + "/risk-factors-legal").btn.btn-primary.text-uppercase next
