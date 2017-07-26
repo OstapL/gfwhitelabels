@@ -30,6 +30,7 @@ const plugins = [
     '_': 'underscore',
     'Backbone': 'backbone',
   }),
+  new webpack.optimize.ModuleConcatenationPlugin(),
   new webpack.optimize.CommonsChunkPlugin({
     name: 'vendor',
     filename: '[name].[hash].js',
