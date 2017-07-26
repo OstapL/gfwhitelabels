@@ -36,7 +36,7 @@ module.exports = {
 
       require('bootstrap-select/sass/bootstrap-select.scss');
 
-      let selectPicker = require('bootstrap-select');
+      require('bootstrap-select');
       this.$el.html('');
       this.$el.append(
         this.template({
