@@ -201,7 +201,7 @@ module.exports = {
     attr.name = name;
     this.prepareField(name, attr);
     attr.value = attr.value && attr.value.indexOf('-') != -1 ? attr.value.split('-')[0] : '';
-    attr.class1 = attr.class1 || 'col-xl-4 col-lg-4 col-xs-4 p-r-0 p-r-lg-1 m-d-p-l-10';
+    attr.class1 = attr.class1 || 'col-xl-4 col-lg-4 col-xs-4 p-r-0 m-d-p-l-10';
     const template = require('./templates/dateYear.pug');
     return template(attr);
   },
