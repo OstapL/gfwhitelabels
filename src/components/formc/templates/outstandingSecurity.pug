@@ -4,32 +4,32 @@ include ../../raiseFunds/templates/menu.pug
 
 section.formc-team-members-director.container.m-b-85
   - var campaignId = values.campaign_id;
-  +menu('formc', 'outstanding-security')
+  .row
+    +menu('formc', 'outstanding-security')
 
-  //START RIGHT BLOCK
-  .col-xl-8.col-lg-8.col-md-12.p-xs-0
-    h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis.mb45 outstanding security
-
-    form(action="").form-section
-      .col-lg-12.p-xs-0
-        -
-          pug_html += app.fields.radioLabel('business_loans_or_debt_choice',{
-          value: values.business_loans_or_debt_choice,
-          class1: 'bold',
-          class2: 'form-section col-lg-12 yesno',
-          class3: 'm-b-1',
-          schema: fields.business_loans_or_debt_choice,
-          });
+    //START RIGHT BLOCK
+    .col-xl-8.col-lg-8.col-md-12
+      h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.mb45 outstanding security
+      form(action="").form-section
+        .row
+          -
+            pug_html += app.fields.radioLabel('business_loans_or_debt_choice',{
+            value: values.business_loans_or_debt_choice,
+            class1: 'bold col-xl-12',
+            class2: 'form-section col-lg-12 yesno',
+            class3: 'm-b-1',
+            schema: fields.business_loans_or_debt_choice,
+            });
         .business_loans_or_debt_choice.shown-yes(style="display:" + (values['business_loans_or_debt_choice'] ? 'block' : 'none') + ";")
-          |!{ templates.business_loans_or_debt }
+          .m-b-2
+            |!{ templates.business_loans_or_debt }
 
-        .m-t-0
+        .row
           -
             pug_html += app.fields.radioLabel('exempt_offering_choice',{
             value: values.exempt_offering_choice,
-            class1: 'bold',
+            class1: 'bold col-xl-12',
             class2: 'form-section col-lg-12 yesno',
-            class3: 'm-b-1',
             schema: fields.exempt_offering_choice,
             });
         .exempt_offering_choice.shown-yes(style="display:" + (values['exempt_offering_choice'] ? 'block' : 'none') + ";")
@@ -84,8 +84,8 @@ section.formc-team-members-director.container.m-b-85
               span.color-red *
           .col-lg-12.big-textarea
             textarea(placeholder="There is the risk that..." id="risks_to_purchasers" name="risks_to_purchasers").form-control= values['risks_to_purchasers']
-        .col-lg-12.m-t-2
-          .row
+        .row
+          .col-lg-12.m-t-2
             .text-md-center.text-sm-center.text-xs-center
               button#submitForm.btn.btn-primary.text-uppercase.pull-lg-right Save And Continue
                 i.fa.fa-angle-right
