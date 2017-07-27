@@ -1245,9 +1245,11 @@ module.exports = {
   investmentThankYou: Backbone.View.extend({
     template: require('./templates/thankYou.pug'),
     el: '#content',
-    initialize(options) {
+    initialize() {
       if (this.model.company.ga_id)
         app.analytics.emitCompanyCustomEvent(this.model.company.ga_id);
+
+      $('.popover').popover('hide');
     },
 
     render() {
