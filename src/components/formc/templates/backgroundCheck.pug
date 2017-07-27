@@ -2,7 +2,7 @@ include ../../raiseFunds/templates/menu.pug
 
 - pug_html += app.breadcrumbs('create form c', '', [ ['Home', '/'], ['Create Form C', '/formc/' + values.id + '/introduction'], ['Background Check', ''], ]);
 
-section.formc-team-members-director.container.m-b-85
+section.formc-background-check.container.m-b-85
   - var campaignId = values.campaign_id;
   .row
     +menu('formc', 'background-check')
@@ -61,7 +61,7 @@ section.formc-team-members-director.container.m-b-85
           li.pb10 the issuer has filed at least one annual report pursuant to Regulation Crowdfunding and has fewer than 300 holders of record and has total assets that do not exceed $10,000,000;
           li.pb10 the issuer has filed at least three annual reports pursuant to Regulation Crowdfunding;
           li.pb10 the issuer or another party repurchases all of the securities issued in reliance on Section 4(a)(6) of the Securities Act, including any payment in full of debt securities or any complete redemp- tion of redeemable securities; or
-          li.pb10 the issuer liquidates or dissolves its business in accordance with state law.
+          li the issuer liquidates or dissolves its business in accordance with state law.
         .row.m-t-3
           .col-lg-12.text-md-center.text-sm-center.text-xs-center
             button.btn.btn-primary.text-uppercase.pull-lg-right Save

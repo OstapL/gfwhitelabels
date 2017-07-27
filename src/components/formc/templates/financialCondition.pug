@@ -4,7 +4,7 @@ include ../../raiseFunds/templates/menu.pug
   var fileFolderDropzone = require('directives/setdropzone/folder.js'); 
   pug_html += app.breadcrumbs('create form c', '', [ ['Home', '/'], ['Create Form C', '/formc/' + values.id + '/introduction'], ['FINANCIAL CONDITION', ''], ]);
 
-section.formc-team-members-director.container.m-b-85
+section.formc-financial-condition.container.m-b-85
   - var campaignId = values.campaign_id;
   .row
     +menu('formc', 'financial-condition')
@@ -44,7 +44,7 @@ section.formc-team-members-director.container.m-b-85
             });
         .row
           .col-lg-12
-            h3.text-xs-center.m-t-2 Instructions
+            h3.text-xs-center Instructions
             p.pb10 Companies are limited to raising $1 million through Regulation Crowdfunding in any 12-month period.
             p.pb10 You are required to file a complete set of financial statements, and notes 
               a(href=require('doc/NOTES.pdf') target="_blank")

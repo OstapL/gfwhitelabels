@@ -1,15 +1,18 @@
 p.m-b-1 In order to pay you any dividends or revenue share, regulations require GrowthFountain to collect your Taxpayer Identification Number.  Don’t worry we keep this information safe, secure and encrypted on a separate server.
--
-  pug_html += app.fields.textLabel('ssn', _.extend({
-      'placeholder': 'Social Security #',
-      'label': 'Social Security Number (SSN) or Tax ID (ITIN/EIN)',
-      'value': user.ssn
-    }, fields.ssn));
-  
-  pug_html += app.fields.textLabel('ssn_re', _.extend({
-    'label': 'Re-enter SSN',
-    'value': user.ssn
-    }, fields.ssn_re))
+.row
+  .col-xl-6
+    -
+      pug_html += app.fields.textLabel('ssn', _.extend({
+          'placeholder': 'Social Security #',
+          'label': 'Social Security Number (SSN) or Tax ID (ITIN/EIN)',
+          'value': user.ssn
+        }, fields.ssn));
+  .col-xl-6.m-t-ssn
+    -
+      pug_html += app.fields.textLabel('ssn_re', _.extend({
+        'label': 'Re-enter SSN',
+        'value': user.ssn
+        }, fields.ssn_re))
 
 .popover-content-ssn
   i.fa.fa-info-circle

@@ -2,7 +2,7 @@ include ../../raiseFunds/templates/menu.pug
 
 - pug_html += app.breadcrumbs('create form c', '', [ ['Home', '/'], ['Create Form C', '/formc/' + values.id + '/introduction'], ['team members (officer)', ''], ]);
 
-section.formc-team-members-director.container.m-b-85
+section.formc-team-members-officer.container.m-b-85
   - var formcId = values.formc_id;
   - var campaignId = values.campaign_id;
   .row
@@ -10,7 +10,7 @@ section.formc-team-members-director.container.m-b-85
 
     //START RIGHT BLOCK
     .col-xl-8.col-lg-8.col-md-12.team-member-formc
-      h2.text-uppercase.text-xs-center.m-t-0.m-b-3 Team members (officer)
+      h2.text-uppercase.text-xs-center.m-t-0.mb45 Team members (officer)
       form.form-section
         .row
           .col-xl-6.col-lg-6.col-md-6
@@ -92,7 +92,7 @@ section.formc-team-members-director.container.m-b-85
                     'placeholder': 'YYYY',
                     }, fields.start_date));
         .row
-          .col-lg-12.m-t-2
+          .col-lg-12.m-t-2.m-b-1
             strong Is this individual also a Director?
             .form-group.form-section.m-t-1.m-b-0
               .radio-input.m-b-0.yesno
@@ -161,7 +161,7 @@ section.formc-team-members-director.container.m-b-85
                 placeholder: 'Provide short description of the business',},
                 fields.employer_principal_businesss))
         .row
-          .col-xl-12.m-t-2
+          .col-xl-12
             strong Is this individual also a 20%+ Voting Shareholder?
             .form-group.form-section.m-t-1.m-b-0
               .radio-input.m-b-1.yesno
@@ -199,7 +199,7 @@ section.formc-team-members-director.container.m-b-85
             .border-bottom.m-t-3.m-b-3
         |!{ templates.experiences }
 
-        .row.m-t-3
+        .row.offecer-btn-m-t
           .col-lg-12.text-lg-right.text-sm-center.text-xs-center
             a(href='/formc/' + values.formc_id + '/team-members').btn.btn-secondary.text-uppercas.m-r-1 Cancel
             button(type='button')#submitForm.btn.btn-primary.text-uppercase Save
