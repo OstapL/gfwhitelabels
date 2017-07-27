@@ -345,7 +345,7 @@ module.exports = {
     },
 
     render() {
-      if (this.model.campaign.expired) {
+      if (this.model.isClosed() || this.model.campaign.expired) {
         const template = require('./templates/detailNotAvailable.pug');
         this.$el.html(template());
         app.hideLoading();
@@ -675,7 +675,7 @@ module.exports = {
     },
 
     render() {
-      if (this.model.campaign.expired) {
+      if (this.model.isClosed() || this.model.campaign.expired) {
         const template = require('./templates/detailNotAvailable.pug');
         this.$el.html(template());
         return this;
@@ -1245,9 +1245,11 @@ module.exports = {
   investmentThankYou: Backbone.View.extend({
     template: require('./templates/thankYou.pug'),
     el: '#content',
-    initialize(options) {
+    initialize() {
       if (this.model.company.ga_id)
         app.analytics.emitCompanyCustomEvent(this.model.company.ga_id);
+
+      $('.popover').popover('hide');
     },
 
     render() {
