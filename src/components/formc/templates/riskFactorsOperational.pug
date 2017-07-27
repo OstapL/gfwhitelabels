@@ -6,7 +6,7 @@ include riskFactorsMixins.pug
 
 - pug_html += app.breadcrumbs('create form c', '', [ ['Home', '/'], ['Create Form C', '/formc/' + values.id + '/introduction'], ['Risk Factors', ''], ]);
 
-section.formc-team-members-director.container.m-b-85
+section.formc-risk-factor.container.m-b-85
   - var campaignId = values.campaign_id;
   .row
     +menu('formc', 'risk-factors-operational')
@@ -41,7 +41,7 @@ section.formc-team-members-director.container.m-b-85
                   - if (!(k < Object.keys(defaultRisks).length) && k != 99)
                     +showRiskForm(v, k, 'operational_risk')
       .row
-        .col-lg-12.m-t-3
+        .col-lg-12
           p.pb10
             b In the text box below, please include those operational risks that are specific to your business.
             |  In brainstorming the proper risks to disclose, you can reference the language above or consider the following questions for guidance:
@@ -68,7 +68,7 @@ section.formc-team-members-director.container.m-b-85
 
           .form-section
             .form-group.m-b-0
-              label.d-block
+              label.d-block.m-b-0
                 - var complete = values.operational_risk[99] ? true : false
                 input(type="checkbox" name="complete" disabled=disabled data-previous=String(complete) checked=complete)#complete
                 span.p-l-2 None of these risks apply. This page is complete.
