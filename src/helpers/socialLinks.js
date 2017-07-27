@@ -14,10 +14,15 @@ module.exports = {
       const network = e.target.name;
       const value = e.target.value.toLowerCase();
 
+      if(value === '') {
+        return false;
+      }
+
       const withNetwork = !!_(socialNetworksMap[network]).find(link => value.indexOf(link) >= 0);
 
-      if (withNetwork)
+      if (withNetwork) {
         return e.target.value = app.helpers.format.ensureLinkProtocol(value, true);
+      }
 
       let linkValue = socialNetworksMap[network][0] + (value.startsWith('/') ? value : '/' + value);
 

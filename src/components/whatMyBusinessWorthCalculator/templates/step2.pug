@@ -30,14 +30,13 @@
 
             .col-lg-12
               input(
-                value= formatPrice(data.monthlyOperatingTwoYears),
-                type='text',
-                placeholder='Second Year Expenses',
+                value= app.helpers.format.formatMoney(data.monthlyOperatingTwoYears)
+                type='money'
+                data-value-type='money'
+                placeholder='Second Year Expenses'
                 autocomplete='off'
-                data-input-mask='price',
-                data-model-value='monthlyOperatingTwoYears',
-                data-current-value= data.monthlyOperatingTwoYears
-                name="monthlyOperatingTwoYears")#monthlyOperatingTwoYears.form-control.js-field
+                name="monthlyOperatingTwoYears"
+              )#monthlyOperatingTwoYears.form-control.js-field
 
           .form-group.row
             label(for="workingCapital").col-lg-12.font-weight-normal  How much working capital do you need to generate your projected revenue over the next 24 months?) &nbsp;&nbsp;
@@ -45,12 +44,12 @@
                 div.showPopover(data-content="<u>Working Capital.</u> The amount of capital needed to carry on a business.  This represents the operating liquidity and is calculated as current assets minus current liabilities; accounts receivable plus inventory minus accounts payable.")
                   i(aria-hidden="true").fa.fa-question-circle.text-muted
 
-            .col-lg-12.mb20
+            .col-lg-12.mb20.text-xs-center.bootstrap-slider-calc
               input(
                 type='text',
                 data-slider-value= data.workingCapital,
                 name="workingCapital"
-                data-model-value='workingCapital')#workingCapital.form-control.js-bootstrap-slider
+              )#workingCapital.form-control.js-bootstrap-slider
 
             p.col-lg-12.grey-text-help.m-t-1 * Input should be as a % of revenue.
 
@@ -62,14 +61,13 @@
 
             .col-lg-12
               input(
-                value= formatPrice(data.additionalOperating),
-                type='text',
-                placeholder='Annual Expenses',
+                value= app.helpers.format.formatMoney(data.additionalOperating)
+                type='money'
+                data-value-type='money'
+                placeholder='Annual Expenses'
                 autocomplete='off'
-                data-input-mask='price',
-                data-model-value='additionalOperating',
-                data-current-value= data.additionalOperating
-                name="additionalOperating")#additionalOperating.form-control.js-field
+                name="additionalOperating"
+              )#additionalOperating.form-control.js-field
 
           .form-group.row
             label(for="capitalExpenditures").col-lg-12.font-weight-normal Are you expecting any Capital Expenditures over the next 24 months? &nbsp;&nbsp;
@@ -79,38 +77,36 @@
 
             .col-lg-12
               input(
-                value= formatPrice(data.capitalExpenditures),
-                type='text',
-                placeholder='Capital Expenditures',
+                value= app.helpers.format.formatMoney(data.capitalExpenditures)
+                type='money'
+                data-value-type='money'
+                placeholder='Capital Expenditures'
                 autocomplete='off'
-                data-input-mask='price',
-                data-model-value='capitalExpenditures',
-                data-current-value= data.capitalExpenditures
-                name="capitalExpenditures")#capitalExpenditures.form-control.js-field
+                name="capitalExpenditures"
+              )#capitalExpenditures.form-control.js-field
 
           .form-group.row
             label(for="taxRate").col-lg-12.font-weight-normal What Tax Rate do you expect to pay on your operating profit? (including federal, state, local, and any other taxes applicable to the operation of your business)
 
-            .col-lg-12.mb20
+            .col-lg-12.mb20.text-xs-center.bootstrap-slider-calc
               input(
                 type='text',
                 data-slider-value= data.taxRate,
                 name="taxRate"
-                data-model-value='taxRate')#taxRate.form-control.js-bootstrap-slider
+              )#taxRate.form-control.js-bootstrap-slider
 
           .form-group.row
             label(for="annualInterest").col-lg-12.font-weight-normal What do you expect your annual interest expense to be over the next 2 years?
 
             .col-lg-12
               input(
-                value= formatPrice(data.annualInterest),
-                type='text',
-                placeholder='Annual Interest Expense',
+                value= app.helpers.format.formatMoney(data.annualInterest)
+                type='money'
+                data-value-type='money'
+                placeholder='Annual Interest Expense'
                 autocomplete='off'
-                data-input-mask='price',
-                data-model-value='annualInterest',
-                data-current-value= data.annualInterest
-                name="annualInterest")#annualInterest.form-control.js-field
+                name="annualInterest"
+              )#annualInterest.form-control.js-field
 
           .form-group.row.clearfix.m0
             .col-xs-6.p-t-2.m-t-1

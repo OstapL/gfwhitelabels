@@ -19,18 +19,27 @@ const snippets = {
   team_members: require('./templates/snippets/team_members.pug'),
 };
 
+const fixGATrackerID = (data) => {
+  if (!data || !data.ga_id)
+    return;
+
+  if (!data.ga_id.startsWith('UA-'))
+    data.ga_id = 'UA-' + data.ga_id;
+};
+
 module.exports = {
   company: Backbone.View.extend(_.extend({
     urlRoot: app.config.raiseCapitalServer + '/company',
     template: require('./templates/company.pug'),
     events: _.extend({
-      'click #submitForm': api.submitAction,
+      'click #submitForm': 'submitCompanyInfo',
       'keyup #zip_code': 'changeZipCode',
       'click .update-location': 'updateLocation',
       'click .onPreview': raiseHelpers.onPreviewAction,
       'click .submit_form': raiseHelpers.submitCampaign,
       'click #postForReview': raiseHelpers.postForReview,
-      'keyup #slug': 'fixSlug',
+      'keyup #slugField': 'fixSlug',
+      'keyup #ga_id': 'fixTrackerIDForUI',
       'change #website': 'appendHttpIfNecessary',
     },
       /*app.helpers.confirmOnLeave.events,*/
@@ -59,13 +68,12 @@ module.exports = {
         name: 'Legal Name of Company',
         short_name: 'Doing Business as Another Name?',
         industry: 'Industry',
-        ga_id: 'Google Analytic ID',
+        ga_id: 'Google Analytic ID <a class="link-2" href="https://support.google.com/analytics/topic/2790009?hl=en&ref_topic=3544906" target="_blank">Set Up Google Analytics</a>',
         founding_state: 'Jurisdiction of Incorporation / Organization',
         tagline: 'Tagline',
         description: 'About Us',
         corporate_structure: 'Corporate Structure',
         founding_date: 'Founding date',
-        ga_id: 'Google Analytic ID',
         address_1: 'Street Address',
         address_2: 'Optional Address',
         zip_code: 'Zip code',
@@ -82,6 +90,63 @@ module.exports = {
       if(this.model.hasOwnProperty('id')) {
         this.urlRoot += '/:id';
       }
+    },
+
+    submitCompanyInfo(e) {
+      let $form = $(e.target).closest('form');
+
+      const data = $form.serializeJSON();
+      fixGATrackerID(data);
+      
+      api.submitAction.call(this, e, data);
+    },
+
+    fixTrackerIDForUI (e) {
+      const SKIP_KEY_CODES = [
+        16,   //shift
+        17,   //ctrl
+        18,   //alt
+        35,   //end
+        36,   //home
+        37,   //left arrow
+        38,   //down arrow
+        39,   //right arrow
+        40,   //up arrow
+        91,   //left window
+      ];
+      
+      
+      if (_.contains(SKIP_KEY_CODES, e.keyCode))
+        return;
+
+      const rx = /^[0-9]{8}\-[0-9]{1,2}$/;
+      if (rx.test(e.target.value))
+        return;
+
+      const rawValue = e.target.value;
+
+      let cursorPosition = e.target.selectionStart;
+      let digitsValue = rawValue.replace(/[^0-9]/g, '');
+      if (digitsValue.length < 8) {
+        e.target.value = digitsValue;
+        return;
+      }
+
+      let firstPart = digitsValue.substr(0, 8);
+      let secondPart = digitsValue.substr(8, 2);
+      let newValue = firstPart;
+      if (secondPart) {
+        newValue += '-' + secondPart;
+        if (newValue.charAt(cursorPosition) === '-' && rawValue.indexOf('-') < 0) {
+          ;// cursorPosition -= 1;
+        } else {
+          if (newValue.indexOf('-') < cursorPosition) {
+            cursorPosition += 1;
+          }
+        }
+      }
+      e.target.value = newValue;
+      e.target.setSelectionRange(cursorPosition, cursorPosition);
     },
 
     fixSlug(e) {
@@ -152,6 +217,8 @@ module.exports = {
         app.user.data.info.push(data);
         localStorage.setItem('user', JSON.stringify(app.user.toJSON()));
       }
+
+      app.analytics.emitEvent(app.analytics.events.CampaignStarted, app.user.stats);
 
       app.routers.navigate(
         '/campaign/' + data.campaign_id + '/general_information',
@@ -299,7 +366,10 @@ module.exports = {
         title: 'Drop your photo here or click to upload',
         help_text: 'This is the image that will appear at the top of your campaign. A minimum size of 1600x800 is recommended.',
         templateDropzone: 'headerMedia.pug',
+        defaultImage: require('images/default/default-header.png'),
         onSaved: (data) => {
+          this.model.header_image_image_id = data.file;
+          this.model.header_image_data = data.file.toJSON();
           this.model.updateMenu(this.model.calcProgress(this.model));
         },
         crop: {
@@ -307,7 +377,6 @@ module.exports = {
             aspectRatio: 1600/800,
             crop: function(e) {
               /*
-              debugger;
               if(event.detail.height < 1600) {
                 console.log('too small area ', event.detail.height);
                 throw('too small');
@@ -336,6 +405,8 @@ module.exports = {
         title: 'Drop your photo here or click to upload',
         help_text: ' This image entices investors to view your campaign. A minimum size of 350x209 is recommended.',
         onSaved: (data) => {
+          this.model.list_image_image_id = data.file;
+          this.model.list_image_data = data.file.toJSON();
           this.model.updateMenu(this.model.calcProgress(this.model));
         },
         crop: {
@@ -433,7 +504,7 @@ module.exports = {
       const img = $videoContainer.find('img')[0];
 
       if (!e.target.value) {
-        img.src = require('images/default/255x153.png');
+        img.src = require('images/default/default-video.png');
         return;
       }
 
@@ -451,12 +522,12 @@ module.exports = {
     _updateYoutubeThumbnail(img, videoID) {
       img.src = videoID
         ? '//img.youtube.com/vi/' + videoID + '/0.jpg'
-        : require('images/default/255x153.png');
+        : require('images/default/default-video.png');
     },
 
     _updateVimeoThumbnail(img, videoID) {
       if (!videoID) {
-        img.src = require('images/default/255x153.png');
+        img.src = require('images/default/default-video.png');
         return;
       }
 
@@ -470,7 +541,7 @@ module.exports = {
         img.src = response[0].thumbnail_large;
       }).fail((err) => {
         console.error('Failed to load thumbnail from vimeo');
-        img.src = require('images/default/255x153.png');
+        img.src = require('images/default/default-video.png');
       });
     },
 
@@ -539,6 +610,8 @@ module.exports = {
       this.fields.photo_image_id = _.extend(this.fields.photo_image_id, {
         label: 'Profile Picture',
         help_text: 'A minimum size of 300x300 is recommended.',
+        defaultImage: require('images/default/Default_photo.png'),
+
         onSaved: (data) => {
           // delete newData.urlRoot;
           api.makeRequest(this.urlRoot, 'PUT', this.model.toJSON());
@@ -735,6 +808,8 @@ module.exports = {
       this.fields.investor_presentation_file_id = _.extend(this.fields.investor_presentation_file_id, {
         label: 'Upload an Investor Presentation',
         onSaved: (data) => {
+          this.model.investor_presentation_file_id = data.file;
+          this.model.investor_presentation_data = data.file.toJSON();
           this.model.updateMenu(this.model.calcProgress(this.model));
         },
       });

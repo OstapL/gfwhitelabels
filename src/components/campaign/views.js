@@ -7,6 +7,18 @@ const validation = require('components/validation/validation.js');
 
 const CalculatorView = require('./revenueShareCalculator.js');
 
+const preventScrollHandler = (e) => {
+  e.preventDefault();
+  return false;
+};
+
+const preventBodyScrolling = (preventScroll) => {
+  if (preventScroll === true) {
+    document.body.addEventListener("touchmove", preventScrollHandler);
+  } else {
+    document.body.removeEventListener("touchmove", preventScrollHandler);
+  }
+};
 
 module.exports = {
   list: Backbone.View.extend({
@@ -16,11 +28,6 @@ module.exports = {
       'change select.orderby': 'orderby',
     },
     initialize(options) {
-      let dataClass = [];
-      options.collection.data.forEach((el) => {
-        dataClass.push(new app.models.Company(el));
-      });
-      options.collection.data = dataClass;
       this.collection = options.collection;
     },
 
@@ -29,7 +36,7 @@ module.exports = {
 
       require('bootstrap-select/sass/bootstrap-select.scss');
 
-      let selectPicker = require('bootstrap-select');
+      require('bootstrap-select');
       this.$el.html('');
       this.$el.append(
         this.template({
@@ -91,7 +98,7 @@ module.exports = {
       };
 
       if (this.model.ga_id) {
-        app.emitCompanyAnalyticsEvent(this.model.ga_id);
+        app.analytics.emitCompanyCustomEvent(this.model.ga_id);
       }
     },
 
@@ -235,12 +242,43 @@ module.exports = {
             openEffect  : 'elastic',
             closeEffect : 'elastic',
 
-            helpers : {
+            helpers: {
               title : {
                 type : 'inside'
-              }
+              },
+              // overlay: {
+              //   locked: false
+              // }
+            },
+            beforeShow(){
+              const $html = $('html');
+              ['fancybox-margin', 'fancybox-lock'].forEach((cssClass) => {
+                if (!$html.hasClass(cssClass)) {
+                  $html.addClass(cssClass);
+                }
+              });
+              preventBodyScrolling(true);
+              // $('html').css('overflowX', 'visible');
+              // $('body').css('overflowY', 'hidden');
+            },
+            afterClose(){
+              $('html').removeClass('fancybox-margin fancybox-lock');
+              // $('html').css('overflowX', 'hidden');
+              // $('body').css('overflowY', 'visible');
+              preventBodyScrolling(false);
             }
           });
+
+          // $fancyBox.fancybox({
+          //   openEffect  : 'elastic',
+          //   closeEffect : 'elastic',
+          //
+          //   helpers : {
+          //     title : {
+          //       type : 'inside'
+          //     }
+          //   }
+          // });
           resolve();
         }, 'fancybox_chunk');
       });
@@ -307,6 +345,13 @@ module.exports = {
     },
 
     render() {
+      if (this.model.campaign.expired) {
+        const template = require('./templates/detailNotAvailable.pug');
+        this.$el.html(template());
+        app.hideLoading();
+        return this;
+      }
+
       this.$el.html(
         this.template({
           values: this.model,
@@ -395,6 +440,7 @@ module.exports = {
     initialize(options) {
       this.fields = options.fields;
       this.user = options.user;
+      this.fields.amount.type = 'money';
       this.user.account_number_re = this.user.account_number;
       this.user.routing_number_re = this.user.routing_number;
       this.fields.payment_information_type.validate.choices = {
@@ -516,6 +562,7 @@ module.exports = {
       this.fields.amount.fn = function(name, value, attr, data, computed) {
         return validateAmount(value);
       };
+      this.fields.amount.positiveOnly = true;
 
       this.model.campaign.expiration_date = new Date(this.model.campaign.expiration_date);
 
@@ -527,37 +574,38 @@ module.exports = {
           },
           choices: COUNTRIES
         },
+        messageRequired: 'Not a valid choice',
       });
 
       this.fields.personal_information_data.schema.phone = _.extend(this.fields.personal_information_data.schema.phone, {
-        required: false,
-        fn: function(name, value, attr, data, schema) {
-          let country = this.getData(data, 'personal_information_data.country');
-          if (country == 'US')
-            return;
-
-          return this.required(name, true, attr, data);
-        },
+        // required: false,
+        // fn: function(name, value, attr, data, schema) {
+        //   let country = this.getData(data, 'personal_information_data.country');
+        //   if (country == 'US')
+        //     return;
+        //
+        //   return this.required(name, true, attr, data);
+        // },
       });
 
       this.fields.personal_information_data.schema.city = _.extend(this.fields.personal_information_data.schema.city, {
-        fn: function(name, value, attr, data, schema) {
-          let country = this.getData(data, 'personal_information_data.country');
-          if (country == 'US')
-            return;
-          return this.required(name, true, attr, data);
-        },
-        required: false,
+        // fn: function(name, value, attr, data, schema) {
+        //   let country = this.getData(data, 'personal_information_data.country');
+        //   if (country == 'US')
+        //     return;
+        //   return this.required(name, true, attr, data);
+        // },
+        // required: false,
       });
 
       this.fields.personal_information_data.schema.state = _.extend(this.fields.personal_information_data.schema.state, {
         required: false,
-        fn: function(name, value, attr, data, schema) {
-          let country = this.getData(data, 'personal_information_data.country');
-          if (country == 'US')
-            return;
-          return this.required(name, true, attr, data);
-        },
+        // fn: function(name, value, attr, data, schema) {
+        //   let country = this.getData(data, 'personal_information_data.country');
+        //   if (country == 'US')
+        //     return;
+        //   return this.required(name, true, attr, data);
+        // },
       });
 
       // this.user.ssn_re = this.user.ssn;
@@ -572,7 +620,7 @@ module.exports = {
           city: 'City',
         },
         payment_information_data: {
-          name_on_bank_account: 'Name on Bank Account',
+          name_on_bank_account: 'Name As It Appears on Bank Account',
           account_number: 'Account Number',
           account_number_re: 'Re-enter Account Number',
           routing_number: 'Routing Number',
@@ -609,10 +657,13 @@ module.exports = {
 
       this.assignLabels();
 
-      if(window.location.hostname == 'dcu.growthfountain.com') {
+      if(window.location.hostname == 'dcu.growthfountain.com' || window.location.hostname == 'tvfcu.growthfountain.com' || window.location.hostname == 'alpha-dcu.growthfountain.com' || window.location.hostname == 'alpha-tvfcu.growthfountain.com') {
       //if(window.location.hostname == 'localhost') {
         this.fields.is_understand_securities_related = Object.assign({}, this.fields.is_reviewed_educational_material);
         this.fields.is_understand_securities_related.label = this.labels.is_understand_securities_related;
+        if(window.location.hostname == 'tvfcu.growthfountain.com' || window.location.hostname == 'alpha-tvfcu.growthfountain.com') {
+          this.fields.is_understand_securities_related.label = this.fields.is_understand_securities_related.label.replace(/DCU \(Digital Federal Credit Union\)/ig, 'TVFCU (Tennessee Valley Federal Credit Union) ')
+        }
       } else {
         delete this.fields.is_understand_securities_related;
       }
@@ -620,10 +671,16 @@ module.exports = {
       this.initMaxAllowedAmount();
 
       if (this.model.ga_id)
-        app.emitCompanyAnalyticsEvent(this.model.ga_id);
+        app.analytics.emitCompanyCustomEvent(this.model.ga_id);
     },
 
     render() {
+      if (this.model.campaign.expired) {
+        const template = require('./templates/detailNotAvailable.pug');
+        this.$el.html(template());
+        return this;
+      }
+
       this.$el.html(
         this.template({
           snippets: this.snippets,
@@ -765,11 +822,14 @@ module.exports = {
     },
 
     maxInvestmentsPerYear(annualIncome, netWorth, investedPastYear, investedOtherSites) {
-      let maxInvestmentsPerYear = (annualIncome >= 100 && netWorth >= 100)
-        ? Math.min(annualIncome, netWorth) * 0.1
-        : Math.min(annualIncome, netWorth) * 0.05;
+      const coef = (annualIncome >= 100 && netWorth >= 100) ? 0.1 : 0.05;
+      let maxInvestmentsPerYear = Math.min(annualIncome, netWorth) * coef;
 
-      maxInvestmentsPerYear = maxInvestmentsPerYear < 2 ? 2.2 : maxInvestmentsPerYear;
+      if (maxInvestmentsPerYear < 2)
+        maxInvestmentsPerYear = 2.2;
+
+      if (maxInvestmentsPerYear > 107)
+        maxInvestmentsPerYear = 107;
 
       return Math.round((maxInvestmentsPerYear * 1000 - investedPastYear - investedOtherSites));
     },
@@ -785,7 +845,7 @@ module.exports = {
     },
 
     getNumber(value) {
-      return Number(value.replace(/\,/g, ''));
+      return Number(value.replace(/[\$,]/g, ''));
     },
 
     formatNumber(value) {
@@ -812,7 +872,7 @@ module.exports = {
 
       let newAmount = Math.ceil(amount / pricePerShare) *  pricePerShare;
 
-      this.$amount.val(this.formatNumber(newAmount));
+      this.$amount.val('$' + this.formatNumber(newAmount));
       this._updateTotalAmount();
 
       if (newAmount > amount) {
@@ -823,16 +883,14 @@ module.exports = {
     },
 
     updateAmount(e) {
+      e.preventDefault();
+      e.stopPropagation();
 
-      if(e.keyCode == 37 || e.keyCode == 39) {
-        return;
-      }
+      app.helpers.format.formatMoneyInputOnKeyup(e);
 
-      let amount = this.getNumber(e.currentTarget.value);
+      let amount = this.getNumber(e.target.value);
       if (!amount)
         return;
-
-      e.currentTarget.value = this.formatNumber(amount);
 
       this.$amount.data('rounded', false);
 
@@ -841,17 +899,23 @@ module.exports = {
       this.updatePerks(amount);
 
       this._updateTotalAmount();
+
+      return false;
     },
 
     updatePerks(amount) {
       function updatePerkElements($elms, amount) {
         $elms.removeClass('active').find('i.fa.fa-check').hide();
-        $elms.each((idx, el) => {
-          if(parseInt(el.dataset.amount) <= amount) {
-            $(el).addClass('active').find('i.fa.fa-check').show();
-            return false;
-          }
+        let filteredPerks = _($elms).filter(el =>  {
+          const perkAmount = parseInt(el.dataset.amount);
+          return perkAmount <= amount;
         });
+
+        let activePerk = _.last(filteredPerks);
+
+        if (activePerk) {
+          $(activePerk).addClass('active').find('i.fa.fa-check').show();
+        }
       }
 
       updatePerkElements($('.invest-perks-mobile .perk'), amount);
@@ -876,32 +940,41 @@ module.exports = {
     },
 
     updateLimitInModal(e) {
-      let annualIncome = Number(this.$('#annual_income').val().replace(/\,/g, '')) || 0,
-          netWorth = Number(this.$('#net_worth').val().replace(/\,/g, '')) || 0;
+      e.preventDefault();
+      e.stopPropagation();
 
+      app.helpers.format.formatMoneyInputOnKeyup(e);
+      const rx = /[\$,]/g;
+
+      let annualIncome = Number(this.$('#annual_income').val().replace(rx, ''));
+      let netWorth = Number(this.$('#net_worth').val().replace(rx, '')) || 0;
+      if (isNaN(annualIncome) || !annualIncome)
+        annualIncome = 0;
+      if (isNaN(netWorth) || !netWorth)
+        netWorth = 0;
 
       let investedOnOtherSites = this.user.invested_on_other_sites;
       let investedPastYear = this.user.invested_equity_past_year;
-
-      this.$('#annual_income').val(annualIncome.toLocaleString('en-US'));
-      this.$('#net_worth').val(netWorth.toLocaleString('en-US'));
 
       this.$('span.current-limit').text(
         this.maxInvestmentsPerYear(annualIncome / 1000, netWorth / 1000, investedPastYear, investedOnOtherSites)
           .toLocaleString('en-US')
       );
+
+      return false;
     },
 
     updateIncomeWorth(e) {
+      const rx = /[\$,]/g;
       let netWorth = $('#net_worth')
         .val()
         .trim()
-        .replace(/\,/g, '') / 1000;
+        .replace(rx, '') / 1000;
 
       let annualIncome = $('#annual_income')
         .val()
         .trim()
-        .replace(/\,/g, '') / 1000;
+        .replace(rx, '') / 1000;
 
       let data = {
         net_worth: netWorth,
@@ -919,15 +992,15 @@ module.exports = {
       let fields = {
         net_worth: {
           required: true,
-          fn: function(name, value, attr, data, schema) {
-            return validateRange(value * 1000, 0, 5000000 * 2, 'Net Worth')
-          },
+          // fn: function(name, value, attr, data, schema) {
+          //   return validateRange(value * 1000, 0, 5000000 * 2, 'Net Worth')
+          // },
         },
         annual_income: {
           required: true,
-          fn: function(name, value, attr, data, schema) {
-            return validateRange(value * 1000, 0, 500000 * 2, 'Annual Income');
-          },
+          // fn: function(name, value, attr, data, schema) {
+          //   return validateRange(value * 1000, 0, 500000 * 2, 'Annual Income');
+          // },
         }
       };
 
@@ -1163,8 +1236,7 @@ module.exports = {
     _success(data) {
       const feeInfo = this.calcFeeWithCredit();
       this.user.credit = feeInfo.remainingCredit;
-
-      app.emitFacebookPixelEvent('MakeInvestment');
+      app.analytics.emitEvent(app.analytics.events.InvestmentMade, app.user.stats);
       this.saveEsign(data);
     },
 
@@ -1175,7 +1247,7 @@ module.exports = {
     el: '#content',
     initialize(options) {
       if (this.model.company.ga_id)
-        app.emitCompanyAnalyticsEvent(this.model.company.ga_id);
+        app.analytics.emitCompanyCustomEvent(this.model.company.ga_id);
     },
 
     render() {

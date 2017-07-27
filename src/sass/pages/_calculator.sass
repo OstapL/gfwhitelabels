@@ -43,37 +43,30 @@
                 color: $small-text
                 
                 &.btn
-                    h4
-                        margin-left: 15px
-                        @media screen and (max-width:575px)
-                            margin-left: 0
+                    @media screen and (min-width:768px)
+                        h4
+                            margin-left: 15px
                     border-radius: $calc_tabs_radius
                     @media screen and (max-width:575px)
                         h4
-                            font-size: rem(10)
-                            position: relative
-                            z-index: 2
+                            font-size: rem(9)
                 
-                
-                &:after
-                    content: ""
-                    width: 30px
-                    height: 31px
-                    position: absolute
-                    background: inherit
-                    top: 0
-                    bottom: 0
-                    right: -15px
-                    margin: auto
-                    border: 1px solid $gallery
-                    border-left: none
-                    border-bottom: none
-                    transform: rotate(45deg)
-                    z-index: 1
-                    @media screen and (max-width:575px)
-                        width: 27px
-                        height: 27px
-                        right: -13px
+                @media screen and (min-width:768px)
+                    &:after
+                        content: ""
+                        width: 31px
+                        height: 32px
+                        position: absolute
+                        background: inherit
+                        top: -0.2px
+                        bottom: 0
+                        right: -16px
+                        margin: auto
+                        border: 1px solid $gallery
+                        border-left: none
+                        border-bottom: none
+                        transform: rotate(44deg)
+                        z-index: 1
 
 
                 &.current
@@ -82,54 +75,16 @@
                     border-color: $calc_tabs_current_bg
                     color: $white
                     cursor: default
-            @media screen and (max-width:360px)
-
-                &:nth-child(1n+1)
-                    h4
-                        left: 8px
-                &:first-of-type
-                    width: 24%!important
-                &:last-of-type
-                    width: 28%!important
-                    h4
-                        left: 5px
         &.capitalraise
             padding: 0 2%
 
             li
-                width: 24.6%
-                @media screen and (max-width:360px)
-                    width: 20%!important
-                    &:nth-child(1n+1)
-                        width: 25%!important
-                        h4
-                            left: 10px
-                    &:first-of-type
-                        width: 23%!important
-                        h4
-                            left: 0
-                    &:last-of-type
-                        width: 27%!important
-                        h4
-                            left: 7px
+                width: 25%
 
         &.established-business
             li
-                width: 19.6%
-                @media screen and (max-width:360px)
-                    width: 20%!important
-                    &:nth-child(1n+1)
-                        width: 20%
-                        h4
-                            left: 10px
-                    &:first-of-type
-                        width: 18%!important
-                        h4
-                            left: 0
-                    &:last-of-type
-                        width: 22%!important
-                        h4
-                            left: 7px
+                width: 20%
+
         &.revenue-share-calculator
             li
               @media screen and (max-width:360px)
@@ -198,8 +153,11 @@
             .btn
                 display: block
                 margin-top: rem(25)
-                @media screen and (max-width:440px)
+                @media screen and (max-width:567px)
                     font-size: rem(10)!important
+                    padding-left: 0
+                    padding-right: 0
+                    text-align: center
     &.established-business-finish
         #chart
             .flot-x-axis
@@ -207,10 +165,16 @@
                     width: 74px
                     &:last-child
                         text-align: center!important
+                        max-width: 50px
                     @media screen and (max-width:575px)
                         font-size: 6px
                         width: 30px
-                        margin-left: 25px
+                        margin-left: 15px
+                        &:last-child
+                            text-align: center!important
+                            max-width: 50px!important
+                            margin-left: 5px!important
+
     &.revenue-calculator
         .graf-responsive
             .flot-x-axis
@@ -226,7 +190,10 @@
         table-layout: fixed
         max-width: 400px
         margin: 0 auto 20px
-
+    .bootstrap-slider-calc
+        &.has-error
+            .help-block
+                margin-top: rem(6)
 .lead
     margin-bottom: 10px
     &__center
@@ -243,10 +210,32 @@
     font-size: 12px
 .graf-responsive
     overflow: auto!important
+    @media screen and (max-width: 375px)
+        .plot-title
+            left: 0
     #chart1   
         width: 100%
         @media screen and (max-width: 767px)
-            width: 768px!important
+            width: 600px!important
+            .flot-x-axis .flot-tick-label
+                font-size: 12px
+                margin-left: 20px
+        @media screen and (max-width: 567px)
+            width: 520px!important
+            margin-left: rem(5)
+        @media screen and (max-width: 414px)
+            width: 380px!important
+            margin-left: rem(5)
+            .flot-x-axis .flot-tick-label
+                margin-left: 7px
+        @media screen and (max-width: 375px)
+            width: 345px!important
+            margin-left: rem(5)
+            .flot-x-axis .flot-tick-label
+                font-size: 10px
+                margin-left: 10px
+            
+
     .data-point-label
         transform: translate(-50%, -50%)
         position: absolute

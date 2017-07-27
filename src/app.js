@@ -2,18 +2,10 @@ const Router = require('./router.js');
 const User = require('components/accountProfile/user.js');
 const Menu = require('components/menu/views.js');
 
-const safeDataLayerPush = (...args) => {
-  if (!window.dataLayer) {
-    console.warn('No data layer found! It looks like GTM scripts blocked');
-    return;
-  }
-
-  dataLayer.push(...args);
-};
-
 class App {
   constructor() {
     this.cache = {};
+    this.analytics = require('./helpers/analytics.js');
     this.helpers = require('./helpers.js');
     this.config = require('./config.js');
     this.cookies = require('cookies-js');
@@ -35,15 +27,6 @@ class App {
 
   start() {
     this.user.loadWithPromise().then(() => {
-
-      // A trick for turn off statistics with GET param, for SEO issue
-      if(document.location.search.indexOf('nometrix=t') !== -1) {
-        delete this.config.googleTagID;
-      }
-
-      if (this.config.googleTagID) {
-        this.initFacebookPixel();
-      }
 
       this.routers = new Router();
       Backbone.history.start({ pushState: true });
@@ -67,70 +50,6 @@ class App {
         el: '#menuProfile',
       });
       this.profile.render();
-    });
-  }
-
-  initFacebookPixel() {
-    if (!this.config.googleTagID || !this.config.facebookPixelID)
-      return;
-
-    safeDataLayerPush({
-      event: 'fb-pixel-init'
-    });
-  }
-
-  emitFacebookPixelEvent(eventName='ViewContent', params={}) {
-    if (!this.config.googleTagID || !this.config.facebookPixelID)
-      return;
-
-    const STANDARD_EVENTS = [
-      'ViewContent',
-      'Search',
-      'AddToCart',
-      'AddToWishlist',
-      'InitiateCheckout',
-      'AddPaymentInfo',
-      'Purchase',
-      'Lead',
-      'CompleteRegistration',
-    ];
-
-    let trackType = (_.contains(STANDARD_EVENTS, eventName)) ? 'track' : 'trackCustom';
-
-    safeDataLayerPush({
-      event: 'fb-pixel-event',
-      trackType,
-      eventName,
-    });
-  }
-
-  emitGoogleAnalyticsEvent(eventName, params={}) {
-    if (!this.config.googleTagID)
-      return;
-
-    if (!eventName)
-      return console.error('eventName is not set');
-
-    let hasRequiredParams = ['eventAction', 'eventCategory'].every(paramName => !!params[paramName]);
-    if (!hasRequiredParams)
-      return console.error('Required params are not set');
-    
-    params.event = eventName;
-    safeDataLayerPush(params);
-  }
-
-  emitCompanyAnalyticsEvent(trackerId) {
-    if (this.config.googleTagID)
-      return;
-
-    if (!trackerId)
-      return;
-
-    safeDataLayerPush({
-      event: 'company-custom-event',
-      eventCategory: 'Company',
-      eventAction: 'ViewPage',
-      trackerId,
     });
   }
 

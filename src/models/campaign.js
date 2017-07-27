@@ -58,6 +58,9 @@ class Campaign {
         set: function(value) { this.data[key] = value; },
       });
     }
+    //sort perks asc
+    if (this.perks && this.perks.length)
+      this.perks.sort((p1, p2) => p1.amount - p2.amount);
   }
 
   toJSON() {
@@ -80,8 +83,19 @@ class Campaign {
     return data;
   }
 
-  daysLeft(dateTo) {
-    return moment(this.expiration_date).diff(moment(), 'days');
+  daysLeft() {
+    let days = Math.ceil(moment(this.expiration_date).diff(moment(), 'days', true));
+    if (days < 0)
+      days = 0;
+
+    return days;
+  }
+
+  daysLeftText() {
+    const daysLeft = this.daysLeft();
+    return daysLeft === 1
+      ? `${daysLeft} Day Left`
+      : `${daysLeft} Days Left`;
   }
 
   daysPassedPercentage(approved_date) {
@@ -199,8 +213,13 @@ class Campaign {
   }
 
   get expired() {
-    return this.expirationDate.isBefore(today);
+    return this.expirationDate.isSameOrBefore(today);
   }
+
+  get successful() {
+    return this.amount_raised >= this.minimum_raise;
+  }
+
 }
 
-module.exports = Campaign
+module.exports = Campaign;

@@ -222,6 +222,11 @@ select.form-control
 				+mt(.2s)
 				&:hover
 					color: $link-1-hover
+	.city-state-us
+		.has-error
+			.help-block
+				position: relative
+				top: 25px
 
 	// вместо этого поля используеться сейчас поля типа text
 	input[type='date'] 
@@ -234,6 +239,11 @@ select.form-control
 		padding-top: 10px
 		line-height: 14px
 	.has-error
+		input,
+		textarea,
+		select,
+			border-color: #ed1c24
+			box-shadow: 0px 0px 3px 2px rgba(237,28,36, 0.1)
 		.help-block
 			color: $crimson
 			position: relative

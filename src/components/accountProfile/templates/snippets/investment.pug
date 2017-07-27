@@ -1,84 +1,95 @@
 div(data-investmentid=id).one_table
   -
     var url = campaign.getMainImage();
-    var background = 'background: url(' + url + ') center center no-repeat; background-size: cover;';
+    var background = 'background: url(' + (url || require('images/default/350x282.png')) + ') center center no-repeat; background-size: cover;';
   .img_column.text-lg-center.text-sm-center(style=background)
 
     if active
-      span.img_tab #{campaign.daysLeft() + ' Days Left'}
+      span.img_tab #{campaign.daysLeftText()}
       if processed
         span.investment-processed
           i.fa.fa-check.like-icon-circle
           | Investment Processed
-
-    if cancelled
-      span.successfull.unsuccessfull  Cancelled
-    if expired
-      span.end-date  #{campaign.expirationDate.format('MM/DD/YYYY')}
+    else
+      if cancelled
+        span.unsuccessfull Cancelled
+      else if campaign.successful
+        span.successfull Successfully
+          br
+          | funded campaign
+      else if expired
+        span.unsuccessfull Unsuccessfully
+          br
+          | funded campaign
+        br
+        span.end-date
+          | #{campaign.expirationDate.format('MM/DD/YYYY')}
+          br
+          | End Date
 
     h2.text-uppercase #{company.name}
-  .right-columns
-    .one_line
-      .col40
-        span.light_grey Amount Invested
-      .col60
-        span.bold-grey.font-weight-bold #{'$' + amount}
-    .one_line
-      .col40
-        span.light_grey Investment Day
-      .col60
-        span.dark_grey #{createdDate.format('MM/DD/YYYY') }
-    .one_line
-      .col40
-        span.light_grey Investment ID
-      .col60
-        span.dark_grey #{id}
-    .one_line
-      .col40
-        span.light_grey Security
-      .col60
-        span.dark_grey #{security_type == 0 ? 'Common Equity' : 'Revenue Share'}
-    .one_line
-      .col40.col-perks
-        span.light_grey Perks
-      .col60.col-perks.showPopover(data-content=perk)
-        span.dark_grey #{perk}
-  .right_buttons
-    h3 Downloadable Files
-    ul
-      li
-        - debugger;
-        a(href=campaign.investor_presentation_file_id.getUrl('origin') target="_blank").link-3 Investor Presentation
-      li
-        a(href=formc.link_to_formc data-id=id target="_blank").link-3.formc-docs-link Form C
-      li
-        a(href="#" data-id=id target="_blank").link-3.financial-docs-link Financials
-      li
-        a(
-          href="#"
-          data-object-id=id
-          data-security-type=security_type
-          target="_blank"
-        ).link-3.agreement-link Agreements
-  .bottom_column
-    .top_descript
-      .left_text
-        h3 #{app.helpers.format.formatAmount(campaign.amount_raised)}
-        span Raised
-      .right_text
-        h3 #{app.helpers.format.formatAmount((campaign.minimum_raise))}
-        span Goal
-      p.percents #{ campaign.fundedPercentage().text }
-      .clear
-    .progress_line_container
-      progress(value=campaign.amount_raised max=(campaign.minimum_raise || campaign.maximum_raise)).progress
-    .text-xs-center
-      a(href=('/' + company.id)).btn.btn-sm.btn-secondary.text-uppercase view campaign
-        i.fa.fa-angle-right
-    .cancel_invest
-      if active
-        a(
-          href="#"
-          data-id=(id || 0)
-        ).cancel-investment.font-weight-bold Cancel investment
+  .right-block
+    .right-columns
+      .one_line
+        .col40
+          span.light_grey Amount Invested
+        .col60
+          span.bold-grey.font-weight-bold #{'$' + (amount || 0).toLocaleString('en-US') }
+      .one_line
+        .col40
+          span.light_grey Investment Day
+        .col60
+          span.dark_grey #{createdDate.format('MM/DD/YYYY') }
+      .one_line
+        .col40
+          span.light_grey Investment ID
+        .col60
+          span.dark_grey #{id}
+      .one_line
+        .col40
+          span.light_grey Security
+        .col60
+          span.dark_grey #{security_type == 0 ? 'Common Equity' : 'Revenue Share'}
+      .one_line
+        .col40.col-perks
+          span.light_grey Perks
+        .col60.col-perks.showPopover(data-content=perk)
+          span.dark_grey #{perk}
+    .right_buttons
+      h3 Downloadable Files
+      ul
+        li
+          a(href=campaign.investor_presentation_file_id.getUrl('origin') target="_blank").link-3 Investor Presentation
+        li
+          a(href=(formc.link_to_formc || "#") data-id=id target="_blank" disabled=formc.link_to_formc).link-3.formc-docs-link Form C
+        li
+          a(href="#" data-id=id target="_blank").link-3.financial-docs-link Financials
+        li
+          a(
+            href="#"
+            data-object-id=id
+            data-security-type=security_type
+            target="_blank"
+          ).link-3.agreement-link Agreements
+    .bottom_column
+      .top_descript
+        .left_text
+          h3 #{app.helpers.format.formatAmount(campaign.amount_raised)}
+          span Raised
+        .right_text
+          h3 #{app.helpers.format.formatAmount((campaign.minimum_raise))}
+          span Goal
+        p.percents #{ campaign.fundedPercentage().text }
+        .clear
+      .progress_line_container
+        progress(value=campaign.amount_raised max=(campaign.minimum_raise || campaign.maximum_raise)).progress
+      .text-xs-center
+        - var campaignURL = '/' + (company.slug || company.id);
+        a(href=campaignURL).btn.btn-sm.btn-secondary.text-uppercase view campaign
+          i.fa.fa-angle-right
+      .cancel_invest
+        if active
+          a(
+            href="#"
+          ).cancelInvestment.font-weight-bold Cancel investment
   .clear

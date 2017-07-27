@@ -12,7 +12,7 @@
   
 
 section.company-header.scroll-paralax.no-paralax-mobile
-  div(style="background-image: url(" + values.campaign.getMainImage() + ")").background
+  div(style="background-image: url(" + (values.campaign.getMainImage() || require('images/default/default-header.png')) + ")").background
   .js-height-parent.container-fluid
     .home-content
       .home-text.text-lg-center
@@ -28,6 +28,7 @@ section.company-header.scroll-paralax.no-paralax-mobile
               data-provider=videoInfo.provider
               data-id=videoInfo.id
               data-url=videoInfo.url
+              data-modal-class='detail-video-popup'
             ).big-icon.link-6.youtube_popup.showVideoModal.play-icon
               i.fa.fa-play
 
@@ -166,6 +167,7 @@ section.campaigndetail
           if values.linkedin
             a(href=values.linkedin target="_blank").link-1.link-campaing-detail
               i.fa.fa-linkedin
+        .clear
     
     .col-xl-6.col-lg-12.col-md-12.col-sm-12.col-xs-12.right-block-investors.p-xs-0
       .progress_bar_container
@@ -237,7 +239,7 @@ section
         else if values.campaign.gallery_group_id.data.length
           each v,k in values.campaign.gallery_group_id.data
             .col-lg-4.col-sm-12.col-xs-12.col-md-6.no-padding-img
-              a(href=(v.getUrl('main')) data-size='1440x900' rel="gallery1" title=(v.name) disabled="1").fancybox
+              a(href=(v.getUrl('main')) data-size='1440x900' rel="gallery1" title=(v.name) onclick="return false;").fancybox
                 img(src=(v.getUrl('530x441')) alt=(v.name)).w-100.img-responsive
     .container
       .col-lg-12.p-sm-0
@@ -324,7 +326,7 @@ section
               each v in values.campaign.team_members.members
                 .col-xl-4.col-lg-4.col-md-6.col-sm-12.col-xs-12.team.team-detail.p-xs-0
                   .card.text-lg-center.text-xs-center
-                    img(src=v.photo_image_id.getUrl('350x209') alt="").img-circle
+                    img(src=v.photo_image_id.getUrl('Default_photo') alt="").img-circle
                     .card-block
                       h4.text-xs-center.card-title.text-uppercase #{v.first_name} #{v.last_name }
                       p.card-text
@@ -360,7 +362,7 @@ section
                               p.color-grey
                                 i.fa.fa-graduation-cap
                                 |  #{v.college}
-    .col-lg-12.border-bottom.m-t-0.m-b-3
+    .col-lg-12.border-bottom.m-t-0.m-b-0
   if values.campaign.press && Object.keys(values.campaign.press).length > 0 && values.campaign.press[0].headline != ''
     section.articles#articles
       .container
@@ -422,26 +424,26 @@ section
       .row
         h2#documents.col-lg-12.text-uppercase.text-lg-center.text-xs-center.campaign-subheading.m-t-0 Documents
         .col-xl-8.offset-xl-2.col-lg-10.offset-lg-1.col-sm-12.offset-sm-0
-          .col-lg-4.text-xs-center
+          .col-xl-4.col-lg-4.col-md-6.col-sm-6.col-xs-12.text-xs-center
             p Official filing on SEC.gov
             if values.formc.link_to_formc
               a(href=values.formc.link_to_formc target="_blank")
                 img(src=require('images/icons/lrg_US_Department_of_State35.gif')).img-document.d-inline-block
                 h3.d-inline-block  Form C
 
-          .col-lg-4.text-xs-center
+          .col-xl-4.col-lg-4.col-md-6.col-sm-6.col-xs-12.text-xs-center
             p Company documents
             a(href="#" target="_blank").company-documents
               i.fa.fa-file-pdf-o.d-inline-block
               h3.d-inline-block Financials
 
-          .col-lg-4.row.text-xs-center
+          .col-xl-4.col-lg-4.col-md-12.col-sm-12.col-xs-12.text-xs-center
             p Company documents
             if values.campaign.investor_presentation_file_id.id
               a(href=values.campaign.investor_presentation_file_id.getUrl('origin') target="_blank")
                 i.fa.fa-file-powerpoint-o.d-inline-block
-                h3.d-inline-block Investor Presentation
-  section.overview
+                h3.d-inline-block.m-b-0 Investor Presentation
+  section.overview-detail
     .container
       div
         h2#overview.col-lg-12.text-uppercase.text-xs-center.campaign-subheading.m-t-0 overview and terms

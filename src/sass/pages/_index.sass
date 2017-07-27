@@ -26,6 +26,11 @@
   .height-block-banner
     height: $height-block-banner
     overflow: hidden
+    @media screen and (min-width : 440px) and (max-width : 767px)
+      height: 420px!important
+    @media only screen and (max-width : 439px)
+      height: 92vh!important
+
     &.scroll-paralax
       &:before
         background: transparent
@@ -164,37 +169,43 @@
   padding: rem(25) 0 rem(20) 0
   padding-bottom: rem(25)
   display: $home-our-partners-display
+  text-align: center
   .partners-line
     margin-bottom: rem(35)
-    hr
-      width: 97%
-      border-top: 2px solid #c4c4c4
-    .center-title
-      -ms-transform: translate(-50%,-50%)
-      -webkit-transform: translate(-50%,-50%)
-      transform: translate(-50%,-50%)
-      position: absolute
-      left: 50%
-      top: 12px
-      background-color: $alabaster
-      padding-left: rem(15)
-      padding-right: rem(15)
+    .title
+      color: $small-text
+      overflow: hidden
       text-align: center
-      color: $small_text
-      @media only screen and (min-width : 1400px)
-        max-width: 60%
-        min-width: 50%
-      @media screen and (min-width : 1200px) and (max-width : 1400px)
-        min-width: 60%
-      @media only screen and (max-width : 1199px)
-        min-width: 70%
-        top: 0
-      @media only screen and (max-width : 768px)
-        min-width: 80%
-      @media only screen and (max-width : 440px)
-        min-width: 100%
+      width: 97%
+      margin: auto
+      &:before,
+      &:after
+        content: ''
+        display: inline-block
+        vertical-align: middle
+        width: 100%
+        height: 1px
+        background-color: #c4c4c4
+        position: relative
+      &:before
+        margin-left: -100%
+        left: -14px
+      &:after
+        margin-right: -100%
+        right: -14px
+      @media only screen and (max-width : 767px)
+        &:before,
+        &:after
+          background-color: transparent
+
+
   .item
     min-height: 70px
+    display: inline-block
+    padding-left: 30px
+    padding-right: 30px
+    @media only screen and (min-width : 1440px)
+      width: 14.25%
     @media only screen and (max-width : 544px)
       margin: rem(10) 0
       img
@@ -203,21 +214,23 @@
   img
     margin: 0 auto
     &.callahan
-      width: 160px
+      min-width: 155px
       margin-top: rem(12)
     &.jdcu
-      width: 160px
+      min-width: 155px
       margin-top: rem(12)
     &.river-mark
-      width: 160px
+      min-width: 155px
       margin-top: rem(15)
     &.dcu
-      width: 140px
+      min-width: 135px
       margin-top: rem(7)
     &.momentum3
-      width: 125px
+      min-width: 120px
     &.infinity
-      width: 160px
+      min-width: 155px
+    &.tvfcu
+      min-width: 110px
 
 @media only screen and (max-width : 768px)
   .owl-carousel
@@ -261,6 +274,11 @@
   background-size: cover!important
   background-repeat: no-repeat!important
   background-position: center center!important
+  @media screen and (min-width : 440px) and (max-width : 767px)
+    height: 420px!important
+  @media only screen and (max-width : 439px)
+    height: 92vh!important
+
 @media only screen and (max-width : 480px)
   .slide_1
     background-position-x: $background-position-x-sl-1
@@ -268,15 +286,14 @@
     background-position-x: $background-position-x-sl-2
   .slide_3
     background-position-x: $background-position-x-sl-3
-  .main-slider-item
-    height: 420px!important
+
 @media only screen and (max-width : 320px)
   .slide_3
     background-position-x: -400px!important
 @media only screen and (max-width : 768px)
   .slider-main
     .slider-content
-      top: 60%
+      top: 55%
 
 .main-video
   height: 75vh
@@ -398,6 +415,7 @@
     margin-bottom: rem(15)
   h3
     margin-bottom: 0
+    line-height: rem(24)
   .titile-better
     color: $titile-better-color
     font-size: rem(36)
@@ -470,5 +488,5 @@
         +mt(.5s)
         color: rgba($black, .7)
   .news-img
-    @media only screen and (max-width : 576px)
+    @media only screen and (max-width : 767px)
       padding-bottom: 30px!important

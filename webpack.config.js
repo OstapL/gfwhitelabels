@@ -3,7 +3,7 @@ const path = require('path');
 const HtmlPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const CompressionPlugin = require("compression-webpack-plugin");
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 
 const isAnalyze = process.env.NODE_ENV === 'analyze';
 const isProd = process.env.NODE_ENV === 'production';
@@ -30,6 +30,7 @@ const plugins = [
     '_': 'underscore',
     'Backbone': 'backbone',
   }),
+  new webpack.optimize.ModuleConcatenationPlugin(),
   new webpack.optimize.CommonsChunkPlugin({
     name: 'vendor',
     filename: '[name].[hash].js',
@@ -64,6 +65,17 @@ if (isAnalyze) {
 if (isDev) {
   plugins.push(new webpack.HotModuleReplacementPlugin());
   plugins.push(new webpack.NamedModulesPlugin());
+  plugins.push(new BrowserSyncPlugin({
+    // browse to http://localhost:3000/ during development
+    host: 'localhost',
+    port: 3000,
+    // proxy the Webpack Dev Server endpoint
+    // (which should be serving on http://localhost:3100/)
+    // through BrowserSync
+    proxy: 'http://localhost:7070/'
+  }, {
+    reload: false,
+  }));
 }
 
 const dependencies = Object.keys(require('./package.json').dependencies);
@@ -141,6 +153,20 @@ module.exports = {
           path.resolve(__dirname, './staticdata'),
         ],
      },
+     {
+       test: /\.(pdf|doc|docx)$/,
+       include: [
+          path.resolve(__dirname, './staticdata'),
+        ],
+        loaders: [
+          {
+            loader: 'file-loader',
+            query: {
+              name: '[path][name].[hash].[ext]',
+            }
+          },
+        ],
+     },
       {
         test: /\.(gif|png|jpe?g|svg|ico)$/i,
         include:[
@@ -179,6 +205,7 @@ module.exports = {
       constants: path.resolve(__dirname, 'consts'),
       images: path.resolve(__dirname, 'staticdata/img'),
       video: path.resolve(__dirname, 'staticdata/video'),
+      doc: path.resolve(__dirname, 'staticdata/doc'),
     },
     modules: [
       path.resolve(__dirname, 'src'),
@@ -202,3 +229,4 @@ module.exports = {
     inline: true,
   },
 };
+

@@ -9,6 +9,9 @@
     .list-block
       .row.m-b-2
         margin-bottom: rem(50)!important
+  .text-block
+    @media screen and (max-width: 543px)
+      margin-top: rem(10)
 .pages-left-menu
   li
     padding: rem(2) 0
@@ -34,12 +37,14 @@
     .team-member-list
       .name
         margin-top: rem(20)
-  @media screen and (min-width: 991px)
-    .p-r-0-medium-up
-      padding-right: 0
-
+  .photo-wrap.p-r-0
+    @media screen and (max-width: 991px)
+      padding-right: 15px!important
+  .photo-wrap.p-l-0
+    @media screen and (max-width: 991px)
+      padding-left: 15px!important
 .w-infinityfcu
-  width: 80%
+  width: 85%
 
 .annual_privacy_notice
   .facts-bgc

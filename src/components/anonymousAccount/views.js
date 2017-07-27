@@ -1,130 +1,169 @@
 const socialAuth = require('./social-auth.js');
 
-module.exports = {
-  popupLogin: Backbone.View.extend({
-    urlRoot: app.config.authServer + '/rest-auth/login',
-    template: require('./templates/popupLogin.pug'),
-    events: {
-      'submit #sign-in-form': 'signinSubmit',
-      'click #sign-in-form .reset-password-link': 'resetPassword',
+const LOGIN_FIELDS = {
+  email: {
+    type: 'email',
+    required: true
+  },
+  password: {
+    type: 'password',
+    required: true,
+    minLength: 8,
+    //needed for validation message
+    label: 'Password',
+  },
+  domain: {
+    type: 'string',
+    required: true,
+  },
+};
 
-      'submit #sign-up-form': 'signupSubmit',
-      'click #sign-up-form .btn-social-network': 'loginWithSocial',
+const SIGNUP_FIELDS = {
+  first_name: {
+    type: 'string',
+    required: true,
+    minLength: 2,
+    label: 'First Name',
+  },
+  last_name: {
+    type: 'string',
+    required: true,
+    minLength: 2,
+    label: 'Last Name',
+  },
+  checkbox1: {
+    type: 'boolean',
+    required: true,
+    messageRequired: 'You must agree to the terms before creating an account',
+  },
+  email: LOGIN_FIELDS.email,
+  domain: LOGIN_FIELDS.domain,
+  password1: _.extend({}, LOGIN_FIELDS.password, { label: 'Password' }),
+  password2: _.extend({}, LOGIN_FIELDS.password, { label: 'Re-enter Password'}),
+};
 
-      'click .link-show-login': 'switchToLogin',
-      'click .link-show-sign-up': 'switchToSignup',
-    },
-
-    initialize(options) {
-      this.fields = {
-        checkbox1: {
-          type: 'boolean',
-          validate: {
-            OneOf: {
-              choices: [true, '1'],
-              labels: [],
-            },
-            choices: {},
-          },
-          required: true,
-          messageRequired: 'You must agree to the terms before creating an account',
-        },
-      };
-    },
-
-    render() {
+const popupAuthHelper = {
+  events: {
+    'submit form': api.submitAction,
+    'click .reset-password-link': 'resetPassword',
+    'click .switchAuthPopup': 'switchPopupView',
+    'click .btn-social-network': 'loginWithSocial',
+  },
+  methods: {
+    renderModal(selector, switchToView) {
       $('body').scrollTo();
 
-      this.$el.html(
-        this.template()
-      );
+      this.$el.html(this.template({
+        fields: this.fields,
+      }));
 
-      // clear previous modal elements from DOM
-      $('#sign_in').remove();
-      $('#sign_up').remove();
+      $(selector).remove();
 
       $('body').append(this.$el);
 
-      this.$signIn = $('#sign_in');
-      this.$signUp = $('#sign_up');
-
-      this.$signIn.off('hidden.bs.modal');
-      this.$signUp.off('hidden.bs.modal');
-      this.$signIn.off('shown.bs.modal');
-      this.$signUp.off('shown.bs.modal');
-
-      this.$signIn.on('hidden.bs.modal', () => {
-        if (this.showModal) {
-          this.$signUp.modal('show');
-          this.showModal = false;
-        }
-      });
-
-      this.$signUp.on('hidden.bs.modal', () => {
-        if (this.showModal) {
-          this.$signIn.modal('show');
-          this.showModal = false;
-        }
-      });
-
-      this.$signUp.modal('show');
+      this.initModal(selector, switchToView);
 
       return this;
-    },
-
-    switchToLogin(e) {
-      e.preventDefault();
-      this.showModal = true;
-      this.$signUp.modal('hide');
-      return false;
-    },
-
-    switchToSignup(e) {
-      e.preventDefault();
-      this.showModal = true;
-      this.$signIn.modal('hide');
-      return false;
-    },
-
-    _success(data) {
-      if (this.urlRoot.indexOf('registration') >= 0)
-        app.emitFacebookPixelEvent('CompleteRegistration');
-
-      app.user.setData(data);
-
-      this.$signIn.modal('hide');
-      this.$signUp.modal('hide');
     },
 
     loginWithSocial(e) {
       socialAuth.loginWithSocialNetwork.call(this, e);
     },
 
-    signupSubmit(e) {
-      this.urlRoot = `${app.config.authServer}/rest-auth/registration`;
-      let data = $(e.target).closest('form').serializeJSON({ useIntKeysAsArrayIndex: true });
-      api.submitAction.call(this, e, data);
-    },
-
-    signinSubmit(e) {
-      this.urlRoot = `${app.config.authServer}/rest-auth/login`;
-      let data = $(e.target).closest('form').serializeJSON({ useIntKeysAsArrayIndex: true });
-      data.checkbox1 = 1;
-      api.submitAction.call(this, e, data);
-    },
-
     resetPassword(e) {
       e.preventDefault();
-
-      setTimeout(() => {
-        window.location = '/account/reset';
-      }, 100);
-
-      this.$signIn.modal('hide');
-
+      this.reset = true;
+      this.$modal.modal('hide');
       return false;
     },
-  }),
+
+    switchPopupView(e) {
+      e.preventDefault();
+      this.showModal = true;
+      this.$modal.modal('hide');
+      return false;
+    },
+
+    initModal(selector, switchToView) {
+      this.$modal = $(selector);
+      this.$modal.off('hidden.bs.modal');
+      this.$modal.on('hidden.bs.modal', () => {
+        this.destroy();
+        if (this.showModal) {
+          this.showModal = false;
+          (new switchToView()).render();
+        } else if (this.reset) {
+          this.reset = false;
+          setTimeout(() => {
+            window.location = '/account/reset';
+          }, 100);
+        }
+      });
+
+      this.$modal.modal({
+        backdrop: 'static',
+      });
+    },
+    destroy() {
+      this.$modal.off('hidden.bs.modal');
+      this.$modal.remove();
+      this.undelegateEvents();
+      this.$el.remove();
+    },
+  },
+};
+
+const Views = {
+  popupLogin: Backbone.View.extend(_.extend({
+    urlRoot: app.config.authServer + '/rest-auth/login',
+    template: require('./templates/popupLogin.pug'),
+    events: popupAuthHelper.events,
+
+    initialize(options) {
+      this.fields = LOGIN_FIELDS;
+    },
+
+    render() {
+      return this.renderModal('#sign_in', Views.popupSignup);
+    },
+
+    _success(data) {
+      app.user.setData(data);
+      this.$modal.modal('hide');
+    },
+
+    loginWithSocial(e) {
+      socialAuth.loginWithSocialNetwork.call(this, e);
+    },
+
+  },
+    popupAuthHelper.methods
+  )),
+
+  popupSignup: Backbone.View.extend(_.extend({
+    urlRoot: `${app.config.authServer}/rest-auth/registration`,
+    template: require('./templates/popupSignup.pug'),
+
+    events: popupAuthHelper.events,
+
+    initialize() {
+      this.fields = SIGNUP_FIELDS;
+    },
+
+    render() {
+      return this.renderModal('#sign_up', Views.popupLogin);
+    },
+
+    _success(data) {
+      app.user.setData(data).then(() => {
+        app.analytics.emitEvent(app.analytics.events.RegistrationCompleted, app.user.stats);
+      });
+      this.$modal.modal('hide');
+    },
+
+  },
+    popupAuthHelper.methods
+  )),
 
   login: Backbone.View.extend({
     urlRoot: app.config.authServer + '/rest-auth/login',
@@ -133,7 +172,8 @@ module.exports = {
       'submit .login-form': api.submitAction,
     },
 
-    initialize(options) {
+    initialize() {
+      this.fields = LOGIN_FIELDS;
     },
 
     render() {
@@ -159,60 +199,8 @@ module.exports = {
       'click .btn-social-network': 'loginWithSocial',
     },
 
-    initialize(options) {
-      this.fields = {
-        first_name: {
-          type: 'string',
-          validate: {
-            _Length: 'Length',
-          },
-          required: true,
-        },
-        last_name: {
-          type: 'string',
-          validate: {
-            _Length: 'Length',
-          },
-          required: true,
-        },
-        email: {
-          type: 'email',
-          validate: {
-            _Email: 'Email',
-            _Length: 'Length',
-          },
-          required: true
-        },
-        domain: {
-          type: 'string',
-          validate: {
-            _Length: 'Length',
-          },
-          required: true,
-        },
-        checkbox1: {
-          type: 'boolean',
-          validate: {
-            _OneOf: 'OneOf'
-          },
-          required: true,
-          messageRequired: 'You must agree to the terms before creating an account',
-        },
-        password1: {
-          type: 'string',
-          'validate': {
-            _Length: 'Length',
-          },
-          required: true,
-        },
-        password2: {
-          type: 'string',
-          validate: {
-            _Length: 'Length'
-          },
-          required: true,
-        },
-      };
+    initialize() {
+      this.fields = SIGNUP_FIELDS;
     },
 
     render() {
@@ -223,13 +211,14 @@ module.exports = {
     },
 
     _success(data) {
-      app.emitFacebookPixelEvent('CompleteRegistration');
-      app.user.setData(data);
+      app.user.setData(data).then(() => {
+        app.analytics.emitEvent(app.analytics.events.RegistrationCompleted, app.user.stats);
+      });
     },
 
     loginWithSocial(e) {
       socialAuth.loginWithSocialNetwork.call(this, e);
-    }
+    },
 
   }),
 
@@ -256,7 +245,7 @@ module.exports = {
     },
 
     _success(data) {
-      app.emitFacebookPixelEvent('CompleteRegistration');
+      app.analytics.emitEvent(app.analytics.events.RegistrationCompleted, app.user.stats);
 
       app.hideLoading();
       $('body').scrollTo();
@@ -264,9 +253,17 @@ module.exports = {
         '<section class="reset">' +
           '<div class="container">' +
             '<div class="col-lg-12">' +
-              '<h2 class="dosis text-uppercase text-sm-center text-xs-center m-t-85">' +
-                'Please check your email for instructions. ' +
+              '<h2 class="text-uppercase text-sm-center text-xs-center m-t-85 m-b-2">' +
+                'reset password' +
               '</h2>' +
+              '<h3 class="font-weight-light m-t-0 text-xs-center"> Don\'t worry, you\'ll be up and running in seconds!</h3>' +
+              '<h2 class="text-xs-center m-b-1 font-weight-light m-t-3"> ' +
+                '<div class="icon-in-circle align-middle">' +
+                  '<i class="fa fa-paper-plane-o" aria-hidden="true"></i>' +
+                '</div>' +
+                'Email sent successfully' +
+              '</h2>' +
+              '<h3 class="font-weight-light m-t-2 m-b-0 text-xs-center">We sent you an email with instructions on how to reset your password</h3>' +
             '</div>' +
           '</div>' +
         '</section>'
@@ -345,3 +342,5 @@ module.exports = {
   }),
 
 };
+
+module.exports = Views;

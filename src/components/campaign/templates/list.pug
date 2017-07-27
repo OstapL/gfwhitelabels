@@ -52,7 +52,10 @@ mixin paginator(currentPage, limit, totalCount)
                       span.sr-only Prev
 
                 each page in pages
-                  li.page-item.active
+                  -
+                    var itemClass = page == currentPage ? 'active' : '';
+                    itemClass += ' page-item';
+                  li(class=itemClass)
                     a(href=(urlPrefix + page + orderBy)).page-link= page
 
                 if currentPage + 1 < totalPages
@@ -119,10 +122,26 @@ section.small-section.filter.p-b-0
                 else
                   option(value=k)= v
 
+secetion.email-subscription.subscription-campaing-list
+  .container
+    .row
+      .col-xs-12
+        h2.text-xs-center.font-weight-light.m-t-0 Sign up and be the first to hear about new investment opportunities
+    .row
+      .col-xl-12
+        -
+          var subscriber = require('directives/subscribe/index.js');
+          pug_html += subscriber.render({
+            containerClass: 'subscription-wrap',
+            emailClass: 'col-xs-12 p-l-0',
+            subscribeClass: 'subscription-btn'
+          });
+
 section.campaing-list
   .container#campaignList
     include _list.pug
 -
   var currentPage = Number(app.getParams().page) || 1;
   var GENERAL = require('consts/general.json');
+
 +paginator(currentPage, GENERAL.COMPANIES_PER_PAGE, collection.count)

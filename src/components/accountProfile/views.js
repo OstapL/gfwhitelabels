@@ -18,7 +18,6 @@ module.exports = {
       // 'click #saveFinancialInfo': api.submitAction,
       'change #not-qualify': 'changeQualify',
       'change .investor-item-checkbox': 'changeAccreditedInvestorItem',
-      // 'change input[name=accredited_investor]': 'changeAccreditedInvestor',
     },
     app.helpers.phone.events,
     app.helpers.yesNo.events,
@@ -37,6 +36,7 @@ module.exports = {
 
       this.fields.image_image_id = _.extend(this.fields.image_image_id, {
         templateDropzone: 'profileDropzone.pug',
+        defaultImage: require('images/default/Default_photo.png'),
         onSaved: (data) => {
           app.user.updateImage(data.file);
         },
@@ -151,7 +151,7 @@ module.exports = {
         instagram: 'Your Instagram Link',
         linkedin: 'Your LinkedIn Link',
         bank_name: 'Bank Name',
-        name_on_bank_account: 'Name on Bank Account',
+        name_on_bank_account: 'Name As It Appears on Bank Account',
         ssn: 'Social Security Number (SSN) or Tax ID (ITIN/EIN)',
         ssn_re: 'Re-enter SSN',
       };
@@ -189,22 +189,17 @@ module.exports = {
 
     changeAccreditedInvestorItem(e) {
       let $target = $(e.target);
-      let name = $target.data('name');
       let checked = $target.prop('checked');
-      this.$('input[name=' + name + ']').val(checked);
-      if (checked) {
-        this.$('#not-qualify').prop('checked', false).change();
-      }
+
+      if (checked)
+        this.$('#not-qualify').prop('checked', false);
     },
 
     changeQualify(e) {
       let $target = $(e.target);
-      if ($target.prop('checked')) {
-        this.$('.investor-item-checkbox').prop('checked', false).change();
-
-        this.$('input[name=accredited_investor_choice]').val(false);
-      } else {
-        this.$('input[name=accredited_investor_choice]').val(true);
+      const notQualify = $target.prop('checked');
+      if (notQualify) {
+        this.$('.investor-item-checkbox').prop('checked', false);
       }
     },
 
@@ -378,21 +373,21 @@ module.exports = {
     template: require('./templates/investorDashboard.pug'),
     el: '#content',
     events: {
-      'click .cancel-investment': 'cancelInvestment',
+      'click .cancelInvestment': 'cancelInvestment',
       'click .agreement-link': 'openAgreement',
       'click .financial-docs-link': 'showFinancialDocs',
     },
 
     initialize(options) {
       this.fields = options.fields;
-
-      _.each(this.model.data, (investment, idx) => {
-        this.model.data[idx] = new InvestmentModel(investment);
-      });
+      this.fields.cancelled_reason.label = 'What is the main reason for your cancellation?';
+      this.fields.feedback.label = 'Do you have any suggestions to improve our platform?';
+      this.model.data = (this.model.data || []).map(investment => new InvestmentModel(investment, this.fields));
 
       this.snippets = {
         investment: require('./templates/snippets/investment.pug'),
         creditSection: require('./templates/snippets/creditSection.pug'),
+        confirmCancel: require('./templates/snippets/confirm-cancel.pug'),
       };
 
       //this is auth cookie for downloadable files
@@ -407,6 +402,7 @@ module.exports = {
       this.$el.html(this.template({
         investments: this.model.data,
         snippets: this.snippets,
+        fields: this.fields,
       }));
     },
 
@@ -459,6 +455,8 @@ module.exports = {
     },
 
     onCancel(investment) {
+      app.analytics.emitEvent(app.analytics.events.InvestmentCancelled, app.user.stats);
+
       _.each(this.model.data, (i) => {
         if (i.campaign_id != investment.campaign_id)
           return;
@@ -481,12 +479,50 @@ module.exports = {
       }
     },
 
+    confirmCancellation($container) {
+      return new Promise((resolve) => {
+        $container.append(this.snippets.confirmCancel({
+          fields: this.fields,
+        }));
+
+        const $modal = $container.find('#investor_popup');
+
+        let data = null;
+
+        $modal.on('shown.bs.modal', () => {
+          const $form = $modal.find('form');
+          $form.off('submit');
+          $form.on('submit', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            data = $form.serializeJSON();
+
+            $modal.modal('hide');
+
+            return false;
+          });
+        });
+
+        $modal.on('hidden.bs.modal', () => {
+          $modal.find('form').off('submit');
+          setTimeout(() => $modal.remove(), 100);
+          resolve(data);
+        });
+
+        $modal.modal({
+          backdrop: 'static',
+        });
+
+      });
+    },
+
     //TODO: sort investments in dom on historical tab after cancel investment
     cancelInvestment(e) {
       e.preventDefault();
 
       let $target = $(e.target);
-      let id = $target.data('id');
+      let id = $target.closest('[data-investmentid]').data('investmentid');
 
       if (!id)
         return false;
@@ -496,11 +532,14 @@ module.exports = {
       if (!investment)
         return console.error('Investment doesn\'t exist: ' + id);
 
-      app.dialogs.confirm('Are you sure?').then((confirmed) => {
-        if (!confirmed)
+
+      this.confirmCancellation($target.closest('div')).then((data) => {
+        if (data === null)
           return;
 
-        api.makeRequest(app.config.investmentServer + '/' + id + '/decline', 'PUT').done((response) => {
+        data.rating = data.rating || 0;
+
+        api.makeRequest(app.config.investmentServer + '/' + id + '/decline', 'PUT', data).done((response) => {
           investment.deposit_cancelled_by_investor = true;
 
           $target.closest('.one_table').remove();
@@ -518,15 +557,15 @@ module.exports = {
           let cancelledInvestmentElem = this.snippets.investment(investment);
 
           if (historicalInvestmentElements.length) {
-            //find investment to insert after it
+            //find investment to insert before it
             let block = _.find(historicalInvestmentElements, (elem) => {
               const investmentId = Number(elem.dataset.investmentid);
-              return investmentId > investment.id;
+              return investment.id > investmentId;
             });
             if (block)
-              $(block).after(cancelledInvestmentElem);
+              $(block).before(cancelledInvestmentElem);
             else
-              historicalInvestmentsBlock.prepend(cancelledInvestmentElem);
+              historicalInvestmentsBlock.append(cancelledInvestmentElem);
           } else {
             historicalInvestmentsBlock.empty();
             historicalInvestmentsBlock.append(cancelledInvestmentElem);
@@ -536,9 +575,7 @@ module.exports = {
         }).fail((err) => {
           app.dialogs.error(err.error);
         });
-
       });
-
     },
   }),
 
@@ -677,6 +714,7 @@ module.exports = {
           model: data[0],
           fields: options[0].fields,
           allowQuestion: false,
+          readonly: this.campaign.expired,
           cssClass: 'col-xl-8 offset-xl-0',
         });
         comments.render();

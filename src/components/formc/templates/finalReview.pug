@@ -20,7 +20,7 @@ include fields_final_review.pug
 
 section.formc-review
   .container
-    .col-lg-3.sticky-side-menu
+    .col-xl-3.col-lg-3.p-xs-0.sticky-side-menu
       .page_title.border-bottom.mb25
         h4.text-uppercase.dosis TABLE OF CONTENTS
       ul.list-unstyled.m-b-1.custom
@@ -66,10 +66,10 @@ section.formc-review
       .col-lg-12.text-xs-center.m-t-1.no-print
         a(data-toggle="modal" data-target="#formc_review_popup" href="#formc_review_popup").btn.btn-primary submit Form C
 
-      .col-lg-12.text-xs-center.m-t-1.no-print
-        a(href=app.config.esignServer + "/final-review/" + formcId).btn.btn-primary export in pdf
-
-    .col-xl-9
+      .col-lg-12.text-xs-center.m-t-1.m-b-3.no-print
+        a(href=app.config.esignServer + "/final-review/" + formcId).btn.btn-secondary export in pdf
+      .clear
+    .col-xl-9.col-lg-9.p-xs-0
       section.warning-formc-review.m-b-3
         .warning-block
           i.fa.fa-exclamation-triangle 
@@ -82,7 +82,10 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small
-            +frField('company.name', 'text')
+            if values.company.short_name
+              +frField('company.short_name', 'text')
+            else
+              +frField('company.name', 'text')
             | as Issuer
         
         h3.text-xs-center
@@ -127,7 +130,10 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small
-            +frField('company.name', 'text')
+            if values.company.short_name
+              +frField('company.short_name', 'text')
+            else
+              +frField('company.name', 'text')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold#overview_information.letter-spacing-normal OVERVIEW INFORMATION
         .one-block.m-b-3
@@ -271,7 +277,10 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.wont-weight-bold FORM C Offering Material for
           p.small
-            +frField('company.name', 'text')
+            if values.company.short_name
+              +frField('company.short_name', 'text')
+            else
+              +frField('company.name', 'text')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold#introductory_notices.letter-spacing-normal INTRODUCTORY NOTICES
         p.text-uppercase.m-t-0.m-b-0.pb10 
@@ -362,7 +371,10 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +frField('company.name', 'text')
+            if values.company.short_name
+              +frField('company.short_name', 'text')
+            else
+              +frField('company.name', 'text')
             |  as Issuer
         p.pb10  This Material contains significant additional disclosure of investment risks to be reviewed by each potential investor.  Each investor should review all of the risks related to this Offering prior to making a commitment to invest in the 
           if values.campaign.security_type == 0
@@ -394,7 +406,10 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +frField('company.name', 'text')
+            if values.company.short_name
+              +frField('company.short_name', 'text')
+            else
+              +frField('company.name', 'text')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold#description_business.letter-spacing-normal.m-b-3 DESCRIPTION OF THE ISSUER’S BUSINESS
         p.text-uppercase.m-t-0.m-b-0.pb10 
@@ -417,7 +432,7 @@ section.formc-review
           +frField('company.state', 'select')
           | !{' '}
           +frField('company.zip_code', 'text')
-          |  The Company’s website is 
+          | . The Company’s website is 
           +frField('company.website', 'text')
           | .
         p.text-uppercase.m-t-3.m-b-0.pb10 
@@ -440,7 +455,10 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +frField('company.name', 'text')
+            if values.company.short_name
+              +frField('company.short_name', 'text')
+            else
+              +frField('company.name', 'text')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold#management_material_persons.letter-spacing-normal.m-b-3 MANAGEMENT & MATERIAL PERSONS
         p.text-indent Specific biographical information on each of the Company’s officers and members of its Board of Directors of is attached as Exhibit C.  Exhibit C contains information on the last three years of employment and supplements the information summarized below.  The Company has confirmed that no officer, director or 20% shareholder 
@@ -507,7 +525,7 @@ section.formc-review
                     td.text-xs-center
                       +frField('formc.team_members[' + mIdx + '].principal_occupation', 'text')
                       br
-                      +frField('formc.team_members[' + mIdx + '].employer_principal_business', 'text')
+                      +frField('formc.team_members[' + mIdx + '].employer_principal_businesss', 'text')
                       br
                       +frField('formc.team_members[' + mIdx + '].employer_start_date', 'text')
 
@@ -516,7 +534,10 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small
-            +frField('company.name', 'text')
+            if values.company.short_name
+              +frField('company.short_name', 'text')
+            else
+              +frField('company.name', 'text')
             |  as Issuer
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u 20% Holders
@@ -556,7 +577,10 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +frField('company.name', 'text')
+            if values.company.short_name
+              +frField('company.short_name', 'text')
+            else
+              +frField('company.name', 'text')
             |  as Issuer
         if values.formc.transaction_with_related_parties_choice == 1
           p.pb10.text-indent The Company is disclosing certain related party transactions below arising from any of the transactions occurring in the Company’s last fiscal year.  As used here, the term “related party” includes: (1) any director or officer of the Company; (2) any person who is, as of the most recent practicable date, the beneficial owner of twenty percent (20%) or more of the Company’s outstanding voting equity securities, calculated on the basis of voting power; (3) if the Company was incorporated or organized within the past three years, any promoter of the Company; or (4) any immediate family member of any of the foregoing persons.  Only those transactions are listed in which the related party had or is expected to have a direct or indirect material interest in such transaction, and the list includes transactions with entities under common control with the issuer.  As used here, the term “transaction” includes, but is not limited to, any financial transaction, arrangement or relationship (including any indebtedness or guarantee of indebtedness) or any series of similar transactions, arrangements or relationships.  Where it is not practicable to state the approximate amount of the interest, the amount involved in the transaction has been approximated.
@@ -580,7 +604,7 @@ section.formc-review
                     td.text-xs-center
                       +frField('formc.transaction_with_related_parties[' + k + '].nature_of_interest', 'text')
                     td.text-xs-center
-                      +frField('formc.transaction_with_related_parties[' + k+ '].amount_of_interest', 'text')
+                      +frField('formc.transaction_with_related_parties[' + k+ '].amount_of_interest', 'money')
           p.pb10.text-indent The term “immediate family member” includes any child, stepchild, grandchild, parent, stepparent, grandparent, spouse or spousal equivalent, sibling, mother-in-law, father-in-law, son-in-law, daughter-in-law, brother-in-law, or sister-in-law of the person, and includes adoptive relationships. The term “spousal equivalent” means a co-habitant occupying a relationship generally equivalent to that of a spouse.
 
       // page 9
@@ -588,13 +612,16 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +frField('company.name', 'text')
+            if values.company.short_name
+              +frField('company.short_name', 'text')
+            else
+              +frField('company.name', 'text')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold#procedure_purchasing_securities.letter-spacing-normal.m-b-3 PROCEDURE FOR PURCHASING SECURITIES
         p.text-uppercase.m-t-0.m-b-0.pb10 
           u Minimum Commitment and Closing Date
         p.text-indent To participate in this Offering, each investor must purchase securities in a minimum dollar amount equal to 
-          +frField('campaign.minimum_increment', 'text')
+          +frField('campaign.minimum_increment', 'money')
           - var deadline = new Date();
           - deadline.setDate(deadline.getDate() + values.campaign.length_days);
           | .
@@ -610,14 +637,17 @@ section.formc-review
           else
             | Each Offering is listed on the Platform for a minimum of twenty-one (21) days and the Offering period may extend beyond such twenty-one days if set forth in the Material and each investor is properly notified.  During that period (or later if the investor is notified of a change), the Company must aggregate investor commitments that are equal to or greater than the Offering’s   minimum target amount.  The process generally involves the following steps: (1) an investor registered on
             | the Platform identifies a desired offering and communicates an investment commitment to purchase securities in such offering by completing a subscription agreement; (2) the Intermediary confirms the investor’s eligibility to participate in the Offering and then has the subscription agreement countersigned by the issuer; (3) the investor transfers the funds required to purchase the offered securities to a third-party FDIC insured account designated by the Intermediary as being for the benefit of issuers and investors (the “FBO Account”); (4) once the targeted minimum
-            | offering amount is achieved or exceeded through investor  commitments collectively, the issuer would be able to close the transaction on the original target closing date or an earlier date with at least five business days prior notice to the investors; and (5) the funds would be released by the FBO Account agent to the issuer, less any required fees sent to the intermediary, and the issuer would issue the securities to the investor
+            | offering amount is achieved or exceeded through investor  commitments collectively, the issuer would be able to close the transaction on the original target closing date or an earlier date with at least five business days prior notice to the investors; and (5) the funds would be released by the FBO Account agent to the issuer, less any required fees sent to the intermediary, and the issuer would issue the securities to the investor.
 
       // page 10
       section.page-formc-review.m-t-1
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +frField('company.name', 'text')
+            if values.company.short_name
+              +frField('company.short_name', 'text')
+            else
+              +frField('company.name', 'text')
             |  as Issuer
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Method for Investor Cancellation of a Commitment 
@@ -640,7 +670,10 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +frField('company.name', 'text')
+            if values.company.short_name
+              +frField('company.short_name', 'text')
+            else
+              +frField('company.name', 'text')
             |  as Issuer
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Use of Third Party Services
@@ -676,7 +709,10 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +frField('company.name', 'text')
+            if values.company.short_name
+              +frField('company.short_name', 'text')
+            else
+              +frField('company.name', 'text')
             |  as Issuer
         p execution of a Subscription Agreement available on the Platform, which contains, among other things, certain representations, warranties and covenants.  The Company must secure investor commitments that equal or exceed the minimum target amount for the Offering prior to the applicable closing date, or the Offering will be canceled and investor funds committed in connection with the Offering will be returned.  An investor commitment is conditional after being made, but only up until the time that is 48 hours before the applicable closing date.  For the 48-hour period prior to the applicable closing date, investor commitments may not be cancelled by the investor but in certain circumstances may still be returned (e.g. if the target minimum amount is not met).   As a reminder, investors are required to reconfirm their investment commitment  
           if values.campaign.security_type == 1
@@ -692,7 +728,10 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +frField('company.name', 'text')
+            if values.company.short_name
+              +frField('company.short_name', 'text')
+            else
+              +frField('company.name', 'text')
             |  as Issuer
         h2#capital_structure.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 CAPITAL STRUCTURE OF THE ISSUER
         p.text-uppercase.m-t-0.m-b-0.pb10 
@@ -712,9 +751,9 @@ section.formc-review
                   td
                     - pug_html += customFields.outstandingSecurityType(k, values.formc.outstanding_securities[k], fields.formc);
                   td
-                    +frField('formc.outstanding_securities[' + k + '].amount_authorized', 'text')
+                    +frField('formc.outstanding_securities[' + k + '].amount_authorized', 'money')
                   td
-                    +frField('formc.outstanding_securities[' + k + '].amount_outstanding', 'text')
+                    +frField('formc.outstanding_securities[' + k + '].amount_outstanding', 'money')
                   td
                     +frField('formc.outstanding_securities[' + k + '].voting_right', 'select')
               
@@ -733,7 +772,10 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +frField('company.name', 'text')
+            if values.company.short_name
+              +frField('company.short_name', 'text')
+            else
+              +frField('company.name', 'text')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold#description_securities.letter-spacing-normal.m-b-3 DESCRIPTION OF SECURITIES OFFERED
         p.text-uppercase.m-t-0.m-b-0.pb10 
@@ -771,7 +813,10 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small
-            +frField('company.name', 'text')
+            if values.company.short_name
+              +frField('company.short_name', 'text')
+            else
+              +frField('company.name', 'text')
             |  as Issuer
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Distinguishing the Securities
@@ -795,8 +840,9 @@ section.formc-review
             u Valuation of the Securities
           p.pb10.text-indent The offering price of the securities in this Offering has been established by the Company and does not necessarily bear any specific relation to the assets, book value or potential earnings of the Company or any other recognized criteria of value. The Shares have not been registered under the Securities Exchange Act of 1934 and have not been traded or quoted on any exchange or quotation system. There is no public market in which shareholders may sell their Shares, and there can be no assurance given that such a market will ever develop. The securities offered hereby are restricted by law and the ability to transfer and interests in the Shares is severely limited.
           p.pb10.text-indent Method by which the offered securities are valued:
-          p.p-l-2.pb10
-            +frField('campaign.valuation_determination', 'select')
+          if values.campaign.valuation_determination != 2
+            p.p-l-2.pb10
+              +frField('campaign.valuation_determination', 'select')
           p.p-l-2.pb10
             if values.campaign.valuation_determination == 2
               +frField('campaign.valuation_determination_other', 'text')
@@ -810,7 +856,10 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +frField('company.name', 'text')
+            if values.company.short_name
+              +frField('company.short_name', 'text')
+            else
+              +frField('company.name', 'text')
             |  as Issuer
         if values.campaign.valuation_determination == '0'
           // p.pb10.text-indent The price of each Share was determined by the Company in good faith based on its own assessment of its current position and the benchmarking reference range determined by the use of certain business calculators provided by the Intermediary.  Such calculators use the data provided by the Company and do not reflect any advice or recommendation on the part of the Intermediary.  In working with the calculators, the Company considered its current capital structure, including current debt and cash, and assembled an income statement from the last twelve months including an estimate of net income and EBITDA.  The Company also made projections for the next twelve months along with a similar estimate of net income and EBITDA.
@@ -823,7 +872,10 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +frField('company.name', 'text')
+            if values.company.short_name
+              +frField('company.short_name', 'text')
+            else
+              +frField('company.name', 'text')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold#use_of_proceeds.letter-spacing-normal.m-b-3 USE OF PROCEEDS
         p.pb10.text-indent The Company intends to apply the proceeds of this Offering substantially as set forth herein, subject to reallocation by management as it deems in the best interests of the Company. The actual use of proceeds of this Offering is subject to the discretion of management and the board of directors, and may include general corporate purposes.
@@ -865,13 +917,13 @@ section.formc-review
                   td.text-xs-center
                     +frField('formc.less_offering_express[' + k + '].title', 'text')
                   td.text-xs-center
-                    +frField('formc.less_offering_express[' + k + '].min', 'text')
+                    +frField('formc.less_offering_express[' + k + '].min', 'money')
                     - minSum += values.formc.less_offering_express[k].min
                   td.text-xs-center
                     | #{ ((parseFloat(v.min) * 100) / values.campaign.minimum_raise).toFixed(2) }%
                     - minP += ((parseFloat(v.min) * 100) / values.campaign.minimum_raise)
                   td.text-xs-center
-                    +frField('formc.less_offering_express[' + k + '].max', 'text')
+                    +frField('formc.less_offering_express[' + k + '].max', 'money')
                     - maxSum += values.formc.less_offering_express[k].max
                   td.text-xs-center
                     | #{ ((parseFloat(v.max) * 100) / values.campaign.maximum_raise).toFixed(2) }%
@@ -894,13 +946,13 @@ section.formc-review
                   td.text-xs-center
                     +frField('formc.use_of_net_proceeds[' + k + '].title', 'text')
                   td.text-xs-center
-                    +frField('formc.use_of_net_proceeds[' + k + '].min', 'text')
+                    +frField('formc.use_of_net_proceeds[' + k + '].min', 'money')
                     - minSum += values.formc.use_of_net_proceeds[k].min
                   td.text-xs-center
                     | #{ ((parseFloat(v.min) * 100) / values.campaign.minimum_raise).toFixed(2) }%
                     - minP += ((parseFloat(v.min) * 100) / values.campaign.minimum_raise)
                   td.text-xs-center
-                    +frField('formc.use_of_net_proceeds[' + k + '].max', 'text')
+                    +frField('formc.use_of_net_proceeds[' + k + '].max', 'money')
                     - maxSum += values.formc.use_of_net_proceeds[k].max
                   td.text-xs-center
                     | #{ ((parseFloat(v.max) * 100) / values.campaign.maximum_raise).toFixed(2) }%
@@ -922,7 +974,10 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +frField('company.name', 'text')
+            if values.company.short_name
+              +frField('company.short_name', 'text')
+            else
+              +frField('company.name', 'text')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold#financial_condition.letter-spacing-normal.m-b-3 FINANCIAL CONDITION
         p.text-indent References to the future financial condition of the Company may contain forward-looking statements. Such forward-looking statements are not guarantees of future performance and involve uncertainties and other factors which may cause the Company’s actual results, performance or achievements to be materially different from any future results, performance or achievements expressed or implied by such forward-looking statements. Actual operating results may be affected by various factors including, without limitation, changes in national economic conditions, competitive market conditions, uncertainties related to government regulation, and actual versus projected timing of events, all of which may cause such actual results to differ materially from what is expressed or forecast in this Material.  For purposes of this section, any reference to the Company includes its predecessors, if any.  The Company's actual results may differ materially from those discussed herein.
@@ -1012,7 +1067,10 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small
-            +frField('company.name', 'text')
+            if values.company.short_name
+              +frField('company.short_name', 'text')
+            else
+              +frField('company.name', 'text')
             |  as Issuer
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Results of Operations
@@ -1043,7 +1101,7 @@ section.formc-review
                     td.text-xs-center
                       +frField('formc.business_loans_or_debt[' + k + '].creditor', 'text')
                     td.text-xs-center
-                      +frField('formc.business_loans_or_debt[' + k + '].outstanding_amount', 'text')
+                      +frField('formc.business_loans_or_debt[' + k + '].outstanding_amount', 'money')
                     td.text-xs-center
                       +frField('formc.business_loans_or_debt[' + k + '].interest_rate', 'text')
                       | %
@@ -1077,7 +1135,7 @@ section.formc-review
                     td.text-xs-center
                       +frField('formc.exempt_offering[' + k + '].securities_offered', 'text')
                     td.text-xs-center
-                      +frField('formc.exempt_offering[' + k + '].amount_sold', 'text')
+                      +frField('formc.exempt_offering[' + k + '].amount_sold', 'money')
                     td.text-xs-center
                       +frField('formc.exempt_offering[' + k + '].use_of_proceeds', 'text')
         p.text-uppercase.m-t-3.m-b-0.pb10 
@@ -1090,7 +1148,10 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +frField('company.name', 'text')
+            if values.company.short_name
+              +frField('company.short_name', 'text')
+            else
+              +frField('company.name', 'text')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold#risk_factors.letter-spacing-normal.m-b-3 CROWDFUNDING RISK FACTORS
         p.text-indent An investment in the Company’s securities involves substantial risk.  Prospective investors should carefully consider the risk factors referred to in this Material. An investor should not invest any funds in the Offering unless he or she can afford to lose his or her entire investment.  In making an investment decision, investors must rely on their own examination of the Company and the terms of the Offering, including the merits and risks involved.  The Shares have not been recommended or reviewed by any federal or state securities commission or regulatory authority.  There is no ready market for the sale of the Shares and it may be difficult or impossible for an investor to sell or otherwise dispose of the Shares.
@@ -1127,7 +1188,10 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +frField('company.name', 'text')
+            if values.company.short_name
+              +frField('company.short_name', 'text')
+            else
+              +frField('company.name', 'text')
             |  as Issuer
         if values.campaign.security_type == 0 
           p.text-uppercase.m-t-3.m-b-0.pb10 
@@ -1165,7 +1229,10 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +frField('company.name', 'text')
+            if values.company.short_name
+              +frField('company.short_name', 'text')
+            else
+              +frField('company.name', 'text')
             |  as Issuer
         
         p.text-uppercase.m-t-3.m-b-0.pb10 
@@ -1188,7 +1255,10 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +frField('company.name', 'text')
+            if values.company.short_name
+              +frField('company.short_name', 'text')
+            else
+              +frField('company.name', 'text')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 ISSUER-SPECIFIC RISK FACTORS
         p.text-uppercase.m-t-0.m-b-1.pb10 
@@ -1253,7 +1323,10 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +frField('company.name', 'text')
+            if values.company.short_name
+              +frField('company.short_name', 'text')
+            else
+              +frField('company.name', 'text')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold#eligibility_information.letter-spacing-normal.m-b-3 ELIGIBILITY INFORMATION
         p.text-uppercase.m-t-0.m-b-0.pb10 
@@ -1283,7 +1356,10 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small
-            +frField('company.name', 'text')
+            if values.company.short_name
+              +frField('company.short_name', 'text')
+            else
+              +frField('company.name', 'text')
             |  as Issuer
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u No Disqualifications
@@ -1309,7 +1385,10 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +frField('company.name', 'text')
+            if values.company.short_name
+              +frField('company.short_name', 'text')
+            else
+              +frField('company.name', 'text')
             |  as Issuer
         p.pb10 appropriate federal banking agency; the U.S. Commodity Futures Trading Commission; or the National Credit Union Administration that:
         ol(type="I")
@@ -1334,7 +1413,10 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +frField('company.name', 'text')
+            if values.company.short_name
+              +frField('company.short_name', 'text')
+            else
+              +frField('company.name', 'text')
             |  as Issuer  
         p.pb10 (7)  The Company has confirmed that no Covered Person filed, or was any such person named as an underwriter in, any registration statement or Regulation A offering statement filed with the SEC that, within five years before the filing of this offering statement, was the subject of a refusal order, stop order, or order suspending the Regulation A exemption, or is any such person, at the time of such filing, the subject of an investigation or proceeding to determine whether a stop order or suspension order should be issued.
         p.pb10 (8)  The Company has confirmed that no Covered Person is subject to a United States Postal Service false representation order entered within five years before the filing of the information required by Section 4A(b) of the Securities Act, or is any such person, at the time of filing of this offering statement, subject to a temporary restraining order or preliminary injunction with respect to conduct alleged by the United States Postal Service to constitute a scheme or device for obtaining money or property through the mail by means of false representations
@@ -1344,7 +1426,10 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +frField('company.name', 'text')
+            if values.company.short_name
+              +frField('company.short_name', 'text')
+            else
+              +frField('company.name', 'text')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3#other_matters OTHER MATTERS
         p.text-uppercase.m-t-0.m-b-0.pb10 
@@ -1361,7 +1446,10 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +frField('company.name', 'text')
+            if values.company.short_name
+              +frField('company.short_name', 'text')
+            else
+              +frField('company.name', 'text')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3#reporting_obligations REPORTING OBLIGATIONS
         p.text-uppercase.m-t-0.m-b-0.pb10 
@@ -1384,7 +1472,10 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +frField('company.name', 'text')
+            if values.company.short_name
+              +frField('company.short_name', 'text')
+            else
+              +frField('company.name', 'text')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3#business_plan EXHIBIT A: BUSINESS PLAN
 
@@ -1400,7 +1491,10 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +frField('company.name', 'text')
+            if values.company.short_name
+              +frField('company.short_name', 'text')
+            else
+              +frField('company.name', 'text')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3#financial_statements EXHIBIT B: FINANCIAL STATEMENTS for most recent fiscal year
         -
@@ -1422,7 +1516,10 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +frField('company.name', 'text')
+            if values.company.short_name
+              +frField('company.short_name', 'text')
+            else
+              +frField('company.name', 'text')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3#biographical_information EXHIBIT C: BIOGRAPHIES
         p.pb10.text-indent Employment information from previous employers over the last three years for each of the Company’s officers is as follows:
@@ -1527,7 +1624,10 @@ section.formc-review
           .top-intro
             p.small.text-xs-left.font-weight-bold FORM C Offering Material for
             p.small.pb10
-              +frField('company.name', 'text')
+              if values.company.short_name
+                +frField('company.short_name', 'text')
+              else
+                +frField('company.name', 'text')
               |  as Issuer
           h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3#revenue_share_agreement EXHIBIT D:  FORM OF REVENUE SHARE AGREEMENT
           p.pb10.text-indent.text-uppercase.font-weight-bold THIS  INSTRUMENT  AND  THE  SECURITIES  DESCRIBED  HEREIN  HAVE  NOT BEEN REGISTERED UNDER THE SECURITIES ACT OF 1933, AS AMENDED (THE “ACT”),   OR   UNDER   THE    SECURITIES   LAWS    OF ANY    STATES.       THESE SECURITIES  MAY  NOT  BE  OFFERED,  SOLD  OR  OTHERWISE  TRANSFERRED, PLEDGED  OR  HYPOTHECATED EXCEPT  AS  PERMITTED UNDER  THE ACT AND APPLICABLE    STATE    SECURITIES    LAWS    PURSUANT    TO    AN    EFFECTIVE REGISTRATION STATEMENT OR AN EXEMPTION THEREFROM.
@@ -1552,7 +1652,7 @@ section.formc-review
               b Repayment Promise.
               |  For value received, the Company hereby promises to pay to the Investor in lawful money of the United States of America and in immediately available funds, the  Total Repayment  Amount  (as  defined  below)  in  the  manner  set  forth  in  this  Agreement.Investor   hereby   agrees  to   accept  the   Total  Repayment  Amount as   consideration   for  the Investment Amount (as defined below) consistent with the terms of this Agreement.   The parties agree  that  the  term
               b  “Investment  Amount” 
-              | shall  mean  that  dollar  amount  committed  to  the Company  by the  Investor in the Offering  equal to [INVESTMENT].   The parties  further agree that the term 
+              | shall  mean  that  dollar  amount  committed  to  the Company  by the  Investor in the Offering  equal to $[INVESTMENT].   The parties  further agree that the term 
               b  “Total Repayment Amount” 
               | shall mean that dollar amount that is equal to a multiple of  two  times  (2x)  the  amount  of  the  Investment  Amount.    Investor  acknowledges  that  Investor may have paid certain fees to participate in the Offering and that such fees are not included in any calculation of the Investment Amount or the Total Repayment amount.
             li.pb10
@@ -1563,12 +1663,15 @@ section.formc-review
               b “Available  Revenue  Pool” 
               | shall  mean that dollar  amount  equal to  five  percent  (5%)  of  the gross revenue  of  the  Company  in  such  Fiscal  Year  of  determination,  including all  of  the  Company’s cash  receipts  from  all  sales  of  any  kind  without  any  deduction  or  offset  of  any  kind.    For  any Fiscal Year of determination, the term “Revenue Share Payment” shall mean that dollar amount that  is  equal  to  the  product  of  (a)  the  Available  Revenue  Pool  calculated  for  such  Fiscal  Year multiplied  by  (b)  the  Proportionate  Share  (as  defined  below).   The  parties  agree  that  the  term 
               b “Proportionate  Share” 
-              | shall  mean a fraction, the  numerator  of  which is the  Investment Amount, and  the  denominator  of  which  is  the  total  dollar  amount  committed  to  the  Company  in  the Offering by all participants in the Offering equal to [TOTAL RAISE]. 
+              | shall  mean a fraction, the  numerator  of  which is the  Investment Amount, and  the  denominator  of  which  is  the  total  dollar  amount  committed  to  the  Company  in  the Offering by all participants in the Offering equal to $[TOTAL RAISE]. 
         section.page-formc-review.m-t-1
           .top-intro
             p.small.text-xs-left.font-weight-bold FORM C Offering Material for
             p.small.pb10
-              +frField('company.name', 'text')
+              if values.company.short_name
+                +frField('company.short_name', 'text')
+              else
+                +frField('company.name', 'text')
               |  as Issuer
           ol(start="4")
             li.pb10
@@ -1592,7 +1695,10 @@ section.formc-review
           .top-intro
             p.small.text-xs-left.font-weight-bold FORM C Offering Material for
             p.small.pb10
-              +frField('company.name', 'text')
+              if values.company.short_name
+                +frField('company.short_name', 'text')
+              else
+                +frField('company.name', 'text')
               |  as Issuer
           ol(start="9")
             li.pb10
@@ -1613,7 +1719,10 @@ section.formc-review
           .top-intro
             p.small.text-xs-left.font-weight-bold FORM C Offering Material for
             p.small.pb10
-              +frField('company.name', 'text')
+              if values.company.short_name
+                +frField('company.short_name', 'text')
+              else
+                +frField('company.name', 'text')
               |  as Issuer
           ol(start="13")
             li.pb10
@@ -1633,7 +1742,10 @@ section.formc-review
           .top-intro
             p.small.text-xs-left.font-weight-bold FORM C Offering Material for
             p.small.pb10
-              +frField('company.name', 'text')
+              if values.company.short_name
+                +frField('company.short_name', 'text')
+              else
+                +frField('company.name', 'text')
               |  as Issuer
           ol(start="16")
             li.pb10

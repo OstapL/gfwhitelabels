@@ -4,6 +4,7 @@ const mimetypeIconMap = {
   'pdf': 'pdf',
   'doc': 'doc',
   'msword': 'doc',
+  'application/xml': 'xml',
   'vnd.openxmlformats-officedocument.wordprocessingml.document': 'docx',
   'vnd.ms-powerpoint': 'ppt',
   'vnd.openxmlformats-officedocument.presentationml.presentation': 'pptx',
@@ -60,7 +61,9 @@ class File {
   }
 
   getIcon() {
-    return mimetypeIconMap[this.mime.split('/').reverse()[0]] || defaultIcon
+    return mimetypeIconMap[this.mime] ||
+      mimetypeIconMap[this.mime.split('/').reverse()[0]] || 
+      defaultIcon;
   }
 
   getIconUrl(icon) {
@@ -118,6 +121,16 @@ class File {
       type,
       data
     )
+  }
+
+  toJSON() {
+    return {
+      id: this.id,
+      name: this.name,
+      mime: this.mime,
+      site_id: this.site_id,
+      urls: this.urls
+    }
   }
 }
 

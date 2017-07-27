@@ -9,6 +9,7 @@
   position: relative
   top: 50%;
   left: 0;
+
 //======================================
 // show main menu list on mobile devaices
 html.show-menu
@@ -19,10 +20,6 @@ html.show-menu
   body
     overflow: hidden !important 
     position: relative
-    height: 100% !important
-    -webkit-overflow-scrolling: auto!important
-    width: 100%
-    position: fixed
 
   header
     button.navbar-toggler
@@ -43,13 +40,9 @@ html.show-menu
 
     .mobile-menu.full-height
       right: 0
-      -webkit-transition: right 0.35s ease-in 200ms
-      -moz-transition: right 0.35s ease-in 200ms
-      -ms-transition: right 0.35s ease-in 200ms
-      -o-transition: right 0.35s ease-in 200ms
-      transition: right 0.35s ease-in 200ms
       overflow-y: auto
       background-color: $menu-backgound-mobile
+      display: block
 //================================
 
 //=================================
@@ -189,17 +182,42 @@ header
               background-color: rgba($submenu-bgc-hover, .09)
 
               a 
-                color: rgba($menu_text_color, 1)
+                color: rgba($menu_text_color, 1)!important
+                span.title
+                  opacity: 1
             a
               padding-left: 10px
               padding-right: 10px
               width: 100%
-              color: rgba($menu_text_color, 0.7)
+              color: rgba($menu_text_color, 0.7)!important
               font-size: $font-size-sub-menu
               text-align: left
+              position: relative
               .fa
                 margin-top: rem(4)
                 margin-left: 10px
+              span.title
+                position: absolute
+                top: 5px
+                left: 105%
+                line-height: 12px
+                font-size: 10px
+                color: $small-text
+                background-color: $alabaster
+                border-radius: 2px
+                width: 100%
+                opacity: 0
+                padding: rem(3)
+                padding-left: rem(7)
+                box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.5)
+                &:before
+                  position: absolute
+                  top: 10px
+                  content: ''
+                  left: -10px
+                  border: 5px solid transparent
+                  border-right: 5px solid $alabaster
+
             p 
               margin-bottom: 0
               font-weight: 600
@@ -355,7 +373,7 @@ header
           margin-top: rem(5)
         li
           a
-            color: $notification-link-color
+            color: $notification-link-color!important
             font-size: 12px
             padding-left: 0
             padding-right: 0
@@ -423,7 +441,6 @@ header
     .navbar-nav .nav-item a
       font-size: 0.6875rem
     .navbar-nav .login-sinup a
-      top: -55%
       font-size: 0.6875rem
 
   @media screen and (min-width: 992px)
@@ -436,7 +453,7 @@ header
       -webkit-box-shadow: $sub-menu-box-shadov
       -moz-box-shadow: $sub-menu-box-shadov
       box-shadow: $sub-menu-box-shadov
-      background-color: rgba($menu_backgound_from, 0.96)
+      background-color: $menu_backgound_from
       &.two-columns
         left: -120px
         .submenu
@@ -472,17 +489,17 @@ header
       display: none
 
   @media screen and (max-width: 991px)    
-    position: absolute
+    position: fixed
     top: 0
     left: 0
-    z-index: 9999
+    z-index: 999
     display: block
-    height: 65px;
+    height: 65px
     margin: 0
     max-height: none
     width: 100%
-    background-color: rgba($menu_backgound_from, .96)
-    background: rgba($menu_backgound_from, .96) $header_bg_image
+    &.sticky-active
+      background-color: rgba($menu_backgound_from, .93)
     .navbar .navbar-brand
       display: inline-block
       height: $navbar_height_mobile
@@ -494,7 +511,7 @@ header
     nav
       position: absolute
       top: 0
-      z-index: 99999
+      z-index: 999
       height: 100%
       padding: 0
       width: 100%
@@ -503,29 +520,31 @@ header
           position: relative
           top: 25%
       .mobile-menu.full-height
-        -webkit-transition: right 0.35s ease-in 200ms
-        -moz-transition: right 0.35s ease-in 200ms
-        -ms-transition: right 0.35s ease-in 200ms
-        -o-transition: right 0.35s ease-in 200ms
-        transition: right 0.35s ease-in 200ms
-        position: absolute
+        transition: right .6s
+        position: fixed
+        -webkit-backface-visibility: hidden
+        -webkit-transform: translateZ(0)
+        box-sizing: border-box
         z-index: 999
-        right: -240px
+        right: -260px
         min-height: 568px
         height: 100vh
         overflow: hidden
-        width: 240px
+        width: 260px
         overflow-y: auto
         top: $navbar_height_mobile
         background-color: $menu-backgound-mobile
+        display: block
+        box-shadow: $mobile-menu-box-shadow
       #menuList
         float: none!important
         margin: 0
         overflow: hidden
         overflow-y: auto
-        width: 240px
+        width: 260px
         box-sizing: border-box
         height: 80vh
+        margin-top: rem(20)
         li
           height: auto
           margin-left: 0
@@ -533,18 +552,18 @@ header
           position: relative
           &:after
             content: ''
-            width: 220px
+            width: 240px
             position: absolute
             margin-left: rem(10)
-            border-bottom: solid 1px $menu_text_color
+            border-bottom: solid 1px rgba($menu_text_color, .4)
           &:hover
             background-color: $menu-bgc-mobile-hover
             &:after
               border-bottom: none
           a
-            font-size: rem(13)
+            font-size: rem($menu-font-size-mobile)
             font-family: $font-family-menu
-            letter-spacing: 1.3px
+            letter-spacing: $menu-letter-spacing-mobile
             padding: 10px
             text-transform: uppercase
             text-align: left
@@ -563,6 +582,8 @@ header
             .user-info-name
               color: $white
               background-color: $menu-bgc-mobile-user
+              span
+                width: 45px
               div
                 display: inline-block
                 font-size: rem(15)

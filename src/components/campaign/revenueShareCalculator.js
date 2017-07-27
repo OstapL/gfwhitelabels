@@ -1,23 +1,7 @@
 // import './styles/style.sass'
 //import 'jquery.inputmask/dist/jquery.inputmask.bundle.js';
 
-const settings = app.helpers.calculator.settings;
 const minPersents = 200;
-
-const setCaretPosKeyCodes = [
-  48,
-  49,
-  50,
-  51,
-  52,
-  53,
-  54,
-  55,
-  56,
-  57,
-  58,
-  8,
-];
 
 module.exports = {
   calculator: Backbone.View.extend(_.extend({
@@ -26,13 +10,6 @@ module.exports = {
     events: _.extend({
       // calculate your income
       'submit .js-calc-form': 'doCalculation',
-      'keyup [name=growLevel]': 'savePercents',
-      // 'keydown [name=growLevel]': 'filterKeyCodeForPercentage',
-      'focusin [name=growLevel]': 'setCaretPosition',
-      'click [name=growLevel]': 'setCaretPosition',
-      'keyup [name=raiseMoney]': app.helpers.format.formatMoneyValue,
-      'keyup [name=nextYearRevenue]': app.helpers.format.formatMoneyValue,
-      // 'blur [data-input-mask="percent"]': 'cutZeros',
     }, app.helpers.calculatorValidation.events),
 
     initialize() {
@@ -47,90 +24,20 @@ module.exports = {
       this.fields = {
         raiseMoney: {
           required: true,
-          type: 'integer',
-          validate: {},
+          type: 'money',
           label: 'How much is the company raising?'
         },
         nextYearRevenue: {
           required: true,
-          type: 'integer',
-          validate: {},
+          type: 'money',
           label: 'What do you expect next year\'s revenue share to be?',
         },
         growLevel: {
           required: true,
-          type: 'integer',
-          validate: {},
+          type: 'percent',
           label: 'At what rate do you expect revenues to grow each year?',
         },
       };
-    },
-
-    filterKeyCodeForPercentage(e) {
-      let value = e.target.value.replace(/\%/g, '');
-      if (!((((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105)) && !(value.match(/\.\d{2}$/))) ||
-        ((e.keyCode == 110 || e.keyCode == 190) && !(value.match(/\./))))
-        && !(e.keyCode == settings.BACKSPACEKEYCODE ||
-          e.keyCode == settings.TABKEYCODE ||
-          e.keyCode == settings.LEFTARROWKEYCODE ||
-          e.keyCode == settings.RIGHTARROWKEYCODE ||
-          e.keyCode == settings.HOMEKEYCODE ||
-          e.keyCode == settings.ENDKEYCODE ||
-          e.keyCode == settings.F5KEYCODE ||
-          e.keyCode == settings.ENTERKEYCODE ||
-          ((e.ctrlKey || e.metaKey) && e.keyCode == settings.CKEYCODE) ||
-          ((e.ctrlKey || e.metaKey) && e.keyCode == settings.AKEYCODE) ||
-          ((e.ctrlKey || e.metaKey) && e.keyCode == settings.VKEYCODE)
-        )
-      ) {
-        e.preventDefault();
-        e.stopPropagation();
-      }
-      if (e.keyCode == settings.BACKSPACEKEYCODE) {
-        e.preventDefault();
-        e.stopPropagation();
-        value = value.substring(0, value.length - 1);
-        e.target.value = value;
-      }
-    },
-
-    savePercents(e) {
-      let target = e.target;
-      let value = e.target.value.replace(/[\$\%\,]/g, '');
-
-      this.data[target.dataset.modelValue] = Number(value);
-
-      let withDot = (e.keyCode == 110 || e.keyCode == 190);
-      target.value = app.helpers.calculator.formatPercentage(value, withDot);
-
-      this.cutZeros(e);
-
-      if (_(setCaretPosKeyCodes).contains(e.keyCode))
-        this.setCaretPosition(e);
-    },
-
-    setCaretPosition(e) {
-      let input = e.target;
-
-      if (input.value.endsWith('%')) {
-        if (input.value.length === 1)
-          input.value = '';
-        else if (input.value.length > 1)
-          app.helpers.calculator.setCaretPosition(input, input.value.length - 1);
-      }
-    },
-
-    cutZeros(e) {
-      let elem = e.target;
-      let value = elem.value.replace('$', '').replace(/,/g, '');
-
-      if (!value) {
-        elem.dataset.currentValue = 0;
-        elem.value = '';
-      } else {
-        elem.dataset.currentValue = parseFloat(value);
-        elem.value = app.helpers.calculator.formatPercentage(elem.dataset.currentValue);
-      }
     },
 
     doCalculation(e) {
@@ -139,16 +46,11 @@ module.exports = {
       if (!this.validate(e))
         return;
 
-      app.emitGoogleAnalyticsEvent('calculate-revenue-share', {
-        eventCategory: 'Calculator',
-        eventAction: 'calculate',
-        eventLabel: 'Company',
-        eventValue: window.location.pathname,
-      });
-
-      this.data.raiseMoney = Number(this.$raiseMoney.val().replace(/[\$\,]/g, ''));
-      this.data.nextYearRevenue = Number(this.$nextYearRevenue.val().replace(/[\$\,]/g, ''));
-      this.data.growLevel = Number(this.$growLevel.val().replace(/[\%\,]/g, ''));
+      app.analytics.emitEvent(app.analytics.events.CalculatorUsed, app.user.stats);
+      const filterNumberRx = /[^0-9\.]/g;
+      this.data.raiseMoney = Number(this.$raiseMoney.val().replace(filterNumberRx, ''));
+      this.data.nextYearRevenue = Number(this.$nextYearRevenue.val().replace(filterNumberRx, ''));
+      this.data.growLevel = Number(this.$growLevel.val().replace(filterNumberRx, ''));
 
       let maxOfMultipleReturned = 0,
         countOfMultipleReturned = 0,
@@ -302,20 +204,26 @@ module.exports = {
           }
         });
 
+        app.helpers.calculator.bindResizeTo(this.$plot);
+
         this.$chart.on('growFinished', () => {
           //options.series.points.show = true;
           //$.plot(this.$chart, dataArr, options);
 
           let plotData = this.$plot.getData();
-          let last = plotData[0].data.pop();
-          let o = this.$plot.pointOffset({x: last[0], y: last[1]});
-          if (last[1] * 100 >= minPersents) {
-            $('<div class="data-point-label">Congratulations, Payback Share Contract is complete</div>').css({
-              position: 'absolute',
-              left: o.left - 500,
-              top: o.top - 30,
-              display: 'none'
-            }).appendTo(this.$plot.getPlaceholder()).fadeIn('slow');
+          let last = _.last(plotData[0].data);
+          if (last && last.length > 1) {
+            let o = this.$plot.pointOffset({x: last[0], y: last[1]});
+            if (last[1] * 100 >= minPersents) {
+              $('.data-point-label').remove();
+
+              $('<div class="data-point-label">Congratulations, Payback Share Contract is complete</div>').css({
+                position: 'absolute',
+                left: o.left - 500,
+                top: o.top - 30,
+                display: 'none'
+              }).appendTo(this.$plot.getPlaceholder()).fadeIn('slow');
+            }
           }
         });
 
@@ -342,6 +250,7 @@ module.exports = {
             $flotTooltip.hide();
           }
         });
+
       }, 'graph_chunk');
 
       return this;
@@ -357,31 +266,6 @@ module.exports = {
 
       this.$plot.shutdown();
       this.$chart.empty();
-    },
-
-    resizeJqPlot: function() {
-      if (!this.jQPlot) return;
-      this.jQPlot.replot({
-        resetAxes: true,
-        legend: {
-          show: false
-        },
-        axes: {
-          xaxis: {
-            min: 0,
-            max: 10,
-            tickInterval: 1,
-            label: 'Years'
-          },
-          yaxis: {
-            min: 0,
-            max: 2.5,
-            tickInterval: 0.5,
-            label: 'Multiple Returned',
-            labelRenderer: $.jqplot.CanvasAxisLabelRenderer
-          }
-        }
-      });
     },
 
     mapToPlot(data) {
