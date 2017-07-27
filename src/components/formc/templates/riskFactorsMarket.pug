@@ -6,14 +6,14 @@ include riskFactorsMixins.pug
 
 - pug_html += app.breadcrumbs('create form c', '', [ ['Home', '/'], ['Create Form C', '/formc/' + values.id + '/introduction'], ['Risk Factors', ''], ]);
 
-section.formc-team-members-director.container.m-b-85
+section.formc-risk-factor.container.m-b-85
   - var campaignId = values.campaign_id;
   .row
     +menu('formc', 'risk-factors-market')
 
     //START RIGHT BLOCK
     .col-xl-8.col-lg-8.col-md-12
-      h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.m-b-3 risk factors (MARKET AND CUSTOMER)
+      h2.text-uppercase.text-lg-center.text-xs-center.m-t-0 risk factors (MARKET AND CUSTOMER)
       .row
         .col-lg-12
           p.pb10.pb10.text-justify Please review the following statements that relate to common market and customer risk factors.  If any of these statements reflect potential risks for your company, then you should edit and add such statement so that they are personalized to your company.  Please note that the rules
@@ -21,8 +21,8 @@ section.formc-team-members-director.container.m-b-85
               u require you to add specificity
             |  to each risk statement to ensure that an investor understands how the risk applies to your business.
       .row
-        .col-xl-12.m-t-2
-          .warning-block.m-t-1
+        .col-xl-12
+          .warning-block
             i.fa.fa-info-circle
             span.warning-text You are free to use any statement that applies to your business, provided that in each case you customize the final language to be specific to your company.
       .form-section
@@ -67,8 +67,8 @@ section.formc-team-members-director.container.m-b-85
             button(data-method="PATCH" data-concat="false").btn.btn-secondary.btn-sm.text-uppercase.pull-lg-right.m-b-3.add-risk save and Add this Risk
         .col-xl-12
           .form-section
-            .form-group
-              label.d-block
+            .form-group.m-b-0
+              label.d-block.m-b-0
                 - var complete = values.market_and_customer_risk[99] ? true : false
                 input(type="checkbox" name="complete" disabled=disabled data-previous=String(complete) checked=complete)#complete
                 span.p-l-2 None of these risks apply. This page is complete.

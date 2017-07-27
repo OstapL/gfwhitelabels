@@ -4,13 +4,13 @@ include riskFactorsMixins.pug
 
 - pug_html += app.breadcrumbs('create form c', '', [ ['Home', '/'], ['Create Form C', '/formc/' + values.id + '/introduction'], ['Risk Factors', ''], ]);
 
-section.formc-team-members-director.container.m-b-85
+section.formc-risk-factor.container.m-b-85
   - var campaignId = values.campaign_id;
   .row
     +menu('formc', 'risk-factors-competitive')
     //START RIGHT BLOCK
     .col-xl-8.col-lg-8.col-md-12
-      h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.m-b-3 risk factors (Competitive)
+      h2.text-uppercase.text-lg-center.text-xs-center.m-t-0 risk factors (Competitive)
       .row
         .col-lg-12
           p.pb10.pb10.text-justify Please review the following statements that relate to common competitive risk factors.  If any of these statements reflect potential risks for your company, then you should edit and add such statement so that they are personalized to your company.  Please note that the rules
@@ -37,7 +37,7 @@ section.formc-team-members-director.container.m-b-85
                   - if (!(k < Object.keys(defaultRisks).length) && k != 99)
                     +showRiskForm(v, k, 'competitive_risk')
       .row
-        .col-lg-12.m-t-3
+        .col-lg-12
           p.pb10
             b In the text box below, please include those competitive risks that are specific to your business.
             |  In brainstorming the proper risks to disclose, you can reference the language above or consider the following questions for guidance:
@@ -65,7 +65,7 @@ section.formc-team-members-director.container.m-b-85
 
           .form-section
             .form-group.m-b-0
-              label.d-block
+              label.d-block.m-b-0
                 - var complete = values.competitive_risk[99] ? true : false
                 input(type="checkbox" name="complete" disabled=disabled data-previous=String(complete) checked=complete)#complete
                 span.p-l-2 None of these risks apply. This page is complete.

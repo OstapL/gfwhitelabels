@@ -4,14 +4,14 @@ include ../../raiseFunds/templates/menu.pug
 
 - pug_html += app.breadcrumbs('create form c', '', [ ['Home', '/'], ['Create Form C', '/formc/' + values.id + '/introduction'], ['Risk Factors', ''], ]);
 
-section.formc-team-members-director.container.m-b-85
+section.formc-risk-factor.container.m-b-85
   - var campaignId = values.campaign_id;
   .row
     +menu('formc', 'risk-factors-instruction')
 
     //START RIGHT BLOCK
     .col-xl-8.col-lg-8.col-md-12
-      h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.m-b-3 risk factors (INSTRUCTIONS)
+      h2.text-uppercase.text-lg-center.text-xs-center.m-t-0 risk factors (INSTRUCTIONS)
       .row
         .col-lg-12
           p.pb10.pb10.text-justify The  Crowdfunding rules require that each company offering securities disclose the risks involved in purchasing their securities.  In identifying these risks, each company should avoid generalized statements and focus on those factors that are unique to their company.  Therefore, in completing this risk factor section, it is important that you tailor the description of each risk to your company’s business and
