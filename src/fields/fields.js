@@ -30,8 +30,8 @@ module.exports = {
 
   nestedTextLabel(nestedName, name, value, index, myAttr, schema) {
     this.prepareNestedField(nestedName, name, value, index, myAttr, schema);
-    myAttr.class1 = myAttr.class1 || 'col-xl-3 col-lg-12 text-lg-left text-xl-right';
-    myAttr.class2 = myAttr.class2 || 'col-xl-9 col-lg-12';
+    myAttr.class1 = myAttr.class1 || 'col-xl-12 text-xl-left';
+    myAttr.class2 = myAttr.class2 || 'col-xl-12';
     if(index != -1) {
       return this.textLabel(
         nestedName + '[' + index + '][' + name + ']',
@@ -47,8 +47,8 @@ module.exports = {
 
   nestedTextareaLabel(nestedName, name, value, index, myAttr, schema) {
     this.prepareNestedField(nestedName, name, value, index, myAttr, schema);
-    myAttr.class1 = myAttr.class1 ? myAttr.class1 : 'text-lg-right col-lg-3 col-md-12 text-md-left';
-    myAttr.class2 = myAttr.class2 ? myAttr.class2 : 'col-lg-9 col-md-12';
+    myAttr.class1 = myAttr.class1 ? myAttr.class1 : 'col-xl-12 text-xl-left';
+    myAttr.class2 = myAttr.class2 ? myAttr.class2 : 'col-xl-12';
     if(index != -1) {
       return this.textareaLabel(
         nestedName + '[' + index + '][' + name + ']',
@@ -64,8 +64,8 @@ module.exports = {
 
   nestedChoiceLabel(nestedName, name, value, index, myAttr, schema) {
     this.prepareNestedField(nestedName, name, value, index, myAttr, schema);
-    myAttr.class1 = myAttr.class1 ? myAttr.class1 : 'text-lg-right col-lg-3 col-md-12 text-md-left';
-    myAttr.class2 = myAttr.class2 ? myAttr.class2 : 'col-lg-9 col-md-12';
+    myAttr.class1 = myAttr.class1 ? myAttr.class1 : 'col-xl-12 text-xl-left';
+    myAttr.class2 = myAttr.class2 ? myAttr.class2 : 'col-xl-12';
     if(index != -1) {
       return this.choiceLabel(
         nestedName + '[' + index + '][' + name + ']',
@@ -81,8 +81,8 @@ module.exports = {
 
   nestedRadioLabel(nestedName, name, value, index, myAttr, schema) {
     this.prepareNestedField(nestedName, name, value, index, myAttr, schema);
-    myAttr.class1 = myAttr.class1 ? myAttr.class1 : 'text-lg-right col-lg-3 col-md-12 text-md-left';
-    myAttr.class2 = myAttr.class2 ? myAttr.class2 : 'col-lg-9 col-md-12';
+    myAttr.class1 = myAttr.class1 ? myAttr.class1 : 'col-xl-12 text-xl-left';
+    myAttr.class2 = myAttr.class2 ? myAttr.class2 : 'col-xl-12';
     if(index != -1) {
       return this.radioLabel(
         nestedName + '[' + index + '][' + name + ']',
@@ -164,8 +164,8 @@ module.exports = {
     attr.type = attr.type || 'text';
     attr.value = formatValue(attr.type, attr.value);
 
-    attr.class1 = attr.class1 || 'col-xl-3 col-lg-12 text-lg-left text-xl-right';
-    attr.class2 = attr.class2 || 'col-xl-9 col-lg-12';
+    attr.class1 = attr.class1 || 'col-xl-12 text-xl-left';
+    attr.class2 = attr.class2 || 'col-xl-12';
     const template = require('./templates/textLabel.pug');
     return template(attr);
   },
@@ -173,8 +173,8 @@ module.exports = {
   textareaLabel(name, attr) {
     attr.name = name;
     this.prepareField(name, attr);
-    attr.class1 = attr.class1 || 'col-xl-3 col-lg-12 text-lg-left text-xl-right';
-    attr.class2 = attr.class2 || 'col-xl-9 col-lg-12 big-textarea';
+    attr.class1 = attr.class1 || 'col-xl-12 text-xl-left';
+    attr.class2 = attr.class2 || 'col-xl-12 big-textarea';
     const template = require('./templates/textareaLabel.pug');
     return template(attr);
   },
@@ -201,7 +201,7 @@ module.exports = {
     attr.name = name;
     this.prepareField(name, attr);
     attr.value = attr.value && attr.value.indexOf('-') != -1 ? attr.value.split('-')[0] : '';
-    attr.class1 = attr.class1 || 'col-xl-4 col-lg-4 col-xs-4 p-r-0 p-r-lg-1 m-d-p-l-10';
+    attr.class1 = attr.class1 || 'col-xl-4 col-lg-4 col-xs-4 p-r-0 m-d-p-l-10';
     const template = require('./templates/dateYear.pug');
     return template(attr);
   },
@@ -232,8 +232,8 @@ module.exports = {
   fieldChoiceLabel(name, attr) {
     this.prepareField(name, attr);
     attr.type = attr.type || 'select';
-    attr.class1 = attr.class1 || 'col-xl-3 col-lg-12 text-lg-left text-xl-right';
-    attr.class2 = attr.class2 || 'col-xl-9 col-lg-12';
+    attr.class1 = attr.class1 || 'col-xl-12 text-xl-left';
+    attr.class2 = attr.class2 || 'col-xl-12';
     const template = require('./templates/fieldChoiceLabel.pug');
 
     return template({
@@ -245,8 +245,8 @@ module.exports = {
   radioLabel(name, attr) {
     this.prepareField(name, attr);
     attr.type = attr.type || 'radio';
-    attr.class1 = attr.class1 || 'col-xl-3 text-xl-right text-lg-left';
-    attr.class2 = attr.class2 || 'col-xl-9';
+    attr.class1 = attr.class1 || 'col-xl-12 text-xl-left';
+    attr.class2 = attr.class2 || 'col-xl-12';
     const template = require('./templates/radioLabel.pug');
 
     return template({

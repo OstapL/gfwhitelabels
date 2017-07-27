@@ -88,56 +88,46 @@
                   .col-xs-12.p-xs-0
                     section.right-block
                       .form-group.row.required
-                        label.col-xl-3.text-lg-right.text-xs-left Legal Name
+                        label.col-xs-12.text-xl-left Legal Name
                           span.color-red *
-                        .col-xl-9
-                          .row
-                            -
-                              pug_html += app.fields.fieldText('first_name', {
-                                'class': 'col-lg-6 m-b-md-25',
-                                'placeholder': 'First Name',
-                                'value': user.first_name,
-                              });
-                              pug_html += app.fields.fieldText('last_name', {
-                                'class': 'col-lg-6',
-                                'placeholder': 'Last Name',
-                                'value': user.last_name,
-                              });
+                        -
+                          pug_html += app.fields.fieldText('first_name', {
+                            'class': 'col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 pull-left',
+                            'placeholder': 'First Name',
+                            'value': user.first_name,
+                          });
+                          pug_html += app.fields.fieldText('last_name', {
+                            'class': 'col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 last-name',
+                            'placeholder': 'Last Name',
+                            'value': user.last_name,
+                          });
                       | !{ countryDirective(this).render() }
                       .row
                         .col-xl-12
                           .border-bottom.m-t-2.m-b-3
                       .row.m-b-0
-                        .col-xl-6.col-lg-6
+                        .col-xl-6.col-lg-6.col-md-6
                           -
                             pug_html += app.fields.textLabel("twitter", _.extend({
-                                'class1': 'col-xl-6 col-lg-12 text-lg-left text-xl-right',
-                                'class2': 'col-xl-6 col-lg-12 input-min-width',
                                 'type': 'text',
                                 'value': user.twitter,
                               }, fields.twitter))
-                        .col-xl-6.col-lg-6
+                        .col-xl-6.col-lg-6.col-md-6
                           -
                             pug_html += app.fields.textLabel("facebook", _.extend({
-                                'class1': 'col-xl-5 col-lg-12 text-lg-left text-xl-right p-t-0 m-b-0 m-b-lg-1',
-                                'class2': 'col-xl-7 col-lg-12',
                                 'type': 'text',
                                 'value': user.facebook,
                               }, fields.facebook))
                       .row.m-b-0
-                        .col-xl-6.col-lg-6
+                        .col-xl-6.col-lg-6.col-md-6
                           -
                             pug_html += app.fields.textLabel("instagram", _.extend({
-                                'class1': 'col-xl-6 col-lg-12 text-lg-left text-xl-right',
-                                'class2': 'col-xl-6 col-lg-12 input-min-width',
                                 'type': 'text',
                                 'value': user.instagram,
                               }, fields.instagram))
-                        .col-xl-6.col-lg-6
+                        .col-xl-6.col-lg-6.col-md-6
                           -
                             pug_html += app.fields.textLabel("linkedin", _.extend({
-                                'class1': 'col-xl-5 col-lg-12 text-lg-left text-xl-right p-t-0 m-b-0 m-b-lg-1',
-                                'class2': 'col-xl-7 col-lg-12',
                                 'type': 'text',
                                 'value': user.linkedin,
                               }, fields.linkedin))
@@ -249,48 +239,52 @@
                       .row
                         .col-sm-12
                           hr.m-b-3.m-t-1
-                      -
-                        pug_html += app.fields.textLabel('bank_name', _.extend({
-                            'type': 'text',
-                            'value': user.bank_name
-                          }, fields.bank_name))
-
-                        pug_html += app.fields.textLabel('name_on_bank_account', _.extend({
-                            'type': 'text',
-                            'class1': 'col-xl-3 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 m-b-lg-1',
-                            'value': user.name_on_bank_account
-                          }, fields.name_on_bank_account))
-
-                        pug_html += app.fields.textLabel('account_number', _.extend({
-                            'help_text': '<div class="img-routing-number"></div>',
-                            'type': 'text',
-                            'value': user.account_number
-                          }, fields.account_number))
-
-                        pug_html += app.fields.textLabel('account_number_re', _.extend({
-                            'class1': 'col-xl-3 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 m-b-lg-1',
-                            'help_text': '<div class="img-routing-number"></div>',
-                            'type': 'text',
-                            'value': user.account_number
-                          }, fields.account_number_re))
-
-                        pug_html += app.fields.textLabel('routing_number', _.extend({
-                            'help_text': '<div class="img-routing-number"></div>',
-                            'type': 'text',
-                            'value': user.routing_number
-                          }, fields.routing_number))
-
-                        pug_html += app.fields.textLabel('routing_number_re', _.extend({
-                            'help_text': '<div class="img-routing-number"></div>',
-                            'type': 'text',
-                            'class1': 'col-xl-3 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 m-b-lg-1',
-                            'value': user.routing_number
-                          }, fields.routing_number_re))
+                      .row
+                        .col-xl-6.col-lg-6.col-md-6
+                          -
+                            pug_html += app.fields.textLabel('bank_name', _.extend({
+                                'type': 'text',
+                                'value': user.bank_name
+                              }, fields.bank_name))
+                        .col-xl-6.col-lg-6.col-md-6
+                          -
+                            pug_html += app.fields.textLabel('name_on_bank_account', _.extend({
+                                'type': 'text',
+                                'value': user.name_on_bank_account
+                              }, fields.name_on_bank_account))
+                        .col-xl-6.col-lg-6.col-md-6
+                          -
+                            pug_html += app.fields.textLabel('account_number', _.extend({
+                                'help_text': '<div class="img-routing-number"></div>',
+                                'type': 'text',
+                                'value': user.account_number
+                              }, fields.account_number))
+                        .col-xl-6.col-lg-6.col-md-6
+                          -
+                            pug_html += app.fields.textLabel('account_number_re', _.extend({
+                                'help_text': '<div class="img-routing-number"></div>',
+                                'type': 'text',
+                                'value': user.account_number
+                              }, fields.account_number_re))
+                        .col-xl-6.col-lg-6.col-md-6
+                          -
+                            pug_html += app.fields.textLabel('routing_number', _.extend({
+                                'help_text': '<div class="img-routing-number"></div>',
+                                'type': 'text',
+                                'value': user.routing_number
+                              }, fields.routing_number))
+                        .col-xl-6.col-lg-6.col-md-6
+                          -
+                            pug_html += app.fields.textLabel('routing_number_re', _.extend({
+                                'help_text': '<div class="img-routing-number"></div>',
+                                'type': 'text',
+                                'value': user.routing_number
+                              }, fields.routing_number_re))
 
                       .form-group.row.radio.requried
-                        label.text-xl-right.text-lg-left.col-xl-3.col-lg-12 Account Type
+                        label.text-xl-left.col-xl-12 Account Type
                           span.color-red *
-                        .col-xl-9.col-lg-12.radio-input
+                        .col-xl-12.radio-input
                           label
                             input(
                               type="radio"
@@ -313,7 +307,7 @@
                             pug_html += ssnDirective(this).render();
 
                       .form-group.row.clearfix.m0
-                        .col-lg-12.mt30.text-xs-center
+                        .col-xl-12.mt30.text-xs-center
                           .controls
                             button(
                               href="#"

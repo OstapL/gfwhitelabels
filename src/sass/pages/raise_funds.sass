@@ -1,4 +1,6 @@
 .create-company,.create-company-general
+  .title
+    margin-bottom: rem(40)
   .custom-link-company,
   .custom-ga-fields // page /company/create
     .prefix_input_prefix
@@ -28,8 +30,6 @@
       margin-bottom: 0
     .custom-select
       width: 100%
-    label
-      line-height: rem(18)
   .form-section
     .date-input
       input
@@ -41,53 +41,15 @@
   input
     min-width: rem(185)
 .create-company
-  .custom-link-company
-    .help-block
-      position: relative
-      left: rem(15)
   .custom-ga-fields
     .prefix_input_prefix
-      width: 11%
+      width: 15%
+      @media screen and (min-width : 992px) and (max-width : 1200px)
+        width: 20%
     .prefix_input_field
-      width: 89%
-    @media only screen and (min-width : 1200px)
-      label
-        position: relative
-        top: -15px
-        margin-bottom: 0
-      .form-group
-        margin-bottom: 10px
-        margin-top: 10px
-  .tour
-    @media only screen and (min-width : 1200px)
-      margin-bottom: 0
-      .help-block
-        margin-bottom: rem(20)
-    label
-      position: relative
-      top: -18px
-      margin-bottom: 0
-      @media only screen and (max-width : 1200px)
-        top: -5px
-  .custom-link-company
-    @media only screen and (min-width : 1200px)
-      margin-bottom: rem(5)
-      .help-block
-        margin-bottom: rem(20)
-    label
-      position: relative
-      top: -10px
-      @media only screen and (max-width : 1200px)
-        top: 0
-  .form-group.founding_state
-    @media only screen and (min-width : 1200px)
-      margin-bottom: rem(5)
-      .help-block
-        margin-bottom: rem(20)
-    label
-      top: -10px
-      @media only screen and (max-width : 1200px)
-        top: 0
+      width: 85%
+      @media screen and (min-width : 992px) and (max-width : 1200px)
+        width: 80%
 @media only screen and (max-width : 1200px)
   .create_compaign
     margin-top: 50px
@@ -97,11 +59,6 @@
         width: 50%
       .prefix_input_field
         width: 50%
-    .custom-ga-fields
-      .prefix_input_field
-        width: 90%
-      .prefix_input_prefix
-        width: 10%
 
 @media only screen and (max-width : 992px)
   .create-company
@@ -128,6 +85,8 @@
         width: 100%
         
 .create-company-team-add
+  .title
+    margin-bottom: rem(45)
   .warning-team-add
     font-size: rem(14)
   .team-add-item
@@ -139,6 +98,8 @@
       line-height: rem(15)
     .small-text
       color: $small-text
+      font-size: rem(12)
+      line-height: rem(18)
   .edit-team-members
     position: absolute
     right: 5px
@@ -156,23 +117,22 @@
           margin-right: 0
           margin-bottom: 25px
 .create-perks
+  .title
+    margin-bottom: rem(45)
   .perks-textarea
     textarea
       min-height: 80px
 .team-members
+  .title
+    margin-bottom: rem(45)
   .img-photo
     width: 155px
     height: 155px
     margin: auto
-@media only screen and (min-width : 1200px)
-  .add-link-additional-video
-    position: relative
-    top: -45px!important
-    left: 0!important
 @media only screen and (min-width : 992px)
   .add-link-additional-video
     position: relative
-    top: -15px
+    top: -20px
 @media only screen and (max-width : 1200px)
   .create-company-media
     .delete-section-container.media-delete
@@ -199,18 +159,37 @@
       margin-bottom: rem(25)
     input
       max-width: 100%!important
-
-
+.campaign-specifics
+  .title
+    margin-bottom: rem(45)
 @media only screen and (max-width : 992px)
   .campaign-specifics
     .m-l-30
       margin-left: 0
       padding-left: 0
+  .create-company-media
+    .add-link-additional-video
+      position: relative
+      top: 25px
+      margin-bottom: rem(50)
 @media only screen and (max-width : 340px)
   .team-members
     .btn.m-r-3
       margin-right: 10px!important  
 .create-company-media
+  .galleryDropzone
+    margin-bottom: 0!important
+  .additional-video-block
+    margin-bottom: rem(5)
+    .one-video
+      .delete-section-container
+        margin-top: rem(20)
+      &:first-child
+        .delete-section-container
+          margin-top: 0
+  .title
+    margin-bottom: rem(45)
+
   .main-video-block, .additional-video-block
     .img-media
       height: 160px!important
