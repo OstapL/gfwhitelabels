@@ -10,7 +10,7 @@ section.formc-team-members-director.container.m-b-85
 
     //START RIGHT BLOCK
     .col-xl-8.col-lg-8.col-md-12.team-member-formc
-      h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.m-b-3 Team members (director)
+      h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.mb45 Team members (director)
       form.form-section
         input(type="hidden" value=2 name="role[]")
         input(type="hidden" value=1 name="individual_director_choice")
@@ -110,7 +110,7 @@ section.formc-team-members-director.container.m-b-85
               value: values.employer_principal_businesss, 
               placeholder: 'Provide short description of the business',})
         .row
-          .col-lg-12.m-t-2
+          .col-lg-12
             strong Is this individual also a 20%+ Voting Shareholder?
             .form-group.form-section.m-t-1.m-b-0
               .radio-input.m-b-1.yesno
@@ -121,16 +121,19 @@ section.formc-team-members-director.container.m-b-85
                   input(type="radio" name="voting_shareholder_choice" value="0" checked=((values.role & 1) != 1 ? true : false))
                   |  No
         .voting_shareholder_choice.shown-yes(style="display:" + ((values.role & 1) == 1? 'block' : 'none'))
-          -
-            pug_html += app.fields.textLabel('number_of_shares', {
-            schema: fields.number_of_shares,
-            label: 'Number of Shares', 
-            value: values.number_of_shares,})
-          -
-            pug_html += app.fields.textLabel('class_of_securities', {
-            schema: fields.class_of_securities,
-            label: 'Class of Securities',
-            value: values.class_of_securities,})
+          .row
+            .col-xl-6.col-lg-5.col-md-6
+              -
+                pug_html += app.fields.textLabel('number_of_shares', {
+                schema: fields.number_of_shares,
+                label: 'Number of Shares', 
+                value: values.number_of_shares,})
+            .col-xl-6.col-lg-5.col-md-6
+              -
+                pug_html += app.fields.textLabel('class_of_securities', {
+                schema: fields.class_of_securities,
+                label: 'Class of Securities',
+                value: values.class_of_securities,})
           -
             pug_html += app.fields.textLabel('voting_power_percent', {
             schema: fields.voting_power_percent,
@@ -146,7 +149,7 @@ section.formc-team-members-director.container.m-b-85
             .border-bottom.m-t-3.m-b-3
         |!{ templates.experiences }
 
-        .row.m-t-3
+        .row.offecer-btn-m-t
           .col-xl-12
             .text-sm-center.text-xs-center.text-lg-right
               a(href='/formc/' + values.formc_id + '/team-members').btn.btn-secondary.text-uppercas.m-r-1 Cancel

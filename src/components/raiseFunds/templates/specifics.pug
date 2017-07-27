@@ -95,19 +95,22 @@ section.campaign-specifics.container.m-b-85
                 placeholder: '$',
                 });
           .row
-            .col-xl-6.col-lg-6.col-md-6
+            .col-xl-12
               -
                 pug_html += app.fields.fieldChoiceLabel('valuation_determination', _.extend({
                     'value': values.valuation_determination,
                   }, fields.valuation_determination));
+          .row
+            .col-xl-12
+                div(class=(values.valuation_determination == 2 ? '' : 'collapse'))
+                  -
+                    pug_html += app.fields.textareaLabel('valuation_determination_other', {
+                        schema: _.extend({}, fields.valuation_determination_other, { required: true }),
+                        help_text: 'How are the securities being offered being valued? Include examples of methods for how such securities may be valued by the issuer in the future, including during subsequent corporate actions.',
+                        value: values.valuation_determination_other,
+                      });
+          .row
             .col-xl-6.col-lg-6.col-md-6
-              div(class=(values.valuation_determination == 2 ? '' : 'collapse'))
-                -
-                  pug_html += app.fields.textareaLabel('valuation_determination_other', {
-                      schema: _.extend({}, fields.valuation_determination_other, { required: true }),
-                      help_text: 'How are the securities being offered being valued? Include examples of methods for how such securities may be valued by the issuer in the future, including during subsequent corporate actions.',
-                      value: values.valuation_determination_other,
-                    });
               -
                 pug_html += app.fields.textLabel('price_per_share', {
                     schema: fields.price_per_share,

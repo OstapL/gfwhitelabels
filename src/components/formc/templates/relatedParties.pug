@@ -3,7 +3,7 @@ include ../../raiseFunds/templates/menu.pug
 - pug_html += app.breadcrumbs('create form c', '', [ ['Home', '/'], ['Create Form C', '/formc/' + values.id + '/introduction'], ['related parties', ''], ]);
 
 
-section.formc-team-members-director.container.m-b-85
+section.formc-related-parties.container.m-b-85
   - var campaignId = values.campaign_id;
   .row
     +menu('formc', 'related-parties')
@@ -12,7 +12,7 @@ section.formc-team-members-director.container.m-b-85
     .col-xl-8.col-lg-8.col-md-12
       .row
         .col-xl-12
-          h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.m-b-3 related parties
+          h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.mb45 related parties
       .row
         .col-lg-12 
           p.pb10 Please describe any transaction or proposed transaction with related parties in the last 12 months. You may want to be over-inclusive here, particularly with related party transactions that could have the appearance of a conflict of interest or a form of self-dealing. In general, if a transaction involved a potential conflict of interest that needed to be disclosed to the Board of Directors (or required shareholder approval), then it should be disclosed.

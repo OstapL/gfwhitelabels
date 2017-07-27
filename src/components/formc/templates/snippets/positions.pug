@@ -31,7 +31,7 @@ mixin run()
 
   if first_run
     .row
-      h3.text-xs-center.col-lg-12.m-t-0 Previously held a different position with the issuer? Please list them:
+      h3.text-xs-center.col-lg-12.m-t-0.m-b-1 Previously held a different position with the issuer? Please list them:
 
     div(class=(attr.row == 0 ? '' : '') + name + '_block' + (attr.required == true ? ' required ' : ' ') + ' nested')
       div(class=(attr.row == 0 ? '' : '') + name + '_container' + (attr.required == true ? ' required ' : ' ') + ' nested')

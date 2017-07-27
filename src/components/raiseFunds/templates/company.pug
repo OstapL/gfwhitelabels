@@ -33,23 +33,23 @@ section.create-company.container.m-b-85
                 schema: fields.short_name, 
                 placeholder: 'Short Name', 
                 value: values.short_name,})
+
+          .row.form-group.custom-link-company
+            .col-date
+              label.col-xl-12.text-xl-left What would you like your custom URL to be?
+                span.color-red *
+              .col-xl-12
+                .prefix_input_prefix
+                  input(value=window.location.origin disabled="disabled").form-control
+                .prefix_input_field#slug
+                  -
+                    pug_html += app.fields.fieldText('slug', {
+                    class: '',
+                    schema: fields.slug,
+                    id: 'slugField',
+                    placeholder: 'Your Custom URL', 
+                    value: values.slug,})
           .row
-            .col-xl-6.col-lg-6.col-md-6
-              .row.form-group.custom-link-company
-                .col-date
-                  label.col-xl-12.text-xl-left What would you like your custom URL to be?
-                    span.color-red *
-                  .col-xl-12
-                    .prefix_input_prefix
-                      input(value=window.location.origin disabled="disabled").form-control
-                    .prefix_input_field#slug
-                      -
-                        pug_html += app.fields.fieldText('slug', {
-                        class: '',
-                        schema: fields.slug,
-                        id: 'slugField',
-                        placeholder: 'Your Custom URL', 
-                        value: values.slug,})
             .col-xl-6.col-lg-6.col-md-6
               .custom-ga-fields
                 .row.form-group
