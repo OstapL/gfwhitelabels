@@ -119,34 +119,12 @@ module.exports = {
       if (_.contains(SKIP_KEY_CODES, e.keyCode))
         return;
 
-      const rx = /^[0-9]{8}\-[0-9]{1,2}$/;
+      const rx = /^\d{4,9}-\d{1,4}$/;
       if (rx.test(e.target.value))
         return;
 
       const rawValue = e.target.value;
-
-      let cursorPosition = e.target.selectionStart;
-      let digitsValue = rawValue.replace(/[^0-9]/g, '');
-      if (digitsValue.length < 8) {
-        e.target.value = digitsValue;
-        return;
-      }
-
-      let firstPart = digitsValue.substr(0, 8);
-      let secondPart = digitsValue.substr(8, 2);
-      let newValue = firstPart;
-      if (secondPart) {
-        newValue += '-' + secondPart;
-        if (newValue.charAt(cursorPosition) === '-' && rawValue.indexOf('-') < 0) {
-          ;// cursorPosition -= 1;
-        } else {
-          if (newValue.indexOf('-') < cursorPosition) {
-            cursorPosition += 1;
-          }
-        }
-      }
-      e.target.value = newValue;
-      e.target.setSelectionRange(cursorPosition, cursorPosition);
+      e.target.value = rawValue.replace(/[^0-9-]/gi, '');
     },
 
     fixSlug(e) {
