@@ -82,6 +82,12 @@ section.formc-team-members-director.container.m-b-85
               value: values.principal_occupation, 
               placeholder: 'Principal Occupation and Name of Employer',})
         .row
+          .col-xl-6.col-lg-7.col-md-6
+            -
+              pug_html += app.fields.textLabel('employer_principal_businesss', {
+              schema: fields.employer_principal_businesss, 
+              value: values.employer_principal_businesss, 
+              placeholder: 'Provide short description of the business',})
           .col-xl-6.col-lg-5.col-md-6
             .row.form-group
               label.col-xl-12 Employment Start Date
@@ -103,12 +109,7 @@ section.formc-team-members-director.container.m-b-85
                     'placeholder': 'YYYY',
                     'name': 'employer_start_date',
                     }, fields.employer_start_date));
-          .col-xl-6.col-lg-7.col-md-6
-            -
-              pug_html += app.fields.textLabel('employer_principal_businesss', {
-              schema: fields.employer_principal_businesss, 
-              value: values.employer_principal_businesss, 
-              placeholder: 'Provide short description of the business',})
+          
         .row
           .col-lg-12
             strong Is this individual also a 20%+ Voting Shareholder?
@@ -134,11 +135,13 @@ section.formc-team-members-director.container.m-b-85
                 schema: fields.class_of_securities,
                 label: 'Class of Securities',
                 value: values.class_of_securities,})
-          -
-            pug_html += app.fields.textLabel('voting_power_percent', {
-            schema: fields.voting_power_percent,
-            label: '% of Voting Power Prior to Offering',
-            value: values.voting_power_percent,})
+          .row
+            .col-xl-6.col-lg-5.col-md-6
+              -
+                pug_html += app.fields.textLabel('voting_power_percent', {
+                schema: fields.voting_power_percent,
+                label: '% of Voting Power Prior to Offering',
+                value: values.voting_power_percent,})
         .row
           .col-xl-12
             .border-bottom.m-t-2.m-b-3
