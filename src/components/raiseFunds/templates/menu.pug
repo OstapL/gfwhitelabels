@@ -1,10 +1,12 @@
+- var STATUSES = require('consts/raisecapital/companyStatuses.json').STATUS;
+
 mixin getCompanyUrl(id, section, currentStep, step, name)
   if id || currentStep == step
     -
       var linkHref = '/' + section + '/' + id + '/' + step;
       var linkId = 'menu_' + section.substr(0, 1) + '_' + step;
-      var activeClass = currentStep == step ? 'active ' : '',
-          disabledClass = (section == 'formc' && (!app.user.formc.is_paid || app.user.company.is_approved != 5)) ? 'disabled ' : '';
+      var activeClass = (currentStep == step && window.location.pathname.indexOf(section) != -1) ? 'active ' : '',
+          disabledClass = (section == 'formc' && !(app.user.formc.is_paid || app.user.company.is_approved == STATUSES.APPROVED)) ? 'disabled ' : '';
       var linkClass = 'list-group-item list-group-item-action ' + activeClass + disabledClass;
 
     a(href=linkHref id=linkId class=linkClass) #{ name }
@@ -33,11 +35,11 @@ mixin getRiskFactorsItem(id, section, currentStep, step, name)
 
 
 mixin menu(currentSection, currentStep)
-    .col-lg-4.col-xl-3.create_compaign
+    .col-lg-4.col-xl-3.left-menu-raise-formc
       .jumbotron.jumbotron-fluid.row
         .raise-funds
           h4.text-uppercase.m-b-0 Raise capital
-            .small-text (10% Done)
+            //.small-text (10% Done)
         #accordion(role="tablist" aria-multiselectable="true")
           .panel.panel-default
             .panel-heading(role="tab")
@@ -53,7 +55,7 @@ mixin menu(currentSection, currentStep)
                   i(class="arrow fa " + (currentSection == 'company' ? 'fa-angle-down' : 'fa-angle-left'))
             #company(role="tabpanel" class="panel-collapse collapse " + (currentSection == 'company' ? 'in' : ''))
               .list-group
-                a(href="/company/create" class="list-group-item list-group-item-action" + (currentSection == 'company' && currentStep == 'company' ? ' active' : '')) Company Detail
+                a(href="/company/create" class="list-group-item list-group-item-action" + (currentSection == 'company' && currentStep == 'create' ? ' active' : '')) Company Detail
                   if values.id
                     .icon-check
                       i.fa.fa-check-circle-o
@@ -101,7 +103,7 @@ mixin menu(currentSection, currentStep)
                       a(data-toggle="collapse"
                         href="#risk_factors"
                         aria-expanded="true"
-                        class="list-group-item list-group-heading" + (inRiskFactors ? ' active' : '')
+                        class="list-group-item list-group-heading risk-factors-none-border" + (inRiskFactors ? ' active' : '')
                       )
                         |  Risk Factors 
                         span.pull-right
@@ -130,14 +132,16 @@ mixin menu(currentSection, currentStep)
           .row
             .col-lg-12.text-xs-center
               .row
-                button(type="button").btn.btn-secondary.text-uppercase.m-t-2.onPreview preview
-              if app.user.company.is_approved == 0
+                button(type="button" data-method="PATCH").btn.btn-secondary.text-uppercase.m-t-2.onPreview preview
+              if app.user.company.is_approved == STATUSES.NEW
                 .row
                   button(type="button").btn.btn-primary.text-uppercase.m-t-2.submit_form submit campaign
-              else if app.user.company.is_approved != 5 
-                .row
-                  button.btn.btn-primary.text-uppercase.m-t-2.disabled Campaign in review
-              else
+              else if app.user.company.is_approved == STATUSES.PENDING 
+                .row 
+                  .warning-block.warning-team-add.text-lg-left.m-t-2
+                    i.fa.fa-info-circle
+                    span.warning-text We are reviewing your campaign
+              else if app.user.company.is_approved  > STATUSES.PENDING
                 .row
                   a(href="/formc/" + app.user.formc.id + "/introduction").btn.btn-primary.text-uppercase.m-t-2 Open Form C
         
@@ -149,13 +153,16 @@ mixin menu(currentSection, currentStep)
               |  education Links
             .nav
               li.nav-item
-                a(href="/pg/investor_tutorial" target="_blank").nav-link.link-3 Business Tutorial
+                a(href="https://support.google.com/analytics/answer/1008015?hl=en" target="_blank").nav-link.link-3 Google Analytics Help
               li.nav-item
-                a(href="/pg/success_guide" target="_blank").nav-link.link-3 Success Guide
+                a(href="/pg/investor-tutorial" target="_blank").nav-link.link-3 Business Tutorial
               li.nav-item
-                a(href="/calculator/selectYourBusiness" target="_blank").nav-link.link-3 What's My Business Worth?
+                a(href="/pg/success-guide" target="_blank").nav-link.link-3 Success Guide
+              li.nav-item
+                a(href="/calculator/BusinessValuation" target="_blank").nav-link.link-3 What's My Business Worth?
               li.nav-item
                 a(href="/calculator/whatmybusinessworth/intro" target="_blank").nav-link.link-3 How Much Should I Raise?
+      
       div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#company_publish.modal.fade
         div(role="document").modal-dialog
           .modal-content
@@ -171,23 +178,23 @@ mixin menu(currentSection, currentStep)
                   .col-lg-6.pull-left.p-l-0.general_information.collapse
                     h3.m-b-0.m-t-0 General Information
                   .col-lg-6.text-xs-right.m-b-10.p-r-0.general_information.collapse
-                    a(href="/campaign/" + (campaignId || values.id) + "/general_information?check=1").btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+                    a(href="/campaign/" + (campaignId || values.id) + "/general_information?check=1&r=" + Math.random()).btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
                   .col-lg-6.pull-left.p-l-0.media.collapse
                     h3.m-b-0.m-t-0 Media 
                   .col-lg-6.text-xs-right.m-b-10.p-r-0.media.collapse
-                    a(href='/campaign/' + (campaignId || values.id) + '/media?check=1').btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+                    a(href='/campaign/' + (campaignId || values.id) + '/media?check=1&r=' + Math.random()).btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
                   .col-lg-6.pull-left.p-l-0.team-members.collapse
                     h3.m-b-0.m-t-0 Team Members 
                   .col-lg-6.text-xs-right.m-b-10.p-r-0.team-members.collapse
-                    a(href='/campaign/' + (campaignId || values.id) + '/team-members?check=1').btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+                    a(href='/campaign/' + (campaignId || values.id) + '/team-members?check=1&r=' + Math.random()).btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
                   .col-lg-6.pull-left.p-l-0.specifics.collapse
                     h3.m-b-0.m-t-0 Specifics 
                   .col-lg-6.text-xs-right.m-b-10.p-r-0.specifics.collapse
-                    a(href='/campaign/' + (campaignId || values.id) + '/specifics?check=1').btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+                    a(href='/campaign/' + (campaignId || values.id) + '/specifics?check=1&r=' + Math.random()).btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
                   .col-lg-6.pull-left.p-l-0.perks.collapse
                     h3.m-b-0.m-t-0 Perks 
                   .col-lg-6.text-xs-right.mb30.p-r-0.perks.collapse
-                    a(href='/campaign/' + (campaignId || values.id) + '/perks?check=1').btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+                    a(href='/campaign/' + (campaignId || values.id) + '/perks?check=1&r=' + Math.random()).btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
             .modal-footer
       div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#company_publish_confirm.modal.fade
         div(role="document").modal-dialog
@@ -218,62 +225,76 @@ mixin menu(currentSection, currentStep)
             .modal-body
               .form-section.row
                 .col-xl-10.offset-xl-1.m-b-2
-                  .col-lg-6.pull-left.p-l-0.introduction.collapse
-                    h3.m-b-0.m-t-0 Introduction
-                  .col-lg-6.text-xs-right.m-b-10.p-r-0.introduction.collapse
-                    a(href="/formc/" + (formcId || values.id) + "/introduction?check=1").btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
-                  .col-lg-6.pull-left.p-l-0.team-members.collapse
-                    h3.m-b-0.m-t-0 Team Members 
-                  .col-lg-6.text-xs-right.m-b-10.p-r-0.team-members.collapse
-                    a(href='/formc/' + (formcId || values.id) + '/team-members?check=1').btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
-                  .col-lg-6.pull-left.p-l-0.related-parties.collapse
-                    h3.m-b-0.m-t-0 Related Parties
-                  .col-lg-6.text-xs-right.m-b-10.p-r-0.related-parties.collapse
-                    a(href='/formc/' + (formcId || values.id) + '/related-parties?check=1').btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
-                  .col-lg-6.pull-left.p-l-0.use-of-proceeds.collapse
-                    h3.m-b-0.m-t-0 Use of Proceeds 
-                  .col-lg-6.text-xs-right.m-b-10.p-r-0.use-of-proceeds.collapse
-                    a(href='/formc/' + (formcId || values.id) + '/use-of-proceeds?check=1').btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
-                  .col-lg-6.pull-left.p-l-0.risk-factors-market.collapse
-                    h3.m-b-0.m-t-0 Risk: Market and Customer 
-                  .col-lg-6.text-xs-right.mb30.p-r-0.risk-factors-market.collapse
-                    a(href='/formc/' + (formcId || values.id) + '/risk-factors-market?check=1').btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
-                  .col-lg-6.pull-left.p-l-0.risk-factors-financial.collapse
-                    h3.m-b-0.m-t-0 Risk: Financial
-                  .col-lg-6.text-xs-right.m-b-10.p-r-0.risk-factors-financial.collapse
-                    a(href="/formc/" + (formcId || values.id) + "/risk-factors-financial?check=1").btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
-                  .col-lg-6.pull-left.p-l-0.risk-factors-operational.collapse
-                    h3.m-b-0.m-t-0 Risk: Operational
-                  .col-lg-6.text-xs-right.m-b-10.p-r-0.risk-factors-operational.collapse
-                    a(href="/formc/" + (formcId || values.id) + "/risk-factors-operational?check=1").btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
-                  .col-lg-6.pull-left.p-l-0.risk-factors-competitive.collapse
-                    h3.m-b-0.m-t-0 Risk: Competitive
-                  .col-lg-6.text-xs-right.m-b-10.p-r-0.risk-factors-competitive.collapse
-                    a(href="/formc/" + (formcId || values.id) + "/risk-factors-competitive?check=1").btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
-                  .col-lg-6.pull-left.p-l-0.risk-factors-personnel.collapse
-                    h3.m-b-0.m-t-0 Risk: Personnel and Third Party
-                  .col-lg-6.text-xs-right.m-b-10.p-r-0.risk-factors-personnel.collapse
-                    a(href="/formc/" + (formcId || values.id) + "/risk-factors-personnel?check=1").btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
-                  .col-lg-6.pull-left.p-l-0.risk-factors-legal.collapse
-                    h3.m-b-0.m-t-0 Risk: Legal and Regulatory
-                  .col-lg-6.text-xs-right.m-b-10.p-r-0.risk-factors-legal.collapse
-                    a(href="/formc/" + (formcId || values.id) + "/risk-factors-legal?check=1").btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
-                  .col-lg-6.pull-left.p-l-0.risk-factors-misc.collapse
-                    h3.m-b-0.m-t-0 Risk: Miscellaneous
-                  .col-lg-6.text-xs-right.m-b-10.p-r-0.risk-factors-misc.collapse
-                    a(href="/formc/" + (formcId || values.id) + "/risk-factors-misc?check=1").btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
-                  .col-lg-6.pull-left.p-l-0.financial-condition.collapse
-                    h3.m-b-0.m-t-0 Financial Condition
-                  .col-lg-6.text-xs-right.m-b-10.p-r-0.financial-condition.collapse
-                    a(href="/formc/" + (formcId || values.id) + "/financial-condition?check=1").btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
-                  .col-lg-6.pull-left.p-l-0.outstanding-security.collapse
-                    h3.m-b-0.m-t-0 Outstanding Security
-                  .col-lg-6.text-xs-right.m-b-10.p-r-0.outstanding-security.collapse
-                    a(href="/formc/" + (formcId || values.id) + "/outstanding-security?check=1").btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
-                  .col-lg-6.pull-left.p-l-0.background-check.collapse
-                    h3.m-b-0.m-t-0 Background Check
-                  .col-lg-6.text-xs-right.m-b-10.p-r-0.background-check.collapse
-                    a(href="/formc/" + (formcId || values.id) + "/background-check?check=1").btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+                  .row
+                    .col-lg-8.pull-left.p-l-0.introduction.collapse
+                      h3.m-b-0.m-t-0 Introduction
+                    .col-lg-4.text-xs-right.m-b-1.p-r-0.introduction.collapse
+                      a(href="/formc/" + (formcId || values.id) + "/introduction?check=1&r=" + Math.random()).btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+                  .row
+                    .col-lg-8.pull-left.p-l-0.team-members.collapse
+                      h3.m-b-0.m-t-0 Team Members 
+                    .col-lg-4.text-xs-right.m-b-1.p-r-0.team-members.collapse
+                      a(href='/formc/' + (formcId || values.id) + '/team-members?check=1&r=' + Math.random()).btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+                  .row
+                    .col-lg-8.pull-left.p-l-0.related-parties.collapse
+                      h3.m-b-0.m-t-0 Related Parties
+                    .col-lg-4.text-xs-right.m-b-1.p-r-0.related-parties.collapse
+                      a(href='/formc/' + (formcId || values.id) + '/related-parties?check=1&r=' + Math.random()).btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+                  .row
+                    .col-lg-8.pull-left.p-l-0.use-of-proceeds.collapse
+                      h3.m-b-0.m-t-0 Use of Proceeds 
+                    .col-lg-4.text-xs-right.m-b-1.p-r-0.use-of-proceeds.collapse
+                      a(href='/formc/' + (formcId || values.id) + '/use-of-proceeds?check=1&r=' + Math.random()).btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+                  .row
+                    .col-lg-8.pull-left.p-l-0.risk-factors-market.collapse
+                      h3.m-b-0.m-t-0 Risk: Market and Customer 
+                    .col-lg-4.text-xs-right.m-b-1.p-r-0.risk-factors-market.collapse
+                      a(href='/formc/' + (formcId || values.id) + '/risk-factors-market?check=1&r=' + Math.random()).btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+                  .row
+                    .col-lg-8.pull-left.p-l-0.risk-factors-financial.collapse
+                      h3.m-b-0.m-t-0 Risk: Financial
+                    .col-lg-4.text-xs-right.m-b-10.p-r-0.risk-factors-financial.collapse
+                      a(href="/formc/" + (formcId || values.id) + "/risk-factors-financial?check=1&r=" + Math.random()).btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+                  .row
+                    .col-lg-8.pull-left.p-l-0.risk-factors-operational.collapse
+                      h3.m-b-0.m-t-0 Risk: Operational
+                    .col-lg-4.text-xs-right.m-b-1.p-r-0.risk-factors-operational.collapse
+                      a(href="/formc/" + (formcId || values.id) + "/risk-factors-operational?check=1&r=" + Math.random()).btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+                  .row
+                    .col-lg-8.pull-left.p-l-0.risk-factors-competitive.collapse
+                      h3.m-b-0.m-t-0 Risk: Competitive
+                    .col-lg-4.text-xs-right.m-b-1.p-r-0.risk-factors-competitive.collapse
+                      a(href="/formc/" + (formcId || values.id) + "/risk-factors-competitive?check=1&r=" + Math.random()).btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+                  .row
+                    .col-lg-8.pull-left.p-l-0.risk-factors-personnel.collapse
+                      h3.m-b-0.m-t-0 Risk: Personnel and Third Party
+                    .col-lg-4.text-xs-right.m-b-1.p-r-0.risk-factors-personnel.collapse
+                      a(href="/formc/" + (formcId || values.id) + "/risk-factors-personnel?check=1&r=" + Math.random()).btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+                  .row
+                    .col-lg-8.pull-left.p-l-0.risk-factors-legal.collapse
+                      h3.m-b-0.m-t-0 Risk: Legal and Regulatory
+                    .col-lg-4.text-xs-right.m-b-1.p-r-0.risk-factors-legal.collapse
+                      a(href="/formc/" + (formcId || values.id) + "/risk-factors-legal?check=1&r=" + Math.random()).btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+                  .row
+                    .col-lg-8.pull-left.p-l-0.risk-factors-misc.collapse
+                      h3.m-b-0.m-t-0 Risk: Miscellaneous
+                    .col-lg-4.text-xs-right.m-b-1.p-r-0.risk-factors-misc.collapse
+                      a(href="/formc/" + (formcId || values.id) + "/risk-factors-misc?check=1&r=" + Math.random()).btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+                  .row
+                    .col-lg-8.pull-left.p-l-0.financial-condition.collapse
+                      h3.m-b-0.m-t-0 Financial Condition
+                    .col-lg-4.text-xs-right.m-b-1.p-r-0.financial-condition.collapse
+                      a(href="/formc/" + (formcId || values.id) + "/financial-condition?check=1&r=" + Math.random()).btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+                  .row
+                    .col-lg-8.pull-left.p-l-0.outstanding-security.collapse
+                      h3.m-b-0.m-t-0 Outstanding Security
+                    .col-lg-4.text-xs-right.m-b-1.p-r-0.outstanding-security.collapse
+                      a(href="/formc/" + (formcId || values.id) + "/outstanding-security?check=1&r=" + Math.random()).btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+                  .row
+                    .col-lg-8.pull-left.p-l-0.background-check.collapse
+                      h3.m-b-0.m-t-0 Background Check
+                    .col-lg-4.text-xs-right.m-b-1.p-r-0.background-check.collapse
+                      a(href="/formc/" + (formcId || values.id) + "/background-check?check=1&r=" + Math.random()).btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
             .modal-footer
       div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#formc_publish_confirm.modal.fade
         div(role="document").modal-dialog
@@ -284,11 +305,15 @@ mixin menu(currentSection, currentStep)
                   i.fa.fa-times
               h2.text-lg-center.text-uppercase.text-md-center.text-xs-center.line-height-1.dosis.m-t-1.modal-title Are you sure you want to submit ?
 
-            .modal-body.m-b-2
+            .modal-body.p-t-0
               .col-sm-12
-                .result-info-block.m-x-auto.text-xs-center
-                  |  Once you submit, we'll generate the form c document and you'll have the opportunity to review prior to final submission.
-                  .info-btn-block.mb30
-                    a(href="#" data-dismiss="modal").btn.m-t-2.m-r-1.btn-secondary Cancel
-                    a(href="/formc/" + values.id + '/final-review' dta-dismiss="modal").btn.m-t-2.btn-primary.text-uppercase Yes
+                .m-x-auto.text-xs-center
+                  |  Once you submit, we'll generate the Form C document and you'll have the opportunity to review prior to final submission.
+                  .info-btn-block
+                    .row.mb30
+                      .col-xl-10.offset-xl-1.col-lg-12.offset-lg-0.col-md-12.col-sm-12.col-xs-12
+                        .col-xl-6.col-lg-6.col-md-6
+                          a(href="#" data-dismiss="modal").btn.m-t-2.m-r-1.btn-secondary.btn-block Cancel
+                        .col-xl-6.col-lg-6.col-md-6
+                          a(href="/formc/" + values.id + '/final-review' dta-dismiss="modal").btn.m-t-2.btn-primary.text-uppercase.btn-block Yes
             .modal-footer

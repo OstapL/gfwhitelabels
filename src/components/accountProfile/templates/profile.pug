@@ -3,6 +3,7 @@
   var rolesConsts = require('consts/team_member/roles.json');
   var countryDirective = require('directives/country/index.js');
   var ssnDirective = require('directives/ssn/index.js');
+  var imageDropzone = require('directives/setdropzone/image.js'); 
 
   pug_html += app.breadcrumbs('Profile', '', [ ['Home', '/'], ['Profile', ''],]);
 
@@ -12,38 +13,49 @@
       form(method="post" action="").form.form-section
         h4.m-t-0.m-b-1.profile-user-name.text-xs-center.text-uppercase #{user.first_name + ' ' + user.last_name}
         -
-          pug_html += app.fields.userProfileDropzone('image_image_id', _.extend({
-            thumbSize: '255x135',
-            default: '/img/default/255x153.png',
-            icon: 'camera',
-            text: 'Drop your profile photo here or click to upload',
-            data: user.image_data[0],
-          }, fields.image));
-      .row.m-t-2.m-b-2
-        .col-xl-12.col-lg-12.col-md-6.offset-md-3.col-xs-8.offset-xs-2.offset-xl-0.offset-lg-0.p-l-0.p-r-0
+          pug_html += new imageDropzone.ImageDropzone(view, 
+            'image_image_id', 
+            'image_data', 
+            view.fields.image_image_id
+          ).render().resultHTML;
+      .row
+        .col-xl-12.col-lg-12.col-md-6.offset-md-3.col-xs-12.offset-xl-0.offset-lg-0.credit-password-block
           -
             var roles = app.user.getRoles();
             var company = app.user.getCompany();
           if roles && roles.length
             each roleInfo, idx in roles
               .profile-type-user
-                if roleInfo.roles && roleInfo.roles.length
-                  each role in roleInfo.roles
-                    span.user-type #{ role.title }
-                  .user-company
-                    | in
-                    a(href="/dashboard/issuer-dashboard?id=" + roleInfo.company.id).link-3  #{ roleInfo.company.name }
-                    |  company.
-                  hr
-          else if company && company.name
+                .profile-type-user-wrap
+                  if roleInfo.roles && roleInfo.roles.length && roleInfo.company.is_paid
+                    each role in roleInfo.roles
+                      span.user-type #{ role.title }
+                    .user-company
+                      | in 
+                      a(href=app.getIssuerDashboardUrl(roleInfo.company.id)).link-3 #{ roleInfo.company.name }
+                      |  company.
+          else if company && company.name && company.is_paid
             .profile-type-user
-              .user-company
-                a(href="/dashboard/issuer-dashboard").link-3  #{ company.name }
-                |  company.
-          a(href="/account/change-password").link-3
-            i.fa.fa-lock
-            |  Need to change your password?
-
+              .profile-type-user-wrap
+                .user-company
+                  a(href="/dashboard/" + company.formc_id + "/issuer-dashboard").link-3 #{ company.name }
+                  |  company.
+          if user.credit > 0 && user.days_left > 0
+            hr.profile-type-user-hr
+            .profile-type-user.credit-all
+              
+              h3.text-uppercase.m-t-0 your credit
+                .small-text Credit valid for #{ user.days_left } days.
+              .profile-comission
+                .wrap
+                  h2.m-t-0.m-b-0 $#{ user.credit }
+              .text-xs-center
+                a(href="/companies").btn.btn-secondary invest
+          .profile-reset-password      
+            hr
+            a(href="/account/change-password").link-3
+              i.fa.fa-lock
+              |  Need to change your password?
     .col-xl-8.col-lg-8
       ul.nav.nav-tabs.profile-tabs
         li(aria-expanded="false").nav-item
@@ -136,7 +148,7 @@
                             button(
                               type="button"
                               data-method="PATCH"
-                            )#save-account-info.btn.btn-primary.pull-lg-right Save
+                            )#saveAccountInfo.btn.btn-primary.pull-lg-right Save
 
         div(
           aria-expanded="true"
@@ -162,6 +174,7 @@
                           input(
                           type='text'
                           name="net_worth"
+                          value=user.net_worth
                           data-slider-value=user.net_worth
                           ).form-control.slider-net-worth
                       .form-group.row.bootstrap-slider-custom
@@ -185,69 +198,54 @@
                         label.accredited_investor.shown-yes
                           input(
                             type="checkbox"
-                            data-name="accredited_investor_1m"
-                            value='1'
-                            checked=user.accredited_investor_1m
-                          ).col-xl-1.investor-1m.investor-item-checkbox
-                          input(
-                            type="hidden"
+                            id="accredited_investor_1m"
                             name="accredited_investor_1m"
-                            value=String(user.accredited_investor_1m)
-                          )
+                            data-unchecked-value="0"
+                            value="1"
+                            checked=!!user.accredited_investor_1m
+                          ).col-xl-1.investor-1m.investor-item-checkbox
                           span.font-weight-normal.col-xl-10.p-l-0
                             | I am an Accredited Investor because my net worth, or joint net worth with my spouse, exceeds $1 million excluding my primary residence.
                         label.accredited_investor.shown-yes
                           input(
                             type="checkbox"
-                            data-name="accredited_investor_200k"
-                            value='1'
-                            checked=user.accredited_investor_200k
-                          ).col-xl-1.investor-200k.investor-item-checkbox
-                          input(
-                            type="hidden"
                             name="accredited_investor_200k"
-                            value=String(user.accredited_investor_200k)
-                          )
+                            id="accredited_investor_200k"
+                            data-unchecked-value="0"
+                            value="1"
+                            checked=!!user.accredited_investor_200k
+                          ).col-xl-1.investor-200k.investor-item-checkbox
                           span.font-weight-normal.col-xl-10.p-l-0 I am an Accredited Investor because my annual income exceeds $200,000 or my joint annual income with my spouse exceeds $300,000 for each of the past two (2) years and expect the same this year
                         label.accredited_investor.shown-yes
                           input(
                             type="checkbox"
-                            data-name="accredited_investor_5m"
-                            value='1'
-                            checked=user.accredited_investor_5m
-                          ).col-xl-1.investor-entity.investor-item-checkbox
-                          input(
-                            type="hidden"
                             name="accredited_investor_5m"
-                            value=String(user.accredited_investor_5m)
-                          )
+                            id="accredited_investor_5m"
+                            data-unchecked-value="0"
+                            value="1"
+                            checked=!!user.accredited_investor_5m
+                          ).col-xl-1.investor-entity.investor-item-checkbox
                           span.font-weight-normal.col-xl-10.p-l-0 I am an Accredited Investor because I am authorized to invest on behalf of an entity with at least $5M in assets or an entity where all of the owners are Accredited Investors.
                         label.accredited_investor.shown-yes
                           input(
                             type="checkbox"
-                            data-name="accredited_investor_poor"
-                            value='1'
+                            name="accredited_investor_poor"
+                            id="accredited_investor_poor"
+                            data-unchecked-value="0"
+                            value="1"
                             checked=user.accredited_investor_poor
                           ).col-xl-1.investor-risk-agree.investor-item-checkbox
-                          input(
-                            type="hidden"
-                            name="accredited_investor_poor"
-                            value=String(user.accredited_investor_poor)
-                          )
                           span.font-weight-normal.col-xl-10.p-l-0 I am an Accredited Investor because I am authorized to invest on behalf of a trust with at least $5M in assets and I acknowledge that I have sufficient knowledge to evaluate the merits and risks of private offerings.
                         .row
                           label.accredited_investor.shown-yes.col-xl-12
                             input(
                               type="checkbox"
                               checked=!user.accredited_investor_choice
+                              name="accredited_investor_choice"
+                              data-unchecked-value="1"
+                              value="0"
                             ).col-xl-1.investor-risk-agree#not-qualify
                             span.font-weight-normal.col-xl-11.p-l-0 I do not qualify.
-                            input(
-                              type="hidden"
-                              name="accredited_investor_choice"
-                              value=String(user.accredited_investor_choice)
-                            )
-
                       .row
                         .col-sm-12
                           hr.m-b-3.m-t-1
@@ -264,26 +262,26 @@
                           }, fields.name_on_bank_account))
 
                         pug_html += app.fields.textLabel('account_number', _.extend({
-                            'help_text': '<img src="/img/routing-number-on-check.png">',
+                            'help_text': '<div class="img-routing-number"></div>',
                             'type': 'text',
                             'value': user.account_number
                           }, fields.account_number))
 
                         pug_html += app.fields.textLabel('account_number_re', _.extend({
                             'class1': 'col-xl-3 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 m-b-lg-1',
-                            'help_text': '<img src="/img/routing-number-on-check.png">',
+                            'help_text': '<div class="img-routing-number"></div>',
                             'type': 'text',
                             'value': user.account_number
                           }, fields.account_number_re))
 
                         pug_html += app.fields.textLabel('routing_number', _.extend({
-                            'help_text': '<img src="/img/routing-number-on-check.png">',
+                            'help_text': '<div class="img-routing-number"></div>',
                             'type': 'text',
                             'value': user.routing_number
                           }, fields.routing_number))
 
                         pug_html += app.fields.textLabel('routing_number_re', _.extend({
-                            'help_text': '<img src="/img/routing-number-on-check.png">',
+                            'help_text': '<div class="img-routing-number"></div>',
                             'type': 'text',
                             'class1': 'col-xl-3 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 m-b-lg-1',
                             'value': user.routing_number
@@ -318,6 +316,6 @@
                         .col-lg-12.mt30.text-xs-center
                           .controls
                             button(
-                              type="button"
+                              href="#"
                               data-method="PATCH"
-                            )#save-financial-info.btn.btn-primary.pull-lg-right SAVE
+                            )#saveFinancialInfo.btn.btn-primary.pull-lg-right SAVE

@@ -1,0 +1,12 @@
+div(class=class1 id=(divId ? divId : ''))
+  input(
+    id=id || name + '__year'
+    name=(name || name) + '__year'
+    placeholder=placeholder
+    class=(help_text ? 'showPopover' : '')
+    data-content=(help_text ? help_text : '')
+    type='text'
+    maxlength=4
+    value=value
+    disabled=!!disabled
+  ).form-control

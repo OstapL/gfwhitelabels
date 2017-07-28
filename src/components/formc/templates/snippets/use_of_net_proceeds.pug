@@ -10,10 +10,20 @@ mixin row(value, index)
             i.fa.fa-times
     td.border-b-t-none.w-25.font-size-12
       .form-section
-        input(type="money" value=('$' + (value.min || 0)) name="use_of_net_proceeds[" + index + "][min]").input-border-bottom.form-control.text-xs-center.min-use
+        input(
+          type="money"
+          data-value-type="money"
+          value=app.helpers.format.formatPrice(value.min || 0)
+          name="use_of_net_proceeds[" + index + "][min]"
+        ).input-border-bottom.form-control.text-xs-center.min-use
     td.border-b-t-none.w-25.font-size-12
       .form-section
-        input(type="money" value=('$' + (value.max || 0)) name="use_of_net_proceeds[" + index + "][max]").input-border-bottom.form-control.text-xs-center.max-use
+        input(
+          type="money"
+          data-value-type="money"
+          value=app.helpers.format.formatPrice(value.max || 0)
+          name="use_of_net_proceeds[" + index + "][max]"
+        ).input-border-bottom.form-control.text-xs-center.max-use
 
 mixin run()
   if first_run
@@ -27,72 +37,6 @@ mixin run()
               |  Add Another
         td.border-b-t-none
         td.border-b-t-none
-      //- tr
-      //-   td.border-t-n.d-block.input-w-80
-      //-     | Salaries, Benefits and Wages
-      //-     .pull-right
-      //-       .delete-section-container
-      //-         a(href="#" data-index=index data-section=name).delete-sectionnew
-      //-           i.fa.fa-times
-      //-     input(type="hidden" name="use_of_net_proceeds[0][title]" value="Salaries, Benefits and Wages")
-      //-   td.border-b-t-none.w-25.font-size-12
-      //-     .form-section
-      //-       input(type="text" name="use_of_net_proceeds[0][min]").input-border-bottom.form-control.text-xs-center.min-expense
-      //-   td.border-b-t-none.w-25.font-size-12
-      //-     .form-section
-      //-       input(type="text" name="use_of_net_proceeds[0][max]").input-border-bottom.form-control.text-xs-center.min-expense
-      //- tr
-      //-   td.border-t-n.d-block.input-w-80
-      //-     | Product Development 
-      //-     .pull-right
-      //-       .delete-section-container
-      //-         a(href="#" data-index=index data-section=name).delete-sectionnew
-      //-           i.fa.fa-times
-      //-   td.border-b-t-none.w-25.font-size-12
-      //-     .form-section
-      //-       input(type="text").input-border-bottom.form-control.text-xs-center.min-expense
-      //-   td.border-b-t-none.w-25.font-size-12
-      //-     .form-section
-      //-       input(type="text").input-border-bottom.form-control.text-xs-center.min-expense
-      //- tr
-      //-   td.border-t-n.d-block.input-w-80
-      //-     | Marketing 
-      //-     .pull-right
-      //-       .delete-section-container
-      //-         a(href="#" data-index=index data-section=name).delete-sectionnew
-      //-           i.fa.fa-times
-      //-   td.border-b-t-none.w-25.font-size-12
-      //-     .form-section
-      //-       input(type="text").input-border-bottom.form-control.text-xs-center.min-expense
-      //-   td.border-b-t-none.w-25.font-size-12
-      //-     .form-section
-      //-       input(type="text").input-border-bottom.form-control.text-xs-center.min-
-      //- tr
-      //-   td.border-t-n.d-block.input-w-80
-      //-     | Operations (Data, Hosting, Fees)
-      //-     .pull-right
-      //-       .delete-section-container
-      //-         a(href="#" data-index=index data-section=name).delete-sectionnew
-      //-           i.fa.fa-times
-      //-   td.border-b-t-none.w-25.font-size-12
-      //-     .form-section
-      //-       input(type="text").input-border-bottom.form-control.text-xs-center.min-expense
-      //-   td.border-b-t-none.w-25.font-size-12
-      //-     .form-section
-      //-       input(type="text").input-border-bottom.form-control.text-xs-center.min-expense
-      //- tr
-      //-   td.border-t-n.d-block.input-w-80
-      //-     | Travel, Conferences and Events 
-      //-     .pull-right
-      //-       .delete-section-container
-      //-         a(href="#" data-index=index data-section=name).delete-sectionnew
-      //-           i.fa.fa-times
-      //-   td.border-b-t-none.w-25.font-size-12
-      //-     .form-section
-      //-       input(type="text").input-border-bottom.form-control.text-xs-center.min-expense
-      //-   td.border-b-t-none.w-25.font-size-12
-      //-     .form-section
-      //-       input(type="text").input-border-bottom.form-control.text-xs-center.min-expense
       if values == null || values.length == 0
         +row({}, 0)
       else

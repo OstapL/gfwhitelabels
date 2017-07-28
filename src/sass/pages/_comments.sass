@@ -1,0 +1,137 @@
+.ask
+  h2
+    margin-bottom: 0
+  padding-bottom: rem(50)
+  .form-section
+    textarea
+      border: none
+      border-bottom: solid 1px $gallery
+      outline: none
+      padding: rem(6) rem(10)
+      resize: none
+      height: 36px
+      overflow: hidden
+
+  .hr
+    width: 100%
+    height: rem(1)
+    background-color: #e7e7e7
+    margin-bottom: rem(45)
+
+.comments
+  .single-comment
+    padding: rem(50) 0 0
+    margin: rem(45) 0 0
+    border-top: 1px solid #eee
+    &:nth-child(1)
+      border-top: 1px solid #eee
+      margin: rem(45) 0 0
+      padding: rem(50) 0 0
+    .author-info
+      .icon-comment
+        color: $small-text
+        .p-r-5
+          padding-right: rem(5)
+        a
+          margin-right: rem(10)
+          span
+            margin-right: rem(5)
+      .reply
+        margin: 0 rem(10)
+        .reply-right
+          padding-left: rem(10)
+          color: $small-text
+        .reply-left
+          padding-right: 10px
+          color: $small-text
+      .responce
+        li
+          display: inline-block
+          margin-top: rem(3)
+      .comment-img
+        display: inline-block
+        margin-right: rem(35)
+        img
+          width: 65px
+          height: 65px
+      .author-heading
+        display: inline-block
+        vertical-align: middle
+        .author-mane
+          display: inline-block
+          font-family: $company-comments-ff
+          margin-bottom: rem(6)
+          font-weight: $company-comments-fw
+        .kvalificatio-comments
+          display: inline-block
+          font-size: rem(11)
+          font-weight: bold
+          color: $white
+          background-color: $who-is-comment
+          padding: rem(1) rem(20)
+          border-radius: 2px
+          margin-left: rem(10)
+          text-transform: capitalize
+        .date-comments
+          font-size: rem(12)
+          color: $small-text
+          position: relative
+          top: -5px
+      .author-comment
+        margin-top: rem(10)
+        p
+          text-align: justify
+  .multilevel-comments
+    border-top: 1px solid #eee
+    padding: 0 0 0 rem(65)
+    margin: rem(30) 0 0
+    .author-info
+      .reply
+        margin: 0
+    .single-comment
+      border-top: 1px solid #eee
+      margin: rem(30) 0 0
+      padding: rem(30) 0 0
+      &:nth-child(1)
+        border: 0
+        margin: 0
+        padding: rem(30) 0 0
+  .edit-comment
+    textarea
+      border: solid 1px #ebebeb!important
+@media only screen and (max-width : 992px)
+  .comments
+    .comments-wrap
+      display: block
+  .comment-form
+    .btn.m-r-2
+      margin-right: 1rem!important
+@media only screen and (max-width : 768px)
+  .comments
+    .single-comment
+      .multilevel-comments
+        padding: 0
+@media only screen and (max-width : 576px)
+  .ask
+    .comment-form
+      margin-top: rem(15)
+    .btn.ask-question
+      margin-top: rem(10)
+      margin-bottom: rem(10)
+    .kvalificatio-comments
+      font-size: rem(13)!important
+      padding: rem(2) rem(7)!important
+      margin-left: rem(5)!important
+  .comment-form
+    textarea
+      margin-top: rem(25)
+@media only screen and (max-width : 360px)
+  .comments
+    .single-comment
+      .author-info
+        .comment-img
+          display: inline-block
+          margin-right: rem(10)
+          text-align: center
+        .author-heading
+          width: 70%

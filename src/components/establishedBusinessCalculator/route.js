@@ -8,38 +8,49 @@ module.exports = {
   },
   methods: {
     calculatorEstablishedBusinessIntro() {
-      const View = require('./views');
-      new View.intro().render();
-      $('#content').scrollTo();
-      app.hideLoading();
+      require.ensure([], () => {
+        const View = require('./views');
+        new View.intro().render();
+        app.hideLoading();
+        $('body').scrollTo();
+      }, 'establish_business_calculator_chunk');
     },
 
     calculatorEstablishedBusinessStep1() {
-      const View = require('./views');
-      new View.step1().render();
-      $('#content').scrollTo();
-      app.hideLoading();
+      require.ensure([], () => {
+        const View = require('./views');
+        new View.step1().render();
+        $('body').scrollTo();
+        app.hideLoading();
+      }, 'establish_business_calculator_chunk');
     },
 
     calculatorEstablishedBusinessStep2() {
-      const View = require('./views');
-      new View.step2().render();
-      $('#content').scrollTo();
-      app.hideLoading();
+      require.ensure([], () => {
+        const View = require('./views');
+        new View.step2().render();
+        $('body').scrollTo();
+        app.hideLoading();
+      }, 'establish_business_calculator_chunk');
     },
 
     calculatorEstablishedBusinessStep3() {
-      const View = require('./views');
-      new View.step3().render();
-      $('#content').scrollTo();
-      app.hideLoading();
+      require.ensure([], () => {
+        const View = require('./views');
+        new View.step3().render();
+        $('body').scrollTo();
+        app.hideLoading();
+      }, 'establish_business_calculator_chunk');
     },
 
     calculatorEstablishedBusinessFinish() {
-      const View = require('./views');
-      new View.finish().render();
-      $('#content').scrollTo();
-      app.hideLoading();
+      require.ensure([], () => {
+        const View = require('./views');
+        new View.finish().render();
+        $('body').scrollTo();
+        app.hideLoading();
+      }, 'establish_business_calculator_chunk');
     },
   },
+  auth: ['calculatorEstablishedBusinessFinish'],
 };

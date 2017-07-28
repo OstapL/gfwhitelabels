@@ -7,8 +7,11 @@ module.exports = {
   
   methods: {
     confirmLeaving(e) {
-      if (!this.isDifferent()) return;
-      
+      if (this.isDifferent() === false){
+        return;
+      }
+
+      //TODO: investigate logic and refactor this code///!!!
       if (confirm("You have unsaved changes. Do you really want to leave?")) {
       } else {
         e.preventDefault();
@@ -17,50 +20,43 @@ module.exports = {
     },
 
     isDifferent() {
-      let newData;
-      if (window.location.pathname.indexOf('risk-factors') !== -1){
-        newData = {};
-        newData[this.riskType] = this.model[this.riskType][99] ? {99: {title: '', risk: ''}} : {};
-        let that = this;
-        this.$('textarea.added, textarea.editing').each(function(){
-          newData[that.riskType][$(this).data('index')] = {title: $(this).siblings('input[name=title]').val(), risk: $(this).val()};
-        });
-        let riskFormData = this.$('form.add-risk-form').serializeJSON();
-        if (riskFormData.title || riskFormData.risk) {
-          newData[this.riskType]['new'] = riskFormData; 
-        }
-      } else {
-        newData = this.$('form').serializeJSON({ useIntKeysAsArrayIndex: true });
+      let method = this.el.querySelector('form').dataset.method || 'POST';
+      if(this.model && this.model.toJSON().hasOwnProperty('id')) {
+        method = this.el.querySelector('form').dataset.method || 'PATCH';
       }
+
+      let newData = $(this.el.querySelector('form')).serializeJSON();
       api.deleteEmptyNested.call(this, this.fields, newData);
       api.fixDateFields.call(this, this.fields, newData);
-      api.fixMoneyFields.call(this, this.fields, newData);
-      let patchData = {};
-      let d = deepDiff(this.model, newData);
-      _(d).forEach((el, i) => {
-        if(el.kind == 'E' || el.kind == 'A') {
-          if ((typeof el.lhs != 'undefined') && (typeof el.rhs != 'undefined') && (String(el.lhs) === String(el.rhs))) return;
-          patchData[el.path[0]] = newData[el.path[0]];
-        } else if(el.kind == 'N' && newData.hasOwnProperty(el.path[0])) {
-          // In case if we delete data that was in the model
-          if (el.path[0] instanceof Array) {
+
+      if(method == 'PATCH') {
+        let patchData = {};
+        let d = deepDiff(newData, this.model.toJSON());
+        _(d).forEach((el, i) => {
+          if(el.kind == 'E' || el.kind == 'A') {
+            patchData[el.path[0]] = newData[el.path[0]];
+            if(this.fields[el.path[0]] && this.fields[el.path[0]].hasOwnProperty('dependies')) {
+              this.fields[el.path[0]].dependies.forEach((dep, index) => {
+                patchData[dep] = newData[dep];
+              });
+            }
+          } else if(el.kind == 'N' && newData.hasOwnProperty(el.path[0])) {
+            // In case if we delete data that was in the model
             var newArr = [];
             newData[el.path[0]].forEach((arr, i) => {
               newArr.push(arr);
             });
-          } else if (el.path[0] instanceof Object) {
-            var newArr = {};
-            for (let p in el.path[0]) {
-              newArr[p] = el.path[0][p];
+            patchData[el.path[0]] = newArr;
+            if(this.fields[el.path[0]] && this.fields[el.path[0]].hasOwnProperty('dependies')) {
+              this.fields[el.path[0]].dependies.forEach((dep, index) => {
+                patchData[dep] = newData[dep];
+              });
             }
-          } else {
-            // console.log(el);
           }
-          patchData[el.path[0]] = newArr;
-        }
-      });
-      return Object.keys(patchData).length !== 0;
+        });
+        newData = patchData;
+      };
+      return Object.keys(newData).length !== 0;
     }
   },
-
 };

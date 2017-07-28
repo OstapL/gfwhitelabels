@@ -1,0 +1,15 @@
+- var type = attr.type ? attr.type : 'text';
+div(class=attr.class)
+  input(
+    id=attr.id || name
+    name=attr.name || name
+    placeholder=attr.placeholder ? attr.placeholder : attr.label
+    type=type
+    class=(attr.help_text ? 'showPopover' : '')
+    data-content=(attr.help_text ? attr.help_text : '')
+    value=attr.value
+    maxlength = attr.maxlength ? attr.maxlength : false
+    disabled=(attr.disabled ? attr.disabled : false)
+    data-value-type=(attr.valueType ? attr.valueType : type)
+    autocomplete=attr.autocomplete || false
+  ).form-control

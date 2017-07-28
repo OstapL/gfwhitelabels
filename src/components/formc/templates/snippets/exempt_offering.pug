@@ -10,15 +10,16 @@ mixin row(value, index)
 
       | !{app.fields.nestedTextLabel(name, 'exemption_relied_upon', value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right m-b-0 p-t-0 m-b-lg-1',}, attr.schema.exemption_relied_upon)}
       .row.form-group
-        .col-date(id="exempt_offering__" + index + "__offering_date")
+        .col-date
           label.col-xl-3.col-lg-12.text-xl-right.textlg-left Date of Offering
             span.color-red *
           .col-xl-4.col-lg-6.p-r-0
-            | !{app.fields.nestedDateMonth(name, 'offering_date', value, index, attr.schema.offering_date, {placeholder: 'MM',})}
+            div(id="exempt_offering__" + index + "__offering_date")
+              | !{app.fields.nestedDateMonth(name, 'offering_date', value, index, attr.schema.offering_date, {class1:'col-xl-4 col-lg-4 col-xs-4 p-l-0  m-d-p-r-5', placeholder: 'MM',})}
 
-            | !{app.fields.nestedDateDay(name, 'offering_date', value, index, attr.schema.offering_date, {placeholder: 'DD',})}
+              | !{app.fields.nestedDateDay(name, 'offering_date', value, index, attr.schema.offering_date, {class1:'col-xl-4 col-lg-4 col-xs-4 p-r-0  m-d-p-l-5',placeholder: 'DD',})}
 
-            | !{app.fields.nestedDateYear(name, 'offering_date', value, index, attr.schema.offering_date, {placeholder: 'YYYY',})}
+              | !{app.fields.nestedDateYear(name, 'offering_date', value, index, attr.schema.offering_date, {class1:'col-xl-4 col-lg-4 col-xs-4 p-r-0 p-r-lg-1 m-d-p-l-10', placeholder: 'YYYY',})}
 
       | !{app.fields.nestedTextLabel(name, 'securities_offered', value, index, attr.schema.securities_offered)}
       | !{app.fields.nestedTextLabel(name, 'use_of_proceeds', value, index, attr.schema.use_of_proceeds)}

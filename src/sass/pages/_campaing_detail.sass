@@ -1,790 +1,768 @@
-.bg-dark-alfa-70:before
-	content: " "
-	width: 100%
-	height: 100%
-	position: absolute
-	top: 0
-	left: 0
-	background: rgba(17, 17, 17, .5)
-.js-height-parent
-	height: 70vh
+.bg-after-company:before
+  content: " "
+  width: 100%
+  height: 100%
+  position: absolute
+  top: 0
+  left: 0
+  background: rgba(17, 17, 17, .5)
+
 .border-bottom-scroll
-	box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.1)
-	padding-top: rem(25)
-	background-color: #fdfdfd
+  box-shadow: 0px 1px 0px 0px rgba(0,0,0,0.1)
+  padding-top: rem(25)
+  background-color: #fdfdfd
 
 .home-section
-	position: relative
-	background-repeat: no-repeat
-	background-attachment: fixed
-	background-position: center center
-	-webkit-background-size: cover
-	-moz-background-size: cover
-	-o-background-size: cover
-	background-size: cover
+  position: relative
+  background-repeat: no-repeat
+  background-attachment: fixed
+  background-position: center center
+  -webkit-background-size: cover
+  -moz-background-size: cover
+  -o-background-size: cover
+  background-size: cover
 
 .home-content
-	position: relative
-	display: table
-	width: 100%
-	height: 100%
-	text-align: center
+  position: relative
+  display: table
+  width: 100%
+  height: 100%
+  text-align: center
 
 .home-text
-	display: table-cell
-	vertical-align: middle
-	color: $white
-	img
-	  max-width: 50%
+  display: table-cell
+  vertical-align: middle
+  color: $white
+  img
+    max-width: 50%
+.company-header
+  height: 82vh
+  overflow: hidden
+  position: relative
+  @media screen and (min-width : 440px) and (max-width : 767px)
+    height: 500px!important
+    .home-content
+      top: 30%!important
+  @media only screen and (max-width : 439px)
+    height: 92vh!important
+  &.scroll-paralax
+    &:after
+      z-index: 1
+  .company-name
+    margin-top: 0
+    position: relative
+    font-weight: $campain_main_name_font_weight
+    color: $white
+    padding-left: rem(4)
+  .tagline
+    font-style: italic
+    margin-top: 15px
 
-.hs-line-14
-	margin-top: 0
-	position: relative
-	font-weight: $campain_main_name_font_weight 
-	font-family: $one_block_h3_font_family
-	color: $white
-	padding-left: rem(4)
+  .big-icon
+    display: block
+    margin: rem(20) auto rem(15)
+    text-align: center
 
-	
-.big-icon
-	display: block
-	margin: rem(20) auto rem(15)
-	text-align: center
-	line-height: rem(88)
-	font-size: rem(72)
-	width: 60px
-	text-decoration: none
-	outline: none
-
+  .background
+    position: absolute
+    width: 100%
+    top: -20px
+    height: 105%
+    background-size: cover!important
+    background-position: center
+  .home-content
+    position: absolute 
+    left: 50%
+    top: 45%
+    -ms-transform: translate(-50%,-50%)
+    -webkit-transform: translate(-50%,-50%)
+    transform: translate(-50%,-50%)
+    width: 100%
+    z-index: 2
+    text-align: center
+    @media only screen and (max-width : 576px)
+      top: 35%
 .detail-security-type-icon
-	font-size: rem(18)!important
-	padding-left: rem(5)
-
+  font-size: rem(18)!important
+  padding-left: rem(5)
 
 .small-icon
-	display: block
-	margin: rem(45) auto rem(20)
-	text-align: center
-	font-size: rem(36)
-	color: rgba(255,255,255, .97)
-
-.link-campaing-detail
-	+calc-rem(18)
-	color: $white
-	padding: rem(10)
-
-.social-link
-	padding: rem(15) 0
+  display: block
+  margin: rem(45) auto rem(20)
+  text-align: center
+  font-size: rem(36)
+  color: rgba(255,255,255, .97)
 
 .top-info
-	position: relative
-	padding-bottom: rem(20)
-	padding-top: rem(15)
-	.top-info-wrap
-		&:before
-			width: 100%
-			background-color: $black
-			opacity: .5
-			position: absolute
-			z-index: 1
-			content: ''
-			height: 100%
-			left: 0
-			bottom: 0
-		.top-info-wrap-item
-			position: relative
-			z-index: 1
-			h2
-				letter-spacing: rem(.6)
-				color: $white
-				margin-bottom: 0
-				margin-top: 0
-			p
-				color: $small-text
-				margin-bottom: rem(3)
-
-		.btn
-			margin-top: rem(8)
+  position: relative
+  padding-bottom: rem(20)
+  padding-top: rem(15)
+  position: absolute
+  bottom: 0
+  width: 100%
+  z-index: 3
+  .top-info-wrap
+    &:before
+      width: 100%
+      background-color: #000
+      opacity: .5
+      position: absolute
+      z-index: 1
+      content: ''
+      height: 100%
+      left: 0
+      bottom: 0
+    .top-info-wrap-item
+      position: relative
+      z-index: 1
+      h2
+        letter-spacing: rem(.6)
+        color: $white
+        margin-bottom: 0
+        margin-top: 0
+        @media only screen and (max-width : 767px)
+          margin-bottom: rem(25)
+        @media only screen and (max-width : 575px)
+          font-size: rem(16)
+      p
+        color: $small-text
+        margin-bottom: rem(3)
+        @media only screen and (max-width : 575px)
+          font-size: rem(13)
+      .share
+        margin-top: rem(13)
+        padding-top: 0
+        span
+          position: relative
+          top: -5px
+        @media screen and (min-width : 992px) and (max-width : 1199px)
+          margin-top: 0
+    .btn
+      margin-top: rem(8)
 .edit-campaign-wrap
-	position: fixed
-	right: 0
-	top: 30%
-	z-index: 999
-	background-color: rgba(0,0,0,0.5)
-	padding: 50px
-	text-align: center
+  position: fixed
+  right: 0
+  top: 30%
+  z-index: 999
+  background-color: rgba(0,0,0,0.5)
+  padding: 50px
+  text-align: center
 .campaigndetail
-	background-color: #fdfdfd
-	padding-top: rem(50)
-	h1
-		letter-spacing: rem(.75)
-		margin-bottom: 0
-		font-weight: 300
-		line-height: rem(35)
-	h2
-		letter-spacing: rem(.6)
-	p
-		margin-bottom: rem(3)
-		color: $small-text
-		line-height: rem(14)
-	.sity-detail
-		color: $small-text
-		text-transform: capitalize
-	.date-detail
-		color: $small-text
-	.mt25
-		margin-top: rem(25)
-	.mt20
-		margin-top: rem(20)
-	.right-block-investors
-		h2
-			margin-top: 0
-			margin-bottom: 0
-		.committed
-			font-size: rem(24)
-			font-weight: 700
-			color: $puerto_rico
-			line-height: 0
-		.investors-block
-			margin-top: rem(25)
-			ul
-				margin-left: 0
-				padding-left: 0
-				margin-top: rem(6)
-				> li
-					padding-right: rem(10)
-					display: inline-block
-				img
-					width: rem(35)
-					height: rem(35)
-				a.link-1
-					position: relative
-					top: rem(10)
-		.progress_bar_container
-			span
-				margin-bottom: rem(5)
-.share
-	span
-		color: $small-text
+  background-color: #fdfdfd
+  padding-top: rem(50)
+  @media only screen and (max-width : 1199px)
+    box-shadow: 0px 1px 0px 0px rgba(0,0,0,0.1)
+    padding-bottom: rem(25)
+    .btn
+      margin-top: rem(25)
+  @media only screen and (max-width : 991px)
+    .btn
+      margin-top: 0
+      margin-bottom: rem(15)
+  h1
+    letter-spacing: rem(.75)
+    margin-bottom: 0
+    font-weight: 300
+    line-height: rem(35)
+  h2
+    letter-spacing: rem(.6)
+  p
+    margin-bottom: rem(3)
+    color: $small-text
+    line-height: rem(14)
+  .left-wrap-city
+    margin-bottom: rem(25)
+    margin-top: rem(5)
+    p
+      color: $small-text
+      text-transform: capitalize
+      vertical-align: middle
+      display: inline-block
+      width: 83%
+      line-height: 15px
+    .icon-city
+      font-size: rem(12)
+      width: 22px
+      height: 22px
+      background-color: $campaign-like-bgc
+      position: relative
+      vertical-align: middle
+      border-radius: 100px
+      color: $white
+      margin-right: rem(3)
+      z-index: 2
+      &:before
+        transform: translate(-50%, -50%)
+        position: absolute
+        left: 50%
+        top: 50%
+    .vertical-line
+      height: 75%
+      border-left: 3px solid $alabaster
+      margin: 0 rem(10)
+      position: absolute
+      bottom: 25px
+  .brif-block
+    @media only screen and (min-width : 1200px)
+      padding-right: 0
+  .brif
+    border-left: solid 1px #e7e7e7
+    border-right: solid 1px #e7e7e7
+    padding: 0 rem(15)
+    @media screen and (min-width : 544px) and (max-width : 1200px)
+      border-right: none
 
-	padding-top: rem(25)
-	a
-		i
-			font-size: rem(30)
-			margin-left: rem(15)
-	.facebook-share
-		color: $btn-facebook-bg
-		+mt(.2s)
-		&:hover
-			color: $btn-facebook-hover-bg
-				
-	.linkedin-share
-		color: $btn-linkedin-bg
-		+mt(.2s)
-		&:hover
-			color: $btn-linkedin-hover-bg
-	.twitter-share
-		color: $btn-twitter-bg
-		+mt(.2s)
-		&:hover
-			color: $btn-twitter-hover-bg
-	.email-share
-		color: $btn-email-bg
-		+mt(.2s)
-		&:hover
-			color: $btn-email-hover-bg
+    @media only screen and (max-width : 543px)
+      border-left: none
+      border-right: none
+      border-top: solid 1px #e7e7e7
+      border-bottom: solid 1px #e7e7e7
+      padding: rem(25) 0 rem(30) 0
+    .link-campaing-detail
+      font-size: rem(12)
+      text-decoration: underline
+    h4
+      margin-top: rem(5)
+    ul
+      padding-left: rem(20)
+      margin-bottom: 0
+    p,
+    li
+      font-size: rem(12)
+      color: $black
+      line-height: 18px
+    .social-link
+      .link-campaing-detail
+        font-size: rem(15)
+        padding: 0 rem(7)
+        &:last-child
+          padding-right: 0
+      @media only screen and (max-width : 375px)
+        width: 100%
+        display: block
+        margin-top: rem(10)
+        position: relative
+        left: -6px
+  .mt25
+    margin-top: rem(25)
+  .mt20
+    margin-top: rem(20)
+  .right-block-investors
+    @media only screen and (max-width : 991px)
+      margin-top: rem(30)
+    h2
+      margin-top: 0
+      margin-bottom: 0
+    .committed
+      font-size: rem(24)
+      font-weight: 700
+      color: $total_sum_progresbar
+      line-height: 0
+    .investors-block
+      margin-top: rem(25)
+      ul
+        margin-left: 0
+        padding-left: 0
+        margin-top: rem(6)
+        > li
+          padding-right: rem(10)
+          display: inline-block
+        img
+          width: rem(35)
+          height: rem(35)
+        a.link-1
+          position: relative
+          top: rem(10)
+    .progress_bar_container
+      span
+        margin-bottom: rem(5)
+        font-size: rem(14)
+        &.committed
+          font-size: rem(24)
+  .progress-campaign-right
+    margin-top: rem(25)
+    p
+      font-size: rem(14)
+.share
+  span
+    color: $small-text
+
+  padding-top: rem(25)
+  a
+    i
+      font-size: rem(30)
+      margin-left: rem(15)
+  .facebook-share
+    color: $btn-facebook-bg
+    +mt(.2s)
+    &:hover
+      color: $btn-facebook-hover-bg
+        
+  .linkedin-share
+    color: $btn-linkedin-bg
+    +mt(.2s)
+    &:hover
+      color: $btn-linkedin-hover-bg
+  .twitter-share
+    color: $btn-twitter-bg
+    +mt(.2s)
+    &:hover
+      color: $btn-twitter-hover-bg
+  .email-share
+    color: $btn-email-bg
+    +mt(.2s)
+    &:hover
+      color: $btn-email-hover-bg
 .social-share-mobile
-	.share
-		span
-			display: block!important
+  .share
+    span
+      display: block!important
 
 
 
 .about-detail
-	padding-bottom: rem(50)
+  margin-top: rem($margin-top-section-campaign)
+  padding-bottom: rem($padding-bottom-section-campaign)
 
-	.no-padding-img
-		padding: 5px
-	.card
-		margin-top: rem(40)
-		border: none
-		margin-bottom: 0
-		&::before
-			position: absolute
-			width: 100%
-			height: 100%
-			content: ''
-			background-color: rgba(17,17,17, 0.5)
-		.card-img
-			border-radius: 0
-			max-height: 210px
-		.additional-video
-			width: 100%
-			height: 210px
-			background-position: center
-			background-size: 110%
-		.card-img-overlays
-			text-align: center!important
-			top: 50%
-			left: 50%
-			-ms-transform: translate(-50%,-50%)
-			-webkit-transform: translate(-50%,-50%)
-			transform: translate(-50%,-50%)
-			position: absolute
-			padding: 0
-			width: 100%
+  .no-padding-img
+    padding: 5px
+  .card
+    margin-top: rem(40)
+    border: none
+    margin-bottom: 0
+    &::before
+      position: absolute
+      width: 100%
+      height: 100%
+      content: ''
+      background-color: rgba(17,17,17, 0.5)
+    .card-img
+      border-radius: 0
+      max-height: 210px
+    .additional-video
+      width: 100%
+      height: 210px
+      background-position: center
+      background-size: 110%
+    .card-img-overlays
+      text-align: center!important
+      top: 50%
+      left: 50%
+      -ms-transform: translate(-50%,-50%)
+      -webkit-transform: translate(-50%,-50%)
+      transform: translate(-50%,-50%)
+      position: absolute
+      padding: 0
+      width: 100%
 
-		h3
-			color: $white
-			margin-top: 0
+    h3
+      color: $white
+      margin-top: 0
+      line-height: rem(24)
 
-	h2
-		margin-bottom: rem(25)
-	h3.our
-		margin-top: rem(45)
-		margin-bottom: rem(20)
+  h2
+    margin-bottom: rem(25)
+  h3.our
+    margin-top: rem(45)
+    margin-bottom: rem(20)
+.detail-page-calculator
+  .text-graf
+    font-size: rem(12)
+    color: $small-text
+    line-height: 15px
+    margin-top: rem(20)
+  .data-point-label
+    width: 100%
+    font-weight: bold
+    left: 0!important
+    text-align: center
+  .plot-title
+    left: -10px!important
+    color: $small-text
+  .flot-x-axis
+    .flot-tick-label
+      margin-left: rem(40)
+  .plot-x-title
+    text-align: center
+    color: $small-text
+    margin-top: 10px
+  
+  @media only screen and (max-width : 991px)
+    .js-jq-plot-area
+      width: 100%
+      overflow-x: scroll
+      overflow-y: hidden
+      #chart1
+        width: 1100px
+      @media screen and (max-width: 375px)
+        .plot-title
+            left: 0
+      #chart1   
+        width: 100%
+        @media screen and (max-width: 767px)
+            width: 600px!important
+            .flot-x-axis .flot-tick-label
+                font-size: 12px
+                margin-left: 20px
+            .data-point-label
+              font-size: rem(12)
+        @media screen and (max-width: 567px)
+            width: 520px!important
+            margin-left: rem(5)
+        @media screen and (max-width: 414px)
+            width: 380px!important
+            margin-left: rem(5)
+            .flot-x-axis .flot-tick-label
+                margin-left: 7px
+        @media screen and (max-width: 375px)
+            width: 325px!important
+            margin-left: rem(5)
+            .flot-x-axis .flot-tick-label
+                font-size: 10px
+                margin-left: 10px
+
+
 #members
-	.hide-more-detail
-		height: 83px
-		overflow: hidden
-		position: relative
-	.hide-more-detail.show-more-detail
-		height: auto!important
-		.show-more-members
-			display: none
-	.show-more-members
-		position: absolute
-		right: 0
-		bottom: -5px
-		z-index: 2
-		background-color: white
-		padding-left: rem(17)
-		&:before
-			content: '...'
-			position: absolute
-			left: 0
-			top: 0
-			z-index: 2
-			color: $black
+  margin-top: rem($margin-top-section-campaign)
+  padding-bottom: rem($padding-bottom-section-campaign-members)
+  .hide-more-detail
+    height: 83px
+    overflow: hidden
+    position: relative
+  .hide-more-detail.show-more-detail
+    height: auto!important
+    .show-more-members
+      display: none
+  .show-more-members
+    position: absolute
+    right: 0
+    bottom: -5px
+    z-index: 2
+    background-color: white
+    padding-left: rem(17)
+    &:before
+      content: '...'
+      position: absolute
+      left: 0
+      top: 0
+      z-index: 2
+      color: $black
 
 
-
+#articles
+  margin-top: rem($margin-top-section-campaign)
+  padding-bottom: rem($padding-bottom-section-campaign)
+  .see-all-article
+    margin-top: rem(30)
 .articles_press
-	.card
-		margin-top: 0
-		min-height: rem(148)
-		background-color: $alabaster
-		text-align: center
-		padding: rem(30)
-		margin-bottom: rem(45)
-		border: none
-		&:hover
-			.fa-link
-				color: $articles-icon-color-hover
-			.links
-				color: $articles-link-name-color-hover
-		.fa-link
-			font-size: rem(24)
-			color: $articles-icon-color
-			margin-bottom: 15px
-			+mt(.2s)
-			&:hover
-				color: $articles-icon-color-hover
-		.card-text
-			line-height: rem(18)
-			letter-spacing: rem(.45)
-			color: $black
-			font-size: rem(18)
-		.intro
-			margin-top: rem(10)
-		.links
-			font-size: rem(14)
-			color: $articles-link-name-color
-			+mt(.2s)
-			&:hover
-				color: $articles-link-name-color-hover
-		.icon-campaign
-			width: rem(12)
-			height: rem(12)
-			margin-right: rem(5)
-			margin-bottom: rem(8)
-		.pos-bottom
-			margin-top: 10px
-.team
-	padding-bottom: rem(15)
-	a,a:hover
-		.card-text,.card-title
-			color: $black_text
-	.team-social	
-		.linkedin-share-team
-			font-size: 18px
-			margin: 2px
-			color: $btn-linkedin-bg
-			+mt(.2s)
-			&:hover
-				color: $btn-linkedin-hover-bg
-		.facebook-share-team
-			font-size: 18px
-			margin: 2px
-			color: $btn-facebook-bg
-			+mt(.2s)
-			&:hover
-				color: $btn-facebook-hover-bg
+  .card
+    margin-top: 0
+    background-color: $alabaster
+    border: none
+
+    .articles-press-item
+      padding: rem(30) 0
+      margin: 0 rem(20)
+      border-top: solid 1px $light_grey
+      @media only screen and (max-width : 767px)
+        margin: 0 rem(13) 0 0
+      .logo
+        width: 8%
+        display: inline-block
+        vertical-align: top
+        @media only screen and (max-width : 767px)
+          width: 20%
+          text-align: center
+        @media only screen and (max-width : 567px)
+          width: 15%
+        img
+          max-width: 45px
+          position: relative
+          top: -2px
+          @media only screen and (max-width : 767px)
+            width: 80%
+          @media only screen and (max-width : 567px)
+            width: 65%
+      .text-block
+        width: 92%
+        display: inline-block
+        @media only screen and (max-width : 767px)
+          width: 80%
+        @media only screen and (max-width : 567px)
+          width: 85%
+      &:first-child
+        border-top: none
+    #hidden-article-press
+      .border-top
+        border-top: solid 1px $light_grey
+  .see-all-article-press
+    margin-top: rem(30)
+
+
+.team.team-detail
+  padding-bottom: rem(15)
+  a,a:hover
+    .card-text,.card-title
+      color: $black_text
+  .team-social  
+    .linkedin-share-team
+      font-size: 18px
+      margin: 2px
+      color: $btn-linkedin-bg
+      +mt(.2s)
+      &:hover
+        color: $btn-linkedin-hover-bg
+    .facebook-share-team
+      font-size: 18px
+      margin: 2px
+      color: $btn-facebook-bg
+      +mt(.2s)
+      &:hover
+        color: $btn-facebook-hover-bg
 
 
 
-	.card
-		border: none
-		margin-bottom: 0
-		.card-block
-			padding: rem(20) 0
-			i
-				padding: 0 rem(4) rem(15)
-			.cite_education
-				margin-top: rem(5)
-		.card-title
-			margin-bottom: 0
-		.img-circle
-			width: rem(180)
-			height: rem(180)
-		.color-grey
-			color: $small-text
-			font-size: rem(12)
+  .card
+    border: none
+    margin-bottom: 0
+    .card-block
+      padding: rem(20) 0
+      i
+        padding: 0 rem(4) rem(15)
+      .cite_education
+        margin-top: rem(15)
+
+    .card-title
+      margin-bottom: 0
+    .img-circle
+      width: rem(180)
+      height: rem(180)
+    .color-grey
+      color: $small-text
+      font-size: rem(12)
+
 
 .document
-	padding-bottom: rem(45)
-	h2
-		margin-bottom: rem(25)
-	h3
-		letter-spacing: rem(.35)
-		margin-top: rem(15)
-		margin-bottom: 0
-	.img-document
-		width: rem(28)
-		height: rem(28)
-		position: relative
-		bottom: rem(5)
-		margin-right: rem(5)
-	a, h3
-		font-size: rem(18)
+  padding-bottom: rem($padding-bottom-section-campaign)
+  margin-top: rem($margin-top-section-campaign)
+  h2
+    margin-bottom: rem(25)
+  h3
+    letter-spacing: rem(.35)
+    margin-top: rem(15)
+    margin-bottom: 0
+    font-weight: normal
+  .img-document
+    width: rem(28)
+    height: rem(28)
+    position: relative
+    bottom: rem(5)
+    margin-right: rem(5)
+  a, h3
+    font-size: rem(18)
 
-		color: $small-text
-		+mt(.2s)
-		&:hover, focus
-			color: $document-link-hover-color
-		i
-			font-size: rem(24)
-			margin-right: rem(5)
+    color: $small-text
+    +mt(.2s)
+    &:hover, focus
+      color: $document-link-hover-color
+    i
+      font-size: rem(24)
+      margin-right: rem(5)
 .company-documents-content
-	.thumb-file-container
-		display: inline-block
-		text-align: center
-		min-width: 150px
-		margin-bottom: rem(25)
-		a
-			font-size: rem(11)
-.overview
-	h3
-		margin-top: 0 
-	.fundraising, .perks, .thankyou-page
-		text-align: center
-		.bgc-row-top
-			background-color: $detail-overview-background //переменная находится в файле /unique/variables
-		.bgc-row-middle
-			background-color: $alabaster
-			td
-				padding: 5px 0
-		h3
-			color: $white
-			margin-top: 0
-			margin-bottom: 0
-			letter-spacing: normal
-		h2
-			margin-top: 0
-			margin-bottom: 0
-			letter-spacing: normal
-		.width-50
-			width: 50%
-		@media only screen and (max-width : 480px)
-			h2
-				font-size: rem(18)
-	.perks
-		text-align: left
-		.perks-invest
-			h3
-				color: $black
-				margin-top: 0
-				margin-bottom: 0
-				span
-					color: $perks-money-color
-		.w-35
-			width: 40%
-		.bgc-row-middle
-			td
-				padding-left: 20px
-				padding-right: 20px
-		td
-			padding-left: 20px
-			padding-right: 20px
+  .thumb-file-container
+    display: inline-block
+    text-align: center
+    min-width: 150px
+    margin-bottom: rem(25)
+    a
+      font-size: rem(11)
+.overview-detail
+  margin-top: rem($margin-top-section-campaign)
+  padding-bottom: rem($padding-bottom-section-campaign)
+  h3
+    margin-top: 0 
+  .fundraising, .perks, .thankyou-page
+    text-align: center
+    .bgc-row-top
+      background-color: $detail-overview-background //переменная находится в файле /unique/variablesев
+      td
+        padding-left: 0!important
+        padding-right: 0!important
+
+    .bgc-row-middle
+      background-color: $alabaster
+      td
+        padding: 5px 0
+    h2
+      margin-top: 0
+      margin-bottom: 0
+      letter-spacing: normal
+    .width-50
+      width: 50%
+  .perks
+    text-align: left
+    .perks-invest
+      h3
+        color: $black
+        margin-top: 0
+        margin-bottom: 0
+        span
+          color: $perks-money-color
+    .w-35
+      width: 40%
+    .bgc-row-middle
+      td
+        padding-left: 20px
+        padding-right: 20px
+    td
+      padding-left: 20px
+      padding-right: 20px
 
 #perks
-	table
-		th, td
-			border: 1px solid #ebebeb
+  margin-top: rem(10)
+  
+  table
+    th, td
+      border: 1px solid #ebebeb
 
 .investors-all
-	padding-bottom: rem(45)
-	h3
-		margin-bottom: 0
-	.card
-		border: none
-		margin-top: rem(25)
-		margin-bottom: 0
-		.card-title
-			margin-bottom: 0
-	a
-		&:hover
-			color: $black_text
+  padding-bottom: rem(45)
+  h3
+    margin-bottom: 0
+  .card
+    border: none
+    margin-top: rem(25)
+    margin-bottom: 0
+    .card-title
+      margin-bottom: 0
+  a
+    &:hover
+      color: $black_text
 .risks
-	padding-bottom: rem(45)
-	h2
-		margin-bottom: rem(20)
-	a.see-all
-		margin-top: rem(25)
+  padding-bottom: rem(45)
+  h2
+    margin-bottom: rem(20)
+  a.see-all
+    margin-top: rem(25)
 .faq
-	h2
-		margin-bottom: rem(20)
-	a.see-all
-		margin-top: rem(25)
-
-.ask
-	h2
-		margin-bottom: 0
-	padding-bottom: rem(50)
-	.form-section
-		textarea
-			border: none
-			border-bottom: solid 1px $gallery
-			outline: none
-			padding: rem(6) rem(10)
-			resize: none
-			height: 36px
-			overflow: hidden
-
-	.hr
-		width: 100%
-		height: rem(1)
-		background-color: #e7e7e7
-		margin-bottom: rem(45)
-.comments
-	.comment
-		&:nth-child(1)
-			.one-comment
-				border-top: solid 1px solid 1px $gallery
-				border-right: none
-				border-left: none
-				padding-top: 30px
-				padding-bottom: 30px
-		.one-comment
-			border-top: solid 1px $gallery
-			padding-top: 30px
-			padding-bottom: 30px
-		.comment-1
-			.one-comment
-				border-top: solid 1px $gallery
-			&:last-child
-				.one-comment
-					border-bottom: none
-		.comment-2
-			.one-comment
-				border-top: solid 1px $gallery
-			&:last-child
-				.one-comment
-					border-top: solid 1px $gallery
-					border-bottom: none
-		.comment-3
-			.one-comment
-				border-top: solid 1px $gallery
-			&:last-child
-				.one-comment
-					border-top: solid 1px $gallery
-					border-bottom: none
-
-	img
-		width: rem(65)
-		height: rem(65)
-		display: inline-block
-		//float: left
-		//margin-right: 15px
-	.one-comment
-		.wrap-title-comment
-			position: relative
-			vertical-align: middle
-			margin-left: rem(35)
-			display: inline-block
-			.name-comments
-				font-size: rem(15)
-				letter-spacing: rem(1.5)
-				font-family: $company-comments-ff
-				color: $black
-				margin-bottom: 0
-				.kvalificatio-comments
-					font-size: rem(11)
-					font-weight: bold
-					color: $white
-					background-color: $sandy-brown
-					padding: rem(5) rem(18)
-					border-radius: 2px
-					margin-left: rem(10) 
-					text-transform: capitalize
-			.date-comments
-				font-size: rem(12)
-				color: $small-text
-		.comments-wrap
-			display: block
-			width: 100%
-			p
-				margin-top: rem(10)
-				font-size: rem(14)
-			.icon-comment
-				color: $small-text
-			.reply
-				margin: 0 10px
-				.reply-right
-					padding-left: 10px
-					color: $small-text
-				.reply-left
-					padding-right: 10px
-					color: $small-text
-			.responce
-				li
-					display: inline-block
-					margin-top: 3px
-	.edit-comment
-		textarea
-			border: solid 1px #ebebeb!important
-.comments
-	.single-comment
-		padding: 30px 0 0
-		margin: 30px 0 0
-		border-top: 1px solid #eee
-		&:nth-child(1)
-			border-top: 1px solid #eee
-			margin: 45px 0 0
-			padding: 50px 0 0
-		.author-info
-			.icon-comment
-				color: $small-text
-				.p-r-5
-					padding-right: 5px
-			.reply
-				margin: 0 10px
-				.reply-right
-					padding-left: 10px
-					color: $small-text
-				.reply-left
-					padding-right: 10px
-					color: $small-text
-			.responce
-				li
-					display: inline-block
-					margin-top: 3px
-			.comment-img
-				display: inline-block
-				margin-right: 35px
-				img
-					width: 65px
-					height: 65px
-			.author-heading
-				display: inline-block
-				vertical-align: middle
-				.author-mane
-					display: inline-block
-					font-family: $company-comments-ff
-					margin-bottom: 0
-				.kvalificatio-comments
-					display: inline-block
-					font-size: rem(11)
-					font-weight: bold
-					color: $white
-					background-color: $sandy-brown
-					padding: rem(3) rem(20)
-					border-radius: 2px
-					margin-left: rem(10)
-					text-transform: capitalize
-				.date-comments
-					font-size: rem(12)
-					color: $small-text
-					position: relative
-					top: -5px
-			.author-comment
-				margin-top: 10px
-				p
-					font-size: 14px
-					line-height: 18px
-					text-align: justify
-	.multilevel-comments
-		border-top: 1px solid #eee
-		padding: 0 0 0 65px
-		margin: 30px 0 0
-		.author-info
-			.reply
-				margin: 0
-		.single-comment
-			border-top: 1px solid #eee
-			margin: 30px 0 0
-			&:nth-child(1)
-				border: 0
-				margin: 0
-				padding: 30px 0 0
-@media only screen and (max-width : 768px)
-	.comments
-		.single-comment
-			.multilevel-comments
-				padding: 0
-@media only screen and (max-width : 360px)
-	.comments
-		.single-comment
-			.author-info
-				.comment-img
-					display: block
-					margin-right: 0
-					text-align: center
-
-//@media only screen and (min-width : 991px)
-//	.col-lg-12
-//		.col-lg-11.comment
-//			padding-left: 25px!important
-//			.col-xl-1
-//				width: 9%
-//			.col-xl-11
-//				width: 91%
+  h2#faq
+    margin-bottom: rem(20)
+  a.see-all
+    margin-top: rem(25)
+#faq-section
+  margin-top: rem($margin-top-section-campaign)
+  padding-bottom: rem($padding-bottom-section-campaign)
+#ask-section
+  margin-top: rem($margin-top-section-campaign)
+  padding-bottom: rem($padding-bottom-section-campaign)
+  h2
+    margin-top: 0
 .like-detail
-	.like-text-wrap
-		text-align: center
-		margin-top: rem(50)
+  .like-text-wrap
+    text-align: center
+    margin-top: rem(50)
 
-		h2
-			margin-bottom: 0
-			letter-spacing: rem(1)
-			margin-top: 0
-			color: $campaign-like-color-h2
+    h2
+      margin-bottom: 0
+      letter-spacing: rem(1)
+      margin-top: 0
 
-	@media only screen and (max-width : 992px)
-		h1.like-detail-text
-			width: 100%
-			text-align: center
-			margin-bottom: rem(25)
-		.like-text-wrap
-			width: 100%
-			padding-left: 0
-			text-align: center
-	@media only screen and (max-width : 460px)
-		img
-			height: 240px
-		h1.like-detail-text
-			font-size: rem(24)
-		.like-text-wrap
-			h2
-				font-size: rem(18)
+  @media only screen and (max-width : 992px)
+    h1.like-detail-text
+      width: 100%
+      text-align: center
+      margin-bottom: rem(25)
+    .like-text-wrap
+      width: 100%
+      padding-left: 0
+      text-align: center
+  @media only screen and (max-width : 460px)
+    img
+      height: 240px
 
 @media only screen and (max-width : 992px)
-	.hs-line-14
-		font-size: rem(28)
-	.p-md-0
-		padding-left: 0!important
-		padding-right: 0!important
-	.tabs-scroll
-		display: none
-	.campaigndetail
-		.share
-			margin-bottom: rem(20)
-		.right-block-investors
-			h2
-				margin-bottom: rem(20)
-	.document
-		h3
-			margin-bottom: rem(25)
-	.comments
-		img
-			margin-bottom: 20px
-		.comments-wrap
-			display: block
-	.comment-form
-		.btn.m-r-2
-			margin-right: 1rem!important
+  .hs-line-14
+    font-size: rem(28)
+  .p-md-0
+    padding-left: 0!important
+    padding-right: 0!important
+  .tabs-scroll
+    display: none
+  .campaigndetail
+    .share
+      margin-bottom: rem(20)
+    .right-block-investors
+      h2
+        margin-bottom: rem(20)
+  .document
+    h3
+      margin-bottom: rem(25)
 @media only screen and (max-width : 640px)
-	#members
-		.hide-more-detail
-			height: 88px
-	.p-xs-0
-		padding-left: 0!important
-		padding-right: 0!important
+  #members
+    .hide-more-detail
+      height: 88px
+  .p-xs-0
+    padding-left: 0!important
+    padding-right: 0!important
 @media only screen and (max-width : 576px)
-	.js-height-parent
-		height: 250px
-	h1.big-h1
-		font-size: rem(28)
-	.top-info-wrap-item
-		h2
-			font-size: rem(19)
-			margin-bottom: rem(25)!important
-			&.no-margin
-				margin-bottom: 0!important
-		p
-			font-size: rem(15)
-	.right-block-investors
-		margin-top: 25px
-	.campaigndetail
-		padding-top: rem(30) 
-		h1
-			font-size: rem(21)
-		.sity-detail
-			font-size: rem(15)
-		.date-detail
-			font-size: rem(15)
-	.right-block-investors
-		span
-			font-size: rem(15)
-		.committed
-			font-size: rem(19)!important
-		h2
-			font-size: rem(19)
-			margin-bottom: rem(30)!important
-	.campaigndetail
-		border-bottom: solid 1px $gallery
-		.share
-			margin-bottom: rem(30)
-			span
-				font-size: rem(18) 
-			a 
-				i.fa-facebook-square
-					margin-left: 0
-			.m-t-1
-				margin-top: rem(4)!important
-	.show-more-members
-		bottom: 0!important
-	.fundraising 
-		.bgc-row-middle
-			p
-				font-size: rem(15)
-	.perks 
-		td
-			padding-left: rem(10)!important
-			padding-right: rem(10)!important
-	.ask
-		.comment-form
-			margin-top: rem(15)
-		.btn.ask-question
-			margin-top: rem(10)
-			margin-bottom: rem(10)
-		.kvalificatio-comments
-			font-size: rem(13)!important
-			padding: rem(2) rem(7)!important
-			margin-left: rem(5)!important
-	.big-icon
-		margin: auto!important
-	.comment-form
-		textarea
-			margin-top: 25px
+  .js-height-parent
+    height: 250px
+  h1.big-h1
+    letter-spacing: rem(2.8)
+  .top-info-wrap-item
+    h2
+      font-size: rem(19)
+      margin-bottom: rem(25)!important
+      &.no-margin
+        margin-bottom: 0!important
+    p
+      font-size: rem(15)
+  .right-block-investors
+    margin-top: 25px
+  .campaigndetail
+    padding-top: rem(30) 
+    h1
+      font-size: rem(18)
+    .sity-detail
+      font-size: rem(13)
+    .date-detail
+      font-size: rem(13)
+  .right-block-investors
+    span
+      font-size: rem(13)
+      line-height: rem(22)
+    .committed
+      font-size: rem(16)!important
+    h2
+      font-size: rem(16)
+  .campaigndetail
+    border-bottom: solid 1px $gallery
+    .share
+      margin-bottom: rem(30)
+      span
+        font-size: rem(13) 
+      a 
+        i.fa-facebook-square
+          margin-left: 0
+      .m-t-1
+        margin-top: rem(4)!important
+  .show-more-members
+    bottom: 0!important
+  .fundraising 
+    .bgc-row-middle
+      p
+        font-size: rem(13)
+  .perks 
+    td
+      padding-left: rem(10)!important
+      padding-right: rem(10)!important
+  .big-icon
+    margin: auto!important
+  .detail-page-calculator
+    h4
+      font-size: rem(15)
+  .overview
+    table
+      h2
+        font-size: rem(16)
 

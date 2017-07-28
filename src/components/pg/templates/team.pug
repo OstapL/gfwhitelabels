@@ -1,0 +1,101 @@
+- pug_html += app.breadcrumbs(app.config.teamName, '', [ ['Home', '/'], [app.config.teamName, ''], ]);
+
+section.text_block.information-page
+  .container
+    .row
+      .col-lg-3.hidden-md-down 
+        .page_title.border-bottom.mb25
+          h4.text-uppercase ABOUT US
+        ul.list-unstyled.custom.pages-left-menu
+          li
+            a(href='/pg/overview').d-inline-block.w-100 Overview
+          li.active
+            a(href='/pg/team').d-inline-block.w-100 #{app.config.teamName}
+          li.display-partners
+            a(href='/pg/partners').d-inline-block.w-100 Partners
+          li
+            a(href='/pg/contact').d-inline-block.w-100 Contact Us
+          li
+            a(href='/pg/careers').d-inline-block.w-100 Careers
+          li
+            a(href='/pg/news').d-inline-block.w-100 In the News
+          li
+            a(href='/pg/faq').d-inline-block.w-100 FAQ
+
+      .team-member-list
+        .col-lg-9
+          .row
+            .col-lg-12.text-xs-center
+              h2.text-uppercase.m-t-0 #{app.config.teamTitle}
+            .col-xl-12.text-xs-center
+              h3.font-weight-light.m-t-0.m-b-0 At GrowthFountain, we are dedicated to helping entrepreneurs as passionate
+                br
+                | about their business as we are. 
+          .row.m-t-3
+            .col-xl-12.text-xs-center
+              h4.section-bg-line.text-uppercase our Founders
+          .row.m-b-3
+            .col-xl-6.col-lg-6.photo-wrap.p-r-0
+              img(src=require("images/pages/ken.jpg")).img-fluid.m-x-auto
+            .col-xl-6.col-lg-6
+              h4.text-uppercase.name.text-lg-left.text-md-center.text-sm-center.text-xs-center(data-animate-class='animated|fadeInRight') Kenneth Staut
+                .small-text.font-weight-normal CEO
+              p(data-animate-class='animated|fadeInRight') Ken co-founded GrowthFountain because he wanted to level the playing field for small businesses. His dad was a small local business owner from Pittsburgh (Go Steelers!) and at a very young age, he saw firsthand the positive impact a small business can have on the local community. With over 15 years of experience in finance – including co-founding and selling a hedge fund – he combines his grass-roots entrepreneurial spirit with his Wall Street background. Ken’s hobbies include golf, whiskey and deathly spicy food.
+          .row
+            .col-xl-6.col-lg-6.hidden-lg-up
+              img(src=require("images/pages/leon.jpg")).img-fluid.m-x-auto
+            .col-xl-6.col-lg-6
+              h4(data-animate-class='animated|fadeInLeft').text-uppercase.name.text-lg-right.text-md-center.text-sm-center.text-xs-center leon stiel
+                .small-text.font-weight-normal CTO
+              p(data-animate-class='animated|fadeInLeft').text-lg-right Leon grew up spending summers going door-to-door campaigning for local community issues and attending computer camp, here in New York. This left a lasting impression on him, as he graduated from Carnegie Mellon and set-off on an almost 20 year career in technology and finance - from helping run an innovative web development company to co-founding a hedge fund to leading IT development across teams at a major investment bank. He is able to leverage this experience to help companies achieve their goals through the use of technology. His hobbies involve raising his many children and not sleeping.
+            .col-xl-6.col-lg-6.photo-wrap.p-l-0.pull-left.hidden-md-down
+              img(src=require("images/pages/leon.jpg")).img-fluid.fade-img
+          .row.m-t-3
+            .col-xl-12.text-xs-center
+              h4.section-bg-line.text-uppercase the team
+          .row(data-animate-class='animated|fadeInUp')
+            .col-xl-4.col-lg-4.col-md-4.col-sm-6.col-xs-12
+              .one-team.text-xs-center.m-b-3
+                img(src=require("images/pages/kevin.png")).img-circle.h-100.m-b-1
+                h4.text-uppercase KEVIN MATUSZEWSKI
+                  .small-text.font-weight-normal Director
+            .col-xl-4.col-lg-4.col-md-4.col-sm-6.col-xs-12
+              .one-team.text-xs-center.m-b-3
+                img(src=require("images/pages/kim.png")).img-circle.h-100.m-b-1
+                h4.text-uppercase KIMBERLY RUSSO
+                  .small-text.font-weight-normal Marketing Director
+            .col-xl-4.col-lg-4.col-md-4.col-sm-6.col-xs-12
+              .one-team.text-xs-center.m-b-3
+                img(src=require("images/pages/joe.png")).img-circle.h-100.m-b-1
+                h4.text-uppercase JOE ESPOSITO
+                  .small-text.font-weight-normal Senior Advisor
+            .col-xl-4.col-lg-4.col-md-4.col-sm-6.col-xs-12
+              .one-team.text-xs-center.m-b-3
+                img(src=require("images/pages/abe.png")).img-circle.h-100.m-b-1
+                h4.text-uppercase abe orden
+                  .small-text.font-weight-normal Operations Manager
+            .col-xl-4.col-lg-4.col-md-4.col-sm-6.col-xs-12
+              .one-team.text-xs-center.m-b-3
+                img(src=require("images/pages/vlad.png")).img-circle.h-100.m-b-1
+                h4.text-uppercase vladislav tarasenko
+                  .small-text.font-weight-normal Lead Engineer
+            .col-xl-4.col-lg-4.col-md-4.col-sm-6.col-xs-12
+              .one-team.text-xs-center.m-b-3
+                img(src=require("images/pages/morgan.png")).img-circle.h-100.m-b-1
+                h4.text-uppercase Morgan kinzler
+                  .small-text.font-weight-normal Marketing Associate
+
+section.height-block-banner.scroll-paralax.no-paralax-mobile
+  - var styleString = 'background: url(' + require('images/banners/team-bg.jpg') + ')';
+  div(style=styleString + '; height:600px').background
+  .center-wrap.container
+    .row
+      .col-xl-12
+        h2.text-uppercase.m-t-0  Want to work with us?
+        h3.font-weight-light We're always looking for smart, hard working
+          br
+          | team members to help us fulfill our mission:
+          br
+          | to level the playing field for America’s small businesses!
+      .col-xs-12.text-xs-center
+        a(href="/pg/careers").btn.btn-lg.btn-secondary.text-uppercase JOIN NOW

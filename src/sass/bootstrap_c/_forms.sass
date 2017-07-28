@@ -17,6 +17,7 @@ select.form-control
 		label
 			margin-right: rem(30)
 			font-weight: 400
+			cursor: pointer
 		input
 			margin-left: 0
 			margin-right: rem(5)
@@ -56,6 +57,8 @@ select.form-control
 		border: dashed 1px $small-text
 		display: inline-block
 		cursor: pointer
+		min-height: 155px
+		width: 100%
 		+mt(.2s)
 		&.gallery
 			min-height: 155px
@@ -72,7 +75,7 @@ select.form-control
 		background-color: $alabaster
 		img
 			border-radius: 100%
-			width: 145px
+			width: 145px!important
 			height: 145px
 			margin-top: 10px
 			margin-bottom: 10px
@@ -82,6 +85,9 @@ select.form-control
 
 	.dragging-over
 		border: dashed 1px $dragging-hover-border
+		-webkit-box-shadow: 0px 0px 6px 1px $dragging-hover-border
+		-moz-box-shadow: 0px 0px 6px 1px $dragging-hover-border
+		box-shadow: 0px 0px 6px 1px $dragging-hover-border
 
 	// класс для инпутов только с border-bottom 
 	.input-border-bottom
@@ -95,6 +101,9 @@ select.form-control
 	.big-label-text
 		position: relative
 		top: rem(-15)
+	.bootstrap-select
+		.filter-option
+			font-family: $font-family-sans-serif
 	@media screen and (max-width: 1200px)
 		.big-label-text
 			top: 0
@@ -213,6 +222,11 @@ select.form-control
 				+mt(.2s)
 				&:hover
 					color: $link-1-hover
+	.city-state-us
+		.has-error
+			.help-block
+				position: relative
+				top: 25px
 
 	// вместо этого поля используеться сейчас поля типа text
 	input[type='date'] 
@@ -225,6 +239,11 @@ select.form-control
 		padding-top: 10px
 		line-height: 14px
 	.has-error
+		input,
+		textarea,
+		select,
+			border-color: #ed1c24
+			box-shadow: 0px 0px 3px 2px rgba(237,28,36, 0.1)
 		.help-block
 			color: $crimson
 			position: relative
@@ -251,3 +270,5 @@ select.form-control
 	.custom-select
 		height: rem(40)!important
 
+[type="checkbox"], [type="radio"]
+	cursor: pointer

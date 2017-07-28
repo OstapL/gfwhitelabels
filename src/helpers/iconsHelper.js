@@ -14,7 +14,7 @@ module.exports = {
   },
 
   resolveIconPath(mime, defaultIcon) {
-    return `/img/icons/${this.resolveIcon(mime, defaultIcon)}.png`;
+    return require(`images/icons/${this.resolveIcon(mime, defaultIcon)}.png`);
   },
 
 };

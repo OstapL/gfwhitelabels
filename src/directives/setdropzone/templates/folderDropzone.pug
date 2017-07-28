@@ -1,0 +1,39 @@
+- 
+  klass = options.class || '';
+  var requiredklass = options.required ? 'required' : '',
+    popoverklass = options.help_text ? 'showPopover' : '';
+
+  klass = "row media-item folderDropzone " + klass + " " + fileElement.fieldName + " " + requiredklass;
+
+  klass1 = klass1 || 'col-xl-3 col-lg-12 text-xl-right text-lg-left ';
+  klass1 += requiredklass;
+
+  klass2 = klass2 || 'col-xl-9 col-lg-12 p-l-1 p-r-1';
+  klass2 += ' dropzone__' + fileElement.fieldName;
+
+  text = options.text || 'Drop your PDF or DOC here or click to upload';
+  if(options.required && options.required == true) {
+    options.label += '<span class="color-red">*</span>' 
+  }
+
+div(class=klass)
+  div(data-content=(options.help_text || '') class=popoverklass).dropzoneContainer
+    div(class=klass1)
+      label(for=(this.folderElement.file.id || this.folderElement.name))!= options.label
+
+    div(class=klass2)
+      div(class=" col-lg-12 border-dropzone p-r-0" id=(this.folderElement.file.id))
+        div(class="uploading collapse")
+          i.fa.fa-spinner.fa-pulse.fa-3x.fa-fw
+        span.filescroll
+          div.col-lg-5.col-md-5.col-sm-5.col-xs-12.text-xs-center.text-md-center.text-lg-center.p-dropzone
+            a(class='link-1' href="#")
+              p.drop-photo #{text}
+              i(class="fa fa-file")
+          div.col-lg-7.col-md-7.col-sm-7.col-xs-12.p-r-0.p-l-0.img-dropzone.text-xs-center.all-file-scroll
+            .file-scroll.fileHolder
+              each file,index in this.folderElement.files
+                - pug_html += file.render().resultHTML
+              else
+                .thumb-file-container.text-xl-center
+                  img(src=require('images/icons/filefolder.png') alt=label class="img-file img-")

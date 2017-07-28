@@ -5,18 +5,25 @@ mixin row(value, index)
       .delete-section-container.media-delete
         a(href="#" data-section=name data-index=index).delete-sectionnew
           i.fa.fa-times
-      .row.showPopover(data-content="You Tube or Vimeo links only please.")
+      .row.showPopover(data-content="YouTube or Vimeo links only please.")
         .col-xl-7.col-lg-6.videoInteractive.text-xl-right.text-lg-left
           
           | !{app.fields.nestedTextLabel(name, 'headline', value, index,{class1: 'col-xl-5 col-lg-12 p-t-0 m-b-0 m-b-lg-1', class2: 'col-xl-7 col-lg-12', placeholder: 'Title',}, attr.schema.headline)}
           | !{app.fields.nestedTextLabel(name, 'link', value, index,{class1: 'col-xl-5 col-lg-12', class2: 'col-xl-7 col-lg-12 additional-video-link', placeholder: 'http://www.',}, attr.schema.link)}
           
         .col-xl-5.col-lg-6
-          .embed-responsive.embed-responsive-16by9 
-            -
-              var additionalVideo = app.getVideoId(values && values[index] ? values[index].link : null);
-              var src = app.getVideoUrl(additionalVideo);
-            iframe.embed-responsive-item(src=src allowfullscreen="true")
+          -
+            var videoInfo = app.getVideoInfo(values && values[index] ? values[index].link : null);
+
+          if videoInfo.provider === 'youtube'
+            .img-media.youtube-media
+              img(src="https://img.youtube.com/vi/" + videoInfo.id + "/0.jpg")
+          else if videoInfo.provider === 'vimeo'
+            .img-media
+              img(src="" data-vimeo-id=videoInfo.id).card-img.w-100.vimeo-thumbnail
+          else
+            .img-media
+              img(src=require("images/default/default-video.png"))
 
 mixin run()
   if first_run

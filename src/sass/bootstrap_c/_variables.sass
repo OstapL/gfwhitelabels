@@ -10,9 +10,15 @@ $btn-border-radius-sm: $border-radius
 $btn-border-radius-lg: $border-radius
 $spacer:       1.25rem // не знаю что это !
 $popover-max-width: 500px
-$input-color: $black // нужен быть не здесь 
 $spacer-y: 11px // что это?
-$input-btn-border-width: $border-width // ?
+
+//general color for table
+$table-border-color: #e7e7e7
+$table-bg-accent: $alabaster
+$table-bgc-row-calculator: $puerto_rico
+// selection
+$selection-color: $white
+$selection-bgc: rgba($puerto_rico, .5)
 // Фукнции
 =mt($time)
 	transition: all $time ease
@@ -54,6 +60,396 @@ $fa-font-path: "//netdna.bootstrapcdn.com/font-awesome/4.6.3/fonts" !default;
 
 
 
+//link color- для каждего сайта цвета разные 
+$link-1-hover: rgba(119, 119, 119, .6)
+$link-2-hover: rgba(174, 208, 124, .6)
+$link-3-hover: rgba(60, 189, 185, .6)
+$link-4-hover: rgba(119, 119, 119, .6)
+$link-5-hover: rgba(17, 17, 17, .6)
+$link-6-hover: rgba(255, 255, 255, .6)
+/** End main color **/
+
+/** Дополнительный шрифт **/
+$brandon-grotesque-medium: BrandonGrotesque-Medium
+
+$second-font-family: $brandon-grotesque-medium
+// HEADER
+$menu_backgound_from: $cod_gray // цвет для меню если градиент то левая сторона
+$menu_backgound_to: $cod_gray // цвет для меню если градиент то правая сторона
+$logo-width-desktop: 20%
+$menu_text_color: rgba($white, .5)
+$menu_text_color-hover: rgba($white, .7)
+$submenu-bgc-hover: $white
+$navbar-brand-margin-right: 0
+$navbar-brand-margin-left: 0
+$box-shadow-top-menu: none
+$menu-font-weight: normal
+$sub-menu-box-shadov: 0px 4px 15px -5px rgba(#000 ,0.75)
+$header_bg_image: #{''} // для задаванния картинки бекграунда в хедере(в некоторых сайтах есть кроме цвета еще и картинка)
+$menu_shadows: none
+$navbar_height: 75px
+$font-size-menu: rem(13)
+$letter-sp-menu: rem(1.3)
+$font-family-menu: $second-font-family
+$font-size-sub-menu: rem(15)
+$menu-icon-color: $puerto_rico // color for menu icon check
+//mobile menu
+$menu-backgound-mobile: rgba($menu_backgound_from, .93)
+$navbar_height_mobile: 65px
+$mobile-menu-font-weight: normal
+$icon-mobile-menu-color: rgba($white, 0.75)
+$logo-width-mobile: 190px
+$navbar-brand-margin-left-mobile: 0!important
+$navbar-brand-margin-right-mobile: 0!important
+$menu-color-mobile: $menu_text_color
+$menu-bgc-mobile-hover: $menu_text_color
+$menu-bgc-mobile-user: $puerto_rico
+$menu-letter-spacing-mobile: 1.5px
+$menu-font-size-mobile: 15
+$mobile-menu-box-shadow: none
+//END HEADER
+
+// FOOTER
+$footer_background: $alabaster
+$display_partnres: block
+$footer-title-size: 13px // размер заголовка меню в футере
+$footer-title-ls: 1.3px // letter-spacing заголовка меню в футере
+$footer-title-fw: bold
+$footer-title-color: $footer_text
+$footer-menu-link-size: rem(15)
+$footer-bottom-text-color: $footer_text
+$footer-bottom-text-size: rem(12)
+$footer-company-text-color: $boulder
+
+// для стилизации текста надписи компании в футере 
+$footer_logo_font: $second-font-family
+$footer_logo_lett_space: rem(1.3)
+$footer-bottom-bgc: $cod_gray
+$footer-bottom-link-color: $boulder
+$footer-bottom-link-color-hover: #b0afaf
+$footer-company-text-color: $boulder
+// End FOOTER
 
 
+// main page
 
+//img
+$height-block-banner: 70vh
+
+$home-our-partners-display: block // только на GF
+$titile-better-color: $puerto_rico
+$titile-better-ls: 3.6px
+$better-icon-color: $puerto_rico 
+$video-center-wrap-bgc: rgba($puerto_rico, .8)
+$font-weight-text-video: 300
+$letter-spacing-text-video: normal
+
+$video-center-wrap-margin-top: 67
+$video-center-wrap-margin-bottom: 63
+$main-video-table-height: 500px
+$main-video-mobile-height: 500px
+$main-video-xs-height: 500px
+$margin-bottom-text-video: 20
+$margin-top-text-video: 0
+$margin-bottom-last-child-text-video: 0
+$margin-bottom-h2-title-video: 25
+$margin-top-h2-title-video: 0
+$play-icon-margin-top-video: 60
+// bottom banner
+$main-page-banner-bottom-height: 600px
+$main-page-banner-bottom-top: -720px
+$main-page-banner-bottom-top-mw: -820px
+$main-page-banner-bottom-image: 'img/banners/main-bg-section-bottom.jpg'
+
+
+$powered-by-title-color: $black
+$powered-by-small-color: $small-text
+$powered-by-small-font-weight: 300
+$powered-by-display: none
+$powered-by-title-fz: 15
+$powered-by-title-ls: 1.5px
+$small-powered-by-font-size: rem(15)
+
+// slider position
+$background-position-x-sl-1: -60px!important
+$background-position-x-sl-2: -60px!important
+$background-position-x-sl-3: -400px!important
+//margin section
+$margin-section-main-top-list: 70
+$margin-section-main-bottom-list: 70
+$margin-section-main-top-better: 60
+$margin-section-main-bottom-better: 70
+$margin-section-main-top-news: 70
+
+// investor-dashboard page
+$name-investor-dashboard-ls: 2.4px
+$name-investor-dashboard-fw: 400
+$name-investor-dashboard-lh: 22px
+$date-investor-dashboard-bgc: rgba(246, 150, 121, 0.8)
+$investor-unsuccessfull-bgc: rgba(237,28,36, 0.8)
+$investor-successfull-bgc: rgba(174,208,124, 0.8)
+$rating-icon-color: $puerto_rico
+//End investor-dashboard page
+
+//Issue dashboard page
+$name-issue-dashboard-fw: bold
+$name-issue-dashboard-lh: 26px
+$name-issue-dashboard-ls: 2.4px
+$issuer-dashboard-bgc: $puerto_rico
+$date-issuer-dashboard-bgc: rgba(246, 150, 121, 0.8)
+$issue-raises-bgc: $wild_willow
+//END Issue dashboard page
+
+//Company page
+$campain_main_name_font_weight: bold
+$detail-skroll-ff: $second-font-family
+$tabs-scroll-border-bottom-active-link: $puerto_rico
+$tabs-scroll-border-bottom-hover-link: $puerto_rico
+$document-link-hover-color: $puerto_rico // section DOCUMENT
+$detail-overview-background: $puerto_rico // в таблице заливка
+$perks-money-color: $wild_willow //переменная для цвета суммы на станице компании - секция Perks
+$company-comments-ff: $second-font-family // ff для имени в коментариях
+$company-comments-fw: bold
+$who-is-comment: $sandy-brown
+$campaign-like-color: $white
+$campaign-like-bgc: rgba(159,211,86, .8)
+$total_sum_progresbar: $puerto_rico
+$progress-bar-color: $wild_willow
+$progress_bar_background: $wild_willow
+$campign_subheading_color: $puerto_rico
+
+$margin-top-section-campaign: 70
+$padding-bottom-section-campaign: 70
+$padding-bottom-section-campaign-members: 20 // там + 50 от item
+$funded-campaign-bgc: rgba($wild_willow, 0.7)
+//CALCULATOR
+$calc_tabs_bg: $alabaster
+$calc_tabs_radius: 0
+$calc_tabs_current_bg: $puerto_rico
+$calculator-finish-icon: $wild_willow
+
+
+// POPOVER
+$popover-bgc: rgba(60,189,185, 0.9)
+$popover-color: $white
+$popover-bgc-arrow: rgba(60,189,185, 0.5)
+
+//Warning-block
+$warning-block-border-color: $sandy-brown
+$warning-block-icon-color: $sandy-brown
+$warning-block-text-color: $small-text
+
+
+//Left menu company campaign
+$menu-icon-color: $puerto_rico
+$jumbotron-bg: #f8f8f8
+$jumbotron-padding: 5px
+$company-campaign-font-family: $second-font-family //font-f for left menu - company/campaign
+
+//notification 
+$bgc-notificatin-bell: $puerto_rico
+$notific_list_title: $puerto_rico
+$notification-title-ff: $second-font-family
+$top-position-notification: 25px
+$height-notification: 50px
+$notification-link-color-hover: $link-2-hover
+$notification-link-color: $wild_willow
+
+
+//modal sign up
+$sign-up-header-bgc: $puerto_rico
+$sign-up-credit-color: $puerto_rico // page sign up
+
+$active_tab_authorization: $mine_shaft //active class  for authorization title tab 
+$tab_authorization_text: $black //text color for authorization title tab 
+
+// bootstrap slider styles 
+$btstr_slider_track_tick_bg: $scorpion // цвет слайдера ползунка активный
+$btstr_slider_track_not_tick_bg: $gallery // цвет слайдера ползунка не активный
+$btstr_slider_nandle_block_bg: $wild_willow // цвет кнопки ползунка
+$btstr_slider_other_nandle_block_bg: $white //цвет промежутков на слайдере
+
+// радиус для кнопок 
+$btn-border-radius-lg: 50px
+$btn-border-radius-sm: 50px
+$btn-border-radius: 50px
+
+//шрифт по умолчанию 
+$font-family-base: 'Open Sans', sans-serif
+
+// переменная размера шрифта для меню которая используется в common/header.sass
+
+// размеры шрифтов 
+$font-size-base:             .875rem
+$font-size-lg:               0.875rem!important
+$font-size-sm:               0.75rem!important 
+$font-size-xs:               .65rem 
+
+$font-size-h1:               1.875rem
+$font-size-h2:               1.5rem
+$font-size-h3:               1.125rem
+$font-size-h4:               0.9375rem
+$font-size-h5:               0.8125rem
+$font-size-h6:               0.6875rem
+
+//переменные отступов для кнопок
+$btn-padding-x-lg: rem(42)
+$btn-padding-y-lg: rem(14)
+$btn-padding-x-sm: rem(26)
+$btn-padding-y-sm: rem(6)
+$btn-padding-y:    rem(10)
+$btn-padding-x:    rem(33)
+
+//Формы
+$border-width: 1px
+$border-radius: 1px // border-radius для всех инпутов
+$input-color: $black // цвет текста всех инпутов
+$input-height: 36px // height всех интупов
+$input-height-sm: 36px // height всех интупов
+$input-height-sm: 36px // height всех интупов
+$input-height-lg: 36px// height всех интупов
+$custom-select-color: $black
+$select_height: 36px
+$select-padding-y: 0
+$select-padding-x: 0.75rem
+$select-btn-border-width: 2px
+$border_color: $gallery
+$custom-select-border-radius: 1px
+$input-border-radius: 1px // border-radius для всех инпутов
+$progress-border-radius: 0
+// переменные для пагинации
+$pagination-active-color: $white
+$pagination-color: $small-text
+$pagination-padding-y: .16rem
+$pagination-padding-x: .62rem
+$pagination-padding-x-lg: rem(15)
+$pagination-padding-y-lg: rem(6)
+$pagination-active-border: $grey
+$pagination-hover-border: $grey
+$pagination-hover-bg: transparent
+$pagination-hover-color: $grey
+$active-pagination-bgc: $puerto_rico
+
+//ALERT
+$alert-info-bg: none
+$alert-info-border: $black
+$alert-info-text: $black
+$alert-success-bg: none
+$alert-warning-bg: none
+$alert-danger-bg: none
+$alert-danger-border: #ed1c24
+$alert-danger-text: #ed1c24
+
+$list-group-border-radius: 0
+$list-group-border-radius: 0
+$list-group-border-width: 0
+$list-group-active-bg: $puerto_rico
+$list-group-active-color: #f4f4f4
+$list-group-bg: none
+$list-group-hover-bg:  none
+$list-group-link-color:  none
+$list-group-active-text-color: #f4f4f4
+$list-group-link-color: $black_text
+
+//Breadcrumb
+$breadcrumb-divider-color: $black_text 
+$breadcrumb-active-color: $small-text // active element
+$breadcrumb-ff: $second-font-family // шрифт
+$breadcrumb-title-color: $small-text // цвет заголовка
+$breadcrumb-link-color: $black //link color 
+
+$nav-pills-active-link-color: $grey
+$link-color: #111
+
+// contextual colors
+$text-muted: $small-text
+$brand-info: $wild_willow
+
+$dragging-hover-border: $wild_willow //цвет дроп зоны при перетягивании картинки
+
+
+// стилизация заголовков в ячейке кампании
+$one_block_h3_font_family: $second-font-family
+$one_block_h3_letter_space: rem(1.8)
+$one_block_h3_font_weight: 700
+$more_inform-bgc: rgba($puerto_rico, 0.9) // при ховере на компанию
+
+$color_heading_education: $puerto_rico // для стилизации заголовков на странице education
+
+// для стилизации заголовков блогов(на странице списка блогов)
+$blog-item-title-weight: 400
+$blog-item-title-f-size: rem(18)
+$blog-item-title-let-space: 2.2px
+//color-green -variables
+$color-green: $wild_willow
+
+// для настройки кнопок с выпадающими списками .one_drop на странице кампании
+$one_drop_border_radius: 1px
+$one_drop_font_weight: 500
+
+$active-risk-bgc: $puerto_rico // for formc risk -variables
+//issuer dashboard
+
+$color-base:			#869791 !default;
+$color-white:			#FFF !default;
+$color-gray:			#D6D6D6 !default;
+
+//OWL CAROUSEL VARS
+$nav-color: 			$puerto_rico !default;
+$nav-color-hover:		$white !default;
+$nav-font-size: 		18px !default;
+$nav-rounded: 			10px !default;
+$nav-padding: 			9px 20px !default;
+$nav-margin:			0;
+$nav-background: 		$white !default;
+$nav-background-hover:	$puerto_rico !default;
+$nav-disabled-opacity: 	0.5 !default;
+$dot-width:				10px !default;
+$dot-height:			10px !default;
+$dot-rounded:			30px !default;
+$dot-margin: 			5px 7px !default;
+$dot-background:		$white !default;
+$dot-background-active:	$puerto_rico !default;
+
+
+//notification 
+$bgc-notificatin-bell: $puerto_rico
+$notific_list_title: $puerto_rico
+$notification-title-ff: $brandon-grotesque-medium
+$top-position-notification: 25px
+$height-notification: 50px
+$notification-link-color-hover: $link-2-hover
+$notification-link-color: $wild_willow
+$notification-text-color-read: $menu_text_color-hover
+$notification-text-color-not-read: $white
+$notification-border-bottom-color: rgba($small-text, .9)
+$notification-bgc-not-read: rgba(70,70,70, .9)
+//raise landing
+$growth-is-bgc: $puerto_rico
+$content-bottom-icon-color: $wild_willow
+$raise-landing-table-bgc: $puerto_rico
+$raise-landing-table-text-color: $white
+
+//icon circle
+$icon-circle-color: $white
+$icon-circle-bgc: $wild_willow
+
+// pages left menu
+$page-left-menu-color: $puerto_rico
+$section-bg-line: $puerto_rico
+
+$fancy-nav-color: $puerto_rico
+
+// heartland-tour page
+$heartland-tour-in-main: $puerto_rico
+$heardlen-city-icon-color: $puerto_rico
+$heardlen-calendar-bgc: $sandy-brown-two
+
+//цвет иконки для кнопки play
+$play-icon-color: $puerto_rico
+
+// на странице ANNUAL PRIVACY NOTICE
+$annual-privacy-notice: $puerto_rico
+
+// висота инпута на companies /  нужно менять тк у нас кнопки разные
+$subscription-campaing-height-input: 40px

@@ -1,68 +1,3 @@
-div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#sign_up.modal.fade
-  div(role="document").modal-dialog
-    .modal-content
-      .modal-header
-        button(type="button" data-dismiss="modal" aria-label="Close").close
-          span(aria-hidden="true")
-            i.fa.fa-times
-        h2.text-xs-center.text-uppercase.dosis.modal-title Sign up
-        p.text-xs-center Have an account? &nbsp;
-          a(href="#").link-3.link-show-login
-            | Log In
-      .modal-body
-        .container.form-section
-          form#sign-up-form.signup-form.col-lg-10.offset-lg-1
-            input(type="hidden" name="domain" value=window.location.host)
-            .form-group.row.clearfix.required
-              input(type="text"
-              placeholder="First name"
-              name="first_name").form-control
-            .form-group.row.clearfix.required
-              input(type="text"
-              placeholder="Last name"
-              name="last_name").form-control
-            .form-group.row.clearfix.required
-              input(type="email"
-              placeholder="E-mail"
-              name="email").form-control
-            .form-group.row.clearfix.required
-              input(type="password"
-              placeholder="Password"
-              name="password1").form-control
-            .form-group.row.clearfix.required
-              input(type="password"
-              placeholder="Re-enter password"
-              name="password2").form-control
-              input(type="hidden"
-              value=window.location.host
-              name="domain")
-            .form-group.row.clearfix.required
-              .row
-                .col-lg-12
-                  label
-                    input(type="checkbox" name="checkbox1" value="1")#agree-rules
-                    span.label-text I agree to the
-                      a(href="/pg/terms_of_use" target="_blank").link-3  Terms of Use
-                      | ,
-                      a(href="/pg/privacy_policy" target="_blank").link-3  Privacy Policy
-                      |  and
-                      a(href="/pg/electronic_signature" target="_blank").link-3  Electronic Signature and Electronic Delivery of Documentation.
-                .col-lg-12.text-xs-center
-                  button(type="submit").btn.btn-primary.text-uppercase Sign up
-                .col-lg-12.border-bottom.or
-                  span or
-            .social-btn
-              button(data-network="facebook").btn.btn-block.btn-social-network.btn-facebook.text-uppercase
-                i.fa.fa-facebook
-                |  SIGN UP with Facebook
-              button(data-network="linkedin").btn.btn-block.btn-social-network.btn-linkedin.text-uppercase
-                i.fa.fa-linkedin
-                |  SIGN UP with linkedin
-              button(data-network="google").btn.btn-block.btn-social-network.btn-google.text-uppercase
-                i.fa.fa-google-plus
-                |  SIGN UP with Google
-        .modal-footer
-
 div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#sign_in.modal.fade
   div(role="document").modal-dialog
     .modal-content
@@ -73,39 +8,48 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
               i.fa.fa-times
           h2.dosis.text-uppercase.text-sm-center.text-xs-center.mt50 Log in
           p.small-text.text-xs-center New to GrowthFountain? &nbsp;
-            a(href="#").link-3.link-show-sign-up Sign up
+            a(href="#").link-3.switchAuthPopup Sign Up
         .modal-body
           .form-section
-            form#sign-in-form.login-form.col-lg-10.offset-lg-1
-              .col-lg-12
-                .form-group.row.clearfix.required
-                  input(type="email"
-                  placeholder="E-mail"
-                  name="email").form-control
-                .form-group.row.clearfix.required
-                  input(type="password"
-                  placeholder="Password"
-                  name="password").form-control
-                  input(type="hidden"
+            form(novalidate autocomplete="off")#sign-in-form.login-form.col-lg-10.offset-lg-1
+              .col-lg-12.p-xs-0
+                -
+                  pug_html += app.fields.fieldText('email', {
+                    autocomplete: 'off',
+                    required: true,
+                    placeholder: 'E-mail',
+                    type: 'email',
+                    'class': 'form-group row clearfix',
+                  });
+                  pug_html += app.fields.fieldText('password', {
+                    required: true,
+                    autocomplete: 'off',
+                    placeholder: 'Password',
+                    type: 'password',
+                  'class': 'form-group row clearfix',
+                  });
+                input(
+                  type="hidden"
                   value=window.location.host
-                  name="domain")
-              .col-lg-12
+                  name="domain"
+                )
+              .col-lg-12.p-xs-0
                 .row.forgot
-                  a(href="#").reset-password-link.link-3 Forgot your password?
+                  a(href="#").reset-password-link.link-3 Forgot Your Password?
               .col-lg-12
                 .row.text-sm-center.text-xs-center
-                  button(type="submit").btn.btn-primary.btn-login.text-uppercase Log in
+                  button(type="submit")#login-btn.btn.btn-primary.btn-login.text-uppercase Log In
             //-
               .col-lg-12.border-bottom.or
                 span or
               .social-btn.col-lg-12
-                a(data-original-title="facebook" href="#").btn.btn-block.btn-facebook.text-uppercase
+                a(data-original-title="facebook" href="#")#login-facebook.btn.btn-block.btn-facebook.text-uppercase
                   i.fa.fa-facebook
                   |  Log In with Facebook
-                a(data-original-title="Linkedin" href="#").btn.btn-block.btn-linkedin.text-uppercase
+                a(data-original-title="Linkedin" href="#")#login-linkedin.btn.btn-block.btn-linkedin.text-uppercase
                   i.fa.fa-linkedin
                   |  Log In with linkedin
-                a(data-original-title="Google Plus" href="#").btn.btn-block.btn-google.text-uppercase
+                a(data-original-title="Google Plus" href="#")#login-google.btn.btn-block.btn-google.text-uppercase
                   i.fa.fa-google-plus
                   |  Log In with Google
     .modal-footer

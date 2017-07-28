@@ -5,12 +5,12 @@ machine:
 dependencies:
     override:
         - npm install
-        - git submodule init
-        - git submodule update
-        - git submodule foreach git pull origin master
+        - npm install -g mocha@3.4.2
+        - git submodule update --init
+        - cd staticdata && git checkout `echo $CIRCLE_BRANCH | sed -e 's/ostap/alpha/g' | sed -e 's/chagin/alpha/g'` && git pull
+        - cd ..
         - ls -la 
-        - ./node_modules/webpack/bin/webpack.js -p --config ./webpack.config.production.js 
-        - ./node_modules/gulp/bin/gulp.js styles
+        - NODE_ENV=production ./node_modules/webpack/bin/webpack.js -p --config ./webpack.config.js
         - sudo apt-get update
         - sudo apt-get install python-dev
         - sudo pip install awscli
@@ -20,6 +20,10 @@ dependencies:
     
     cache_directories:
         - "node_modules"
+
+machine:
+    node:
+        version: 6.1.0
 
 general:
     branches:

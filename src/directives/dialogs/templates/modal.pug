@@ -1,0 +1,23 @@
+
+div(tabindex='-1' role='dialog' aria-hidden='true' aria-labelledby="generic-modal-label").modal.fade#generic-modal
+  div.modal-dialog(role='document')
+    div.modal-content
+      div.modal-header
+        button(type="button"  aria-label="Close").close.modal-btn-cancel
+          span(aria-hidden="true")
+            i.fa.fa-times
+        h3.text-uppercase.text-xs-center.modal-title#generic-modal-label #{ type }
+      div.modal-body.text-xs-center.p-t-0
+        h3.m-t-0 #{ message }
+
+      div.modal-footer.text-xs-center
+        case type
+          when 'confirm'
+            button(type="button").btn.btn-secondary.modal-btn-cancel.m-r-2 CANCEL
+          //-
+            when 'info'
+            when 'warning'
+            when 'error'
+        button(type="button").btn.btn-primary.modal-btn-ok OK
+
+

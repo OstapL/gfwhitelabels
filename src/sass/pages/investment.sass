@@ -19,9 +19,14 @@
 				font-size: 14px
 				font-weight: 700
 .investment
-	.input-border-bottom
+	@media screen and (min-width: 991px)
+		.invest-left-p-0
+			padding-right: 0
+		.invest-right-p-0
+			padding-left: 30px
+
+	.input-border
 		padding: 0 15px
-		border-bottom: none
 		.form-control:disabled
 			background-color: transparent!important
 	
@@ -56,25 +61,139 @@
 		margin-top: 30px
 		margin-bottom: 0
 	.investment-summary
-		padding-top: 11px
-		background-color: $detail-overview-background
-		p
-			line-height: 1
-			margin-top: 7px
-			margin-bottom: 20px
-			color: $white
-		span
-			color: $white
+		border: none
+		.investment-summary-wrap
+			.grey
+				padding: rem(12) 0
+				text-align: center
+				background-color: $alabaster
+			td
+				width: 50%
+			.big-h
+				min-height: 55px
+				height: 55px
+				vertical-align: middle
+				padding: rem(12) 0
+				text-align: center
+				*
+					margin-bottom: 0
+				&.target
+					*
+						line-height: 21px
+		@media screen and (max-width: 544px)
+			margin-top: rem(30)
+		@media screen and (max-width: 375px)
+			p
+				font-size: rem(13)
+
+	.total-investment-amount
+		font-size: rem(14)
 	.fee
 		.input-border-bottom
+			.form-control:disabled
+				background-color: transparent!important
+				border: none
 			&:before
 				content: '+'
 				position: absolute
 				top: 6px
-				left: 15px
-				@media screen and (max-width: 576px)
-					top: 3px
+				left: 25px
 
+		.commission-0
+			&.input-border
+				border: none!important
+				input
+					border-bottom: none
+		.input-border
+			input
+				border-top: none
+				border-left: none
+				border-right: none
+			&:before
+				content: '+'
+				position: absolute
+				top: rem(6)
+				left: 0px
+				@media screen and (max-width: 576px)
+					top: rem(5)
+			&.commission
+				position: relative
+				input
+					color: $small-text
+				&:after
+					content: ''
+					position: absolute
+					border-bottom: solid 1px $small-text
+					width: 50px
+					top: rem(17)
+					left: rem(-4)
+				.waived
+					position: absolute
+					right: 0
+					top: 10px
+					color: #d44330
+					font-size: rem(13)
+					text-transform: uppercase
+					letter-spacing: 1.3px
+				.commission-right-block
+					position: absolute
+					top: -17px
+					left: 97%
+					width: 330px
+					height: 78px
+					background-size: 100%
+					background-repeat: no-repeat
+					z-index: 2
+					background-image: url("img/generals/comission-bg.png")
+					.wrap-commision-credit-amount
+						position: relative
+						left: 46%
+						width: 80px
+						top: 77%
+						height: 100%
+						display: block
+						transform: translate(-50%,-50%)
+						.credit-amount
+							position: relative
+							display: block
+							text-align: center
+							font-weight: bold
+							color: $puerto-rico
+							font-size: rem(36)
+							line-height: 22px
+						.credit-remains
+							position: relative
+							font-weight: bold
+							display: block
+							color: $puerto-rico
+							font-size: rem(13)
+							text-transform: uppercase
+							text-align: center
+							line-height: 22px
+
+					.wrap-commision-credit-text
+						position: absolute
+						left: 60%
+						width: 120px
+						top: 0
+						height: 100%
+						display: block
+						.credit-text
+							position: absolute
+							left: 50%
+							top: 50%
+							width: 100%
+							transform: translate(-50%,-50%)
+							color: $puerto-rico
+							font-size: rem(12)
+							text-align: center
+							font-weight: bold
+							line-height: 12px
+							display: block
+							border-left: solid 1px $puerto-rico
+					
+	.commission-group
+		position: relative
 	.varification
 		label
 			font-weight: 400
@@ -105,6 +224,7 @@
 			padding-left: 5px
 			font-family: 'Allura'
 			font-size: rem(24)
+
 @media screen and (min-width: 992px)
 	.personal_information
 		.col-lg-4-5
@@ -112,7 +232,78 @@
 			float: left
 			padding-left: 15px
 			padding-right: 15px
+@media screen and (max-width: 767px)
+	.commission-right-block
+		.wrap-commision-credit-text
+			.credit-text
+				width: 95%!important
 @media screen and (max-width: 576px)
 	.investment 
 		.list-group-item-heading
 			margin-bottom: rem(5)
+@media screen and (min-width: 414px) and (max-width: 545px)
+	.commission-right-block
+		background-size: 100%!important
+		width: 230px!important
+		height: 55px!important
+		top: -6px!important
+		.wrap-commision-credit-amount
+			width: 70px!important
+			top: 70%!important
+			left: 49%!important
+			.credit-amount
+				font-size: rem(30)!important
+			.credit-remains
+				font-size: rem(10)!important
+				line-height: 19px!important
+		.wrap-commision-credit-text
+			width: 95px!important
+			.credit-text
+				width: 74%!important
+				font-size: rem(8)!important
+				line-height: 9px!important
+			
+@media screen and (max-width: 413px)
+	.commission-right-block
+		width: 180px!important
+		height: 43px!important
+		top: -1px!important
+		.wrap-commision-credit-amount
+			width: 55px!important
+			left: 46%!important
+			.credit-amount
+				font-size: rem(22)!important
+				line-height: 10px!important
+			.credit-remains
+				line-height: 20px!important
+				font-size: rem(8)!important
+
+		.wrap-commision-credit-text
+			width: 67px!important
+
+			.credit-text
+				line-height: 7px!important
+				font-size: rem(7)!important
+				padding-right: rem(1)!important
+				padding-left: rem(2)
+	.fee
+		.waived
+			font-size: rem(10)!important
+			top: 12px!important
+		.commission:after
+			top: rem(18)!important
+			width: 40px!important
+	.investment
+		.fee
+			.input-border
+				&:before
+					top: 7px
+@media screen and (max-width: 320px)
+	.commission-group
+		.commission
+			.waived
+				width: 50px
+				top: 10px!important
+		.commission-right-block
+			left: 95%!important
+			top: 12px!important

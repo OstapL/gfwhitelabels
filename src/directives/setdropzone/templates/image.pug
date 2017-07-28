@@ -1,0 +1,13 @@
+.row.fileContainer
+  .col-xl-12.one-photo
+    if file.file.id
+      .delete-image-container
+        a(href="#").crop-image.cropImage
+          i.fa.fa-crop
+        a(href="#").delete-image.deleteFile
+          i.fa.fa-times
+      .bgc-wrap
+        img(class=("w-100 img-" + file.fieldName) src=file.file.getUrl())
+    else
+      .bgc-wrap
+        img(class=("w-100 img-" + file.fieldName) src=file.getDefaultImage())

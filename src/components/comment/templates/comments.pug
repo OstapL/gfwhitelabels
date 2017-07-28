@@ -1,10 +1,10 @@
-.container.m-t-3.p-x-0
+.container.p-x-0
   if attr.allowQuestion
-    | !{ snippets.add() }
+    | !{ snippets.add({ attr: attr }) }
   -
-    var cssClass = 'comments col-xl-8 p-xs-0' + (attr.cssClass || '');
+    var cssClass = 'comments col-xl-8 p-xs-0 ' + (attr.cssClass || '');
 
-  div(class=cssClass).comments.col-xl-8.offset-xl-2.p-xs-0
+  div(class=cssClass).comments
       -
         var level = 0;
       each c in comments

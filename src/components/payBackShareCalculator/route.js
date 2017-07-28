@@ -6,25 +6,31 @@ module.exports = {
   },
   methods: {
     calculatorPaybackshareStep1() {
-      const View = require('./views');
-      new View.step1().render();
-      $('#content').scrollTo();
-      app.hideLoading();
+      require.ensure([], () => {
+        const View = require('./views');
+        new View.step1().render();
+        $('body').scrollTo();
+        app.hideLoading();
+      }, 'payback_share_calculator_chunk');
     },
 
     calculatorPaybackshareStep2() {
-      const View = require('./views');
-      new View.step2().render();
-      $('#content').scrollTo();
-      app.hideLoading();
+      require.ensure([], () => {
+        const View = require('./views');
+        new View.step2().render();
+        $('body').scrollTo();
+        app.hideLoading();
+      }, 'payback_share_calculator_chunk');
     },
 
     calculatorPaybackshareStep3: function () {
-      const View = require('./views');
-      new View.step3().render();
-      $('#content').scrollTo();
-      app.hideLoading();
+      require.ensure([], () => {
+        const View = require('./views');
+        new View.step3().render();
+        $('body').scrollTo();
+        app.hideLoading();
+      }, 'payback_share_calculator_chunk');
     },
   },
-  auth: ['calculatorPaybackshareStep1'],
+  auth: ['calculatorPaybackshareStep3'],
 };

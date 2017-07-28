@@ -1,27 +1,24 @@
 .warning-block
-	font-size: rem(14)
+  font-size: rem(15)
+  position: relative
+  padding: rem(10) rem(20)
+  margin-bottom: rem(20)
+  border: 1px $warning-block-border-color solid
+  color: $warning-block-border-color
 
-	position: relative
+  &:before
+    background-color: $warning-block-icon-color
+    width: rem(9)
+    content: ''
+    position: absolute
+    left: 0
+    top: 0
+    height: 100%
 
-	padding: rem(10) rem(20)
-	margin-bottom: rem(20)
-
-	border: 1px $sandy-brown solid
-
-	color: $sandy-brown
-	&:before
-		background-color: $sandy-brown
-		width: rem(9)
-		content: ''
-		position: absolute
-		left: 0
-		top: 0
-		height: 100%
-	.warning-text
-		color: $small-text
-		padding-left: rem(20)
-		font-size: rem(15)
-	i 
-		position: absolute
-		top: rem(14)
-		left: rem(20)  
+  .warning-text
+    color: $warning-block-text-color
+    padding-left: rem(20)
+  i
+    position: absolute
+    top: rem(14)
+    left: rem(20)

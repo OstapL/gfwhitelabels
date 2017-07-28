@@ -1,0 +1,280 @@
+.heartland-tour
+  .top-baner
+    height: 60vh
+    .background
+      top: -50px
+    .top-baner-text
+      position: relative
+
+      h1, h3
+        color: $white
+      h1
+        margin-bottom: rem(15)
+    .center-wrap 
+      top: 30%
+      @media only screen and (max-width : 992px)
+        top: 40%
+      @media only screen and (max-width : 375px)
+        top: 50%
+  .scroll-paralax
+    &:before
+      background: rgba(17, 17, 17, 0.1)
+  .how-it-works
+    background-color: $alabaster
+    padding: rem(45) 0
+    .circle
+      margin-right: rem(6)
+      height: 13px
+      width: 13px
+      padding: 0px
+      border-radius: 100px
+      border: solid 1px #000
+      vertical-align: middle
+      display: inline-block
+      margin-top: -3px
+
+
+      &.red-circle
+        background-color: #d44330
+      &.white-circle
+        background-color: $white
+      &.blue-circle 
+        background-color: #0072bc
+  .map-apply
+    .bgi-button-section
+      .background
+        width: 100%
+        min-height: 160px
+        background-repeat: no-repeat
+        background-size: cover
+        position: relative
+        background-image: url("img/heartland_tour/bgi-button-section.jpg")
+        position: relative
+        background-position: center
+        @media only screen and (max-width : 767px)
+          background-image: url("img/heartland_tour/bgi-button-section-top.png")
+          height: 320px
+        
+      .center-wrap
+        position: absolute
+        top: 50%
+        left: 50%
+        -ms-transform: translate(-50%, -50%)
+        -webkit-transform: translate(-50%, -50%)
+        transform: translate(-50%, -50%)
+        text-align: center
+        width: 100%
+        @media only screen and (max-width : 991px)
+          padding: 0
+        .one-button
+          min-width: 470px
+          display: inline-block
+          margin: 0 40px
+          @media only screen and (max-width : 1200px)
+            min-width: 370px
+            .btn
+              font-size: 60%
+          @media only screen and (max-width : 991px)
+            width: 50%
+            min-width: 340px
+            max-width: 340px
+            margin: 0 10px
+            .btn
+              font-size: 55%
+          @media only screen and (max-width : 767px)
+            min-width: 360px
+            max-width: 400px
+            display: block
+            margin: rem(120) auto
+          @media only screen and (max-width : 420px)
+            min-width: 90%
+            max-width: 280px
+            .btn
+              font-size: 50%
+          @media only screen and (max-width : 360px)
+            .btn
+              font-size: 42%
+          &.two
+            @media only screen and (max-width : 320px)
+              .btn
+                position: relative
+                top: 5px
+
+        .center-logo
+          position: absolute
+          top: 38%
+          left: 50%
+          -ms-transform: translate(-50%, -50%)
+          -webkit-transform: translate(-50%, -50%)
+          transform: translate(-50%, -50%)
+          opacity: .5
+          margin-left: 2px
+          z-index: -1
+          @media only screen and (max-width : 991px)
+            display: none
+          img
+            width: 220px
+      .block-links
+        height: 100%
+        @media only screen and (max-width : 576px)
+          .wrap-logo
+            .center-logo
+              img
+                width: 35px
+            
+        @media only screen and (max-width : 375px)
+          .btn
+            font-size: rem(10)
+
+
+    .wrap-logo
+      position: relative
+      .center-logo
+        position: absolute
+        top: 50%
+        left: 50%
+        -ms-transform: translate(-50%, -30%)
+        -webkit-transform: translate(-50%, -30%)
+        transform: translate(-50%, -30%)
+        z-index: -1
+        img
+          width: 130px
+    .all-map
+      margin-top: rem(50)
+      .map-center
+        position: relative
+        background-image: url("img/heartland_tour/bg-video.png")
+        width: 100%
+        min-height: 450px
+        overflow: hidden
+        background-repeat: no-repeat
+        background-size: cover
+        margin-top: rem(45)
+        .bgi-xs
+          display: none
+        @media only screen and (max-width : 1199px)
+          min-height: 370px
+        @media only screen and (max-width : 991px)
+          min-height: 420px
+        @media only screen and (max-width : 767px)
+          min-height: 339px
+        @media only screen and (max-width : 578px)
+          background-image: none
+          min-height: auto
+          &:before
+            display: none
+          video
+            display: none
+          .bgi-xs
+            display: block
+            img
+              width: 100%
+        &:before
+            background-color: rgba(0,0,0, .3)
+            width: 100%
+            content: ''
+            height: 100%
+            position: absolute
+            left: 0
+            top: 0
+            z-index: -1
+        video
+          position: absolute
+          left: 0
+          top: 0
+          width: 113%
+          z-index: -2
+          
+        .text-wrap
+          position: absolute
+          top: 46%
+          left: 46%
+          -ms-transform: translate(-50%, -50%)
+          -webkit-transform: translate(-50%, -50%)
+          transform: translate(-50%, -50%)
+          width: 100%
+          text-align: center
+          @media only screen and (max-width : 578px)
+            left: 50%
+            top: 50%
+          h1
+            color: $white
+            @media only screen and (max-width : 576px)
+              font-size: rem(16)
+              line-height: rem(18)!important
+              max-width: 260px
+              margin: 0 auto
+            @media only screen and (max-width : 360px)
+              max-width: 200px
+      .small
+        font-size: rem(12)
+        color: $small-text
+        margin-top: rem(25)
+        line-height: 15px
+      .city
+        ul
+          list-style-type: none
+          padding-left: 0
+          li
+            padding: rem(8) 0
+            *
+              display: inline-block
+            i
+              color: $heardlen-city-icon-color
+              font-size: rem(30)
+              margin-right: rem(9)
+            h3
+              margin: 0
+              strong
+                margin-right: rem(5)
+              .grey
+                color: $small-text
+        .calendar
+          display: inline
+          border-radius: 2px
+          padding: rem(7) rem(12)
+          color: $white
+          background-color: $heardlen-calendar-bgc
+          *
+            display: inline-block
+          i
+            font-size: rem(14)
+            margin-right: rem(5)
+
+  .sities
+    .scroll-paralax
+      &:after
+        background: rgba(17, 17, 17, 0.1)
+    .sities-section
+      .background
+        top: -300px
+        @media screen and (min-width : 768px) and (max-width : 1300px)
+          top: -360px
+          height: 550px
+      h1
+        color: $white
+        @media only screen and (max-width : 360px)
+          font-size: rem(24)
+      .opasity-block
+        &:before
+          background: rgba(17, 17, 17, 0.2)
+        
+#heartland-tour-modal
+  .modal-dialog
+    max-width: 950px
+  .modal-header
+    h2
+      line-height: rem(26)
+  .modal-body
+    ul 
+      list-style-type: none
+      padding-left: 0
+      margin-bottom: 0
+      li
+        padding: rem(8) 0
+        a
+          font-size: rem(18)
+          i
+            margin-right: rem(10)
+            color: $small-text
+            font-size: rem(30)

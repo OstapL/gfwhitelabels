@@ -1,0 +1,64 @@
+- pug_html += app.breadcrumbs('Contact us', '', [ ['Home', '/'], ['Contacts us', ''], ]);
+
+section.text_block  
+  .container
+    .row
+      .col-lg-3.hidden-md-down  
+        .page_title.border-bottom.mb25
+          h4.text-uppercase ABOUT US
+        ul.list-unstyled.custom.pages-left-menu
+          li
+            a(href='/pg/overview').d-inline-block.w-100 Overview
+          li
+            a(href='/pg/team').d-inline-block.w-100 #{app.config.teamName}
+          li.display-partners
+            a(href='/pg/partners').d-inline-block.w-100 Partners
+          li.active
+            a(href='/pg/contact').d-inline-block.w-100 Contact Us
+          li
+            a(href='/pg/careers').d-inline-block.w-100 Careers
+          li
+            a(href='/pg/news').d-inline-block.w-100 In the News
+          li
+            a(href='/pg/faq').d-inline-block.w-100 FAQ
+
+      .col-lg-9
+        include ../../../templates/map
+        section.all-contacts.mt50
+          .row
+            //temporary hidden phone
+            .col-sm-5.offset-lg-2.offset-sm-1
+              h4.dosis.text-uppercase.m0 ADDRESS
+              p 
+                i.fa.fa-map-marker
+                | &nbsp; 79 Madison Ave, 5th Floor 
+                p &nbsp;&nbsp;&nbsp; New York, NY 10016
+            .col-sm-5.col-lg-4.xs-top-padding
+              h4.dosis.text-uppercase.m0 E-MAIL
+              p 
+                i.fa.fa-envelope-o
+                | &nbsp; info@growthfountain.com
+        section.form-section.clearfix(style="display: none")
+          form(method="post" action="").form
+            .row
+              .col-lg-10.offset-lg-1
+                .form-body.clearfix 
+                  .row
+                    .col-lg-5
+                      .form-group.row
+                        .col-lg-12
+                          input(name="name" placeholder="Name" type="text" value="").form-control
+
+                      .form-group.row
+                        .col-lg-12
+                          input(name="email" placeholder="Email" type="text" value="").form-control
+
+                    .col-lg-7
+                      .form-group.row.contact-message
+                        .col-lg-12
+                          textarea(name="Message" placeholder="Message" value="").form-control.contacts-textarea
+
+                      .form-group.row.clearfix.m0 
+                        .col-lg-12.text-xs-center
+                          .controls  
+                            button(type="submit").btn.btn-primary.pull-lg-right.text-uppercase submit

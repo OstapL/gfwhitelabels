@@ -1,93 +1,49 @@
 mixin row(value, index)
-  - var index = index;
-  - value = value || {};
+  -
+    value = value || {};
+    var isFee = value.title && value.title.replace(/[.\(\)\s]/g, '_').toLowerCase() === 'commissions_and_broker_expenses';
+
   tr(class="border-b-t-none p-t-b-5 addSectionBlock " + name data-index=index)
     td.border-t-n.d-block.input-w-80
       .d-inline-block.pull-left.p-r-1
       input(type="text" value=value.title name="less_offering_express[" + index + "][title]").input-border-bottom.form-control.font-size-12.pull-left
-      if !value.fee
+      if !isFee
         .d-inline-block.pull-right
           .delete-section-container
             a(href="#" data-index=index data-section=name).delete-sectionnew
               i.fa.fa-times
     td.border-b-t-none.w-25.font-size-12
       .form-section
-        if value.fee
-          input(type="money" value=('$' + (value.min || 0)) name="less_offering_express[" + index + "][min]" readonly).input-border-bottom.form-control.text-xs-center.min-expense
-        else
-          input(type="money" value=('$' + (value.min || 0)) name="less_offering_express[" + index + "][min]").input-border-bottom.form-control.text-xs-center.min-expense
+        input(
+          type="money"
+          data-value-type="money"
+          value=app.helpers.format.formatPrice(value.min || 0)
+          name="less_offering_express[" + index + "][min]"
+          readonly=isFee
+        ).input-border-bottom.form-control.text-xs-center.min-expense
     td.border-b-t-none.w-25.font-size-12
       .form-section
-        if value.fee
-          input(type="money" value=('$' + (value.max || 0)) name="less_offering_express[" + index + "][max]" readonly).input-border-bottom.form-control.text-xs-center.max-expense
-        else
-          input(type="money" value=('$' + (value.max || 0)) name="less_offering_express[" + index + "][max]").input-border-bottom.form-control.text-xs-center.max-expense
+        input(
+          type="money"
+          data-value-type="money"
+          value=app.helpers.format.formatPrice(value.max || 0)
+          name="less_offering_express[" + index + "][max]"
+          readonly=isFee
+        ).input-border-bottom.form-control.text-xs-center.max-expense
+
 
 mixin run()
   if first_run
     tbody(class=name + '_container')
       tr
         td.border-t-n.p-l-r-20
-          .pull-left.font-weight-bold Less: Offering Expenses
+          #less_offering_express.pull-left.font-weight-bold Less: Offering Expenses
           .pull-right
             a(href="#" data-section=name data-comp="formc" data-template="less_offering_express").link-2.add-sectionnew
               i.fa.fa-plus
               |  Add Another
         td.border-b-t-none
         td.border-b-t-none
-      //- tr
-      //-   td.border-t-n.d-block.input-w-80
-      //-     | Commissions and Broker Expenses
-      //-     .pull-right
-      //-       .delete-section-container
-      //-         a(href="#" data-index=index data-section=name).delete-sectionnew
-      //-           i.fa.fa-times
-      //-     input(type="hidden" name="less_offering_express[0][title]" value="Commissions and Broker Expenses")
-      //-   td.border-b-t-none.w-25.font-size-12
-      //-     .form-section
-      //-       input(type="text" name="less_offering_express[0][min]").input-border-bottom.form-control.text-xs-center.min-expense
-      //-   td.border-b-t-none.w-25.font-size-12
-      //-     .form-section
-      //-       input(type="text" name="less_offering_express[0][max]").input-border-bottom.form-control.text-xs-center.min-expense
-      //- tr
-      //-   td.border-t-n.d-block.input-w-80
-      //-     | Misc. Offering Costs (Legal)
-      //-     .pull-right
-      //-       .delete-section-container
-      //-         a(href="#" data-index=index data-section=name).delete-sectionnew
-      //-           i.fa.fa-times
-      //-   td.border-b-t-none.w-25.font-size-12
-      //-     .form-section
-      //-       input(type="text").input-border-bottom.form-control.text-xs-center.min-expense
-      //-   td.border-b-t-none.w-25.font-size-12
-      //-     .form-section
-      //-       input(type="text").input-border-bottom.form-control.text-xs-center.min-expense
-      //- tr
-      //-   td.border-t-n.d-block.input-w-80
-      //-     | Misc. Offering Costs (Marketing)
-      //-     .pull-right
-      //-       .delete-section-container
-      //-         a(href="#" data-index=index data-section=name).delete-sectionnew
-      //-           i.fa.fa-times
-      //-   td.border-b-t-none.w-25.font-size-12
-      //-     .form-section
-      //-       input(type="text").input-border-bottom.form-control.text-xs-center.min-expense
-      //-   td.border-b-t-none.w-25.font-size-12
-      //-     .form-section
-      //-       input(type="text").input-border-bottom.form-control.text-xs-center.min-expense
-      //- tr
-      //-   td.border-t-n.d-block.input-w-80
-      //-     | Misc. Offering Costs (Admin)
-      //-     .pull-right
-      //-       .delete-section-container
-      //-         a(href="#" data-index=index data-section=name).delete-sectionnew
-      //-           i.fa.fa-times
-      //-   td.border-b-t-none.w-25.font-size-12
-      //-     .form-section
-      //-       input(type="text").input-border-bottom.form-control.text-xs-center.min-expense
-      //-   td.border-b-t-none.w-25.font-size-12
-      //-     .form-section
-      //-       input(type="text").input-border-bottom.form-control.text-xs-center.min-expense
       if values == null || values.length == 0
         +row({}, 0)
       else

@@ -7,9 +7,9 @@ section.formc-team-members-director.container.m-b-85
   +menu('formc', 'background-check')
 
   //START RIGHT BLOCK
-  .col-lg-8
+  .col-lg-8.p-xs-0
     h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis.mb45 Background  check
-    .col-lg-12
+    .col-lg-12.p-xs-0
       b Has the company or any director, officer, 20% voting shareholder or paid securities promoter been subject to:
       ol.m-t-1
         li.pb10.font-weight-bold Conviction: felony or misdemeanor, within 10 years prior to this offering (5 years in the case of the company) in connection with the purchase or sale of securities, making false filings with the SEC, or arising out of the conduct of the business of an underwriter, broker, dealer, municipal securities dealer, investment adviser, funding portal or paid solicitor of purchasers of securities?
@@ -24,10 +24,10 @@ section.formc-team-members-director.container.m-b-85
         .form-group.form-section.m-t-1.m-b-0
           .radio-input.m-b-1.yesno
             label 
-              input(type="radio" name="company_or_director_subjected_to_choice" value="true" checked=(values['company_or_director_subjected_to_choice'] == 1) target=".transactions-past-year-container")
+              input(type="radio" data-value-type="boolean" name="company_or_director_subjected_to_choice" value="true" checked=(values['company_or_director_subjected_to_choice'] == 1) target=".transactions-past-year-container")
               |  Yes
             label 
-              input(type="radio" name="company_or_director_subjected_to_choice" value="false" checked=(values['company_or_director_subjected_to_choice'] == 0) target=".transactions-past-year-container")
+              input(type="radio" data-value-type="boolean" name="company_or_director_subjected_to_choice" value="false" checked=(values['company_or_director_subjected_to_choice'] == 0) target=".transactions-past-year-container")
               |  No
         .m-b-3.company_or_director_subjected_to_choice.shown-yes(style="display:" + (values['company_or_director_subjected_to_choice']  == 1? 'block' : 'none'))
           - 
@@ -61,5 +61,5 @@ section.formc-team-members-director.container.m-b-85
           li.pb10 the issuer or another party repurchases all of the securities issued in reliance on Section 4(a)(6) of the Securities Act, including any payment in full of debt securities or any complete redemp- tion of redeemable securities; or
           li.pb10 the issuer liquidates or dissolves its business in accordance with state law.
         .row.m-t-3
-          .col-lg-12.text-md-center.text-sm-center-text-xs-center
+          .col-lg-12.text-md-center.text-sm-center.text-xs-center
             button.btn.btn-primary.text-uppercase.pull-lg-right Save

@@ -1,2 +1,83 @@
 img
 	max-width: 100%
+
+.height-block-banner
+	height: 340px
+	background-color: #FFF
+	position: relative
+	overflow: hidden
+	margin-top: rem(50)
+	
+	.background
+		position: absolute
+		width: 100%
+		top: -450px
+		height: 100%
+		background-size: cover!important
+		-webkit-backface-visibility: hidden
+		backface-visibility: hidden
+		-webkit-transform-style: preserve-3d
+		transform-style: preserve-3d
+		z-index: 1
+		@media only screen and (max-width : 1024px)
+			top: -500px
+.scroll-paralax
+	&:before
+		position: absolute
+		width: 100%
+		height: 100%
+		content: ''
+		background: rgba(17, 17, 17, .5)
+		left: 0
+		top: 0
+		z-index: 2
+	.center-wrap
+		position: absolute 
+		left: 50%
+		top: 50%
+		-ms-transform: translate(-50%,-50%)
+		-webkit-transform: translate(-50%,-50%)
+		transform: translate(-50%,-50%)
+		width: 100%
+		z-index: 2
+		text-align: center
+		h1,h2,h3
+			color: $alabaster
+
+		h2
+			margin-bottom: rem(20)
+			margin-top: 0
+		h3
+			margin-bottom: rem(25)
+			margin-top: 0
+			font-weight: 300
+		a.btn
+			&:nth-child(2)
+				margin-left: rem(30)
+		&.small-button
+			.btn
+				@media only screen and (max-width : 425px)
+					padding: rem(10) rem(20)
+					font-size: rem(13)!important
+					border: none
+					&:nth-child(2)
+						margin-left: rem(10)
+
+.no-paralax-mobile
+	.background
+		@media only screen and (max-width : 768px)
+			transform: none!important
+			top: 0px!important
+			background-position: center!important
+			height: 100%!important
+.page.partners
+  .partner-height-top
+    .background
+      top: -200px
+// для подсказки в профайле и на странице инвест 
+.img-routing-number
+	background-image: url(../img/generals/routing-number-on-check.png)
+	width: 251px
+	height: 156px
+	background-repeat: no-repeat
+	background-size: 100%

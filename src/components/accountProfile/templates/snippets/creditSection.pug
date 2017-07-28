@@ -1,0 +1,19 @@
+if app.user.get('credit') > 0 && app.user.get('days_left') > 0
+  section.credit-investor
+    .container
+      .row
+        .col-xl-12
+          .col-xl-4.col-md-6.col-sm-6.p-x-0
+            .profile-type-user.credit-all.m-t-0
+              h2.text-uppercase.m-t-0.m-b-0 your credit
+                .small-text Credit valid for #{ app.user.get('days_left') } days.
+              .profile-comission
+                .wrap
+                  h2.m-t-0.m-b-0 $#{ app.user.get('credit') }
+
+          .col-xl-2.p-x-0
+            .text-xs-center.text-lg-left
+              a(href="/companies").btn.btn-primary.m-t-0 invest
+      .row
+        .col-xl-12
+          hr.m-t-3.m-b-3

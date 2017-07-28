@@ -1,0 +1,20 @@
+div(class=class1)
+  select(
+    id=id || name + '__month'
+    name=(name || name) + '__month'
+    data-value-type="string"
+    disabled=!!disabled
+  ).custom-select.w-100
+    option(value="") MM
+    option(value = "01" selected = (value == '01') ? true : false) Jan
+    option(value = "02" selected = (value == '02') ? true : false) Feb
+    option(value = "03" selected = (value == '03') ? true : false) Mar
+    option(value = "04" selected = (value == '04') ? true : false) Apr
+    option(value = "05" selected = (value == '05') ? true : false) May
+    option(value = "06" selected = (value == '06') ? true : false) Jun
+    option(value = "07" selected = (value == '07') ? true : false) Jul
+    option(value = "08" selected = (value == '08') ? true : false) Aug
+    option(value = "09" selected = (value == '09') ? true : false) Sep
+    option(value = "10" selected = (value == '10') ? true : false) Oct
+    option(value = "11" selected = (value == '11') ? true : false) Nov
+    option(value = "12" selected = (value == '12') ? true : false) Dec

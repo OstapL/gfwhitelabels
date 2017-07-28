@@ -1,0 +1,20 @@
+.row
+    .col-xl-7col-lg-7.col-md-7.col-sm-7
+        .crop-image-container
+    .preview-container.col-xl-5.col-lg-5.col-md-5.col-sm-5.hidden-xs-down.text-xs-center.p-r-0
+        .row
+            .img-preview(style="width: 150px; height: 150px; overflow: hidden; margin: auto;")
+
+        .row
+            .img-preview.mini(style="width: 50px; height: 50px; overflow: hidden; margin: auto;")
+
+.row
+    .col-xl-12.m-t-3.m-b-2.text-xs-center
+        button(
+            type="button"
+            data-dismiss="modal"
+        ).btn.btn-secondary.m-r-2.cropper-cancel Cancel
+        button(
+            type="button"
+            data-dissmiss="modal"
+        ).btn.btn-primary.cropper-ok Save

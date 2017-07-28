@@ -9,9 +9,17 @@
 
   .page-item
     +mt(0.2s)
-
+    border-radius: none!important
     a
       margin-right: 4px
+    .page-link
+      border-radius: none!important
+    &:last-child
+      .page-link
+        border-radius: 0!important
+    &:first-child
+      .page-link
+        border-radius: 0!important
 
     &:hover a
       border: 1px solid #a3a3a3
@@ -27,7 +35,9 @@
   .page-item.active a,
   .page-item.active a:focus,
   .page-item.active a:visited
-    background: none
+    background: $active-pagination-bgc
+    border-color: $active-pagination-bgc
+    font-weight: bold
 
     &:hover
-      background: none
+      background: $active-pagination-bgc

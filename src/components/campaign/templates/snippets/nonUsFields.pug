@@ -10,32 +10,30 @@
           class1: 'col-xl-6 col-lg-12 text-lg-left text-xl-right m-b-lg-1',
           class2: 'col-xl-6 col-lg-12 p-r-xl-0',
           id: 'personal_information_data__city',
-        }, fields.personal_information_data.schema.city);
+        }, _.extend({}, fields.personal_information_data.schema.city, { required: true }));
     .col-lg-6
-      .form-group.row.state.text
-        label.text-xl-right.text-lg-left.col-xl-5.col-lg-12(for="state").p-t-0.m-b-0.m-b-lg-1 State/Province/ Region
-          span.color-red *
-        div.col-xl-7.col-lg-12
-          input.form-control(
-            name='personal_information_data[state]'
-            id='personal_information_data__state'
-            placeholder='State/Province/Region'
-            type="text"
-            value=user.state
-          )
+      -
+        pug_html += app.fields.nestedTextLabel(
+          'personal_information_data',
+          'state',
+          user,
+          -1, {
+            class1: 'text-xl-right text-lg-left col-xl-5 col-lg-12 p-t-0 m-b-0 m-b-lg-1',
+            class2: 'col-xl-7 col-lg-12',
+          }, _.extend({}, fields.personal_information_data.schema.state, { required: true, label: 'State/Province/ Region', placeholder: 'State/Province/Region' })
+        );
   .row
     .col-lg-6.p-xl-0
-      .form-group.row.zip_code.text
-        label.text-xl-right.text-lg-left.col-xl-6.col-lg-12(for="zip_code") Postal Code
-          span.color-red *
-        div.col-xl-6.col-lg-12.p-r-xl-0
-          input(
-            name='personal_information_data[zip_code]'
-            id='personal_information_data__zip_code'
-            placeholder='Postal Code'
-            type="text"
-            value=user.zip_code
-          ).form-control
+      -
+        pug_html += app.fields.nestedTextLabel(
+          'personal_information_data',
+          'zip_code',
+          user,
+          -1, {
+            class1: 'text-xl-right text-lg-left col-xl-6 col-lg-12',
+            class2: 'col-xl-6 col-lg-12 p-r-xl-0',
+          }, _.extend({}, fields.personal_information_data.schema.zip_code, { required: true, label: 'Postal Code'})
+        );
     .col-lg-6
       -
         pug_html += app.fields.nestedTextLabel(

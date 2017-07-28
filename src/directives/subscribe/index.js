@@ -1,3 +1,8 @@
+const removeHTMLFromMessage = (msg) => {
+  msg = msg || '';
+  return msg.replace(/(<(.+)>)/ig, '');
+};
+
 class MailSubscriber {
   constructor() {
     this.template = require('./templates/subscribe.pug');
@@ -17,23 +22,28 @@ class MailSubscriber {
       // Origin 'http://alpha.growthfountain.com:7070' is therefore not allowed access.
       $.ajax({
         url: url,
-        type: 'POST',
         data: data,
-        dataType: 'json',
+        dataType: 'jsonp',
       }).then((response) => {
-        alert('Check your email to proceed with your subscription.');
+        if (response.result == 'success') {
+          app.dialogs.info(removeHTMLFromMessage(response.msg || 'Check your email to proceed with your subscription.'));
+          $form.find('[type=email]').val('');
+          return;
+        }
+        app.dialogs.error(removeHTMLFromMessage(response.msg));
       }).fail((jqXHR, textStatus, errorThrown) => {
-        //TODO: this is temporary solution
-        alert('Check your email to proceed with your subscription.');
+        console.error(errorThrown);
+        app.dialogs.error('An error occurred, try again later.');
       });
-      console.log('subscribe');
-      console.log(data);
+
       return false;
     });
+
+    this.eventsAttached = true;
   }
 
-  render() {
-    let html = this.template();
+  render(options) {
+    let html = this.template(options);
     this.attachEvents();
     return html;
   }

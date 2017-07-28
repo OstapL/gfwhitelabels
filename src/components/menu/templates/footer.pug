@@ -5,7 +5,7 @@
         .d-inline-block
           .display-partners
             p.fade-in-logo#fade_in_logo
-              img(src="/img/fade-in-logo.png" alt="")
+              img(src=require("images/fade-in-logo.png") alt="")
         .company.text-lg-left.d-inline-block
           span ©GROWTHFOUNTAIN 2017.
           p Made with heart in NYC
@@ -25,77 +25,54 @@
             i.fa.fa-linkedin
           a(href="https://twitter.com/growthfountain" target="_blank").link-1.d-inline-block
             i.fa.fa-twitter
-    .col-xl-2.col-md-2.col-lg-3.col-xs-12
+    .col-xl-2.col-lg-3.col-md-2.col-sm-6.col-xs-12.m-t-mobile-1
       .footer_title
         h4.text-uppercase About us
       a(href="/pg/overview") Overview
-      a(href="/pg/team") #{teamName}
+      a(href="/pg/team") #{app.config.teamName}
       a(href="/pg/partners").display-partners Partners
       a(href="/pg/contact") Contact Us
       a(href="/pg/careers") Careers
       a(href="/pg/news") In the News
       a(href="/pg/faq").mb20 FAQ
       //- a(href="/pg/blogs").mb20 Blog
-    .col-xl-2.m-t-mobile-1.p-x-0-custom.col-md-3.p-l-md-0.col-lg-3.col-xs-12
+    .col-xl-2.col-lg-3.col-md-3.col-sm-6.col-xs-12.p-l-md-0.p-x-0-custom.m-t-mobile-1
       .footer_title
         h4.text-uppercase Investor resources
-      a(href="/pg/investor_tutorial") Investor Tutorial
+      a(href="/pg/investor-tutorial") Investor Tutorial
       a(href="/pg/education") Education
       a(href="/pg/investorquestions").mb20 FAQ
-    .col-xl-3.m-t-mobile-1.col-md-4.p-r-md-0.col-lg-3.col-xs-12
+    .col-xl-3.col-lg-3.col-md-4.col-sm-6.col-xs-12.p-r-md-0.m-t-mobile-1.business-resources
       .footer_title
         h4.text-uppercase Business resources
-      a(href="/pg/business_tutorial") Business Tutorial
+      a(href="/pg/business-tutorial") Business Tutorial
       //- a(href="") Campaign Material
-      a(href="/pg/success_guide") Success Guide
+      a(href="/pg/success-guide") Success Guide
       a(href="/pg/advertising").nav-link Advertising and Communication
       a(href="/calculator/paybackshare/step-1").nav-link Revenue Share Calculator
       a(href="/calculator/whatmybusinessworth/intro") How Much Should I Raise?
-      a(href="/calculator/selectYourBusiness") What's My Business Worth?
+      a(href="/calculator/BusinessValuation") What's My Business Worth?
       a(href="/pg/entrepreneurquestions").mb20 FAQ
     
-    .col-xl-2.m-t-mobile-1.col-md-3.col-lg-3.col-xs-12
+    .col-xl-2.col-lg-3.col-md-3.col-sm-6.col-xs-12.m-t-mobile-1
       .footer_title
         h4.text-uppercase Legal
-      a(href="/pg/terms_of_use") Terms of Use
-      a(href="/pg/privacy_policy") Privacy Policy
-      a(href="/pg/annual_privacy") Annual Privacy Notice
-      a(href="/pg/electronic_signature").mb20 ESIGN Disclosure
-  .row.m-b-3
-    .col-lg-12
-      hr.m-b-3.m-t-2
-      p.small.text-muted GrowthFountain Capital, LLC (“GFC”) is a funding portal registered with the US Securities and Exchange Commission (“SEC”) and is a member of the Financial Industry Regulatory Authority (“FINRA”).  GFC serves as the funding portal facilitating all securities-related transactions on the website growthfountain.com and all subdomains related thereto (collectively, the “Platform”).  All securities listed on the Platform are offered pursuant to Section 4(a)(6) of the Securities Act of 1933, as amended, and the related rules promulgated by the SEC (collectively, “Regulation Crowdfunding”).   By viewing and using the Platform, you agree to be bound by our Terms of Use and Privacy Policy, as may be amended. GFC is not a registered broker dealer or an investment advisor. GFC and its affiliates do not make investment recommendations or provide any investment advice.  No communication, through the Platform or otherwise, should be construed as advice or a recommendation for any securities being offered through the Platform.  GFC does not verify information provided by companies listed on the Platform and makes no assurance as to the completeness or accuracy of any such information. Prospective investors must conduct their own due diligence before making a decision to invest in any securities offered on the Platform.  Investments in crowdfunding offerings are speculative and involve a high degree of risk and those investors who cannot afford to lose their entire investment should not invest. SEC registration and FINRA membership do not constitute an endorsement by those entities. Neither the SEC nor any other regulatory body has passed upon the merits of the securities, the terms of the offerings, or the accuracy or completeness of any offering materials posted on the Platform.  The securities that are listed on the Platform are not insured against loss, not guaranteed to increase in value and may lose all their value.
-  if window.location.host == 'jdcu.growthfountain.com'
-    section.home-wrap-text-block.top-block.text-xs-center.top-baner-tabel
-      .col-xl-11.offset-xl-1.top-baner-tabel
-        .col-xl-4.left.p-l-0.p-r-0.border
-          h3.font-weight-bold.m0.letter-spacing-normal.padding-5 Not NCUA Insured
-        .col-xl-4.center.p-l-0.p-r-0.border
-          h3.font-weight-bold.m0.letter-spacing-normal.padding-5 Not Credit Union Guaranteed
-        .col-xl-4.right.p-l-0.p-r-0.border
-          h3.font-weight-bold.m0.letter-spacing-normal.padding-5 May Lose Value
-//.footer-bottom.m-t-3
+      a(href="/pg/terms-of-use") Terms of Use
+      a(href="/pg/privacy-policy") Privacy Policy
+      a(href="/pg/annual-privacy") Annual Privacy Notice
+      a(href="/pg/electronic-signature").mb20 ESIGN Disclosure
+
+.footer-bottom-section.mt30
   .container
-    .row
-      .col-lg-6.col-sm-6.col-xs-9.text-xs-left.text-lg-left
-        .d-inline-block
-          .display-partners
-            p.fade-in-logo#fade_in_logo
-              img(src="/img/fade-in-logo.png" alt="")
-        .company.text-lg-left.d-inline-block
-          span ©GROWTHFOUNTAIN 2017.
-          p Made with heart in NYC
-      .col-lg-6.col-sm-6.col-xs-3.text-xs-center.p-xs-0
-        .footer-social.pull-sm-right
-          a(href="https://www.facebook.com/GrowthFountain/" target="_blank").link-1.d-inline-block
-            i.fa.fa-facebook
-          a(href="https://www.linkedin.com/company/growthfountain" target="_blank").link-1.d-inline-block
-            i.fa.fa-linkedin
-          a(href="https://twitter.com/growthfountain" target="_blank").link-1.d-inline-block
-            i.fa.fa-twitter
-        .footer-social.footer-email-subscribe.pull-sm-right
-          -
-            var subscribeDirective = require('directives/subscribe/index.js');
-            pug_html += subscribeDirective.render();
-
-
+    .row.m-b-3
+      .col-lg-12
+        p.small.text-muted.p-t-3 GrowthFountain Capital, LLC (“GFC”) is a funding portal registered with the US Securities and Exchange Commission (“SEC”) and is a member of the Financial Industry Regulatory Authority (“FINRA”).  GFC serves as the funding portal facilitating all securities-related transactions on the website growthfountain.com and all subdomains related thereto (collectively, the “Platform”).  All securities listed on the Platform are offered pursuant to Section 4(a)(6) of the Securities Act of 1933, as amended, and the related rules promulgated by the SEC (collectively, “Regulation Crowdfunding”).   By viewing and using the Platform, you agree to be bound by our Terms of Use and Privacy Policy, as may be amended. GFC is not a registered broker dealer or an investment advisor. GFC and its affiliates do not make investment recommendations or provide any investment advice.  No communication, through the Platform or otherwise, should be construed as advice or a recommendation for any securities being offered through the Platform.  GFC does not verify information provided by companies listed on the Platform and makes no assurance as to the completeness or accuracy of any such information. Prospective investors must conduct their own due diligence before making a decision to invest in any securities offered on the Platform.  Investments in crowdfunding offerings are speculative and involve a high degree of risk and those investors who cannot afford to lose their entire investment should not invest. SEC registration and FINRA membership do not constitute an endorsement by those entities. Neither the SEC nor any other regulatory body has passed upon the merits of the securities, the terms of the offerings, or the accuracy or completeness of any offering materials posted on the Platform.  The securities that are listed on the Platform are not insured against loss, not guaranteed to increase in value and may lose all their value.
+    if window.location.host == 'jdcu.growthfountain.com'
+      section.home-wrap-text-block.top-block.text-xs-center.top-baner-tabel
+        .col-xl-11.offset-xl-1.top-baner-tabel.m-b-3
+          .col-xl-4.left.p-l-0.p-r-0.border
+            h3.font-weight-bold.m0.letter-spacing-normal.padding-5 Not NCUA Insured
+          .col-xl-4.center.p-l-0.p-r-0.border
+            h3.font-weight-bold.m0.letter-spacing-normal.padding-5 Not Credit Union Guaranteed
+          .col-xl-4.right.p-l-0.p-r-0.border
+            h3.font-weight-bold.m0.letter-spacing-normal.padding-5 May Lose Value

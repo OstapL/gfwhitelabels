@@ -1,50 +1,59 @@
 module.exports = {
   events: {
-    'click .add-section': 'addSection',
+    // 'click .add-section': 'addSection',
     'click .delete-section': 'deleteSection',
     'click .add-sectionnew': 'addSectionNew',
     'click .delete-sectionnew': 'deleteSectionNew',
   },
 
   methods: {
-    addSection(e) {
-      e.preventDefault();
-      let sectionName = e.target.dataset.section;
-      let template = require('templates/section.pug');
-      this[sectionName + 'Index']++;
-      $('.' + sectionName).append(
-          template({
-            fields: this.fields,
-            name: sectionName,
-            attr: {
-              class1: '',
-              class2: '',
-              app: app,
-              type: this.fields[sectionName].type,
-              index: this[sectionName + 'Index'],
-            },
-            // values: this.model.toJSON(),
-            values: this.model,
-          })
-      );
-    },
+    // addSection(e) {
+    //   e.preventDefault();
+    //   let sectionName = e.target.dataset.section;
+    //   let template = require('templates/section.pug');
+    //   this[sectionName + 'Index']++;
+    //   $('.' + sectionName).append(
+    //       template({
+    //         fields: this.fields,
+    //         name: sectionName,
+    //         attr: {
+    //           class1: '',
+    //           class2: '',
+    //           app: app,
+    //           type: this.fields[sectionName].type,
+    //           index: this[sectionName + 'Index'],
+    //         },
+    //         // values: this.model.toJSON(),
+    //         values: this.model,
+    //       })
+    //   );
+    // },
 
     deleteSection(e) {
       e.preventDefault();
-      if(confirm('Are you sure?')) {
-        let sectionName = e.currentTarget.dataset.section;
-        if($('.' + sectionName + ' .delete-section-container').length > 1) {
-          $('.' + sectionName + ' .index_' + e.currentTarget.dataset.index).remove();
-          e.currentTarget.offsetParent.remove();
-        } else {
-          $('.' + sectionName + ' .index_' + e.currentTarget.dataset.index + ' input').val('');
-          $('.' + sectionName + ' .index_' + e.currentTarget.dataset.index + ' textarea').val('');
-        }
-      }
 
-      // ToDo
-      // Fix index counter
-      // this[sectionName + 'Index'] --;
+      const target = e.currentTarget;
+      const sectionName = target.dataset.section;
+      const index = target.dataset.index;
+
+      app.dialogs.confirm('Are you sure?').then((confirmed) => {
+        if (!confirmed)
+          return;
+
+        if($('.' + sectionName + ' .delete-section-container').length > 1) {
+          $('.' + sectionName + ' .index_' + index).remove();
+          target.offsetParent.remove();
+        } else {
+          $('.' + sectionName + ' .index_' + index + ' input').val('');
+          $('.' + sectionName + ' .index_' + index + ' textarea').val('');
+          this.el.querySelectorAll('.' + sectionName + '[data-index="' + index + '"] select').forEach((el) => {
+            el.querySelector('option').selected = true;
+          });
+        }
+        // ToDo
+        // Fix index counter
+        // this[sectionName + 'Index'] --;
+      });
     },
 
     addSectionNew(e) {
@@ -56,8 +65,10 @@ module.exports = {
       */
 
       e.preventDefault();
+
       const sectionName = e.target.dataset.section;
-      const template = require('components/' + e.target.dataset.comp + '/templates/snippets/' + e.target.dataset.template + '.pug');
+      // const template = require('components/' + e.target.dataset.comp + '/templates/snippets/' + e.target.dataset.template + '.pug');
+      const template = this.snippets[e.target.dataset.template];
       this[sectionName + 'Index']++;
 
       $('.' + sectionName + '_container').append(
@@ -79,18 +90,30 @@ module.exports = {
       */
 
       e.preventDefault();
-      if(confirm('Are you sure?')) {
-        let sectionName = e.currentTarget.dataset.section;
-        if(this.$el.find('.' + sectionName).length > 1) {
-          $(e.target).parents('.addSectionBlock').remove();
+      const target = e.currentTarget;
+      const sectionName = target.dataset.section;
+      const index = target.dataset.index;
+
+      app.dialogs.confirm('Are you sure?').then((confirmed) => {
+        if (!confirmed)
+          return;
+
+        if(this.$el.find('.' + sectionName + '.addSectionBlock').length > 1) {
+          $(target).parents('.addSectionBlock').remove();
         } else {
-          this.$el.find('.' + sectionName + '[data-index=' + e.currentTarget.dataset.index + '] input').val('');
-          this.$el.find('.' + sectionName + '[data-index=' + e.currentTarget.dataset.index + '] textarea').val('');
+          this.$el.find('.' + sectionName + '[data-index=' + index + '] input').val('');
+          this.$el.find('.' + sectionName + '[data-index=' + index + '] textarea').val('');
+          this.el.querySelectorAll('.' + sectionName + '[data-index="' + index + '"] select').forEach((el) => {
+            el.querySelector('option').selected = true;
+          });
+          if (sectionName == 'additional_video') {
+            this.$el.find('.' + sectionName + '[data-index=' + index + '] input').trigger('change');
+          }
         }
         this[sectionName + 'Index'] --;
         // TODO
         // Fix index of the next fields
-      }
+      });
     },
 
     createIndexes() {
@@ -99,6 +122,7 @@ module.exports = {
        */
 
       this.jsonTemplates = {};
+
       _(this.fields).each((el, key) => {
         if(el.type == 'nested') {
           if(typeof this.model[key] != 'object') {
@@ -115,25 +139,44 @@ module.exports = {
       });
     },
 
-    buildJsonTemplates(component, context={}) {
-      /*
-       * Build html for nested fields
-       * PARAMS:
-       *    - component: name of the component 
-       * MUST RUN AFTER createIndex function
-       */
+    // buildJsonTemplates(component, context={}) {
+    //   /*
+    //    * Build html for nested fields
+    //    * PARAMS:
+    //    *    - component: name of the component
+    //    * MUST RUN AFTER createIndex function
+    //    */
+    //
+    //   _(this.fields).each((el, key) => {
+    //     if (el.type !== 'nested' || el.schema.urls)
+    //       return;
+    //
+    //     this.jsonTemplates[key] = require('components/' + component + '/templates/snippets/' + key + '.pug')(_.extend({
+    //       attr: _.extend(
+    //         {}, this.fields[key]
+    //       ),
+    //       name: key,
+    //       values: this.model[key] || {},
+    //       first_run: 1,
+    //     }, context));
+    //   });
+    // },
+
+    buildSnippets(snippets, context={}) {
+      this.snippets = snippets;
 
       _(this.fields).each((el, key) => {
-        if(el.type == 'nested' &&  !el.schema.hasOwnProperty('urls')) {
-          this.jsonTemplates[key] = require('components/' + component + '/templates/snippets/' + key + '.pug')(_.extend({
-            attr: _.extend(
-              {}, this.fields[key]
-            ),
-            name: key,
-            values: this.model[key] || {},
-            first_run: 1,
-          }, context));
-        }
+        if (el.type !== 'nested' || el.schema.urls)
+          return;
+
+        this.jsonTemplates[key] = snippets[key](_.extend({
+          attr: _.extend(
+            {}, this.fields[key]
+          ),
+          name: key,
+          values: this.model[key] || {},
+          first_run: 1,
+        }, context));
       });
     },
 

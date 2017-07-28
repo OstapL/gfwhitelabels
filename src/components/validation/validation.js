@@ -1,9 +1,9 @@
 const rules = require('./rules.js');
 const fixedProps = ['type', 'label', 'placeholder'];
-const fixedRegex = ['number', 'url', 'email', 'money'];
+const fixedRegex = ['number', 'url', 'email', 'money', 'file', 'image'];
 
 module.exports = {
-  clearMsg (view, attr, selector) {
+  clearMsg(view, attr, selector) {
     var $el = view.$('[name=' + attr + ']');
     var $group = $el.parent();
 
@@ -20,39 +20,36 @@ module.exports = {
   },
 
   invalidMsg: function (view, attr, error, selector) {
-
     // If we have error for json/nested fieds
     // we need get all keys and show error for each key
     // individually
-    if(Array.isArray(error) !== true && typeof error == 'object') {
+    if (Array.isArray(error) !== true && typeof error == 'object') {
       _(error).forEach((el, k) => {
         _(el).forEach((errors, key) => {
           this.invalidMsg(view, attr + '__' + k + '__' + key, errors, selector);
-        })
+        });
       });
       return false;
     }
 
     // Temp hack for nested fields
-    if(attr.indexOf('__') !== -1) {
+    if (attr.indexOf('__') !== -1) {
       let t = $('#' + attr).parents('.shown-yes');
-      if(t.length != 0 && t.css('display') == 'none') {
+      if (t.length != 0 && t.css('display') == 'none') {
         t.show();
       }
     }
 
-    let $el = null;
-    let $group = null;
-
-    $el = view.$('#' + attr);
-
-    if ($el.length == 0) {
+    let $el = view.$('#' + attr);
+    if ($el.length == 0)
       $el = view.$('[name=' + attr + ']');
-    }
 
     if (Array.isArray(error) !== true) {
       error = [error];
     }
+
+    error = error.map(err => err.endsWith('.') ? err.substring(0, err.length - 1) : err);
+    let errorMsg = error.join(', ') + '.';
 
     // if element not found - we will show error just in alert-warning div
     if ($el.length == 0) {
@@ -62,11 +59,11 @@ module.exports = {
       // first element in form
       if ($el.length == 0) {
         let msg = attr == 'non_field_errors' ? '' : ('<b>' + attr + ':</b> ');
-        msg += error.join(',');
+        msg += errorMsg;
 
         $el = $('<div class="alert alert-warning" role="alert"><p>' + msg + '</p></div>');
 
-        if(view.$el.find('form').length == 0) {
+        if (view.$el.find('form').length == 0) {
           view.$el.prepend($el);
         } else {
           view.$el.find('form').prepend($el);
@@ -74,19 +71,17 @@ module.exports = {
       } else {
         $el.html(
           $el.html() + '<p><b>' + attr + ':</b> ' +
-            error.join(',') + '</p>'
+          errorMsg + '</p>'
         );
       }
     } else {
-      $group = $el.parent();
+      let $group = $el.parent();
       $group.addClass('has-error');
-      var $errorDiv = $group.find('.help-block');
-
-      if ($errorDiv.length != 0) {
-        $errorDiv.html(error.join(', '));
-      } else {
-        $group.append('<div class="help-block">' + error.join(', ') + '</div>');
-      }
+      let $errorDiv = $group.find('.help-block');
+      if ($errorDiv.length)
+        $errorDiv.html(errorMsg);
+      else
+        $group.append('<div class="help-block">' + errorMsg + '</div>');
     }
   },
 
@@ -117,6 +112,7 @@ module.exports = {
     this.errors = {};
 
     _(schema).each((attr, name) => {
+
       // TODO
       // How to check nested one element if that can be blank ?
       // requiredTemp - temp fix to validate fields on investment page only
@@ -129,7 +125,9 @@ module.exports = {
                 this.runRules(attr, name);
               } catch (e) {
                 this.finalResult = false;
-                Array.isArray(this.errors[name]) ? this.errors[name].push(e) : this.errors[name] = [e];
+                Array.isArray(this.errors[name])
+                  ? this.errors[name].push(e)
+                  : this.errors[name] = [e];
               }
             });
           } else {

@@ -3,61 +3,12 @@ const isBoolean = function(val) {
 }
 
 let exports = {
-  calcProgress: function(data) {
-    try {
-      return {
-        'general_information': 
-          data.pitch.length > 5 &&
-          data.intended_use_of_proceeds.length > 5 &&
-          data.business_model.length > 5,
-        'media':
-          data.video != '' &&
-          data.header_image_image_id != null &&
-          data.list_image_image_id != null &&
-          data.gallery_group_data.length > 0,
-        'specifics': 
-          data.minimum_raise >= 25000 &&
-          data.maximum_raise <= 1000000 &&
-          data.minimum_increment >= 100 &&
-          data.length_days >= 60 &&
-          data.investor_presentation_file_id != null &&
-          isBoolean(data.security_type),
-        'team-members': data.team_members.length > 0,
-        'perks': data.perks.length > 0
-      }
-    } catch(e) {
-      return {};
-    }
-  },
-
-  updateMenu: function(progress) {
-    let complited = 0;
-    _(progress).each((v,k) => {
-      let el = null;
-      if(v == false) {
-        el = document.querySelector('#menu_c_' + k + ' .icon-check');
-        if(el != null) {
-          el.remove();
-        }
-      } else {
-        if(k != 'perks') {
-          complited ++;
-        }
-        if(document.querySelector('#menu_c_' + k + ' .icon-check') == null) {
-          document.querySelector('#menu_c_' + k).innerHTML += ' <div class="icon-check"><i class="fa fa-check-circle-o"></i></div>';
-        }
-      }
-    });
-    
-    if(complited == 4) {
-      document.querySelectorAll('#form_c a.disabled').forEach((v, i) => {
-        v.className = v.className.replace('disabled', '');
-      });
-    }
-  },
 
   submitCampaign: function submitCampaign(e) {
-    let progress = exports.calcProgress(app.user.campaign);
+    // ToDo
+    // Fix class
+    let campaignClass = new app.models.Campaign(app.user.campaign);
+    let progress = campaignClass.calcProgress();
 
     if(
         progress.general_information == true &&
@@ -84,7 +35,7 @@ let exports = {
   postForReview: function postForReview(e) {
     $('#company_publish_confirm').modal('hide', 0);
     if(app.user.company.is_approved < 1) {
-      api.makeRequest(raiseCapitalServer + '/company/' + e.target.dataset.companyid + '/post-for-review', 'PUT')
+      api.makeRequest(app.config.raiseCapitalServer + '/company/' + e.target.dataset.companyid + '/post-for-review', 'PUT')
         .then((data) => {
           app.user.company.is_approved = 1;
           $('#company_publish_confirm').modal('hide');
@@ -94,6 +45,7 @@ let exports = {
               { trigger: true, replace: false }
             );
           }, 500);
+          app.analytics.emitEvent(app.analytics.events.CampaignSubmitted, app.user.stats);
         });
     } else if(app.user.company.is_approved == 1) {
       app.routers.navigate(
@@ -112,7 +64,7 @@ let exports = {
     e.preventDefault();
     let pathname = location.pathname;
     app.showLoading();
-    let data = this.$('form').serializeJSON({ useIntKeysAsArrayIndex: true });
+    let data = this.$('form').serializeJSON();
     if (window.location.href.indexOf('team-members/add') !== -1) {
       e.target.dataset.method = 'PUT';
     }
@@ -120,6 +72,8 @@ let exports = {
       setTimeout((function() {
         window.location = '/' + this.formc.company_id + '?preview=1&previous=' + pathname;
       }).bind(this), 100);
+    } else {
+      app.hideLoading();
     }
   }
 };

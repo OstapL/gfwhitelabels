@@ -5,6 +5,8 @@ module.exports = {
   patterns: {
     // Matches any digit(s) (i.e. 0-9)
     number: /^\d+(\.\d+)?$/,
+    file: /^\d+(\.\d+)?$/,
+    image: /^\d+(\.\d+)?$/,
 
     // Matches any number (e.g. 100.000)
     money: /^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:\.\d+)?$/,
@@ -28,9 +30,12 @@ module.exports = {
     rangeLength: '{0} must be between {1} and {2} characters',
     oneOf: '{0} must be one of: {1}',
     equalTo: '{0} must be the same as {1}',
+    money: '{0} must only contain digits',
     digits: '{0} must only contain digits',
     number: '{0} must be a number',
-    email: '{0} must be a valid email',
+    file: '{0} must be a file',
+    image: '{0} must be an image',
+    email: 'Invalid email', // email: '{0} must be a valid email',
     url: '{0} must be a valid url',
     inlinePattern: '{0} is invalid',
   },
@@ -214,6 +219,14 @@ module.exports = {
   // We are testing only regex for empty set use required rule
   regex: function (name, attr, data, pattern) {
     let value = this.getData(data, name);
+
+    // This is sucks ..
+    // Quick fix for file, image and complex ojects
+    // Fix this
+    if(value && value.id) {
+      value = value.id;
+    }
+
     if (this.hasValue(value) && !value.toString().match(this.patterns[pattern] || pattern)) {
       throw this.format(this.messages[pattern], attr.label, pattern);
     }

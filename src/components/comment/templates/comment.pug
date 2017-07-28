@@ -1,15 +1,15 @@
 -
-  var roleHelper = require('helpers/roleHelper.js');
-  var dateHelper = require('helpers/dateHelper.js');
-
   var userName = comment.user.first_name + ' ' + comment.user.last_name;
   //ignore Director/Shareholder role
   // var roleBitmap = 0b1111111100 & comment.user.role;
   var roleBitmap = comment.user.role;
   //roleBitmap = roleBitmap || comment.user.role;
-  var roles = roleHelper.extractRolesByPriority(roleBitmap);
-  var passedTime = dateHelper.fromNow(comment.created_date);
-  var avatar = app.getUrl(comment.user.image_data) || '/img/default/Default_photo.png';
+  var roles = app.helpers.role.extractRolesByPriority(roleBitmap);
+  var passedTime = app.helpers.date.fromNow(comment.created_date);
+  var avatar = require('images/default/Default_photo.png');
+  if(comment.user.image_data.urls && comment.user.image_data.urls['50x50']) {
+    avatar = app.sites[comment.user.image_data.site_id] + comment.user.image_data.urls['50x50'];
+  }
 
 div(id=('comment' + comment.uid) data-id=comment.uid data-level=level).single-comment.col-xl-12
   .author-info
@@ -24,7 +24,7 @@ div(id=('comment' + comment.uid) data-id=comment.uid data-level=level).single-co
           else
             if comment.related
               span.kvalificatio-comments #{ comment.related }
-          p.date-comments.hidden-xs-down #{ passedTime }
+          p.date-comments #{ passedTime }
     .row
       .col-xl-12
         .author-comment
@@ -32,14 +32,14 @@ div(id=('comment' + comment.uid) data-id=comment.uid data-level=level).single-co
         div.responce.comment-actions
           if level <= 0
             li.icon-comment
-              i.fa.fa-comment-o.p-r-5
+              i.fa.fa-comment-o.p-r-5.p-l-0
               a(href="#").link-1.link-response-count
                 span.count #{ comment.count || '' }
                 i.fa.fa-angle-up
               span.reply-right |
           if level <= 3
             li.reply
-              a(href="#").link-1.link-reply Reply
+              a(href="#" disabled=attr.readonly).link-1.link-reply Reply
           //-
             li
               a(href="#").link-1.link-like

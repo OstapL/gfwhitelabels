@@ -1,24 +1,9 @@
-'use strict';
-
 const typeOfDocuments = require('consts/typeOfDocuments.json');
 const companyFees = require('consts/companyFees.json');
-const formcHelpers = require('./helpers.js');
-const formatHelper = require('../../helpers/formatHelper.js');
 const securityTypeConsts = require('consts/formc/security_type.json');
 const yesNoConsts = require('consts/yesNo.json');
 const roles = ['Shareholder', 'Director', 'Officer'];
-
-const menuHelper = require('helpers/menuHelper.js');
-const addSectionHelper = require('helpers/addSectionHelper.js');
-const yesNoHelper = require('helpers/yesNoHelper.js');
-
-const dropzoneHelpers = require('helpers/dropzoneHelpers.js');
-const riskFactorsHelper = require('helpers/riskFactorsHelper.js');
-const validation = require('components/validation/validation.js');
-
-const disableEnterHelper = require('helpers/disableEnterHelper.js');
-
-const leavingConfirmationHelper = require('helpers/leavingConfirmationHelper.js');
+const riskFactors = require('./riskFactorsHelper.js');
 
 const labels = {
   title: 'Title for Risk',
@@ -55,7 +40,7 @@ const labels = {
 
 const submitFormc = function submitFormc(e) {
   e.preventDefault();
-  let progress = formcHelpers.formcCalcProgress(this.model);
+  let progress = this.model.calcProgress();
 
   if(
       progress.introduction == true &&
@@ -89,9 +74,21 @@ const submitFormc = function submitFormc(e) {
   }
 };
 
+const snippets = {
+  business_loans_or_debt: require('./templates/snippets/business_loans_or_debt.pug'),
+  exempt_offering: require('./templates/snippets/exempt_offering.pug'),
+  experiences: require('./templates/snippets/experiences.pug'),
+  less_offering_express: require('./templates/snippets/less_offering_express.pug'),
+  outstanding_securities: require('./templates/snippets/outstanding_securities.pug'),
+  positions: require('./templates/snippets/positions.pug'),
+  sold_securities_data: require('./templates/snippets/sold_securities_data.pug'),
+  transaction_with_related_parties: require('./templates/snippets/transaction_with_related_parties.pug'),
+  use_of_net_proceeds: require('./templates/snippets/use_of_net_proceeds.pug'),
+};
+
 module.exports = {
   introduction: Backbone.View.extend(_.extend({
-    urlRoot: formcServer + '/:id/introduction',
+    urlRoot: app.config.formcServer + '/:id/introduction',
 
     events: _.extend({
       'click .save-and-continue': 'submit',
@@ -99,7 +96,7 @@ module.exports = {
       'click .link-2': 'openPdf',
       'keyup #full_name': 'changeSign',
       'click #pay-btn': 'stripeSubmit',
-    }, menuHelper.events, yesNoHelper.events, /*leavingConfirmationHelper.events*/),
+    }, app.helpers.menu.events, app.helpers.yesNo.events, /*app.helpers.confirmOnLeave.events*/),
 
     preinitialize() {
       // ToDo
@@ -111,7 +108,9 @@ module.exports = {
 
     initialize(options) {
       this.model = options.formc;
+      this.campaign = options.campaign;
       this.fields = options.fields;
+      this.fields.failed_to_comply_choice.dependies = ['failed_to_comply'];
 
       if(this.model.is_paid === false) {
         this.fields.full_name = { 
@@ -125,8 +124,6 @@ module.exports = {
 
       this.$el.html(
         template({
-          serverUrl: serverUrl,
-          Urls: Urls,
           fields: this.fields,
           values: this.model,
           fullName: app.user.get('first_name') + ' ' + app.user.get('last_name'),
@@ -137,6 +134,7 @@ module.exports = {
       this.eSignCompanyName = eSignForm.find('#company-name');
       this.eSignFullName = eSignForm.find('#full_name');
       this.eSignPreview = eSignForm.find('.electronically .name');
+      this.campaign.updateMenu(this.campaign.calcProgress());
 
       return this;
     },
@@ -149,7 +147,7 @@ module.exports = {
 
     saveEsign() {
       const listingAgreement = 'formc/listing_agreement.pdf';
-      const reqUrl = global.esignServer + '/pdf-doc';
+      const reqUrl = app.config.esignServer + '/pdf-doc';
       const formData = this.getDocMetaData();
       const data = [{
         object_id: this.model.id,
@@ -158,7 +156,7 @@ module.exports = {
         template: listingAgreement
       }];
 
-      app.makeRequest(reqUrl, 'POST', data, {
+      api.makeRequest(reqUrl, 'POST', data, {
         contentType: 'application/json; charset=utf-8',
         crossDomain: true,
       })
@@ -198,8 +196,10 @@ module.exports = {
     },
 
     _success(data, newData) {
-      if (this.formData && !this.formData.is_paid) this.saveEsign(data);
-      formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
+      if (this.formData && !this.formData.is_paid) {
+        this.saveEsign(data);
+      }
+      this.model.updateMenu(this.model.calcProgress());
       return 1;
     },
 
@@ -214,125 +214,130 @@ module.exports = {
 
     stripeSubmit(e) {
       e.preventDefault();
-      
-      this.setFormData();
-      let $stripeForm = $('.payment-block');
 
-      function validateCard(form, selectors) {
+      app.helpers.scripts.load('https://js.stripe.com/v2/').then(() => {
+        this.setFormData();
+        let $stripeForm = $('.payment-block');
 
-        let number = form.find('#' + selectors.number);
-        let expMonth = form.find('#' + selectors.expMonth);
-        let expYear = form.find('#' + selectors.expYear);
-        let cvc = form.find('#' + selectors.cvc);
-        let error = 0;
+        function validateCard(form, selectors) {
 
-        $('.help-block').remove();
-        if (!Stripe.card.validateCardNumber(number.val())) {
-          validation.invalidMsg({ $: $, $el: $('#content') }, selectors.number, ['Please, check card number.']);
-          error = 1;
-        }
+          let number = form.find('#' + selectors.number);
+          let expMonth = form.find('#' + selectors.expMonth);
+          let expYear = form.find('#' + selectors.expYear);
+          let cvc = form.find('#' + selectors.cvc);
+          let error = 0;
 
-        if (!Stripe.card.validateExpiry(expMonth.val(), expYear.val())) {
-          validation.invalidMsg({ $: $, $el: $('#content') }, selectors.expDate, ['Please, check expiration date.']);
-          error = 1;
-        }
+          $('.help-block').remove();
+          if (!Stripe.card.validateCardNumber(number.val())) {
+            app.validation.invalidMsg({ $: $, $el: $('#content') }, selectors.number, ['Please, check card number.']);
+            error = 1;
+          }
 
-        if (!Stripe.card.validateCVC(cvc.val())) {
-          validation.invalidMsg({ $: $, $el: $('#content') }, selectors.cvc, ['Please, check CVC.']);
-          error = 1;
-        }
+          if (!Stripe.card.validateExpiry(expMonth.val(), expYear.val())) {
+            app.validation.invalidMsg({ $: $, $el: $('#content') }, selectors.expDate, ['Please, check expiration date.']);
+            error = 1;
+          }
 
-        if(error == 1) {
-          return null;
-        }
+          if (!Stripe.card.validateCVC(cvc.val())) {
+            app.validation.invalidMsg({ $: $, $el: $('#content') }, selectors.cvc, ['Please, check CVC.']);
+            error = 1;
+          }
 
-        return {
-          number: number.val(),
-          cvc: cvc.val(),
-          exp_month: expMonth.val(),
-          exp_year: expYear.val(),
+          if(error == 1) {
+            return null;
+          }
+
+          return {
+            number: number.val(),
+            cvc: cvc.val(),
+            exp_month: expMonth.val(),
+            exp_year: expYear.val(),
+          };
         };
-      };
 
-      let $payBtn = $(e.target);
-      $payBtn.prop('disabled', true);
+        let $payBtn = $(e.target);
+        $payBtn.prop('disabled', true);
 
-      var card = validateCard($stripeForm,
-        { number: 'card_number',
-          expDate: 'card_exp_date_year__year',
-          expMonth: 'card_exp_month__month',
-          expYear: 'card_exp_date_year__year',
-          cvc: 'card_cvc',
-        });
+        var card = validateCard($stripeForm,
+          { number: 'card_number',
+            expDate: 'card_exp_date_year',
+            expMonth: 'card_exp_month',
+            expYear: 'card_exp_date_year',
+            cvc: 'card_cvc',
+          });
 
-      if (!card) {
-        $payBtn.prop('disabled', false);
-        return;
-      }
-
-      if (!this.eSignFullName.val().trim()) {
-        validation.invalidMsg({ $: $, $el: $('#content'), }, 'full-name', ['Check your name']);
-        $payBtn.prop('disabled', false);
-        return;
-      }
-
-      app.showLoading();
-
-      Stripe.setPublishableKey(stripeKey);
-
-      Stripe.card.createToken(card, (status, stripeResponse) => {
-        if (stripeResponse.error) {
-          validation.invalidMsg({ $: $, $el: $('#content'), }, 'card_number', [stripeResponse.error.message]);
-          $payBtn.prop('disabled', false); // Re-enable submission
-          app.hideLoading();
+        if (!card) {
+          $payBtn.prop('disabled', false);
           return;
         }
 
-        api.makeRequest(formcServer + '/' + this.model.id + '/stripe', "PUT", {
-          stripeToken: stripeResponse.id
-        }).done((formcResponse, statusText, xhr) => {
-          if (xhr.status !== 200) {
-            validation.invalidMsg({'$': $, $el: $('#content'),}, "expiration-block",
-              [formcResponse.description || 'Some error message should be here']);
+        if (!this.eSignFullName.val().trim()) {
+          app.validation.invalidMsg({ $: $, $el: $('#content'), }, 'full-name', ['Check your name']);
+          $payBtn.prop('disabled', false);
+          return;
+        }
 
-            $payBtn.prop('disabled', false);
+        app.showLoading();
+
+        Stripe.setPublishableKey(app.config.stripeKey);
+
+        Stripe.card.createToken(card, (status, stripeResponse) => {
+          if (stripeResponse.error) {
+            app.validation.invalidMsg({ $: $, $el: $('#content'), }, 'card_number', [stripeResponse.error.message]);
+            $payBtn.prop('disabled', false); // Re-enable submission
             app.hideLoading();
             return;
           }
 
-          //todo; sign data, make request to server
-          // let signData = {
-          //   type: 'POST',
-          //   'company_name': this.eSignCompanyName.val(),
-          //   'full_name': this.eSignFullName.val(),
-          // };
-          //
-          // if (this.model.is_paid == false) {
-          //   signData.company_name = this.eSignCompanyName.val();
-          //   signData.full_name = this.eSignFullName.val();
-          // }
+          app.user.setFormcPaid(this.model.id);
+          app.profile.render();
+
+          api.makeRequest(app.config.formcServer + '/' + this.model.id + '/stripe', "PUT", {
+            stripeToken: stripeResponse.id
+          }).done((formcResponse, statusText, xhr) => {
+            if (xhr.status !== 200) {
+              app.validation.invalidMsg({'$': $, $el: $('#content'),}, "expiration-block",
+                [formcResponse.description || 'Some error message should be here']);
+
+              $payBtn.prop('disabled', false);
+              app.hideLoading();
+              return;
+            }
+
+            //todo; sign data, make request to server
+            // let signData = {
+            //   type: 'POST',
+            //   'company_name': this.eSignCompanyName.val(),
+            //   'full_name': this.eSignFullName.val(),
+            // };
+            //
+            // if (this.model.is_paid == false) {
+            //   signData.company_name = this.eSignCompanyName.val();
+            //   signData.full_name = this.eSignFullName.val();
+            // }
 
 
 
-          this.model.is_paid = true;
-          delete this.fields.full_name;
+            this.model.is_paid = true;
+            delete this.fields.full_name;
 
-          $stripeForm.remove();
+            $stripeForm.remove();
 
-          this.$('#save-button-block').removeClass('collapse');
+            this.$('#save-button-block').removeClass('collapse');
 
-          this.$('.save-and-continue').click();
-          app.hideLoading();
+            this.$('.save-and-continue').click();
+            app.hideLoading();
 
-        }).fail((xhr, ajaxOptions, err) => {
-          validation.invalidMsg({'$': $}, "expiration-block",
-            [xhr.responseJSON.non_field_errors || 'An error occurred, please, try again later.']);
+          }).fail((xhr, ajaxOptions, err) => {
+            app.validation.invalidMsg({'$': $}, "expiration-block",
+              [xhr.responseJSON && xhr.responseJSON.non_field_errors ? xhr.responseJSON.non_field_errors : 'An error occurred, please, try again later.']);
 
-          $payBtn.prop('disabled', false);
-          app.hideLoading();
+            $payBtn.prop('disabled', false);
+            app.hideLoading();
+          });
+
+          return false;
         });
-
-        return false;
       });
     },
 
@@ -345,32 +350,29 @@ module.exports = {
       let $submitBtn = $form.find('#pay-btn');
       $submitBtn.prop('disabled', true);
 
-      let data = $form.serializeJSON({ checkboxUncheckedValue: 'false', useIntKeysAsArrayIndex: true });
-
+      let data = $form.serializeJSON();
       if (data.certify == 0) {
         delete data.certify;
       }
 
-      api.submitAction.call(this, e, data);
-
-      return false;
+      return api.submitAction.call(this, e, data);
     },
 
     changeSign() {
       this.eSignPreview.text(this.eSignFullName.val());
     },
 
-  }, menuHelper.methods, yesNoHelper.methods, leavingConfirmationHelper.methods)),
+  }, app.helpers.menu.methods, app.helpers.yesNo.methods, app.helpers.confirmOnLeave.methods)),
 
   teamMembers: Backbone.View.extend(_.extend({
-    urlRoot: formcServer + '/:id/team-members/employers',
+    urlRoot: app.config.formcServer + '/:id/team-members/employers',
     events: _.extend({
       'click #submitForm': api.submitAction,
       'click .inviteAction': 'repeatInvitation',
       'blur #full_time_employers,#part_time_employers': 'updateEmployees',
       'click .submit_formc': submitFormc,
       'click .delete-member': 'deleteMember',
-    }, menuHelper.events, leavingConfirmationHelper.events),
+    }, app.helpers.menu.events, app.helpers.confirmOnLeave.events),
 
     preinitialize() {
       // ToDo
@@ -382,14 +384,15 @@ module.exports = {
 
     initialize(options) {
       this.model = options.formc;
+      this.campaign = options.campaign;
       this.fields = options.fields;
-      this.fields.full_time_employers = { label: 'Full Time Employees' };
-      this.fields.part_time_employers = { label: 'Part Time Employees' };
+      this.fields.full_time_employers.label = 'Full Time Employees';
+      this.fields.part_time_employers.label = 'Part Time Employees';
       this.urlRoot = this.urlRoot.replace(':id', this.model.id);
     },
 
     _success(data, newData) {
-      formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
+      this.model.updateMenu(this.model.calcProgress());
       return 1;
     },
 
@@ -399,32 +402,37 @@ module.exports = {
 
     deleteMember: function (e) {
       e.preventDefault();
-      let userId = e.currentTarget.dataset.id;
 
-      if (confirm('Are you sure you would like to delete this team member?')) {
+      const target = e.currentTarget;
+      const userId = target.dataset.id;
+
+      app.dialogs.confirm('Are you sure you would like to delete this team member?').then((confirmed) => {
+        if (!confirmed)
+          return;
+
         api.makeRequest(
           this.urlRoot.replace('employers', '') +  userId,
           'DELETE',
-          {'role': e.currentTarget.dataset.role }
+          {'role': target.dataset.role }
         ).
         then((data) => {
           let index = this.model.team_members.findIndex((el) => { return el.user_id == userId });
           this.model.team_members.splice(index, 1);
-          e.currentTarget.parentElement.parentElement.remove()
+          target.parentElement.parentElement.remove()
           /*
            * ToDo
            * Create right notification error
            *
-          if (this.model.team_members.length < 1) {
-            this.$el.find('.notification').show();
-            this.$el.find('.buttons-row').hide();
-          } else {
-            this.$el.find('.notification').hide();
-            this.$el.find('.buttons-row').show();
-          }
-          */
+           if (this.model.team_members.length < 1) {
+           this.$el.find('.notification').show();
+           this.$el.find('.buttons-row').hide();
+           } else {
+           this.$el.find('.notification').hide();
+           this.$el.find('.buttons-row').show();
+           }
+           */
         });
-      }
+      });
     },
 
     updateEmployees(e) {
@@ -442,10 +450,10 @@ module.exports = {
     repeatInvitation(e) {
       e.preventDefault();
       api.makeRequest(
-        formcServer + '/' + this.model.id + '/team-members/invitation/' +  e.target.dataset.id,
+        app.config.formcServer + '/' + this.model.id + '/team-members/invitation/' +  e.target.dataset.id,
         'PUT',
       ).then((data) => {
-        e.target.innerHTML = 'sent';
+        e.target.innerHTML = '<i class="fa fa-envelope-open-o" aria-hidden="true"></i> Sent';
         e.target.className = 'link-3 invite';
       });
     },
@@ -455,8 +463,6 @@ module.exports = {
 
       this.$el.html(
         template({
-          serverUrl: serverUrl,
-          Urls: Urls,
           fields: this.fields,
           values: this.model,
           roles: roles,
@@ -470,21 +476,22 @@ module.exports = {
           ],
         })
       );
-      disableEnterHelper.disableEnter.call(this);
+      app.helpers.disableEnter.disableEnter.call(this);
+      this.campaign.updateMenu(this.campaign.calcProgress());
       return this;
     },
 
-  }, menuHelper.methods, addSectionHelper.methods, leavingConfirmationHelper.methods)),
+  }, app.helpers.menu.methods, app.helpers.section.methods, app.helpers.confirmOnLeave.methods)),
 
 	teamMemberAdd: Backbone.View.extend(_.extend({
-    urlRoot: formcServer + '/:id/team-members',
+    urlRoot: app.config.formcServer + '/:id/team-members',
     doNotExtendModel: true,
     roles: ['shareholder', 'director', 'officer'],
     events: _.extend({
       'click #submitForm': 'submit',
       'click .submit_formc': submitFormc,
       'click .team-current-date': 'setCurrentDate',
-    }, addSectionHelper.events, menuHelper.events, yesNoHelper.events, leavingConfirmationHelper.events),
+    }, app.helpers.section.events, app.helpers.menu.events, app.helpers.yesNo.events, app.helpers.confirmOnLeave.events),
 
     preinitialize() {
       // ToDo
@@ -500,7 +507,6 @@ module.exports = {
         t.formc_id = options.formc.id;
         t.campaign_id = options.formc.campaign_id;
         t.company_id = options.formc.company_id;
-        t.progress = options.formc.progress;
         delete t.id;
         this.model = t;
       } else {
@@ -508,13 +514,16 @@ module.exports = {
           formc_id: options.formc.id,
           campaign_id: options.formc.campaign_id,
           company_id: options.formc.company_id,
-          progress: options.formc.progress
+          role: 0
         };
       }
       this.fields = options.fields;
       this.role = options.role;
       this.allFields = options.fields;
       this.fields = options.fields[this.role].fields;
+      this.campaign = options.campaign;
+
+      this.allFields.shareholder.fields.voting_power_percent.type = 'percent';
 
       this.labels = {
         first_name: 'First name',
@@ -545,7 +554,7 @@ module.exports = {
       this.assignLabels();
 
       this.createIndexes();
-      this.buildJsonTemplates('formc');
+      this.buildSnippets(snippets);
     },
 
     render() {
@@ -562,10 +571,10 @@ module.exports = {
 
       if (this.role == 'director') {
         template = require('components/formc/templates/teamMembersDirector.pug');
-        this.buildJsonTemplates('formc');
+        this.buildSnippets(snippets);
       } else if (this.role == 'officer') {
         template = require('components/formc/templates/teamMembersOfficer.pug');
-        this.buildJsonTemplates('formc');
+        this.buildSnippets(snippets);
       } else if (this.role == 'shareholder') {
         template = require('components/formc/templates/teamMembersShareHolder.pug');
       }
@@ -575,15 +584,14 @@ module.exports = {
 
       this.$el.html(
         template({
-          serverUrl: serverUrl,
-          Urls: Urls,
           fields: this.fields,
           values: this.model,
           templates: this.jsonTemplates,
         })
       );
       this.$el.find('.selectpicker').selectpicker();
-      disableEnterHelper.disableEnter.call(this);
+      app.helpers.disableEnter.disableEnter.call(this);
+      this.campaign.updateMenu(this.campaign.calcProgress());
       return this;
     },
 
@@ -601,11 +609,13 @@ module.exports = {
     },
 
     submit(e) {
-      let data = $(e.target).closest('form').serializeJSON({ useIntKeysAsArrayIndex: true });
+      let data = $(e.target).closest('form').serializeJSON();
 
       if(data.role) {
-        data.role = data.role.reduce((a,b) => { return parseInt(a)+parseInt(b)}, 0)
-        let newRole = data.role;
+        // data.role = data.role.reduce((a,b) => { return parseInt(a)+parseInt(b)}, 0);
+        // data.role = this.model.role;
+        
+        let newRole = this.model.role;
 
         // delete data['experiences'];
         // delete data['positions'];
@@ -639,7 +649,12 @@ module.exports = {
           delete data.employer_start_date__year;
           delete data.employer_start_date__month;
         }
-        if(data.role != newRole) {
+        data.role.forEach((val,i) => { 
+          if((newRole & val) != val) {
+            newRole += val;
+          }
+        });
+        if(this.model.role != newRole) {
           data.role = newRole;
         }
         else if(this.model.hasOwnProperty('id') == true) {
@@ -664,17 +679,17 @@ module.exports = {
       yearControl.prop('disabled', isCurrentDate);
     },
 
-  }, addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods, leavingConfirmationHelper.methods)),
+  }, app.helpers.section.methods, app.helpers.menu.methods, app.helpers.yesNo.methods, app.helpers.confirmOnLeave.methods)),
 
 
   relatedParties: Backbone.View.extend(_.extend({
     el: '#content',
-    urlRoot: formcServer + '/:id/related-parties',
+    urlRoot: app.config.formcServer + '/:id/related-parties',
 
     events: _.extend({
       'submit form': 'submit',
       'click .submit_formc': submitFormc,
-    }, addSectionHelper.events, menuHelper.events, yesNoHelper.events, leavingConfirmationHelper.events),
+    }, app.helpers.section.events, app.helpers.menu.events, app.helpers.yesNo.events, app.helpers.confirmOnLeave.events),
 
     preinitialize() {
       // ToDo
@@ -687,6 +702,7 @@ module.exports = {
     initialize(options) {
       this.model = options.formc;
       this.fields = options.fields;
+      this.campaign = options.campaign;
 
       this.labels = {
         transaction_with_related_parties: {
@@ -699,12 +715,12 @@ module.exports = {
       this.assignLabels();
 
       this.createIndexes();
-      this.buildJsonTemplates('formc');
+      this.buildSnippets(snippets);
     },
 
     submit(e) {
       e.preventDefault();
-      let data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
+      let data = $(e.target).serializeJSON();
 
       if (data.transaction_with_related_parties_choice == false) {
         data.transaction_with_related_parties = this.model.transaction_with_related_parties;
@@ -718,29 +734,28 @@ module.exports = {
 
       this.$el.html(
         template({
-          serverUrl: serverUrl,
-          Urls: Urls,
           fields: this.fields,
           values: this.model,
           templates: this.jsonTemplates,
         })
       );
-      disableEnterHelper.disableEnter.call(this);
+      app.helpers.disableEnter.disableEnter.call(this);
+      this.campaign.updateMenu(this.campaign.calcProgress());
       return this;
     },
 
     _success(data, newData) {
-      formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
+      this.model.updateMenu(this.model.calcProgress());
       return 1;
     },
 
     getSuccessUrl(data) {
       return '/formc/' + this.model.id + '/use-of-proceeds';
     },
-  }, addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods, leavingConfirmationHelper.methods)),
+  }, app.helpers.section.methods, app.helpers.menu.methods, app.helpers.yesNo.methods, app.helpers.confirmOnLeave.methods)),
 
   useOfProceeds: Backbone.View.extend(_.extend({
-    urlRoot: formcServer + '/:id/use-of-proceeds',
+    urlRoot: app.config.formcServer + '/:id/use-of-proceeds',
 
     preinitialize() {
       // ToDo
@@ -794,22 +809,21 @@ module.exports = {
 
       commission.min = Math.round(this.campaign.minimum_raise * companyFees.trans_percent / 100);
       commission.max = Math.round(this.campaign.maximum_raise * companyFees.trans_percent / 100);
-      commission.fee = true;
 
       this.assignLabels();
       this.createIndexes();
-      this.buildJsonTemplates('formc');
+      this.buildSnippets(snippets);
     },
 
     events: _.extend({
-      'submit form': 'submit',
+      'click #submit': api.submitAction,
       'click .submit_formc': submitFormc,
       'change input[type=radio][name=doc_type]': 'changeDocType',
       // 'change .min-expense,.max-expense,.min-use,.max-use': 'calculate',
       'blur .min-expense,.max-expense,.min-use,.max-use': 'calculate',
       'click .add-sectionnew': 'addSectionNew',
       'click .delete-sectionnew': 'deleteRow',
-    }, menuHelper.events, dropzoneHelpers.events, leavingConfirmationHelper.events),
+    }, app.helpers.menu.events, app.helpers.confirmOnLeave.events),
 
     deleteRow(e) {
       this.deleteSectionNew(e);
@@ -817,7 +831,7 @@ module.exports = {
     },
 
     _success(data, newData) {
-      formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
+      this.model.updateMenu(this.model.calcProgress());
       return 1;
     },
 
@@ -837,7 +851,7 @@ module.exports = {
     calculate(e, warning=true) {
       if (e) {
         let $target = $(e.target);
-        // $target.val(formatHelper.formatNumber($target.val()));
+        // $target.val(app.helpers.format.formatNumber($target.val()));
       }
       let minRaise = this.campaign.minimum_raise;
       let maxRaise = this.campaign.maximum_raise;
@@ -845,14 +859,14 @@ module.exports = {
       let minNetProceeds = minRaise - this._getSum('.min-expense');
       let maxNetProceeds = maxRaise - this._getSum('.max-expense');
 
-      this.$('.min-net-proceeds').text('$' + formatHelper.formatNumber(minNetProceeds));
-      this.$('.max-net-proceeds').text('$' + formatHelper.formatNumber(maxNetProceeds));
+      this.$('.min-net-proceeds').text('$' + app.helpers.format.formatNumber(minNetProceeds));
+      this.$('.max-net-proceeds').text('$' + app.helpers.format.formatNumber(maxNetProceeds));
 
       let minTotalUse = this._getSum('.min-use');
       let maxTotalUse = this._getSum('.max-use');
 
-      this.$('.min-total-use').text('$' + formatHelper.formatNumber(minTotalUse));
-      this.$('.max-total-use').text('$' + formatHelper.formatNumber(maxTotalUse));
+      this.$('.min-total-use').text('$' + app.helpers.format.formatNumber(minTotalUse));
+      this.$('.max-total-use').text('$' + app.helpers.format.formatNumber(maxTotalUse));
 
       // return true if the table is valid in terms of the calculation, else return false
       let minEqual = minNetProceeds == minTotalUse;
@@ -887,8 +901,8 @@ module.exports = {
     },
 
     submit(e) {
-      var $target = $(e.target);
-      var data = $target.serializeJSON({ useIntKeysAsArrayIndex: true });
+      var $target = $(e.target.currentTarget);
+      var data = $target.serializeJSON();
       data.use_of_net_proceeds.forEach(function (elem) {
         elem.min = elem.min.replace(/,/g, '');
         elem.max = elem.max.replace(/,/g, '');
@@ -905,39 +919,28 @@ module.exports = {
 
       this.$el.html(
         template({
-          serverUrl: serverUrl,
-          Urls: Urls,
           fields: this.fields,
           values: this.model,
           templates: this.jsonTemplates,
           maxRaise: this.campaign.maximum_raise,
           minRaise: this.campaign.minimum_raise,
-          formatHelper: formatHelper,
           campaignId: this.campaign.id,
+          view: this
         })
       );
       this.$('.max-total-use,.min-total-use').popover({
         html: true,
-        template: '<div class="popover" role="tooltip" style="border-color:red;width:170px;"><div class="popover-arrow" style="border-right-color:red;"></div><h3 class="popover-title"></h3><div class="popover-content" style="color:red;"></div></div>'
-      });
-
-      this.$('.min-expense,.max-expense,.min-use,.max-use').each(function (idx, elem) {
-        let $this = $(this);
-        $this.val(formatHelper.formatNumber($this.val()));
+        template: '<div class="popover  divPopover" style="width:160px"  role="tooltip"><span class="popover-arrow"></span> <h3 class="popover-title"></h3> <span class="icon-popover"><i class="fa fa-info-circle" aria-hidden="true"></i></span> <span class="popover-content"> XXX </span></div>'
       });
 
       this.calculate(null, false);
-      setTimeout(() => { this.createDropzones() } , 1000);
-      disableEnterHelper.disableEnter.call(this);
+      app.helpers.disableEnter.disableEnter.call(this);
+      this.campaign.updateMenu(this.campaign.calcProgress());
       return this;
     }, 
-  }, menuHelper.methods, dropzoneHelpers.methods, addSectionHelper.methods, leavingConfirmationHelper.methods)),
+  }, app.helpers.menu.methods, app.helpers.section.methods, app.helpers.confirmOnLeave.methods)),
 
   riskFactorsInstruction: Backbone.View.extend(_.extend({
-    initialize(options) {
-      this.model = options.formc;
-    },
-
     preinitialize() {
       // ToDo
       // Hack for undelegate previous events
@@ -947,32 +950,34 @@ module.exports = {
     },
 
     events: _.extend({
-      'submit form': 'submit',
+      'submit form': api.submitAction,
       'click .submit_formc': submitFormc,
-    }, menuHelper.events),
+    }, app.helpers.menu.events),
 
-    submit: api.submitAction,
+    initialize(options) {
+      this.model = options.formc;
+      this.campaign = options.campaign;
+    },
 
     render() {
       const template = require('components/formc/templates/riskFactorsInstructions.pug');
       this.$el.html(
         template({
-          serverUrl: serverUrl,
-          Urls: Urls,
           campaignId: this.model.campaign_id,
           values: this.model,
         })
       );
+      this.campaign.updateMenu(this.campaign.calcProgress());
       return this;
     },
-  }, menuHelper.methods)),
+  }, app.helpers.menu.methods)),
 
   riskFactorsMarket: Backbone.View.extend(_.extend({
-    urlRoot: formcServer + '/:id' + '/risk-factors-market/:index',
+    urlRoot: app.config.formcServer + '/:id' + '/risk-factors-market/:index',
     riskType: 'market_and_customer_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.events),
+    }, app.helpers.menu.events, riskFactors.events, app.helpers.confirmOnLeave.events),
 
     preinitialize() {
       // ToDo
@@ -984,12 +989,13 @@ module.exports = {
 
     initialize(options) {
       this.model = options.formc;
+      this.campaign = options.campaign;
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
       this.defaultRisks = {
         0: {
-          title: 'There is a limited market for the Company’s product or services',
+          title: 'There is a limited market for the Company’s product or services.',
           risk: 'Although we have identified what we believe to be a need in the market ' +
                 'for our products and services, there can be no assurance that ' +
                 'demand or a market will develop or that we will be able to create a viable ' +
@@ -1061,8 +1067,6 @@ module.exports = {
       let template = require('components/formc/templates/riskFactorsMarket.pug');
       this.$el.html(
         template({
-          serverUrl: serverUrl,
-          Urls: Urls,
           fields: this.fields,
           values: this.model,
           defaultRisks: this.defaultRisks,
@@ -1071,17 +1075,18 @@ module.exports = {
       this.$('textarea').each(function () {
         $(this).css({ height: this.scrollHeight + 'px' });
       });
-      disableEnterHelper.disableEnter.call(this);
+      app.helpers.disableEnter.disableEnter.call(this);
+      this.campaign.updateMenu(this.campaign.calcProgress());
       return this;
     },
-  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
+  }, app.helpers.menu.methods, app.helpers.section.methods, riskFactors.methods, app.helpers.confirmOnLeave.methods)),
 
   riskFactorsFinancial: Backbone.View.extend(_.extend({
-    urlRoot: formcServer + '/:id' + '/risk-factors-financial/:index',
+    urlRoot: app.config.formcServer + '/:id' + '/risk-factors-financial/:index',
     riskType: 'financial_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.events),
+    }, app.helpers.menu.events, riskFactors.events, app.helpers.confirmOnLeave.events),
 
     preinitialize() {
       // ToDo
@@ -1093,6 +1098,7 @@ module.exports = {
 
     initialize(options) {
       this.model = options.formc;
+      this.campaign = options.campaign;
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
@@ -1163,7 +1169,7 @@ module.exports = {
           risk: 'In addition to general economic conditions and market fluctuations, significant ' +
                 'operating cost increases could adversely affect us due to numerous factors, ' +
                 'many of which are beyond our control. Increases in operating costs would likely ' +
-                'negatively impact our operating income, and could undermine our ability to grow ' +
+                'negatively impact our operating income and could undermine our ability to grow ' +
                 'our business.Our past operating results may not be accurate indicators of ' +
                 'future performance, and you should not rely on such results to predict our ' +
                 'future performance.',
@@ -1178,8 +1184,6 @@ module.exports = {
       let template = require('components/formc/templates/riskFactorsFinancial.pug');
       this.$el.html(
         template({
-          serverUrl: serverUrl,
-          Urls: Urls,
           fields: this.fields,
           values: this.model,
           defaultRisks: this.defaultRisks,
@@ -1188,17 +1192,18 @@ module.exports = {
       this.$('textarea').each(function () {
         $(this).css({ height: this.scrollHeight + 'px' });
       });
-      disableEnterHelper.disableEnter.call(this);
+      app.helpers.disableEnter.disableEnter.call(this);
+      this.campaign.updateMenu(this.campaign.calcProgress());
       return this;
     },
-  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
+  }, app.helpers.menu.methods, app.helpers.section.methods, riskFactors.methods, app.helpers.confirmOnLeave.methods)),
 
   riskFactorsOperational: Backbone.View.extend(_.extend({
-    urlRoot: formcServer + '/:id' + '/risk-factors-operational/:index',
+    urlRoot: app.config.formcServer + '/:id' + '/risk-factors-operational/:index',
     riskType: 'operational_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.events),
+    }, app.helpers.menu.events, riskFactors.events, app.helpers.confirmOnLeave.events),
 
     preinitialize() {
       // ToDo
@@ -1210,6 +1215,7 @@ module.exports = {
 
     initialize(options) {
       this.model = options.formc;
+      this.campaign = options.campaign;
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
@@ -1236,7 +1242,7 @@ module.exports = {
                 'services in response to industry trends or developments in technology, or ' +
                 'those new products may not achieve market acceptance. As a result, we could ' +
                 'lose business, be forced to price products and services on less advantageous ' +
-                'terms to retain or attract clients, or be subject to cost increases. ' +
+                'terms to retain or attract clients or be subject to cost increases. ' +
                 'As a result, our business, financial condition or results of operations may ' +
                 'be adversely affected.',
         },
@@ -1322,8 +1328,6 @@ module.exports = {
       let template = require('components/formc/templates/riskFactorsOperational.pug');
       this.$el.html(
         template({
-          serverUrl: serverUrl,
-          Urls: Urls,
           fields: this.fields,
           values: this.model,
           defaultRisks: this.defaultRisks,
@@ -1333,18 +1337,19 @@ module.exports = {
       this.$('textarea').each(function () {
         $(this).css({ height: this.scrollHeight + 'px' });
       });
-      disableEnterHelper.disableEnter.call(this);
+      app.helpers.disableEnter.disableEnter.call(this);
+      this.campaign.updateMenu(this.campaign.calcProgress());
       return this;
     },
 
-  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
+  }, app.helpers.menu.methods, app.helpers.section.methods, riskFactors.methods, app.helpers.confirmOnLeave.methods)),
 
   riskFactorsCompetitive: Backbone.View.extend(_.extend({
-    urlRoot: formcServer + '/:id' + '/risk-factors-competitive/:index',
+    urlRoot: app.config.formcServer + '/:id' + '/risk-factors-competitive/:index',
     riskType: 'competitive_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.methods),
+    }, app.helpers.menu.events, riskFactors.events, app.helpers.confirmOnLeave.methods),
 
     preinitialize() {
       // ToDo
@@ -1356,6 +1361,7 @@ module.exports = {
 
     initialize(options) {
       this.model = options.formc;
+      this.campaign = options.campaign;
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
@@ -1373,7 +1379,7 @@ module.exports = {
           risk: 'This may place us at a disadvantage in responding to our competitors\' pricing ' +
                 'strategies, advertising campaigns, strategic alliances and other initiatives. ' +
                 'Consequently, such competitors may be in a better position than the Company ' +
-                'to take advantage of customer acquisition and business opportunities, ' +
+                'to take advantage of customer acquisition and business opportunities ' +
                 'and devote greater resources to marketing and sale of their offerings. ' +
                 'These competitors may limit our opportunity to acquire customers and facilitate ' +
                 'business arrangements.  There is no certainty that the Company will be able ' +
@@ -1384,7 +1390,7 @@ module.exports = {
           title: 'The Company may not be able to create and maintain a competitive advantage.',
           risk: 'The demand for our products or services may change and we may have difficulty ' +
                 'maintaining a competitive advantage within our market.  The Company\'s success ' +
-                'could depend on the ability of management to respond to changingsituations, ' +
+                'could depend on the ability of management to respond to changing situations, ' +
                 'standards and customer needs on a timely and cost-effective basis. In addition, ' +
                 'any failure by the management to anticipate or respond adequately to changes in ' +
                 'customer preferences and demand could have a material adverse effect on our ' +
@@ -1413,8 +1419,6 @@ module.exports = {
       let template = require('components/formc/templates/riskFactorsCompetitive.pug');
       this.$el.html(
         template({
-          serverUrl: serverUrl,
-          Urls: Urls,
           fields: this.fields,
           values: this.model,
           defaultRisks: this.defaultRisks,
@@ -1423,18 +1427,19 @@ module.exports = {
       this.$('textarea').each(function () {
         $(this).css({ height: this.scrollHeight + 'px' });
       });
-      disableEnterHelper.disableEnter.call(this);
+      app.helpers.disableEnter.disableEnter.call(this);
+      this.campaign.updateMenu(this.campaign.calcProgress());
       return this;
     },
 
-  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
+  }, app.helpers.menu.methods, app.helpers.section.methods, riskFactors.methods, app.helpers.confirmOnLeave.methods)),
 
   riskFactorsPersonnel: Backbone.View.extend(_.extend({
-    urlRoot: formcServer + '/:id' + '/risk-factors-personnel/:index',
+    urlRoot: app.config.formcServer + '/:id' + '/risk-factors-personnel/:index',
     riskType: 'personnel_and_third_parties_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.events),
+    }, app.helpers.menu.events, riskFactors.events, app.helpers.confirmOnLeave.events),
 
     preinitialize() {
       // ToDo
@@ -1446,6 +1451,7 @@ module.exports = {
 
     initialize(options) {
       this.model = options.formc;
+      this.campaign = options.campaign;
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
@@ -1477,8 +1483,8 @@ module.exports = {
                 'insurance policies with respect to the death or disability of those ' +
                 'individuals. Therefore, in the event that any of the Company\'s employees ' +
                 'die or become disabled, the Company will not receive any insurance proceeds as ' +
-                'compensation for such person\s absence. The loss of such person could ' +
-                'negatively affect the Company and its operations',
+                'compensation for such person\'s absence. The loss of such person could ' +
+                'negatively affect the Company and its operations.',
         },
         3: {
           title: 'The Company relies on third-parties over which the Company has little control; ' +
@@ -1497,12 +1503,12 @@ module.exports = {
                 'we could experience disruptions.   Such interruptions could result in damage ' +
                 'to our reputation and customer relationships and adversely affect our business. ' +
                 'These events could materially and adversely affect our ability to retain and ' +
-                'attract customers, and have a material negative impact on our operations, ' +
+                'attract customers and have a material negative impact on our operations, ' +
                 'business, financial results and financial condition.',
         },
         5: {
           title: 'The Company may not be able to adequately ensure the loyalty and ' +
-                  'confidentiality of employees and third parties',
+                  'confidentiality of employees and third parties.',
           risk: 'The Company may rely on nondisclosure and noncompetition agreements with ' +
                 'employees, consultants and other parties to protect, in part, trade secrets and ' +
                 'other proprietary rights. There can be no assurance that these agreements will ' +
@@ -1522,8 +1528,6 @@ module.exports = {
       let template = require('components/formc/templates/riskFactorsPersonnel.pug');
       this.$el.html(
         template({
-          serverUrl: serverUrl,
-          Urls: Urls,
           fields: this.fields,
           values: this.model,
           defaultRisks: this.defaultRisks,
@@ -1532,17 +1536,18 @@ module.exports = {
       this.$('textarea').each(function () {
         $(this).css({ height: this.scrollHeight + 'px' });
       });
-      disableEnterHelper.disableEnter.call(this);
+      app.helpers.disableEnter.disableEnter.call(this);
+      this.campaign.updateMenu(this.campaign.calcProgress());
       return this;
     },
-  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
+  }, app.helpers.menu.methods, app.helpers.section.methods, riskFactors.methods, app.helpers.confirmOnLeave.methods)),
 
   riskFactorsLegal: Backbone.View.extend(_.extend({
-    urlRoot: formcServer + '/:id' + '/risk-factors-legal/:index',
+    urlRoot: app.config.formcServer + '/:id' + '/risk-factors-legal/:index',
     riskType: 'legal_and_regulatory_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.events),
+    }, app.helpers.menu.events, riskFactors.events, app.helpers.confirmOnLeave.events),
 
     preinitialize() {
       // ToDo
@@ -1554,6 +1559,7 @@ module.exports = {
 
     initialize(options) {
       this.model = options.formc;
+      this.campaign = options.campaign;
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
@@ -1562,7 +1568,7 @@ module.exports = {
           title: 'We rely on various intellectual property rights in order to operate our ' +
                   'business and these rights may be challenged.',
           risk: 'The Company’s intellectual property rights may not be sufficiently broad and ' +
-                'may notprovide a significant competitive advantage. The steps that the Company ' +
+                'may not provide a significant competitive advantage. The steps that the Company ' +
                 'has taken to maintain and protect its intellectual property may not prevent ' +
                 'it from being challenged, invalidated or circumvented. In some circumstances, ' +
                 'enforcement may not be available to us because an infringer has a dominant ' +
@@ -1570,7 +1576,7 @@ module.exports = {
                 'failure to obtain or maintain intellectual property rights that convey ' +
                 'competitive advantage, adequately protect its intellectual property or detect ' +
                 'or prevent circumvention or unauthorized use of such property, could adversely ' +
-                'impact the Company\'s competitive position and results of operations\'.',
+                'impact the Company\'s competitive position and results of operations.',
         },
         1: {
           title: 'From time to time, third parties may claim that one or more of our products ' +
@@ -1590,7 +1596,7 @@ module.exports = {
                 'divert management’s attention from other business concerns. Any public ' +
                 'announcements related to litigation or interference proceedings initiated or ' +
                 'threatened against as could cause our business to be harmed. Our intellectual ' +
-                'property portfolio may not be useful in asserting a counterclaim, or ' +
+                'property portfolio may not be useful in asserting a counterclaim or ' +
                 'negotiating a license, in response to a claim of intellectual property ' +
                 'infringement. In certain of our businesses we rely on third party intellectual ' +
                 'property licenses and we cannot ensure that these licenses will be available to ' +
@@ -1652,8 +1658,6 @@ module.exports = {
       let template = require('components/formc/templates/riskFactorsLegal.pug');
       this.$el.html(
         template({
-          serverUrl: serverUrl,
-          Urls: Urls,
           fields: this.fields,
           values: this.model,
           defaultRisks: this.defaultRisks,
@@ -1662,17 +1666,18 @@ module.exports = {
       this.$('textarea').each(function () {
         $(this).css({ height: this.scrollHeight + 'px' });
       });
-      disableEnterHelper.disableEnter.call(this);
+      app.helpers.disableEnter.disableEnter.call(this);
+      this.campaign.updateMenu(this.campaign.calcProgress());
       return this;
     },
-  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
+  }, app.helpers.menu.methods, app.helpers.section.methods, riskFactors.methods, app.helpers.confirmOnLeave.methods)),
 
   riskFactorsMisc: Backbone.View.extend(_.extend({
-    urlRoot: formcServer + '/:id' + '/risk-factors-misc/:index',
+    urlRoot: app.config.formcServer + '/:id' + '/risk-factors-misc/:index',
     riskType: 'miscellaneous_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.events),
+    }, app.helpers.menu.events, riskFactors.events, app.helpers.confirmOnLeave.events),
 
     preinitialize() {
       // ToDo
@@ -1684,6 +1689,7 @@ module.exports = {
 
     initialize(options) {
       this.model = options.formc;
+      this.campaign = options.campaign;
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
@@ -1696,8 +1702,6 @@ module.exports = {
       let template = require('components/formc/templates/riskFactorsMisc.pug');
       this.$el.html(
         template({
-          serverUrl: serverUrl,
-          Urls: Urls,
           fields: this.fields,
           values: this.model,
           defaultRisks: this.defaultRisks,
@@ -1706,18 +1710,108 @@ module.exports = {
       this.$('textarea').each(function () {
         $(this).css({ height: this.scrollHeight + 'px' });
       });
-      disableEnterHelper.disableEnter.call(this);
+      app.helpers.disableEnter.disableEnter.call(this);
+      this.campaign.updateMenu(this.campaign.calcProgress());
       return this;
     },
-  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
+  }, app.helpers.menu.methods, app.helpers.section.methods, riskFactors.methods, app.helpers.confirmOnLeave.methods)),
+
+  xeroIntegration: Backbone.View.extend({
+    urlRoot: app.config.formcServer + '/:id/financial-condition/xero',
+
+    events: _.extend({
+      'click .xeroConnect': 'xeroConnect',
+      'click .xeroGrabData': 'xeroGrabData',
+    }),
+
+    render() {
+      let template = require('./templates/xeroIntegration.pug');
+      this.fields = {
+        code: {
+          type: 'number',
+          required: true
+        },
+        documents: {
+          type: 'json',
+          required: true,
+          fn: function checkNotEmpty(name, value, attr, data, computed) {
+            if(value.length == 0) {
+              throw 'Please select at least on document';
+            }
+          },
+        }
+
+      }
+
+      this.$el.html(
+        template({
+          view: this,
+          fields: this.fields
+        })
+      );
+      return this;
+    },
+
+    xeroConnect(e) {
+      api.makeRequest(this.urlRoot.replace(':id', this.model.id)).
+        then((data) => {
+          this.el.querySelector('#code').dataset.token = data.token;
+          this.el.querySelector('#code').dataset.secret = data.token_secret;
+          this.el.querySelector('#url').href = data.url;
+          this.$el.find('#xeroModal').modal('show');
+        });
+    },
+
+    xeroGrabData(e) {
+
+      e.preventDefault();
+      this.$('.help-block').remove();
+
+      let code = e.currentTarget.parentElement.parentElement.querySelector('#code');
+      let data = {};
+      data.token = code.dataset.token;
+      data.token_secret = code.dataset.secret;
+      data.id = this.model.id;
+      data.documents = [];
+      data.code = code.value;
+      this.el.querySelectorAll('[name="documents[]"]').forEach((el) => { 
+        if(el.checked == true) {
+          data.documents.push(el.value)
+        }
+      })
+
+      if(!app.validation.validate(this.fields, data, this)) {
+        _(app.validation.errors).each((errors, key) => {
+          app.validation.invalidMsg(this, key, errors);
+        });
+        this.$('.help-block').prev().scrollTo(5);
+        e.target.removeAttribute('disabled');
+        return false;
+      } else {
+        app.showLoading();
+        api.makeRequest(
+            app.config.formcServer + '/' + this.model.id + '/financial-condition/xero',
+            'PUT',
+            data
+        ).then((data) => {
+          window.location.reload();
+        }).fail((xhr, message) => {
+          app.hideLoading();
+          this.$el.find('#xeroModal .modal-body').html('<h3>' + xhr.responseJSON.message + '</h3>');
+        });
+      }
+
+    },
+
+  }),
 
   financialCondition: Backbone.View.extend(_.extend({
-    urlRoot: formcServer + '/:id/financial-condition',
+    urlRoot: app.config.formcServer + '/:id/financial-condition',
 
     events: _.extend({
       'submit form': api.submitAction,
       'click .submit_formc': submitFormc,
-    }, menuHelper.events, yesNoHelper.events, addSectionHelper.events, dropzoneHelpers.events, /*leavingConfirmationHelper.events*/),
+    }, app.helpers.menu.events, app.helpers.yesNo.events, app.helpers.section.events, /*app.helpers.confirmOnLeave.events*/),
 
     preinitialize() {
       // ToDo
@@ -1729,6 +1823,7 @@ module.exports = {
 
     initialize(options) {
       this.model = options.formc;
+      this.campaign = options.campaign;
       this.fields = options.fields;
       this.campaign = options.campaign;
       this.labels = {
@@ -1753,11 +1848,11 @@ module.exports = {
       this.assignLabels();
 
       this.createIndexes();
-      this.buildJsonTemplates('formc', {campaign: this.campaign});
+      this.buildSnippets(snippets, {campaign: this.campaign});
     },
 
     _success(data, newData) {
-      formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
+      this.model.updateMenu(this.model.calcProgress());
       return 1;
     },
 
@@ -1768,33 +1863,44 @@ module.exports = {
     render() {
       let template = require('./templates/financialCondition.pug');
 
+      const View = require('components/formc/views.js');
+
+
       this.$el.html(
         template({
-          serverUrl: serverUrl,
-          Urls: Urls,
+          view: this,
+          xeroIntegration: xeroIntegration,
           fields: this.fields,
           values: this.model,
           campaignId: this.campaign.id,
           templates: this.jsonTemplates,
         })
       );
-      setTimeout(() => { this.createDropzones() } , 1000);
-      disableEnterHelper.disableEnter.call(this);
+      app.helpers.disableEnter.disableEnter.call(this);
+      this.campaign.updateMenu(this.campaign.calcProgress());
+
+      let xeroIntegration =  new View.xeroIntegration({
+        model: this.model,
+        el: this.el.querySelector('#xeroBlock')
+      });
+      xeroIntegration.render();
+      xeroIntegration.delegateEvents();
       return this;
     },
-  }, menuHelper.methods, yesNoHelper.methods, addSectionHelper.methods, dropzoneHelpers.methods, leavingConfirmationHelper.methods)),
+
+  }, app.helpers.menu.methods, app.helpers.yesNo.methods, app.helpers.section.methods, app.helpers.confirmOnLeave.methods)),
 
   outstandingSecurity: Backbone.View.extend(_.extend({
-    urlRoot: formcServer + '/:id/outstanding-security',
+    urlRoot: app.config.formcServer + '/:id/outstanding-security',
     events: _.extend({
       'submit #security_model_form': 'addOutstanding',
       'change #security_type': 'outstandingSecurityUpdate',
-      'click #submitForm': api.submitAction,
+      'click #submitForm': 'submit',
       'click .submit_formc': submitFormc,
       'click .newOustanding': 'newOustanding',
       'click .editOutstanding': 'editOutstanding',
       'click .delete-outstanding': 'deleteOutstanding',
-    }, addSectionHelper.events, menuHelper.events, yesNoHelper.events, /*leavingConfirmationHelper.events*/),
+    }, app.helpers.section.events, app.helpers.menu.events, app.helpers.yesNo.events, /*app.helpers.confirmOnLeave.events*/),
 
     preinitialize() {
       // ToDo
@@ -1806,6 +1912,7 @@ module.exports = {
 
     initialize(options) {
       this.model = options.formc;
+      this.campaign = options.campaign;
       this.fields = options.fields;
       this.fields.business_loans_or_debt_choice.validate = {};
       this.fields.business_loans_or_debt_choice.validate.choices = {
@@ -1826,6 +1933,13 @@ module.exports = {
         1: 'Yes',
         0: 'No',
       };
+      this.fields.outstanding_securities.schema.amount_authorized.type = 'money';
+      this.fields.outstanding_securities.schema.amount_authorized.required = true;
+      this.fields.outstanding_securities.schema.amount_outstanding.type = 'money';
+      this.fields.outstanding_securities.schema.amount_outstanding.required = true;
+
+      this.fields.business_loans_or_debt.schema.interest_rate.type = 'percent';
+
       this.labels = {
         outstanding_securities: {
           security_type: "Security Type",
@@ -1844,7 +1958,7 @@ module.exports = {
           securities_offered: 'Securities Offered',
         },
         business_loans_or_debt: {
-          maturity_date: 'Date of Offering',
+          maturity_date: 'Maturity Date',
           outstanding_amount: 'Outstanding Amount',
           interest_rate: 'Interest Rate',
           other_material_terms: 'Other Material Terms',
@@ -1854,18 +1968,18 @@ module.exports = {
         exempt_offering_choice: 'An "exempt offering" is any offering of securities which is exempted from the registration requirements of the Securities Act. Have you conducted any exempt offerings in the past three years?',
         exercise_of_rights: 'How could the exercise of rights held by the principal shareholders affect the purchasers of the securities being offered?',
         risks_to_purchasers: '',
-        terms_of_securities: 'How may the terms of the securities being offered be modified?',
+        terms_of_securities: 'How may the terms of the securities being offered be modified? <div class="d-inline-block"><div class="showPopover hidden-xs-down" data-content="What would it take to amend the provisions of the security being offered and is there any minimum amount of consent that would be required to make such an amendment possible (such as a majority of voting power)?" data-original-title="" title=""><i class="fa fa-question-circle text-muted" aria-hidden="true"></i></div></div>',
         security_differences: 'Are there any differences not reflected above between the ' +
                               'securities being offered and each other class of security of ' +
                               'the issuer?',
-        rights_of_securities: 'How may the rights of the securities being offered be materially ' +
-                              'limited, diluted or qualified by the rights of any other class of ' +
-                              'security identified above?',
+        rights_of_securities: 'How may the rights of the securities being offered be materially limited, ' +
+                              'diluted or qualified by the rights of any other class of security identified above?' +
+                              ' <div class="d-inline-block"><div class="showPopover hidden-xs-down" data-content=" Is there any action that common or preferred holders could take against the group of investors in this offering that would limit their rights?  Are there any resolutions that could be passed or votes that could be taken to alter or diminish the rights of the investors in this offering?" data-original-title="" title=""><i class="fa fa-question-circle text-muted" aria-hidden="true"></i></div></div>',
       };
       this.assignLabels();
 
       this.createIndexes();
-      this.buildJsonTemplates('formc');
+      this.buildSnippets(snippets);
 
     },
 
@@ -1901,8 +2015,8 @@ module.exports = {
 
       this.el.querySelector('#security_type').selectedIndex = data.security_type;
       this.el.querySelector('#terms_and_rights').value = data.terms_and_rights;
-      this.el.querySelector('#amount_authorized').value = data.amount_authorized;
-      this.el.querySelector('#amount_outstanding').value = data.amount_outstanding;
+      this.el.querySelector('#amount_authorized').value = app.helpers.format.formatPrice(data.amount_authorized);
+      this.el.querySelector('#amount_outstanding').value = app.helpers.format.formatPrice(data.amount_outstanding);
       this.el.querySelector('input[name="voting_right"][value="' + (+data.voting_right) + '"]').checked = true;
       this.el.querySelector('#custom_security_type').value = data.custom_security_type;
       this.el.querySelector('#security_model_form').dataset.update = e.currentTarget.dataset.index;
@@ -1915,28 +2029,39 @@ module.exports = {
 
     addOutstanding(e) {
       e.preventDefault();
-      const data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
+      const data = $(e.target).serializeJSON();
+
+      //work around NaN values in decimal field type serialization
+      if (isNaN(data.amount_authorized))
+        delete data.amount_authorized;
+
+      if (isNaN(data.amount_outstanding))
+        delete data.amount_outstanding;
 
       const sectionName = e.target.dataset.section;
       const template = require('./templates/snippets/outstanding_securities.pug');
 
-      if(data.amount_authorized.toLocaleLowerCase() == 'n/a' ||
+      if(typeof data.amount_authorized == 'string') {
+        if(data.amount_authorized.toLocaleLowerCase() == 'n/a' ||
           data.amount_authorized.toLocaleLowerCase() == 'not available' ||
           data.amount_authorized.toLocaleLowerCase() == 'na') {
-        data.amount_authorized = null;
-      } else {
-        data.amount_authorized = Math.round(
+            data.amount_authorized = null;
+        } else {
+          data.amount_authorized = Math.round(
             data.amount_authorized.replace(/[\$\,]/g, '') * 100 
+          ) / 100;
+        }
+      }
+
+      if (data.amount_outstanding) {
+        data.amount_outstanding = Math.round(
+            data.amount_outstanding * 100
         ) / 100;
       }
 
-      data.amount_outstanding = Math.round(
-          data.amount_outstanding.replace(/[\$\,]/g, '') * 100
-      ) / 100;
-
-      if (!validation.validate(this.fields.outstanding_securities.schema, data, this)) {
-        _(validation.errors).each((errors, key) => {
-          validation.invalidMsg(this, key, errors);
+      if (!app.validation.validate(this.fields.outstanding_securities.schema, data, this)) {
+        _(app.validation.errors).each((errors, key) => {
+          app.validation.invalidMsg(this, key, errors);
         });
         this.$('.help-block').prev().scrollTo(5);
         return;
@@ -1980,33 +2105,39 @@ module.exports = {
 
     deleteOutstanding(e) {
       e.preventDefault();
-      if (!confirm('Are you sure?')) return;
-      let sectionName = e.currentTarget.dataset.section;
-      let index = e.currentTarget.dataset.index;
-      this.$('.' + sectionName + '_container tr[data-index=' + index + ']').remove();
-      this.model[sectionName].splice(index, 1);
+      const target = e.currentTarget;
+      const sectionName = target.dataset.section;
+      const index = target.dataset.index;
 
-      // Reorganize indice
-      this.$('.' + sectionName + '_container tr').each(function (idx, elem) {
-        $(this).attr('data-index', idx);
-        $(this).find('a').attr('data-index', idx);
+      app.dialogs.confirm('Are you sure?').then((confirmed) => {
+        if (!confirmed)
+          return;
+
+        this.$('.' + sectionName + '_container tr[data-index=' + index + ']').remove();
+        this.model[sectionName].splice(index, 1);
+
+        // Reorganize indice
+        this.$('.' + sectionName + '_container tr').each(function (idx, elem) {
+          $(this).attr('data-index', idx);
+          $(this).find('a').attr('data-index', idx);
+        });
+
+        // ToDo
+        // Fix index counter
+        this[sectionName + 'Index']--;
+        this.$('.' + sectionName + '_container tr')
+
+        api.makeRequest(
+          this.urlRoot.replace(':id', this.model.id),
+          'PATCH',
+          {'outstanding_securities': this.model[sectionName]}
+        );
       });
-
-      // ToDo
-      // Fix index counter
-      this[sectionName + 'Index']--;
-      this.$('.' + sectionName + '_container tr')
-
-      api.makeRequest(
-        this.urlRoot.replace(':id', this.model.id),
-        'PATCH',
-        {'outstanding_securities': this.model[sectionName]}
-      );
     },
 
     _success(data, newData) {
-      formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
-      return 1;
+      this.model.updateMenu(this.model.calcProgress());
+      return true;
     },
 
     getSuccessUrl() {
@@ -2024,21 +2155,36 @@ module.exports = {
 
       this.$el.html(
         template({
-          serverUrl: serverUrl,
-          Urls: Urls,
           fields: this.fields,
           values: this.model,
           templates: this.jsonTemplates,
         })
       );
       $('#security_modal #custom_security_type').parent().parent().hide();
-      disableEnterHelper.disableEnter.call(this);
+      app.helpers.disableEnter.disableEnter.call(this);
+      this.campaign.updateMenu(this.campaign.calcProgress());
       return this;
     },
-  }, addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods, leavingConfirmationHelper.methods)),
+
+    submit(e) {
+      e.preventDefault();
+
+      let data = $(e.currentTarget).closest('form').serializeJSON();
+
+      if (data.business_loans_or_debt_choice === false) {
+        data.business_loans_or_debt = [];
+      }
+
+      if (data.exempt_offering_choice === false) {
+        data.exempt_offering = [];
+      }
+
+      return api.submitAction.call(this, e, data);
+    },
+  }, app.helpers.section.methods, app.helpers.menu.methods, app.helpers.yesNo.methods, app.helpers.confirmOnLeave.methods)),
 
   backgroundCheck: Backbone.View.extend(_.extend({
-    urlRoot: formcServer + '/:id' + '/background-check',
+    urlRoot: app.config.formcServer + '/:id' + '/background-check',
 
     preinitialize() {
       // ToDo
@@ -2049,6 +2195,7 @@ module.exports = {
     },
     initialize(options) {
       this.model = options.formc;
+      this.campaign = options.campaign;
       this.fields = options.fields;
       this.labels = {
         company_or_director_subjected_to: 'If Yes, Explain',
@@ -2067,32 +2214,31 @@ module.exports = {
 
     _success(data) {
       app.hideLoading();
-      $('#content').scrollTo();
+      $('body').scrollTo();
       return false;
     },
 
     events: _.extend({
       'submit form': api.submitAction,
       'click .submit_formc': submitFormc,
-    }, menuHelper.events, yesNoHelper.events, leavingConfirmationHelper.events),
+    }, app.helpers.menu.events, app.helpers.yesNo.events, app.helpers.confirmOnLeave.events),
 
     render() {
       let template = require('./templates/backgroundCheck.pug');
       this.$el.html(
         template({
-          serverUrl: serverUrl,
-          Urls: Urls,
           fields: this.fields,
           values: this.model,
         })
       );
-      disableEnterHelper.disableEnter.call(this);
+      app.helpers.disableEnter.disableEnter.call(this);
+      this.campaign.updateMenu(this.campaign.calcProgress());
       return this;
     },
-  }, menuHelper.methods, yesNoHelper.methods, addSectionHelper.methods, leavingConfirmationHelper.methods)),
+  }, app.helpers.menu.methods, app.helpers.yesNo.methods, app.helpers.section.methods, app.helpers.confirmOnLeave.methods)),
 
   finalReview: Backbone.View.extend({
-    urlRoot: formcServer + '/:id/final-review',
+    urlRoot: app.config.formcServer + '/:id/final-review',
 
     preinitialize() {
       // ToDo
@@ -2104,14 +2250,15 @@ module.exports = {
     initialize(options) {
       this.formcId = options.formcId;
       this.fields = options.fields;
-      disableEnterHelper.disableEnter.call(this);
+      this.campaign = options.model.campaign;
+
+      app.helpers.disableEnter.disableEnter.call(this);
     },
     events: {
       'click .createField': 'createField',
     },
 
     _success(data, newData) {
-      // formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
       return 1;
     },
 
@@ -2132,7 +2279,7 @@ module.exports = {
         element.name = target.dataset.name;
 
         if(target.dataset.type == 'money') {
-          //element.value = formatHelper.unformatPrice(target.innerHTML);
+          //element.value = app.helpers.format.unformatPrice(target.innerHTML);
           element.value = target.innerHTML;
         } else {
           element.value = target.innerHTML;
@@ -2173,7 +2320,7 @@ module.exports = {
 
     update(e) {
       let val = e.target.value;
-      val = (e.target.dataset.type == 'money') ? formatHelper.unformatPrice(val) : val;
+      val = (e.target.dataset.type == 'money') ? app.helpers.format.unformatPrice(val) : val;
       const name = e.target.name;
       const reloadRequiredFields = [
         'corporate_structure',
@@ -2214,51 +2361,49 @@ module.exports = {
       let method = 'PATCH';
 
       if(name.indexOf('company.') !== -1) {
-
         fieldName = name.split('company.')[1];
         data[fieldName] = val;
-        url = raiseCapitalServer + '/company/' + app.user.company.id + '/edit';
+        url = app.config.raiseCapitalServer + '/company/' + app.user.company.id;
 
       } else if(name.indexOf('campaign.') !== -1) {
         fieldName = name.split('campaign.')[1];
         data[fieldName] = val;
-        url = raiseCapitalServer + '/campaign/' + app.user.campaign.id + '/edit';
-        updateModel = app.user.campaign;
+        url = app.config.raiseCapitalServer + '/campaign/' + this.campaign.id;
+        updateModel = this.campaign;
 
       } else if(name.indexOf('formc.') !== -1) {
         fieldName = name.split('formc.')[1];
-        url = formcServer + '/' + app.user.formc.id;
+        url = app.config.formcServer + '/' + this.model.id;
 
         if(fieldName.indexOf('[') !== -1) {
           let names = fieldName.split('.');
           fieldName = names[0].split('[')[0];
           let index = names[0].split('[')[1].replace(']', '');
+          if (name.indexOf('end_date_of_service') >= 0 && (val || '').toLowerCase() == 'current') {
+            val = void(0);
+          }
           app.setValByKey(app.user, name, val);
 
           if(fieldName == 'team_members') {
-            url = formcServer + '/' + app.user.formc.id + '/team-members/' +
-              roles[app.user.formc.team_members[index].role[0]].toLocaleLowerCase() + '/' + 
-              app.user.formc.team_members[index].user_id;
-
-            data = app.user.formc.team_members[index];
-            method = 'PUT';
-
+            data = this.model.formc.team_members[index];
+            url = app.config.formcServer + '/' + this.model.id + '/team-members/' + data.user_id;
+            method = 'PATCH';
           } else if(fieldName.indexOf('risk') !== -1) {
             let riskVar = name.split('.')[2];
-            app.user.formc[fieldName][riskVar] = val;
+            this.model[fieldName][riskVar] = val;
             let riskName = fieldName.split('_')[0];
             riskName = riskName.indexOf('miscellaneous') >= 0 ? 'misc' : riskName;
-            url = formcServer + '/' + app.user.formc.id + '/risk-factors-' + riskName + '/' + index;
-            app.user.formc[fieldName][index];
-            data = app.user.formc[fieldName][index];
+            url = app.config.formcServer + '/' + this.model.id + '/risk-factors-' + riskName + '/' + index;
+            this.model[fieldName][index];
+            data = this.model[fieldName][index];
           } else {
-            data[names[0].replace(/\[\d+\]/, '')] = app.user.formc[names[0].replace(/\[\d+\]/, '')];
+            data[names[0].replace(/\[\d+\]/, '')] = this.model[names[0].replace(/\[\d+\]/, '')];
           }
         } else {
           data[fieldName] = val;
         }
 
-        updateModel = app.user.formc;
+        updateModel = this.model;
       }
 
       fillDataWithDependencies(data, fieldName, updateModel);
@@ -2294,7 +2439,7 @@ module.exports = {
           } else {
             href.dataset.type = 'text';
             if(e.target.dataset.type == 'money') {
-              realVal = formatHelper.formatPrice(realVal);
+              realVal = app.helpers.format.formatPrice(realVal);
             }
           }
 
@@ -2342,18 +2487,14 @@ module.exports = {
       this.fields.formc.outstanding_securities.schema.security_type.validate.choices = securityTypeConsts.SECURITY_TYPES;
       this.fields.formc.outstanding_securities.schema.custom_security_type.validate.choices = securityTypeConsts.SECURITY_TYPES;
       this.fields.formc.outstanding_securities.schema.voting_right.validate.choices = yesNoConsts.YESNO;
+      this.fields.formc.business_plan_file_id.label = 'Please upload your business plan';
 
       this.$el.html(
         template({
-          serverUrl: serverUrl,
-          Urls: Urls,
           fields: this.fields,
           formcId: this.formcId,
-          values: {
-            company: app.user.company,
-            campaign: app.user.campaign,
-            formc: app.user.formc
-          }
+          view: this,
+          values: this.model
         })
       );
 

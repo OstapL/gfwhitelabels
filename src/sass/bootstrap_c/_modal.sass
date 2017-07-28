@@ -17,7 +17,63 @@
 			color: $small-text
 			line-height: rem(14)
 			margin-top: rem(10)
-
+		&.sign-up-header
+			background-color: $sign-up-header-bgc
+			.close
+				color: $white
+				opacity: 1
+				&:hover
+					color: $white
+					opacity: .7
+			.title-header-signup
+				margin-top: rem(20)!important
+				text-align: center
+				margin-bottom: rem(20)
+				h1
+					font-size: rem(24)
+					color: $white
+					display: inline-block
+					margin-bottom: 0
+					&.number
+						font-size: rem(36)
+				.border-left
+					border-left: solid 1px $white
+					@media only screen and (max-width : 545px)
+						border: none
+				.text
+					p
+						margin-top: 0
+						margin-bottom: 0
+						@media only screen and (min-width : 544px)
+							margin-right: 10px
+			.title-header-bottom
+				font-size: rem(20)
+				text-align: center
+				color: $white
+			hr
+				background-color: $white
+				height: 1px
+				margin-top: rem(25)
+				width: 260px
+			.text
+				p
+					color: $white
+					margin-bottom: 20px
+					font-size: 12px
+					line-height: 16px
+		@media only screen and (max-width : 375px)
+			text-align: center
+			.title-header-signup
+				h1
+					font-size: rem(21)!important
+					margin-bottom: 0
+			hr
+				margin: rem(10) auto!important
+				width: 100%!important
+			.title-header-bottom
+				span
+					font-size: rem(16)
+            		margin-bottom: 0
 	.modal-body
 		padding: rem(15) rem(30) 0
 		form
@@ -37,6 +93,8 @@
 					display: block
 					padding-left: rem(20)
 					line-height: rem(14)
+					font-size: rem(12)
+					line-height: 18px
 				.p-t-6
 					padding-top: rem(6)
 			.btn
@@ -46,8 +104,9 @@
 				.btn
 					margin-top: rem(10)
 			.or
-				margin-top: rem(30)
+				margin-top: rem(25)
 				position: relative
+				margin-bottom: rem(18)
 				span
 					position: absolute
 					text-align: center
@@ -72,10 +131,23 @@
 	.radio-input
 		label
 			font-weight: normal
-@media only screen and (max-width : 768px)
-	.modal-dialog	
-		.modal-body
-			padding: rem(10) rem(0)
+#sign_up,
+#sign_in
+  .modal-dialog
+    max-width: 540px
+    .modal-body
+      padding: rem(15) rem(45) 0
+      @media only screen and (max-width : 480px)
+      	padding: rem(15) rem(15) 0
+      @media only screen and (max-width : 360px)
+      	padding: rem(15) 0 0
+
+      .label-text
+        line-height: 14px
+        font-size: rem(12)
+	
+
+@media only screen and (max-width : 991px)
 	[id^="videoModal"]
 		top: 5%!important
 		.modal-dialog
@@ -86,24 +158,75 @@
 				top: -50!important
 				font-size: rem(40)
 [id^="videoModal"]
-	top: 10%
+	top: 12%
 	.modal-dialog
-		max-width: rem(700)
+		max-width: rem(940)
+		.modal-content
+			padding: 0
+			margin: 0
 		.close
 			position: absolute
 			right: -40px
-			top: -40px
+			top: -30px
 			z-index: 999
 			color: $white
-			font-size: rem(33)
+			font-size: rem(30)!important
 			opacity: .7
+.main-video-modal
+	top: 30px
+	.modal-content
+		background-color: transparent
+	.modal-dialog
+		.embed-responsive-16by9
+			padding-bottom: 0
+			height: 93vh
+			@media only screen and (max-width : 575px)
+				height: 75vh
+		max-width: 100%
+		margin-top: 0
+		background: #000
+		.close
+			position: absolute
+			right: 5px
+			top: 5px
+			z-index: 1051
+			color: $black
+			font-size: rem(26)
+			opacity: 1
+			background: #fff
+			width: 50px
+			height: 50px
+			border-radius: 100px
+			+mt(.2s)
+			&:hover
+				+mt(.2s)
+				color: rgba($black, .7)
+		.player
+			.sidedock
+				display: none !important
+
+
+.show-video-modal
+	.modal-backdrop.in
+		opacity: 1
+
 .modal-dropzone
-	top: 15%
 	.modal-dialog
 		max-width: 640px
+		margin: 0 auto!important
+		top: 50%
+		transform: translate(0, -50%)!important
+		@media only screen and (max-width : 767px)
+			top: 17%
+			transform: translate(0, 0)!important
+		@media only screen and (max-width : 374px)
+			top: 15%
+
 		.modal-header
 			.close
 				font-size: rem(30)
+				position: relative
+				top: -5px
 		.img-preview
 			position: relative
 			border-radius: 100%
@@ -126,7 +249,133 @@
 				padding: rem(15)
 		.cropper-view-box
 			border-radius: 0px
+	.image-crop-padding
+		padding-left: 90px
+		padding-right: 90px
+		@media only screen and (max-width : 767px)
+			padding-left: 15px
+			padding-right: 15px
+
+
 
 .files-modal
 	.thumb-file-container
 		width: 150px
+.cropModal
+	.close
+		span
+			font-size: rem(21)
+#generic-modal
+	.modal-header
+		.close
+			position: absolute
+			right: 15px
+		h3
+			margin-top: rem(10)
+	.modal-footer
+		padding-bottom: rem(30)
+#investor_popup
+	.modal-dialog
+		max-width: 730px
+	.modal-body
+		padding: rem(20) rem(97) rem(5) rem(97)
+		@media only screen and (max-width : 575px)
+			padding: rem(20) rem(30) rem(5) rem(30)
+
+		.btn
+			margin-top: rem(25)
+		label
+			font-size: rem(14)
+			font-weight: bold
+			margin-bottom: rem(5)
+			padding-top: 0
+		textarea
+			height: 70px
+		.form-group
+			margin-bottom: rem(20)
+.detail-video-popup
+	top: 0!important
+	background-color: #000
+	overflow-y: hidden!important	
+
+	.modal-dialog
+		position: relative
+		margin-top: 0
+		max-width: 90vw
+		width: 100%
+		height: 100%
+		.close
+			position: absolute
+			right: -60px!important
+			top: 10px
+			z-index: 1051
+			color: $black
+			font-size: rem(26)
+			opacity: 1
+			background: #fff
+			width: 50px
+			height: 50px
+			border-radius: 100px
+			+mt(.2s)
+			&:hover
+				+mt(.2s)
+				color: rgba($black, .7)
+			@media only screen and (max-width : 1280px)
+				right: -30px!important
+			@media only screen and (max-width : 767px)
+				font-size: rem(18)!important
+				width: 30px
+				height: 30px
+			@media only screen and (max-width : 567px)
+				right: 0!important
+
+
+		.modal-content
+			top: 50%
+			left: 50%
+			margin: 0
+			width: 100%
+			-ms-transform: translate(-50%, -50%)
+			-webkit-transform: translate(-50%, -50%)
+			transform: translate(-50%, -50%)
+
+#xeroModal
+	.modal-dialog
+		max-width: 730px
+		.modal-header
+			h2
+				margin-bottom: rem(20)
+		.modal-body
+			padding: 0 rem(65) rem(30) rem(65)
+			@media only screen and (max-width : 575px)
+				padding: 0 rem(20) rem(30) rem(20)
+			p.what-xero
+				margin-top: rem(5)
+				margin-bottom: rem(15)
+
+			.bank
+				max-width: 380px
+				margin: auto
+				margin-bottom: 20px
+				@media only screen and (max-width : 543px)
+					max-width: 180px
+
+				label
+					font-weight: normal
+					font-size: rem(15)
+					line-height: rem(12)
+					padding-top: 0
+					margin-bottom: 0
+				input
+					float: left
+					margin-right: rem(24)
+				.form-group
+					&:last-child
+						margin-bottom: rem(15)
+			.input-wrap
+				max-width: 340px
+				text-align: center
+				margin-left: 5px
+			.btn
+				margin-top: 25px
+

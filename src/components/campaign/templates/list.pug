@@ -1,4 +1,66 @@
 - 'use strict';
+
+mixin paginator(currentPage, limit, totalCount)
+  if limit < totalCount
+    -
+      currentPage = currentPage || 1;
+      var totalPages = Math.ceil(totalCount / limit);
+      var pages = [];
+      if (totalPages <= 3) {
+        for (var i = 1; i <= 3; i += 1) {
+          if (i <= totalPages) {
+            pages.push(i);
+          }
+        }
+      } else {
+        if (currentPage == totalPages) {
+          if (currentPage - 2 > 1) {
+            pages.push(currentPage - 2);
+          }
+          if (currentPage - 1 > 1) {
+            pages.push(currentPage - 1);
+          }
+          pages.push(currentPage);
+          } else if (currentPage == 1) {
+            pages.push(currentPage);
+          if (currentPage + 1 < totalPages) {
+            pages.push(currentPage + 1);
+          }
+          if (currentPage + 2 < totalPages) {
+            pages.push(currentPage + 2);
+          }
+        } else {
+          pages.push(currentPage - 1);
+          pages.push(currentPage);
+          pages.push(currentPage + 1);
+        }
+      }
+
+      var orderBy = app.getParams().orderby ? '&orderby=' + app.getParams().orderby : '';
+      var urlPrefix = '/companies?page=';
+    section.pagination(style="display:" + (totalCount <= limit ? "none" : "block") + ";")
+      .container
+        .row
+          .col-lg-12
+            nav
+              ul.pagination.pagination-sm
+                if currentPage - 1 > 1
+                  li.page-item
+                    a(href=(urlPrefix + (currentPage - 1)) + orderBy).page-link
+                      span(aria-hidden="true")
+                        i.fa.fa-angle-left
+                      span.sr-only Prev
+
+                each page in pages
+                  li.page-item.active
+                    a(href=(urlPrefix + page + orderBy)).page-link= page
+
+                if currentPage + 1 < totalPages
+                  a(href=(urlPrefix + (currentPage + 1) + orderBy) aria-label="Next").page-link
+                    span(aria-hidden="true")
+                      i.fa.fa-angle-right
+                    span.sr-only Next
+
 section.small-section.filter.p-b-0
   form(
       action="/campaigns/" 
@@ -57,36 +119,25 @@ section.small-section.filter.p-b-0
                 else
                   option(value=k)= v
 
+secetion.email-subscription.subscription-campaing-list
+  .container
+    .row
+      .col-xs-12
+        h2.text-xs-center.font-weight-light.m-t-0 Sign up and be the first to hear about new investment opportunities
+    .row
+      .col-xl-12
+        -
+          var subscriber = require('directives/subscribe/index.js');
+          pug_html += subscriber.render({
+            containerClass: 'subscription-wrap',
+            emailClass: 'col-xs-12 p-l-0',
+            subscribeClass: 'subscription-btn'
+          });
+
 section.campaing-list
   .container#campaignList
     include _list.pug
-- var currentPage = Number(app.getParams().page) || 1;
-
-- var orderBy = app.getParams().orderby ? '&orderby=' + app.getParams().orderby : '';
-- var count = collection.count[0];
-section.pagination(style="display:" + (count <= 6 ? "none" : "block") + ";")
-    .container
-        .row
-            .col-lg-12
-                nav
-                    ul.pagination.pagination-sm
-                        if currentPage - 1 > 0
-                          li.page-item
-                              a(href="/companies?page=" + (currentPage - 1) + orderBy).page-link
-                                  span(aria-hidden="true")
-                                      i.fa.fa-angle-left
-                                  span.sr-only Next
-                        li.page-item.active
-                            a(href="/companies?page=" + currentPage + orderBy).page-link= currentPage
-                        if currentPage + 1 <= Math.ceil(count / 6)
-                          li.page-item
-                              a(href="/companies?page=" + (currentPage + 1) + orderBy).page-link= (currentPage + 1)
-                        if currentPage + 2 <= Math.ceil(count / 6)
-                          li.page-item
-                              a(href="/companies?page=" + (currentPage + 2) + orderBy).page-link= (currentPage + 2)
-                        if currentPage + 1 <= Math.ceil(count / 6)
-                          li.page-item
-                              a(href=("/companies?page=" + (currentPage + 1) + orderBy) aria-label="Next").page-link
-                                  span(aria-hidden="true")
-                                      i.fa.fa-angle-right
-                                  span.sr-only Next
+-
+  var currentPage = Number(app.getParams().page) || 1;
+  var GENERAL = require('consts/general.json');
++paginator(currentPage, GENERAL.COMPANIES_PER_PAGE, collection.count)

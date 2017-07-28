@@ -1,5 +1,3 @@
-- var formatHelper = require('helpers/formatHelper.js');
-
 - function ggetData(name) {
 -   if(name.indexOf('.') == -1) {
 -       return values[name];                                                           
@@ -36,8 +34,11 @@ mixin frfieldNestedTextLabel(nestedName, name, value, index, myAttr)
   )
 
 
-mixin frField(name, type)
-  - var value = ggetData(name)
+mixin frField(name, type, defaultValue)
+  -
+    var value = ggetData(name);
+    value = (typeof value === 'undefined') ? defaultValue : value;
+
   if type == 'select'
     - var schemaName = name;
     if name.indexOf('[') !== -1
@@ -58,7 +59,7 @@ mixin frField(name, type)
   if type == 'textarea'
     - value = value.replace(/\n/g, "<br />")
   if type == 'money'
-    - value = formatHelper.formatPrice(value)
+    - value = app.helpers.format.formatPrice(value)
   a(
     href="#"
     data-name=name

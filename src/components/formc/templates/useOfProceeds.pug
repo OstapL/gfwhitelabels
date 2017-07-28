@@ -1,12 +1,9 @@
 - 'use strict'
 include ../../raiseFunds/templates/menu.pug
 
-style.
-  .red {
-    color: red;
-  }
-
-- pug_html += app.breadcrumbs('create form c', '', [ ['Home', '/'], ['Create Form C', '/formc/' + values.id + '/introduction'], ['Use Of Proceeds', ''], ]);
+- 
+  var fileDropzone = require('directives/setdropzone/file.js'); 
+  pug_html += app.breadcrumbs('create form c', '', [ ['Home', '/'], ['Create Form C', '/formc/' + values.id + '/introduction'], ['Use Of Proceeds', ''], ]);
 
 section.formc.use_of_proceeds.create-company-media.container
   +menu('formc', 'use-of-proceeds')
@@ -20,18 +17,18 @@ section.formc.use_of_proceeds.create-company-media.container
       .form-group.intended
         .col-lg-12.p-xs-0
           textarea(rows="3" placeholder="Intended Use of Proceeds" name="intended_use_of_proceeds").form-control= values.intended_use_of_proceeds
-      .table.table-responsive
+      .table
         .col-lg-12.table-responsive.p-xs-0
           table.table.table-bordered.use-of-proceeds-table.expense-table.m-b-0
             thead
               tr
                 th.w-50
-                th.w-25.text-lg-center.font-size-12 If target offering amount sold
-                th.w-25.text-lg-center.font-size-12 If maximum amount sold
+                th.w-25.text-xs-center.font-size-12 If target offering amount sold
+                th.w-25.text-xs-center.font-size-12 If maximum amount sold
               tr.color-grey.row-gray
                 td.w-50.p-l-r-20.p-t-b-5 Total Proceeds
-                td.w-25.text-lg-center.font-size-12.p-t-b-5 $#{ formatHelper.formatNumber(minRaise) }
-                td.w-25.text-lg-center.font-size-12.p-t-b-5 $#{ formatHelper.formatNumber(maxRaise) }
+                td.w-25.text-xs-center.font-size-12.p-t-b-5 $#{ app.helpers.format.formatNumber(minRaise) }
+                td.w-25.text-xs-center.font-size-12.p-t-b-5 $#{ app.helpers.format.formatNumber(maxRaise) }
               |!{ templates.less_offering_express }
 
           table.table.table-bordered.use-of-proceeds-table.use-table.m-b-0.m-t-0
@@ -40,8 +37,9 @@ section.formc.use_of_proceeds.create-company-media.container
                 td.w-50.p-l-r-20 Net Proceeds
                   .pull-right.icon.showPopover(data-content="Minimum and maximum net proceeds is calculated automatically: <br> Net Proceeds = Total Proceeds - Sum (A+B+C)")
                     i.fa.fa-question-circle.m-r-0
-                td.w-25.text-lg-center.font-size-12.min-net-proceeds
-                td.w-25.text-lg-center.font-size-12.max-net-proceeds
+                  div#use_of_net_proceeds
+                td.w-25.text-xs-center.font-size-12.min-net-proceeds
+                td.w-25.text-xs-center.font-size-12.max-net-proceeds
             |!{ templates.use_of_net_proceeds }
           table.table.table-bordered.m-t-0
             tbody
@@ -49,22 +47,22 @@ section.formc.use_of_proceeds.create-company-media.container
                 td.w-50 Total Use of Net Proceeds
                   .pull-right.icon.showPopover(data-content="Minimum and maximum total use of net proceeds is calculated automatically: <br>  Total Use of Net Proceeds = Sum (A+B+C)")
                     i.fa.fa-question-circle
-                td.w-25.text-lg-center.font-size-12.min-total-use(data-content="<i class='fa fa-exclamation-circle'></i>Minimum Total Use of Net Proceeds must be equal to Minimum Net Proceeds." data-placement="bottom" data-toggle="popover" data-container="body" data-trigger="manual")
-                td.w-25.text-lg-center.font-size-12.max-total-use(data-content="<i class='fa fa-exclamation-circle'></i>Maximum Total Use of Net Proceeds must be equal to Miaximum Net Proceeds." data-placement="bottom" data-toggle="popover" data-container="body" data-trigger="manual")
+                td.w-25.text-xs-center.font-size-12.min-total-use(data-content="Minimum Total Use of Net Proceeds must be equal to Minimum Net Proceeds." data-placement="bottom" data-toggle="popover" data-container="body" data-trigger="manual")
+                td.w-25.text-xs-center.font-size-12.max-total-use(data-content="Maximum Total Use of Net Proceeds must be equal to Maximum Net Proceeds." data-placement="bottom" data-toggle="popover" data-container="body" data-trigger="manual")
       .col-lg-12.p-xs-0
-        .border-bottom.m-b-3
+        .border-bottom.m-b-3.m-t-2
         h3.text-xs-center Business Plan
 
       .col-lg-12.create-perks.doc.p-xs-0
         .img-ppt
           -
-            pug_html += app.fields.fileDropzone('business_plan_file_id',{
-            data: values.business_plan_data[0] || [],
-            }, fields.business_plan_file_id);
+            pug_html += fileDropzone.getInstance(view, 
+              'business_plan_file_id', 
+              'business_plan_data', 
+              view.fields.business_plan_file_id
+            ).render().resultHTML;
       
       .col-lg-12.text-lg-right.m-t-2.text-xs-center.text-sm-center.p-xs-0
         //- a(href="#").btn.btn-primary.text-uppercase save
-        button.btn.btn-primary.text-uppercase save and continue
+        button#submit.btn.btn-primary.text-uppercase save and continue
           i.fa.fa-angle-right
-
-      

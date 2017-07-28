@@ -1,0 +1,23 @@
+if app.config.indexPage.topBanner == 1
+  section.home-wrap-text-block.top-block.top-dcu
+    div.opasity-blocks.hide-bg-fixed
+      .container.text-lg-center.text-xs-center.text-sm-center
+        .col-lg-12.mt45
+          p.mb25  !{app.config.indexPage.topBannerText}
+        .col-xl-11.offset-xl-1.col-lg-11.offset-lg-1.p-b-3.top-baner-tabel
+          .col-xl-4.col-lg-4.left.p-l-0.p-r-0.border
+            h3.font-weight-bold.m0.letter-spacing-normal.padding-5 Not NCUA Insured
+          .col-xl-4.col-lg-4.center.p-l-0.p-r-0.border
+            h3.font-weight-bold.m0.letter-spacing-normal.padding-5 Not Credit Union Guaranteed
+          .col-xl-4.col-lg-4.right.p-l-0.p-r-0.border
+            h3.font-weight-bold.m0.letter-spacing-normal.padding-5 May Lose Value
+else if app.config.indexPage.topBanner == 2
+  section.home-wrap-text-block.top-block.m-t-0.top-river
+    .opasity-blocks.hide-bg-fixed
+      .container.text-lg-center.text-xs-center.text-sm-center
+        .col-lg-12
+          h2.text-uppercase.font-weight-bold What can we do to help your company grow and prosper?
+          h3 Rivermark is your partner for business success, with solutions for business checking, payments and lending that help you grow your revenue and better manage your cash.
+        .col-lg-12
+          a(href="https://www.rivermarkcu.org/business-accounts" target="_blank").btn.btn-lg.btn-secondary.m-b-3 Click to Learn More
+else

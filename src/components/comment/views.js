@@ -1,8 +1,3 @@
-const helpers = {
-  date: require('helpers/dateHelper.js'),
-  yesNo: require('helpers/yesNoHelper.js'),
-};
-
 const validation = require('components/validation/validation.js');
 
 function initDates(c) {
@@ -37,7 +32,7 @@ function findComment(comments, uid) {
 
 module.exports = {
   comments: Backbone.View.extend(_.extend({
-    urlRoot: commentsServer + '/:model/:id',
+    urlRoot: app.config.commentsServer + '/:model/:id',
     template: require('./templates/comments.pug'),
     el: '.comments-container',
     events: _.extend({
@@ -50,7 +45,7 @@ module.exports = {
       'click .link-like': 'likeComment',
       'click .link-edit': 'editComment',
       'click .link-delete': 'deleteComment',
-    }, helpers.yesNo.events),
+    }, app.helpers.yesNo.events),
 
     initialize(options) {
       this.fields = options.fields;
@@ -61,6 +56,7 @@ module.exports = {
         },
       });
 
+      this.readonly = options.readonly;
       this.allowQuestion = _.isBoolean(options.allowQuestion) ? options.allowQuestion : true;
       this.allowResponse = _.isBoolean(options.allowResponse) ? options.allowResponse : true;
       this.cssClass = _.isString(options.cssClass) ? options.cssClass : '';
@@ -68,7 +64,7 @@ module.exports = {
       this.urlRoot = this.urlRoot.replace(':model', 'company').replace(':id', this.model.id);
 
       this.userRole = 0;
-      _.each(app.user.companiesMember.data, (company) => {
+      _.each(app.user.companiesMember, (company) => {
         if (company.company_id == this.model.id)
           this.userRole = company.role;
       });
@@ -127,6 +123,7 @@ module.exports = {
         owner_id: this.model.owner_id,
         company_id: this.model.id,
         attr: {
+          readonly: this.readonly,
           allowQuestion: this.allowQuestion,
           allowResponse: this.allowResponse,
           cssClass: this.cssClass,
@@ -197,6 +194,9 @@ module.exports = {
 
     submitComment(e) {
       e.preventDefault();
+
+      if (this.readonly)
+        return false;
 
       if (!app.user.ensureLoggedIn(window.location.pathname))
         return false;
@@ -306,7 +306,7 @@ module.exports = {
       }).fail((err) => {
         $target.prop('disabled', false);
         app.hideLoading();
-        alert(err);
+        app.dialogs.error(err);
       });
     },
 
@@ -326,6 +326,9 @@ module.exports = {
 
     showReplyTo(e) {
       e.preventDefault();
+      if (this.readonly)
+        return false;
+
       let $commentBlock = $(e.target).closest('.single-comment');
 
       let $newCommentBlock = $commentBlock.find('.comment-form');
@@ -398,5 +401,5 @@ module.exports = {
         );
     },
 
-  }, helpers.yesNo.methods)),
+  }, app.helpers.yesNo.methods)),
 };

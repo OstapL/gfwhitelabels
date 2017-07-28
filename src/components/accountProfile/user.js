@@ -1,16 +1,40 @@
-const roleHelper = require('helpers/roleHelper.js');
-const ONE_HOUR = 1000 * 60 * 60;
+const Image = require('models/image.js');
+const YEAR = 1000 * 60 * 60 * 24 * 30 * 12;
+
+const fixImageData = (data) => {
+  if (data.image_data == null ||
+      !Array.isArray(data.image_data)) {
+    return data;
+  }
+
+  if(data.image_data.length == 0) {
+    data.image_data = {};
+    return data;
+  }
+
+  let originData = data.image_data[0];
+  let croppedData = data.image_data[1] || originData;
+
+  data.image_data = originData;
+  data.image_data.urls = {
+    origin: originData.urls ? (originData.urls[0] || '') : '',
+    main: croppedData.urls ? (croppedData.urls[0] || '') : '',
+    '50x50': croppedData.urls ? (croppedData.urls[0] || '') : '',
+  }
+
+  return data;
+};
 
 class User {
   constructor() {
     this.company = null;
     this.campaign = null;
     this.formc = null;
-    this.companiesMember = [];
 
     this.data = { token: '', id: ''};
-    this.role_data = null;
     this.token = null;
+
+    this.next = null;
   }
 
   get(key) {
@@ -37,41 +61,146 @@ class User {
     this.data.last_name = value;
   }
 
-  load() {
-    const token = localStorage.getItem('token');
-    if (token === null)
-      return app.trigger('userLoaded', { id: '' });
+  get companiesMember() {
+    return this.data.info || [];
+  }
 
-    // if we have a token we can get information about user
-    this.token = token;
-    cookies.set('token', token, {
-      domain: '.' + domainUrl,
-      expires: ONE_HOUR,
-      path: '/',
+  setFormcPaid(formcID) {
+    if (this.companiesMember.length <= 0)
+      return;
+
+    if (this.formc.id === formcID)
+      this.formc.is_paid = true;
+
+    const companyInfo = _.find(this.companiesMember, companyInfo => companyInfo.formc_id === formcID);
+    if (companyInfo)
+      companyInfo.is_paid = true;
+  }
+
+  updateImage(imageData) {
+    this.data.image_data = imageData;
+    this.data.image_image_id = new Image(
+      app.config.authServer + '/rest-auth/data',
+      this.data.image_data
+    );
+    document.getElementById('user-thumbnail').src = this.data.image_image_id.getUrl('50x50');
+    this.updateLocalStorage();
+  }
+
+  updateLocalStorage() {
+    localStorage.setItem('token', this.data.token);
+    localStorage.setItem('user', JSON.stringify(this.data));
+  }
+
+  setData(data, next) {
+    return new Promise((resolve, reject) => {
+      next = next || this.next || app.getParams().next || '/';
+
+      this.next = null;
+
+      if (!data.token)
+        return app.dialogs.error('no token or additional info provided');
+
+      const req = data.info
+        ? ''
+        : api.makeRequest(app.config.authServer + '/info',  'GET');
+
+      $.when(req).done((responseData) => {
+        if(responseData) {
+          // we need to rerender menu
+          this.data = responseData;
+        } else {
+          this.data = JSON.parse(JSON.stringify(data));
+        }
+
+        this.updateLocalStorage();
+
+        app.cookies.set('token', data.token, {
+          domain: '.' + app.config.domainUrl,
+          expires: YEAR,
+          path: '/',
+        });
+
+        delete this.data.token;
+
+        setTimeout(function() {
+          //TODO: replace this with app.routers.navigate
+          window.location = next;
+        }, 200);
+        resolve();
+      }).fail(() => {
+        this.emptyLocalStorage();
+        setTimeout(function() {
+          window.location = '/account/login?next=' + document.location.pathname;
+        }, 100);
+        reject('Failed to get user info');
+      });
     });
+  }
 
-    // let userData = localStorage.getItem('user');
-    // userData = JSON.parse(userData);
-    // this.set(userData);
-    // app.trigger('userLoaded', userData);
-    // return;
-
-    $.when(
-        api.makeRequest(authServer + '/rest-auth/data-mini', 'GET'),
-        this.getCompaniesMemberR()
-    ).then((data, members) => {
-      this.data = data[0];
-      this.companiesMember = members[0];
-      localStorage.setItem('user', JSON.stringify(this.data));
-      return this.getCompanyR();
-    }).then((company) => {
-      this.data.company = company;
-      app.trigger('userLoaded', this.data);
-    }).fail((xhr, status) => {
-      localStorage.removeItem('token');
-      app.defaultSaveActions.error(app, xhr, status, '');
+  updateUserData(data, next) {
+    const infoRequest = data.info ? null : api.makeRequest(app.config.authServer + '/info',  'GET');
+    $.when(infoRequest).done((responseData) => {
+      this.data = _.extend({}, this.data, responseData || data);
+      this.data.image_image_id = new app.models.Image(
+        app.config.authServer + '/rest-auth/data',
+        data.image_data
+      );
+      this.updateLocalStorage();
+      app.profile.render();
+      delete data.token;
+      if (next)
+        setTimeout(() => window.location = next, 100);
+    }).fail(() => {
+      this.emptyLocalStorage();
+      setTimeout(function() {
+        window.location = '/account/login?next=' + document.location.pathname;
+      }, 100);
     });
+  }
 
+  emptyLocalStorage() {
+    localStorage.clear();
+    // localStorage.removeItem('user');
+    // localStorage.removeItem('token');
+    app.cookies.expire('token');
+    this.token = null;
+    this.data = {};
+  }
+
+  loadWithPromise() {
+    return new Promise((resolve, reject) => {
+      this.token = localStorage.getItem('token');
+      if (this.token === null)
+        return resolve();
+
+       const data = fixImageData(JSON.parse(localStorage.getItem('user')) || {});
+      //ensure user has all required data.info
+      let infoReq = !data.info || !Array.isArray(data.info)
+        ? api.makeRequest(app.config.authServer + '/info',  'GET')
+        : null;
+
+      $.when(infoReq).then((responseData) => {
+        this.data = responseData || data;
+        this.data.image_image_id = new Image(
+          app.config.authServer + '/rest-auth/data',
+          data.image_data || {}
+        );
+        if (responseData) {
+          this.updateLocalStorage();
+        }
+
+        app.analytics.emitEvent(app.analytics.events.LoggedIn, app.user.stats);
+
+        return resolve();
+      }).fail(() => {
+        this.emptyLocalStorage();
+        setTimeout(() => {
+          window.location = '/account/login?next=' + document.location.pathname;
+        }, 100);
+        return resolve();
+      });
+    });
   }
 
   is_anonymous() {
@@ -80,115 +209,138 @@ class User {
 
   toJSON() {
     const data = Object.assign({}, this.data, {'companiesMember': this.companiesMember});
+    if(this.data.image_image_id) {
+      data.image_image_id = data.image_image_id.id;
+    }
     return data;
   }
 
-  _initRoles() {
-    if (!this.companiesMember || !this.companiesMember.data || !this.companiesMember.data.length)
-      return;
+  getRoles() {
+    if (!this.companiesMember || !this.companiesMember.length)
+      return [];
 
-    this.role_data = [];
+    const role_data = [];
 
-    _.each(this.companiesMember.data, (data) => {
-      let roles = roleHelper.extractRoles(data.role);
-      this.role_data.push({
+    _.each(this.companiesMember, (data) => {
+      let roles = app.helpers.role.extractRoles(data.role);
+      role_data.push({
         company: {
           id: data.company_id,
           name: data.company,
+          is_paid: data.is_paid,
         },
         roles: roles,
       });
     });
 
+    return role_data;
   }
 
   getRolesInCompany(company_id) {
-    if (!this.role_data)
-      this._initRoles();
-
-    if (!_.isNumber(company_id))
+    if (!_.isNumber(company_id)) {
       return;
+    }
 
-    return _(this.role_data).find((data) => { return data.company.id == company_id; });
-  }
+    const role_data = this.getRoles();
 
-  getRoles() {
-    if (!this.role_data)
-      this._initRoles();
-
-    return this.role_data;
+    return _(role_data).find((data) => { return data.company.id == company_id; });
   }
 
   ensureLoggedIn(next) {
-    if (this.is_anonymous()) {
-      const pView = require('components/anonymousAccount/views.js');
-      let v = new pView.popupLogin({
-        next: next || window.location.pathname,
-      });
-      v.render();
-      app.hideLoading();
-
-      return false;
+    if (!this.is_anonymous()) {
+      return true;
     }
 
-    return true;
+    this.next = next || (window.location.pathname + window.location.search);
+    require.ensure(['components/anonymousAccount/views.js'], (require) => {
+      const pView = require('components/anonymousAccount/views.js');
+
+      let v = $('#content').is(':empty')
+        ? new pView.signup({
+          el: '#content',
+          model: {},
+        })
+        : new pView.popupSignup({});
+
+      v.render();
+      app.hideLoading();
+    }, 'anonymous_account_chunk');
+
+    return false;
   }
 
   logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    cookies.expire('token');
-    app.trigger('userLogout', {});
+    this.emptyLocalStorage();
+    //TODO: looks like unnesessary code
+    // app.trigger('userLogout', {});
 
-    window.location = '/';
+    setTimeout(() => { window.location = '/';}, 100);
   }
 
-  passwordChanged(token) {
-    if (!token) {
-      console.error('New token is empty');
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
-      cookies.expire('token');
-      this.token = null;
+  passwordChanged(data) {
+    if (!data) {
+      console.error('New data is empty');
+      this.emptyLocalStorage();
       return;
     }
 
-    localStorage.setItem('token', token);
-    this.token = token;
-    cookies.set('token', token, {
-      domain: '.' + domainUrl,
-      expires: ONE_HOUR,
-      path: '/',
-    });
+    this.setData(data);
   }
 
-  getCompanyR(id, requestMethod='GET') {
-    if(id) 
-      return this.company ? '' : app.makeCacheRequest(raiseCapitalServer + '/company/' + id + '/edit', requestMethod);
-    else
-      return this.company ? '' : app.makeCacheRequest(authServer + '/user/company', requestMethod);
+  getCompanyR(id) {
+    if(id)  {
+      return this.company ? '' : api.makeCacheRequest(app.config.raiseCapitalServer + '/company/' + id, 'GET');
+    } else {
+      let formcOwner = this.companiesMember.filter((el) => {
+        return el.owner_id = this.data.id;
+      });
+      if(formcOwner.length == 0) {
+        return '';
+      }
+      else {
+        return this.company ? '' : api.makeCacheRequest(app.config.raiseCapitalServer + '/company/' + formcOwner[0].company_id, 'GET');
+      }
+    }
   }
 
   getCompany() {
     return this.company;
   }
 
-  getCampaignR(id, requestMethod='GET') {
-    if(id) 
-      return this.campaign ? '' : app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/edit', requestMethod);
-    else
-      return this.campaign ? '' : app.makeCacheRequest(authServer + '/user/campaign', requestMethod);
+  getCampaignR(id) {
+    if(id)  {
+      return this.campaign ? '' : api.makeCacheRequest(app.config.raiseCapitalServer + '/campaign/' + id, 'GET');
+    } else {
+      let formcOwner = this.companiesMember.filter((el) => {
+        return el.owner_id = this.data.id;
+      });
+      if(formcOwner.length == 0) {
+        return '';
+      }
+      else {
+        return this.campaign ? '' : api.makeCacheRequest(app.config.raiseCapitalServer + '/campaign/' + formcOwner[0].campaign_id, 'GET');
+      }
+    }
   }
 
   getCampaign() {
     return this.campaign;
   }
 
-  getFormcR(id, requestMethod='GET') {
-    if(id) 
-      return this.formc ? '' : app.makeCacheRequest(formcServer + '/' + id, requestMethod);
-    else
-      return this.formc ? '' : app.makeCacheRequest(authServer + '/user/formc', requestMethod);
+  getFormcR(id) {
+    if(id)  {
+      return this.formc ? '' : api.makeCacheRequest(app.config.formcServer + '/' + id, 'GET');
+    } else {
+      let formcOwner = this.companiesMember.filter((el) => {
+        return el.owner_id = this.data.id;
+      });
+      if(formcOwner.length == 0) {
+        return '';
+      }
+      else {
+        return this.formc ? '' : api.makeCacheRequest(app.config.formcServer + '/' + formcOwner[0].formc_id, 'GET');
+      }
+    }
   }
 
   getFormc() {
@@ -196,15 +348,27 @@ class User {
   }
 
   getCompaniesMemberR() {
-    return this.companiesMember.length != 0 ? '' : app.makeCacheRequest(raiseCapitalServer + '/info');
+    return this.companiesMember.length != 0 ? '' : api.makeCacheRequest(app.config.raiseCapitalServer + '/info');
   }
 
   getCompaniesMember() {
     return this.companiesMember;
   }
 
+  get stats() {
+    const full_name = ((this.data.first_name || this.data.last_name) ? (`${this.data.first_name} ${this.data.last_name}`) : '').trim();
+    if (this.data.id) {
+      return {
+        user: {
+          id: this.data.id,
+          email: this.data.email,
+          full_name,
+        },
+      };
+    }
+    return {};
+  }
+
 }
 
-module.exports = () => {
-  return new User();
-};
+module.exports = User;

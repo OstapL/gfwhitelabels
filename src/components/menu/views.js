@@ -1,4 +1,4 @@
-const Notifications = require('./notifications');
+const Notifications = require('./notifications.js');
 const notifications_channel = 'general';
 const HIDE_TIMEOUT = 500;
 
@@ -8,9 +8,7 @@ module.exports = {
     render: function () {
       this.$el.html(
         this.template({
-          serverUrl: serverUrl,
           user: app.user.toJSON(),
-          Urls: Urls,
         })
       );
       return this;
@@ -34,9 +32,7 @@ module.exports = {
 
       this.$el.html(
         this.template({
-          serverUrl: serverUrl,
           user: app.user.toJSON(),
-          Urls: Urls,
         })
       );
       return this;
@@ -48,9 +44,7 @@ module.exports = {
     render: function () {
       this.$el.html(
         this.template({
-          serverUrl: serverUrl,
           user: app.user.toJSON(),
-          Urls: Urls,
         })
       );
       return this;
@@ -92,7 +86,6 @@ module.exports = {
 
       this.$el.html(
         this.template({
-          serverUrl: serverUrl,
           user: app.user.toJSON(),
           notifications: this.model.data,
           unreadCount: this.countUnreadMessages(),
@@ -129,7 +122,6 @@ module.exports = {
         return;
 
       this._hideTimeout = setTimeout(() => {
-        console.log('hide notifications')
         if (this.$notificationContainer.hasClass('notification-active'))
           this.$notificationContainer.removeClass('notification-active');
       }, HIDE_TIMEOUT);
@@ -160,12 +152,14 @@ module.exports = {
     },
 
     initNotifications() {
-      this.notifications = new Notifications();
-      this.notifications.on(notifications_channel, (data) => {
-        this.model.data = this.model.data.concat(data);
-        this.updateUnreadCount();
-        let notificationsHtml = data.map(this.snippets.notification);
-        this.$notificationList.prepend(notificationsHtml);
+      Notifications.getInstanceAsync().then((instance) => {
+        this.notifications = instance;
+        this.notifications.on(notifications_channel, (data) => {
+          this.model.data = this.model.data.concat(data);
+          this.updateUnreadCount();
+          let notificationsHtml = data.map(this.snippets.notification);
+          this.$notificationList.prepend(notificationsHtml);
+        });
       });
     },
 

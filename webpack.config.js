@@ -1,78 +1,220 @@
-var webpack = require('webpack'),
-  ExtractTextPlugin = require('extract-text-webpack-plugin'),
-  HtmlWebpackPlugin = require('html-webpack-plugin'),
-  autoprefixer = require('autoprefixer'),
-  path = require('path');
+const webpack = require('webpack');
+const path = require('path');
+const HtmlPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const CompressionPlugin = require("compression-webpack-plugin");
+
+const isAnalyze = process.env.NODE_ENV === 'analyze';
+const isProd = process.env.NODE_ENV === 'production';
+const isDev = process.env.NODE_ENV === 'development';
+
+const plugins = [
+  new HtmlPlugin({
+    title: 'GrowthFountain | Equity Crowdfunding Platform',
+    template: './src/index.pug',
+    filename: 'index.html',
+    inject: 'head',
+  }),
+  new ExtractTextPlugin({
+    filename: 'styles.[name].[hash].css',
+    disable: false,
+    allChunks: true,
+  }),
+  new webpack.ProvidePlugin({
+    'jQuery': 'jquery',
+    '$': 'jquery',
+    'window.jQuery': 'jquery',
+    'Tether': 'tether',
+    'window.Tether': 'tether',
+    '_': 'underscore',
+    'Backbone': 'backbone',
+  }),
+  new webpack.optimize.CommonsChunkPlugin({
+    name: 'vendor',
+    filename: '[name].[hash].js',
+    minChunks: Infinity,
+  }),
+  new webpack.EnvironmentPlugin({
+    NODE_ENV: 'development',
+  }),
+];
+
+if (isProd || isAnalyze) {
+  plugins.push(new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /en/));
+  plugins.push(new webpack.optimize.UglifyJsPlugin({
+      mangle: true,
+      compress: {
+        warnings: false,
+      },
+      output: { comments: false },
+    }));
+  plugins.push(new CleanWebpackPlugin(['dist'], {
+    root: __dirname,
+    verbose: true,
+    dry: false,
+  }));
+}
+
+if (isAnalyze) {
+  const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+  plugins.push(new BundleAnalyzerPlugin());
+}
+
+if (isDev) {
+  plugins.push(new webpack.HotModuleReplacementPlugin());
+  plugins.push(new webpack.NamedModulesPlugin());
+}
+
+const dependencies = Object.keys(require('./package.json').dependencies);
+const lazyDependencies = ['dropzone', 'socket.io-client', 'cropperjs'];
+
+const baseDependencies = dependencies.filter((dep) => {
+  return !lazyDependencies.find(authDep => authDep == dep);
+});
 
 module.exports = {
-  entry: './src/app.js',
-  devtool: 'eval-source',
-  output: {
-    path: __dirname + '/dist',
-    publicPath: '/',
-    filename: 'bundle.js'
+  entry: {
+    vendor: baseDependencies,
+    index: path.resolve(__dirname, './src/index.js'),
   },
-
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: '[name].[hash].js',
+    publicPath: '/',
+    pathinfo: !isProd,
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['env'],
+          },
+        },
+        include: [path.resolve(__dirname, 'src')],
+        exclude: [/\/node_modules\//],
+      },
+      {
+        test: /\.css$/,
+        include: [
+          path.resolve(__dirname, './node_modules'),
+          path.resolve(__dirname, './src'),
+        ],
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            'css-loader',
+            'resolve-url-loader',
+          ],
+        }),
+      },
+      {
+        test: /\.(scss|sass)$/i,
+        include: [
+          path.resolve(__dirname, './node_modules'),
+          path.resolve(__dirname, './src'),
+        ],
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            'css-loader',
+            'resolve-url-loader',
+            {
+              loader: 'sass-loader',
+              query: {
+                sourceMap: true,
+              }
+            }],
+        })
+      },
+      {
+        test: /\.pug$/,
+        loader: 'pug-loader',
+      },
+      {
+       test: /\.(mp3|mp4|webm)$/,
+       loader: 'file-loader',
+       include: [
+          path.resolve(__dirname, './staticdata'),
+        ],
+     },
+     {
+       test: /\.(pdf|doc|docx)$/,
+       include: [
+          path.resolve(__dirname, './staticdata'),
+        ],
+        loaders: [
+          {
+            loader: 'file-loader',
+            query: {
+              name: '[path][name].[hash].[ext]',
+            }
+          },
+        ],
+     },
+      {
+        test: /\.(gif|png|jpe?g|svg|ico)$/i,
+        include:[
+          path.resolve(__dirname, './node_modules'),
+          path.resolve(__dirname, './staticdata'),
+        ],
+        loaders: [
+          {
+            loader: 'file-loader',
+            query: {
+              name: '[path][name].[hash].[ext]',
+            }
+          },
+          {
+            loader: 'image-webpack-loader',
+            query: {
+              bypassOnDebug: true,
+            }
+          }
+        ],
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+            query: '[path][name].[hash].[ext]',
+          }
+        ],
+      }
+    ],
+  },
+  resolve: {
+    alias: {
+      components: path.resolve(__dirname, 'src/components'),
+      constants: path.resolve(__dirname, 'consts'),
+      images: path.resolve(__dirname, 'staticdata/img'),
+      video: path.resolve(__dirname, 'staticdata/video'),
+      doc: path.resolve(__dirname, 'staticdata/doc'),
+    },
+    modules: [
+      path.resolve(__dirname, 'src'),
+      path.resolve(__dirname, 'node_modules'),
+      path.resolve(__dirname, ''),
+    ],
+    extensions: ['.js', '.sass', '.scss', '.css'],
+  },
+  plugins: plugins,
+  devtool: isProd ? false :'eval',
+  watch: isDev,
   devServer: {
-    contentBase: './dist/',
     historyApiFallback: true,
-    inline: true,
-    hot: true,
     port: 7070,
     host: '0.0.0.0',
-    stats: {
-      colors: true
-    }
+    disableHostCheck: true,
+    //this can be used only on local machine,
+    //to open app hosted on local machine from mobile phone you need to use disableHostCheck prop;
+    // public: 'local.growthfountain.com',
+    hot: true,
+    inline: true,
   },
-
-  resolve: {
-    extensions: ['', '.js', '.pug', '.sass', '.scss'],
-    modulesDirectories: [
-      './src',
-      './',
-      './node_modules',
-    ]
-  },
-
-  debug: true,
-
-  plugins: [
-    new ExtractTextPlugin("style.css"),
-    new HtmlWebpackPlugin({
-      title: 'Backbone App',
-      template: './src/index.html',
-      filename: 'index.html',
-      inject: 'body' // Inject all scripts into the body
-    }),
-    new webpack.ProvidePlugin({
-      $: "jquery",
-      jQuery: "jquery",
-      Tether: "tether",
-      "window.Tether": "tether",
-      Backbone: "backbone"
-    }),
-    new webpack.HotModuleReplacementPlugin()
-  ],
-
-  module: {
-    loaders: [
-      {test: /bootstrap\/js\//, loader: 'imports?jQuery=$' },
-      {test: /\.html?$/, loader: 'file?name=[name].[ext]'},
-      {test: /\.pug$/, loader: 'pug-loader'},
-      {test: /\.json$/, exclude: /node_modules/, loader: 'json-loader'},
-      {test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader', query: {presets: ['es2015']}},
-      {test: /\.css$/, loaders: ['style-loader', 'css-loader']},
-      {test: /\.sass$/, loaders: ['style-loader', 'css-loader', 'sass-loader']},
-      {test: /\.scss$/, loaders: ['style-loader', 'css-loader', 'sass-loader']},
-      {test: /\.png$/, loader: 'url?limit=8192&mimetype=image/png'},
-      {test: /\.jpe?g$/, loader: 'url?limit=8192&mimetype=image/jpg'},
-      {test: /\.gif$/, loader: 'url?limit=8192&mimetype=image/gif'},
-      {test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=8192&mimetype=image/svg+xml'},
-      {test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=8192&mimetype=application/font-woff2'},
-      {test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=8192&mimetype=application/font-woff'},
-      {test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=8192&mimetype=application/octet-stream'},
-      {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=8192&mimetype=application/octet-stream'},
-      {test: /\.md$/, loaders: ['html', 'markdown']}
-    ]
-  }
 };
+

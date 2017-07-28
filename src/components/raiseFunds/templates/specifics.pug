@@ -1,7 +1,8 @@
-- 'use strict';
 include menu.pug
 
-- pug_html += app.breadcrumbs('Create Company', '', [ ['Home', '/'], ['Create Company', '/campaign/' + values.id + '/general_information'], ['specifics', ''], ]);
+- 
+  var fileDropzone = require('directives/setdropzone/file.js'); 
+  pug_html += app.breadcrumbs('Create Company', '', [ ['Home', '/'], ['Create Company', '/campaign/' + values.id + '/general_information'], ['specifics', ''], ]);
 
 section.campaign-specifics.container.m-b-85
   - var campaignId = values.id;
@@ -9,11 +10,11 @@ section.campaign-specifics.container.m-b-85
   +menu('campaign', 'specifics')
 
   .col-xl-8.col-lg-8.col-md-12.p-sm-0
-    h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.m-b-0 specifics
+    h2.text-uppercase.text-lg-center.text-xs-center.m-t-0 specifics
     form.form-section
       .col-xl-12.p-sm-0
         .row
-          .form-group
+          .form-group.m-b-0
             .col-sm-12
               .warning-block 
                 i.fa.fa-info-circle  
@@ -36,7 +37,7 @@ section.campaign-specifics.container.m-b-85
                   schema: fields.maximum_raise,
                   value: values.maximum_raise,
                   placeholder: '$',
-                  help_text: 'Important Information About the Amount of Your Raise. <br><br>The requirement is based upon your Maximum Raise Amount: <br><br><u>“If $100,000 or less”</u><br>Financials have to be signed by CEO and total <br>income, taxable income and total tax reflected on <br>federal return must be included. If reviewed or <br>audited financials available, they must be provided <br>instead. <br><br><u>“If $100,001-$500,000”</u><br>Financials have to be signed by independent <br>accountant. If audited financials available, they <br>must be provided instead. <br><br><u>“If $500,001-$1,000,000”</u><br>Financials have to be signed by an independent <br>auditor UNLESS this is your first reliance on <br>Regulation Crowdfunding, in which case financials <br>must be signed by an independent accountant. <br>If audited statements are available, they must be <br>provided here.',
+                  help_text: 'Important Information About the Amount of Your Raise. <br><br>The requirement is based upon your Maximum Raise Amount: <br><br><u>“If $100,000 or less”</u><br>Financials have to be signed by CEO and total <br>income, taxable income and total tax reflected on <br>federal return must be included. If reviewed or <br>audited financials available, they must be provided <br>instead. <br><br><u>“If $100,001-$500,000”</u><br>Financials have to be signed by independent <br>accountant. If audited financials available, they <br>must be provided instead. <br><br><u>“If $500,001-$1,070,000”</u><br>Financials have to be signed by an independent <br>auditor UNLESS this is your first reliance on <br>Regulation Crowdfunding, in which case financials <br>must be signed by an independent accountant. <br>If audited statements are available, they must be <br>provided here.',
                 });
 
         - 
@@ -53,18 +54,20 @@ section.campaign-specifics.container.m-b-85
               'class1': 'col-xl-3 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 m-b-lg-1',
             }, fields.length_days));
 
-        .text-lg-right.img-ppt.m-b-3
+        .text-lg-right.img-ppt.m-b-3.fileDropzone
           -
-            pug_html += app.fields.fileDropzone("investor_presentation_file_id", {
-                data: values.investor_presentation_data[0],
-              }, fields.investor_presentation_file_id);
+            pug_html += fileDropzone.getInstance(view, 
+              'investor_presentation_file_id', 
+              'investor_presentation_data', 
+              view.fields.investor_presentation_file_id
+            ).render().resultHTML;
         .row
           .col-xl-12
             .border-bottom
 
         h3.text-lg-center.col-md-center.text-xs-center.col-lg-12.pre-money-terms Pre-Money Valuation and Equity Terms
         .col-lg-12.text-lg-center.text-md-center.text-xs-center.m-b-1.p-b-1
-          a(href=bucketServer + '/docs/GrowthFountain.Security.Description.pdf' target="_blank").link-2 Click here to see descriptions of Common Equity and Revenue Share
+          a(href=require('doc/GrowthFountain.Security.Description.pdf') target="_blank").link-2 Click here to see descriptions of Common Equity and Revenue Share
         .row.m-b-1
           .pre-money-terms.m-b-1
             -
@@ -86,7 +89,7 @@ section.campaign-specifics.container.m-b-85
                     a(href="/calculator/paybackshare/step-1" target="_blank").dropdown-item Revenue Share Calculator
                     a(href="/calculator/whatmybusinessworth/intro" target="_blank").dropdown-item How Much Should I Raise?
                     a(href="/calculator/establishedBusiness/intro" target="_blank").dropdown-item Established Business Valuation
-                    a(href="/calculator/selectCalculator" target="_blank").dropdown-item New Startup Valuation
+                    a(href="/calculator/capitalraise/intro" target="_blank").dropdown-item New Startup Valuation
             .col-xl-5.col-lg-5.col-sm-6.pull-lg-right.pull-md-left
               - 
                 pug_html += app.fields.textLabel('premoney_valuation', {
@@ -205,7 +208,7 @@ section.campaign-specifics.container.m-b-85
                     a(href="/calculator/paybackshare/step-1" target="_blank").dropdown-item Revenue Share Calculator
                     a(href="/calculator/whatmybusinessworth/intro" target="_blank").dropdown-item How Much Should I Raise?
                     a(href="/calculator/establishedBusiness/intro" target="_blank").dropdown-item Established Business Valuation
-                    a(href="/calculator/selectCalculator" target="_blank").dropdown-item New Startup Valuation
+                    a(href="/calculator/capitalraise/intro" target="_blank").dropdown-item New Startup Valuation
           
           .col-xl-9.offset-xl-3
             h4.m-t-1.font-weight-bold.letter-spacing-normal Here’s how Revenue Share works:

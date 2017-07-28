@@ -1,54 +1,57 @@
-.partner-page
-	.section-partner
-		margin-top: 0
-		margin-bottom: 0
-		padding: 15px 17px
-		background-color: $puerto_rico
-		color: $white
-	.partners-bgi
-		background: url(/img/partner-section.jpg)
-		background-position: center center
-		background-attachment: fixed
-		height: 340px
-		background-repeat: no-repeat
-		background-size: cover
+.team, .raise-capital-landing, .partners, .investor_tutorial, .investor-tutorial, .business_tutorial, .business-tutorial, .heartland-tour
+  .footer_new
+    margin-top: 0
 
-// ToDo
-// текст блог вообще можно убрать и все вложение
-// ul.sidebar_link сделанно не по бутстрепу
+.page.overview
+  .icon-block
+    vertical-align: top
+  @media screen and (max-width: 543px)
+    .list-block
+      .row.m-b-2
+        margin-bottom: rem(50)!important
+  .text-block
+    @media screen and (max-width: 543px)
+      margin-top: rem(10)
+.pages-left-menu
+  li
+    padding: rem(2) 0
+    padding-left: rem(8)
+    margin-bottom: rem(5)
+    &.active
+      border-left: solid 5px $page-left-menu-color
+      padding-left: rem(3)
+      a
+        color: $page-left-menu-color
+    a
+      &:hover
+        color: $page-left-menu-color
+.section-bg-line
+  margin-top: 0
+  margin-bottom: rem(30)
+  padding: 15px 17px
+  background-color: $section-bg-line
+  color: $white
 
-// .text_block 
-// 	padding-top: 77px
-// 	.sidebar_title
-// 		text-transform: uppercase
-// 		color: $grey
-// 		border-bottom: 1px solid $grey
-// 		margin-bottom: 15px
-// 		letter-spacing: 6px
-// 	ul.sidebar_link 
-// 		padding: 0
-// 		li 
-// 			display: block
-// 			line-height: 2em
-// 			a
-// 				color: $black_text
-// 				@include mt(.2s)
-// 			:hover,
-// 			.active
-// 				color: $grey
-// 				@include mt(.2s)
-// 	.main_text
-// 		color: $black_text
-// 		margin-bottom: 15px
-// 	.first
-// 		margin-bottom: 37px 
-// 	figure
-// 		p
-// 			margin-bottom: 5px
+.page.team
+  @media screen and (max-width: 991px)
+    .team-member-list
+      .name
+        margin-top: rem(20)
+  .photo-wrap.p-r-0
+    @media screen and (max-width: 991px)
+      padding-right: 15px!important
+  .photo-wrap.p-l-0
+    @media screen and (max-width: 991px)
+      padding-left: 15px!important
+.w-infinityfcu
+  width: 85%
 
-// common styles for form elements
+.annual_privacy_notice
+  .facts-bgc
+    background-color: $annual-privacy-notice
 
-// Todo
-// Это явно идет в common/common
-
-
+.bg-gray-block
+  padding: rem(7) rem(20) rem(28)
+  background: $alabaster
+  h3
+    line-height: rem(25)

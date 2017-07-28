@@ -1,72 +1,60 @@
 -
-  var format = require('helpers/formatHelper.js');
   var security_type = require('consts/raisecapital/security_type.json');
   var industry = require('consts/raisecapital/industry.json');
-  var campaignHelper = require('../helpers.js');
 
 .row
   for company in collection.data
-    - var percentage_raised = campaignHelper.fundedPercentage(company.campaign, 20);
-    .col-xl-4.col-lg-6.col-xs-12.col-sm-12.col-md-12
+    if company.campaign.expired
+      - continue;
+    .col-xl-4.col-lg-6.col-md-6.col-xs-12.col-sm-12
       a(href="/" + company.slug).block_link
       .one_block
         .for_img
           -
-            var url = app.getUrl(company.campaign.list_image_data);
-            url = url ? (url + '?v=2') : '/img/default/255x153.png';
             var alternate = company.short_name || company.name;
-
-          img(src=url alt=alternate)
-
+          img(src=company.campaign.list_image_image_id.getUrl('350x209') alt=alternate)
+          .label
+            if company.campaign.daysLeft() <= 30
+              .deys-left.label-one #{ company.campaign.daysLeftText() }
+            if company.campaign.fundedPercentage().actual >= 50
+              .funded.label-one #{ company.campaign.fundedPercentage().actual }% Funded
+          if company.isNew()
+            .is-new
+              img(src=require("images/generals/is-new.png"), alt="")
           .more_inform
             .title.text-center
               if company.campaign.security_type == 0
-                h3.text-uppercase Valuation: #{format.formatPrice(company.campaign.premoney_valuation)}
+                h3.text-uppercase Valuation: #{app.helpers.format.formatPrice(company.campaign.premoney_valuation)}
               else
                 h3.text-uppercase Percentage Revenue: #{company.campaign.percentage_revenue}%
 
-            .small_text
-              if company.tagline
-                p #{company.tagline.substr(0, 120)}
-
-            .ico_cont
-              a(href="/" + company.slug + '#team').link-1
-                i.fa.fa-users
-              a(href="/" + company.slug + '#overview').link-1
-                i.fa.fa-list
-
             .bottom_pr
               if company.campaign.security_type == security_type.CommonEquity
-                p Price per share: #{format.formatPrice(company.campaign.price_per_share)}
+                p Price per share: #{app.helpers.format.formatPrice(company.campaign.price_per_share)}
                 p Number of shares: #{(Math.round(company.campaign.minimum_raise / company.campaign.price_per_share) || 0).toLocaleString('en-US')}
               else
                 //- p % Revenue: #{campaign.percentage_revenue}%
                 p Cap: #{company.campaign.cap}X
-                p Percentage Revenue: #{company.campaign.percentage_revenue}%
-
+                p Minimum Investment: $#{company.campaign.minimum_increment}
+            hr
+            .small_text
+              if company.tagline
+                h3.font-weight-light.letter-spacing-normal.m-t-2 #{company.tagline.substr(0, 120)}
         .title.text-xs-center
           h3.text-uppercase.m-t-0.m-x-auto= company.short_name || company.name
           span.place
             i.fa.fa-map-marker
-            = company.city + ' ' + company.state
+            = company.city + ', ' + company.state
           .clear
         .description
-          if company.description
-            p= company.description.replace(/(<([^>]+)>)/ig,"").substr(0,250)
-
-        .progress_bar_container
-          span.left_text #{ percentage_raised.text }
-          span.right_text 
-            b #{format.formatPrice(company.campaign.amount_raised)} 
-            | of #{format.formatPrice(company.campaign.minimum_raise)}
-          .clear
-            progress(value=percentage_raised.value max="100").progress #{company.campaign.progress} %
+          if company.brief
+            | !{company.brief}
 
         .bottom_text
           span.left_desc
-            b Security:
-            |  #{company.campaign.security_type == security_type.CommonEquity ? 'Common Equity' : 'Revenue Share'}
+            i.fa.fa-get-pocket
+            h6.text-uppercase  #{company.campaign.security_type == security_type.CommonEquity ? 'Common Equity' : 'Revenue Share'}
           span.right_desc
-            b Industry:&nbsp;
-            | !{ industry[company.industry] || "Other" }
+            i.fa.fa-tags
+            h6.text-uppercase  !{ industry[company.industry] || "Other" }
           .clear

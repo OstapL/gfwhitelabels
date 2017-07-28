@@ -1,0 +1,7 @@
+.col-xl-4.col-lg-4.col-md-4.col-sm-6.col-xs-12.one-photo(class="fileContainer" + file.file.id)
+  .delete-image-container
+    a(href="#" data-imageid=file.file.id).crop-image.cropImage
+      i.fa.fa-crop
+    a(href="#" data-imageid=file.file.id).delete-image.deleteFile
+      i.fa.fa-times
+  img(class=("w-100 img-" + file.file.fieldName) src=file.file.getUrl())

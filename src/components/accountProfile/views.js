@@ -1,42 +1,32 @@
-const validation = require('components/validation/validation.js');
-const userDocuments = require('helpers/userDocuments.js');
 
-const disableEnterHelper = require('helpers/disableEnterHelper.js');
+const InvestmentModel = require('src/models/investment.js');
+// ToDo
+// Refactor, this consts shouden't be here
+const FEES = require('consts/raisecapital/companyFees.json');
 
-const helpers = {
-  date: require('helpers/dateHelper.js'),
-  format: require('helpers/formatHelper.js'),
-  phone: require('helpers/phoneHelper.js'),
-  dropzone: require('helpers/dropzoneHelpers.js'),
-  yesNo: require('helpers/yesNoHelper.js'),
-  fileList: require('helpers/fileList.js'),
-  campaign: require('components/campaign/helpers.js'),
-};
-
-const moment = require('moment');
-
-const FINANCIAL_INFORMATION = require('consts/financialInformation.json');
-
-import 'bootstrap-slider/dist/bootstrap-slider'
-import 'bootstrap-slider/dist/css/bootstrap-slider.css'
+import 'bootstrap-slider/dist/bootstrap-slider';
+import 'bootstrap-slider/dist/css/bootstrap-slider.css';
 
 
 module.exports = {
   profile: Backbone.View.extend(_.extend({
     template: require('./templates/profile.pug'),
-    urlRoot: authServer + '/rest-auth/data',
+    urlRoot: app.config.authServer + '/rest-auth/data',
     doNotExtendModel: true,
     events: _.extend({
-      'click #save-account-info': api.submitAction,
-      'click #save-financial-info': api.submitAction,
+      'click #saveAccountInfo': api.submitAction,
+      // 'click #saveFinancialInfo': api.submitAction,
       'change #not-qualify': 'changeQualify',
       'change .investor-item-checkbox': 'changeAccreditedInvestorItem',
-      'change #twitter,#facebook,#instagram,#linkedin': 'appendHttpsIfNecessary',
-      // 'change input[name=accredited_investor]': 'changeAccreditedInvestor',
-    }, helpers.phone.events, helpers.dropzone.events, helpers.yesNo.events),
+    },
+    app.helpers.phone.events,
+    app.helpers.yesNo.events,
+    app.helpers.social.events,
+    ),
 
     initialize(options) {
       this.activeTab = options.activeTab;
+      this.model = options.model.data;
 
       this.fields = options.fields;
 
@@ -45,18 +35,26 @@ module.exports = {
       });
 
       this.fields.image_image_id = _.extend(this.fields.image_image_id, {
+        templateDropzone: 'profileDropzone.pug',
+        defaultImage: require('images/default/Default_photo.png'),
+        onSaved: (data) => {
+          app.user.updateImage(data.file);
+        },
         crop: {
-          control: {
+          control:  {
             aspectRatio: 1 / 1,
           },
-          cropper: {
-            cssClass : 'img-profile-crop',
-            preview: true,
-          },
           auto: {
-            width: 600,
-            height: 600,
-          }
+            width: 300,
+            height: 300,
+          },
+          resize: {
+            width: 50,
+            height: 50,
+          },
+          cssClass: 'img-profile-crop',
+          template: 'withpreview',
+          templateImage: 'profileImage.pug'
         },
       });
 
@@ -65,7 +63,7 @@ module.exports = {
         required: true,
         minLength: 5,
         dependies: ['account_number_re'],
-        fn: function(name, value, attr, data, schema) {
+        fn: function (name, value, attr, data, schema) {
           if (value != this.getData(data, 'account_number_re')) {
             throw "Account number fields don't match.";
           }
@@ -77,7 +75,7 @@ module.exports = {
         required: true,
         minLength: 5,
         dependies: ['account_number'],
-        fn: function(name, value, attr, data, schema) {
+        fn: function (name, value, attr, data, schema) {
           if (value != this.getData(data, 'account_number')) {
             throw "Account number fields don't match.";
           }
@@ -88,7 +86,7 @@ module.exports = {
         required: true,
         _length: 9,
         dependies: ['routing_number_re'],
-        fn: function(name, value, attr, data, computed) {
+        fn: function (name, value, attr, data, computed) {
           if (value != data.routing_number_re) {
             throw "Routing number fields don't match.";
           }
@@ -99,7 +97,7 @@ module.exports = {
         required: true,
         _length: 9,
         dependies: ['routing_number'],
-        fn: function(name, value, attr, data, computed) {
+        fn: function (name, value, attr, data, computed) {
           if (value != data.routing_number) {
             throw "Routing number fields don't match.";
           }
@@ -111,7 +109,7 @@ module.exports = {
         required: true,
         _length: 9,
         dependies: ['ssn_re'],
-        fn: function(name, value, attr, data, computed) {
+        fn: function (name, value, attr, data, computed) {
           if (value != data.ssn_re) {
             throw "Social security fields don't match.";
           }
@@ -123,7 +121,7 @@ module.exports = {
         required: true,
         _length: 9,
         dependies: ['ssn'],
-        fn: function(name, value, attr, data, computed) {
+        fn: function (name, value, attr, data, computed) {
           if (value != data.ssn) {
             throw "Social security fields don't match.";
           }
@@ -143,9 +141,9 @@ module.exports = {
         city: 'City',
         phone: 'Phone',
         account_number: 'Account Number',
-        account_number_re: 'Re-Enter Account Number',
+        account_number_re: 'Re-enter Account Number',
         routing_number: 'Routing Number',
-        routing_number_re: "Re-Enter Routing Number",
+        routing_number_re: 'Re-enter Routing Number',
         annual_income: 'My Annual Income',
         net_worth: 'My Net Worth',
         twitter: 'Your Twitter Link',
@@ -153,9 +151,9 @@ module.exports = {
         instagram: 'Your Instagram Link',
         linkedin: 'Your LinkedIn Link',
         bank_name: 'Bank Name',
-        name_on_bank_account: 'Name On Bank Account',
-        ssn: 'Social Security Number (SSN) Or Tax ID (ITIN/EIN)',
-        ssn_re: 'Re-enter',
+        name_on_bank_account: 'Name As It Appears on Bank Account',
+        ssn: 'Social Security Number (SSN) or Tax ID (ITIN/EIN)',
+        ssn_re: 'Re-enter SSN',
       };
 
       this.assignLabels();
@@ -170,72 +168,70 @@ module.exports = {
       this.$el.html(
         this.template({
           tab: this.activeTab || 'account_info',
-          serverUrl: serverUrl,
           user: this.model,
           company: app.user.get('company'),
           fields: this.fields,
+          view: this
         })
       );
 
+      this.el.querySelector('#saveFinancialInfo').addEventListener('click', (e) => { api.submitAction.call(this, e)});
+
       this._initSliders();
-
-      setTimeout(() => { this.createDropzones() } , 1000);
-
-      this.onImageCrop();
 
       this.cityStateArea = this.$('.js-city-state');
       this.cityField = this.$('.js-city');
       this.stateField = this.$('.js-state');
-      disableEnterHelper.disableEnter.call(this);
+      app.helpers.disableEnter.disableEnter.call(this);
 
       return this;
     },
 
     changeAccreditedInvestorItem(e) {
       let $target = $(e.target);
-      let name = $target.data('name');
       let checked = $target.prop('checked');
-      this.$('input[name=' + name + ']').val(checked);
-      if (checked) {
-        this.$('#not-qualify').prop('checked', false).change();
-      }
+
+      if (checked)
+        this.$('#not-qualify').prop('checked', false);
     },
 
     changeQualify(e) {
       let $target = $(e.target);
-      if ($target.prop('checked')) {
-        this.$('.investor-item-checkbox').prop('checked', false).change();
-
-        this.$('input[name=accredited_investor_choice]').val(false);
-      } else {
-        this.$('input[name=accredited_investor_choice]').val(true);
+      const notQualify = $target.prop('checked');
+      if (notQualify) {
+        this.$('.investor-item-checkbox').prop('checked', false);
       }
-    },
-
-    onImageCrop(name) {
-      name = name || 'image_image_id';
-      let dataFieldName = this._getDataFieldName(name);
-      let data = this.model[dataFieldName][0];
-      let url = data && data.urls ? data.urls[0] : null;
-      if (url) {
-        $('.user-info-name > span')
-          .empty()
-          .append('<img src="' + url + '" id="user-thumbnail"' + ' class="img-fluid img-circle">');
-      }
-
-    },
-
-    onImageDelete(name) {
-      $('.user-info-name > span').empty().append('<i class="fa fa-user">');
-    },
-
-    saveInfo(e) {
-      let data = _.pick(this.model, ['image_image_id', 'image_data']);
-      return api.submitAction.call(this, e, data);
     },
 
     appendHttpsIfNecessary(e) {
-      helpers.format.appendHttpIfNecessary(e, true);
+      app.helpers.format.appendHttpIfNecessary(e, true);
+    },
+
+    saveAccountInfo(e) {
+      //validate link fields if they have value
+      const linkFields = ['twitter', 'facebook', 'instagram', 'linkedin'];
+      let fields = {};
+      let data = {};
+
+      _.each(linkFields, (name) => {
+        let field = this.$('#' + name);
+        if (field.val()) {
+          fields[name] = _.extend({}, this.fields[name], { type: 'url' });
+          data[name] = field.val();
+        }
+      });
+      this.$('.help-block').remove();
+      if (!app.validation.validate(fields, data)) {
+        e.preventDefault();
+
+        _(app.validation.errors).each((errors, key) => {
+          validation.invalidMsg(this, key, errors);
+        });
+
+        return false;
+      }
+
+      api.submitAction.call(this, e);
     },
 
     _initSliders() {
@@ -245,7 +241,7 @@ module.exports = {
       this.$('.slider-net-worth').bootstrapSlider({
         ticks: [0, 50, 100, 200, 500, 1000, 2000, 5000],
         ticks_positions: [0, 14, 28, 42, 56, 70, 85, 100],
-        ticks_labels: ['$0', '$50K', '$100K', '$200K', '$500K' , '$1M', '$2M', '$5M+'],
+        ticks_labels: ['$0', '$50K', '$100K', '$200K', '$500K', '$1M', '$2M', '$5M+'],
         ticks_snap_bounds: 1,
         formatter(value) {
           return value < 1000
@@ -258,7 +254,8 @@ module.exports = {
         if (e.value < 1000) {
           cbInvestor1m.prop('checked', false).change();
         }
-        this.model.net_worth = e.value;
+
+        // this.model.net_worth = e.value;
       });
 
       this.$('.slider-annual-income').bootstrapSlider({
@@ -267,22 +264,22 @@ module.exports = {
         ticks_labels: ['$0', '$50K', '$100K', '$200K', '$500K+'],
         ticks_snap_bounds: 1,
         formatter(value) {
-          return '$' + value + 'K'
+          return '$' + value + 'K';
         },
-
       }).on('slideStop', (e) => {
         cbInvestor200k.prop('disabled', e.value < 200);
         if (e.value < 200) {
           cbInvestor200k.prop('checked', false).change();
         }
-        this.model.annual_income = e.value;
+
+        // this.model.annual_income = e.value;
       });
 
       cbInvestor1m.prop('disabled', this.model.net_worth < 1000);
       cbInvestor200k.prop('disabled', this.model.annual_income < 200);
 
       // this.$('a[href="#financial_info"]').on('show.bs.tab', (e) => console.warn('!!!!!!!'));
-      
+
       this.$('a[href="#financial_info"]').on('show.bs.tab', (e) => {
         setTimeout(() => {
           this.$('.slider-net-worth').bootstrapSlider('setValue', this.model.net_worth);
@@ -295,33 +292,33 @@ module.exports = {
       this.cityStateArea.text('City/State');
       this.cityField.val('');
       this.stateField.val('');
-      validation.invalidMsg(this, 'zip_code', 'Sorry your zip code is not found');
+      app.validation.invalidMsg(this, 'zip_code', 'Sorry your zip code is not found');
     },
 
     _updateUserInfo() {
-      let first_name = this.el.querySelector('#first_name').value;
-      let last_name = this.el.querySelector('#last_name').value;
+      let firstName = this.el.querySelector('#first_name').value;
+      let lastName = this.el.querySelector('#last_name').value;
+      let fullName = firstName + lastName;
 
-      if (app.user.first_name == first_name && app.user.last_name == last_name)
+      if (app.user.first_name == firstName && app.user.last_name == lastName)
         return;
 
-      app.user.first_name = first_name;
-      app.user.last_name = last_name;
+      app.user.first_name = firstName;
+      app.user.last_name = lastName;
 
       //TODO: move this code to user.js
       let userData = app.user.toJSON();
       localStorage.setItem('user', JSON.stringify(userData));
 
-      let full_name = `${first_name} ${last_name}`;
-
-      $('#user_name').text(full_name);
-      $('.image_image_id').siblings('h3').text(full_name);
+      $('#user_name').text(fullName);
+      $('.image_image_id').siblings('h3').text(fullName);
     },
 
     _success(data) {
       this._updateUserInfo();
 
-      app.routers.navigate("/", {trigger: true});
+      app.routers.navigate('/account/profile', { trigger: true });
+      app.hideLoading();
       return 0;
 
       // if ($("#financial_info").hasClass("active")) {
@@ -331,35 +328,41 @@ module.exports = {
 
     },
 
-  }, helpers.phone.methods, helpers.dropzone.methods, helpers.yesNo.methods)),
+  },
+    app.helpers.phone.methods,
+    app.helpers.yesNo.methods,
+    app.helpers.social.methods,
+  )),
 
   changePassword: Backbone.View.extend({
-    urlRoot: authServer + '/rest-auth/password/change',
+    urlRoot: app.config.authServer + '/rest-auth/password/change',
     events: {
       'submit form': api.submitAction,
     },
+
     getSuccessUrl(data) {
-      app.user.passwordChanged(data.key);
+      // app.user.passwordChanged(data.key);
       return '/account/profile';
     },
-    render(){
+
+    render() {
       let template = require('./templates/changePassword.pug');
       this.$el.html(template({}));
       return this;
-    }
+    },
   }),
 
   setNewPassword: Backbone.View.extend({
-    urlRoot: authServer + '/reset-password/do',
+    urlRoot: app.config.authServer + '/reset-password/do',
     events: {
-        'submit form': api.submitAction,
+      'submit form': api.submitAction,
     },
 
     getSuccessUrl(data) {
       return '/account/profile';
     },
 
-    render(){
+    render() {
       let template = require('./templates/setNewPassword.pug');
       this.$el.html(template());
       return this;
@@ -370,25 +373,36 @@ module.exports = {
     template: require('./templates/investorDashboard.pug'),
     el: '#content',
     events: {
-      'click .cancel-investment': 'cancelInvestment',
+      'click .cancelInvestment': 'cancelInvestment',
       'click .agreement-link': 'openAgreement',
       'click .financial-docs-link': 'showFinancialDocs',
     },
 
     initialize(options) {
       this.fields = options.fields;
-
-      _.each(this.model.data, helpers.campaign.initInvestment);
+      this.fields.cancelled_reason.label = 'What is the main reason for your cancellation?';
+      this.fields.feedback.label = 'Do you have any suggestions to improve our platform?';
+      this.model.data = (this.model.data || []).map(investment => new InvestmentModel(investment, this.fields));
 
       this.snippets = {
-        investment: require('./templates/investment.pug'),
+        investment: require('./templates/snippets/investment.pug'),
+        creditSection: require('./templates/snippets/creditSection.pug'),
+        confirmCancel: require('./templates/snippets/confirm-cancel.pug'),
       };
+
+      //this is auth cookie for downloadable files
+      app.cookies.set('token', app.user.data.token, {
+        domain: '.' + app.config.domainUrl,
+        expires: 1000 * 60 * 60 * 24 * 30 * 12,
+        path: '/',
+      });
     },
 
     render() {
       this.$el.html(this.template({
         investments: this.model.data,
         snippets: this.snippets,
+        fields: this.fields,
       }));
     },
 
@@ -397,54 +411,109 @@ module.exports = {
       const PARTICIPATION_AGREEMENT_ID = 2;
       const objectId = e.target.dataset.objectId;
       const securityType = e.target.dataset.securityType;
-      const subscriptionAgreementLink = userDocuments.getUserDocumentsByType(objectId, securityType);
-      const participationAgreementLink = userDocuments.getUserDocumentsByType(objectId, PARTICIPATION_AGREEMENT_ID);
+      const subscriptionAgreementLink =
+        app.helpers.userDocuments.getUserDocumentsByType(objectId, securityType);
+      const participationAgreementLink =
+        app.helpers.userDocuments.getUserDocumentsByType(objectId, PARTICIPATION_AGREEMENT_ID);
 
       const data = {
         title: 'Agreements',
-        files: [{
-          mime: 'application/pdf',
-          name: 'Subscription Agreement.pdf',
-          urls: [subscriptionAgreementLink]
-        }, {
-          mime: 'application/pdf',
-          name: 'Participation Agreement.pdf',
-          urls: [participationAgreementLink]
-        }],
+        files: [
+          {
+            mime: 'application/pdf',
+            name: 'Subscription Agreement.pdf',
+            urls: { origin: subscriptionAgreementLink },
+          }, {
+            mime: 'application/pdf',
+            name: 'Participation Agreement.pdf',
+            urls: { origin: participationAgreementLink },
+          },
+        ],
       };
 
-      helpers.fileList.show(data);
+      app.helpers.fileList.show(data);
     },
 
     _findInvestment(id) {
-      return _.find(this.model.data, (inv) =>  {
-        return inv.id == id;
-      });
+      return _.find(this.model.data, inv => inv.id == id);
     },
 
     showFinancialDocs(e) {
       e.preventDefault();
 
       const activeCompaign = this._findInvestment(e.target.dataset.id);
-      const fiscal_prior_group_data = activeCompaign.formc.fiscal_prior_group_data;
-      const fiscal_recent_group_data =  activeCompaign.formc.fiscal_recent_group_data;
-      const financialDocs = fiscal_prior_group_data.concat(fiscal_recent_group_data);
+      const fiscalPriorGroupData = activeCompaign.formc.fiscal_prior_group_data;
+      const fiscalRecentGroupData = activeCompaign.formc.fiscal_recent_group_data;
+      const financialDocs = fiscalPriorGroupData.concat(fiscalRecentGroupData);
 
       let data = {
         title: 'Financials',
         files: financialDocs,
       };
 
-      helpers.fileList.show(data);
+      app.helpers.fileList.show(data);
     },
 
     onCancel(investment) {
+      app.analytics.emitEvent(app.analytics.events.InvestmentCancelled, app.user.stats);
+
       _.each(this.model.data, (i) => {
         if (i.campaign_id != investment.campaign_id)
           return;
 
         i.campaign.amount_raised -= investment.amount;
         this.$('[data-investmentid=' + i.id + ']').replaceWith(this.snippets.investment(i));
+      });
+
+      //update available credit section
+      if (app.user.get('days_left') > 0 && investment.comission < FEES.fees_to_investor) {
+        let credit = app.user.get('credit');
+        let creditReturn = FEES.fees_to_investor - investment.comission;
+        credit += creditReturn;
+        app.user.set('credit', credit)
+        let $creditSection = this.$('.credit-investor');
+        if ($creditSection.length)
+          $creditSection.html(this.snippets.creditSection());
+        else
+          this.$('.investor-dashboard').before(this.snippets.creditSection());
+      }
+    },
+
+    confirmCancellation($container) {
+      return new Promise((resolve) => {
+        $container.append(this.snippets.confirmCancel({
+          fields: this.fields,
+        }));
+
+        const $modal = $container.find('#investor_popup');
+
+        let data = null;
+
+        $modal.on('shown.bs.modal', () => {
+          const $form = $modal.find('form');
+          $form.off('submit');
+          $form.on('submit', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            data = $form.serializeJSON();
+
+            $modal.modal('hide');
+
+            return false;
+          });
+        });
+
+        $modal.on('hidden.bs.modal', () => {
+          $modal.find('form').off('submit');
+          setTimeout(() => $modal.remove(), 100);
+          resolve(data);
+        });
+
+        $modal.modal({
+          backdrop: 'static',
+        });
+
       });
     },
 
@@ -453,7 +522,7 @@ module.exports = {
       e.preventDefault();
 
       let $target = $(e.target);
-      let id = $target.data('id');
+      let id = $target.closest('[data-investmentid]').data('investmentid');
 
       if (!id)
         return false;
@@ -463,48 +532,49 @@ module.exports = {
       if (!investment)
         return console.error('Investment doesn\'t exist: ' + id);
 
-      if (!confirm('Are you sure?'))
-        return false;
 
-      api.makeRequest(investmentServer + '/' + id + '/decline', 'PUT').done((response) => {
-      // setTimeout(() => {
-        investment.status = FINANCIAL_INFORMATION.INVESTMENT_STATUS.CancelledByUser;
-        helpers.campaign.initInvestment(investment);
+      this.confirmCancellation($target.closest('div')).then((data) => {
+        if (data === null)
+          return;
 
-        $target.closest('.one_table').remove();
+        data.rating = data.rating || 0;
 
-        let hasActiveInvestments = _.some(this.model.data, i => i.active);
-        if (!hasActiveInvestments)
-          $('#active .investor_table')
-            .append(
-              '<div role="alert" class="alert alert-warning">' +
+        api.makeRequest(app.config.investmentServer + '/' + id + '/decline', 'PUT', data).done((response) => {
+          investment.deposit_cancelled_by_investor = true;
+
+          $target.closest('.one_table').remove();
+
+          let hasActiveInvestments = _.some(this.model.data, i => i.active);
+          if (!hasActiveInvestments)
+            $('#active .investor_table')
+              .append(
+                '<div role="alert" class="alert alert-warning">' +
                 '<strong>You have no active investments</strong>' +
-              '</div>');
+                '</div>');
 
-        let historicalInvestmentsBlock = this.$el.find('#historical .investor_table');
-        let historicalInvestmentElements = historicalInvestmentsBlock.find('.one_table');
-        let cancelledInvestmentElem = this.snippets.investment(investment);
+          let historicalInvestmentsBlock = this.$el.find('#historical .investor_table');
+          let historicalInvestmentElements = historicalInvestmentsBlock.find('.one_table');
+          let cancelledInvestmentElem = this.snippets.investment(investment);
 
-        if (historicalInvestmentElements.length) {
-          //find investment to insert after it
-          let block = _.find(historicalInvestmentElements, (elem) => {
-            const investmentId = Number(elem.dataset.investmentid);
-            return investmentId > investment.id;
-          });
-          if (block)
-            $(block).after(cancelledInvestmentElem);
-          else
-            historicalInvestmentsBlock.prepend(cancelledInvestmentElem);
-        } else {
-          historicalInvestmentsBlock.empty();
-          historicalInvestmentsBlock.append(cancelledInvestmentElem);
-        }
+          if (historicalInvestmentElements.length) {
+            //find investment to insert before it
+            let block = _.find(historicalInvestmentElements, (elem) => {
+              const investmentId = Number(elem.dataset.investmentid);
+              return investment.id > investmentId;
+            });
+            if (block)
+              $(block).before(cancelledInvestmentElem);
+            else
+              historicalInvestmentsBlock.append(cancelledInvestmentElem);
+          } else {
+            historicalInvestmentsBlock.empty();
+            historicalInvestmentsBlock.append(cancelledInvestmentElem);
+          }
 
-        this.onCancel(investment);
-      // }, 500);
-
-      }).fail((err) => {
-        alert(err.error);
+          this.onCancel(investment);
+        }).fail((err) => {
+          app.dialogs.error(err.error);
+        });
       });
     },
   }),
@@ -543,9 +613,7 @@ module.exports = {
 
     render() {
       this.$el.html(
-        this.template({
-          
-        })
+        this.template({})
       );
       return this;
     },
@@ -557,9 +625,7 @@ module.exports = {
 
     render() {
       this.$el.html(
-        this.template({
-          
-        })
+        this.template({})
       );
       return this;
     },
@@ -571,9 +637,7 @@ module.exports = {
 
     render() {
       this.$el.html(
-        this.template({
-          
-        })
+        this.template({})
       );
       return this;
     },
@@ -585,9 +649,7 @@ module.exports = {
 
     render() {
       this.$el.html(
-        this.template({
-          
-        })
+        this.template({})
       );
       return this;
     },
@@ -599,67 +661,61 @@ module.exports = {
       'click .cancel-campaign': 'cancelCampaign',
     },
 
-    initialize(options) {},
+    initialize(options) {
+      this.company = options.company;
+      this.model = this.company;
+      this.campaign = options.campaign;
+      this.formc = options.formc;
 
-    render(){
+      //this is auth cookie for downloadable files
+      app.cookies.set('token', app.user.data.token, {
+        domain: '.' + app.config.domainUrl,
+        expires: 1000 * 60 * 60 * 24 * 30 * 12,
+        path: '/',
+      });
+    },
+
+    render() {
       this.$el.html(
         this.template({
-          values: this.model,
-          helpers: helpers,
+          self: this,
+          company: this.company,
+          campaign: this.campaign,
+          formc: this.formc,
         })
       );
 
       this.initComments();
 
-      try {
-        let script = document.createElement('script');
-        script.type = 'text/javascript';
-        script.src = '/js/graph/graph.js';
-        $(document.head).append(script);
+      require.ensure(['src/js/graph/graph.js', 'src/js/graph_data.js'], () => {
+        require('src/js/graph/graph.js');
+        require('src/js/graph_data.js');
+      }, 'graph_chunk');
 
-        script = document.createElement('script');
-        script.type = 'text/javascript';
-        script.src = '/js/graph_data.js'
-        $(document.head).append(script);
-      } catch(err){
-        console.log(err);
-      }
-
-
-
-      // const socket = require('socket.io-client')('http://localhost:3000');
-      // socket.on('connect', function () {
-      //   socket.emit('newUser', app.user.id, function (data) {
-      //     console.log(data);
-      //   });
-      // });
-      // socket.on('notification', function(msg){
-      //   console.log(msg);
-      //   $('.notification-container ul').append($('<li>').html('<a>' + msg + '</a>'));
-      // });
       return this;
     },
 
     cancelCampaign(e) {
       e.preventDefault();
-      alert('Please, call us 646-759-8228');
+      app.dialogs.info('Please, call us 646-759-8228');
     },
 
     initComments() {
       const View = require('components/comment/views.js');
-      const urlComments = commentsServer + '/company/' + this.model.id;
+      const urlComments = app.config.commentsServer + '/company/' + this.company.id;
       let optionsR = api.makeRequest(urlComments, 'OPTIONS');
       let dataR = api.makeRequest(urlComments);
 
       $.when(optionsR, dataR).done((options, data) => {
-        data[0].id = this.model.id;
-        data[0].owner_id = this.model.owner_id;
+        data[0].id = this.company.id;
+        data[0].owner_id = this.company.owner_id;
 
         let comments = new View.comments({
           model: data[0],
           fields: options[0].fields,
           allowQuestion: false,
-          cssClass: 'col-lg-8',
+          readonly: this.campaign.expired,
+          cssClass: 'col-xl-8 offset-xl-0',
         });
         comments.render();
 

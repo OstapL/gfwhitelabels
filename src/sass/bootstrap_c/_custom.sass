@@ -1,125 +1,148 @@
 // custom select используется в шаблоне team member officer FORMC 
 .team-select
-	.btn
-		letter-spacing: normal
-		text-transform: capitalize!important
-		.filter-option
-			font-size: 14px!important
+  .btn
+    letter-spacing: normal
+    text-transform: capitalize!important
+    .filter-option
+      font-size: 14px!important
 // for dropzone
 .img-file
-	max-width: 65px!important
-	margin: auto
+  max-width: 65px!important
+  margin: auto
 //for risks page hide border 
 .borderless-textarea
-	border: none!important
-	resize: none
-	min-height: 10px !important
+  border: none!important
+  resize: none
+  min-height: 10px !important
 .risk-button
-	margin-left: 20px
+  margin-left: 20px
 .page
-	.line-bottom
-		border-bottom: solid 1px $small-text
-		display: inline-block
-		width: 80%
+  .line-bottom
+    border-bottom: solid 1px $small-text
+    display: inline-block
+    width: 80%
 .media-item
-	margin-bottom: rem(25)
-	.p-dropzone
-		i
-			font-size: rem(30)
-			margin-top: rem(15)
-	@media screen and (max-width: 540px)
-		i
-			padding-bottom: 25px
+  margin-bottom: rem(25)
+  .p-dropzone
+    i
+      font-size: rem(30)
+      margin-top: rem(15)
+  @media screen and (max-width: 540px)
+    i
+      padding-bottom: 25px
 .like-icon-circle
-	background-color: $campaign-like-bgc
-	color: $campaign-like-color
-	padding: 10px 11px
-	border-radius: 100px
-	font-size: rem(24)
+  background-color: $campaign-like-bgc
+  color: $campaign-like-color
+  padding: 10px 11px
+  border-radius: 100px
+  font-size: rem(24)
+  width: 40px
+  height: 40px
+  position: relative
+  vertical-align: middle
+  &:before
+    left: 50%
+    top: 50%
+    -ms-transform: translate(-50%, -50%)
+    -webkit-transform: translate(-50%, -50%)
+    transform: translate(-50%, -50%)
+    position: absolute
 //
 .m-d-p-r-5
-	padding-right: 5px!important
+  padding-right: 5px!important
 .m-d-p-l-5
-	padding-left: 5px!important
+  padding-left: 5px!important
 .m-d-p-l-10
-	padding-left: 10px!important
+  padding-left: 10px!important
+.form-group-m-b-0
+  .form-group
+    margin-bottom: 0
+.m-t-10
+  margin-top: rem(10)
 @media screen and (min-width: 1200px)
-	.p-xl-0
-		padding-right: 0!important
-		padding-left: 0!important
-	.p-r-xl-0
-		padding-right: 0!important
+  .p-xl-0
+    padding-right: 0!important
+    padding-left: 0!important
+  .p-r-xl-0
+    padding-right: 0!important
 @media screen and (max-width: 1200px)
-	.p-l-sm-0
-		padding-left: 0!important
-	.p-r-sm-0
-		padding-right: 0!important
-	.delete-section-container
-		top: 25px!important
-	.m-b-0.m-b-lg-1
-		margin-bottom: 8px!important
-	.m-b-lg-2
-		margin-bottom: 16px
-	.p-l-0.p-l-lg-1
-		padding-left: 1rem!important
-	.p-l-2,.p-l-3
-		&.p-l-lg-1
-			padding-left: 1rem!important
+  .p-l-sm-0
+    padding-left: 0!important
+  .p-r-sm-0
+    padding-right: 0!important
+  .delete-section-container
+    top: 25px!important
+  .m-b-0.m-b-lg-1
+    margin-bottom: 8px!important
+  .m-b-lg-2
+    margin-bottom: 16px
+  .p-l-0.p-l-lg-1
+    padding-left: 1rem!important
+  .p-l-2,.p-l-3
+    &.p-l-lg-1
+      padding-left: 1rem!important
 @media screen and (max-width: 992px)
-	.p-sm-0
-		padding-left: 0!important
-		padding-right: 0!important
-	.p-t-sm-1
-		padding-top: 1rem
-	.m-t-sm-1
-		margin-top: 1rem
-	.p-r-0.p-r-lg-1
-		padding-right: 1rem!important
-	.m-b-md-25
-		margin-bottom: 25px!important
+  .p-sm-0
+    padding-left: 0!important
+    padding-right: 0!important
+  .p-t-sm-1
+    padding-top: 1rem
+  .m-t-sm-1
+    margin-top: 1rem
+  .p-r-0.p-r-lg-1
+    padding-right: 1rem!important
+  .m-b-md-25
+    margin-bottom: 25px!important
 @media screen and (max-width: 544px)
-	.m-t-xs-1
-		margin-top: 1rem
-	.p-l-xs-1
-		padding-left: 1rem!important
-	.p-r-xs-1
-		padding-right: 1rem!important
-	.p-xs-0
-		padding: 0!important
-	.hide-bg-fixed
-		background-attachment: inherit!important
-	.custom-btn
-		display: block!important
-		overflow: hidden!important
-		font-size: rem(12)!important
-		padding-left: 0!important
-		padding-right: 0!important
-		letter-spacing: normal!important
+  .m-t-xs-1
+    margin-top: 1rem
+  .p-l-xs-1
+    padding-left: 1rem!important
+  .p-r-xs-1
+    padding-right: 1rem!important
+  .p-xs-0
+    padding: 0!important
+  .hide-bg-fixed
+    background-attachment: inherit!important
+  .custom-btn
+    display: block!important
+    overflow: hidden!important
+    font-size: rem(12)!important
+    padding-left: 0!important
+    padding-right: 0!important
+    letter-spacing: normal!important
 //uploading in drop zone
 .uploading
-	left: 50%
-	top: 50%
-	-ms-transform: translate(-50%, -50%)
-	-webkit-transform: translate(-50%, -50%)
-	transform: translate(-50%, -50%)
-	position: absolute
-	z-index: 999
+  left: 50%
+  top: 50%
+  -ms-transform: translate(-50%, -50%)
+  -webkit-transform: translate(-50%, -50%)
+  transform: translate(-50%, -50%)
+  position: absolute
+  z-index: 999
+  i
+    padding-bottom: 0
+.userProfileDropzone
+  .uploading
+    @media screen and (max-width: 991px)
+      top: 100%
+      transform: translate(-50%, 400%)
 // на страницах
 .icon-color
-	color: #aed07c
+  color: #aed07c
 // для иконки удаления элемента при ховере
 .delete-section-container
-	text-align: right
-	position: relative
-	z-index: 999
-	a
-		&:hover
-			color: $crimson
-			
+  text-align: right
+  position: relative
+  z-index: 999
+  a
+    &:hover
+      color: $crimson
+      
 .delete-file-container
-	a
-		&:hover
-			color: $crimson
+  a
+    &:hover
+      color: $crimson
 .formula
     position: absolute
     top: 20px
@@ -137,212 +160,433 @@
 // file drop zone scroll с загрузкой больше одного файла
 .filescroll
 
-	.all-file-scroll
-		::-webkit-scrollbar
-			width: 10px
-			background: transparent
-		::-webkit-scrollbar-thumb
-			border-width: 1px 1px 1px 2px
-			border-color: #1a1c1d
-			background-color: #929292
-		::-webkit-scrollbar-thumb:hover
-			border-width: 1px 1px 1px 2px
-			border-color: #1c1f22
-			background-color: $small-text
-		::-webkit-scrollbar-track
-			border-width: 0
-		::-webkit-scrollbar-track:hover
-			border-left: none
-	.file-scroll
-		margin: 0 auto
-		overflow-y: scroll
-		max-height: 140px
-		.thumb-file-container
-			width: 120px
-			margin-right: 7px
-			margin-bottom: 15px
-			margin-top: 35px
-			overflow: hidden
-			display: inline-block
-			position: relative
-			a.link-file
-				display: block
-				font-size: 11px
-			&:nth-child(2n)
-				margin-right: 0
-			img
-				width: 100%
-			.delete-file-container
-				right: 18px
-				position: absolute
-				top: -5px
-				i
-					font-size: 14px!important
-					margin-top: 0
+  .all-file-scroll
+    ::-webkit-scrollbar
+      width: 10px
+      background: transparent
+    ::-webkit-scrollbar-thumb
+      border-width: 1px 1px 1px 2px
+      border-color: #1a1c1d
+      background-color: #929292
+    ::-webkit-scrollbar-thumb:hover
+      border-width: 1px 1px 1px 2px
+      border-color: #1c1f22
+      background-color: $small-text
+    ::-webkit-scrollbar-track
+      border-width: 0
+    ::-webkit-scrollbar-track:hover
+      border-left: none
+  .file-scroll
+    margin: 0 auto
+    overflow-y: scroll
+    max-height: 140px
+    .thumb-file-container
+      width: 120px
+      margin-right: 7px
+      margin-bottom: 15px
+      margin-top: 35px
+      overflow: hidden
+      display: inline-block
+      position: relative
+      a.link-file
+        display: block
+        font-size: 11px
+      &:nth-child(2n)
+        margin-right: 0
+      img
+        width: 100%
+      .delete-file-container
+        right: 18px
+        position: absolute
+        top: -5px
+        i
+          font-size: 14px!important
+          margin-top: 0
 .uploading
-	i.fa-spinner
-		font-size: 22px
+  i.fa-spinner
+    font-size: 22px
 .fileFolderDropzone
-	.border-dropzone
-		min-height: 155px
+  .border-dropzone
+    min-height: 155px
 //drop zone с одним файлом
-.fileDropzone
-	.border-dropzone
-		min-height: 155px
-		width: 100%
-	.thumb-file-container
-		margin-top: 30px
-		.link-file
-			font-size: 11px
-	.delete-file-container
-		position: absolute
-		right: 0
-		left: 70px
-		top: -7px
+.fileDropzone, .fileFolderDropzone
+  .has-error
+    .border-dropzone
+      border-color: #ed1c24
+      box-shadow: 0px 0px 3px 2px rgba(237,28,36, 0.1)
+    .help-block
+      float: left
+
+  .border-dropzone
+    min-height: 155px
+    width: 100%
+  .thumb-file-container
+    margin-top: 30px
+    .link-file
+      font-size: 11px
+  .delete-file-container
+    position: absolute
+    right: 0
+    left: 70px
+    top: -7px
 p.drop-photo
-	max-width: 290px
-	margin: auto
+  max-width: 290px
+  margin: auto
 .imageDropzone
-	.p-dropzone
-		top: 45px!important
-	.border-dropzone
-		width: 100%
-	.one-photo
-		.delete-image-container
-			position: absolute
-			right: 15px
-			top: 0
-			.crop-image
-				margin-right: 3px
-				i
-					padding: 5px
-					background-color: rgba(0,0,0, .5)
-					color: $white_op
-					width: 25px
-					height: 25px
-				+mt(.2s)
-				&:hover
-					i
-						color: $wild_willow
-			.delete-image
-				i
-					padding: 5px
-					background-color: rgba(0,0,0, .5)
-					color: $white_op
-					width: 25px
-					height: 25px
-				&:hover
-					i
-						color: $crimson
+  .p-dropzone
+    margin-top: 45px
+    top: 0!important
+    margin-bottom: 30px
+    &.header-media
+      margin-top: 30px
+      top: 0!important
+      margin-bottom: 30px
+  .border-dropzone
+    width: 100%
+  .has-error
+    margin-bottom: 25px
+    .border-dropzone
+      border-color: #ed1c24
+      box-shadow: 0px 0px 3px 2px rgba(237,28,36, 0.1)
+    .help-block
+      position: absolute!important
+      left: 15px
+      top: 100%
+  @media screen and (max-width: 768px)
+    .p-sm-0
+      padding-left: 0 !important
+      padding-left: 0 !important
+  .one-photo
+    .delete-image-container
+      position: absolute
+      right: 15px
+      top: 0
+      .crop-image
+        margin-right: 3px
+        i
+          padding: 5px
+          background-color: rgba(0,0,0, .5)
+          color: $white_op
+          width: 25px
+          height: 25px
+        +mt(.2s)
+        &:hover
+          i
+            color: $wild_willow
+      .delete-image
+        i
+          padding: 5px
+          background-color: rgba(0,0,0, .5)
+          color: $white_op
+          width: 25px
+          height: 25px
+        &:hover
+          i
+            color: $crimson
 
 .galleryDropzone
-	.border-dropzone
-		min-height: 155px
-	.dropzone-text
-		margin-top: 30px
-		.icon-gallery
-			font-size: 30px
-			margin-top: 10px
-			margin-bottom: 5px
-	.all-gallery
+  .border-dropzone
+    min-height: 155px
+  .has-error
+    .border-dropzone
+      border-color: #ed1c24
+      box-shadow: 0px 0px 3px 2px rgba(237,28,36, 0.1)
+  .dropzone-text
+    margin-top: 30px
+    .icon-gallery
+      font-size: 30px
+      margin-top: 10px
+      margin-bottom: 5px
+  .all-gallery
 
-		.one-photo
-			margin-top: 30px
-			height: 100px
-			overflow: hidden
+    .one-photo
+      margin-top: 30px
+      height: 87px
+      overflow: hidden
 
-			.delete-image-container
-				position: absolute
-				right: 15px
-				top: 0
-				.crop-image
-					margin-right: 3px
-					i
-						padding: 5px
-						background-color: rgba(0,0,0, .5)
-						color: $white_op
-						width: 25px
-						height: 25px
-					&:hover
-						i
-							color: $wild_willow
-				.delete-image
-					i
-						padding: 5px
-						background-color: rgba(0,0,0, .5)
-						color: $white_op
-						width: 25px
-						height: 25px
-					&:hover
-						i
-							color: $crimson
-	@media screen and (max-width: 992px)
-		.one-photo
-			height: auto!important
+      .delete-image-container
+        position: absolute
+        right: 15px
+        top: 0
+        .crop-image
+          margin-right: 3px
+          i
+            padding: 5px
+            background-color: rgba(0,0,0, .5)
+            color: $white_op
+            width: 25px
+            height: 25px
+          &:hover
+            i
+              color: $wild_willow
+        .delete-image
+          i
+            padding: 5px
+            background-color: rgba(0,0,0, .5)
+            color: $white_op
+            width: 25px
+            height: 25px
+          &:hover
+            i
+              color: $crimson
+  @media screen and (max-width: 992px)
+    .one-photo
+      height: auto!important
 .userProfileDropzone
-	.one-photo
-		.delete-image-container
-			position: absolute
-			right: 0px
-			top: 0
-			.crop-image
-				margin-right: 3px
-				i
-					padding: 5px
-					background-color: rgba(0,0,0, .5)
-					color: $white
-					width: 25px
-					height: 25px
-					text-align: center
-				&:hover
-					i
-						color: $wild_willow
-			.delete-image
-				i
-					padding: 5px
-					background-color: rgba(0,0,0, .5)
-					color: $white
-					width: 25px
-					height: 25px
-					text-align: center
-				&:hover
-					i
-						color: $crimson
+  @media screen and (min-width: 768px)
+    .p-sm-up-x-0
+      padding: 0
+  .p-dropzone
+    margin-top: 30px!important
+  .dropzone-profile.border-dropzone
+    min-height: auto!important
+  .one-photo
+    .delete-image-container
+      position: absolute
+      right: 0px
+      top: 0
+      .crop-image
+        margin-right: 3px
+        i
+          padding: 5px
+          background-color: rgba(0,0,0, .5)
+          color: $white
+          width: 25px
+          height: 25px
+          text-align: center
+        &:hover
+          i
+            color: $wild_willow
+      .delete-image
+        i
+          padding: 5px
+          background-color: rgba(0,0,0, .5)
+          color: $white
+          width: 25px
+          height: 25px
+          text-align: center
+        &:hover
+          i
+            color: $crimson
 
-	.border-dropzone
-		min-height: 150px
-.teamMemberDropzone
-	.p-dropzone
-		top: 35px!important
-	.one-photo
-		background-color: $alabaster
-		.delete-image-container
-			right: 0
-	@media screen and (max-width: 540px)
-		.p-dropzone
-			margin-bottom: rem(35)
+  .border-dropzone
+    min-height: 150px
+    border: none
+    &.has-error
+      border-color: #ed1c24
+      box-shadow: 0px 0px 3px 2px rgba(237,28,36, 0.1)
+      .help-block
+        left: 0
+
+.team-members
+  .p-dropzone
+    top: 0px!important
+    margin-top: rem(30)!important
+    margin-bottom: rem(25)!important
+  .one-photo
+    img
+      border-radius: 100px
+      width: 133px!important
+      height: 133px
+      margin: rem(10)
+  @media screen and (max-width: 540px)
+    .p-dropzone
+      margin-bottom: rem(35)
+.crop-image-container
+  max-width: 100%!important
+  max-height: 400px!important
 //custom
 .campaign-specifics
-	.btn-dropdown
-		min-width: rem(160)
-	.btn-group
-		min-width: 185px
-		.dropdown-toggle
-			padding-left: rem(8)
-			padding-right: rem(8)
-			&:after
-				margin-top: 0
-	.btn-dropdown
-		font-size: rem(14)
-	.btn-dropdown-click
-		padding: rem(9)
+  .btn-dropdown
+    min-width: rem(160)
+  .btn-group
+    min-width: 185px
+    .dropdown-toggle
+      padding-left: rem(8)
+      padding-right: rem(8)
+      &:after
+        margin-top: 0
+  .btn-dropdown
+    font-size: rem(14)
+  .btn-dropdown-click
+    padding: rem(9)
 .input-min-width
-	input
-		min-width: rem(180)
+  input
+    min-width: rem(180)
 
 // THANK YOU PAGE
 .thank-you-page
-	h3
-		color: $black!important
-	.campaign-subheading
-		color: #fff!important
+  h3
+    color: $black!important
+  .campaign-subheading
+    color: #fff!important
+.icon-in-circle
+  color: $icon-circle-color
+  background-color: $icon-circle-bgc
+  width: 40px
+  height: 40px
+  border-radius: 100px
+  position: relative
+  margin: auto
+  display: inline-block
+  margin-right: 15px
+  @media screen and (max-width: 544px)
+    margin-bottom: rem(20)
+    margin: 0 auto
+    text-align: center
+    display: block
+  i
+    font-size: rem(22)
+    padding: 5px
+    left: 50%
+    top: 50%
+    -ms-transform: translate(-50%, -50%)
+    -webkit-transform: translate(-50%, -50%)
+    transform: translate(-50%, -50%)
+    position: absolute
+.align-middle
+  vertical-align: middle
+@media screen and (max-width: 1200px)
+  .hide-bg-fixed
+    background-attachment: initial!important
+
+//fancybox
+.fancybox-title
+  font-family: $open-sans!important
+  font-size: rem(15)!important
+  text-align: left!important
+  background-color: $fancy-nav-color!important
+  color: $white
+.fancybox-title-inside-wrap
+  padding: 5px!important
+.fancybox-next, .fancybox-prev
+  span
+    background-image: none!important
+    width: 30px!important
+    height: 30px!important
+    -webkit-box-shadow: 0px 0px 8px 1px rgba(0,0,0,0.75)
+    -moz-box-shadow: 0px 0px 8px 1px rgba(0,0,0,0.75)
+    box-shadow: 0px 0px 8px 1px rgba(0,0,0,0.75)
+    background-color: #fff
+    border-radius: 100px
+
+    &:before
+      content: '\f138'
+      position: absolute
+      font: normal normal normal 30px/1 FontAwesome
+      top: 0px
+      left: 2px
+      color: $fancy-nav-color
+      @media only screen and (max-width : 767px)
+        top: 1px
+.fancybox-prev
+  span
+    &:before
+      content: '\f137'!important
+.fancybox-skin
+  .fancybox-close
+    background-image: none!important
+    background-image: none!important
+    width: 30px!important
+    height: 30px!important
+    -webkit-box-shadow: 0px 0px 8px 1px rgba(0,0,0,0.75)
+    -moz-box-shadow: 0px 0px 8px 1px rgba(0,0,0,0.75)
+    box-shadow: 0px 0px 8px 1px rgba(0,0,0,0.75)
+    background-color: #fff
+    border-radius: 100px
+    &:before
+      content: '\f057'
+      position: absolute
+      font: normal normal normal 30px/1 FontAwesome
+      top: 0px
+      left: 2px
+      color: $fancy-nav-color
+      @media only screen and (max-width : 767px)
+        top: 1px
+
+#fancybox-loading, .fancybox-close, .fancybox-prev span, .fancybox-next span
+  background-image: url(img/fancybox/fancybox_sprite.png)
+#fancybox-loading div
+  width: 44px
+  height: 44px
+  background: url(img/fancybox/fancybox_loading.gif) center center no-repeat
+.fancybox-nav
+  position: absolute
+  top: 0
+  width: 40%
+  height: 100%
+  cursor: pointer
+  text-decoration: none
+  -webkit-tap-highlight-color: transparent
+  z-index: 8040
+.fancybox-overlay
+  position: absolute
+  top: 0
+  left: 0
+  overflow: hidden
+  display: none
+  z-index: 8010
+  background: url(img/fancybox/fancybox_overlay.png)
+
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5)
+  #fancybox-loading, .fancybox-close, .fancybox-prev span, .fancybox-next span
+    background-image: url(img/fancybox/fancybox_sprite@2x.png)
+    background-size: 44px 152px
+  #fancybox-loading div
+    background-image: url(img/fancybox/fancybox_loading@2x.gif)
+    background-size: 24px 24px
+//====
+
+.play-icon
+  background-color: rgba($white, .6)
+  border-radius: 100px
+  width: 85px
+  height: 85px
+  display: inline-block
+  margin-top: rem(60)
+  position: relative
+  @media only screen and (max-width : 544px)
+    width: 50px
+    height: 50px
+    margin-top: rem(35)
+  i
+    color: $play-icon-color
+    font-size: rem(30)
+    position: absolute 
+    left: 53%
+    top: 50%
+    -ms-transform: translate(-50%,-50%)
+    -webkit-transform: translate(-50%,-50%)
+    transform: translate(-50%,-50%)
+    @media only screen and (max-width : 544px)
+      font-size: rem(16)
+  +mt(.5s)
+  &:hover
+    +mt(.5s)
+    background-color: rgba($white, .9)
+  &.small-icon
+    width: 45px
+    height: 45px
+    i
+      font-size: 16px
+.scrolling-top
+  position: fixed
+  top: 55px
+  right: 50px
+  z-index: 100
+  a
+    font-size: rem(18)
+    color: rgba($small-text, .6)
+    i
+      font-size: rem(44)
+      margin-right: 10px
+      vertical-align: middle
+    .text
+      vertical-align: middle
+      font-weight: bold
+    &:hover
+      color: rgba($small-text, 1)
+  @media only screen and (max-width : 991px)
+    display: none
+.fancybox-lock body
+  position: relative

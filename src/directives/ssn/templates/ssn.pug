@@ -3,18 +3,18 @@ p.m-b-1 In order to pay you any dividends or revenue share, regulations require 
   pug_html += app.fields.textLabel('ssn', _.extend({
       'placeholder': 'Social Security #',
       'class1': 'col-xl-3 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 m-b-lg-1',
-      'label': 'Social Security number (SSN) or Tax ID (ITIN/EIN)',
+      'label': 'Social Security Number (SSN) or Tax ID (ITIN/EIN)',
       'value': user.ssn
     }, fields.ssn));
 
   pug_html += app.fields.textLabel('ssn_re', _.extend({
-    'label': 'Re-enter',
+    'label': 'Re-enter SSN',
     'value': user.ssn
     }, fields.ssn_re))
 
 .popover-content-ssn
   i.fa.fa-info-circle
-  span Why do we need this? I know it seems terribly invasive but we are required to obtain your socialsecurity number for two reasons,
+  span Why do we need this? I know it seems terribly invasive but we are required to obtain your social security number for two reasons,
   p 1) regulators require we comply with know your customer and anti-money laundering rules and;
   p 2) companies will need to provide you with tax information based on your investment.
   p Don’t worry, we’re obsessive about your privacy.

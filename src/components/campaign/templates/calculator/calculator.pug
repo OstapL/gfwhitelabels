@@ -1,0 +1,67 @@
+.calculator-container.detail-page-calculator
+  .row
+    .col-xl-12.text-xs-center
+      h4.text-uppercase.m-t-2.m-b-1 Revenue Share Calculator 
+        div.d-inline-block
+          div.showPopover.hidden-xs-down(data-content="A Revenue Share Agreement is a form of investment contract in which the Company shares 5% of its revenue annually with investors.<br> Here’s how it works:<ol class='p-l-1'><li>Investors earn 5% of the company’s revenue annually;</li><li>No distributions are required until the second full calendar year and the company is allowed one year of forbearance as needed;</li><li>Distributions are capped at two times the invested amount (2x);</li><li>In the event of default, investors become general unsecured creditors (senior to equity).</li>")
+            i(aria-hidden="true").fa.fa-question-circle.text-muted
+      p Want to see some possible return scenarios?
+        sup *
+
+  .row.m-t-1
+    .col-xl-10.offset-xl-1
+      form(method="post" action="").js-calc-form.form-section
+        .form-body.clearfix
+          .col-lg-4.p-xs-0
+            .form-group
+              .col-xl-8.offset-xl-2.text-xs-center
+                label(for="raiseMoney").font-weight-bold How much is the company raising?
+              input(
+                value=(data.raiseMoney ? app.helpers.calculator.formatMoney(data.raiseMoney) : ''),
+                type='money',
+                placeholder='$0',
+                autocomplete="off"
+                data-value-type='money'
+                name="raiseMoney"
+              )#raiseMoney.form-control.js-field
+
+          .col-lg-4.p-xs-0
+            .form-group
+              .col-xl-12.text-xs-center
+                label(for="nextYearRevenue").font-weight-bold What do you expect next year's revenue to be?
+              input(
+                value=(data.nextYearRevenue ? app.helpers.calculator.formatMoney(data.nextYearRevenue) : ''),
+                type='money'
+                data-value-type='money'
+                placeholder='$0'
+                autocomplete="off"
+                name="nextYearRevenue"
+              )#nextYearRevenue.form-control.js-field
+
+          .col-lg-4.p-xs-0
+            .form-group
+              .col-xl-12.text-xs-center
+                label(for="growLevel").font-weight-bold At what rate to you expect revenue to grow each year?
+              input(
+                value=(data.growLevel ? data.growLevel + '%' : ''),
+                type='percent',
+                placeholder='0%',
+                autocomplete="off"
+                data-value-type='percent'
+                name="growLevel",
+              )#growLevel.form-control.js-field
+        .row
+          .col-xl-12.text-xs-center.m-t-10
+            .controls
+              button(type="submit").btn.btn-primary.text-uppercase go
+    .col-xl-12
+      #revenue-share-calculator-result
+        .calculator-container.col-xs-12.m-t-2
+          .js-jq-plot-area
+            #chart1
+            p.plot-title Multiple Returned
+            p.plot-x-title Years
+            p.text-graf
+              sup *
+              | The calculations are mathematical based on user inputs and may not reflect actual results. Use of this calculator does not constitute investment advice. We are providing this tool to help you evaluate potential revenue sharing scenarios and payback periods. Any determination is your sole responsibility.
+      

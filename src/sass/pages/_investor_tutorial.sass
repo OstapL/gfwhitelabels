@@ -1,87 +1,182 @@
-.investor-tutorial
-	h1
-		font-size: 48px
-		display: block
-		font-weight: bold
-		color: $white
-		line-height: rem(40)
-		margin-bottom: rem(25)
-		letter-spacing: rem(1)
-		text-transform: uppercase
-	h2
-		margin-top: 0
-		text-transform: uppercase
-		letter-spacing: rem(1)
-	p
-		font-size: 14px
-		color: $white
-		line-height: rem(24)
-		letter-spacing: rem(1)
-		text-transform: uppercase
+.investor-tutorial-page
+  h1
+    font-size: 48px
+    display: block
+    font-weight: bold
+    color: $white
+    line-height: rem(40)
+    margin-bottom: rem(25)
+    letter-spacing: rem(1)
+    text-transform: uppercase
+  h2
+    margin-top: 0
+    text-transform: uppercase
+    letter-spacing: rem(1)
+    color: $white
+  h3
+    color: $white
+  p
+    font-size: 14px
+    color: $white
+    line-height: rem(24)
+    letter-spacing: rem(1)
+    text-transform: uppercase
 
-	ul, ol
-		li
-			font-size: 14px
-			line-height: 24px
-			text-transform: uppercase
+  ul, ol
+    li
+      font-size: 14px
+      line-height: 24px
+      text-transform: uppercase
+      color: $white
 
-	p.small
-		font-size: 14px
-		line-height: 24px
-	.nextstep
-		position: absolute 
-		left: 50%
-		bottom: 0px
-		-ms-transform: translate(-50%,-50%)
-		-webkit-transform: translate(-50%,-50%)
-		transform: translate(-50%,-50%)
-		z-index: 999
-		text-align: center
-	.t45
-		.carousel-caption
-			top: 45%!important
-	.t40
-		.carousel-caption
-			top: 40%!important
-	.before-making
-		.carousel-caption
-			top: 35%!important
-	.t30
-		.carousel-caption
-			top: 30%!important
-	.t20
-		.carousel-caption
-			top: 20%!important
-	.bgc-black
-		background-color: $black
-	.carousel-caption
-		img
-			max-width: 300px
-			position: absolute
-			left: 0
-			height: 200px!important
-			margin-top: 10px
-
+  p.small
+    font-size: 14px
+    line-height: 24px
+  .nextstep
+    position: absolute 
+    left: 50%
+    bottom: 0px
+    -ms-transform: translate(-50%,-50%)
+    -webkit-transform: translate(-50%,-50%)
+    transform: translate(-50%,-50%)
+    z-index: 999
+    text-align: center
+  .t45
+    .carousel-caption
+      top: 45%!important
+  .t40
+    .carousel-caption
+      top: 40%!important
+  .before-making
+    .carousel-caption
+      top: 35%!important
+  .t30
+    .carousel-caption
+      top: 30%!important
+  .t20
+    .carousel-caption
+      top: 20%!important
+  .bgc-black
+    background-color: $black
+  .carousel-caption
+    img
+      max-width: 300px
+      position: absolute
+      left: 0
+      height: 200px!important
+      margin-top: 10px
+  .owl-dots
+    left: 50%
+    bottom: 10px
+    position: absolute
+    -ms-transform: translate(-50%,-50%)
+    -webkit-transform: translate(-50%,-50%)
+    transform: translate(-50%,-50%)
+    opacity: 0.6
+  .owl-nav
+    position: absolute
+    left: 50%
+    top: 50%
+    position: absolute
+    width: 100%
+    -ms-transform: translate(-50%,-50%)
+    -webkit-transform: translate(-50%,-50%)
+    transform: translate(-50%,-50%)
+    opacity: 0.6
+    .owl-prev
+      position: absolute
+      left: 10px
+      border-radius: 100px!important
+    .owl-next
+      position: absolute
+      right: 10px
+      border-radius: 100px!important
 .mobile-investor-tutorial
-	.wrap-contant
-		position: relative
-		&:before
-			content: " "
-			width: 100%
-			height: 100%
-			position: absolute
-			top: 0
-			left: 0
-			background: rgba(17, 17, 17, .4)
-			
-		.content
-			top: 50%;
-			left: 50%
-			-ms-transform: translate(-50%,-50%);
-			-webkit-transform: translate(-50%,-50%);
-			transform: translate(-50%,-50%);
-			position: absolute;
-			width: 100%
-			h2,h1,h3
-				color: $white
-				text-align: center
+  .wrap-contant
+    position: relative
+    &:before
+      content: " "
+      width: 100%
+      height: 100%
+      position: absolute
+      top: 0
+      left: 0
+      background: rgba(17, 17, 17, .4)
+      
+    .content
+      top: 50%;
+      left: 50%
+      -ms-transform: translate(-50%,-50%);
+      -webkit-transform: translate(-50%,-50%);
+      transform: translate(-50%,-50%);
+      position: absolute;
+      width: 100%
+      h2,h1,h3
+        color: $white
+        text-align: center
+#carousel-investor
+  .carousel-item
+    height: 100%
+    &:before
+      width: 100%
+      background-color: $black
+      opacity: .5
+      position: absolute
+      z-index: 1
+      content: ''
+      height: 100%
+      left: 0
+      bottom: 0
+    .slider-item
+      width: 100vw
+      height: 92vh
+      background-size: cover!important
+    .slider-content
+      top: 40%
+      -ms-transform: translate(-50%,-50%);
+      -webkit-transform: translate(-50%,-50%);
+      transform: translate(-50%,-50%);
+      position: absolute
+      left: 50%
+      z-index: 999
+      width: 100%
+    @media only screen and (max-width : 992px)
+      h2
+        font-size: rem(14)
+        line-height: rem(14)
+      h1
+        font-size: rem(16)
+        line-height: rem(14)
+      p
+        font-size: rem(10)
+        line-height: rem(14)
+      li
+        font-size: rem(10)
+        line-height: rem(14)
+      a
+        font-size: rem(10)
+        line-height: rem(14)
+      ol
+        margin-bottom: 0
+.mobile-investor-tutorial
+  h2
+    font-size: rem(14)
+    line-height: rem(14)
+  h1
+    font-size: rem(16)
+    line-height: rem(14)
+  p
+    font-size: rem(10)
+    line-height: rem(14)
+    color: $black
+  li
+    font-size: rem(10)!important
+    line-height: rem(14)!important
+    color: $black!important
+  a
+    font-size: rem(10)
+    line-height: rem(14)
+  ol
+    margin-bottom: 0!important
+.owl-carousel.owl-loaded
+  overflow-x: hidden

@@ -13,6 +13,12 @@ section.create-company.container.m-b-85
     h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis Company
     form.form-section
       .col-xl-12.p-sm-0
+        -
+          pug_html += app.fields.fieldChoiceLabel('tour', _.extend({
+              'empty': { '': 'Choose option' },
+              'reverse': 1,
+              'value': values.tour,
+            }, fields.tour));
         - 
           pug_html += app.fields.textLabel('name', {
           class1:'col-xl-3 col-lg-12 p-t-0 text-lg-left text-xl-right m-b-0 m-b-lg-1', 
@@ -27,13 +33,37 @@ section.create-company.container.m-b-85
           schema: fields.short_name, 
           placeholder: 'Short Name', 
           value: values.short_name,})
+        .row.form-group.custom-link-company
+          .col-date#slug
+            label.col-xl-3.col-lg-12.text-xl-right.text-lg-left.m-b-0.p-t-0.m-b-lg-1 What would you like your custom URL to be?
+              span.color-red *
+            .col-xl-9
+              .prefix_input_prefix
+                input(value=window.location.origin disabled="disabled").form-control
+              .prefix_input_field
+                -
+                  pug_html += app.fields.fieldText('slug', {
+                  class: '',
+                  schema: fields.slug,
+                  id: 'slugField',
+                  placeholder: 'Your Custom URL', 
+                  value: values.slug,})
+        .custom-ga-fields
+          .row.form-group
+            label.col-xl-3.col-lg-12.text-xl-right.text-lg-left 
+              | Google Analytic ID 
+              a(href="https://support.google.com/analytics/topic/2790009?hl=en&ref_topic=3544906" target="_blank").link-2 Set Up Google Analytics
+            .col-xl-9
+              .prefix_input_prefix
+                input(value="UA -" disabled="disabled").form-control
+              .prefix_input_field
+                -
 
-        - 
-          pug_html += app.fields.textLabel('slug', {
-          class1: 'col-xl-3 col-lg-12 p-t-0 text-lg-left text-xl-right m-b-0 m-b-lg-1', 
-          schema: fields.slug, 
-          placeholder: 'growthfountain.com/', 
-          value: values.slug,})
+                  pug_html += app.fields.fieldText('ga_id', {
+                    schema: fields.ga_id,
+                    class: '',
+                    placeholder: 'xxxxxx-xx',
+                    value: ((values.ga_id || '').replace(/^UA-/i, ''))})
 
         -
           pug_html += app.fields.fieldChoiceLabel('industry', _.extend({
@@ -125,6 +155,7 @@ section.create-company.container.m-b-85
               class1:'col-xl-5 col-lg-12 text-lg-left text-xl-right', 
               class2:'col-xl-7 col-lg-12', 
               schema: fields.website, 
+              placeholder: 'http://www.',
               value: values.website,})
         .border-bottom.m-t-2.m-b-3
         .row.m-b-0
@@ -134,6 +165,7 @@ section.create-company.container.m-b-85
               class1:'col-xl-6 col-lg-12 text-lg-left text-xl-right', 
               class2:'col-xl-6 col-lg-12', 
               schema: fields.twitter, 
+              placeholder: 'https://www.',
               value: values.twitter,})
           .col-xl-6.col-lg-6
             - 
@@ -141,6 +173,7 @@ section.create-company.container.m-b-85
               class1:'col-xl-5 col-lg-12 text-lg-left text-xl-right', 
               class2:'col-xl-7 col-lg-12', 
               schema: fields.facebook, 
+              placeholder: 'https://www.',
               value: values.facebook,})
         .row.m-b-0
           .col-lg-6.col-l-65
@@ -149,6 +182,7 @@ section.create-company.container.m-b-85
               class1:'col-xl-6 col-lg-12 text-lg-left text-xl-right', 
               class2:'col-xl-6 col-lg-12', 
               schema: fields.instagram, 
+              placeholder: 'https://www.',
               value: values.instagram,})
           .col-lg-6
             - 
@@ -156,6 +190,7 @@ section.create-company.container.m-b-85
               class1:'col-xl-5 col-lg-12 text-lg-left text-xl-right', 
               class2:'col-xl-7 col-lg-12', 
               schema: fields.linkedin, 
+              placeholder: 'https://www.',
               value: values.linkedin,})
         .row.m-t-2.pull-lg-right.text-md-center.text-sm-center.text-xs-center
           .col-xl-12
@@ -212,6 +247,7 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
               button(data-companyId=formc.company_id)#postForReview.btn.m-t-2.btn-primary.text-uppercase Yes
       .modal-footer
 //MODAL
+- var states = require('consts/usaStatesChoices.json');
 div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#city_state_modal.modal.fade
   div(role="document").modal-dialog
     .modal-content
@@ -228,12 +264,12 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
               input(type="text" placeholder="City" value=values.city).js-city.form-control
             .form-group.row.clearfix.required
               select(name='state' value=values.state).js-state.form-control.custom-select
-                option(checked='checked', value="") State
-                each state in states
-                  if state.abbreviation == values.state
-                    option(value=state.abbreviation selected)= state.name
+                option(value="") State
+                each name,abbreviation in states
+                  if abbreviation == values.state
+                    option(value=abbreviation selected="true")= name
                   else
-                    option(value=state.abbreviation)= state.name
+                    option(value=abbreviation)= name
             .form-group.row.clearfix.required.m0
               .row
                 .col-lg-12
@@ -244,4 +280,4 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
 
 
 if !window.google || !window.google.maps
-  script(src= window.location.protocol + "//maps.google.com/maps/api/js?language=en&key=" + googleMapKey)
+  script(src= window.location.protocol + "//maps.google.com/maps/api/js?language=en&key=" + app.config.googleMapKey)

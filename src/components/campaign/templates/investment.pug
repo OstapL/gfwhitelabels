@@ -46,43 +46,67 @@ mixin confirmStatement(name, attr)
 .container.investment
   //START LEFT BLOCK
   .row
-    .col-xl-8.col-lg-7
+    .col-xl-8.col-lg-7.invest-left-p-0
       h2.text-uppercase.dosis.m-t-0.text-md-center.text-sm-center.text-xs-center.text-lg-left
         | Investment
       .form-section.clearfix
-        form(action="POST" data-method="POST" name="invest_form").invest_form.clearfix
+        form(action="POST" data-method="POST" name="invest_form")#investForm.invest_form.clearfix
           input(type="hidden" name="company_id" value=values.id)
           .row
-            .col-xl-12.col-xs-6
+            .col-xl-12.col-xs-8.col-sm-5.col-lg-8
               -
-                pug_html += app.fields.fieldTextLabel("amount", _.extend({
+                pug_html += app.fields.textLabel("amount", _.extend({
                     class1: 'col-xl-3 col-lg-4 text-md-left text-lg-right text-xl-right',
                     class2: 'col-xl-4 col-lg-8',
                     placeholder: '$',
                     text: "$10 of payment processing fee. Your money will be returned to you if the " +
                       "campaign doesn't reach the target goal ($500,000).",
                   }, fields.amount));
-
-            .col-xl-12.col-xs-6
-              -
-                pug_html += app.fields.fieldTextLabel("fee", _.extend({
-                    class1: 'col-xl-3 col-lg-4 text-md-left text-lg-right text-xl-right',
-                    class2: 'col-xl-4 col-lg-8 input-border-bottom',
-                    class3: 'c',
-                    placeholder: '+ $10',
-                    value: '$10',
-                    label: 'Commission',
-                    disabled: true,
-                  }, fields.fee));
+          .row
+            .col-xl-12.col-xs-7.col-sm-5.col-lg-8
+              .form-group.row.fee.text
+                label.col-xl-3.col-lg-4.text-md-left.text-lg-right.text-xl-right Commission
+                .commission-group
+                    .col-xl-4.col-lg-8.col-xs-10.col-sm-12
+                      if feeInfo.waived
+                        - var cssClass = "commission commission-" + feeInfo.remainingCredit;
+                        div(class=cssClass).col-xl-12.p-x-0.input-border
+                          input(name="waived" id="waived" value=("$" + feeInfo.waived) disabled).form-control
+                          h4.text-uppercase.waived Credit Applied
+                          .commission-right-block
+                            .wrap-commision-credit-amount
+                              span.credit-amount #{ '$' + feeInfo.remainingCredit }
+                              span.credit-remains credit left
+                            .wrap-commision-credit-text
+                              span.credit-text
+                                if feeInfo.remainingCredit <= 0
+                                  | You are using the last $#{ feeInfo.credit } of your $25 credit
+                                else
+                                  | You can use the remaining credit toward your next investment
+                        if feeInfo.fee > 0
+                          .col-xl-12.p-x-0.input-border
+                            input(name="fee" id="fee" value=("$" + feeInfo.fee) disabled).form-control
+                        else
+                          input(name="fee" id="fee" value=("$" + feeInfo.fee) disabled hidden=true).form-control
+                      else
+                        -
+                          var feeStr = '$' + feeInfo.fee;
+                          pug_html += app.fields.fieldText("fee", _.extend({
+                            class: 'input-border-bottom',
+                            placeholder: '+ ' + feeStr,
+                            value: feeStr,
+                            label: 'Commission',
+                            disabled: true,
+                          }, fields.fee));
           .row
             label.col-xl-3.col-lg-4.text-md-left.text-lg-right.text-xl-right.p-t-0.total-investment-label Total
-            .col-xl-xlcol-lg-8
-              span.p-l-1.total-investment-amount $10
-              input(type="hidden" name="total_amount" value="$10")
+            .col-xl-4.col-lg-8.p-l-0
+              span.p-l-1.total-investment-amount #{ '$' + feeInfo.fee }
+              input(type="hidden" name="total_amount" value=("$" + feeInfo.fee))
           // popover content for amount field
           div.popover-content-amount-campaign
             i.fa.fa-info-circle
-            p Investors are limited to 12 month investment totals ranging from $2,000 - $100,000 based on income and net worth.
+            p Investors are limited to 12 month investment totals ranging from $2,200 - $107,000 based on income and net worth.
             p Based on your annual income and net worth, you can invest
               span.color-red
                 = ' '
@@ -108,34 +132,35 @@ mixin confirmStatement(name, attr)
           div.popover-content-amount-ok
             i.fa.fa-info-circle
             span Based on your updated annual income and net worth, you can invest up to $:amount.
-          section.hidden-sm-up
-            h2.text-uppercase.m-t-3.text-xs-center Investment Summary
-            .jumbotron.jumbotron-fluid.investment-summary
-              .container
-                .col-md-7.col-xs-6.text-xs-center
-                  .row
-                    span Target
-                    p.font-weight-bold
+          section.hidden-sm-up.investment-summary
+            h4.text-uppercase.section-bg-line.text-xs-center.m-b-0 Investment Summary
+            .investment-summary-wrap
+              table.table.table-bordered
+                tr.grey
+                  td
+                    p Type of security
+                  td
+                    p Offering deadline
+                tr
+                  td.big-h
+                    p.font-weight-bold #{values.campaign.security_type == 0 ? 'Common Equity' : 'Revenue Share'}
+                  td.big-h
+                    p.text-uppercase.font-weight-bold #{ values.campaign.expirationDate.format('MMM DD, YYYY') }
+                tr.grey
+                  td
+                    p Target
+                  td
+                    p Committed
+                tr
+                  td.big-h.target
+                    p.text-uppercase.font-weight-bold
                       | $#{values.campaign.minimum_raise.toLocaleString('en-US')} -
                       | $#{values.campaign.maximum_raise.toLocaleString('en-US')}
-                .col-md-5.col-xs-6.text-xs-center
-                  .row
-                    span Committed
-                    p.font-weight-bold $#{values.campaign.amount_raised.toLocaleString('en-US')}
-              .container
-                .col-md-7.col-xs-6.text-xs-center
-                  .row
-                    span Offering deadline
-                    p.font-weight-bold.m-b-0 #{values.campaign.expiration_date.toLocaleDateString('en-US', {timeZone: 'UTC'})}
-                .col-md-5.col-xs-6.text-xs-center
-                  .row
-                    span Type of security
-                    p.font-weight-bold.m-b-0
-                      | #{values.campaign.security_type == 0 ? 'Common Equity' : 'Revenue Share'}
+                  td.big-h
+                    p.text-uppercase.font-weight-bold $#{values.campaign.amount_raised.toLocaleString('en-US')}
           section.hidden-sm-up.invest-perks-mobile
             - var perks = values.campaign.perks;
             if perks && perks.length
-              - perks.sort(function (a, b) { return Number(b.amount) - Number(a.amount); });
               h2.text-uppercase.dosis.m-t-3.text-xs-center PERKS
                 span.small-text.open-sans.hidden-xs-up
                   | Investor Perks are not intended to affect the value of the security and
@@ -201,22 +226,29 @@ mixin confirmStatement(name, attr)
                 'value': user.country,
                 'id': 'personal_information_data__country',
               }, this.fields.personal_information_data.schema.country));
-            -
-              pug_html += app.fields.nestedTextLabel(
-                'personal_information_data',
-                'street_address_1',
-                user,
-                -1, {
-                },
-                fields.personal_information_data.schema.street_address_1);
-            -
-              pug_html += app.fields.nestedTextLabel(
-                'personal_information_data',
-                'street_address_2',
-                user,
-                -1, {
-                },
-                fields.personal_information_data.schema.street_address_2);
+            .row
+              .col-lg-6.p-xl-0
+                -
+                  pug_html += app.fields.nestedTextLabel(
+                    'personal_information_data',
+                    'street_address_1',
+                    user,
+                    -1, {
+                      class1: 'col-xl-6 col-lg-12 text-lg-left text-xl-right m-b-lg-1',
+                      class2: 'col-xl-6 col-lg-12 p-r-xl-0',
+                    },
+                    fields.personal_information_data.schema.street_address_1);
+              .col-lg-6
+                -
+                  pug_html += app.fields.nestedTextLabel(
+                    'personal_information_data',
+                    'street_address_2',
+                    user,
+                    -1, {
+                      class1: 'text-xl-right text-lg-left col-xl-5 col-lg-12',
+                      class2: 'col-xl-7 col-lg-12',
+                    },
+                    fields.personal_information_data.schema.street_address_2);
 
             if user.country == 'US'
               | !{ snippets.us({ fields: fields, user: user }) }
@@ -273,63 +305,78 @@ mixin confirmStatement(name, attr)
                     class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right p-t-0 m-b-0 m-b-lg-1',
                   },
                   fields.payment_information_data.schema.name_on_bank_account);
-
-              -
-                pug_html += app.fields.nestedTextLabel(
-                  'payment_information_data',
-                  'account_number',
-                  user,
-                  -1, {
-                  },
-                  fields.payment_information_data.schema.account_number);
-
-              -
-                pug_html += app.fields.nestedTextLabel(
-                  'payment_information_data',
-                  'account_number_re',
-                  user,
-                  -1, {
-                    class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right p-t-0 m-b-0',
-                  },
-                  fields.payment_information_data.schema.account_number_re);
-
-              -
-                pug_html += app.fields.nestedTextLabel(
-                  'payment_information_data',
-                  'routing_number',
-                  user,
-                  -1, {
-                  },
-                  fields.payment_information_data.schema.routing_number);
-              -
-                pug_html += app.fields.nestedTextLabel(
-                  'payment_information_data',
-                  'routing_number_re',
-                  user,
-                  -1, {
-                  },
-                fields.payment_information_data.schema.routing_number_re);
+              .row
+                .col-lg-6.p-xl-0
+                  -
+                    pug_html += app.fields.nestedTextLabel(
+                      'payment_information_data',
+                      'account_number',
+                      user,
+                      -1, {
+                        'help_text': '<div class="img-routing-number"></div>',
+                        class1: 'col-xl-6 col-lg-12 text-lg-left text-xl-right m-b-lg-1',
+                        class2: 'col-xl-6 col-lg-12 p-r-xl-0',
+                      },
+                      fields.payment_information_data.schema.account_number);
+                .col-lg-6
+                  -
+                    pug_html += app.fields.nestedTextLabel(
+                      'payment_information_data',
+                      'account_number_re',
+                      user,
+                      -1, {
+                        class1: 'text-xl-right text-lg-left col-xl-5 col-lg-12 p-t-0 m-b-0 m-b-lg-1',
+                        class2: 'col-xl-7 col-lg-12',
+                        'help_text': '<div class="img-routing-number"></div>',
+                      },
+                      fields.payment_information_data.schema.account_number_re);
+              .row
+                .col-lg-6.p-xl-0
+                  -
+                    pug_html += app.fields.nestedTextLabel(
+                      'payment_information_data',
+                      'routing_number',
+                      user,
+                      -1, {
+                        class1: 'col-xl-6 col-lg-12 text-lg-left text-xl-right m-b-lg-1',
+                        class2: 'col-xl-6 col-lg-12 p-r-xl-0',
+                        'help_text': '<div class="img-routing-number"></div>',
+                      },
+                      fields.payment_information_data.schema.routing_number);
+                .col-lg-6
+                  -
+                    pug_html += app.fields.nestedTextLabel(
+                      'payment_information_data',
+                      'routing_number_re',
+                      user,
+                      -1, {
+                        class1: 'text-xl-right text-lg-left col-xl-5 col-lg-12 p-t-0 m-b-0 m-b-lg-1',
+                        class2: 'col-xl-7 col-lg-12',
+                        'help_text': '<div class="img-routing-number"></div>',
+                      },
+                    fields.payment_information_data.schema.routing_number_re);
 
               .form-group.row.radio.check-fields.required
                 label.text-md-right.col-lg-3 Account Type
                   span.color-red *
-                #payment_information_data__bank_account_type.col-lg-9.radio-input
-                  label 
-                    input(
-                      type="radio"
-                      name="payment_information_data[bank_account_type]"
-                      value=auth.bank_account_type.Checking
-                      checked=(user.bank_account_type == auth.bank_account_type.Checking)
-                    )
-                    |  Checking
-                  label
-                    input(
-                      type="radio"
-                      name="payment_information_data[bank_account_type]"
-                      value=auth.bank_account_type.Savings
-                      checked=(user.bank_account_type == auth.bank_account_type.Savings)
-                    )
-                    |  Savings
+                .col-lg-9.radio-input
+                  .div#payment_information_data__bank_account_type
+                    label 
+                      input(
+                        type="radio"
+                        name="payment_information_data[bank_account_type]"
+                        value=auth.bank_account_type.Checking
+                        checked=(user.bank_account_type == auth.bank_account_type.Checking)
+                      )
+                      |  Checking
+                    label
+                      input(
+                        type="radio"
+                        name="payment_information_data[bank_account_type]"
+                        value=auth.bank_account_type.Savings
+                        checked=(user.bank_account_type == auth.bank_account_type.Savings)
+                      )
+                      |  Savings
             // IF CHECK
             .row.check-fields.payment-fields(style="display:none;")
               .col-lg-12
@@ -430,18 +477,20 @@ mixin confirmStatement(name, attr)
             .col-lg-12.m-t-2
               .row
                 span By Signing You Acknowledge and Agree to the 
-                  a(href="#" data-path=esignServer + "/pdf-doc/invest/subscription_agreement.pdf" target="_blank").link-2 Subscription Agreement
+                  a(href="#" data-path=app.config.esignServer + "/pdf-doc/invest/subscription_agreement.pdf" target="_blank").link-2 Subscription Agreement
                   |  and 
-                  a(href="#" data-path=esignServer + "/pdf-doc/invest/participation_agreement.pdf" target="_blank").link-2 Participation Agreement
+                  a(href="#" data-path=app.config.esignServer + "/pdf-doc/invest/participation_agreement.pdf" target="_blank").link-2 Participation Agreement
+                  | .
             .col-lg-12.m-t-2
               .row
                 #signature__full_name.form-group.row
-                  - var fullName = user.first_name + ' ' + user.last_name;
+                  //- var fullName = user.first_name + ' ' + user.last_name;
                   .col-xl-5.col-lg-6.col-md-6
                     input(
                       type="text"
                       placeholder="Type Your Name"
                       name='signature[full_name]'
+                      id='signature_full_name_input'
                     ).form-control.typed-name
                   .col-xl-5.col-lg-6.col-md-6
                     .electronically
@@ -451,28 +500,18 @@ mixin confirmStatement(name, attr)
             .form-group.row
               .col-md-12.text-md-center.text-sm-center.text-xs-center
                 .controls
-                  button(
-                  type="submit").btn.btn-lg.btn-primary.pull-lg-right.text-uppercase invest
+                  button#submitButton(data-method="POST" type="button").btn.btn-lg.btn-primary.pull-lg-right.text-uppercase invest
     //END LEFT BLOCK
     //START RIGHT BLOCK
-    .col-xl-4.col-lg-5.pull-right.hidden-xs-down.invest-perks
-      if values.campaign.perks
+    .col-xl-4.col-lg-5.col-md-12.col-sm-12.pull-right.hidden-xs-down.invest-perks.invest-right-p-0
+      if values.campaign.perks.length
         h2.text-uppercase.dosis.m-t-0 PERKS
           span.small-text.open-sans
             | Investor Perks are not intended to affect the value of the security and
             | investors should evaluate the merits of each investment without regard to any
             | Investor Perks.
 
-        .list-group.list-group-border-invest.invest-right-margin
-          -
-            values.campaign.perks = Object.keys(values.campaign.perks).map(function(key) {
-              return values.campaign.perks[key];
-            });
-
-            values.campaign.perks.sort(function (a, b) {
-              return Number(b.amount) - Number(a.amount);
-            });
-
+        .list-group.list-group-border-invest.invest-right-margin.m-b-3
           each v,k in values.campaign.perks
             a(href="#" data-amount=v.amount).list-group-item.list-group-item-action.perk
               h3.list-group-item-heading
@@ -480,30 +519,32 @@ mixin confirmStatement(name, attr)
                 |  Investment 
                 i.fa.fa-check(style="display:none;")
               p.list-group-item-text.text-justify #{v.perk}
-      section.hidden-xs-down
-        h2.text-uppercase Investment Summary
-        .jumbotron.jumbotron-fluid.investment-summary
-          .container
-            .col-md-7
-              .row
-                span Target
-                p.font-weight-bold
+      section.hidden-xs-down.investment-summary
+        h4.text-uppercase.section-bg-line.text-xs-center.m-b-0 Investment Summary
+        .investment-summary-wrap
+          table.table.table-bordered
+            tr.grey
+              td
+                p Type of security
+              td
+                p Offering deadline
+            tr
+              td.big-h
+                p.font-weight-bold #{values.campaign.security_type == 0 ? 'Common Equity' : 'Revenue Share'}
+              td.big-h
+                p.font-weight-bold #{ values.campaign.expirationDate.format('MMM DD, YYYY') }
+            tr.grey
+              td
+                p Target
+              td
+                p Committed
+            tr
+              td.big-h.target
+                p.text-uppercase.font-weight-bold
                   | $#{values.campaign.minimum_raise.toLocaleString('en-US')} -
                   | $#{values.campaign.maximum_raise.toLocaleString('en-US')}
-            .col-md-5
-              .row
-                span Committed
-                p.font-weight-bold $#{values.campaign.amount_raised.toLocaleString('en-US')}
-          .container
-            .col-md-7
-              .row
-                span Offering deadline
-                p.font-weight-bold.m-b-0 #{values.campaign.expiration_date.toLocaleDateString('en-US', {timeZone: 'UTC'})}
-            .col-md-5
-              .row
-                span Type of security
-                p.font-weight-bold.m-b-0
-                  | #{values.campaign.security_type == 0 ? 'Common Equity' : 'Revenue Share'}
+              td.big-h
+                p.text-uppercase.font-weight-bold $#{values.campaign.amount_raised.toLocaleString('en-US')}
 
 //MODAL
 div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#city_state_modal.modal.fade
@@ -550,11 +591,14 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
                 span.current-limit.color-green 1000
               | .
             .form-group.row.clearfix.required
+              -
+                var annualIncomeValue = '$' + (user.annual_income * 1000).toLocaleString('en-US');
+                var netWorthValue = '$' + (user.net_worth * 1000).toLocaleString('en-US');
               label Net Worth
-              input(type="text" placeholder="Net Worth" name="net_worth" value=(user.net_worth * 1000).toLocaleString('en-US'))#net_worth.net-worth.form-control
+              input(type="money" placeholder="Net Worth" name="net_worth" value=netWorthValue data-positive-only='1')#net_worth.net-worth.form-control
             .form-group.row.clearfix.required
               label Annual Income
-              input(type="text" placeholder="Annual Income" name="annual_income" value=(user.annual_income * 1000).toLocaleString('en-US'))#annual_income.annual_income.form-control
+              input(type="money" placeholder="Annual Income" name="annual_income" data-positive-only='1' value=annualIncomeValue)#annual_income.annual_income.form-control
             .form-group.row.clearfix.required.m0
               .row
                 .col-lg-12
@@ -563,4 +607,4 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
         .modal-footer
 
 if !window.google || !window.google.maps
-  script(src= window.location.protocol + "//maps.google.com/maps/api/js?language=en&key=" + googleMapKey)
+  script(src= window.location.protocol + "//maps.google.com/maps/api/js?language=en&key=" + app.config.googleMapKey)
