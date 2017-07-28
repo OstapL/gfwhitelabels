@@ -6,8 +6,8 @@ mixin row(value, index)
       a(href="#" data-section=name data-index=index).delete-sectionnew
         i.fa.fa-times
 
-    | !{app.fields.nestedTextLabel(name, 'amount', value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right m-b-0 p-t-0 m-b-lg-1'}, attr.schema.amount)}
-    | !{app.fields.nestedTextareaLabel(name, 'perk', value, index,{class2:'col-xl-9 col-lg-12 perks-textarea'}, attr.schema.perk)}
+    | !{app.fields.nestedTextLabel(name, 'amount', value, index, attr.schema.amount)}
+    | !{app.fields.nestedTextareaLabel(name, 'perk', value, index,{class2:'col-xl-12 perks-textarea'}, attr.schema.perk)}
 
 mixin run()
 
@@ -20,7 +20,7 @@ mixin run()
           each value, index in values
             +row(value, index)
     .row.add-link
-      .col-xl-9.offset-xl-3
+      .col-xl-12
         a(href="#" data-section=name data-comp="raiseFunds" data-template="perks").link-2.add-sectionnew
           i.fa.fa-plus
           |  Add Another Perk

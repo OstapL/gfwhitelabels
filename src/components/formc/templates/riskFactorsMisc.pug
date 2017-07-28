@@ -6,60 +6,62 @@ include riskFactorsMixins.pug
 
 - pug_html += app.breadcrumbs('form c', '', [ ['Home', '/'], ['Create Form C', '/formc/' + values.id + '/introduction'], ['Risk Factors', ''], ]);
 
-section.formc-team-members-director.container.m-b-85
+section.formc-risk-factor.container.m-b-85
   - var campaignId = values.campaign_id;
-  +menu('formc', 'risk-factors-misc')
-
-
-  //START RIGHT BLOCK
-  .col-lg-8.p-xs-0
-    h2.text-uppercase.text-lg-center.text-xs-center.m-t-0 risk factors (MISCELLANEOUS)
-    .col-lg-12.p-xs-0
-      p.text-justify Congratulations on making it through the initial six risk factor sections.  This last category is intended to catch any additional risks that may not have been covered and to give you a final chance to disclose potential risks to investors.
-    .form-section
-      section.risks
-        .col-lg-12.p-xs-0
-          #accordion-risk.pannel-group.accordion.accordion-risk(role="tablist" aria-multiselectable="true")
-            //- each v, k in defaultRisks
-            //-   +showRiskForm(v, k, 'market_and_customer_risk')
-
-            - var disabled = false;
-            each v, k in values['miscellaneous_risk']
-              - if (k != 99 && !disabled)
-                - disabled = true;
-              - if (!(k < Object.keys(defaultRisks).length) && k != 99)
-                +showRiskForm(v, k, 'miscellaneous_risk')
-
-    .col-lg-12.m-t-3.p-xs-0
-      p.pb10
-        b Are there any other additional risks that are specific to your business? 
-        |  For example:
-      ul
-        li.pb10 Are there technology risks not previously disclosed?
-        li.pb10 Are there insurance or business interruption risks not previously disclosed? 
-        li.pb10 Are there brand or reputation risks not previously disclosed?
-        li.pb10 Are there cost risks not previously disclosed? 
-      .pb10 In the text box below, please add any additional risk factors that have not already been addressed in the previous six categories. 
-    .col-lg-12.p-xs-0
-      form(data-method="PATCH").form-section.add-risk-form.clearfix
-        - 
-          pug_html += app.fields.textLabel('title', {
-          schema: fields.title, 
-          value: values.title,})
-        - 
-          pug_html += app.fields.textareaLabel('risk', {
-          schema: fields.risk,
-          class2: 'col-lg-9 col-md-12 big-textarea',
-          placeholder: 'Describe Your Risk', 
-          value: values.risk,})
-        button(data-method="PATCH" data-concat="false").btn.btn-secondary.btn-sm.text-uppercase.pull-lg-right.m-b-3.add-risk save and Add this Risk
-
+  .row
+    +menu('formc', 'risk-factors-misc')
+    //START RIGHT BLOCK
+    .col-xl-8.col-lg-8.col-md-12
+      h2.text-uppercase.text-lg-center.text-xs-center.m-t-0 risk factors (MISCELLANEOUS)
+      .row
+        .col-lg-12
+          p.text-justify Congratulations on making it through the initial six risk factor sections.  This last category is intended to catch any additional risks that may not have been covered and to give you a final chance to disclose potential risks to investors.
       .form-section
-        .form-group
-          label.d-block
-            - var complete = values.miscellaneous_risk[99] ? true : false
-            input(type="checkbox" name="complete" disabled=disabled data-previous=String(complete) checked=complete)#complete
-            span.p-l-2 None of these risks apply. This page is complete.
+        section.risks
+          .row
+            .col-lg-12
+              #accordion-risk.pannel-group.accordion.accordion-risk(role="tablist" aria-multiselectable="true")
+                //- each v, k in defaultRisks
+                //-   +showRiskForm(v, k, 'market_and_customer_risk')
+
+                - var disabled = false;
+                each v, k in values['miscellaneous_risk']
+                  - if (k != 99 && !disabled)
+                    - disabled = true;
+                  - if (!(k < Object.keys(defaultRisks).length) && k != 99)
+                    +showRiskForm(v, k, 'miscellaneous_risk')
+      .row
+        .col-lg-12
+          p.pb10
+            b Are there any other additional risks that are specific to your business? 
+            |  For example:
+          ul
+            li.pb10 Are there technology risks not previously disclosed?
+            li.pb10 Are there insurance or business interruption risks not previously disclosed? 
+            li.pb10 Are there brand or reputation risks not previously disclosed?
+            li.pb10 Are there cost risks not previously disclosed? 
+          .pb10 In the text box below, please add any additional risk factors that have not already been addressed in the previous six categories. 
+      .row
+        .col-lg-12
+          form(data-method="PATCH").form-section.add-risk-form.clearfix
+            - 
+              pug_html += app.fields.textLabel('title', {
+              schema: fields.title, 
+              value: values.title,})
+            - 
+              pug_html += app.fields.textareaLabel('risk', {
+              schema: fields.risk,
+              class2: 'col-xl-12 big-textarea',
+              placeholder: 'Describe Your Risk', 
+              value: values.risk,})
+            button(data-method="PATCH" data-concat="false").btn.btn-secondary.btn-sm.text-uppercase.pull-lg-right.m-b-3.add-risk save and Add this Risk
+        .col-xl-12
+          .form-section
+            .form-group.m-b-0
+              label.d-block.m-b-0
+                - var complete = values.miscellaneous_risk[99] ? true : false
+                input(type="checkbox" name="complete" disabled=disabled data-previous=String(complete) checked=complete)#complete
+                span.p-l-2 None of these risks apply. This page is complete.
 
       .row.m-t-3
         .col-lg-12.text-lg-right.text-sm-center.text-xs-center
