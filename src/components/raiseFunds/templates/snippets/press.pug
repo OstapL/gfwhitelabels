@@ -5,7 +5,7 @@ mixin row(value, index)
       a(href="#" data-section=name data-index=index).delete-sectionnew
         i.fa.fa-times
 
-    | !{app.fields.nestedTextLabel(name, 'headline', value, index, {placeholder:'Please enter a quote or the headline'}, attr.schema.headline)}
+    | !{app.fields.nestedTextLabel(name, 'headline', value, index, {placeholder:'Please Enter a Quate or the Headline'}, attr.schema.headline)}
     | !{app.fields.nestedTextLabel(name, 'name', value, index, {placeholder:'Example: Business Insider',}, attr.schema.name)}
     | !{app.fields.nestedTextLabel(name, 'link', value, index, {placeholder:'http://www.'}, attr.schema.link)}
 

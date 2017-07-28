@@ -76,14 +76,14 @@ module.exports = {
         founding_date: 'Founding date',
         address_1: 'Street Address',
         address_2: 'Optional Address',
-        zip_code: 'Zip code',
+        zip_code: 'Zip Code',
         phone: 'Phone',
         website: 'Website',
         twitter: 'Twitter',
         facebook: 'Facebook',
         instagram: 'Instagram',
-        linkedin: 'Linkedin',
-        slug: 'What would you like your custom URL to be?',
+        linkedin: 'LinkedIn',
+        slug: 'What Would You Like Your Custom URL to Be?',
       };
       this.assignLabels();
 
@@ -281,7 +281,7 @@ module.exports = {
       this.labels = {
         pitch: 'Why Should People Invest?',
         business_model: 'Why We Are Raising Capital?',
-        intended_use_of_proceeds: 'How We Intend To Make Money?',
+        intended_use_of_proceeds: 'How We Intend to Make Money?',
         faq: {
           question: 'Question',
           answer: 'Answer',
@@ -815,9 +815,9 @@ module.exports = {
       });
 
       this.labels = {
-        minimum_raise: 'Our Minimum Total Raise is',
-        maximum_raise: 'Our Maximum Total Raise is',
-        minimum_increment: 'The Minimum investment is',
+        minimum_raise: 'Our Minimum Total Raise Is',
+        maximum_raise: 'Our Maximum Total Raise Is',
+        minimum_increment: 'The Minimum investment Is',
         length_days: 'Length of the Campaign',
         investor_presentation_file_id: 'Upload an Investor Presentation',
         premoney_valuation: 'Pre-Money Valuation',
@@ -827,8 +827,8 @@ module.exports = {
         min_equity_offered: 'Minimum Equity Offered',
         max_equity_offered: 'Maximum Equity Offered',
         security_type: 'Security Type',
-        valuation_determination: 'How did you determine your valuation?',
-        valuation_determination_other: 'Please explain',
+        valuation_determination: 'How Did You Determine Your Valuation?',
+        valuation_determination_other: 'Please Explain',
       };
       this.assignLabels();
       this.createIndexes();
