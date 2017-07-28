@@ -1,6 +1,7 @@
 const Router = require('./router.js');
 const User = require('components/accountProfile/user.js');
 const Menu = require('components/menu/views.js');
+const getVideoId = require('get-video-id');
 
 class App {
   constructor() {
@@ -157,34 +158,27 @@ class App {
   }
 
   getVideoInfo(url) {
-    try {
-      let provider = url.match(/https:\/\/(:?www.)?(\w*)/)[2];
-      provider = provider.toLowerCase();
-      let id;
-      if (provider === 'youtube') {
-        id = url.match(/https:\/\/(?:www.)?(\w*).com\/.*v=([^\&]*)/)[2];
-      } else if (provider === 'youtu') {
-        provider = 'youtube';
-        id = url.match(/https:\/\/(?:www.)?(\w*).be\/(.*)/)[2];
-      } else if (provider === 'vimeo') {
-        id = url.match(/https:\/\/(?:www.)?(\w*).com\/(\d*)/)[2];
-      } else {
-        console.log(url, 'Takes a YouTube or Vimeo URL');
-      }
+    if (typeof(url) !== 'string')
+      url = '';
 
-      let resUrl = (provider === 'youtube')
-        ? `//www.youtube.com/embed/${id}?rel=0&enablejsapi=1`
-        : (provider === 'vimeo')
-          ? `//player.vimeo.com/video/${id}`
-          : '//www.youtube.com/embed/?rel=0';
+    const info = getVideoId(url);
+    if (!info || !_.contains(['youtube', 'vimeo'], info.service))
+      return {};
 
-      return { id: id, provider: provider, url: resUrl };
+    const videoURL = (info.service === 'youtube')
+      ? `//www.youtube.com/embed/${info.id}?rel=0&enablejsapi=1`
+      : (info.service === 'vimeo')
+        ? `//player.vimeo.com/video/${info.id}`
+        : '//www.youtube.com/embed/?rel=0';
 
-    } catch (err) {
-      console.log(url, 'Takes a YouTube or Vimeo URL');
-    }
+    //lib does not handle hash after id
+    info.id = info.id.replace(/\#(.)*$/g, '');
 
-    return {};
+    return {
+      id: info.id,
+      provider: info.service,
+      url: videoURL,
+    };
   }
 
   getUrl(data) {
