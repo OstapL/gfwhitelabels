@@ -6,196 +6,196 @@ section.create-company.container.m-b-85
   - var campaignId = campaign.id;
   - var formcId = formc.id;
   - values.progress = campaign.progress;
-  +menu('company', 'create')
+  .row
+    +menu('company', 'create')
 
-  //START RIGHT BLOCK
-  .col-xl-8.col-lg-8.col-md-12.p-sm-0
-    h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis Company
-    form.form-section
-      .col-xl-12.p-sm-0
-        -
-          pug_html += app.fields.fieldChoiceLabel('tour', _.extend({
-              'empty': { '': 'Choose option' },
-              'reverse': 1,
-              'value': values.tour,
-            }, fields.tour));
-        - 
-          pug_html += app.fields.textLabel('name', {
-          class1:'col-xl-3 col-lg-12 p-t-0 text-lg-left text-xl-right m-b-0 m-b-lg-1', 
-          schema: fields.name, 
-          placeholder: 'Company Legal Name', 
-          value: values.name,
-          })
-
-        - 
-          pug_html += app.fields.textLabel('short_name', {
-          class1: 'col-xl-3 col-lg-12 p-t-0 text-lg-left text-xl-right m-b-0 m-b-lg-1', 
-          schema: fields.short_name, 
-          placeholder: 'Short Name', 
-          value: values.short_name,})
-        .row.form-group.custom-link-company
-          .col-date#slug
-            label.col-xl-3.col-lg-12.text-xl-right.text-lg-left.m-b-0.p-t-0.m-b-lg-1 What would you like your custom URL to be?
-              span.color-red *
-            .col-xl-9
-              .prefix_input_prefix
-                input(value=window.location.origin disabled="disabled").form-control
-              .prefix_input_field
-                -
-                  pug_html += app.fields.fieldText('slug', {
-                  class: '',
-                  schema: fields.slug,
-                  id: 'slugField',
-                  placeholder: 'Your Custom URL', 
-                  value: values.slug,})
-        .custom-ga-fields
-          .row.form-group
-            label.col-xl-3.col-lg-12.text-xl-right.text-lg-left 
-              | Google Analytic ID 
-              a(href="https://support.google.com/analytics/topic/2790009?hl=en&ref_topic=3544906" target="_blank").link-2 Set Up Google Analytics
-            .col-xl-9
-              .prefix_input_prefix
-                input(value="UA -" disabled="disabled").form-control
-              .prefix_input_field
-                -
-
-                  pug_html += app.fields.fieldText('ga_id', {
-                    schema: fields.ga_id,
-                    class: '',
-                    placeholder: 'xxxxxx-xx',
-                    value: ((values.ga_id || '').replace(/^UA-/i, ''))})
-
-        -
-          pug_html += app.fields.fieldChoiceLabel('industry', _.extend({
-              'empty': { '': 'Choose Industry' },
-              'value': values.industry,
-            }, fields.industry));
-        -
-          pug_html += app.fields.fieldChoiceLabel('founding_state', _.extend({
-              'empty': { '': 'Choose State' },
-              'class1': 'col-xl-3 col-lg-12 p-t-0 m-b-0 m-b-lg-1 big-label-text text-lg-left text-xl-right',
-              'value': values.founding_state,
-            }, fields.founding_state));
-
-        - 
-          pug_html += app.fields.textLabel('tagline', {
-          schema: fields.tagline, 
-          placeholder: 'Your Company Slogan',
-          value: values.tagline,})
-
-        - 
-          pug_html += app.fields.textareaLabel('description', {
-          schema: fields.description, 
-          placeholder: 'Your Company Description',
-          help_text: 'Explain what your company does in a way that everyone  will understand.<br />  “If you can’t explain it simply, you don’t understand it well enough.” – Albert Einstein', value: values.description,})
-        .showPopover(data-content="C-corps can choose to issue Common Equity or a Revenue Share. LLC’s can only issue a Revenue Share")
+    //START RIGHT BLOCK
+    .col-xl-8.col-lg-8.col-md-12
+      h2.text-uppercase.text-xs-center.m-t-0.title Company
+      form.form-section
           -
-            pug_html += app.fields.fieldChoiceLabel('corporate_structure', _.extend({
-                empty: { '': 'Choose' },
-                'class1': 'col-xl-3 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 m-b-lg-1',
-                'value': values.corporate_structure,
-              }, fields.corporate_structure));
-        .row.form-group
-          .col-date#founding_date
-            label.col-xl-3.col-lg-12.text-xl-right.textlg-left.m-b-0.p-t-0.m-b-lg-1 Date of Organization
-              span.color-red *
-            .col-xl-4.col-lg-6.p-r-0
+            pug_html += app.fields.fieldChoiceLabel('tour', _.extend({
+            'empty': { '': 'Choose option' },
+            'reverse': 1,
+            'value': values.tour,
+            }, fields.tour));
+          .row
+            .col-xl-6.col-lg-6.col-md-6
               - 
-                pug_html += app.fields.dateMonth('founding_date', _.extend({
-                'empty': { '': 'Choose' },
-                'value': values.founding_date,
-                }, fields.founding_date));
+                pug_html += app.fields.textLabel('name', {
+                schema: fields.name, 
+                placeholder: 'Company Legal Name', 
+                value: values.name,
+                })
+            .col-xl-6.col-lg-6.col-md-6
               - 
-                pug_html += app.fields.dateDay('founding_date', _.extend({
-                'empty': { '': 'Choose' },
-                'value': values.founding_date,
-                }, fields.founding_date));
-              - 
-                pug_html += app.fields.dateYear('founding_date', _.extend({
-                'value': values.founding_date,
-                'placeholder': 'YYYY',
-                }, fields.founding_date));
-        .border-bottom.m-t-3.m-b-3
-        - 
-          pug_html += app.fields.textLabel('address_1', {
-          schema: fields.address_1, 
-          value: values.address_1,})
-        - 
-          pug_html += app.fields.textLabel('address_2', {
-          schema: fields.address_2, 
-          value: values.address_2,})
-        .row
-          .col-xl-6.col-lg-6.col-l-65
-            - 
-              pug_html += app.fields.textLabel('zip_code', {
-              class1:'col-xl-6 col-lg-12 text-lg-left text-xl-right', 
-              class2:'col-xl-6 col-lg-12', 
-              schema: fields.zip_code, 
-              value: values.zip_code,})
-          .col-xl-6.col-lg-6.col-sm-12.city_states.required.sity-state-error
-            input(type='hidden' name='state' value=values.state)#state
-            input(type='hidden' name='city' value=values.city)#city
+                pug_html += app.fields.textLabel('short_name', {
+                schema: fields.short_name, 
+                placeholder: 'Short Name', 
+                value: values.short_name,})
 
-            label.col-xl-5.col-lg-12.col-sm-6.col-xs-3.text-xl-right.text-lg-left.p-l-0 City/State
-            .col-xl-7.col-lg-12.col-sm-6.col-xs-9
-              a(data-toggle="modal" data-target="#city_state_modal" href="#city_state_modal").change_state_city
-                span.input-value.js-city-state= (values.city ? values.city : "(city)") + ", " + (values.state ? values.state : "(state)") 
-                i.fa.fa-pencil-square-o.link-1
-        .row.m-b-0
-          .col-xl-6.col-lg-6.col-l-65
-            - 
-              pug_html += app.fields.textLabel('phone', {
-              class1:'col-xl-6 col-lg-12 text-lg-left text-xl-right', 
-              class2:'col-xl-6 col-lg-12', 
-              schema: fields.phone, 
-              value: values.phone,})
-          .col-xl-6.col-lg-6
-            - 
-              pug_html += app.fields.textLabel('website', {
-              class1:'col-xl-5 col-lg-12 text-lg-left text-xl-right', 
-              class2:'col-xl-7 col-lg-12', 
-              schema: fields.website, 
-              placeholder: 'http://www.',
-              value: values.website,})
-        .border-bottom.m-t-2.m-b-3
-        .row.m-b-0
-          .col-xl-6.col-lg-6.col-l-65
-            - 
-              pug_html += app.fields.textLabel('twitter', {
-              class1:'col-xl-6 col-lg-12 text-lg-left text-xl-right', 
-              class2:'col-xl-6 col-lg-12', 
-              schema: fields.twitter, 
-              placeholder: 'https://www.',
-              value: values.twitter,})
-          .col-xl-6.col-lg-6
-            - 
-              pug_html += app.fields.textLabel('facebook', {
-              class1:'col-xl-5 col-lg-12 text-lg-left text-xl-right', 
-              class2:'col-xl-7 col-lg-12', 
-              schema: fields.facebook, 
-              placeholder: 'https://www.',
-              value: values.facebook,})
-        .row.m-b-0
-          .col-lg-6.col-l-65
-            - 
-              pug_html += app.fields.textLabel('instagram', {
-              class1:'col-xl-6 col-lg-12 text-lg-left text-xl-right', 
-              class2:'col-xl-6 col-lg-12', 
-              schema: fields.instagram, 
-              placeholder: 'https://www.',
-              value: values.instagram,})
-          .col-lg-6
-            - 
-              pug_html += app.fields.textLabel('linkedin', {
-              class1:'col-xl-5 col-lg-12 text-lg-left text-xl-right', 
-              class2:'col-xl-7 col-lg-12', 
-              schema: fields.linkedin, 
-              placeholder: 'https://www.',
-              value: values.linkedin,})
-        .row.m-t-2.pull-lg-right.text-md-center.text-sm-center.text-xs-center
-          .col-xl-12
-            button(type="button")#submitForm.btn.btn-primary.text-uppercase save and continue
-              i.fa.fa-angle-right
+          .row.form-group.custom-link-company
+            .col-date
+              label.col-xl-12.text-xl-left What would you like your custom URL to be?
+                span.color-red *
+              .col-xl-12
+                .prefix_input_prefix
+                  input(value=window.location.origin disabled="disabled").form-control
+                .prefix_input_field#slug
+                  -
+                    pug_html += app.fields.fieldText('slug', {
+                    class: '',
+                    schema: fields.slug,
+                    id: 'slugField',
+                    placeholder: 'Your Custom URL', 
+                    value: values.slug,})
+          .row
+            .col-xl-6.col-lg-6.col-md-6
+              .custom-ga-fields
+                .row.form-group
+                  label.col-xl-12.text-xl-left
+                    | Google Analytic ID. 
+                    a(href="https://support.google.com/analytics/topic/2790009?hl=en&ref_topic=3544906" target="_blank").link-2 Set Up Google Analytics
+                  .col-xl-12
+                    .prefix_input_prefix
+                      input(value="UA -" disabled="disabled").form-control
+                    .prefix_input_field
+                      -
+
+                        pug_html += app.fields.fieldText('ga_id', {
+                          schema: fields.ga_id,
+                          class: '',
+                          placeholder: 'xxxxxx-xx',
+                          value: ((values.ga_id || '').replace(/^UA-/i, ''))})
+          .row
+            .col-xl-6.col-lg-6.col-md-6
+              -
+                pug_html += app.fields.fieldChoiceLabel('industry', _.extend({
+                    'empty': { '': 'Choose Industry' },
+                    'value': values.industry,
+                  }, fields.industry));
+            .col-xl-6.col-lg-6.col-md-6
+              -
+                pug_html += app.fields.fieldChoiceLabel('founding_state', _.extend({
+                    'empty': { '': 'Choose State' },
+                    'value': values.founding_state,
+                  }, fields.founding_state));
+
+          -
+            pug_html += app.fields.textLabel('tagline', {
+            schema: fields.tagline, 
+            placeholder: 'Your Company Slogan',
+            value: values.tagline,})
+
+          -
+            pug_html += app.fields.textareaLabel('description', {
+            schema: fields.description, 
+            placeholder: 'Your Company Description',
+            help_text: 'Explain what your company does in a way that everyone  will understand.<br />  “If you can’t explain it simply, you don’t understand it well enough.” – Albert Einstein.', value: values.description,})
+          .row
+            .col-xl-6.col-lg-6.col-md-6
+              .showPopover(data-content="C-corps can choose to issue Common Equity or a Revenue Share. LLC’s can only issue a Revenue Share.")
+                -
+                  pug_html += app.fields.fieldChoiceLabel('corporate_structure', _.extend({
+                      empty: { '': 'Choose Structure' },
+                      'value': values.corporate_structure,
+                    }, fields.corporate_structure));
+            .col-xl-6.col-lg-6.col-md-6
+              .row.form-group
+                .col-date#founding_date
+                  label.col-xl-12.text-xl-left Date of Organization
+                    span.color-red *
+                  .col-xl-12
+                    - 
+                      pug_html += app.fields.dateMonth('founding_date', _.extend({
+                      'empty': { '': 'Choose' },
+                      'value': values.founding_date,
+                      }, fields.founding_date));
+                    - 
+                      pug_html += app.fields.dateDay('founding_date', _.extend({
+                      'empty': { '': 'Choose' },
+                      'value': values.founding_date,
+                      }, fields.founding_date));
+                    - 
+                      pug_html += app.fields.dateYear('founding_date', _.extend({
+                      'value': values.founding_date,
+                      'placeholder': 'YYYY',
+                      }, fields.founding_date));
+          .row
+            .col-xl-12
+              .border-bottom.m-t-2.m-b-3
+          .row
+            .col-xl-6.col-lg-6.col-md-6
+              -
+                pug_html += app.fields.textLabel('address_1', {
+                schema: fields.address_1, 
+                value: values.address_1,})
+            .col-xl-6.col-lg-6.col-md-6
+              -
+                pug_html += app.fields.textLabel('address_2', {
+                schema: fields.address_2, 
+                value: values.address_2,})
+          .row
+            .col-xl-6.col-lg-6.col-md-6
+              -
+                pug_html += app.fields.textLabel('zip_code', {
+                schema: fields.zip_code, 
+                value: values.zip_code,})
+            .col-xl-6.col-lg-6.col-md-6.city_states.required.sity-state-error
+              .form-group.row
+                input(type='hidden' name='state' value=values.state)#state
+                input(type='hidden' name='city' value=values.city)#city
+                
+                label.col-xl-12.text-xl-left City/State
+                .col-xl-12
+                  a(data-toggle="modal" data-target="#city_state_modal" href="#city_state_modal").change_state_city
+                    span.input-value.js-city-state= (values.city ? values.city : "(city)") + ", " + (values.state ? values.state : "(state)") 
+                    i.fa.fa-pencil-square-o.link-1
+          .row
+            .col-xl-6.col-lg-6.col-md-6
+              -
+                pug_html += app.fields.textLabel('phone', {
+                schema: fields.phone, 
+                value: values.phone,})
+            .col-xl-6.col-lg-6.col-md-6
+              -
+                pug_html += app.fields.textLabel('website', {
+                schema: fields.website, 
+                placeholder: 'http://www.',
+                value: values.website,})
+          .row
+            .col-xl-12
+              .border-bottom.m-t-2.m-b-3
+          .row
+            .col-xl-6.col-lg-6.col-md-6
+              -
+                pug_html += app.fields.textLabel('twitter', {
+                schema: fields.twitter, 
+                placeholder: 'https://www.',
+                value: values.twitter,})
+            .col-xl-6.col-lg-6.col-md-6
+              -
+                pug_html += app.fields.textLabel('facebook', {
+                schema: fields.facebook, 
+                placeholder: 'https://www.',
+                value: values.facebook,})
+          .row
+            .col-xl-6.col-lg-6.col-md-6
+              -
+                pug_html += app.fields.textLabel('instagram', { 
+                schema: fields.instagram, 
+                placeholder: 'https://www.',
+                value: values.instagram,})
+            .col-xl-6.col-lg-6.col-md-6
+              -
+                pug_html += app.fields.textLabel('linkedin', {
+                schema: fields.linkedin, 
+                placeholder: 'https://www.',
+                value: values.linkedin,})
+          .row.m-t-2.pull-lg-right.text-md-center.text-sm-center.text-xs-center
+            .col-xl-12
+              button(type="button")#submitForm.btn.btn-primary.text-uppercase save and continue
+                i.fa.fa-angle-right
 
 div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#company_publish.modal.fade
   div(role="document").modal-dialog
