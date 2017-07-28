@@ -91,7 +91,11 @@ module.exports = {
             k: index,
             v: formData,
           }));
+
           $('.add-risk-form').find('input:text, textarea').val('');
+
+          const $newRiskTextarea = $('.risk-panel:last [name=risk]');
+          $newRiskTextarea.prop('readonly', true).removeClass('editing').addClass('borderless-textarea added').css({ height: $newRiskTextarea.prop('scrollHeight')+'px' });
         }
         this.model[this.riskType][index] = formData;
         this.updateComplete();
