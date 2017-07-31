@@ -795,7 +795,7 @@ module.exports = {
       this.labels = {
         minimum_raise: 'Our Minimum Total Raise Is',
         maximum_raise: 'Our Maximum Total Raise Is',
-        minimum_increment: 'The Minimum investment Is',
+        minimum_increment: 'The Minimum Investment Is',
         length_days: 'Length of the Campaign',
         investor_presentation_file_id: 'Upload an Investor Presentation',
         premoney_valuation: 'Pre-Money Valuation',
