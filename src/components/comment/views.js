@@ -1,12 +1,5 @@
 const validation = require('components/validation/validation.js');
 
-function initDates(c) {
-  c.created_date = new Date(c.created_date);
-  _.each(c.children, (ch) => {
-    initDates(ch);
-  });
-};
-
 function countChildComments(comment) {
   let cnt = comment.children.length;
   _.each(comment.children, (childComment) => {
@@ -71,7 +64,6 @@ module.exports = {
 
       //init dates, count
       _.each(this.model.data, (c) => {
-        initDates(c);
         countChildComments(c);
       });
 
@@ -250,7 +242,7 @@ module.exports = {
           children: [],
           message: message,
           uid: newData.new_message_id,
-          created_date: new Date(),
+          created_date: app.helpers.date.nowAsString(),
           user: {
             first_name: app.user.first_name,
             last_name: app.user.last_name,
