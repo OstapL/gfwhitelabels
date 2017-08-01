@@ -3,6 +3,11 @@ const User = require('components/accountProfile/user.js');
 const Menu = require('components/menu/views.js');
 const getVideoId = require('get-video-id');
 
+const preventScrollHandler = (e) => {
+  e.preventDefault();
+  return false;
+};
+
 class App {
   constructor() {
     this.cache = {};
@@ -300,6 +305,15 @@ class App {
 
     return ((elementTop <= windowBottom) && (elementBottom >= windowTop));
   }
+
+  preventBodyScrolling(preventScroll) {
+    if (preventScroll === true) {
+      document.body.addEventListener("touchmove", preventScrollHandler);
+    } else {
+      document.body.removeEventListener("touchmove", preventScrollHandler);
+    }
+  }
+
 
 }
 
