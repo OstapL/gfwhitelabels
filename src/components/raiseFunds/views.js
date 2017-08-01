@@ -816,7 +816,11 @@ module.exports = {
       this.fields.maximum_raise.dependies = ['minimum_raise',];
       this.fields.premoney_valuation.dependies = ['security_type',];
       this.fields.security_type.dependies = ['premoney_valuation',];
-      this.fields.price_per_share.type = 'money';
+      this.fields.price_per_share = _.extend(this.fields.price_per_share, {
+        type: 'money',
+        max: 1000,
+      });
+
       if(this.model.hasOwnProperty('id')) {
         this.urlRoot = this.urlRoot.replace(':id', this.model.id);
       }
