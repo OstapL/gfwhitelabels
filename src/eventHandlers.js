@@ -187,7 +187,11 @@ $('body').on('click', '.team-member-list article', function () {
 
 // scripts for mobile menu
 $('body').on('click', '#toggle_mobile_menu', function () {
-  $('html').toggleClass('show-menu');
+  const $html = $('html');
+  const cssClass = 'show-menu';
+  $html.toggleClass(cssClass);
+  const preventBodyScroll = $html.hasClass(cssClass);
+  app.preventBodyScrolling(preventBodyScroll);
 });
 
 $('html').on('click', function () {
