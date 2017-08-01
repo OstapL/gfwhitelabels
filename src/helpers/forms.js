@@ -1,5 +1,5 @@
 'use strict';
-const deepDiff = require('deep-diff').diff;
+import deepDiff from 'deep-diff';
 
 //this code will work for deep-diff@0.3.8
 // const diff = require('deep-diff');
