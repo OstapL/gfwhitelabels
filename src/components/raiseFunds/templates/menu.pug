@@ -95,7 +95,7 @@ mixin menu(currentSection, currentStep)
             #form_c(role="tabpanel" class="panel-collapse collapse" + (currentSection == 'formc' ? ' in' : ''))
                 .list-group
                     +getCompanyUrl(formcId || values.id, 'formc', currentStep, 'introduction', 'Introduction')
-                    +getCompanyUrl(formcId || values.id, 'formc', currentStep, 'team-members', 'Team Members')
+                    +getCompanyUrl(formcId || values.id, 'formc', currentStep, 'team-members', 'Officers & Shareholders')
                     +getCompanyUrl(formcId || values.id, 'formc', currentStep, 'related-parties', 'Related Parties')
                     +getCompanyUrl(formcId || values.id, 'formc', currentStep, 'use-of-proceeds', 'Use of Proceeds')
                     .panel.panel-default.sub-menu
