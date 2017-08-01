@@ -35,7 +35,7 @@ var e = {
 
   indexPage: {
     //main slider or img (slider - 1/ img - 0)
-    slider: 1,
+    slider: 0,
     campaignListTitle: 'CURRENT CAMPAIGNS', // title main page list campaign
     videoPopupUrl: 'https://player.vimeo.com/video/198101157?title=0&amp;byline=0&amp;controls=0&fullscreen=1&buttons.share = false&embed.buttons.like = false;autoplay=0&portrait=0',
     videoTitle: 'WHAT IS GROWTHFOUNTAIN?',
