@@ -45,6 +45,7 @@ let exports = {
               { trigger: true, replace: false }
             );
           }, 500);
+          app.analytics.emitEvent(app.analytics.events.CampaignSubmitted, app.user.stats);
         });
     } else if(app.user.company.is_approved == 1) {
       app.routers.navigate(
@@ -69,7 +70,8 @@ let exports = {
     }
     if (api.submitAction.call(this, e, data)) {
       setTimeout((function() {
-        window.location = '/' + this.formc.company_id + '?preview=1&previous=' + pathname;
+        const campaignURL = (app.user.company.slug || app.user.company.id);
+        window.location = '/' + (campaignURL + '?preview=1&previous=' + pathname);
       }).bind(this), 100);
     } else {
       app.hideLoading();

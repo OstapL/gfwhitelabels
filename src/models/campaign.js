@@ -8,9 +8,6 @@ const moment = require('moment');
 const today = moment.utc();
 
 const FINANCIAL_INFO = require('consts/financialInformation.json');
-const ACTIVE_STATUSES = FINANCIAL_INFO.INVESTMENT_STATUS_ACTIVE;
-const CANCELLED_STATUSES = FINANCIAL_INFO.INVESTMENT_STATUS_CANCELLED;
-
 
 class Campaign {
   constructor(data={}, schema={}, url=null) {
@@ -83,8 +80,19 @@ class Campaign {
     return data;
   }
 
-  daysLeft(dateTo) {
-    return moment(this.expiration_date).diff(moment(), 'days') + 1;
+  daysLeft() {
+    let days = Math.ceil(moment(this.expiration_date).diff(moment(), 'days', true));
+    if (days < 0)
+      days = 0;
+
+    return days;
+  }
+
+  daysLeftText() {
+    const daysLeft = this.daysLeft();
+    return daysLeft === 1
+      ? `${daysLeft} Day Left`
+      : `${daysLeft} Days Left`;
   }
 
   daysPassedPercentage(approved_date) {
@@ -208,6 +216,7 @@ class Campaign {
   get successful() {
     return this.amount_raised >= this.minimum_raise;
   }
+
 }
 
 module.exports = Campaign;

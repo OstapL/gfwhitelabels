@@ -5,10 +5,10 @@ include ../../raiseFunds/templates/menu.pug
 | !{app.breadcrumbs('Create Form C', '', [ ['Home', '/'], ['Create Form C', '/formc/' + values.id + '/introduction'], ['Introduction', ''], ])}
 
 section.formc.introduction.create-company-media.container
-  +menu('formc', 'introduction')
-  .col-lg-8.p-xs-0
-    h2.text-uppercase.text-lg-center.text-xs-center.m-t-0 introduction
-    .col-lg-12.p-xs-0
+  .row
+    +menu('formc', 'introduction')
+    .col-xl-8.col-lg-8.col-md-12
+      h2.text-uppercase.text-lg-center.text-xs-center.m-t-0 introduction
       .welcome-text
         if app.getParams().notPaid == '1'
           .warning-block.warning-team-add.text-lg-left.m-t-2
@@ -31,8 +31,8 @@ section.formc.introduction.create-company-media.container
         form(action="").form-section
           .certify-checkbox
             .form-group.required
-              label#certify
-                input(type="checkbox" name="certify" value="true" data-value-type="boolean" checked=(values['certify']))
+              label
+                input#certify(type="checkbox" name="certify" value="true" data-value-type="boolean" checked=(values['certify']))
                 | Check this box to certify that all the following statements are true:
           .list
             ul
@@ -55,22 +55,22 @@ section.formc.introduction.create-company-media.container
 
           div(style='display:' + (values['failed_to_comply_choice']  == 1? 'block' : 'none') + ';').failed_to_comply_choice.explain.shown-yes
             .form-group.row
-              .col-lg-3.text-lg-right
+              .col-xl-12.text-xl-left
                 label If Yes, Explain
-              .col-lg-9
+              .col-xl-12
                 textarea(rows="3" name="failed_to_comply").form-control= values['failed_to_comply']
           if values.is_paid != true
             .payment-block
               .row
                 .col-xl-12
-                  .border-bottom.m-t-2.m-b-3
+                  .border-bottom.m-t-3.m-b-3
               .growthfountain-charges
                 p.m-b-1 GrowthFountain charges $#{ values.registration_fee } for Form C generation, background checks and escrow. To authorize this charge and to enter into the Listing Agreement, please electronically sign below.
                 a(href="#" data-path=app.config.esignServer + "/pdf-doc/formc/listing_agreement.pdf" target="_blank").link-2 To review the Listing Agreement, click here
                 .form-group.row.m-t-2
-                  .col-lg-3.text-lg-right
+                  .col-xl-12.text-xl-left
                     label Credit Card Number
-                  .col-lg-9
+                  .col-xl-12
                     input(type="text" data-stripe="number" id="card_number").form-control
                     img(src=require('images/icons/visa_logo_6.gif'), alt="")
                     img(src=require('images/icons/mastercard_logo_5.gif'), alt="")
@@ -78,33 +78,33 @@ section.formc.introduction.create-company-media.container
                     img(src=require('images/icons/Discover-Logo.png'), alt="")
 
               div(id="expiration-block").expiration
-                .form-group.row.m-b-0
-                  .col-xl-7.col-lg-6.col-md-6.p-lg-l-0.expiration-form
-                    .col-xl-5.col-lg-12.text-xl-right.text-lg-left
-                      label Expiration
-                    .col-lg-12.col-xl-7
-                      - 
-                        pug_html += app.fields.dateMonth('card_exp_month', _.extend({
-                        'empty': { '': 'Choose' },
-                        'class1': 'col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-6 p-l-0',
-                        'value': values.card_exp_month,
-                        }, fields.card_exp_month));
-                      - 
-                        pug_html += app.fields.dateYear('card_exp_date_year', _.extend({
-                        'value': values.card_exp_date_year,
-                        'class1': 'col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-6 p-r-0',
-                        'placeholder': 'YYYY',
-                        }, fields.card_exp_date_year));
-                  .col-xl-5.col-lg-6.col-md-6.p-xl-r-0.p-lg-r-0.cvv-code
-                    .col-xl-5.col-lg-12
-                      label CVV Code
-                    .col-xl-7.col-lg-12
-                      .input-icon
-                        div.fa.fa-question-circle.showPopover(
-                        data-content="<p class='pb10'>For Visa, MasterCard and Discover (left), the <br> 3 digits on the <u>back</u> of your card.</p> <p class='pb10'>For American Express (right) the 4 digits on the <br> <u>front</u> of your card.</p><img class='m-r-1 m-l-1' src='images/generals/cart_pay_1.png' /> <img  src='images/generals/cart_pay_2.png' />")
-                      input(type="text" data-stripe="cvc" id="card_cvc" placeholder="CVV Code").form-control
+                .row
+                  .col-xl-6.col-lg-6.col-md-6.expiration-form
+                    .form-group.row
+                      .col-xl-12.text-xl-left
+                        label Expiration
+                      .col-xl-12
+                        - 
+                          pug_html += app.fields.dateMonth('card_exp_month', _.extend({
+                          'empty': { '': 'Choose' },
+                          'value': values.card_exp_month,
+                          }, fields.card_exp_month));
+                        - 
+                          pug_html += app.fields.dateYear('card_exp_date_year', _.extend({
+                          'value': values.card_exp_date_year,
+                          'placeholder': 'YYYY',
+                          }, fields.card_exp_date_year));
+                  .col-xl-6.col-lg-6.col-md-6.cvv-code
+                    .form-group.row
+                      .col-xl-12
+                        label CVV Code
+                      .col-xl-12
+                        .input-icon
+                          div.fa.fa-question-circle.showPopover(
+                          data-content="<p class='pb10'>For Visa, MasterCard and Discover (left), the <br> 3 digits on the <u>back</u> of your card.</p> <p class='pb10'>For American Express (right) the 4 digits on the <br> <u>front</u> of your card.</p><div class='introduction-cart-pay m-r-1'><div class='introduction-cart-pay-1'></div></div> <div class='introduction-cart-pay'><div class='introduction-cart-pay-2'></div></div>")
+                        input(type="text" data-stripe="cvc" id="card_cvc" placeholder="CVV Code").form-control
                 #electronically-sign-form.electronically-sign
-                  .col-xl-10.offset-xl-1.m-t-3.investment.p-x-0
+                  .col-xl-10.offset-xl-1.m-t-2.investment.p-x-0
                     .col-lg-12
                       h3.m-t-0.text-lg-center.m-b-2 Electronically Sign
                     .form-group.row

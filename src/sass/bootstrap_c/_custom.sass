@@ -153,7 +153,7 @@
 .fraction, .top, .bottom
     padding: 0 5px
     .bottom
-        border-top: 1px solid #3cbdb9
+        border-top: 1px solid $white
         display: block
 
 
@@ -400,12 +400,22 @@ p.drop-photo
   .btn-dropdown
     min-width: rem(160)
   .btn-group
-    min-width: 185px
+    min-width: 100%
+    .btn
+      font-family: $open-sans
+      color: $small-text
     .dropdown-toggle
       padding-left: rem(8)
       padding-right: rem(8)
       &:after
         margin-top: 0
+    .btn-dropdown
+      width: 87%
+    .btn-dropdown-click
+      width: 13%
+    &.open
+      .btn-dropdown-click
+        margin-left: -1px
   .btn-dropdown
     font-size: rem(14)
   .btn-dropdown-click
@@ -477,6 +487,8 @@ p.drop-photo
       top: 0px
       left: 2px
       color: $fancy-nav-color
+      @media only screen and (max-width : 767px)
+        top: 1px
 .fancybox-prev
   span
     &:before
@@ -499,6 +511,9 @@ p.drop-photo
       top: 0px
       left: 2px
       color: $fancy-nav-color
+      @media only screen and (max-width : 767px)
+        top: 1px
+
 #fancybox-loading, .fancybox-close, .fancybox-prev span, .fancybox-next span
   background-image: url(img/fancybox/fancybox_sprite.png)
 #fancybox-loading div
@@ -583,4 +598,5 @@ p.drop-photo
       color: rgba($small-text, 1)
   @media only screen and (max-width : 991px)
     display: none
-
+.fancybox-lock body
+  position: relative

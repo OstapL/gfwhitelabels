@@ -1,15 +1,16 @@
 mixin row(value, index)
   - var index = index;
-  div
-    .col-xl-12(data-index=index class=name + ' addSectionBlock').video-container.p-sm-0.m-b-1
-      .delete-section-container.media-delete
-        a(href="#" data-section=name data-index=index).delete-sectionnew
-          i.fa.fa-times
-      .row.showPopover(data-content="YouTube or Vimeo links only please.")
-        .col-xl-7.col-lg-6.videoInteractive.text-xl-right.text-lg-left
+  div.one-video
+    .video-container(data-index=index class=name + ' addSectionBlock')
+      .col-xl-12
+        .delete-section-container.media-delete
+          a(href="#" data-section=name data-index=index).delete-sectionnew
+            i.fa.fa-times
+      .showPopover(data-content="YouTube or Vimeo links only please.")
+        .col-xl-7.col-lg-6.videoInteractive.text-xl-left
           
-          | !{app.fields.nestedTextLabel(name, 'headline', value, index,{class1: 'col-xl-5 col-lg-12 p-t-0 m-b-0 m-b-lg-1', class2: 'col-xl-7 col-lg-12', placeholder: 'Title',}, attr.schema.headline)}
-          | !{app.fields.nestedTextLabel(name, 'link', value, index,{class1: 'col-xl-5 col-lg-12', class2: 'col-xl-7 col-lg-12 additional-video-link', placeholder: 'http://www.',}, attr.schema.link)}
+          | !{app.fields.nestedTextLabel(name, 'headline', value, index,{class1: 'col-xl-12', class2: 'col-xl-12', placeholder: 'Title',}, attr.schema.headline)}
+          | !{app.fields.nestedText(name, 'link', value, index,{class: 'm-b-2 additional-video-link', placeholder: 'http://www.',}, attr.schema.link)}
           
         .col-xl-5.col-lg-6
           -
@@ -35,7 +36,7 @@ mixin run()
           each value, index in values
             +row(value, index)
       .add-link.add-link-additional-video
-        .col-xl-6.offset-xl-3.p-sm-0
+        .col-xl-12
           a(href="#" data-section=name data-comp="raiseFunds" data-template="additional_video").link-2.add-sectionnew
             i.fa.fa-plus
             |  Add Another Video

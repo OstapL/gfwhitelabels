@@ -111,5 +111,5 @@ module.exports = {
       }, 'what_my_business_worth_chunk');
     },
   },
-  auth: ['calculatorWhatMyBusinessWorthIntro', 'businessValuation'],
+  auth: ['calculatorWhatMyBusinessWorthFinish'],
 };

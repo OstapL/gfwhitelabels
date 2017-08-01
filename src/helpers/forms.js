@@ -1,9 +1,6 @@
 'use strict';
-const deepDiff = require('deep-diff').diff;
+import deepDiff from 'deep-diff';
 
-//this code will work for deep-diff@0.3.8
-// const diff = require('deep-diff');
-// const deepDiff = diff.diff || diff.default || diff;
 
 module.exports = {
   makeCacheRequest(url, type, data) {
@@ -30,58 +27,63 @@ module.exports = {
   },
 
   makeRequest(url, type, data, options) {
-    options = options || {};
-    // We can pass type as a string
-    // or we can pass dict with type and data
-    if (typeof type === 'object') {
-      data = type;
-      type = data.type;
-      delete data.type;
-    }
-
-    type = type || 'GET';
-
-    if(type == 'POST' || type == 'PUT' || type == 'PATCH' || type == 'DELETE') {
-      data = JSON.stringify(data);
-    }
-
-    let params = _.extend({
-      url: url,
-      type: type,
-      data: data,
-      dataType: 'json',
-      contentType: "application/json; charset=utf-8",
-      beforeSend: function (xhr) {
-        let token = localStorage.getItem('token');
-        if (token !== null && token !== '') {
-          xhr.setRequestHeader('Authorization', 'Bearer ' + token);
-        }
-      },
-    }, options);
-
-    const promise = $.ajax(params);
-
-    promise.always( (xhr, status) => {
-      // If status is success or it is not get request
-      // do not show error
-      if (status === 'success' || type.toUpperCase() !== 'GET') {
-        return;
+    // return new Promise((resolve, reject) => {
+      options = options || {};
+      // We can pass type as a string
+      // or we can pass dict with type and data
+      if (typeof type === 'object') {
+        data = type;
+        type = data.type;
+        delete data.type;
       }
-      // If we have location in responseJSON
-      // do not show error
-      if (xhr.hasOwnProperty('responseJSON') &&
+
+      type = type || 'GET';
+
+      if(type == 'POST' || type == 'PUT' || type == 'PATCH' || type == 'DELETE') {
+        data = JSON.stringify(data);
+      }
+
+      let params = _.extend({
+        url: url,
+        type: type,
+        data: data,
+        dataType: 'json',
+        contentType: "application/json; charset=utf-8",
+        beforeSend: function (xhr) {
+          let token = localStorage.getItem('token');
+          if (token !== null && token !== '') {
+            xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+          }
+        },
+      }, options);
+
+      const promise = $.ajax(params);
+
+      promise.always((xhr, status) => {
+        // If status is success or it is not get request
+        // do not show error
+        if (status === 'success' || type.toUpperCase() !== 'GET') {
+          return;
+        }
+        // If we have location in responseJSON
+        // do not show error
+        if (xhr.hasOwnProperty('responseJSON') &&
           xhr.responseJSON !== undefined &&
           xhr.responseJSON.hasOwnProperty('location')) {
-        return;
-      }
-      app.helpers.errorPage({
-        status: xhr.status,
-        statusText: xhr.statusText,
+          return;
+        }
+        app.helpers.errorPage({
+          status: xhr.status,
+          statusText: xhr.statusText,
+        });
+        app.hideLoading();
       });
-      app.hideLoading();
-    } );
+      
+      // promise.then(resolve);
+      // promise.fail(reject);
 
-    return promise;
+      return promise;
+    // });
   },
 
   submitAction(e, newData) {
@@ -173,7 +175,7 @@ module.exports = {
       _(app.validation.errors).each((errors, key) => {
         app.validation.invalidMsg(this, key, errors);
       });
-      this.$('.help-block').prev().scrollTo(5);
+      this.$('.help-block').prev().scrollTo(25);
       if(form.length > 0) {
         form[0].removeAttribute('disabled');
       }
@@ -181,9 +183,8 @@ module.exports = {
       return false;
     } else {
 
-      api.makeRequest(url, method, newData).
-        then((responseData) => {
-
+      api.makeRequest(url, method, newData)
+        .then((responseData) => {
           // ToDo
           // Do we really need this ?!
           if(method != 'POST') {
@@ -215,8 +216,8 @@ module.exports = {
               { trigger: true, replace: false }
             );
           }
-        }).
-        fail((xhr, status, text) => {
+        })
+        .fail((xhr, status, text) => {
           if(form.length > 0) {
             form[0].removeAttribute('disabled');
           }
@@ -292,6 +293,8 @@ module.exports = {
         if(data[key_year]) {
           data[key] = data[key_year] + '-' + (data[key_month] || '01') + '-' +
             (data[key_day] || '01')
+        } else {
+          data[key] = '';
         }
         delete data[key_year];
         delete data[key_month];

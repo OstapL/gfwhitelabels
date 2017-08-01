@@ -1,7 +1,13 @@
 #!/usr/bin/env bash
 git fetch -q --all
+
+if git branch --all | grep --quiet "remotes/vladyslav2/alpha"; then
+    echo "============ MERGE WITH VLADYSLAV/alpha ============"
+    git merge --no-ff vladyslav2/alpha > /dev/null
+fi
+
 git checkout alpha > /dev/null
-for b in alpha-dcu alpha-momentum3 alpha-rivermarkcu alpha-jdcu alpha-infinityfcu alpha-tvfcu
+for b in $(cat branches.txt)
 do
     echo "========================= branch $b =========================="
     if git checkout $b; then
@@ -38,8 +44,8 @@ do
         echo ""
     else
         echo "$b failed to checkout. Update script stopped"
-        git status
-        git branch
+        git st;
+        exit 1;
     fi
 done
 

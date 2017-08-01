@@ -1,4 +1,4 @@
-const deepDiff = require('deep-diff').diff;
+import deepDiff from 'deep-diff';
 
 module.exports = {
   events: {

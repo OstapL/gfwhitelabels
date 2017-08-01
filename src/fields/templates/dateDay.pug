@@ -2,6 +2,7 @@ div(class=class1)
   select(
     id=id || name + '__day'
     name=(name || name) + '__day'
+    data-value-type="string"
   ).custom-select.w-100
     option(value="") DD
     option(value = "01" selected = (value == '01') ? true : false) 1

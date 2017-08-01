@@ -28,6 +28,7 @@ section.company-header.scroll-paralax.no-paralax-mobile
               data-provider=videoInfo.provider
               data-id=videoInfo.id
               data-url=videoInfo.url
+              data-modal-class='detail-video-popup'
             ).big-icon.link-6.youtube_popup.showVideoModal.play-icon
               i.fa.fa-play
 
@@ -238,7 +239,7 @@ section
         else if values.campaign.gallery_group_id.data.length
           each v,k in values.campaign.gallery_group_id.data
             .col-lg-4.col-sm-12.col-xs-12.col-md-6.no-padding-img
-              a(href=(v.getUrl('main')) data-size='1440x900' rel="gallery1" title=(v.name)).fancybox
+              a(href=(v.getUrl('main')) data-size='1440x900' rel="gallery1" title=(v.name) onclick="return false;").fancybox
                 img(src=(v.getUrl('530x441')) alt=(v.name)).w-100.img-responsive
     .container
       .col-lg-12.p-sm-0
@@ -361,7 +362,7 @@ section
                               p.color-grey
                                 i.fa.fa-graduation-cap
                                 |  #{v.college}
-    .col-lg-12.border-bottom.m-t-0.m-b-3
+    .col-lg-12.border-bottom.m-t-0.m-b-0
   if values.campaign.press && Object.keys(values.campaign.press).length > 0 && values.campaign.press[0].headline != ''
     section.articles#articles
       .container
@@ -436,12 +437,12 @@ section
               i.fa.fa-file-pdf-o.d-inline-block
               h3.d-inline-block Financials
 
-          .col-xl-4.col-lg-4.col-md-12.col-sm-12.col-xs-12.row.text-xs-center
+          .col-xl-4.col-lg-4.col-md-12.col-sm-12.col-xs-12.text-xs-center
             p Company documents
             if values.campaign.investor_presentation_file_id.id
               a(href=values.campaign.investor_presentation_file_id.getUrl('origin') target="_blank")
                 i.fa.fa-file-powerpoint-o.d-inline-block
-                h3.d-inline-block Investor Presentation
+                h3.d-inline-block.m-b-0 Investor Presentation
   section.overview-detail
     .container
       div

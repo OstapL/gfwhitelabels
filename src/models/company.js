@@ -1,5 +1,6 @@
-const File = require('./file.js');
 
+const moment = require('moment');
+const COMPANY_STATUS = require('consts/raisecapital/companyStatuses.json').STATUS;
 
 class Company {
   constructor(data={}, schema={}, url=null) {
@@ -37,6 +38,17 @@ class Company {
     let data = Object.assign({}, this.data);
     return data;
   }
+
+  isNew() {
+    const today = moment();
+    const approvedDate = moment(this.approved_date);
+    return Math.ceil(today.diff(approvedDate, 'days', true)) <= 10;
+  }
+
+  isClosed() {
+    return this.is_approved === COMPANY_STATUS['SUCCESSFULY CLOSED'] ||
+      this.is_approved === COMPANY_STATUS['UNSUCESSFULY CLOSED'];
+  }
 }
 
-module.exports = Company
+module.exports = Company;
