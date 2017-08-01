@@ -63,6 +63,8 @@ module.exports = {
       this.fields.corporate_structure.validate.choices = require('consts/raisecapital/corporate_structure.json');
       this.fields.tour.validate.choices = require('consts/raisecapital/tour.json').TOUR;
 
+      this.fields.founding_date.required = true;
+
       this.labels = {
         tour: 'Would You Like to Participate in The <a class="link-2" href="/pg/heartland-tour" target="_blank">Heartland Tour</a>',
         name: 'Legal Name of Company',
