@@ -7,19 +7,6 @@ const validation = require('components/validation/validation.js');
 
 const CalculatorView = require('./revenueShareCalculator.js');
 
-const preventScrollHandler = (e) => {
-  e.preventDefault();
-  return false;
-};
-
-const preventBodyScrolling = (preventScroll) => {
-  if (preventScroll === true) {
-    document.body.addEventListener("touchmove", preventScrollHandler);
-  } else {
-    document.body.removeEventListener("touchmove", preventScrollHandler);
-  }
-};
-
 module.exports = {
   list: Backbone.View.extend({
     el: '#content',
@@ -246,9 +233,6 @@ module.exports = {
               title : {
                 type : 'inside'
               },
-              // overlay: {
-              //   locked: false
-              // }
             },
             beforeShow(){
               const $html = $('html');
@@ -257,28 +241,13 @@ module.exports = {
                   $html.addClass(cssClass);
                 }
               });
-              preventBodyScrolling(true);
-              // $('html').css('overflowX', 'visible');
-              // $('body').css('overflowY', 'hidden');
+              app.preventBodyScrolling(true);
             },
             afterClose(){
               $('html').removeClass('fancybox-margin fancybox-lock');
-              // $('html').css('overflowX', 'hidden');
-              // $('body').css('overflowY', 'visible');
-              preventBodyScrolling(false);
+              app.preventBodyScrolling(false);
             }
           });
-
-          // $fancyBox.fancybox({
-          //   openEffect  : 'elastic',
-          //   closeEffect : 'elastic',
-          //
-          //   helpers : {
-          //     title : {
-          //       type : 'inside'
-          //     }
-          //   }
-          // });
           resolve();
         }, 'fancybox_chunk');
       });
