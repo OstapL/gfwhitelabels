@@ -661,6 +661,11 @@ module.exports = {
           delete data.role;
         }
       }
+      //process current date in experiences
+      _.each(data.experiences, (exp, idx) => {
+        if (!exp.end_date_of_service__month && !exp.end_date_of_service__year)
+          delete this.fields.experiences.schema.end_date_of_service;
+      });
       api.submitAction.call(this, e, data);
     },
 
