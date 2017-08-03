@@ -132,6 +132,14 @@ section.formc-team-members-officer.container.m-b-85
                 placeholder: 'Principal Occupation and Name of Employer',}, 
                 fields.principal_occupation))
             .col-xl-6.col-lg-6.col-md-6
+              -
+                pug_html += app.fields.textLabel('employer_principal_businesss', _.extend({
+                schema: fields.employer_principal_businesss, 
+                value: values.employer_principal_businesss, 
+                label: 'Employer’s Principal Business',
+                placeholder: 'Provide short description of the business',},
+                fields.employer_principal_businesss))
+            .col-xl-6.col-lg-6.col-md-6
               .row.form-group
                 label.col-xl-12.text-xl-left Employment Start Date
                   span.color-red *
@@ -152,14 +160,7 @@ section.formc-team-members-officer.container.m-b-85
                       'placeholder': 'YYYY',
                       'name': 'employer_start_date',
                       }, fields.employer_start_date));
-            .col-xl-6.col-lg-6.col-md-6
-              -
-                pug_html += app.fields.textLabel('employer_principal_businesss', _.extend({
-                schema: fields.employer_principal_businesss, 
-                value: values.employer_principal_businesss, 
-                label: 'Employer’s Principal Business',
-                placeholder: 'Provide short description of the business',},
-                fields.employer_principal_businesss))
+            
         .row
           .col-xl-12
             strong Is this individual also a 20%+ Voting Shareholder?
@@ -184,7 +185,7 @@ section.formc-team-members-officer.container.m-b-85
                 schema: fields.class_of_securities,
                 label: 'Class of Securities',
                 value: values.class_of_securities,})
-            .col-xl-12
+            .col-xl-6.col-lg-6.col-md-6
               -
                 pug_html += app.fields.textLabel('voting_power_percent', {
                 schema: fields.voting_power_percent,

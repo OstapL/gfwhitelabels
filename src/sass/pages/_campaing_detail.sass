@@ -426,13 +426,24 @@
   margin-top: rem($margin-top-section-campaign)
   padding-bottom: rem($padding-bottom-section-campaign-members)
   .hide-more-detail
-    height: 83px
+    max-height: 83px
     overflow: hidden
     position: relative
+    -webkit-transition: max-height 1s ease
+    -moz-transition: max-height 1s ease
+    transition: max-height 1s ease
   .hide-more-detail.show-more-detail
-    height: auto!important
+    max-height: 1200px
+    -webkit-transition: max-height 2s ease
+    -moz-transition: max-height 2s ease
+    transition: max-height 2s ease
     .show-more-members
-      display: none
+      visibility: hidden
+      transition: visibility ease-in
+
+  .show-more-members
+    visibility: visible
+    transition-delay: 0.3s
   .show-more-members
     position: absolute
     right: 0
@@ -497,49 +508,81 @@
         border-top: solid 1px $light_grey
   .see-all-article-press
     margin-top: rem(30)
+#revenue-share-calculator-result
+  margin-left: 7%
+  @media only screen and (max-width : 767px)
+    margin-left: 10px
 
 
 .team.team-detail
-  padding-bottom: rem(15)
+  padding-bottom: rem(50)
+  @media only screen and (max-width : 767px)
+    padding-left: 0
+    padding-right: 0
   a,a:hover
     .card-text,.card-title
       color: $black_text
+  .img-wrap
+    display: inline-block
+    vertical-align: top
+    img
+      max-width: 130px
+      @media screen and (min-width : 992px) and (max-width : 1199px)
+        max-width: 100px
+      @media only screen and (max-width : 991px)
+        max-width: 100px
+      @media only screen and (max-width : 767px)
+        max-width: 130px
+      @media only screen and (max-width : 540px)
+        max-width: 100px
+  .info-wrap
+    display: inline-block
+    margin-left: rem(30)
+    margin-top: rem(8)
+    max-width: 180px
+    @media screen and (min-width : 992px) and (max-width : 1199px)
+      max-width: 140px
+    @media only screen and (max-width : 767px)
+      max-width: 350px
+      height: auto!important
+    @media only screen and (max-width : 540px)
+      max-width: 60%
+    @media only screen and (max-width : 360px)
+      max-width: 50%
+    h4
+      margin-bottom: 0
+      line-height: rem(18)
+      text-align: left
+      margin-bottom: rem(2)
+    .title
+      font-size: rem(12)
+      line-height: rem(15)
+      color: $small-text
+      margin-bottom: rem(10)
+    .home,
+    .college
+      font-size: rem(12)
+      line-height: rem(18)
+      color: $small-text
+      i
+        margin-right: rem(3)
   .team-social  
     .linkedin-share-team
-      font-size: 18px
+      font-size: rem(15)
       margin: 2px
       color: $btn-linkedin-bg
       +mt(.2s)
       &:hover
         color: $btn-linkedin-hover-bg
     .facebook-share-team
-      font-size: 18px
+      font-size: rem(15)
       margin: 2px
       color: $btn-facebook-bg
       +mt(.2s)
       &:hover
         color: $btn-facebook-hover-bg
-
-
-
-  .card
-    border: none
-    margin-bottom: 0
-    .card-block
-      padding: rem(20) 0
-      i
-        padding: 0 rem(4) rem(15)
-      .cite_education
-        margin-top: rem(15)
-
-    .card-title
-      margin-bottom: 0
-    .img-circle
-      width: rem(180)
-      height: rem(180)
-    .color-grey
-      color: $small-text
-      font-size: rem(12)
+  .card-text
+    margin-top: rem(15)
 
 
 .document
@@ -700,7 +743,7 @@
 @media only screen and (max-width : 640px)
   #members
     .hide-more-detail
-      height: 88px
+      max-height: 88px
   .p-xs-0
     padding-left: 0!important
     padding-right: 0!important

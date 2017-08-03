@@ -3,7 +3,8 @@ const moment = require('moment');
 module.exports = {
   
   fromNow(dateFrom) {
-    return moment(dateFrom).from(moment());
+    const now = moment.utc();
+    return moment.utc(dateFrom).from(now);
   },
 
   getStartDate(expirationDate, durationInDays) {
@@ -24,5 +25,8 @@ module.exports = {
     return num < 0 ? -num : num;
   },
 
+  nowAsString() {
+    return moment.utc().format('YYYY-MM-DDTHH:mm:ss.SSS');
+  }
 
 };

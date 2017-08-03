@@ -23,13 +23,13 @@ section.team-members.container.m-b-85
               pug_html += app.fields.textLabel('first_name', {
               schema: fields.first_name, 
               value: model.first_name, 
-              label: 'First name',})
+              label: 'First Name',})
           .col-xl-6.col-lg-6.col-md-6
             -
               pug_html += app.fields.textLabel('last_name', {
               schema: fields.last_name, 
               value: model.last_name, 
-              label: 'Last name',})
+              label: 'Last Name',})
         .row
           .col-xl-6.col-lg-6.col-md-6
             -
@@ -65,7 +65,7 @@ section.team-members.container.m-b-85
         -
           pug_html += app.fields.textareaLabel('bio', {
           schema: fields.bio, 
-          placeholder: 'Please write a short bio.',
+          placeholder: 'Please Write a Short Bio.',
           value: model.bio, label: 'Bio',})
         .row
           .col-xl-6.col-lg-6.col-md-6
@@ -73,7 +73,7 @@ section.team-members.container.m-b-85
               pug_html += app.fields.textLabel('city', {
               schema: fields.city, 
               value: model.city, 
-              label:  'Where did you grow up?',
+              label:  'Where Did You Grow Up?',
               help_text: 'Why do we ask? These affinity based questions can help us share your campaign with potential  investors with similar backgrounds.', 
               placeholder: 'Name of Hometown',})
           .col-xl-6.col-lg-6.col-md-6
@@ -81,23 +81,23 @@ section.team-members.container.m-b-85
               pug_html += app.fields.textLabel('college', {
               schema: fields.college, 
               value: model.college, 
-              label:  'Where did you attend college?', 
-              placeholder: 'Name of college or university',})
+              label:  'Where Did You Attend College?', 
+              placeholder: 'Name of College or University',})
         .row
           .col-xl-6.col-lg-6.col-md-6
             -
               pug_html += app.fields.textLabel('linkedin', {
               schema: fields.linkedin, 
               value: model.linkedin, 
-              label:  'Your LinkedIn link', 
-              placeholder: 'Your LinkedIn profile',})
+              label:  'Your LinkedIn Link', 
+              placeholder: 'Your LinkedIn Profile',})
           .col-xl-6.col-lg-6.col-md-6
             -
               pug_html += app.fields.textLabel('facebook', {
               schema: fields.facebook, 
               value: model.facebook, 
-              label:  'Your Facebook link', 
-              placeholder: 'Your Facebook profile',})
+              label:  'Your Facebook Link', 
+              placeholder: 'Your Facebook Profile',})
         -
           pug_html += new imageDropzone.ImageDropzone(view, 
             'photo_image_id', 

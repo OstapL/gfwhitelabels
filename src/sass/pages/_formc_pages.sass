@@ -183,6 +183,7 @@
   .added-risk-title
     background-color: $active-risk-bgc!important
     color: $white!important
+    margin-top: rem(18)
     &:after
       content: '\f00c'
       font: normal normal normal 12px/1 FontAwesome
@@ -193,6 +194,8 @@
       color: $white
       padding: 5px
       border-radius: 100%
+  .panel-heading
+    margin-top: rem(18)
   .form-control[readonly]
     background-color: transparent
 //outstanding security page
@@ -346,3 +349,9 @@
 .formc-risk-factor
   .warning-block
     margin-top: rem(35)
+  .risks
+    padding-bottom: rem(35)
+.add-risk-form
+  .btn-secondary:active,
+  .btn-secondary:focus
+    @extend .btn-secondary
