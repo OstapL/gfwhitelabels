@@ -50,7 +50,7 @@ module.exports = {
       'show.bs.collapse .panel': 'onCollapse',
       'click .see-all-risks': 'seeAllRisks',
       'click .see-all-faq': 'seeAllFaq',
-      'click .show-more-members': 'readMore',
+      'click': 'readMore',
       // 'click .see-all-article-press': 'seeAllArticlePress',
       'click .more-less': 'showMore',
       'hidden.bs.collapse #hidden-article-press' :'onArticlePressCollapse',
@@ -125,6 +125,7 @@ module.exports = {
       $p.text($p.data('full-text'));
       $p.css({ height: 'auto' });
       $a.hide();
+
     },
 
     // seeAllArticlePress(e) {
@@ -337,6 +338,7 @@ module.exports = {
 
       setTimeout(() => {
         this.initAsyncUI();
+        this.$el.find('.team-detail .info-wrap').equalHeights();
       }, 100);
 
       $(window).scroll(function() {
@@ -351,10 +353,7 @@ module.exports = {
               
             });
           });
-      this.$el.find('.perks .col-xl-4 p').equalHeights();
-      this.$el.find('.team .auto-height').equalHeights();
-      this.$el.find('.card-inverse p').equalHeights();
-
+      
       // fetch vimeo
       $('.vimeo-thumbnail').each(function(elem, idx) {
         let id = $(this).data('vimeo-id');
@@ -378,7 +377,11 @@ module.exports = {
 
     readMore(e) {
       e.preventDefault();
-      $(e.target).parent().addClass('show-more-detail');
+      const $target = $(e.target).closest('.show-more-members');
+      if ($target.length)
+        $(e.target).parent().addClass('show-more-detail');
+      else
+        this.$('.show-more-members').parent().removeClass('show-more-detail');
     },
 
   }),

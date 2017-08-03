@@ -75,7 +75,7 @@ if app.getParams().preview == '1'
           button(type="button" data-dismiss="modal" aria-label="Close").close
             span(aria-hidden="true")
               i.fa.fa-times
-          h2.text-lg-center.text-uppercase.text-md-center.text-xs-center.line-height-1.dosis.m-t-1.modal-title COMPLETE THE FOLLOWING TO SUBMIT YOUR CAMPAIGN
+          h2.text-lg-center.text-uppercase.text-md-center.text-xs-center.line-height-1.m-t-1.modal-title COMPLETE THE FOLLOWING TO SUBMIT YOUR CAMPAIGN
 
         .modal-body.m-b-2
           .form-section
@@ -107,7 +107,7 @@ if app.getParams().preview == '1'
           button(type="button" data-dismiss="modal" aria-label="Close").close
             span(aria-hidden="true")
               i.fa.fa-times
-          h2.text-lg-center.text-uppercase.text-md-center.text-xs-center.line-height-1.dosis.m-t-1.modal-title Are you sure you want to submit ?
+          h2.text-lg-center.text-uppercase.text-md-center.text-xs-center.line-height-1.m-t-1.modal-title Are you sure you want to submit ?
 
         .modal-body.m-b-2
           .col-sm-12
@@ -213,14 +213,14 @@ section
 
   section.about-detail.border-bottom
     .container
-      .col-lg-12.p-sm-0
+      .col-xl-10.offset-xl-1.p-sm-0
         h2#about.text-uppercase.text-lg-center.text-xs-center.campaign-subheading.m-t-0 About #{ values.short_name || values.name }
         p !{ app.helpers.text.restoreLineBreak(values.description) }
 
-        h2.dosis.our.text-uppercase.text-lg-center.text-xs-center.campaign-subheading Why You Should Invest
+        h2.our.text-uppercase.text-lg-center.text-xs-center.campaign-subheading Why You Should Invest
         p !{ app.helpers.text.restoreLineBreak(values.campaign.pitch) }
 
-      .col-lg-12.p-x-0
+      .col-xl-12.p-x-0
         #revenue-share-calculator
     .container-fluid.p-l-0.p-r-0
       #gallery1.col-lg-12.pt50.photo-gallegy.text-center-flex
@@ -242,11 +242,11 @@ section
               a(href=(v.getUrl('main')) data-size='1440x900' rel="gallery1" title=(v.name) onclick="return false;").fancybox
                 img(src=(v.getUrl('530x441')) alt=(v.name)).w-100.img-responsive
     .container
-      .col-lg-12.p-sm-0
-        h2.dosis.our.text-uppercase.text-lg-center.text-xs-center.campaign-subheading How We Intend to Make Money
+      .col-xl-10.offset-xl-1.p-sm-0
+        h2.our.text-uppercase.text-lg-center.text-xs-center.campaign-subheading How We Intend to Make Money
         p !{ app.helpers.text.restoreLineBreak(values.campaign.intended_use_of_proceeds) }
 
-        h2.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-subheading Why We are Raising Capital, and What We’ll Do with It
+        h2.text-uppercase.text-lg-center.text-xs-center.campaign-subheading Why We are Raising Capital, and What We’ll Do with It
         p !{ app.helpers.text.restoreLineBreak(values.campaign.business_model) }
     //video    
     .container
@@ -305,8 +305,8 @@ section
       if values.campaign.additional_info
         each v,k in values.campaign.additional_info
           if v && v.title && v.body
-            .col-lg-12.p-sm-0
-              h2.dosis.our.text-uppercase.text-lg-center.text-xs-center.campaign-subheading #{ v.title }
+            .col-xl-10.offset-xl-1.p-sm-0
+              h2.our.text-uppercase.text-lg-center.text-xs-center.campaign-subheading #{ v.title }
               p !{ app.helpers.text.restoreLineBreak(v.body) }
   if values.campaign.team_members
     section#members
@@ -324,13 +324,21 @@ section
           .row
             .col-lg-12.text-center-flex
               each v in values.campaign.team_members.members
-                .col-xl-4.col-lg-4.col-md-6.col-sm-12.col-xs-12.team.team-detail.p-xs-0
-                  .card.text-lg-center.text-xs-center
+                .col-xl-4.col-lg-4.col-md-6.col-sm-12.col-xs-12.team.team-detail
+                  .img-wrap
                     img(src=v.photo_image_id.getUrl('Default_photo') alt="").img-circle
-                    .card-block
-                      h4.text-xs-center.card-title.text-uppercase #{v.first_name} #{v.last_name }
-                      p.card-text
-                        small.text-muted #{v.title }
+                  .info-wrap
+                    h4.text-uppercase #{v.first_name} #{v.last_name }
+                    p.title #{v.title }
+                    if v.city
+                      .home
+                        i.fa.fa-home
+                        span #{v.city}
+                    if v.college
+                      .college
+                        i.fa.fa-graduation-cap
+                        span #{v.college}
+                    if v.linkedin || v.facebook
                       .team-social
                         if v.linkedin
                           a(href=v.linkedin target="_blank").link-1.linkedin-share-team
@@ -338,30 +346,13 @@ section
                         if v.facebook
                           a(href=v.facebook target="_blank").link-1.facebook-share-team
                             i.fa.fa-facebook-square
-                        if !v.linkedin && !v.facebook
-                          a.linkedin-share-team.link-1(style="visibility:hidden;")
-                            i.fa.fa-linkedin-square.more
-                      p.card-text.text-justify.hide-more-detail !{app.helpers.text.restoreLineBreak(v.bio)}
-                        if v.bio.length > 180
-                          a(href="#").show-more-members.link-3 Read More
-                      .d-block.text-lg-left.cite_education
-                        if v.city && v.college
-                          p.color-grey.pull-left
-                            i.fa.fa-home.p-l-0
-                            |  #{v.city}
-                          p.color-grey.pull-right
-                            i.fa.fa-graduation-cap
-                            |  #{v.college}
-                        else
-                          .text-xs-center
-                            if v.city
-                              p.color-grey
-                                i.fa.fa-home.p-l-0
-                                |  #{v.city}
-                            if v.college
-                              p.color-grey
-                                i.fa.fa-graduation-cap
-                                |  #{v.college}
+                  p.card-text.text-justify.hide-more-detail !{app.helpers.text.restoreLineBreak(v.bio)}
+                    if v.bio.length > 180
+                      a(href="#").show-more-members.link-3 Read More
+
+
+
+
     .col-lg-12.border-bottom.m-t-0.m-b-0
   if values.campaign.press && Object.keys(values.campaign.press).length > 0 && values.campaign.press[0].headline != ''
     section.articles#articles
