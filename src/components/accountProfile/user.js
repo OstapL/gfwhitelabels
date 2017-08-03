@@ -192,7 +192,7 @@ class User {
 
         app.analytics.emitEvent(app.analytics.events.LoggedIn, app.user.stats);
 
-        return resolve()
+        return resolve();
       }).fail(() => {
         this.emptyLocalStorage();
         setTimeout(() => {
@@ -357,7 +357,7 @@ class User {
 
   get stats() {
     const full_name = ((this.data.first_name || this.data.last_name) ? (`${this.data.first_name} ${this.data.last_name}`) : '').trim();
-    if (this.data.email) {
+    if (this.data.id) {
       return {
         user: {
           id: this.data.id,
