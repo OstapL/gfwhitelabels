@@ -7,7 +7,6 @@ const validation = require('components/validation/validation.js');
 
 const CalculatorView = require('./revenueShareCalculator.js');
 
-
 module.exports = {
   list: Backbone.View.extend({
     el: '#content',
@@ -24,7 +23,7 @@ module.exports = {
 
       require('bootstrap-select/sass/bootstrap-select.scss');
 
-      let selectPicker = require('bootstrap-select');
+      require('bootstrap-select');
       this.$el.html('');
       this.$el.append(
         this.template({
@@ -230,10 +229,23 @@ module.exports = {
             openEffect  : 'elastic',
             closeEffect : 'elastic',
 
-            helpers : {
+            helpers: {
               title : {
                 type : 'inside'
-              }
+              },
+            },
+            beforeShow(){
+              const $html = $('html');
+              ['fancybox-margin', 'fancybox-lock'].forEach((cssClass) => {
+                if (!$html.hasClass(cssClass)) {
+                  $html.addClass(cssClass);
+                }
+              });
+              app.preventBodyScrolling(true);
+            },
+            afterClose(){
+              $('html').removeClass('fancybox-margin fancybox-lock');
+              app.preventBodyScrolling(false);
             }
           });
           resolve();
@@ -302,7 +314,7 @@ module.exports = {
     },
 
     render() {
-      if (this.model.campaign.expired) {
+      if (this.model.isClosed() || this.model.campaign.expired) {
         const template = require('./templates/detailNotAvailable.pug');
         this.$el.html(template());
         app.hideLoading();
@@ -632,7 +644,7 @@ module.exports = {
     },
 
     render() {
-      if (this.model.campaign.expired) {
+      if (this.model.isClosed() || this.model.campaign.expired) {
         const template = require('./templates/detailNotAvailable.pug');
         this.$el.html(template());
         return this;
@@ -1202,9 +1214,11 @@ module.exports = {
   investmentThankYou: Backbone.View.extend({
     template: require('./templates/thankYou.pug'),
     el: '#content',
-    initialize(options) {
+    initialize() {
       if (this.model.company.ga_id)
         app.analytics.emitCompanyCustomEvent(this.model.company.ga_id);
+
+      $('.popover').popover('hide');
     },
 
     render() {

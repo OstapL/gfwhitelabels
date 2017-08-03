@@ -7,7 +7,7 @@ if git branch --all | grep --quiet "remotes/vladyslav2/alpha"; then
 fi
 
 git checkout alpha > /dev/null
-for b in alpha-dcu alpha-momentum3 alpha-rivermarkcu alpha-jdcu alpha-infinityfcu alpha-tvfcu
+for b in $(cat branches.txt)
 do
     echo "========================= branch $b =========================="
     if git checkout $b; then
