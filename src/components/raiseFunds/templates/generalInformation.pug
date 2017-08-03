@@ -6,12 +6,12 @@ include menu.pug
 section.create-company-general.container.m-b-85
   - var campaignId = values.id;
   - var formcId = formc.id;
-  +menu('campaign', 'general_information')
-  
-  .col-xl-8.col-lg-8.col-md-12.p-sm-0
-    h2.text-uppercase.text-lg-center.text-xs-center.m-t-0 GENERAL INFORMATION
-    form.form-section
-      .col-xl-12.p-sm-0
+  .row
+    +menu('campaign', 'general_information')
+    
+    .col-xl-8.col-lg-8.col-md-12
+      h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.title GENERAL INFORMATION
+      form.form-section
         - pug_html += app.fields.textareaLabel('pitch', {schema: fields.pitch, value: values.pitch,})
         - pug_html += app.fields.textareaLabel('intended_use_of_proceeds', {schema: fields.intended_use_of_proceeds, value: values.intended_use_of_proceeds,})
         - pug_html += app.fields.textareaLabel('business_model', {schema: fields.business_model, value: values.business_model,})

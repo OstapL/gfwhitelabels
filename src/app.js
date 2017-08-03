@@ -1,6 +1,12 @@
 const Router = require('./router.js');
 const User = require('components/accountProfile/user.js');
 const Menu = require('components/menu/views.js');
+const getVideoId = require('get-video-id');
+
+const preventScrollHandler = (e) => {
+  e.preventDefault();
+  return false;
+};
 
 class App {
   constructor() {
@@ -28,11 +34,6 @@ class App {
   start() {
     this.user.loadWithPromise().then(() => {
 
-      // A trick for turn off statistics with GET param, for SEO issue
-      if(document.location.search.indexOf('nometrix=t') !== -1) {
-        delete this.config.googleTagID;
-      }
-
       this.routers = new Router();
       Backbone.history.start({ pushState: true });
       window.addEventListener('popstate', this.routers.back);
@@ -56,72 +57,6 @@ class App {
       });
       this.profile.render();
     });
-  }
-
-  //move this logic to GTM side
-  emitFacebookPixelEvent(eventName='ViewContent', params={}) {
-    if (!this.config.googleTagID || !this.config.facebookPixelID)
-      return;
-
-    const STANDARD_EVENTS = [
-      'ViewContent',
-      'Search',
-      'AddToCart',
-      'AddToWishlist',
-      'InitiateCheckout',
-      'AddPaymentInfo',
-      'Purchase',
-      'Lead',
-      'CompleteRegistration',
-    ];
-
-    let trackType = (_.contains(STANDARD_EVENTS, eventName)) ? 'track' : 'trackCustom';
-
-    safeDataLayerPush({
-      event: 'fb-pixel-event',
-      trackType,
-      eventName,
-    });
-  }
-
-  emitGoogleAnalyticsEvent(eventName, params={}) {
-    if (!this.config.googleTagID)
-      return;
-
-    if (!eventName)
-      return console.error('eventName is not set');
-
-    let hasRequiredParams = ['eventAction', 'eventCategory'].every(paramName => !!params[paramName]);
-    if (!hasRequiredParams)
-      return console.error('Required params are not set');
-    
-    params.event = eventName;
-    safeDataLayerPush(params);
-  }
-
-  emitCompanyAnalyticsEvent(trackerId) {
-    if (!this.config.googleTagID)
-      return;
-
-    if (!trackerId)
-      return;
-
-    safeDataLayerPush({
-      event: 'company-custom-event',
-      eventCategory: 'Company',
-      eventAction: 'ViewPage',
-      trackerId,
-    });
-  }
-
-  emitAnalyticsEvent(eventName, eventData={}) {
-    if (!this.config.googleTagID)
-      return;
-
-    if (!eventName)
-      return console.error('Event Name is not set');
-
-    safeDataLayerPush();
   }
 
   showLoading() {
@@ -228,34 +163,27 @@ class App {
   }
 
   getVideoInfo(url) {
-    try {
-      let provider = url.match(/https:\/\/(:?www.)?(\w*)/)[2];
-      provider = provider.toLowerCase();
-      let id;
-      if (provider === 'youtube') {
-        id = url.match(/https:\/\/(?:www.)?(\w*).com\/.*v=([^\&]*)/)[2];
-      } else if (provider === 'youtu') {
-        provider = 'youtube';
-        id = url.match(/https:\/\/(?:www.)?(\w*).be\/(.*)/)[2];
-      } else if (provider === 'vimeo') {
-        id = url.match(/https:\/\/(?:www.)?(\w*).com\/(\d*)/)[2];
-      } else {
-        console.log(url, 'Takes a YouTube or Vimeo URL');
-      }
+    if (typeof(url) !== 'string')
+      url = '';
 
-      let resUrl = (provider === 'youtube')
-        ? `//www.youtube.com/embed/${id}?rel=0&enablejsapi=1`
-        : (provider === 'vimeo')
-          ? `//player.vimeo.com/video/${id}`
-          : '//www.youtube.com/embed/?rel=0';
+    const info = getVideoId(url);
+    if (!info || !_.contains(['youtube', 'vimeo'], info.service))
+      return {};
 
-      return { id: id, provider: provider, url: resUrl };
+    const videoURL = (info.service === 'youtube')
+      ? `//www.youtube.com/embed/${info.id}?rel=0&enablejsapi=1`
+      : (info.service === 'vimeo')
+        ? `//player.vimeo.com/video/${info.id}`
+        : '//www.youtube.com/embed/?rel=0';
 
-    } catch (err) {
-      console.log(url, 'Takes a YouTube or Vimeo URL');
-    }
+    //lib does not handle hash after id
+    info.id = info.id.replace(/\#(.)*$/g, '');
 
-    return {};
+    return {
+      id: info.id,
+      provider: info.service,
+      url: videoURL,
+    };
   }
 
   getUrl(data) {
@@ -377,6 +305,15 @@ class App {
 
     return ((elementTop <= windowBottom) && (elementBottom >= windowTop));
   }
+
+  preventBodyScrolling(preventScroll) {
+    if (preventScroll === true) {
+      document.body.addEventListener("touchmove", preventScrollHandler);
+    } else {
+      document.body.removeEventListener("touchmove", preventScrollHandler);
+    }
+  }
+
 
 }
 

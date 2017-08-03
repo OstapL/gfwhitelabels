@@ -10,95 +10,101 @@ section.team-members.container.m-b-85
   - var campaignId = campaign.id;
   - var formcId = formc.id;
   - var values = campaign;
-  +menu('campaign', 'team-members')
+  .row
+    +menu('campaign', 'team-members')
 
-  //START RIGHT BLOCK
-  .col-xl-8.col-lg-8.col-md-12.p-sm-0
-    h2.text-uppercase.text-lg-center.text-xs-center.m-t-0 #{type == 'advisor' ? 'advisor' : 'team member'}
+    //START RIGHT BLOCK
+    .col-xl-8.col-lg-8.col-md-12
+      h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.m-b-3 #{type == 'advisor' ? 'advisor' : 'team member'}
+      form.form-section
+        .row
+          .col-xl-6.col-lg-6.col-md-6
+            -
+              pug_html += app.fields.textLabel('first_name', {
+              schema: fields.first_name, 
+              value: model.first_name, 
+              label: 'First Name',})
+          .col-xl-6.col-lg-6.col-md-6
+            -
+              pug_html += app.fields.textLabel('last_name', {
+              schema: fields.last_name, 
+              value: model.last_name, 
+              label: 'Last Name',})
+        .row
+          .col-xl-6.col-lg-6.col-md-6
+            -
+              pug_html += app.fields.textLabel('email', {
+              schema: fields.email, 
+              value: model.email, 
+              label: 'Email',})
+          
+          .col-xl-6.col-lg-6.col-md-6
+            -
+              pug_html += app.fields.textLabel('order', {
+              schema: fields.order, 
+              value: model.order, 
+              placeholder: "Order",
+              help_text: 'Enter a number. Team members will be displayed in ascending order.',
+              label: 'Order',})
 
-    form.form-section.col-xl-12.p-sm-0
-      - 
-        pug_html += app.fields.textLabel('first_name', {
-        schema: fields.first_name, 
-        value: model.first_name, 
-        label: 'First name',})
-      - 
-        pug_html += app.fields.textLabel('last_name', {
-        schema: fields.last_name, 
-        value: model.last_name, 
-        label: 'Last name',})
-      - 
-        pug_html += app.fields.textLabel('email', {
-        schema: fields.email, 
-        value: model.email, 
-        label: 'Email',})
-      - 
-        pug_html += app.fields.textLabel('order', {
-        schema: fields.order, 
-        value: model.order, 
-        placeholder: "Order",
-        help_text: 'Enter a number. Team members will be displayed in ascending order.',
-        label: 'Order',})
-      if type == 'advisor'
-        - 
-          pug_html += app.fields.textLabel('title', {
-          schema: fields.title, 
-          value: 'Advisor', 
-          label: 'Title', 
-          readonly: true,})
-      else
-        - 
-          pug_html += app.fields.textLabel('title', {
-          schema: fields.title, 
-          value: model.title, 
-          label: 'Title',})
-      - 
-        pug_html += app.fields.textareaLabel('bio', {
-        class2: 'col-xl-9 col-lg-12 big-textarea', 
-        schema: fields.bio, 
-        placeholder: 'Please write a short bio.',
-        value: model.bio, label: 'Bio',})
-      - 
-        pug_html += app.fields.textLabel('city', {
-        class1: 'col-xl-3 col-lg-12 p-t-0 text-lg-left text-xl-right m-b-0 m-b-lg-1', 
-        schema: fields.city, 
-        value: model.city, 
-        label:  'Where did you grow up?',
-        help_text: 'Why do we ask? These affinity based questions can help us share your campaign with potential  investors with similar backgrounds.', 
-        placeholder: 'Name of Hometown',})
-      - 
-        pug_html += app.fields.textLabel('college', {
-        class1: 'col-xl-3 col-lg-12 p-t-0 text-lg-left text-xl-right m-b-0 m-b-lg-1', 
-        schema: fields.college, 
-        value: model.college, 
-        label:  'Where did you attend college?', 
-        placeholder: 'Name of college or university',})
-      .row
-        .col-lg-6.input-min-width
-          - 
-            pug_html += app.fields.textLabel('linkedin', {
-            class1:'col-xl-6 col-lg-12 text-lg-left text-xl-right p-l-3 p-t-0 m-b-0 p-l-lg-1 m-b-lg-1', 
-            class2:'col-xl-6 col-lg-12', 
-            schema: fields.linkedin, 
-            value: model.linkedin, 
-            label:  'Your LinkedIn link', 
-            placeholder: 'Your LinkedIn profile',})
-        .col-lg-6
-          - 
-            pug_html += app.fields.textLabel('facebook', {
-            class1:'col-xl-5 col-lg-12 text-lg-left text-xl-right p-t-0 m-b-0 m-b-lg-1', 
-            class2:'col-xl-7 col-lg-12', 
-            schema: fields.facebook, 
-            value: model.facebook, 
-            label:  'Your Facebook link', 
-            placeholder: 'Your Facebook profile',})
-      -
-        pug_html += new imageDropzone.ImageDropzone(view, 
-          'photo_image_id', 
-          'photo_data', 
-          view.fields.photo_image_id
-        ).render().resultHTML;
+        if type == 'advisor'
+          -
+            pug_html += app.fields.textLabel('title', {
+            schema: fields.title, 
+            value: 'Advisor', 
+            label: 'Title', 
+            readonly: true,})
+        else
+          -
+            pug_html += app.fields.textLabel('title', {
+            schema: fields.title, 
+            value: model.title, 
+            label: 'Title',})
+          //.col-xl-6.col-lg-6.col-md-6
+            
+        -
+          pug_html += app.fields.textareaLabel('bio', {
+          schema: fields.bio, 
+          placeholder: 'Please Write a Short Bio.',
+          value: model.bio, label: 'Bio',})
+        .row
+          .col-xl-6.col-lg-6.col-md-6
+            -
+              pug_html += app.fields.textLabel('city', {
+              schema: fields.city, 
+              value: model.city, 
+              label:  'Where Did You Grow Up?',
+              help_text: 'Why do we ask? These affinity based questions can help us share your campaign with potential  investors with similar backgrounds.', 
+              placeholder: 'Name of Hometown',})
+          .col-xl-6.col-lg-6.col-md-6
+            -
+              pug_html += app.fields.textLabel('college', {
+              schema: fields.college, 
+              value: model.college, 
+              label:  'Where Did You Attend College?', 
+              placeholder: 'Name of College or University',})
+        .row
+          .col-xl-6.col-lg-6.col-md-6
+            -
+              pug_html += app.fields.textLabel('linkedin', {
+              schema: fields.linkedin, 
+              value: model.linkedin, 
+              label:  'Your LinkedIn Link', 
+              placeholder: 'Your LinkedIn Profile',})
+          .col-xl-6.col-lg-6.col-md-6
+            -
+              pug_html += app.fields.textLabel('facebook', {
+              schema: fields.facebook, 
+              value: model.facebook, 
+              label:  'Your Facebook Link', 
+              placeholder: 'Your Facebook Profile',})
+        -
+          pug_html += new imageDropzone.ImageDropzone(view, 
+            'photo_image_id', 
+            'photo_data', 
+            view.fields.photo_image_id
+          ).render().resultHTML;
 
-      .col-lg-12.text-lg-right.p-l-0.p-r-0.p-t-2.text-md-center.text-sm-center.text-xs-center
-        button.btn.btn-secondary.text-uppercase.mr30.cancel cancel
-        button(data-method=index == 'new' ? 'POST' : 'PUT').btn.btn-primary.text-uppercase.pull-lg-right.save Save
+        .col-lg-12.text-lg-right.p-l-0.p-r-0.p-t-2.text-md-center.text-sm-center.text-xs-center
+          button.btn.btn-secondary.text-uppercase.mr30.cancel cancel
+          button(data-method=index == 'new' ? 'POST' : 'PUT').btn.btn-primary.text-uppercase.pull-lg-right.save Save
