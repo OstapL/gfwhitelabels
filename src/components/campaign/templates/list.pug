@@ -52,7 +52,10 @@ mixin paginator(currentPage, limit, totalCount)
                       span.sr-only Prev
 
                 each page in pages
-                  li.page-item.active
+                  -
+                    var itemClass = page == currentPage ? 'active' : '';
+                    itemClass += ' page-item';
+                  li(class=itemClass)
                     a(href=(urlPrefix + page + orderBy)).page-link= page
 
                 if currentPage + 1 < totalPages
@@ -140,4 +143,5 @@ section.campaing-list
 -
   var currentPage = Number(app.getParams().page) || 1;
   var GENERAL = require('consts/general.json');
+
 +paginator(currentPage, GENERAL.COMPANIES_PER_PAGE, collection.count)
