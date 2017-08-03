@@ -162,6 +162,17 @@ module.exports = {
       this.cityStateArea = null;
       this.cityField = null;
       this.stateField = null;
+
+      app.routers.on('before-navigate', this.onBeforeNavigate.bind(this));
+    },
+
+    onBeforeNavigate(outData) {
+      if (!confirm('Do you want to leave?')) {
+        outData.preventNavigate = true;
+        return;
+      }
+
+      this.destroy();
     },
 
     render() {
@@ -328,6 +339,9 @@ module.exports = {
 
     },
 
+    destroy() {
+      app.routers.off('before-navigate');
+    },
   },
     app.helpers.phone.methods,
     app.helpers.yesNo.methods,

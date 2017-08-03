@@ -28,6 +28,21 @@ Backbone.View.prototype.checkForm = function () {
   }
 };
 
+const navigate = Backbone.Router.prototype.navigate;
+
+Backbone.Router.prototype.navigate = function(...args) {
+  const outData = {
+    preventNavigate: false,
+  };
+
+  this.trigger('before-navigate', outData);
+
+  if (outData.preventNavigate)
+    return false;
+
+  return navigate.call(this, ...args);
+};
+
 $.fn.scrollTo = function (padding=0, duration='fast') {
   $('html, body').animate({
     scrollTop: $(this).offset().top - padding + 'px',
