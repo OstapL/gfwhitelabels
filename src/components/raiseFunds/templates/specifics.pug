@@ -7,12 +7,12 @@ include menu.pug
 section.campaign-specifics.container.m-b-85
   - var campaignId = values.id;
   - var formcId = formc.id;
-  +menu('campaign', 'specifics')
+  .row
+    +menu('campaign', 'specifics')
 
-  .col-xl-8.col-lg-8.col-md-12.p-sm-0
-    h2.text-uppercase.text-lg-center.text-xs-center.m-t-0 specifics
-    form.form-section
-      .col-xl-12.p-sm-0
+    .col-xl-8.col-lg-8.col-md-12
+      h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.title specifics
+      form.form-section
         .row
           .form-group.m-b-0
             .col-sm-12
@@ -20,39 +20,34 @@ section.campaign-specifics.container.m-b-85
                 i.fa.fa-info-circle  
                 span.warning-text You get to set two fundraising goals: the minimum you're willing to accept and the  maximum you're willing to accept.  If you don't reach your minimum fundraising goal, all money will be returned to the investors.
         .row
-          .col-lg-6
-            - 
+          .col-xl-6.col-lg-6.col-md-6
+            -
               pug_html += app.fields.textLabel('minimum_raise', {
-                class1:'col-xl-6 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 m-b-lg-1',
-                class2:'col-xl-6 col-l-65 col-lg-12',
                 schema: fields.minimum_raise,
                 value: values.minimum_raise,
                 placeholder: '$',
               });
-          .col-lg-6
-            - 
+          .col-xl-6.col-lg-6.col-md-6
+            -
               pug_html += app.fields.textLabel('maximum_raise', {
-                  class1:'col-xl-5 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 m-b-lg-1',
-                  class2:'col-xl-7 col-lg-12',
-                  schema: fields.maximum_raise,
-                  value: values.maximum_raise,
-                  placeholder: '$',
-                  help_text: 'Important Information About the Amount of Your Raise. <br><br>The requirement is based upon your Maximum Raise Amount: <br><br><u>“If $100,000 or less”</u><br>Financials have to be signed by CEO and total <br>income, taxable income and total tax reflected on <br>federal return must be included. If reviewed or <br>audited financials available, they must be provided <br>instead. <br><br><u>“If $100,001-$500,000”</u><br>Financials have to be signed by independent <br>accountant. If audited financials available, they <br>must be provided instead. <br><br><u>“If $500,001-$1,070,000”</u><br>Financials have to be signed by an independent <br>auditor UNLESS this is your first reliance on <br>Regulation Crowdfunding, in which case financials <br>must be signed by an independent accountant. <br>If audited statements are available, they must be <br>provided here.',
+                schema: fields.maximum_raise,
+                value: values.maximum_raise,
+                placeholder: '$',
+                help_text: 'Important Information About the Amount of Your Raise. <br><br>The requirement is based upon your Maximum Raise Amount: <br><br><u>“If $100,000 or less”</u><br>Financials have to be signed by CEO and total <br>income, taxable income and total tax reflected on <br>federal return must be included. If reviewed or <br>audited financials available, they must be provided <br>instead. <br><br><u>“If $100,001-$500,000”</u><br>Financials have to be signed by independent <br>accountant. If audited financials available, they <br>must be provided instead. <br><br><u>“If $500,001-$1,070,000”</u><br>Financials have to be signed by an independent <br>auditor UNLESS this is your first reliance on <br>Regulation Crowdfunding, in which case financials <br>must be signed by an independent accountant. <br>If audited statements are available, they must be <br>provided here.',
                 });
-
-        - 
-          pug_html += app.fields.textLabel('minimum_increment', {
-              class1:'col-xl-3 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 m-b-lg-1',
-              schema: fields.minimum_increment,
-              value: values.minimum_increment,
-              placeholder: '$  People can invest this amount or more',
-            });
-
-        -
-          pug_html += app.fields.fieldChoiceLabel('length_days', _.extend({
-              'value': values.length_days,
-              'class1': 'col-xl-3 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 m-b-lg-1',
-            }, fields.length_days));
+        .row
+          .col-xl-6.col-lg-6.col-md-6
+            -
+              pug_html += app.fields.textLabel('minimum_increment', {
+                  schema: fields.minimum_increment,
+                  value: values.minimum_increment,
+                  placeholder: '$  People Can Invest This Amount or More',
+                });
+          .col-xl-6.col-lg-6.col-md-6
+            -
+              pug_html += app.fields.fieldChoiceLabel('length_days', _.extend({
+                  'value': values.length_days,
+                }, fields.length_days));
 
         .text-lg-right.img-ppt.m-b-3.fileDropzone
           -
@@ -64,12 +59,13 @@ section.campaign-specifics.container.m-b-85
         .row
           .col-xl-12
             .border-bottom
-
-        h3.text-lg-center.col-md-center.text-xs-center.col-lg-12.pre-money-terms Pre-Money Valuation and Equity Terms
-        .col-lg-12.text-lg-center.text-md-center.text-xs-center.m-b-1.p-b-1
-          a(href=require('doc/GrowthFountain.Security.Description.pdf') target="_blank").link-2 Click here to see descriptions of Common Equity and Revenue Share
-        .row.m-b-1
-          .pre-money-terms.m-b-1
+        
+        h3.text-xs-center.col-lg-12.pre-money-terms.m-b-1 Pre-Money Valuation and Equity Terms
+        .row
+          .col-lg-12.text-xs-center.m-b-1.p-b-1
+            a(href=require('doc/GrowthFountain.Security.Description.pdf') target="_blank").link-2 Click Here to See Description of Common Equity and Revenue Share
+        .row
+          .pre-money-terms
             -
               pug_html += app.fields.radioLabel('security_type',{
                   label: 'Security Type',
@@ -77,67 +73,64 @@ section.campaign-specifics.container.m-b-85
                   schema: fields.security_type,
                 });
         div(style=(values.security_type == 0 ? '' :  "display: none")).security_type_list.security_type_0
-          .row
-            .col-xl-7.col-lg-6.col-sm-6.form-group.clearfix
-              label.col-xl-5.col-lg-12.text-xl-right.text-lg-left.m-b-0.p-t-0.m-b-lg-1.p-l-sm-0 Link to Calculators
-              .col-xl-6.col-lg-12.p-l-sm-0
-                .btn-group.showPopover(data-content="Our calculators can help you:<br>1. Derive your valuation;<br>2. Choose the right security;<br>3. Know how much money to raise")
-                  button(data-toggle="dropdown" aria-haspopup="true" aria-expanded="false").btn.btn-dropdown Link to Calculators
-                  button(data-toggle="dropdown" aria-haspopup="true" aria-expanded="false").btn.dropdown-toggle.dropdown-toggle-split.btn-dropdown-click
-                    span.sr-only 
-                  .dropdown-menu
-                    a(href="/calculator/paybackshare/step-1" target="_blank").dropdown-item Revenue Share Calculator
-                    a(href="/calculator/whatmybusinessworth/intro" target="_blank").dropdown-item How Much Should I Raise?
-                    a(href="/calculator/establishedBusiness/intro" target="_blank").dropdown-item Established Business Valuation
-                    a(href="/calculator/capitalraise/intro" target="_blank").dropdown-item New Startup Valuation
-            .col-xl-5.col-lg-5.col-sm-6.pull-lg-right.pull-md-left
-              - 
+          .row.m-t-2
+            .col-xl-6.col-lg-6.col-md-6.clearfix
+              .form-group.row
+                label.col-xl-12 Link to Calculators
+                .col-xl-12
+                  .btn-group.showPopover(data-content="Our calculators can help you:<br>1. Derive your valuation;<br>2. Choose the right security;<br>3. Know how much money to raise.")
+                    button(data-toggle="dropdown" aria-haspopup="true" aria-expanded="false").btn.btn-dropdown Link to Calculators
+                    button(data-toggle="dropdown" aria-haspopup="true" aria-expanded="false").btn.dropdown-toggle.dropdown-toggle-split.btn-dropdown-click
+                      span.sr-only 
+                    .dropdown-menu
+                      a(href="/calculator/paybackshare/step-1" target="_blank").dropdown-item Revenue Share Calculator
+                      a(href="/calculator/whatmybusinessworth/intro" target="_blank").dropdown-item How Much Should I Raise?
+                      a(href="/calculator/establishedBusiness/intro" target="_blank").dropdown-item Established Business Valuation
+                      a(href="/calculator/capitalraise/intro" target="_blank").dropdown-item New Startup Valuation
+            .col-xl-6.col-lg-6.col-md-6
+              -
                 pug_html += app.fields.textLabel('premoney_valuation', {
-                    class1:'col-xl-4 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 p-l-0 m-b-lg-1 p-l-lg-1',
-                    class2: 'col-xl-8 col-lg-12',
-                    schema: fields.premoney_valuation,
-                    value: values.premoney_valuation,
-                    placeholder: '$',
-                  });
-          -
-            pug_html += app.fields.fieldChoiceLabel('valuation_determination', _.extend({
-                'value': values.valuation_determination,
-                'class1': 'col-xl-3 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 m-b-lg-1',
-              }, fields.valuation_determination));
-
-          div(class=(values.valuation_determination == 2 ? '' : 'collapse'))
-            - 
-              pug_html += app.fields.textareaLabel('valuation_determination_other', {
-                  schema: _.extend({}, fields.valuation_determination_other, { required: true }),
-                  class2: 'col-xl-9 col-lg-12',
-                  help_text: 'How are the securities being offered being valued? Include examples of methods for how such securities may be valued by the issuer in the future, including during subsequent corporate actions.',
-                  value: values.valuation_determination_other,
-                });
-          - 
-            pug_html += app.fields.textLabel('price_per_share', {
-                schema: fields.price_per_share,
-                value: values.price_per_share,
+                schema: fields.premoney_valuation,
+                value: values.premoney_valuation,
                 placeholder: '$',
-                help_text: 'Why do we ask? If you’ve issued shares in the past, you’ll have to calculate this in coordination with the current terms of your offering. If this is your first share issuance, we recommend something easy, like $1 per share.',
-              });
-          .m-t-2
+                });
           .row
-            .col-xl-6.col-l-65.showPopover(data-content="<div class=''><span>Minimum # of Shares is calculated automatically: </span><br><span class='fraction'><span class='top'>Minimum Total Raise</span><span class='bottom'>Price Per Share</span></span></div>")
-              - 
+            .col-xl-12
+              -
+                pug_html += app.fields.fieldChoiceLabel('valuation_determination', _.extend({
+                    'value': values.valuation_determination,
+                  }, fields.valuation_determination));
+          .row
+            .col-xl-12
+                div(class=(values.valuation_determination == 2 ? '' : 'collapse'))
+                  -
+                    pug_html += app.fields.textareaLabel('valuation_determination_other', {
+                        schema: _.extend({}, fields.valuation_determination_other, { required: true }),
+                        help_text: 'How are the securities being offered being valued? Include examples of methods for how such securities may be valued by the issuer in the future, including during subsequent corporate actions.',
+                        value: values.valuation_determination_other,
+                      });
+          .row
+            .col-xl-6.col-lg-6.col-md-6
+              -
+                pug_html += app.fields.textLabel('price_per_share', {
+                    schema: fields.price_per_share,
+                    value: values.price_per_share,
+                    placeholder: '$',
+                    help_text: 'Why do we ask? If you’ve issued shares in the past, you’ll have to calculate this in coordination with the current terms of your offering. If this is your first share issuance, we recommend something easy, like $1 per share.',
+                  });
+          .row
+            .col-xl-6.col-lg-6.col-md-6.showPopover(data-content="<div class=''><span>Minimum # of Shares is calculated automatically: </span><br><span class='fraction'><span class='top'>Minimum Total Raise</span><span class='bottom'>Price Per Share</span></span></div>")
+              -
                 pug_html += app.fields.textLabel('min_number_of_shares', {
-                    class1:'col-xl-6 col-lg-12 text-xl-right text-lg-left p-t-0 m-b-0 m-b-lg-1',
-                    class2:'col-xl-6 col-lg-12',
                     schema: fields.min_number_of_shares,
                     value: values.min_number_of_shares,
                     label: 'Minimum № of Shares', maxlength: 90,
                     disabled: true,
                   });
 
-            .col-xl-6.showPopover(data-content="<div class=''><span>Maximum # of Shares is calculated automatically: </span><br><span class='fraction'><span class='top'>Maximum Total Raise</span><span class='bottom'>Price Per Share</span></span></div>")
-              - 
+            .col-xl-6.col-lg-6.col-md-6.showPopover(data-content="<div class=''><span>Maximum # of Shares is calculated automatically: </span><br><span class='fraction'><span class='top'>Maximum Total Raise</span><span class='bottom'>Price Per Share</span></span></div>")
+              -
                 pug_html += app.fields.textLabel('max_number_of_shares', {
-                    class1:'col-xl-5 col-lg-12 text-xl-right text-lg-left p-t-0 m-b-0 m-b-lg-1',
-                    class2:'col-xl-7 col-lg-12',
                     schema: fields.max_number_of_shares,
                     value: values.max_number_of_shares,
                     label: 'Maximum № of Shares',
@@ -145,11 +138,9 @@ section.campaign-specifics.container.m-b-85
                     disabled: true,
                   });
           .row
-            .col-xl-6.col-l-65.showPopover(data-content="<div class=''><span>Minimum Equity Offered is calculated automatically: </span><br><span class='fraction'><span class='top'>Minimum Total Raise</span><span class='bottom'>Minimum Total Raise+Pre-Money Valuation</span></span></div>")
-              - 
+            .col-xl-6.col-lg-6.col-md-6.showPopover(data-content="<div class=''><span>Minimum Equity Offered is calculated automatically: </span><br><span class='fraction'><span class='top'>Minimum Total Raise</span><span class='bottom'>Minimum Total Raise+Pre-Money Valuation</span></span></div>")
+              -
                 pug_html += app.fields.textLabel('min_equity_offered', {
-                    class1:'col-xl-6 col-lg-12 text-xl-right text-lg-left p-t-0 m-b-0 m-b-lg-1',
-                    class2:'col-xl-6 col-lg-12',
                     schema: fields.min_equity_offered,
                     value: values.min_equity_offered,
                     label: 'Minimum Equity Offered',
@@ -157,11 +148,9 @@ section.campaign-specifics.container.m-b-85
                     disabled: true,
                   });
 
-            .col-xl-6.showPopover(data-content="<div class=''><span>Maximum Equity Offered is calculated automatically: </span><br><span class='fraction'><span class='top'>Maximum Total Raise</span><span class='bottom'>Maximum Total Raise+Pre-Money Valuation</span></span></div>")
-              - 
+            .col-xl-6.col-lg-6.col-md-6.showPopover(data-content="<div class=''><span>Maximum Equity Offered is calculated automatically: </span><br><span class='fraction'><span class='top'>Maximum Total Raise</span><span class='bottom'>Maximum Total Raise+Pre-Money Valuation</span></span></div>")
+              -
                 pug_html += app.fields.textLabel('max_equity_offered', {
-                    class1:'col-xl-5 col-lg-12 text-xl-right text-lg-left p-t-0 m-b-0 m-b-lg-1',
-                    class2:'col-xl-7 col-lg-12',
                     schema: fields.max_equity_offered,
                     value: values.max_equity_offered,
                     label: 'Maximum Equity Offered',
@@ -171,21 +160,17 @@ section.campaign-specifics.container.m-b-85
 
         div(style=(values.security_type == 1 ? '' :  "display: none")).security_type_list.security_type_1
           .row.m-t-2
-            .col-xl-6.min_equity_offered
-              - 
+            .col-xl-6.col-lg-6.col-md-6.min_equity_offered
+              -
                 pug_html += app.fields.textLabel('min_equity_offered', {
-                    class1: 'col-xl-6 col-lg-12 text-xl-right text-lg-left',
-                    class2:'col-xl-6 col-lg-12 col-l-65',
                     schema: fields.min_equity_offered,
                     value: '5%',
                     label: 'Percentage Revenue',
                     disabled: true,
                   });
-            .col-xl-6.max_equity_offered
-              - 
+            .col-xl-6.col-lg-6.col-md-6.max_equity_offered
+              -
                 pug_html += app.fields.textLabel('max_equity_offered', {
-                    class1: 'col-xl-5 col-lg-12 text-xl-right text-lg-left',
-                    class2:'col-xl-7 col-lg-12 col-l-65',
                     schema: fields.max_equity_offered,
                     value: '2X',
                     label: 'Cap',
@@ -197,37 +182,40 @@ section.campaign-specifics.container.m-b-85
                   input(name="max_equity_offered" placeholder="$" type="text" value="2X" disabled).form-control
 
           .row
-            .form-group.clearfix
-              label.col-xl-3.col-lg-12.text-xl-right.text-lg-left Link to Calculators
-              .col-xl-9.col-lg-12
-                .btn-group.showPopover(data-content="Our calculators can help you:<br>1. Derive your valuation;<br>2. Choose the right security;<br>3. Know how much money to raise")
-                  button(data-toggle="dropdown" aria-haspopup="true" aria-expanded="false").btn.btn-dropdown Link to Calculators
-                  button(data-toggle="dropdown" aria-haspopup="true" aria-expanded="false").btn.dropdown-toggle.dropdown-toggle-split.btn-dropdown-click
-                    span.sr-only 
-                  .dropdown-menu
-                    a(href="/calculator/paybackshare/step-1" target="_blank").dropdown-item Revenue Share Calculator
-                    a(href="/calculator/whatmybusinessworth/intro" target="_blank").dropdown-item How Much Should I Raise?
-                    a(href="/calculator/establishedBusiness/intro" target="_blank").dropdown-item Established Business Valuation
-                    a(href="/calculator/capitalraise/intro" target="_blank").dropdown-item New Startup Valuation
-          
-          .col-xl-9.offset-xl-3
-            h4.m-t-1.font-weight-bold.letter-spacing-normal Here’s how Revenue Share works:
-            ol.simple-list
-              li.p-b-1 Share 5% of your company's revenue with investors annually, until;
-              li.p-b-1 You have paid investors back two times the invested amount (distributions are capped at (2x) the investment amount, at which point the contract is deemed fulfilled);
-              li.p-b-1 No distributions are required until the second full calendar year and the company is allowed one year of forbearance as needed;
-              li In the event of default, investors become general unsecured creditors (senior to equity).
+            .col-xl-6.col-lg-6.col-md-6
+              .form-group.clearfix.row
+                label.col-xl-12 Link to Calculators
+                .col-xl-12
+                  .btn-group.showPopover(data-content="Our calculators can help you:<br>1. Derive your valuation;<br>2. Choose the right security;<br>3. Know how much money to raise.")
+                    button(data-toggle="dropdown" aria-haspopup="true" aria-expanded="false").btn.btn-dropdown Link to Calculators
+                    button(data-toggle="dropdown" aria-haspopup="true" aria-expanded="false").btn.dropdown-toggle.dropdown-toggle-split.btn-dropdown-click
+                      span.sr-only 
+                    .dropdown-menu
+                      a(href="/calculator/paybackshare/step-1" target="_blank").dropdown-item Revenue Share Calculator
+                      a(href="/calculator/whatmybusinessworth/intro" target="_blank").dropdown-item How Much Should I Raise?
+                      a(href="/calculator/establishedBusiness/intro" target="_blank").dropdown-item Established Business Valuation
+                      a(href="/calculator/capitalraise/intro" target="_blank").dropdown-item New Startup Valuation
+          .row
+            .col-xl-12
+              h4.m-t-0.m-b-1.font-weight-bold.letter-spacing-normal Here’s how Revenue Share works:
+              ol.simple-list
+                li.p-b-1 Share 5% of your company's revenue with investors annually, until;
+                li.p-b-1 You have paid investors back two times the invested amount (distributions are capped at (2x) the investment amount, at which point the contract is deemed fulfilled);
+                li.p-b-1 No distributions are required until the second full calendar year and the company is allowed one year of forbearance as needed;
+                li In the event of default, investors become general unsecured creditors (senior to equity).
         .row
           .col-xl-12
             .border-bottom.m-t-2
-        .col-xl-12
-          h3 Here some important things to remember about the campaign process.
-          ol(type="1")
-            li.pb10.text-justify Investors will have the ability to cancel their investment commitment until 48 hours prior to the deadline you’ve selected.
-            li.pb10 We’ll notify investors when the targeted offering amount has been reached.
-            li.pb10.text-justify If you reach your targeted offering amount prior to your deadline, you may close the offering early if you provide five business days notice of the new deadline.
-            li.pb10.text-justify If an investor doesn’t cancel their commitment before the 48 hour period prior to the deadline, the funds will be released to you and investors will receive securities in exchange for their investment.
-            li.pb10.text-justify If you make a material change to the offering, an investor’s investment commitment will be cancelled unless they reconfirm their commitment.
-        .col-xl-12.p-r-0.m-t-3.pull-xl-right.text-lg-right.text-md-center.text-sm-center.text-xs-center
-          button#submitForm.btn.btn-primary.text-uppercase.submit-specifics save and continue
-            i.fa.fa-angle-right
+        .row
+          .col-xl-12
+            h3 Here some important things to remember about the campaign process.
+            ol(type="1")
+              li.pb10.text-justify Investors will have the ability to cancel their investment commitment until 48 hours prior to the deadline you’ve selected;
+              li.pb10 We’ll notify investors when the targeted offering amount has been reached;
+              li.pb10.text-justify If you reach your targeted offering amount prior to your deadline, you may close the offering early if you provide five business days notice of the new deadline;
+              li.pb10.text-justify If an investor doesn’t cancel their commitment before the 48 hour period prior to the deadline, the funds will be released to you and investors will receive securities in exchange for their investment;
+              li.pb10.text-justify If you make a material change to the offering, an investor’s investment commitment will be cancelled unless they reconfirm their commitment.
+        .row
+          .col-xl-12.m-t-2.pull-xl-right.text-lg-right.text-md-center.text-sm-center.text-xs-center
+            button#submitForm.btn.btn-primary.text-uppercase.submit-specifics save and continue
+              i.fa.fa-angle-right
