@@ -1,17 +1,13 @@
 .row.foreign-country-row
-  .col-xl-6.col-lg-6
+  .col-xl-6.col-lg-6.col-md-6
     -
       pug_html += app.fields.textLabel('city', _.extend({
-          'class1': 'col-xl-6 col-lg-12 text-xl-right text-lg-left',
-          'class2': 'col-xl-6 col-lg-12 input-min-width',
           'type': 'text',
           'value': user.city,
         }, fields.city))
-  .col-xl-6.col-lg-6
+  .col-xl-6.col-lg-6.col-md-6
     -
       pug_html += app.fields.textLabel('state', _.extend({
-          'class1': 'text-lg-right col-xl-5 p-t-0 m-b-0 m-b-lg-1',
-          'class2': 'col-xl-7 input-min-width',
           'type': 'text',
           'label': 'State/Province/ Region',
           'placeholder': 'State/Province/Region',
@@ -19,19 +15,15 @@
         }))
 
 .row.foreign-country-row
-  .col-xl-6.col-lg-6
+  .col-xl-6.col-lg-6.col-md-6
     -
       pug_html += app.fields.textLabel('zip_code1', _.extend({
-          'class1': 'col-xl-6 col-lg-12 text-xl-right text-lg-left',
-          'class2': 'col-xl-6 col-lg-12 input-min-width',
           'type': 'text',
           'value': user.zip_code,
         }, fields.zip_code, { 'label': 'Postal Code' }))
-  .col-xl-5.col-lg-6.foreign-country-phone
+  .col-xl-6.col-lg-6.col-md-6.foreign-country-phone
       -
         pug_html += app.fields.textLabel('phone', _.extend({
-            'class1': 'col-xl-6 col-lg-12 text-xl-right text-lg-left',
-            'class2': 'col-xl-6 col-lg-12 input-min-width',
             'type': 'text',
             'value': user.phone,
           }, fields.phone))

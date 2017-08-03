@@ -6,30 +6,33 @@ mixin row(value, index)
         a(href="#" data-section=name data-index=index).delete-sectionnew
           i.fa.fa-times
       | !{app.fields.nestedTextLabel(name, 'employer', value, index, attr.schema.employer)}
-      | !{app.fields.nestedTextLabel(name, 'title', value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right m-b-0 p-t-0',placeholder: 'Provide short description of the business'}, attr.schema.title)}
-      | !{app.fields.nestedTextLabel(name, 'responsibilities', value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right m-b-0 p-t-0'}, attr.schema.responsibilities)}
+      .row
+        .col-xl-6.col-lg-6.col-md-6
+          | !{app.fields.nestedTextLabel(name, 'title', value, index, {placeholder: 'Provide short description of the business'}, attr.schema.title)}
+        .col-xl-6.col-lg-6.col-md-6
+          | !{app.fields.nestedTextLabel(name, 'responsibilities', value, index, attr.schema.responsibilities)}
 
       .row
-        .col-xl-6.col-lg-6.form-group
-          .row
-            label.col-xl-6.col-lg-12.text-xl-right.text-lg-left.p-l-2.p-l-lg-1.p-t-0.m-b-0.m-b-lg-1 Start Date of Service
-            .col-xl-6.col-lg-12
+        .col-xl-6.col-lg-6.col-md-6
+          .row.form-group
+            label.col-xl-12 Start Date of Service
+            .col-xl-12
               div(id=name + '__' + index + '__' + 'start_date_of_service').row
                 | !{app.fields.nestedDateMonth(name, 'start_date_of_service', value, index, {class1:'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-r-5'}, attr.schema.start_date_of_service)}
                 | !{app.fields.nestedDateYear(name, 'start_date_of_service', value, index, {class1:'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-l-5', placeholder: 'YYYY',}, attr.schema.start_date_of_service)}
                 
               
-        .col-xl-6.col-lg-6.form-group
-          .row
-            label.col-xl-6.col-lg-12.text-xl-right.text-lg-left.p-l-3.p-l-lg-1.p-t-0.m-b-0.m-b-lg-1 End Date of Service
-            .col-xl-6.col-lg-12
+        .col-xl-6.col-lg-6.col-md-6
+          .row.form-group
+            label.col-xl-12 End Date of Service
+            .col-xl-12
               -
                 var isDateCurrent = !value.end_date_of_service;
               div(id=name + '__' + index + '__' + 'end_date_of_service').row
                 | !{app.fields.nestedDateMonth(name, 'end_date_of_service', value, index, {class1:'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-r-5', disabled: !!isDateCurrent, }, attr.schema.end_date_of_service)}
                 | !{app.fields.nestedDateYear(name, 'end_date_of_service', value, index, {class1:'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-l-5', placeholder: 'YYYY', disabled: !!isDateCurrent, }, attr.schema.end_date_of_service)}
               .row.team-current
-                label.col-xl-12
+                label.col-xl-12.m-b-0
                   input(type="checkbox" checked=isDateCurrent).col-xl-1.team-current-date
                   span.font-weight-normal.col-xl-5 Current
                 
@@ -50,8 +53,8 @@ mixin run()
         else
           each value, index in values
             +row(value, index)
-    .row.add-link
-      .col-xl-9.offset-xl-3
+    .row.add-link.add-work-experience
+      .col-xl-12
         a(href="#" data-section=name data-comp='formc' data-template="experiences").link-2.add-sectionnew
           i.fa.fa-plus
           |  Add Work Experience
