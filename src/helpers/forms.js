@@ -1,9 +1,6 @@
 'use strict';
-const deepDiff = require('deep-diff').diff;
+import deepDiff from 'deep-diff';
 
-//this code will work for deep-diff@0.3.8
-// const diff = require('deep-diff');
-// const deepDiff = diff.diff || diff.default || diff;
 
 module.exports = {
   makeCacheRequest(url, type, data) {
@@ -296,6 +293,8 @@ module.exports = {
         if(data[key_year]) {
           data[key] = data[key_year] + '-' + (data[key_month] || '01') + '-' +
             (data[key_day] || '01')
+        } else {
+          data[key] = '';
         }
         delete data[key_year];
         delete data[key_month];

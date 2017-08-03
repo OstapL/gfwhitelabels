@@ -1,13 +1,13 @@
 - var usaStates = require('consts/usaStatesChoices.json');
 
 .row.showPopover(data-content="Why do we ask? These affinity based questions can help us share your campaign with potential investors with similar backgrounds.")
-  .col-xl-6.col-lg-6.input-min-width
-    - pug_html += app.fields.textLabel('zip_code', { class1: 'col-xl-6 col-lg-12 text-xl-right text-lg-left', class2: 'col-xl-6 col-lg-12', label: 'Where did you grow up?', value: values.zip_code, schema: this.fields.zip_code, placeholder: 'Zip code', })
+  .col-xl-6.col-lg-6.col-md-6
+    - pug_html += app.fields.textLabel('zip_code', { label: 'Where did you grow up?', value: values.zip_code, schema: this.fields.zip_code, placeholder: 'Zip code', })
 
-  .col-xl-6.col-lg-6.col-sm-12.city_states.required.form-group
+  .col-xl-6.col-lg-6.col-md-6.city_states.required.form-group
     .row
-      label.col-xl-5.col-lg-12.col-xs-6.text-xl-right.text-lg-left City/State
-      .col-xl-7.col-lg-12
+      label.col-xl-12.text-xl-left City/State
+      .col-xl-12
         a(data-toggle="modal" data-target="#city_state_modal" href="#city_state_modal").change_state_city
           span.input-value.js-city-state #{ values.city  || '(City)' }, #{ usaStates[values.state] || '(State)' }
           i.fa.fa-pencil-square-o.link-1
