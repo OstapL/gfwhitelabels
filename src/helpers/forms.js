@@ -290,12 +290,10 @@ module.exports = {
         var key_year = key + '__year';
         var key_month = key + '__month';
         var key_day = key + '__day';
-        if(data[key_year]) {
+        if (data.hasOwnProperty(key_year)) {
           data[key] = data[key_year] + '-' + (data[key_month] || '01') + '-' +
             (data[key_day] || '01')
-        } else {
-          data[key] = '';
-        }
+        } 
         delete data[key_year];
         delete data[key_month];
         delete data[key_day];
