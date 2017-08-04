@@ -5,57 +5,63 @@ include ../../raiseFunds/templates/menu.pug
 section.formc-team-members-director.container.m-b-85
   - var formcId = values.formc_id;
   - var campaignId = values.campaign_id;
-  +menu('formc', 'team-members-director')
+  .row
+    +menu('formc', 'team-members-director')
 
-  //START RIGHT BLOCK
-  .col-xl-8.col-lg-8.p-xs-0.col-md-12.team-member-formc
-    h2.text-uppercase.text-lg-center.text-xs-center.m-t-0 Team members (director)
-    form.form-section
-      input(type="hidden" value=2 name="role[]")
-      input(type="hidden" value=1 name="individual_director_choice")
-      .col-xl-12.p-xs-0
-        - 
-          pug_html += app.fields.textLabel('first_name', {
-          schema: fields.first_name, 
-          value: values.first_name,})
-        - 
-          pug_html += app.fields.textLabel('last_name', {
-          schema: fields.last_name, 
-          value: values.last_name,})
-        - 
-          pug_html += app.fields.textLabel('email', {
-          schema: fields.email, 
-          value: values.email, 
-          placeholder: 'Email Address', 
-          help_text: 'We will need to contact team members',})
-        .row.form-group
-          .col-date
-            label.col-xl-3.col-lg-12.text-xl-right.textlg-left Date of birth
-              span.color-red *
-            .col-xl-4.col-lg-6.p-r-0
-              - 
-                pug_html += app.fields.dateMonth('dob', _.extend({
-                'empty': { '': 'Choose' },
-                'value': values.dob,
-                }, fields.dob));
-
-              - 
-                pug_html += app.fields.dateDay('dob', _.extend({
-                'empty': { '': 'Choose' },
-                'value': values.dob,
-                }, fields.dob));
-              - 
-                pug_html += app.fields.dateYear('dob', _.extend({
-                'value': values.dob,
-                'placeholder': 'YYYY',
-                'divId': 'dob',
-                }, fields.dob));
+    //START RIGHT BLOCK
+    .col-xl-8.col-lg-8.col-md-12.team-member-formc
+      h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.mb45 Team members (director)
+      form.form-section
+        input(type="hidden" value=2 name="role[]")
+        input(type="hidden" value=1 name="individual_director_choice")
         .row
-          .col-xl-6.col-lg-6.form-group
-            .row
-              label.col-xl-6.col-lg-12.text-xl-right.text-lg-left.m-b-0.p-t-0.m-b-lg-1 Board Service Start Date
+          .col-xl-6.col-lg-6.col-md-6
+            -
+              pug_html += app.fields.textLabel('first_name', {
+              schema: fields.first_name, 
+              value: values.first_name,})
+          .col-xl-6.col-lg-6.col-md-6
+            -
+              pug_html += app.fields.textLabel('last_name', {
+              schema: fields.last_name, 
+              value: values.last_name,})
+        .row
+          .col-xl-6.col-lg-6.col-md-6
+            -
+              pug_html += app.fields.textLabel('email', {
+              schema: fields.email, 
+              value: values.email, 
+              placeholder: 'Email Address', 
+              help_text: 'We will need to contact team members',})
+          .col-xl-6.col-lg-6.col-md-6
+            .row.form-group
+              .col-date
+                label.col-xl-12.text-xl-left Date of birth
+                  span.color-red *
+                .col-xl-12
+                  - 
+                    pug_html += app.fields.dateMonth('dob', _.extend({
+                    'empty': { '': 'Choose' },
+                    'value': values.dob,
+                    }, fields.dob));
+
+                  - 
+                    pug_html += app.fields.dateDay('dob', _.extend({
+                    'empty': { '': 'Choose' },
+                    'value': values.dob,
+                    }, fields.dob));
+                  - 
+                    pug_html += app.fields.dateYear('dob', _.extend({
+                    'value': values.dob,
+                    'placeholder': 'YYYY',
+                    'divId': 'dob',
+                    }, fields.dob));
+        .row
+          .col-xl-6.col-lg-5.col-md-6
+            .row.form-group
+              label.col-xl-12 Board Service Start Date
                 span.color-red *
-              .col-xl-6.col-lg-12
+              .col-xl-12
                 .row#board_service_start_date
                   - 
                     pug_html += app.fields.dateMonth('board_service_start_date', _.extend({
@@ -69,26 +75,24 @@ section.formc-team-members-director.container.m-b-85
                     'class1': 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-l-5',
                     'placeholder': 'YYYY',
                     }, fields.board_service_start_date));
-
-        - 
-          pug_html += app.fields.textLabel('principal_occupation', {
-          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right p-t-0 m-b-0 m-b-lg-1', 
-          schema: fields.principal_occupation, 
-          value: values.principal_occupation, 
-          placeholder: 'Principal Occupation and Name of Employer',})
-        
-        - 
-          pug_html += app.fields.textLabel('employer_principal_businesss', {
-          class1: 'col-xl-3 col-lg-12 text-lg-left p-t-0 m-b-0 m-b-lg-1 text-xl-right', 
-          schema: fields.employer_principal_businesss, 
-          value: values.employer_principal_businesss, 
-          placeholder: 'Provide short description of the business',})
+          .col-xl-6.col-lg-7.col-md-6
+            -
+              pug_html += app.fields.textLabel('principal_occupation', {
+              schema: fields.principal_occupation, 
+              value: values.principal_occupation, 
+              placeholder: 'Principal Occupation and Name of Employer',})
         .row
-          .col-xl-6.col-lg-6
-            .row
-              label.col-xl-6.col-lg-12.text-xl-right.text-lg-left.m-b-0.p-t-0.m-b-lg-1 Employment Start Date
+          .col-xl-6.col-lg-7.col-md-6
+            -
+              pug_html += app.fields.textLabel('employer_principal_businesss', {
+              schema: fields.employer_principal_businesss, 
+              value: values.employer_principal_businesss, 
+              placeholder: 'Provide short description of the business',})
+          .col-xl-6.col-lg-5.col-md-6
+            .row.form-group
+              label.col-xl-12 Employment Start Date
                 span.color-red *
-              .col-xl-6.col-lg-12
+              .col-xl-12
                 .row#employer_start_date
 
                   - 
@@ -105,33 +109,39 @@ section.formc-team-members-director.container.m-b-85
                     'placeholder': 'YYYY',
                     'name': 'employer_start_date',
                     }, fields.employer_start_date));
-        .col-lg-12.p-xs-0.m-t-2
-          strong Is this individual also a 20%+ Voting Shareholder?
-          .form-group.form-section.m-t-1.m-b-0
-            .radio-input.m-b-1.yesno
-              label 
-                input(type="radio" name="voting_shareholder_choice" value="1" checked=((values.role & 1) == 1 ? true : false))
-                |  Yes
-              label 
-                input(type="radio" name="voting_shareholder_choice" value="0" checked=((values.role & 1) != 1 ? true : false))
-                |  No
+          
+        .row
+          .col-lg-12
+            strong Is this individual also a 20%+ Voting Shareholder?
+            .form-group.form-section.m-t-1.m-b-0
+              .radio-input.m-b-1.yesno
+                label 
+                  input(type="radio" name="voting_shareholder_choice" value="1" checked=((values.role & 1) == 1 ? true : false))
+                  |  Yes
+                label 
+                  input(type="radio" name="voting_shareholder_choice" value="0" checked=((values.role & 1) != 1 ? true : false))
+                  |  No
         .voting_shareholder_choice.shown-yes(style="display:" + ((values.role & 1) == 1? 'block' : 'none'))
-          - 
-            pug_html += app.fields.textLabel('number_of_shares', {
-            schema: fields.number_of_shares,
-            label: 'Number of Shares', 
-            value: values.number_of_shares,})
-          - 
-            pug_html += app.fields.textLabel('class_of_securities', {
-            schema: fields.class_of_securities,
-            label: 'Class of Securities',
-            value: values.class_of_securities,})
-          - 
-            pug_html += app.fields.textLabel('voting_power_percent', {
-            schema: fields.voting_power_percent,
-            label: '% of Voting Power Prior to Offering',
-            class1: 'col-xl-3 col-lg-12 text-lg-left p-t-0 m-b-0 m-b-lg-1 text-xl-right',  
-            value: values.voting_power_percent,})
+          .row
+            .col-xl-6.col-lg-5.col-md-6
+              -
+                pug_html += app.fields.textLabel('number_of_shares', {
+                schema: fields.number_of_shares,
+                label: 'Number of Shares', 
+                value: values.number_of_shares,})
+            .col-xl-6.col-lg-5.col-md-6
+              -
+                pug_html += app.fields.textLabel('class_of_securities', {
+                schema: fields.class_of_securities,
+                label: 'Class of Securities',
+                value: values.class_of_securities,})
+          .row
+            .col-xl-6.col-lg-5.col-md-6
+              -
+                pug_html += app.fields.textLabel('voting_power_percent', {
+                schema: fields.voting_power_percent,
+                label: '% of Voting Power Prior to Offering',
+                value: values.voting_power_percent,})
         .row
           .col-xl-12
             .border-bottom.m-t-2.m-b-3
@@ -142,7 +152,7 @@ section.formc-team-members-director.container.m-b-85
             .border-bottom.m-t-3.m-b-3
         |!{ templates.experiences }
 
-        .row.m-t-3
+        .row.offecer-btn-m-t
           .col-xl-12
             .text-sm-center.text-xs-center.text-lg-right
               a(href='/formc/' + values.formc_id + '/team-members').btn.btn-secondary.text-uppercas.m-r-1 Cancel

@@ -49,12 +49,7 @@ section.investor-dashboard
                     | !{ snippets.investment(i) }
 
                 if !hasActiveInvestments
-                  .row
-                    .col-lg-12
-                      .warning-block.m-b-0
-                        i.fa.fa-info-circle
-                        span.warning-text
-                          | You have no active investments
+                  | !{ snippets.noInvestments() }
 
             .tab-pane.fade#historical(
               role="tabpanel"

@@ -4,143 +4,142 @@ include ../../raiseFunds/templates/menu.pug
   var fileFolderDropzone = require('directives/setdropzone/folder.js'); 
   pug_html += app.breadcrumbs('create form c', '', [ ['Home', '/'], ['Create Form C', '/formc/' + values.id + '/introduction'], ['FINANCIAL CONDITION', ''], ]);
 
-section.formc-team-members-director.container.m-b-85
+section.formc-financial-condition.container.m-b-85
   - var campaignId = values.campaign_id;
-  +menu('formc', 'financial-condition')
-
-
-  //START RIGHT BLOCK
-  .col-lg-8.p-xs-0
-    h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis.mb45 financial condition
-    form(action="").form-section
-      .col-lg-12.p-xs-0
-        b Does the issuer have an operating history?
-          span.color-red *
-        .form-group.form-section.m-t-2.m-b-0
-          .radio-input.m-b-1.yesno
-            label 
-              input(type="radio" name="financials_condition_choice" value=1 checked=(values['financials_condition_choice'] == true))
-              |  Yes
-            label 
-              input(type="radio" name="financials_condition_choice" value=0 checked=(values['financials_condition_choice'] == false))
-              |  No
+  .row
+    +menu('formc', 'financial-condition')
+    //START RIGHT BLOCK
+    .col-xl-8.col-lg-8.col-md-12
+      h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.mb45 financial condition
+      form(action="").form-section
+        .row
+          .col-lg-12
+            b Does the issuer have an operating history?
+              span.color-red *
+            .form-group.form-section.m-t-2.m-b-0
+              .radio-input.m-b-1.yesno
+                label 
+                  input(type="radio" name="financials_condition_choice" value=1 checked=(values['financials_condition_choice'] == true))
+                  |  Yes
+                label 
+                  input(type="radio" name="financials_condition_choice" value=0 checked=(values['financials_condition_choice'] == false))
+                  |  No
         .financials_condition_choice.shown-yes(style="display:" + (values['financials_condition_choice'] == true ? 'block' : 'none') + ";")
-          .row
-            .col-lg-12
-              - 
-                pug_html += app.fields.textareaLabel('financials_condition_yes', {
-                    schema: fields.financials_condition_yes,
-                    class1: 'col-xl-12',
-                    class2: 'col-xl-12 big-textarea',
-                    placeholder: "Describe your historical results",
-                    value: values.financials_condition_yes,
-                  });
-
+          -
+            pug_html += app.fields.textareaLabel('financials_condition_yes', {
+                schema: fields.financials_condition_yes,
+                class2: 'col-xl-12 big-textarea',
+                placeholder: "Describe your historical results",
+                value: values.financials_condition_yes,
+              });
+      
         .financials_condition_choice.shown-no(style="display:" + (values['financials_condition_choice'] ? 'none' : 'block') + ";")
-          .row
-            .col-lg-12
-              - 
-                pug_html += app.fields.textareaLabel('financials_condition_no', {
-                  schema: fields.financials_condition_no,
-                  class1: 'col-xl-12',
-                  class2: 'col-xl-12 big-textarea',
-                  placeholder: "Describe your financial condition",
-                  value: values.financials_condition_no,
-                });
-      .col-lg-12.p-xs-0
-        h3.text-xs-center.m-t-2 Instructions
-        p.pb10 Companies are limited to raising $1 million through Regulation Crowdfunding in any 12-month period.
-        p.pb10 You are required to file a complete set of financial statements, and notes 
-          a(href=require('doc/NOTES.pdf') target="_blank")
-            i(aria-hidden="true").fa.fa-question-circle
-          |  to the financial statements, including:
-        ol(type="1").m-b-0
-          li.pb10 balance sheet
-          li.pb10 income statement 
-          li.pb10 statement of cash flows 
-          li.pb10 statement of changes in owners’ equity
-        p.pb10 They must be prepared in accordance with U.S. GAAP and must cover the two most recently completed fiscal years or the period(s) since inception, if shorter. If the financial statements are not audited, they must be labeled as 
-          strong “unaudited”
-          | . You must provide these financial statements even if you have no operating history.
-        p.pb10 If your 
-          strong aggregate offering
-          |  (this means your current maximum offering amount plus all amounts sold in the last 12 months by the issuer, all entities under common control and all predecessors) is:
-        p.font-weight-bold.pb10 $107,000 or less:
-        ul.m-b-0
-          li.pb10 Financial statements of the issuer and its predecessors must be certified by CEO, as well as the disclosure of amount of income, taxable income and total tax reflected on federal tax return (we will collect this certification later in the process). Please don’t forget to add notes to your financial statements. 
-            a(href=require('doc/NOTES.pdf') target="_blank").link-3 Click here to see some examples.
-        p.pb10
-          em If statements are available that have been reviewed or audited by an independent public accountant, they must be provided instead along with a signed audit or review report and need not include information from tax return or certification of CEO
-        p.font-weight-bold.pb10 $107,001-$500,000:
-        ul.m-b-1
-          li Financial statements of the issuer and its predecessors 
-            strong reviewed by an independent public accountant including a signed review report
-        .warning-block.text-lg-left
-          i.fa.fa-info-circle 
-          span.warning-text Note: the accountant you use to do your taxes may not qualify as an independent accountant. If you need an independent accountant, we can refer some to you.
-        p.pb10
-          em If statements are available that have been audited by an independent public accountant, they must be provided instead along with a signed audit report
-        p.font-weight-bold.pb10 $500,001-$1,000,000:
-          ul.m-b-0
-            li.pb10 If this is your first offering in reliance on Regulation Crowdfunding, then you’ll need financial statements reviewed by an independent public accountant (
-              span.warning-text-inline
-                i.fa.fa-info-circle.icon
-                |  see independent accountant disclaimer
-              | ) along with a signed review report (if statements are available that have been audited by an independent public accountant, they must be provided instead along with a signed audit report)
-            li.pb10 If you have previously sold securities in reliance on Regulation Crowdfunding, you’ll need to provide financial statements audited by an independent public accountant along with a signed audit report.
-        p.font-weight-bold.pb10 Financial Statement Clarification
-        p.pb10
-          strong For All Offerings:
-          |  If your offering is conducted in the first 120 days of a fiscal year, the financial statements provided may be for the two fiscal years prior to your most recently completed fiscal year; however, the most recently completed fiscal year must be provided if available,
-        p.pb10
-          strong If your aggregate offering is $107,000 or less:
-          |  the information you provide about your tax return (total income, taxable income and total tax) may be from the tax return filed for the prior year (if any), if your offering is conducted before filing a tax return for the most recently completed fiscal year.  However, you must provide information from the tax return for the most recently completed fiscal year when it is filed, if filed during the offering period.
-        p.pb10
-          strong A Word on Your Independent Accountant.
-          |  The accountant that does your taxes likely does not qualify as an independent accountant. An independent accountant must satisfy the independence standards of either: (i) Rule 2-01 of Regulation S-X or (ii) the AICPA. They must be (1) duly registered and in good standing as a certified public accountant (CPA) under the laws of the place of his or her residence or principal office or (2) in good standing and entitled to practice as a public accountant under the laws of his or her place of residence or principal office.
-        p.pb10 Your company will not be in compliance with the requirement to provide reviewed financial statement if you received a review report that includes modifications. Likewise, you will not be in compliance with the requirement to provide audited financial statements if you received a qualified opinion, an adverse opinion, or a disclaimer of opinion.
-        p You must notify the public accountant of your intended use of the public accountant’s audit or review report in the offering.
-        .border-bottom.m-t-3.m-b-3
-      .col-lg-12.p-xs-0
-        b Have you previously sold securities in reliance on Regulation Crowdfunding?
-          span.color-red *
-        .form-group.form-section.m-t-2.m-b-0
-          .radio-input.m-b-1.yesno
-            label 
-              input(type="radio" name="sold_securities_choice" value="1" checked=(values['sold_securities_choice'] == 1) target=".previous-security-container")
-              |  Yes
-            label 
-              input(type="radio" name="sold_securities_choice" value="0" checked=(values['sold_securities_choice'] == 0) target=".previous-security-container")
-              |  No
-        .sold_securities_choice.shown-yes(style="display:" + (values['sold_securities_choice'] == 1? 'block' : 'none'))
-          - 
-            pug_html += app.fields.textLabel('sold_securities_amount', {
-              class1:'col-xl-12 text-xl-left',
-              class2: 'col-xl-12',
-              schema: fields.sold_securities_amount,
-              value: values.sold_securities_amount,
-            })
-
-        #xeroBlock
-
-        .img-ppt
           -
-            pug_html += new fileFolderDropzone.FolderDropzone(view,
-              'fiscal_recent_group_id',
-              'fiscal_recent_group_data',
-              view.fields.fiscal_recent_group_id
-            ).render().resultHTML;
-
-        .img-ppt
-          -
-            pug_html += new fileFolderDropzone.FolderDropzone(view,
-              'fiscal_prior_group_id',
-              'fiscal_prior_group_data',
-              view.fields.fiscal_prior_group_id
-            ).render().resultHTML;
-
-      |!{ templates.sold_securities_data }
-      .col-lg-12.m-t-2.p-xs-0
-        .text-lg-right.text-sm-center.text-xs-center
-          button.btn.btn-primary.text-uppercase save and continue
-            i.fa.fa-angle-right
+            pug_html += app.fields.textareaLabel('financials_condition_no', {
+              schema: fields.financials_condition_no,
+              class1: 'col-xl-12',
+              class2: 'col-xl-12 big-textarea',
+              placeholder: "Describe your financial condition",
+              value: values.financials_condition_no,
+            });
+        .row
+          .col-lg-12
+            h3.text-xs-center Instructions
+            p.pb10 Companies are limited to raising $1 million through Regulation Crowdfunding in any 12-month period.
+            p.pb10 You are required to file a complete set of financial statements, and notes 
+              a(href=require('doc/NOTES.pdf') target="_blank")
+                i(aria-hidden="true").fa.fa-question-circle
+              |  to the financial statements, including:
+            ol(type="1").m-b-0
+              li.pb10 balance sheet
+              li.pb10 income statement 
+              li.pb10 statement of cash flows 
+              li.pb10 statement of changes in owners’ equity
+            p.pb10 They must be prepared in accordance with U.S. GAAP and must cover the two most recently completed fiscal years or the period(s) since inception, if shorter. If the financial statements are not audited, they must be labeled as 
+              strong “unaudited”
+              | . You must provide these financial statements even if you have no operating history.
+            p.pb10 If your 
+              strong aggregate offering
+              |  (this means your current maximum offering amount plus all amounts sold in the last 12 months by the issuer, all entities under common control and all predecessors) is:
+            p.font-weight-bold.pb10 $107,000 or less:
+            ul.m-b-0
+              li.pb10 Financial statements of the issuer and its predecessors must be certified by CEO, as well as the disclosure of amount of income, taxable income and total tax reflected on federal tax return (we will collect this certification later in the process). Please don’t forget to add notes to your financial statements. 
+                a(href=require('doc/NOTES.pdf') target="_blank").link-3 Click here to see some examples.
+            p.pb10
+              em If statements are available that have been reviewed or audited by an independent public accountant, they must be provided instead along with a signed audit or review report and need not include information from tax return or certification of CEO
+            p.font-weight-bold.pb10 $107,001-$500,000:
+            ul.m-b-1
+              li Financial statements of the issuer and its predecessors 
+                strong reviewed by an independent public accountant including a signed review report
+            .warning-block.text-lg-left
+              i.fa.fa-info-circle 
+              span.warning-text Note: the accountant you use to do your taxes may not qualify as an independent accountant. If you need an independent accountant, we can refer some to you.
+            p.pb10
+              em If statements are available that have been audited by an independent public accountant, they must be provided instead along with a signed audit report
+            p.font-weight-bold.pb10 $500,001-$1,000,000:
+              ul.m-b-0
+                li.pb10 If this is your first offering in reliance on Regulation Crowdfunding, then you’ll need financial statements reviewed by an independent public accountant (
+                  span.warning-text-inline
+                    i.fa.fa-info-circle.icon
+                    |  see independent accountant disclaimer
+                  | ) along with a signed review report (if statements are available that have been audited by an independent public accountant, they must be provided instead along with a signed audit report)
+                li.pb10 If you have previously sold securities in reliance on Regulation Crowdfunding, you’ll need to provide financial statements audited by an independent public accountant along with a signed audit report.
+            p.font-weight-bold.pb10 Financial Statement Clarification
+            p.pb10
+              strong For All Offerings:
+              |  If your offering is conducted in the first 120 days of a fiscal year, the financial statements provided may be for the two fiscal years prior to your most recently completed fiscal year; however, the most recently completed fiscal year must be provided if available,
+            p.pb10
+              strong If your aggregate offering is $107,000 or less:
+              |  the information you provide about your tax return (total income, taxable income and total tax) may be from the tax return filed for the prior year (if any), if your offering is conducted before filing a tax return for the most recently completed fiscal year.  However, you must provide information from the tax return for the most recently completed fiscal year when it is filed, if filed during the offering period.
+            p.pb10
+              strong A Word on Your Independent Accountant.
+              |  The accountant that does your taxes likely does not qualify as an independent accountant. An independent accountant must satisfy the independence standards of either: (i) Rule 2-01 of Regulation S-X or (ii) the AICPA. They must be (1) duly registered and in good standing as a certified public accountant (CPA) under the laws of the place of his or her residence or principal office or (2) in good standing and entitled to practice as a public accountant under the laws of his or her place of residence or principal office.
+            p.pb10 Your company will not be in compliance with the requirement to provide reviewed financial statement if you received a review report that includes modifications. Likewise, you will not be in compliance with the requirement to provide audited financial statements if you received a qualified opinion, an adverse opinion, or a disclaimer of opinion.
+            p You must notify the public accountant of your intended use of the public accountant’s audit or review report in the offering.
+          .col-xl-12
+            .border-bottom.m-t-3.m-b-3
+        .row
+          .col-lg-12
+            b Have you previously sold securities in reliance on Regulation Crowdfunding?
+              span.color-red *
+            .form-group.form-section.m-t-2.m-b-0
+              .radio-input.m-b-1.yesno
+                label 
+                  input(type="radio" name="sold_securities_choice" value="1" checked=(values['sold_securities_choice'] == 1) target=".previous-security-container")
+                  |  Yes
+                label 
+                  input(type="radio" name="sold_securities_choice" value="0" checked=(values['sold_securities_choice'] == 0) target=".previous-security-container")
+                  |  No
+            .sold_securities_choice.shown-yes(style="display:" + (values['sold_securities_choice'] == 1? 'block' : 'none'))
+              -
+                pug_html += app.fields.textLabel('sold_securities_amount', {
+                  class1:'col-xl-12 text-xl-left',
+                  class2: 'col-xl-12',
+                  schema: fields.sold_securities_amount,
+                  value: values.sold_securities_amount,
+                })
+          .col-xl-12
+            #xeroBlock
+          .col-xl-12
+            .img-ppt
+              -
+                pug_html += new fileFolderDropzone.FolderDropzone(view,
+                  'fiscal_recent_group_id',
+                  'fiscal_recent_group_data',
+                  view.fields.fiscal_recent_group_id
+                ).render().resultHTML;
+          .col-xl-12
+            .img-ppt
+              -
+                pug_html += new fileFolderDropzone.FolderDropzone(view,
+                  'fiscal_prior_group_id',
+                  'fiscal_prior_group_data',
+                  view.fields.fiscal_prior_group_id
+                ).render().resultHTML;
+        .row
+          |!{ templates.sold_securities_data }
+        .row
+          .col-lg-12.m-t-2
+            .text-lg-right.text-sm-center.text-xs-center
+              button.btn.btn-primary.text-uppercase save and continue
+                i.fa.fa-angle-right

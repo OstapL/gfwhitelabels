@@ -104,7 +104,7 @@ section.formc-review
           +frField('campaign.minimum_raise', 'money')
           |   MINIMUM OFFERING
         if values.campaign.security_type == 0 
-          p.text-xs-center.font-weight-bold OFFERING PRICE: $ 
+          p.text-xs-center.font-weight-bold OFFERING PRICE: 
             +frField('campaign.price_per_share', 'money')
             |  per Share
           p.text-xs-center.font-weight-bold
@@ -400,6 +400,9 @@ section.formc-review
           u Changes Are Possible In Certain Circumstances
         p.pb10.text-indent The Company reserves the right to modify any of the terms of the Offering at any time before the Offering closes. However, if any material changes are made, each investor will be notified and will be required to reconfirm their investment commitment within 5 days of such notice or their entire investment commitment shall be cancelled. Investors are also given the right to terminate an investment at any time prior to 48 hours from a notified closing date.  Additional
           |  details on the procedures involved with this Offering are contained later in this Material.  Additional information relating to this Offering, including communication channels allowing investors to pose questions and receive answers, is available through the Intermediary on the Platform at https://growthfountain.com/#{ values.slug }
+        p.text-uppercase.m-t-3.m-b-0.pb10
+          u Multiple Closings
+        p.pb10.text-indent If the Company reaches the target amount prior to the Offering deadline and the Offering has been listed for a minimum of twenty-one (21) days, the Company reserves the right to conduct early (and potentially multiple early) closings. In so doing, the Company will provide notice to investors concerning the new offering deadline five business days prior to closing.
 
       // page 5
       section.page-formc-review.m-t-1
@@ -638,6 +641,12 @@ section.formc-review
             | Each Offering is listed on the Platform for a minimum of twenty-one (21) days and the Offering period may extend beyond such twenty-one days if set forth in the Material and each investor is properly notified.  During that period (or later if the investor is notified of a change), the Company must aggregate investor commitments that are equal to or greater than the Offering’s   minimum target amount.  The process generally involves the following steps: (1) an investor registered on
             | the Platform identifies a desired offering and communicates an investment commitment to purchase securities in such offering by completing a subscription agreement; (2) the Intermediary confirms the investor’s eligibility to participate in the Offering and then has the subscription agreement countersigned by the issuer; (3) the investor transfers the funds required to purchase the offered securities to a third-party FDIC insured account designated by the Intermediary as being for the benefit of issuers and investors (the “FBO Account”); (4) once the targeted minimum
             | offering amount is achieved or exceeded through investor  commitments collectively, the issuer would be able to close the transaction on the original target closing date or an earlier date with at least five business days prior notice to the investors; and (5) the funds would be released by the FBO Account agent to the issuer, less any required fees sent to the intermediary, and the issuer would issue the securities to the investor.
+          p.text-uppercase.m-t-3.m-b-0.pb10 
+            u Multiple Closings
+          p.text-indent.pb10 If the Company reached the target amount prior to the Offering deadline and the Offering has been listed for a minimum of twenty-one (21) days, the Company reserves the right to conduct early (and potentially multiple early) closings. In so doing, the Company will provide notice to investors concerning the new offering deadline five business days prior to closing.
+          p.text-uppercase.m-t-3.m-b-0.pb10 
+            u 506(c) Offering
+          p.text-indent The Company reserves the right to conduct a Rule 506(c) Offering during or after the Regulation Crowdfunding Offering.
 
       // page 10
       section.page-formc-review.m-t-1
