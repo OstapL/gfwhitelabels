@@ -7,7 +7,7 @@ dependencies:
         - npm install
         - npm install -g mocha@3.4.2
         - git submodule update --init
-        - cd staticdata && git checkout `echo $CIRCLE_BRANCH | sed -e 's/ostap/alpha/g' | sed -e 's/chagin/alpha/g'` && git pull
+        - cd staticdata && git checkout `echo $CIRCLE_BRANCH | sed -e 's/ostap|demo|chagin/alpha/g' | sed -e 's/beta/master/g'` && git pull
         - cd ..
         - ls -la 
         - NODE_ENV=production ./node_modules/webpack/bin/webpack.js -p --config ./webpack.config.js
