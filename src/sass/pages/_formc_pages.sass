@@ -1,4 +1,6 @@
 .introduction
+  h2
+    margin-bottom: rem(40)
   .mb-50
     margin-bottom: rem(50)
   .welcome-text
@@ -59,12 +61,6 @@
           padding-left: 0!important
         .p-lg-r-0
           padding-right: 0!important
-      @media only screen and (max-width : 768px)
-        .cvv-code
-          padding-left: 0
-        .expiration-form
-          padding-bottom: rem(50)
-          padding-right: 0
       .expiration-form
         .has-error
           .help-block
@@ -120,6 +116,8 @@
       margin-top: 3px
 
 .use_of_proceeds
+  h2
+    margin-bottom: rem(40)
   .intended
     textarea
       max-width: 100%
@@ -185,6 +183,7 @@
   .added-risk-title
     background-color: $active-risk-bgc!important
     color: $white!important
+    margin-top: rem(18)
     &:after
       content: '\f00c'
       font: normal normal normal 12px/1 FontAwesome
@@ -195,6 +194,8 @@
       color: $white
       padding: 5px
       border-radius: 100%
+  .panel-heading
+    margin-top: rem(18)
   .form-control[readonly]
     background-color: transparent
 //outstanding security page
@@ -241,6 +242,8 @@
     position: relative
     left: 0
     top: 0
+  .warning-block
+    margin-bottom: rem(25)
 .table-outstanding
   td
     padding: rem(5) rem(15)
@@ -319,4 +322,36 @@
       opacity: 0
     &:hover
       background: linear-gradient(#e8ebed, #e8ebed)
-
+.formc-team-members-officer,
+.formc-team-members-director
+  .add-work-experience
+    position: relative
+    top: -10px
+  .offecer-btn-m-t
+    margin-top: rem(35)
+.formc-team-members-shareholder,
+.formc-outstanding-security,
+.formc-background-check,
+.formc-risk-factor
+  h2
+    margin-bottom: rem(40)
+.formc-related-parties
+  h2
+    margin-bottom: rem(40)
+  h3
+    margin-top: rem(40)
+.formc-financial-condition
+  h2
+    margin-bottom: rem(40)
+  h3
+    margin-top: rem(17)
+    margin-bottom: rem(13)
+.formc-risk-factor
+  .warning-block
+    margin-top: rem(35)
+  .risks
+    padding-bottom: rem(35)
+.add-risk-form
+  .btn-secondary:active,
+  .btn-secondary:focus
+    @extend .btn-secondary
