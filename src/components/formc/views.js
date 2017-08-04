@@ -2374,6 +2374,11 @@ module.exports = {
 
       } else if(name.indexOf('campaign.') !== -1) {
         fieldName = name.split('campaign.')[1];
+
+        if (fieldName = 'security_type')  {
+          val = parseInt(val);
+        }
+
         data[fieldName] = val;
         url = app.config.raiseCapitalServer + '/campaign/' + this.campaign.id;
         updateModel = this.campaign;
@@ -2487,7 +2492,7 @@ module.exports = {
       this.fields.company.state.validate.choices = require('consts/usaStatesChoices.json');
       this.fields.company.corporate_structure.validate.choices = require('consts/raisecapital/corporate_structure.json');
       this.fields.campaign.length_days.validate.choices = require('consts/raisecapital/length_days.json');
-      this.fields.campaign.security_type.validate.choices = yesNoConsts.YESNO;
+      this.fields.campaign.security_type.validate.choices = require('consts/raisecapital/security_type_options.json');
       this.fields.campaign.valuation_determination.validate.choices = require('consts/raisecapital/valuation_determination_options.json');
       this.fields.formc.outstanding_securities.schema.security_type.type = 'choice';
       this.fields.formc.outstanding_securities.schema.security_type.validate = {};
