@@ -96,6 +96,7 @@ module.exports = {
       'click .link-2': 'openPdf',
       'keyup #full_name': 'changeSign',
       'click #pay-btn': 'stripeSubmit',
+      'click .submit_formc': submitFormc,
     }, app.helpers.menu.events, app.helpers.yesNo.events, /*app.helpers.confirmOnLeave.events*/),
 
     preinitialize() {
