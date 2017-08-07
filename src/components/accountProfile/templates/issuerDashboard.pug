@@ -31,9 +31,11 @@ section.issuer-dashbord-top
             i.fa.fa-bar-chart
           .details
             .number
+              span $
               span(
                 data-counter="counterup"
-                data-value=campaign.amount_raised) #{ app.helpers.format.formatPrice(campaign.amount_raised) }
+                data-num=campaign.amount_raised
+                data-value=campaign.amount_raised)
             .desc Amount Raised
 
       .col-xl-2.col-lg-2.col-md-3.col-sm-6.col-xs-6
@@ -44,7 +46,8 @@ section.issuer-dashbord-top
             .number
               span(
                 data-counter="counterup"
-                data-value=company.number_of_investors) #{company.number_of_investors.toLocaleString('en-US')}
+                data-num=company.number_of_investors
+                data-value=company.number_of_investors) 0
             .desc Number of Investments
 
       .col-xl-2.col-lg-2.col-md-3.col-sm-6.col-xs-6
@@ -55,7 +58,8 @@ section.issuer-dashbord-top
             .number
               span(
                 data-counter="counterup"
-                data-value=0) #{ company.total_views } 
+                data-num=company.total_views
+                data-value=0)
             .desc Page Views
 
       .col-xl-2.col-lg-2.col-md-3.col-sm-6.col-xs-6
@@ -66,6 +70,7 @@ section.issuer-dashbord-top
             .number
               span(
                 data-counter="counterup"
+                data-num=0
                 data-value=0).interactions-count 0
             .desc New Interactions
 
@@ -79,7 +84,7 @@ section.issuer-dashbord-top
           span(
             style="left:" + daysPassedPercents + "%").circle_progress
             i.fa.fa-circle-o
-          div(style="left:" +  (daysPassedPercents < 1 ? 1 : daysPassedPercents) + "%").text_position
+          div(style="left:" +  (daysPassedPercents) + "%").text_position
             .text-wrap
               - var now = new Date();
               .font-weight-bold

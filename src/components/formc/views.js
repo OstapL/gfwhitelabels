@@ -96,6 +96,7 @@ module.exports = {
       'click .link-2': 'openPdf',
       'keyup #full_name': 'changeSign',
       'click #pay-btn': 'stripeSubmit',
+      'click .submit_formc': submitFormc,
     }, app.helpers.menu.events, app.helpers.yesNo.events, /*app.helpers.confirmOnLeave.events*/),
 
     preinitialize() {
@@ -661,6 +662,13 @@ module.exports = {
           delete data.role;
         }
       }
+
+      //process current date in experiences
+      // TODO: process current date
+      // data.experiences.forEach((exp) => {
+      //   if (!exp.end_date_of_service__month && !exp.end_date_of_service__year)
+      //     delete this.fields.experiences.schema.end_date_of_service;
+      // });
       api.submitAction.call(this, e, data);
     },
 
@@ -2367,6 +2375,11 @@ module.exports = {
 
       } else if(name.indexOf('campaign.') !== -1) {
         fieldName = name.split('campaign.')[1];
+
+        if (fieldName = 'security_type')  {
+          val = parseInt(val);
+        }
+
         data[fieldName] = val;
         url = app.config.raiseCapitalServer + '/campaign/' + this.campaign.id;
         updateModel = this.campaign;
@@ -2480,7 +2493,7 @@ module.exports = {
       this.fields.company.state.validate.choices = require('consts/usaStatesChoices.json');
       this.fields.company.corporate_structure.validate.choices = require('consts/raisecapital/corporate_structure.json');
       this.fields.campaign.length_days.validate.choices = require('consts/raisecapital/length_days.json');
-      this.fields.campaign.security_type.validate.choices = yesNoConsts.YESNO;
+      this.fields.campaign.security_type.validate.choices = require('consts/raisecapital/security_type_options.json');
       this.fields.campaign.valuation_determination.validate.choices = require('consts/raisecapital/valuation_determination_options.json');
       this.fields.formc.outstanding_securities.schema.security_type.type = 'choice';
       this.fields.formc.outstanding_securities.schema.security_type.validate = {};
