@@ -1,21 +1,15 @@
 #!/usr/bin/env bash
 git fetch -q --all
-
-if git branch --all | grep --quiet "remotes/vladyslav2/alpha"; then
-    echo "============ MERGE WITH VLADYSLAV/alpha ============"
-    git merge --no-ff vladyslav2/alpha > /dev/null
-fi
-
-git checkout alpha > /dev/null
-for b in $(cat branches.txt)
+git checkout master > /dev/null
+for b in dcu momentum3 rivermarkcu jdcu infinityfcu tvfcu
 do
     echo "========================= branch $b =========================="
     if git checkout $b; then
-        git pull origin $b
+        git pull origin $b > /dev/null
         git submodule update --init
         cd consts && git checkout master && git pull origin master 
         cd ..
-        cd staticdata && git checkout `cd .. && git rev-parse --abbrev-ref HEAD` && git pull && git fetch --all && git merge --no-ff alpha && git push
+        cd staticdata && git checkout `cd .. && git rev-parse --abbrev-ref HEAD` && git pull && git fetch --all && git merge --no-ff alpha-`cd .. && git rev-parse --abbrev-ref HEAD` && git push
         cd ..
         git add staticdata
         git add consts
@@ -26,8 +20,7 @@ do
             git merge vladyslav2/$b > /dev/null
         fi
 
-        git merge --no-ff alpha > /dev/null
-        ./fix_merge.sh
+        git merge --no-ff alpha-$b > /dev/null
 
         if git st | grep --quiet 'UU '; then
             echo "Error after merge"
@@ -49,6 +42,6 @@ do
     fi
 done
 
-git checkout alpha
+git checkout master
 cd staticdata && git checkout `cd .. && git rev-parse --abbrev-ref HEAD`
 cd ..
