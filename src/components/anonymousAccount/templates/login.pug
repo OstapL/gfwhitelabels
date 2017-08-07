@@ -35,13 +35,15 @@ section.login
 
         .col-lg-12.border-bottom.or
           span or
-        .social-btn.col-lg-12
-          a(data-original-title="facebook" href="#")#login-facebook.btn.btn-block.btn-facebook.text-uppercase
-            i.fa.fa-facebook
-            |  Log In with Facebook
-          a(data-original-title="Linkedin" href="#")#login-linkedin.btn.btn-block.btn-linkedin.text-uppercase
-            i.fa.fa-linkedin
-            |  Log In with linkedin
-          a(data-original-title="Google Plus" href="#")#login-google.btn.btn-block.btn-google.text-uppercase
-            i.fa.fa-google-plus
-            |  Log In with Google
+        .row
+          input(type="checkbox" id="agree-rules" name="checkbox1" value="1" checked="1" style="display: none")
+          .social-btn.col-lg-12.p-xs-0
+            a(data-original-title="facebook" data-network="facebook" href="#")#signup-facebook.btn.btn-block.btn-social-network.btn-facebook.text-uppercase
+              i.fa.fa-facebook
+              |  SIGN UP with Facebook
+            a(data-original-title="Linkedin" data-network="linkedin" href="#")#signup-linkedin.btn.btn-block.btn-social-network.btn-linkedin.text-uppercase
+              i.fa.fa-linkedin
+              |  SIGN UP with linkedin
+            a(data-original-title="Google Plus" data-network="google" href="#")#signup-google.btn.btn-block.btn-social-network.btn-google.text-uppercase
+              i.fa.fa-google-plus
+              |  SIGN UP with Google
