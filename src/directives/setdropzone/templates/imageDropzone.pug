@@ -12,14 +12,13 @@
   klass2 += ' dropzone__' + fileElement.fieldName;
 
   var title = options.title || 'Drop photo or click to upload';
-  if(options.required && options.required == true) {
-    options.label += '<span class="color-red">*</span>' 
-  }
 
 div(class=klass)
   div(data-content=(options.help_text || '') class=popoverklass).dropzoneContainer
     div(class=klass1)
-      label(for=fileElement.file.id || fileElement.fieldName)!= options.label
+      label(for=fileElement.file.id || fileElement.fieldName) #{ options.label }
+        if options.required
+          span.color-red *
     div(class=klass2)
       div(class="col-lg-12 p-xs-0 p-r-0 p-sm-0 border-dropzone" id=fileElement.fieldName)
         div(class="uploading collapse")
@@ -28,7 +27,7 @@ div(class=klass)
           div.col-lg-5.col-md-5.col-sm-12.offset-sm-0.col-xs-10.offset-xs-1.p-xs-0.text-xs-center.text-md-center.text-lg-center.p-dropzone.m-b-2
             .row
               a(class='link-1' href="#" onclick="return false")
-                p.drop-photo !{title}
+                p.drop-photo !{ title }
                 i(class="fa fa-file-image-o")
           div(id=name).col-lg-7.col-md-7.col-sm-12.col-xs-12.p-r-0.p-xs-0.p-sm-0.img-dropzone.text-lg-center
             - pug_html += fileElement.render().resultHTML

@@ -46,7 +46,7 @@ mixin confirmStatement(name, attr)
 .container.investment
   //START LEFT BLOCK
   .row
-    .col-xl-8.col-lg-7.invest-left-p-0
+    .col-xl-8.col-lg-7
       h2.text-uppercase.dosis.m-t-0.text-md-center.text-sm-center.text-xs-center.text-lg-left
         | Investment
       .form-section.clearfix
@@ -56,7 +56,7 @@ mixin confirmStatement(name, attr)
             .col-xl-12.col-xs-8.col-sm-5.col-lg-8
               -
                 pug_html += app.fields.textLabel("amount", _.extend({
-                    class1: 'col-xl-3 col-lg-4 text-md-left text-lg-right text-xl-right',
+                    class1: 'col-xl-3 col-lg-4 text-md-left text-lg-right text-xl-right p-t-6',
                     class2: 'col-xl-4 col-lg-8',
                     placeholder: '$',
                     text: "$10 of payment processing fee. Your money will be returned to you if the " +
@@ -65,7 +65,7 @@ mixin confirmStatement(name, attr)
           .row
             .col-xl-12.col-xs-7.col-sm-5.col-lg-8
               .form-group.row.fee.text
-                label.col-xl-3.col-lg-4.text-md-left.text-lg-right.text-xl-right Commission
+                label.col-xl-3.col-lg-4.text-md-left.text-lg-right.text-xl-right.p-t-6 Commission
                 .commission-group
                     .col-xl-4.col-lg-8.col-xs-10.col-sm-12
                       if feeInfo.waived
@@ -198,7 +198,7 @@ mixin confirmStatement(name, attr)
             h2.text-uppercase.dosis.text-md-center.text-sm-center.text-xs-center.text-lg-left.m-t-3 Personal Information
               span.small-text.open-sans Required by United States banking laws. This information is transmitted securely and will never be used for any purpose beyond executing your investment. You only have to do this once.
             .form-group.row.required
-              label.col-lg-3.col-md-12.text-lg-right.text-xs-left.pull-xs-left Legal Name
+              label.col-xs-12.text-xl-left Legal Name
                 span.color-red *
               -
                 pug_html += app.fields.nestedText(
@@ -207,7 +207,7 @@ mixin confirmStatement(name, attr)
                   user,
                   -1, {
                     'placeholder': 'First Name',
-                    'class': 'col-lg-4-5 m-b-md-25 col-md-12',
+                    'class': 'col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 pull-left',
                   }, fields.personal_information_data.schema.first_name);
 
                 pug_html += app.fields.nestedText(
@@ -215,38 +215,33 @@ mixin confirmStatement(name, attr)
                   'last_name',
                   user,
                   -1, {
-                    'class': 'col-lg-4-5 col-md-12 ',
+                    'class': 'col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 last-name',
                     'placeholder': 'Last Name',
                   }, fields.personal_information_data.schema.last_name);
             -
               pug_html += app.fields.fieldChoiceLabel('personal_information_data[country]', _.extend({
-                'class2': 'col-xl-9 col-lg-12 country-select',
                 'required': true,
                 'empty': { '': 'Choose Country', 'value': '' },
                 'value': user.country,
                 'id': 'personal_information_data__country',
               }, this.fields.personal_information_data.schema.country));
             .row
-              .col-lg-6.p-xl-0
+              .col-xl-6.col-lg-6.col-md-6
                 -
                   pug_html += app.fields.nestedTextLabel(
                     'personal_information_data',
                     'street_address_1',
                     user,
                     -1, {
-                      class1: 'col-xl-6 col-lg-12 text-lg-left text-xl-right m-b-lg-1',
-                      class2: 'col-xl-6 col-lg-12 p-r-xl-0',
                     },
                     fields.personal_information_data.schema.street_address_1);
-              .col-lg-6
+              .col-xl-6.col-lg-6.col-md-6
                 -
                   pug_html += app.fields.nestedTextLabel(
                     'personal_information_data',
                     'street_address_2',
                     user,
                     -1, {
-                      class1: 'text-xl-right text-lg-left col-xl-5 col-lg-12',
-                      class2: 'col-xl-7 col-lg-12',
                     },
                     fields.personal_information_data.schema.street_address_2);
 
@@ -285,7 +280,7 @@ mixin confirmStatement(name, attr)
                     fields.payment_information_data.schema.ssn_re);
 
           section.payment-information.border-bottom
-            h2.text-uppercase.dosis.text-md-center.text-sm-center.text-xs-center.text-lg-left
+            h2.text-uppercase.text-md-center.text-sm-center.text-xs-center.text-lg-left
               | Payment information
             .form-group.row
               -
@@ -302,11 +297,10 @@ mixin confirmStatement(name, attr)
                   'name_on_bank_account',
                   user,
                   -1, {
-                    class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right p-t-0 m-b-0 m-b-lg-1',
                   },
                   fields.payment_information_data.schema.name_on_bank_account);
               .row
-                .col-lg-6.p-xl-0
+                .col-xl-6.col-lg-6.col-md-6
                   -
                     pug_html += app.fields.nestedTextLabel(
                       'payment_information_data',
@@ -314,52 +308,44 @@ mixin confirmStatement(name, attr)
                       user,
                       -1, {
                         'help_text': '<div class="img-routing-number"></div>',
-                        class1: 'col-xl-6 col-lg-12 text-lg-left text-xl-right m-b-lg-1',
-                        class2: 'col-xl-6 col-lg-12 p-r-xl-0',
                       },
                       fields.payment_information_data.schema.account_number);
-                .col-lg-6
+                .col-xl-6.col-lg-6.col-md-6
                   -
                     pug_html += app.fields.nestedTextLabel(
                       'payment_information_data',
                       'account_number_re',
                       user,
                       -1, {
-                        class1: 'text-xl-right text-lg-left col-xl-5 col-lg-12 p-t-0 m-b-0 m-b-lg-1',
-                        class2: 'col-xl-7 col-lg-12',
                         'help_text': '<div class="img-routing-number"></div>',
                       },
                       fields.payment_information_data.schema.account_number_re);
               .row
-                .col-lg-6.p-xl-0
+                .col-xl-6.col-lg-6.col-md-6
                   -
                     pug_html += app.fields.nestedTextLabel(
                       'payment_information_data',
                       'routing_number',
                       user,
                       -1, {
-                        class1: 'col-xl-6 col-lg-12 text-lg-left text-xl-right m-b-lg-1',
-                        class2: 'col-xl-6 col-lg-12 p-r-xl-0',
                         'help_text': '<div class="img-routing-number"></div>',
                       },
                       fields.payment_information_data.schema.routing_number);
-                .col-lg-6
+                .col-xl-6.col-lg-6.col-md-6
                   -
                     pug_html += app.fields.nestedTextLabel(
                       'payment_information_data',
                       'routing_number_re',
                       user,
                       -1, {
-                        class1: 'text-xl-right text-lg-left col-xl-5 col-lg-12 p-t-0 m-b-0 m-b-lg-1',
-                        class2: 'col-xl-7 col-lg-12',
                         'help_text': '<div class="img-routing-number"></div>',
                       },
                     fields.payment_information_data.schema.routing_number_re);
 
               .form-group.row.radio.check-fields.required
-                label.text-md-right.col-lg-3 Account Type
+                label.col-xl-12.text-xl-left Account Type
                   span.color-red *
-                .col-lg-9.radio-input
+                .col-xl-12.radio-input
                   .div#payment_information_data__bank_account_type
                     label 
                       input(
@@ -503,7 +489,7 @@ mixin confirmStatement(name, attr)
                   button#submitButton(data-method="POST" type="button").btn.btn-lg.btn-primary.pull-lg-right.text-uppercase invest
     //END LEFT BLOCK
     //START RIGHT BLOCK
-    .col-xl-4.col-lg-5.col-md-12.col-sm-12.pull-right.hidden-xs-down.invest-perks.invest-right-p-0
+    .col-xl-4.col-lg-5.col-md-12.col-sm-12.pull-right.hidden-xs-down.invest-perks
       if values.campaign.perks.length
         h2.text-uppercase.dosis.m-t-0 PERKS
           span.small-text.open-sans
