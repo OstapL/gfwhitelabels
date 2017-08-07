@@ -29,9 +29,9 @@ var e = {
 //  googleClientId: "488593151885-87nqfd8gl444a1me0n149otrf37dbahq.apps.googleusercontent.com",
 //  linkedinClientId: "77wzj6tz0yyr33",
 
-  facebookClientId: "1071081646296574",
-  googleClientId: "805823281871-ve3unmva9aer69papghudk0dnpf8tqr2.apps.googleusercontent.com",
-  linkedinClientId: "77rg2wrcb8utfq",
+  facebookClientId: "1405768896335643",
+  googleClientId: "805823281871-0sbsf2btjd5j13g5aa7sfo4pfjorn3k2.apps.googleusercontent.com",
+  linkedinClientId: "77wzj6tz0yyr33",
 
 
   googleMapKey: "AIzaSyBpCl9-7bkVISZ0o-AaFCsKzZwGAxalkZU",
