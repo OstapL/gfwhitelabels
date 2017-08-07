@@ -204,8 +204,8 @@
     display: inline-block
     padding-left: 30px
     padding-right: 30px
-    @media only screen and (min-width : 1440px)
-      width: 14.25%
+    @media only screen and (min-width : 1065px)
+      width: 14%
     @media only screen and (max-width : 544px)
       margin: rem(10) 0
       img
@@ -214,23 +214,30 @@
   img
     margin: 0 auto
     &.callahan
-      min-width: 155px
       margin-top: rem(12)
+      @media only screen and (min-width : 1440px)
+        min-width: 155px
     &.jdcu
-      min-width: 155px
       margin-top: rem(12)
+      @media only screen and (min-width : 1440px)
+        min-width: 155px
     &.river-mark
-      min-width: 155px
       margin-top: rem(15)
+      @media only screen and (min-width : 1440px)
+        min-width: 155px
     &.dcu
-      min-width: 135px
       margin-top: rem(7)
+      @media only screen and (min-width : 1440px)
+        min-width: 135px
     &.momentum3
-      min-width: 120px
+      @media only screen and (min-width : 1440px)
+        min-width: 120px
     &.infinity
-      min-width: 155px
+      @media only screen and (min-width : 1440px)
+        min-width: 155px
     &.tvfcu
-      min-width: 110px
+      @media only screen and (min-width : 1440px)
+        min-width: 110px
 
 @media only screen and (max-width : 768px)
   .owl-carousel
