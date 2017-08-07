@@ -20,10 +20,14 @@
       .form-control
         background-color: transparent
         cursor: default
-        border-right: none
+        @media only screen and (min-width : 481px)
+          border-right: none
     .prefix_input_field
       overflow: hidden
       white-space: nowrap
+  .custom-link-company
+    .prefix_input_prefix
+      width: 41%
   .form-section
     textarea
       min-height: rem(172)
