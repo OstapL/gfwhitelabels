@@ -426,13 +426,20 @@
   margin-top: rem($margin-top-section-campaign)
   padding-bottom: rem($padding-bottom-section-campaign-members)
   .hide-more-detail
-    height: 83px
+    max-height: 83px
     overflow: hidden
     position: relative
+    transition: max-height 1s ease
+    -moz-transition: max-height 1s ease
+    -webkit-transition: max-height 1s ease
   .hide-more-detail.show-more-detail
-    height: auto!important
+    max-height: 1200px
+    -webkit-transition: max-height 2s ease
+    -moz-transition: max-height 2s ease
+    transition: max-height 2s ease
     .show-more-members
-      display: none
+      visibility: hidden
+      transition: visibility ease-in
   .show-more-members
     position: absolute
     right: 0
@@ -440,6 +447,8 @@
     z-index: 2
     background-color: white
     padding-left: rem(17)
+    visibility: visible
+    transition-delay: 0.3s
     &:before
       content: '...'
       position: absolute
@@ -700,7 +709,7 @@
 @media only screen and (max-width : 640px)
   #members
     .hide-more-detail
-      height: 88px
+      max-height: 88px
   .p-xs-0
     padding-left: 0!important
     padding-right: 0!important
