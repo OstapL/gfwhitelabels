@@ -27,7 +27,6 @@ select.form-control
 
 		font-weight: 700
 		color: $black_bg
-		padding-top: 6px 
 
 		&.thin-label 
 			padding-top: 0
@@ -50,7 +49,8 @@ select.form-control
 
 			input[type='radio']
 				margin-right: 15px
-				
+		&.p-t-6
+			padding-top: rem(6)
 		// знак вопроса (есть на странице calculator/capitalraise/step-1)
 		i 
 	.border-dropzone
@@ -112,13 +112,6 @@ select.form-control
 		.city_states
 			label
 				padding-top: 6px
-			margin-bottom: 20px
-			.change_state_city
-				top: 0
-	@media screen and (max-width: 380px)
-		.change_state_city
-			.input-value
-				max-width: 120px!important
 
 
 	@media screen and (min-width:992px)
@@ -200,14 +193,15 @@ select.form-control
 			display: none
 
 		.change_state_city 
-			position: absolute
+			position: relative
 			top: 5px
 			// right: 0
 			cursor: pointer
 			color: $black
 			min-width: rem(150)
 			outline: none
-
+			@media screen and (max-width: 767px)
+				top: 0
 			.input-value
 				@include ellipsis()
 				display: inline-block

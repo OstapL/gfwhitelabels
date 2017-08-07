@@ -8,9 +8,6 @@ const moment = require('moment');
 const today = moment.utc();
 
 const FINANCIAL_INFO = require('consts/financialInformation.json');
-const ACTIVE_STATUSES = FINANCIAL_INFO.INVESTMENT_STATUS_ACTIVE;
-const CANCELLED_STATUSES = FINANCIAL_INFO.INVESTMENT_STATUS_CANCELLED;
-
 
 class Campaign {
   constructor(data={}, schema={}, url=null) {
