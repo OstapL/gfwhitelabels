@@ -1,35 +1,38 @@
 mixin row(value, index)
   - var index = index;
-  .col-lg-12
+  div
     .col-lg-12(data-index=index class=name + ' addSectionBlock')
       .delete-section-container
         a(href="#" data-section=name data-index=index).delete-sectionnew
           i.fa.fa-times
+      .row
+        .col-xl-6.col-lg-6.col-md-6
+          | !{app.fields.nestedTextLabel(name, 'creditor', value, index, attr.schema.creditor)}
+        .col-xl-6.col-lg-6.col-md-6
+          | !{app.fields.nestedTextLabel(name, 'outstanding_amount', value, index, attr.schema.outstanding_amount)}
 
-      | !{app.fields.nestedTextLabel(name, 'creditor', value, index, attr.schema.creditor)}
+      .row
+        .col-xl-6.col-lg-6.col-md-6
+          | !{app.fields.nestedTextLabel(name, 'interest_rate', value, index, attr.schema.interest_rate)}
+        .col-xl-6.col-lg-6.col-md-6
+          .row.form-group
+            .col-date
+              label.col-xl-12 Maturity Date
+                span.color-red *
+              .col-xl-12
+                div(id='business_loans_or_debt__' + index + '__maturity_date')
+                  | !{app.fields.nestedDateMonth(name, 'maturity_date', value, index, attr.schema.maturity_date, {class1:'col-xl-4 col-lg-4 col-xs-4 p-l-0  m-d-p-r-5', placeholder: 'MM',})}
 
-      | !{app.fields.nestedTextLabel(name, 'outstanding_amount', value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right m-b-0 p-t-0 m-b-lg-1',}, attr.schema.outstanding_amount)}
+                  | !{app.fields.nestedDateDay(name, 'maturity_date', value, index, attr.schema.maturity_date, {class1:'col-xl-4 col-lg-4 col-xs-4 p-r-0  m-d-p-l-5', placeholder: 'DD',})}
 
-      | !{app.fields.nestedTextLabel(name, 'interest_rate', value, index, attr.schema.interest_rate)}
+                  | !{app.fields.nestedDateYear(name, 'maturity_date', value, index, attr.schema.maturity_date, {class1:'col-xl-4 col-lg-4 col-xs-4 p-r-0', placeholder: 'YYYY',})}
 
-      .row.form-group
-        .col-date
-          label.col-xl-3.col-lg-12.text-xl-right.textlg-left Maturity Date
-            span.color-red *
-          .col-xl-4.col-lg-6.p-r-0
-            div(id='business_loans_or_debt__' + index + '__maturity_date')
-              | !{app.fields.nestedDateMonth(name, 'maturity_date', value, index, attr.schema.maturity_date, {class1:'col-xl-4 col-lg-4 col-xs-4 p-l-0  m-d-p-r-5', placeholder: 'MM',})}
-
-              | !{app.fields.nestedDateDay(name, 'maturity_date', value, index, attr.schema.maturity_date, {class1:'col-xl-4 col-lg-4 col-xs-4 p-r-0  m-d-p-l-5', placeholder: 'DD',})}
-
-              | !{app.fields.nestedDateYear(name, 'maturity_date', value, index, attr.schema.maturity_date, {class1:'col-xl-4 col-lg-4 col-xs-4 p-r-0 p-r-lg-1 m-d-p-l-10', placeholder: 'YYYY',})}
-
-      | !{app.fields.nestedTextLabel(name, 'other_material_terms', value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right m-b-0 p-t-0 m-b-lg-1',}, attr.schema.other_material_terms)}
+      | !{app.fields.nestedTextLabel(name, 'other_material_terms', value, index, attr.schema.other_material_terms)}
 
 mixin run()
 
   if first_run
-    div(class=(attr.row == 0 ? '' : 'row ') + name + '_block' + (attr.required == true ? ' requiredNested ' : ' ') + ' nested')
+    div(class=(attr.row == 0 ? '' : ' ') + name + '_block' + (attr.required == true ? ' requiredNested ' : ' ') + ' nested')
       div(class=(attr.row == 0 ? '' : 'row ') + name + '_container' + (attr.required == true ? ' requiredNested ' : ' ') + ' nested')
 
         if values == null || values.length == 0
@@ -38,12 +41,11 @@ mixin run()
         else
           each value, index in values
             +row(value, index)
-      .col-lg-12.m-b-2
-        .row.add-link
-          .col-xl-9.offset-xl-1.pull-xl-right
-            a(href="#" data-section=name data-comp='formc' data-template='business_loans_or_debt').link-2.add-sectionnew
-              i.fa.fa-plus
-              |  Add another loan or debt
+      .row.add-link
+        .col-xl-12
+          a(href="#" data-section=name data-comp='formc' data-template='business_loans_or_debt').link-2.add-sectionnew
+            i.fa.fa-plus
+            |  Add another loan or debt
   else
     +row({}, index)
 

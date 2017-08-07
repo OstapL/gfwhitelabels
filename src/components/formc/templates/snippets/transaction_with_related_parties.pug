@@ -5,10 +5,16 @@ mixin row(value, index)
       .delete-section-container
         a(href="#" data-section=name data-index=index).delete-sectionnew
           i.fa.fa-times
-      | !{app.fields.nestedTextLabel(name, 'amount_of_interest', value, index, {placeholder: '$ Amount of Interest',}, attr.schema.amount_of_interest)}
-      | !{app.fields.nestedTextLabel(name, 'relationship_to_issuer', value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right m-b-0 p-t-0 m-b-lg-1'}, attr.schema.relationship_to_issuer)}
-      | !{app.fields.nestedTextLabel(name, 'nature_of_interest', value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right m-b-0 p-t-0 m-b-lg-1'}, attr.schema.nature_of_interest)}
-      | !{app.fields.nestedTextLabel(name, 'specified_person', value, index, attr.schema.specified_person)}
+      .row
+        .col-xl-6.col-lg-6.col-md-6
+          | !{app.fields.nestedTextLabel(name, 'amount_of_interest', value, index, {placeholder: '$ Amount of Interest',}, attr.schema.amount_of_interest)}
+        .col-xl-6.col-lg-6.col-md-6
+          | !{app.fields.nestedTextLabel(name, 'relationship_to_issuer', value, index,  attr.schema.relationship_to_issuer)}
+      .row
+        .col-xl-6.col-lg-6.col-md-6
+          | !{app.fields.nestedTextLabel(name, 'nature_of_interest', value, index, attr.schema.nature_of_interest)}
+        .col-xl-6.col-lg-6.col-md-6
+          | !{app.fields.nestedTextLabel(name, 'specified_person', value, index, attr.schema.specified_person)}
 
 mixin run()
 
@@ -22,12 +28,11 @@ mixin run()
         else
           each value, index in values
             +row(value, index)
-      .col-lg-12
-        .row.add-link
-          .col-xl-9.offset-xl-3
-            a(href="#" data-section=name data-comp='formc' data-template='transaction_with_related_parties').link-2.add-sectionnew
-              i.fa.fa-plus
-              | Add Related Party
+      .add-link
+        .col-xl-12
+          a(href="#" data-section=name data-comp='formc' data-template='transaction_with_related_parties').link-2.add-sectionnew
+            i.fa.fa-plus
+            | Add Related Party
 
   else
     +row({}, index)
