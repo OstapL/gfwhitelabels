@@ -114,7 +114,7 @@ $('body').on('mouseout', '.showPopover', function () {
 });
 // для скролл шапки та разшерениях меньше 991px класс "sticky-active" - меняет цвет шапки
 $(window).scroll(function() {
-  if ($(this).scrollTop() > 1){
+  if ($(this).scrollTop() > 70){
     $('header').addClass("sticky-active");
   }
   else{
@@ -185,7 +185,11 @@ $('body').on('click', '.team-member-list article', function () {
 
 // scripts for mobile menu
 $('body').on('click', '#toggle_mobile_menu', function () {
-  $('html').toggleClass('show-menu');
+  const $html = $('html');
+  const cssClass = 'show-menu';
+  $html.toggleClass(cssClass);
+  //const preventBodyScroll = $html.hasClass(cssClass);
+  //app.preventBodyScrolling(preventBodyScroll);
 });
 
 $('html').on('click', function () {
