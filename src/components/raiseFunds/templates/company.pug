@@ -15,7 +15,7 @@ section.create-company.container.m-b-85
       form.form-section
           -
             pug_html += app.fields.fieldChoiceLabel('tour', _.extend({
-            'empty': { '': 'Choose option' },
+            'empty': { '': 'Choose Option' },
             'reverse': 1,
             'value': values.tour,
             }, fields.tour));
@@ -102,25 +102,26 @@ section.create-company.container.m-b-85
                     }, fields.corporate_structure));
             .col-xl-6.col-lg-6.col-md-6
               .row.form-group
-                .col-date#founding_date
+                .col-date
                   label.col-xl-12.text-xl-left Date of Organization
                     span.color-red *
                   .col-xl-12
-                    - 
-                      pug_html += app.fields.dateMonth('founding_date', _.extend({
-                      'empty': { '': 'Choose' },
-                      'value': values.founding_date,
-                      }, fields.founding_date));
-                    - 
-                      pug_html += app.fields.dateDay('founding_date', _.extend({
-                      'empty': { '': 'Choose' },
-                      'value': values.founding_date,
-                      }, fields.founding_date));
-                    - 
-                      pug_html += app.fields.dateYear('founding_date', _.extend({
-                      'value': values.founding_date,
-                      'placeholder': 'YYYY',
-                      }, fields.founding_date));
+                    div#founding_date
+                      - 
+                        pug_html += app.fields.dateMonth('founding_date', _.extend({
+                        'empty': { '': 'Choose' },
+                        'value': values.founding_date,
+                        }, fields.founding_date));
+                      - 
+                        pug_html += app.fields.dateDay('founding_date', _.extend({
+                        'empty': { '': 'Choose' },
+                        'value': values.founding_date,
+                        }, fields.founding_date));
+                      - 
+                        pug_html += app.fields.dateYear('founding_date', _.extend({
+                        'value': values.founding_date,
+                        'placeholder': 'YYYY',
+                        }, fields.founding_date));
           .row
             .col-xl-12
               .border-bottom.m-t-2.m-b-3

@@ -125,7 +125,6 @@ module.exports = {
       $p.text($p.data('full-text'));
       $p.css({ height: 'auto' });
       $a.hide();
-
     },
 
     // seeAllArticlePress(e) {
@@ -338,7 +337,6 @@ module.exports = {
 
       setTimeout(() => {
         this.initAsyncUI();
-        this.$el.find('.team-detail .info-wrap').equalHeights();
       }, 100);
 
       $(window).scroll(function() {
@@ -350,10 +348,13 @@ module.exports = {
               "-webkit-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
               "-moz-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
               "-ms-transform" : "translate3d(0px, " + st /2 + "%, .01px)"
-              
+
             });
           });
-      
+      this.$el.find('.perks .col-xl-4 p').equalHeights();
+      this.$el.find('.team .auto-height').equalHeights();
+      this.$el.find('.card-inverse p').equalHeights();
+
       // fetch vimeo
       $('.vimeo-thumbnail').each(function(elem, idx) {
         let id = $(this).data('vimeo-id');
@@ -376,14 +377,14 @@ module.exports = {
     },
 
     readMore(e) {
-      e.preventDefault();
       const $target = $(e.target).closest('.show-more-members');
-      if ($target.length)
+      if ($target.length) {
+        e.preventDefault();
         $(e.target).parent().addClass('show-more-detail');
-      else
+      } else {
         this.$('.show-more-members').parent().removeClass('show-more-detail');
+      }
     },
-
   }),
 
   investment: Backbone.View.extend({
