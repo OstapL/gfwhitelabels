@@ -39,6 +39,7 @@ do
             git st | grep 'UU '
             break;
         else
+            git commit -p
             git push origin $b
             # Push in the main repositary will not work
             # if git branch --all | grep --quiet "remotes/vladyslav2/$b"; then
