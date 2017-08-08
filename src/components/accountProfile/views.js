@@ -690,24 +690,16 @@ module.exports = {
         require('src/js/graph_data.js');
       }, 'graph_chunk');
       setTimeout(()=>{
-        var time = 2;
-        $('.dashboard-stat').each(function(){
-          $('span').each(function(){
-            var 
-            i = 1,
-            num = $(this).data('num'),
-            step = 1000 * time / num,
-            that = $(this),
-            int = setInterval(function(){
-              if (i <= num) {
-                that.html(i);
+        $('.count-num').each(function () {
+          $(this).prop('Counter',0).animate({
+              Counter: $(this).text()
+          }, {
+              duration: 1000,
+              easing: 'swing',
+              step: function (now) {
+                  $(this).text(Math.ceil(now));
               }
-              else {
-                clearInterval(int);
-              }
-              i++;
-            },step);
-          });
+            });
         });
       },100)
       return this;
@@ -749,25 +741,25 @@ module.exports = {
         countComments(data[0].data);
         $('.interactions-count').data('num', commentsCount);
         setTimeout(()=>{
-        var time = 2;
-        $('.dashboard-stat').each(function(){
-          $('.interactions-count').each(function(){
-            var 
-            i = 1,
-            num = $(this).data('num'),
-            step = 1000 * time / num,
-            that = $(this),
-            int = setInterval(function(){
-              if (i <= num) {
-                that.html(i);
-              }
-              else {
-                clearInterval(int);
-              }
-              i++;
-            },step);
+          var time = 2;
+          $('.dashboard-stat').each(function(){
+            $('.interactions-count').each(function(){
+              var 
+              i = 1,
+              num = $(this).data('num'),
+              step = 1000 * time / num,
+              that = $(this),
+              int = setInterval(function(){
+                if (i <= num) {
+                  that.html(i);
+                }
+                else {
+                  clearInterval(int);
+                }
+                i++;
+              },step);
+            });
           });
-        });
       },100)
       });
     },
