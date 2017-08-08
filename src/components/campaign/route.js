@@ -7,6 +7,7 @@ module.exports = {
     ':name/:investmentId/invest-thanks': 'investmentThankYou',
     'companies': 'list',
     ':name': 'detail',
+    ':name/invest-thanks-share': 'investThanksShareDetail',
     ':name/invest': 'investment',
   },
   methods: {
@@ -20,6 +21,52 @@ module.exports = {
           });
           i.render();
           app.hideLoading();
+        });
+      }, 'campaign_chunk');
+    },
+
+    investThanksShareDetail(name) {
+      app.showLoading();
+
+      require.ensure([], () => {
+        const View = require('./views.js');
+        $.when(
+          api.makeCacheRequest(app.config.raiseCapitalServer + '/company', 'OPTIONS'),
+          api.makeCacheRequest(app.config.raiseCapitalServer + '/' + name)
+        ).done((companyFields, companyData) => {
+
+          let model = new app.models.Company(companyData[0], companyFields[0]);
+          let metaDescription = companyData[0].tagline + '. ';
+          try {
+            metaDescription += companyData[0].description.split('.')[0];
+          } catch(e) {
+          }
+
+          document.title = companyData[0].short_name || companyData[0].name;
+          document.head.querySelector('meta[name="description"]').content = metaDescription;
+
+          const siteName = window.location.host.replace(/growthfountain/i, 'GrowthFountain');
+          const ogTitle = `Everyone’s doing it! I just invested in ${(companyData[0].short_name || companyData[0].name)} on ${siteName}`;
+          const ogDescription = companyData[0].description;
+          const ogURL = window.location.origin + '/' + (model.slug || model.id);
+
+          document.head.querySelector('meta[property="og:title"]').content = ogTitle;
+          document.head.querySelector('meta[property="og:description"]').content = ogDescription;
+          document.head.querySelector('meta[property="og:image"]').content = model.campaign.getMainImage();
+          document.head.querySelector('meta[property="og:url"]').content = ogURL;
+          let fbAppIDTag = document.head.querySelector('meta[property="fb:app_id"]');
+          if (!fbAppIDTag) {
+            fbAppIDTag = document.createElement('meta');
+            fbAppIDTag.setAttribute('property', 'fb:app_id');
+            document.head.appendChild(fbAppIDTag);
+          }
+          fbAppIDTag.content = app.config.facebookClientId;
+
+          let i = new View.detail({
+            model: model
+          });
+          i.render();
+          $('body').scrollTo();
         });
       }, 'campaign_chunk');
     },
