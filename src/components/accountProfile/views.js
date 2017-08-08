@@ -388,6 +388,7 @@ module.exports = {
         investment: require('./templates/snippets/investment.pug'),
         creditSection: require('./templates/snippets/creditSection.pug'),
         confirmCancel: require('./templates/snippets/confirm-cancel.pug'),
+        noInvestments: require('./templates/snippets/no-investments.pug'),
       };
 
       //this is auth cookie for downloadable files
@@ -547,10 +548,7 @@ module.exports = {
           let hasActiveInvestments = _.some(this.model.data, i => i.active);
           if (!hasActiveInvestments)
             $('#active .investor_table')
-              .append(
-                '<div role="alert" class="alert alert-warning">' +
-                '<strong>You have no active investments</strong>' +
-                '</div>');
+              .append(this.snippets.noInvestments());
 
           let historicalInvestmentsBlock = this.$el.find('#historical .investor_table');
           let historicalInvestmentElements = historicalInvestmentsBlock.find('.one_table');
@@ -691,7 +689,19 @@ module.exports = {
         require('src/js/graph/graph.js');
         require('src/js/graph_data.js');
       }, 'graph_chunk');
-
+      setTimeout(()=>{
+        $('.count-num').each(function () {
+          $(this).prop('Counter',0).animate({
+              Counter: $(this).text()
+          }, {
+              duration: 1000,
+              easing: 'swing',
+              step: function (now) {
+                  $(this).text(Math.ceil(now));
+              }
+            });
+        });
+      },100)
       return this;
     },
 
@@ -729,7 +739,28 @@ module.exports = {
         }
 
         countComments(data[0].data);
-        $('.interactions-count').text(commentsCount);
+        $('.interactions-count').data('num', commentsCount);
+        setTimeout(()=>{
+          var time = 2;
+          $('.dashboard-stat').each(function(){
+            $('.interactions-count').each(function(){
+              var 
+              i = 1,
+              num = $(this).data('num'),
+              step = 1000 * time / num,
+              that = $(this),
+              int = setInterval(function(){
+                if (i <= num) {
+                  that.html(i);
+                }
+                else {
+                  clearInterval(int);
+                }
+                i++;
+              },step);
+            });
+          });
+      },100)
       });
     },
   }),
