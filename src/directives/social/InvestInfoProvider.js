@@ -29,7 +29,7 @@ class InvestorInfoProvider extends ShareInfoProvider {
         ? model.campaign.minimum_increment
         : 100,
       title: this._format('title', { company: companyName, siteName: this.data.siteName }),
-      url: window.location.origin + '/' + (model.slug || model.id),
+      url: window.location.origin + '/' + (model.slug || model.id) + '/invest-thanks-share',
       description: model.description,
       companyName: companyName,
       corporateStructure: CORPORATE_STRUCTURE[model.corporate_structure] || '',
