@@ -1,12 +1,15 @@
-const extend = function(child) {
-  const view = Backbone.prototype.View.extend.apply(this, arguments);
-  view.prototype.events = _.extend({}, this.prototype.events, child.events);
-  return view;
+const FieldStaticProps = {
+  extend(child) {
+    const view = Backbone.prototype.View.extend.apply(this, arguments);
+    view.prototype.events = _.extend({}, this.prototype.events, child.events);
+    return view;
+  }
 };
 
 const Field = Backbone.View.extend({
+  tagName: 'div',
   events: {
-
+    'change input': 'onChange'
   },
 
   initialize(options) {
@@ -19,12 +22,15 @@ const Field = Backbone.View.extend({
   },
 
   destroy() {
+    this.undelegateEvents();
+    this.$el.remove();
+  },
+
+  onChange(e) {
 
   }
 
-});
-
-Field.extend =  extend;
+}, FieldStaticProps);
 
 const TextField = Field.extend({
   template: require('./templates/'),
