@@ -4,21 +4,26 @@
   (id || name) +
   (required == true ? ' required ' : ' ') +
   type;
+-
+  var containerClass = 'form-group row required';
+  var labelClass = 'col-xl-12 text-xl-left';
+  var inputClass = 'col-xl-12';
+  var id = '';
 
-div(class=cssClass)
-  label(class=class1 for=id)!= label
-  div(class=class2)
+div(class=containerClass)
+  label(class=labelClass for=(attr.id) #{ label }
+  div(class=inputClass)
     input(
-    id=id || name
-    name=name || name
-    placeholder=placeholder ? placeholder :label
-    type=type ? type : 'text'
-    class=(help_text ? 'showPopover' : '')
-    data-content=(help_text ?help_text : '')
-    readonly=(readonly ?readonly : false)
-    value=value
-    maxlength = maxlength ? maxlength : false
-    disabled=(disabled ? disabled : false)
-    data-value-type=(valueType ? valueType : type)
-    data-positive-only=(positiveOnly ? '1' :  false)
+      id=id || name
+      name=name || name
+      placeholder=placeholder ? placeholder :label
+      type=type ? type : 'text'
+      class=(help_text ? 'showPopover' : '')
+      data-content=(help_text ?help_text : '')
+      readonly=(readonly ?readonly : false)
+      value=value
+      maxlength = maxlength ? maxlength : false
+      disabled=(disabled ? disabled : false)
+      data-value-type=(valueType ? valueType : type)
+      data-positive-only=(positiveOnly ? '1' :  false)
     ).form-control
