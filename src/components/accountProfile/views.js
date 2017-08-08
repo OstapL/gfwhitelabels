@@ -683,33 +683,17 @@ module.exports = {
         })
       );
 
+      setTimeout(() => {
+        $('.count-num').animateCount();
+      },100);
+
       this.initComments();
 
       require.ensure(['src/js/graph/graph.js', 'src/js/graph_data.js'], () => {
         require('src/js/graph/graph.js');
         require('src/js/graph_data.js');
       }, 'graph_chunk');
-      setTimeout(()=>{
-        var time = 2;
-        $('.dashboard-stat').each(function(){
-          $('span').each(function(){
-            var 
-            i = 1,
-            num = $(this).data('num'),
-            step = 1000 * time / num,
-            that = $(this),
-            int = setInterval(function(){
-              if (i <= num) {
-                that.html(i);
-              }
-              else {
-                clearInterval(int);
-              }
-              i++;
-            },step);
-          });
-        });
-      },100)
+
       return this;
     },
 
@@ -735,40 +719,23 @@ module.exports = {
           readonly: this.campaign.expired,
           cssClass: 'col-xl-8 offset-xl-0',
         });
+
         comments.render();
 
-        let commentsCount = 0;
-
         function countComments(comments) {
-          commentsCount += comments.length;
+          let count = comments.length || 0;
           _.each(comments, (c) => {
-            countComments(c.children);
+            count += countComments(c.children);
           });
+
+          return count;
         }
 
-        countComments(data[0].data);
-        $('.interactions-count').data('num', commentsCount);
-        setTimeout(()=>{
-        var time = 2;
-        $('.dashboard-stat').each(function(){
-          $('.interactions-count').each(function(){
-            var 
-            i = 1,
-            num = $(this).data('num'),
-            step = 1000 * time / num,
-            that = $(this),
-            int = setInterval(function(){
-              if (i <= num) {
-                that.html(i);
-              }
-              else {
-                clearInterval(int);
-              }
-              i++;
-            },step);
-          });
-        });
-      },100)
+        const commentsCount = countComments(data[0].data);
+
+        $('.interactions-count').data('value', commentsCount).text(commentsCount);
+        $('.interactions-count').animateCount();
+
       });
     },
   }),
