@@ -81,12 +81,14 @@ describe('Log-in page', () => {
       domain: 'alpha.growthfountain.com',
       email: 'test@test.com',
       password: 'qweqwe123',
+      checkbox1: 1,
     };
 
     testHelpers.fillForm($loginForm, _.pick(userData, 'email', 'password'));
 
     eventEmitter.on('done', () => {
       const data = api.makeRequest.args[0][2];
+
       expect(data).to.deep.equal(userData);
 
       //check localStorage/cookie values
@@ -331,6 +333,7 @@ describe('Log-in popup', () => {
       email: 'test@test.com',
       password: 'qweqwe123',
       domain: 'alpha.growthfountain.com',
+      checkbox1: 1,
     };
 
     const $loginForm = $('#sign-in-form');
