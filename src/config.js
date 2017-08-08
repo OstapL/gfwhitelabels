@@ -58,4 +58,5 @@ module.exports = {
 	 //bottom banner (1 - raise capital/ 0 - INVEST)
 	 bottomBunner: 0,
  },
+ currentSiteUrl: "rivermarkcu.growthfountain.com"
 };
