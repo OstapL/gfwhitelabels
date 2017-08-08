@@ -7,7 +7,22 @@ section.login
     
     .col-xl-4.col-lg-6.col-sm-8.offset-sm-2.col-md-8.offset-md-2.offset-lg-3.offset-xl-4
       form(action="" novalidate autocomplete="off" role="presentation").form-section.login-form
-        .col-lg-12.login-padding.p-xs-0
+        .row
+          input(type="checkbox" id="agree-rules" name="checkbox1" value="1" checked="1" style="display: none")
+          .social-btn.col-lg-12.p-xs-0
+            a(data-original-title="facebook" data-network="facebook" href="#")#signup-facebook.btn.btn-block.btn-social-network.btn-facebook.text-uppercase
+              i.fa.fa-facebook
+              |  log in with Facebook
+            a(data-original-title="Linkedin" data-network="linkedin" href="#")#signup-linkedin.btn.btn-block.btn-social-network.btn-linkedin.text-uppercase
+              i.fa.fa-linkedin
+              |  log in with linkedin
+            a(data-original-title="Google Plus" data-network="google" href="#")#signup-google.btn.btn-block.btn-social-network.btn-google.text-uppercase
+              i.fa.fa-google-plus
+              |  log in with Google
+          .col-lg-12.p-xs-0
+            .border-bottom.or
+              span or
+        .col-lg-12.p-xs-0
           input(type="hidden" name="domain" value=window.location.host)
           -
             pug_html += app.fields.fieldText('email', {
@@ -33,17 +48,5 @@ section.login
           .row.text-sm-center.text-xs-center
             button(type="submit")#login-btn.btn.btn-primary.text-uppercase Log In
 
-        .col-lg-12.border-bottom.or
-          span or
-        .row
-          input(type="checkbox" id="agree-rules" name="checkbox1" value="1" checked="1" style="display: none")
-          .social-btn.col-lg-12.p-xs-0
-            a(data-original-title="facebook" data-network="facebook" href="#")#signup-facebook.btn.btn-block.btn-social-network.btn-facebook.text-uppercase
-              i.fa.fa-facebook
-              |  SIGN UP with Facebook
-            a(data-original-title="Linkedin" data-network="linkedin" href="#")#signup-linkedin.btn.btn-block.btn-social-network.btn-linkedin.text-uppercase
-              i.fa.fa-linkedin
-              |  SIGN UP with linkedin
-            a(data-original-title="Google Plus" data-network="google" href="#")#signup-google.btn.btn-block.btn-social-network.btn-google.text-uppercase
-              i.fa.fa-google-plus
-              |  SIGN UP with Google
+        
+        
