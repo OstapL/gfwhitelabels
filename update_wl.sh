@@ -6,7 +6,12 @@ if git branch --all | grep --quiet "remotes/vladyslav2/alpha"; then
     git merge --no-ff vladyslav2/alpha > /dev/null
 fi
 
-git checkout alpha > /dev/null
+git checkout origin/alpha > /dev/null
+if git branch --all | grep --quiet "remotes/vladyslav2/$b"; then
+    echo "============ MERGE WITH VLADYSLAV ALPHA ============"
+    git merge vladyslav2/alpha > /dev/null
+fi
+
 for b in $(cat branches.txt)
 do
     echo "========================= branch $b =========================="
@@ -26,7 +31,7 @@ do
             git merge vladyslav2/$b > /dev/null
         fi
 
-        git merge --no-ff alpha > /dev/null
+        git merge --no-ff origin/alpha > /dev/null
         ./fix_merge.sh
 
         if git st | grep --quiet 'UU '; then
