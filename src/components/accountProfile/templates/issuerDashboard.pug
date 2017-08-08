@@ -34,7 +34,7 @@ section.issuer-dashbord-top
               span $
               span(
                 data-counter="counterup"
-                data-num=campaign.amount_raised
+                class="count-num"
                 data-value=campaign.amount_raised) #{ campaign.amount_raised }
             .desc Amount Raised
 
@@ -46,7 +46,7 @@ section.issuer-dashbord-top
             .number
               span(
                 data-counter="counterup"
-                data-num=company.number_of_investors
+                class="count-num"
                 data-value=company.number_of_investors) #{ company.number_of_investors }
             .desc Number of Investments
 
@@ -58,7 +58,7 @@ section.issuer-dashbord-top
             .number
               span(
                 data-counter="counterup"
-                data-num=company.total_views
+                class="count-num"
                 data-value=0) #{ company.total_views }
             .desc Page Views
 
@@ -70,8 +70,8 @@ section.issuer-dashbord-top
             .number
               span(
                 data-counter="counterup"
-                data-num=0
-                data-value=0).interactions-count 0
+                data-value=0
+              ).interactions-count 0
             .desc New Interactions
 
       .col-xl-7.col-lg-7.col-md-10.col-sm-10.p-r-0.col-xs-10.hidden-xs-down
