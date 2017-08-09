@@ -1,0 +1,70 @@
+//main page custom
+.triangle
+  width: 0
+  height: 0
+  border-style: solid
+  border-color: transparent transparent $crusta transparent
+  opacity: 0.7
+.text-rotate-after
+  position: absolute
+  font-weight: bold
+  font-family: 'Montserrat'
+  letter-spacing: 3px
+  color: #fff
+  transform: rotate(316deg)
+  -webkit-transform: rotate(316deg)
+  -moz-transform: rotate(316deg)
+  -o-transform: rotate(316deg)
+  -ms-transform: rotate(316deg)
+  z-index: 3
+  text-transform: uppercase
+  opacity: 0.6
+.main-top-baner
+  &:after
+    content: ''
+    position: absolute
+    right: 0
+    bottom: 0
+    z-index: 2
+    @extend .triangle
+    border-width: 0 0 340px 350px
+  &:before
+    content: 'your picture'
+    @extend .text-rotate-after
+    font-size: rem(30)
+    bottom: 115px
+    right: 0
+#campaignList
+  .col-xl-4
+    &:first-child
+      .block_link
+        &:after
+          content: ''
+          position: absolute
+          right: 0
+          bottom: 0
+          z-index: 2
+          @extend .triangle
+          border-width: 0 0 200px 200px
+        &:before
+          content: 'your company'
+          @extend .text-rotate-after
+          font-size: rem(18)
+          bottom: 64px
+          right: -18px
+.main-video-wrap
+  .center-wrap
+    &:after
+      content: ''
+      position: absolute
+      right: 0
+      bottom: -77px
+      z-index: 2
+      @extend .triangle
+      border-width: 0 0 400px 400px
+    &:before
+      content: 'your video'
+      @extend .text-rotate-after
+      font-size: rem(30)
+      bottom: 50px
+      right: 40px

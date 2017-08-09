@@ -1,3 +1,4 @@
 src/config.js merge=ours
 src/img/logo.png merge=ours
 staticdata
+src/templates/mainPage.pug merge=ours
