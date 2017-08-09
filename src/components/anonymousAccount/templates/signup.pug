@@ -1,40 +1,36 @@
 section.singup.m-t-85
   .container
     .row
-      div.text-center-flex.position-relative
+      div.text-center-flex.position-relative.col-xs-12
         .sign-up-left-banner-img
-        .sign-up-left-banner.col-xl-4.col-lg-5.col-sm-8.col-md-6.col-xs-12.p-x-0
-          .text-lg-left.text-md-left.text-sm-center.text-xs-center
-            .block-top-section
-              .wrap-baner-title
-                h1.text-uppercase Get
-                h1.text-uppercase.credit.font-weight-bold &nbsp;$25&nbsp;
-                h1.text-uppercase Credit
-              .wrap-baner
-                h2.font-weight-light.m-t-0 If You Sign Up Now*
-                hr
-                p *Limited time offer for new accounts only.
-                  br
-                  | Credit valid for 90 days and can be used
-                  br
-                  | only for investments made on this platform.
-                  br
-                  | Credit applies to investment commission.
-                  br
-                  | Other conditions apply, see 
-                  span
-                    a(href="/pg/terms_of_use").link-3 Terms of Use.
-        .col-xl-4.col-lg-5.col-sm-8.col-md-6.col-xs-12.p-x-0.sign-up-right
-
-          .sign-up-right-padding
-            h2.text-uppercase.text-sm-center.text-xs-center.m-t-2.m-b-0 Sign Up
-            p.text-xs-center Have an Account? 
-              a(href="/account/login").link-3 Log In
-            form(action="" metod="post" novalidate).form-section.signup-form
-              .col-lg-12
-                input(type="hidden" name="domain" value=window.location.host)
-                .row
-                  .social-btn.col-lg-12.p-xs-0
+        .col-xl-6.col-lg-6.col-md-6.col-sm-12.col-xs-12.p-r-block.p-xs-0
+          .sign-up-left-banner
+            .text-xs-center
+              .block-top-section
+                .wrap-baner-title
+                  h1.text-uppercase Get
+                  h1.text-uppercase.credit.font-weight-bold &nbsp;$25&nbsp;
+                  h1.text-uppercase Credit
+                .wrap-baner
+                  h2.font-weight-light.m-t-0 If You Sign Up Now*
+                  hr
+                  p *Limited time offer for new accounts only. Credit valid for 
+                    br
+                    | 90 days and can be used only for investments made on this 
+                    br
+                    | platform. Other conditions apply, see 
+                    span
+                      a(href="/pg/terms_of_use").link-3 Terms of Use.
+        .col-xl-6.col-lg-6.col-md-6.col-sm-12.col-xs-12.p-l-block.p-xs-0
+          .col-xl-12.sign-up-right
+            .sign-up-right-padding
+              h2.text-uppercase.text-sm-center.text-xs-center.p-t-2.m-t-0.m-b-0 Sign Up
+              p.text-xs-center Have an Account? 
+                a(href="/account/login").link-3 Log In
+              form(action="" metod="post" novalidate).form-section.signup-form
+                .col-xl-12.text-xs-center.p-xs-0
+                  input(type="hidden" name="domain" value=window.location.host)
+                  .social-btn.m-x-auto
                     a(data-original-title="facebook" data-network="facebook" href="#")#signup-facebook.btn.btn-block.btn-social-network.btn-facebook.text-uppercase
                       i.fa.fa-facebook
                       |  SIGN UP with Facebook
@@ -44,52 +40,61 @@ section.singup.m-t-85
                     a(data-original-title="Google Plus" data-network="google" href="#")#signup-google.btn.btn-block.btn-social-network.btn-google.text-uppercase
                       i.fa.fa-google-plus
                       |  SIGN UP with Google
-                .form-group.row.clearfix.required
+                    
+                .fields-group.m-x-auto
+                  .form-group.clearfix.required
+                    .row
+                      .col-lg-12.check-input
+                        label
+                          input(type="checkbox" id="agree-rules" name="checkbox1" value="1")
+                          span.label-text I agree to the 
+                            a(href="/pg/terms_of_use" target="_blank").link-3 Terms of Use
+                            | , 
+                            a(href="/pg/privacy_policy" target="_blank").link-3 Privacy Policy
+                            |  and 
+                            a(href="/pg/electronic_signature" target="_blank").link-3 Electronic Signature and Electronic Delivery of Documentation.
                   .row
-                    .col-lg-12
-                      label
-                        input(type="checkbox" id="agree-rules" name="checkbox1" value="1")
-                        span.label-text I agree to the 
-                          a(href="/pg/terms_of_use" target="_blank").link-3 Terms of Use
-                          | , 
-                          a(href="/pg/privacy_policy" target="_blank").link-3 Privacy Policy
-                          |  and 
-                          a(href="/pg/electronic_signature" target="_blank").link-3 Electronic Signature and Electronic Delivery of Documentation.
-                .row
-                  .col-lg-12.border-bottom.or
-                    span or
-                -
-                  pug_html += app.fields.fieldText('first_name', {
-                    required: true,
-                    type: 'text',
-                    placeholder: 'First Name',
-                    'class': 'form-group row clearfix',
-                  });
-                  pug_html += app.fields.fieldText('last_name', {
-                    required: true,
-                    type: 'text',
-                    placeholder: 'Last Name',
-                    'class': 'form-group row clearfix',
-                  });
-                  pug_html += app.fields.fieldText('email', {
-                    require: true,
-                    type: 'email',
-                    placeholder: 'E-mail',
-                    'class': 'form-group row clearfix',
-                  });
-                  pug_html += app.fields.fieldText('password1', {
-                    required: true,
-                    type: 'password',
-                    placeholder: 'Password',
-                    'class': 'form-group row clearfix',
-                  });
-                  pug_html += app.fields.fieldText('password2', {
-                    required: true,
-                    type: 'password',
-                    placeholder: 'Re-enter Password',
-                    'class': 'form-group row clearfix',
-                  });
-                
-              .col-lg-12.m-t-1
-                .row.text-xs-center
-                  button(type="submit")#register-submit-btn.btn.btn-primary.text-uppercase Sign Up
+                    .col-xs-12
+                      .border-bottom.or
+                        span or
+                  .first-last.row
+                    .col-xl-6
+                      -
+                        pug_html += app.fields.fieldText('first_name', {
+                          required: true,
+                          type: 'text',
+                          placeholder: 'First Name',
+                          'class': 'form-group row clearfix',
+                        });
+
+                    .col-xl-6
+                      -
+                        pug_html += app.fields.fieldText('last_name', {
+                          required: true,
+                          type: 'text',
+                          placeholder: 'Last Name',
+                          'class': 'form-group row clearfix',
+                        });
+                    .col-xl-12
+                      -
+                        pug_html += app.fields.fieldText('email', {
+                          require: true,
+                          type: 'email',
+                          placeholder: 'E-mail',
+                          'class': 'form-group row clearfix',
+                        });
+                        pug_html += app.fields.fieldText('password1', {
+                          required: true,
+                          type: 'password',
+                          placeholder: 'Password',
+                          'class': 'form-group row clearfix',
+                        });
+                  
+                .col-xs-12.m-t-1
+                  .row.text-xs-center
+                    button(type="submit")#register-submit-btn.btn.btn-primary.text-uppercase Sign Up
+            .row
+              .bottom-line.col-xs-12
+                span Be signing up I agree to receive occasional issuer and investor notifications
+                  br
+                  |  from GrowthFountain.

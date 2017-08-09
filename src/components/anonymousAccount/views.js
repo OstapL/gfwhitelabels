@@ -44,7 +44,8 @@ const SIGNUP_FIELDS = {
   email: LOGIN_FIELDS.email,
   domain: LOGIN_FIELDS.domain,
   password1: _.extend({}, LOGIN_FIELDS.password, { label: 'Password' }),
-  password2: _.extend({}, LOGIN_FIELDS.password, { label: 'Re-enter Password'}),
+  //we left only one password field
+  // password2: _.extend({}, LOGIN_FIELDS.password, { label: 'Re-enter Password'}),
 };
 
 const popupAuthHelper = {

@@ -1,32 +1,32 @@
-.singup
+.singup,
   .sign-up-left-banner-img
     background-image: url("img/generals/sign-up-bg.png")
     height: 100%
-    width: 390px
-    background-position: center
+    max-width: 555px
+    width: 100%
+    background-position: center bottom
     background-size: cover
     background-repeat: no-repeat
     position: absolute
     top: 0
-    left: 16.7%
+    left: rem(30)
     @media only screen and (max-width : 1200px)
-      left: 9%
-      width: 398px
+      width: 455px
     @media only screen and (max-width : 991px)
-      left: 0
-      width: 375px
+      width: 345px
 
   .position-relative
     position: relative
 
   .sign-up-left-banner
+    height: 100%
     .block-top-section
       background-color: rgba($white, .9)
       padding: 10px 0
       position: relative
       top: 20px
       .wrap-baner-title
-        padding: 0 10px
+        padding: 0 rem(10)
         h1
           display: inline-block
           text-align: center
@@ -34,37 +34,72 @@
           &.credit
             font-size: rem(52)
             color: $sign-up-credit-color
-        @media only screen and (min-width : 768px)
-          padding: 0
-          padding-left: 25px
-          text-align: left
+            @media screen and (min-width : 768px) and (max-width : 991px)
+              font-size: (32)
+          @media screen and (min-width : 768px) and (max-width : 991px)
+            font-size: rem(24)
+
       .wrap-baner
-        padding: 0 25px
+        padding: 0 rem(25)
+        padding-bottom: rem(15)
+        h2
+          @media screen and (min-width : 768px) and (max-width : 991px)
+            font-size: rem(20)
         hr
-          width: 260px
+          max-width: 350px
           background-color: $black
-          margin: 20px 0px
+          margin: 20px auto
         p
           font-size: rem(12)
           line-height: 16px
   .sign-up-right
     border: solid 1px $light_grey
     .label-text
-      font-size: rem(12)
+      font-size: rem(11)
     p
       margin-bottom: rem(25)
       color: $small-text
-    .sign-up-right-padding
-      padding-left: rem(20)
-      padding-right: rem(20)
     .social-btn
       margin-bottom: rem(30)
+      max-width: 290px
+      margin: auto
+      @media only screen and (max-width : 360px)
+        max-width: 320px
     #register-submit-btn
-      margin-bottom: rem(23)
-      margin-top: rem(8)
+      margin-bottom: rem(28)
+      margin-top: rem(13)
     .or
       margin-top: rem(25)
       margin-bottom: 18px
+    .fields-group
+      max-width: 360px
+      width: 100%
+      .check-input
+        margin-top: 30px
+        label
+          font-size: rem(11)
+          line-height: rem(14)
+          input
+           margin-top: rem(3)
+    .first-last
+      .row
+        margin-left: 0
+        margin-right: 0
+    .bottom-line
+      background-color: $alabaster
+      line-height: 14px
+      font-size: rem(11)
+      padding-top: rem(5)
+      padding-bottom: rem(5)
+  .p-r-block
+    padding-right: 0
+    @media only screen and (max-width : 767px)
+      padding-right: 15px
+  .p-l-block
+    padding-left: 0
+    @media only screen and (max-width : 767px)
+      padding-left: 15px
+
   @media only screen and (min-width : 768px)
     .container
       padding-left: 0
@@ -98,9 +133,6 @@
     .sign-up-right
       border-top: none
       height: auto
-  @media only screen and (max-width : 543px)
-    .sign-up-right
-      border: none
   @media only screen and (max-width : 375px)
     .sign-up-left-banner
       .block-top-section
@@ -112,14 +144,11 @@
           h2
             font-size: rem(16)
             margin-bottom: 0
-          hr
-            margin: 10px auto
 
 
   @media only screen and (max-width : 320px)
     .sign-up-right
       height: auto
-      border: none
     .wrap-baner
       h1
         font-size: rem(26)!important
@@ -165,6 +194,7 @@
       display: block
       padding-left: rem(20)
       line-height: rem(14)
+      text-align: left
     .p-t-6
       padding-top: rem(6)
   .social-btn
