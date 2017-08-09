@@ -116,8 +116,7 @@ module.exports = {
         40,   //up arrow
         91,   //left window
       ];
-      
-      
+
       if (_.contains(SKIP_KEY_CODES, e.keyCode))
         return;
 

@@ -116,11 +116,9 @@ $('body').on('mouseout', '.showPopover', function () {
 $(window).scroll(function() {
   if ($(this).scrollTop() > 70){
     $('header').addClass("sticky-active");
-    $('#page').addClass("padding-t-65");
   }
   else{
     $('header').removeClass("sticky-active");
-    $('#page').removeClass("padding-t-65");
   }
 });
 // show bottom logo while scrolling page
@@ -190,8 +188,8 @@ $('body').on('click', '#toggle_mobile_menu', function () {
   const $html = $('html');
   const cssClass = 'show-menu';
   $html.toggleClass(cssClass);
-  const preventBodyScroll = $html.hasClass(cssClass);
-  app.preventBodyScrolling(preventBodyScroll);
+  //const preventBodyScroll = $html.hasClass(cssClass);
+  //app.preventBodyScrolling(preventBodyScroll);
 });
 
 $('html').on('click', function () {
