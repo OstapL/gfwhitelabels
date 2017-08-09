@@ -1,6 +1,6 @@
 const FieldStaticProps = {
   extend(child) {
-    const view = Backbone.prototype.View.extend.apply(this, arguments);
+    const view = Backbone.View.extend.apply(this, arguments);
     view.prototype.events = _.extend({}, this.prototype.events, child.events);
     return view;
   }
@@ -17,38 +17,62 @@ const Field = Backbone.View.extend({
       'schema',
       'model',
       'name',
-      'getValue',
-      'setValue',
+      'attr',
+      // 'getValue',
+      // 'setValue',
     ]));
   },
 
-  buildAttributes() {
-    return {
+  // buildAttributes() {
+  //   // (help_text ? 'showPopover' : '')
+  //
+  //   // (help_text ?help_text : '')
+  //
+  //   // //data-positive-only=(positiveOnly ? '1' :  false)
+  //
+  //   return {
+  //     type: 'email',
+  //     valueType: this.schema.type,
+  //   };
+  // },
 
-    };
+  renderElement() {
+    if (!this.elementID)
+      this.elementID = `field_${this.cid}`;
+
+    return `<div id="${this.elementID}"></div>`;
   },
 
   render() {
+    this.setElement(`#${this.elementID}`);
+
     this.$el.html(
       this.template({
         value: this.getValue(),
         schema: this.schema,
         attr: {
+          type: 'text',
           id: 'input-ID',
           placeholder: 'Placeholder text',
           helpText: 'Help text',
           readonly: false,
           disabled: false,
           fieldContainerClass: 'form-group row required',
-          labelContainerClass: '',
-          inputContainerClass: '',
+          labelClass: 'col-xl-12 text-xl-left',
+          inputContainerClass: 'col-xl-12',
+          inputClass: 'form-control ',
         }
       })
     );
   },
 
+  onChange(e) {
+    // this.setValue(e.target.value);
+  },
+
   getValue() {
-    this.model.get(this.name);
+    return '';
+    //this.model.get(this.name);
   },
 
   setValue(value) {

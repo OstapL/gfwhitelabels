@@ -27,12 +27,14 @@ module.exports = {
         }
 
         const View = require('./views.js');
-        let loginView = new View.login({
+        let loginView = new View.login1({
           el: '#content',
           model: {},
         });
+
         loginView.render();
         app.hideLoading();
+
       }, 'anonymous_account_chunk');
     },
 

@@ -1,4 +1,5 @@
 const socialAuth = require('./social-auth.js');
+const { TextField } = require('fields/new-fields.js');
 
 const LOGIN_FIELDS = {
   email: {
@@ -182,6 +183,44 @@ const Views = {
       this.$el.html(
         this.template()
       );
+      return this;
+    },
+
+    _success(data) {
+      app.user.setData(data);
+    },
+
+  }),
+
+  login1: Backbone.View.extend({
+    urlRoot: app.config.authServer + '/rest-auth/login',
+    template: require('./templates/login.pug'),
+    events: {
+      'submit .login-form': api.submitAction,
+    },
+
+    initialize() {
+      this.fields = {
+        email: new TextField({
+          schema: LOGIN_FIELDS.email,
+          type: 'email',
+        }),
+      };
+    },
+
+    render() {
+      $('body').scrollTo();
+
+      this.$el.html(
+        this.template({
+          fields: this.fields,
+        })
+      );
+
+      setTimeout(() => {
+        _.each(this.fields, field => field.render());
+      }, 10);
+
       return this;
     },
 
