@@ -10,7 +10,7 @@ section.login
         .col-lg-12.login-padding.p-xs-0
           input(type="hidden" name="domain" value=window.location.host)
           -
-            pug_html += fields.email.renderElement()
+            pug_html += fields.email.render().$el.html();
 
             pug_html += app.fields.fieldText('password', {
               'class': 'form-group row clearfix',

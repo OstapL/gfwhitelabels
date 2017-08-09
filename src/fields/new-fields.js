@@ -21,49 +21,49 @@ const Field = Backbone.View.extend({
       // 'getValue',
       // 'setValue',
     ]));
+
+    this.buildAttributes();
   },
 
-  // buildAttributes() {
-  //   // (help_text ? 'showPopover' : '')
-  //
-  //   // (help_text ?help_text : '')
-  //
-  //   // //data-positive-only=(positiveOnly ? '1' :  false)
-  //
-  //   return {
-  //     type: 'email',
-  //     valueType: this.schema.type,
-  //   };
-  // },
+  buildAttributes() {
+    // (help_text ? 'showPopover' : '')
 
-  renderElement() {
-    if (!this.elementID)
-      this.elementID = `field_${this.cid}`;
+    // (help_text ?help_text : '')
 
-    return `<div id="${this.elementID}"></div>`;
+    // //data-positive-only=(positiveOnly ? '1' :  false)
+    this.attr = this.attr || {};
+
+    this.attr = _.extend({
+      type: 'text',
+      valueType: 'text',
+      id: '',
+      placeholder: '',
+      helpText: '',
+      readonly: false,
+      disabled: false,
+      fieldContainerClass: 'form-group row ' + (this.schema.required ? 'required' : ''),
+      labelClass: 'col-xl-12 text-xl-left',
+      inputContainerClass: 'col-xl-12',
+      inputClass: 'form-control ' + (this.attr.help_text ? 'showPopover' : ''),
+      dataContent: this.attr.help_text || '',
+      value: this.getValue(),
+    }, this.attr);
+
+    if (!this.attr.id)
+      this.attr.id = name;
+
   },
 
   render() {
-    this.setElement(`#${this.elementID}`);
 
     this.$el.html(
       this.template({
-        value: this.getValue(),
         schema: this.schema,
-        attr: {
-          type: 'text',
-          id: 'input-ID',
-          placeholder: 'Placeholder text',
-          helpText: 'Help text',
-          readonly: false,
-          disabled: false,
-          fieldContainerClass: 'form-group row required',
-          labelClass: 'col-xl-12 text-xl-left',
-          inputContainerClass: 'col-xl-12',
-          inputClass: 'form-control ',
-        }
+        attr: this.attr,
       })
     );
+
+    return this;
   },
 
   onChange(e) {
@@ -91,7 +91,11 @@ const Field = Backbone.View.extend({
 }, FieldStaticProps);
 
 const TextField = Field.extend({
-  template: require('./templates/text.pug'),
+  template: require('./templates/textField.pug'),
+});
+
+const TextFieldWithLabel = TextField.extend({
+  template: require('./templates/textFieldWithLabel.pug')
 });
 
 const TextareaField = Field.extend({
@@ -164,6 +168,8 @@ const ImageUploadField = FilesUploadField.extend({});
 const ImageGalleryUploadField = {};
 
 module.exports = {
+  TextField,
+  TextFieldWithLabel,
   EmailField,
   TextField,
   TextareaField,

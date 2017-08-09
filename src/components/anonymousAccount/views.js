@@ -203,7 +203,9 @@ const Views = {
       this.fields = {
         email: new TextField({
           schema: LOGIN_FIELDS.email,
-          type: 'email',
+          attr: {
+            fieldContainerClass: 'form-group row clearfix',
+          }
         }),
       };
     },
@@ -216,10 +218,6 @@ const Views = {
           fields: this.fields,
         })
       );
-
-      setTimeout(() => {
-        _.each(this.fields, field => field.render());
-      }, 10);
 
       return this;
     },

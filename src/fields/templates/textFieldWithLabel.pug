@@ -1,0 +1,5 @@
+div(class=attr.fieldContainerClass)
+  label(class=attr.labelClass for=attr.id) #{ attr.label }
+  if attr.required
+    span.color-red *
+  include ./textField
