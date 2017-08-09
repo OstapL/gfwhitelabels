@@ -7,19 +7,6 @@ const validation = require('components/validation/validation.js');
 
 const CalculatorView = require('./revenueShareCalculator.js');
 
-const preventScrollHandler = (e) => {
-  e.preventDefault();
-  return false;
-};
-
-const preventBodyScrolling = (preventScroll) => {
-  if (preventScroll === true) {
-    document.body.addEventListener("touchmove", preventScrollHandler);
-  } else {
-    document.body.removeEventListener("touchmove", preventScrollHandler);
-  }
-};
-
 module.exports = {
   list: Backbone.View.extend({
     el: '#content',
@@ -63,7 +50,7 @@ module.exports = {
       'show.bs.collapse .panel': 'onCollapse',
       'click .see-all-risks': 'seeAllRisks',
       'click .see-all-faq': 'seeAllFaq',
-      'click .show-more-members': 'readMore',
+      'click': 'readMore',
       // 'click .see-all-article-press': 'seeAllArticlePress',
       'click .more-less': 'showMore',
       'hidden.bs.collapse #hidden-article-press' :'onArticlePressCollapse',
@@ -246,9 +233,6 @@ module.exports = {
               title : {
                 type : 'inside'
               },
-              // overlay: {
-              //   locked: false
-              // }
             },
             beforeShow(){
               const $html = $('html');
@@ -257,28 +241,13 @@ module.exports = {
                   $html.addClass(cssClass);
                 }
               });
-              preventBodyScrolling(true);
-              // $('html').css('overflowX', 'visible');
-              // $('body').css('overflowY', 'hidden');
+              app.preventBodyScrolling(true);
             },
             afterClose(){
               $('html').removeClass('fancybox-margin fancybox-lock');
-              // $('html').css('overflowX', 'hidden');
-              // $('body').css('overflowY', 'visible');
-              preventBodyScrolling(false);
+              app.preventBodyScrolling(false);
             }
           });
-
-          // $fancyBox.fancybox({
-          //   openEffect  : 'elastic',
-          //   closeEffect : 'elastic',
-          //
-          //   helpers : {
-          //     title : {
-          //       type : 'inside'
-          //     }
-          //   }
-          // });
           resolve();
         }, 'fancybox_chunk');
       });
@@ -379,7 +348,7 @@ module.exports = {
               "-webkit-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
               "-moz-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
               "-ms-transform" : "translate3d(0px, " + st /2 + "%, .01px)"
-              
+
             });
           });
       this.$el.find('.perks .col-xl-4 p').equalHeights();
@@ -408,10 +377,14 @@ module.exports = {
     },
 
     readMore(e) {
-      e.preventDefault();
-      $(e.target).parent().addClass('show-more-detail');
+      const $target = $(e.target).closest('.show-more-members');
+      if ($target.length) {
+        e.preventDefault();
+        $(e.target).parent().addClass('show-more-detail');
+      } else {
+        this.$('.show-more-members').parent().removeClass('show-more-detail');
+      }
     },
-
   }),
 
   investment: Backbone.View.extend({

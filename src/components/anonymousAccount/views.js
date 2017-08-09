@@ -16,6 +16,11 @@ const LOGIN_FIELDS = {
     type: 'string',
     required: true,
   },
+  checkbox1: {
+    type: 'boolean',
+    required: true,
+    messageRequired: 'You must agree to the terms before creating an account',
+  },
 };
 
 const SIGNUP_FIELDS = {
@@ -171,6 +176,7 @@ const Views = {
     template: require('./templates/login.pug'),
     events: {
       'submit .login-form': api.submitAction,
+      'click .btn-social-network': 'loginWithSocial',
     },
 
     initialize() {
@@ -184,6 +190,10 @@ const Views = {
         this.template()
       );
       return this;
+    },
+
+    loginWithSocial(e) {
+      socialAuth.loginWithSocialNetwork.call(this, e);
     },
 
     _success(data) {
