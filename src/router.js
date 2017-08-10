@@ -9,6 +9,7 @@ const componentRoutes = [
   require('components/accountProfile/route.js'),
   require('components/establishedBusinessCalculator/route.js'),
   require('components/formc/route.js'),
+  require('components/demo/route.js'),
   // require('components/blog/route'),
 ];
 
