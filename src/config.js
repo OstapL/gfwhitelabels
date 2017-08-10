@@ -58,5 +58,6 @@ var e = {
     //bottom banner (1 - raise capital/ 0 - INVEST)
     bottomBunner: 0,
   },
+  currentSiteUrl: 'alpha-jdcu.growthfountain.com',
 };
 module.exports = e;
