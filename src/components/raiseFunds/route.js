@@ -75,6 +75,28 @@ module.exports = {
 
         });
       });
+
+      function runCalendry() {
+        Calendly.initBadgeWidget({
+          url: 'https://calendly.com/morganatgrowthfountain/15min',
+          text: 'Want to Fundraise?',
+          color: '#00a2ff',
+          branding: true
+        });
+      }
+
+      let head = document.getElementsByTagName('head')[0];
+      let css = document.createElement('link');
+      css.rel = 'stylesheet';
+      css.href = "https://calendly.com/assets/external/widget.css";
+      head.appendChild(css);
+
+      let script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.src = "https://calendly.com/assets/external/widget.js";
+      script.onreadystatechange = runCalendry;
+      script.onload = runCalendry;
+      head.appendChild(script);
     },
 
     company() {
