@@ -78,8 +78,8 @@ module.exports = {
 
       function runCalendry() {
         Calendly.initBadgeWidget({
-          url: 'https://calendly.com/vlad-13/15min',
-          text: 'Schedule time with me',
+          url: 'https://calendly.com/morganatgrowthfountain/15min',
+          text: 'Want to Fundraise?',
           color: '#00a2ff',
           branding: true
         });
