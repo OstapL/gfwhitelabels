@@ -11,7 +11,7 @@ var e = {
   blogServer: "https://api-blog-dev.growthfountain.com",
   bucketServer: "https://s3.amazonaws.com/growthfountain-alpha-storage",
   notificationsServer: "https://notifications-dev.growthfountain.com/",
-  teamName: 'Team',
+  teamName: 'GrowthFountain Team',
   teamTitle: "Meet The Team",
   siteTitle: '| GrowthFountain Equity Crowdfunding',
 
@@ -36,11 +36,12 @@ var e = {
   indexPage: {
     //main slider or img (slider - 1/ img - 0)
     slider: 0,
-    campaignListTitle: 'CURRENT CAMPAIGNS', // title main page list campaign
+    campaignListTitle: 'Trending', // title main page list campaign
     videoPopupUrl: 'https://player.vimeo.com/video/198101157?title=0&amp;byline=0&amp;controls=0&fullscreen=1&buttons.share = false&embed.buttons.like = false;autoplay=0&portrait=0',
-    videoTitle: 'WHAT IS GROWTHFOUNTAIN?',
-    videoText: '<h3>We banded together with a simple mission: to simplify fundraising <br> and help businesses raise capital.</h3>'
-    + '<h3>Everybody in the world now has the ability to invest directly <br> in America’s entrepreneurs!</h3>',
+    videoTitle: 'A NEW WAY TO INVEST OR RAISE CAPITAL',
+    videoText: '<p>Through our partnership with Growth Fountain we\'re pleased <br> to introduce Equity Crowdfunding.</p>'
+    + '<p>Discover, support and invest in the businesses within our <br> community, and receive ownership for your contribution.</p>'
+    + '<p>It’s people helping people at an entirely new level.</p>',
     dataVideoIdPopup: '198101157',
     dataProviderVideoPopup: 'vimeo',
     // top banner (none - 0 / dcu - 1 / river - 2)

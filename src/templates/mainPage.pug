@@ -5,7 +5,26 @@ section.slider-main
     p GrowthFountain is coming to your town. 
       a(href="/pg/heartland-tour") Apply Now
       |  to join The Heartland Tour and present your fundraise live!
-  include slider
+  .main-top-baner
+    section.height-block-banner.scroll-paralax.no-paralax-mobile.main-paralax-banner.m-t-0
+      - var styleString = 'background: url(' + require('images/banners/slide_1.jpg') + ')';
+      div(style=styleString + '; height:75vh').background
+      .center-wrap.container
+        .col-lg-12.p-xs-0
+          h1.big-h1.text-uppercase Some of your own text
+        .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
+          span.small-text Invest in local businesses and entrepreneurs you believe in, starting at $100
+        .col-lg-12.mt20.mb30.p-xs-0
+          a(href="/pg/education").link-6 Learn the Risks
+        if app.user.is_anonymous()
+          .col-lg-12.p-xs-0
+            a(href="/account/signup").btn.btn-lg.btn-primary sign up + get $25
+        else
+          .col-lg-12.hidden-sm-down.p-xs-0
+            a(href="/companies").btn.btn-lg.btn-primary INVEST
+            a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
+          .col-lg-12.hidden-md-up
+            a(href="/companies").btn.btn-lg.btn-primary INVEST
 include topbanner
 
 secetion.email-subscription.subscription-campaing-list.main-subscription
@@ -142,8 +161,30 @@ section.better
           p.small-powered-by Powered by
           img(src=require('images/pages/news4.png'), alt="")
 
-include bottombanner
-
+section.height-block-banner.scroll-paralax.no-paralax-mobile.main-page-banner-invest.m-t-0
+    div.background
+    .center-wrap.container.small-button
+      .col-xl-12
+        h2.text-uppercase.m-t-0 Some of your own text
+            h3 It’s the evolution of investing. Receive a financial stake
+              br
+              | in the companies you support.
+      .col-lg-12.p-xs-0
+        if app.user.is_anonymous()
+          a(href="/account/signup").btn.btn-lg.btn-secondary.text-uppercase Sign up to start investing
+        else
+          a(href="/companies").btn.btn-lg.btn-secondary.text-uppercase Start investing
+        //.row.link-bottom
+          a(href="/pg/education").link-6 Understand the Risks
+section.custom-main-block.m-t-3
+  .container
+    .row
+      .col-xl-12.text-xs-center
+        h2.text-uppercase.m-t-0 Your own custom section
+      .col-xl-6
+        p Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas. sit aspernatur odit. aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.
+      .col-xl-6
+        p Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas. .sit aspernatur aut. odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.
 section.news-on-main-page
   .container
     .row
