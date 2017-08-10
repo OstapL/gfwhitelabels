@@ -16,7 +16,6 @@ const Field = Backbone.View.extend({
     _.extend(this, _.pick(options, [
       'schema',
       'model',
-      'name',
       'attr',
       // 'getValue',
       // 'setValue',
@@ -26,11 +25,6 @@ const Field = Backbone.View.extend({
   },
 
   buildAttributes() {
-    // (help_text ? 'showPopover' : '')
-
-    // (help_text ?help_text : '')
-
-    // //data-positive-only=(positiveOnly ? '1' :  false)
     this.attr = this.attr || {};
 
     this.attr = _.extend({
@@ -50,12 +44,14 @@ const Field = Backbone.View.extend({
     }, this.attr);
 
     if (!this.attr.id)
-      this.attr.id = name;
+      this.attr.id = this.attr.name;
+  },
 
+  renderPlaceholder() {
+    return `<div id="${this.cid}"></div>`;
   },
 
   render() {
-
     this.$el.html(
       this.template({
         schema: this.schema,
@@ -63,7 +59,26 @@ const Field = Backbone.View.extend({
       })
     );
 
+    global.emailField = this;
+
     return this;
+  },
+
+  validate() {
+    return true;
+  },
+
+  showErrors() {
+    const $group = this.$el.find('input').parent();
+    if (!$group.hasClass('has-error'))
+      $group.addClass('has-error');
+
+    const $helpBlock = $group.find('.help-block');
+    if ($helpBlock.length) {
+      $helpBlock.html('Error Message');
+    } else {
+      $group.append('<div class="help-block">' + 'Error Message' + '</div>');
+    }
   },
 
   onChange(e) {
@@ -95,28 +110,37 @@ const TextField = Field.extend({
 });
 
 const TextFieldWithLabel = TextField.extend({
-  template: require('./templates/textFieldWithLabel.pug')
+  template: require('./templates/textFieldWithLabel.pug'),
 });
 
 const TextareaField = Field.extend({
 
 });
 
-const EmailField = Field.extend({
-  template: require('./templates/fieldText.pug'),
-
-  events: {
-
+const EmailField = TextField.extend({
+  template: require('./templates/textField.pug'),
+  buildAttributes() {
+    TextField.prototype.buildAttributes.call(this);
+    this.attr.type = 'email';
   },
 
-  initialize() {
+  validate() {
 
+  }
+
+});
+
+const PasswordField = TextField.extend({
+  template: require('./templates/textField.pug'),
+
+  buildAttributes() {
+    TextField.prototype.buildAttributes.call(this);
+    this.attr.type = 'password';
   },
 
-  render() {
-
-  },
-
+  validate() {
+    return true;
+  }
 });
 
 const URLField = TextField.extend({
@@ -124,10 +148,6 @@ const URLField = TextField.extend({
 });
 
 const SocialNetworkField = URLField.extend({
-
-});
-
-const PasswordField = TextField.extend({
 
 });
 

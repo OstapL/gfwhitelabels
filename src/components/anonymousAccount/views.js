@@ -205,7 +205,9 @@ const Views = {
           schema: LOGIN_FIELDS.email,
           attr: {
             placeholder: 'E-mail',
+            autocomplete: 'off',
             inputContainerClass: 'form-group row clearfix',
+            name: 'email',
           }
         }),
       };
@@ -219,6 +221,11 @@ const Views = {
           fields: this.fields,
         })
       );
+
+      _.each(this.fields, (field) => {
+        field.setElement(this.$('#' + field.cid));
+        field.render();
+      });
 
       return this;
     },
