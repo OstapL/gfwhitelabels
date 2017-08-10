@@ -204,7 +204,8 @@ const Views = {
         email: new TextField({
           schema: LOGIN_FIELDS.email,
           attr: {
-            fieldContainerClass: 'form-group row clearfix',
+            placeholder: 'E-mail',
+            inputContainerClass: 'form-group row clearfix',
           }
         }),
       };
