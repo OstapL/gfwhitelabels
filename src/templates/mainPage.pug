@@ -7,6 +7,21 @@ section.slider-main
       |  to join The Heartland Tour and present your fundraise live!
   include slider
 include topbanner
+
+secetion.email-subscription.subscription-campaing-list.main-subscription
+  .container
+    .row
+      .col-xs-12
+        h2.text-xs-center.font-weight-light.m-t-0 Sign up and be the first to hear about new investment opportunities
+    .row
+      .col-xl-12
+        -
+          var subscriber = require('directives/subscribe/index.js');
+          pug_html += subscriber.render({
+            containerClass: 'subscription-wrap',
+            emailClass: 'col-xs-12 p-l-0',
+            subscribeClass: 'subscription-btn'
+          });
 section.campaing-list.campaign-list-main-page
   .container#campaignList
     .col-lg-12
@@ -65,6 +80,11 @@ section.home-our-partners
     .item
       a(href="https://www.tvfcu.com/" target="_blank")
         img(src=require('images/partners-logo/tvfcu.png') alt="").img-fluid.tvfcu
+    .row
+      .bottom-line
+        span GrowthFountain is the preferred equity crowdfunding platform for 
+          strong 1 million
+          |  credit union members and counting
 
 section.better
   .container
