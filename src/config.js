@@ -48,6 +48,7 @@ var e = {
     //bottom banner (1 - raise capital/ 0 - INVEST)
     bottomBunner: 1,
   },
+  currentSiteUrl: 'demo.growthfountain.com',
 };
 
 module.exports = e;
