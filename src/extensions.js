@@ -1,4 +1,15 @@
+//Backbone.View extension methods
 _.extend(Backbone.View.prototype, {
+
+  listenToNavigate() {
+    if (!this.onBeforeNavigate) {
+      this.onBeforeNavigate = function() {
+        this.destroy();
+      };
+    }
+
+    app.routers.on('before-navigate', this.onBeforeNavigate, this);
+  },
 
   assignLabels() {
     _(this.fields).each((el, key) => {
@@ -34,13 +45,41 @@ _.extend(Backbone.View.prototype, {
     if (!this.fields)
       return;
 
-    _(this.fields).each(field => field.destroy());
+    _(this.fields).each((field) => {
+      if (_.isFunction(field.destroy))
+        field.destroy()
+    });
 
     this.undelegateEvents();
+
+    if (this.onBeforeNavigate)
+      app.routers.off('before-navigate', this.onBeforeNavigate, this);
+
   },
 
 });
 
+//Backbone.Router extension methods
+const navigate = Backbone.Router.prototype.navigate;
+
+_.extend(Backbone.Router.prototype, {
+
+  navigate(...args) {
+    const outData = {
+      preventNavigate: false,
+    };
+
+    this.trigger('before-navigate', outData);
+
+    if (outData.preventNavigate)
+      return false;
+
+    return navigate.call(this, ...args);
+  },
+
+});
+
+//jQuery extensions methods
 _.extend($.fn, {
 
   scrollTo(padding=0, duration='fast') {
