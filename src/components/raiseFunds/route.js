@@ -79,7 +79,7 @@ module.exports = {
       function runCalendry() {
         Calendly.initBadgeWidget({
           url: 'https://calendly.com/morganatgrowthfountain/15min',
-          text: 'Want to Fundraise?',
+          text: 'Schedule a Call!',
           color: '#00a2ff',
           branding: true
         });
