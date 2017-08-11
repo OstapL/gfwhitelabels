@@ -17,6 +17,11 @@ const LOGIN_FIELDS = {
     type: 'string',
     required: true,
   },
+  checkbox1: {
+    type: 'boolean',
+    required: true,
+    messageRequired: 'You must agree to the terms before creating an account',
+  },
 };
 
 const SIGNUP_FIELDS = {
@@ -40,7 +45,8 @@ const SIGNUP_FIELDS = {
   email: LOGIN_FIELDS.email,
   domain: LOGIN_FIELDS.domain,
   password1: _.extend({}, LOGIN_FIELDS.password, { label: 'Password' }),
-  password2: _.extend({}, LOGIN_FIELDS.password, { label: 'Re-enter Password'}),
+  //we left only one password field
+  // password2: _.extend({}, LOGIN_FIELDS.password, { label: 'Re-enter Password'}),
 };
 
 const popupAuthHelper = {
@@ -171,6 +177,7 @@ const Views = {
     template: require('./templates/login.pug'),
     events: {
       'submit .login-form': api.submitAction,
+      'click .btn-social-network': 'loginWithSocial',
     },
 
     initialize() {
@@ -211,6 +218,10 @@ const Views = {
       _.each(this.fields, (field) => field.bindEvents());
 
       return this;
+    },
+
+    loginWithSocial(e) {
+      socialAuth.loginWithSocialNetwork.call(this, e);
     },
 
     _success(data) {

@@ -81,12 +81,14 @@ describe('Log-in page', () => {
       domain: 'alpha.growthfountain.com',
       email: 'test@test.com',
       password: 'qweqwe123',
+      checkbox1: 1,
     };
 
     testHelpers.fillForm($loginForm, _.pick(userData, 'email', 'password'));
 
     eventEmitter.on('done', () => {
       const data = api.makeRequest.args[0][2];
+
       expect(data).to.deep.equal(userData);
 
       //check localStorage/cookie values
@@ -170,7 +172,6 @@ describe('Sign-up page', () => {
       last_name: 'lastName',
       email: 'test@test.com',
       password1: 'qweqwe123',
-      password2: 'qweqwe123',
       checkbox1: 1,
       domain: 'alpha.growthfountain.com',
     };
@@ -243,7 +244,6 @@ describe('Sign-up popup', () => {
       last_name: 'Test',
       email: 'test@test.com',
       password1: 'qweqwe123',
-      password2: 'qweqwe123',
       domain: 'alpha.growthfountain.com',
       checkbox1: 1
     };
@@ -279,7 +279,6 @@ describe('Sign-up popup', () => {
       last_name: ['Is required', 'Last Name must be at least 2 characters'],
       email: ['Is required'],
       password1: ['Is required', 'Password must be at least 8 characters'],
-      password2: ['Is required', 'Re-enter Password must be at least 8 characters'],
     });
   });
 });
@@ -331,6 +330,7 @@ describe('Log-in popup', () => {
       email: 'test@test.com',
       password: 'qweqwe123',
       domain: 'alpha.growthfountain.com',
+      checkbox1: 1,
     };
 
     const $loginForm = $('#sign-in-form');

@@ -105,6 +105,25 @@ _.extend($.fn, {
 
 });
 
+$.fn.animateCount = function(options={}) {
+  const defaultOptions = {
+    duration: 1000,
+    easing: 'swing',
+    step(now) {
+      $(this).text(Math.ceil(now));
+    }
+  };
+
+  options = _.extend(defaultOptions, options);
+
+  $(this).each(function() {
+    const $this = $(this);
+    $this.prop('Counter', 0).animate({
+      Counter: $this.text(),
+    }, options);
+  });
+};
+
 $.serializeJSON.defaultOptions = _.extend($.serializeJSON.defaultOptions, {
   customTypes: {
     decimal(val) {
