@@ -174,32 +174,6 @@ const Views = {
     },
 
     initialize() {
-      this.fields = LOGIN_FIELDS;
-    },
-
-    render() {
-      $('body').scrollTo();
-
-      this.$el.html(
-        this.template()
-      );
-      return this;
-    },
-
-    _success(data) {
-      app.user.setData(data);
-    },
-
-  }),
-
-  login1: Backbone.View.extend({
-    urlRoot: app.config.authServer + '/rest-auth/login',
-    template: require('./templates/login.pug'),
-    events: {
-      'submit .login-form': api.submitAction,
-    },
-
-    initialize() {
       this.fields = {
         email: new TextField({
           schema: LOGIN_FIELDS.email,
@@ -208,8 +182,18 @@ const Views = {
             autocomplete: 'off',
             inputContainerClass: 'form-group row clearfix',
             name: 'email',
-          }
+          },
         }),
+        password: new TextField({
+          schema: LOGIN_FIELDS.password,
+          attr: {
+            type: 'password',
+            placeholder: 'Password',
+            autocomplete: 'off',
+            inputContainerClass: 'form-group row clearfix',
+            name: 'password',
+          }
+        })
       };
     },
 
@@ -222,10 +206,7 @@ const Views = {
         })
       );
 
-      _.each(this.fields, (field) => {
-        field.setElement(this.$('#' + field.cid));
-        field.render();
-      });
+      _.each(this.fields, (field) => field.bindEvents());
 
       return this;
     },

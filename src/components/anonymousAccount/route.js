@@ -27,7 +27,7 @@ module.exports = {
         }
 
         const View = require('./views.js');
-        let loginView = new View.login1({
+        let loginView = new View.login({
           el: '#content',
           model: {},
         });

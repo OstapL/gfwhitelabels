@@ -1,35 +1,27 @@
-const FieldStaticProps = {
-  extend(child) {
-    const view = Backbone.View.extend.apply(this, arguments);
-    view.prototype.events = _.extend({}, this.prototype.events, child.events);
-    return view;
-  }
-};
+class Field {
+  //should be overriden in descendant
+  get template() {};
 
-const Field = Backbone.View.extend({
-  tagName: 'div',
-  events: {
-    'change input': 'onChange',
-  },
+  get events() {
+    return {};
+  };
 
-  initialize(options) {
+  constructor(options) {
     _.extend(this, _.pick(options, [
       'schema',
-      'model',
       'attr',
-      // 'getValue',
-      // 'setValue',
     ]));
 
     this.buildAttributes();
-  },
+  };
 
   buildAttributes() {
     this.attr = this.attr || {};
+    if (!this.attr.elementID)
+      this.attr.elementID = _.uniqueId('field_');
 
     this.attr = _.extend({
       type: 'text',
-      valueType: 'text',
       id: '',
       placeholder: '',
       helpText: '',
@@ -41,32 +33,68 @@ const Field = Backbone.View.extend({
       inputClass: 'form-control ' + (this.attr.help_text ? 'showPopover' : ''),
       dataContent: this.attr.help_text || '',
       value: this.getValue(),
+      valueType: this.schema.type,
     }, this.attr);
 
     if (!this.attr.id)
       this.attr.id = this.attr.name;
-  },
 
-  renderPlaceholder() {
-    return `<div id="${this.cid}"></div>`;
-  },
+  };
+
+  getValue() {
+
+  };
+
+  setValue() {
+
+  };
 
   render() {
-    this.$el.html(
-      this.template({
-        schema: this.schema,
-        attr: this.attr,
-      })
-    );
+    if (this.$el)
+      this.$el.empty();
 
-    global.emailField = this;
+    this.$el = null;
 
-    return this;
-  },
+    return this.template({
+      schema: this.schema,
+      attr: this.attr,
+    });
+  };
+
+  bindEvents() {
+    if (this.$el)
+      return;
+
+    this.$el = $('#' + this.attr.elementID);
+
+    _(this.events).each((method, eventParam) => {
+      const [event, selector] = eventParam.split(' ');
+      const handler = this[method];
+      if (!_.isFunction(handler))
+        return;
+
+      this.$el.on(event, selector, handler.bind(this));
+    });
+  };
+
+  unbindEvents() {
+    if (!this.$el)
+      return;
+
+    _(this.events).each((method, eventParam) => {
+      const [event] = eventParam.split(' ');
+      this.$el.off(event)
+    });
+  };
+
+  destroy() {
+    this.unbindEvents();
+    this.$el.remove();
+  }
 
   validate() {
     return true;
-  },
+  };
 
   showErrors() {
     const $group = this.$el.find('input').parent();
@@ -79,131 +107,39 @@ const Field = Backbone.View.extend({
     } else {
       $group.append('<div class="help-block">' + 'Error Message' + '</div>');
     }
-  },
+  };
+
+  hideErrors() {
+    const $group = this.$el.find('input').parent();
+    $group.removeClass('has-error');
+    const $helpBlock = $group.find('.help-block');
+    $helpBlock.remove();
+  };
+}
+
+export class TextField extends Field {
+  get template() {
+    return require('./templates/textField.pug');
+  }
+
+  get events() {
+    return _.extend(super.events, {
+      'change input': 'onChange',
+    });
+  };
 
   onChange(e) {
-    // this.setValue(e.target.value);
-  },
 
-  getValue() {
-    return '';
-    //this.model.get(this.name);
-  },
+  };
+}
 
-  setValue(value) {
-    this.model.set(this.name, value);
-  },
+export class EmailField extends TextField {
 
-  getDisplayValue() {
-    return this.getValue();
-  },
+}
 
-  destroy() {
-    this.undelegateEvents();
-    this.$el.remove();
-  },
-
-}, FieldStaticProps);
-
-const TextField = Field.extend({
-  template: require('./templates/textField.pug'),
-});
-
-const TextFieldWithLabel = TextField.extend({
-  template: require('./templates/textFieldWithLabel.pug'),
-});
-
-const TextareaField = Field.extend({
-
-});
-
-const EmailField = TextField.extend({
-  template: require('./templates/textField.pug'),
-  buildAttributes() {
-    TextField.prototype.buildAttributes.call(this);
-    this.attr.type = 'email';
-  },
-
-  validate() {
-
+export class TextFieldFieldWithLabel  extends TextField {
+  get template() {
+    return require('./templates/textFieldWithLabel.pug');
   }
 
-});
-
-const PasswordField = TextField.extend({
-  template: require('./templates/textField.pug'),
-
-  buildAttributes() {
-    TextField.prototype.buildAttributes.call(this);
-    this.attr.type = 'password';
-  },
-
-  validate() {
-    return true;
-  }
-});
-
-const URLField = TextField.extend({
-
-});
-
-const SocialNetworkField = URLField.extend({
-
-});
-
-const SelectField = Field.extend({
-
-});
-
-const DateField = Field.extend({
-
-});
-
-const NestedField = Field.extend({
-
-});
-
-const MoneyField = Field.extend({
-
-});
-
-const PercentField = Field.extend({
-
-});
-
-const RadioGroupField = Field.extend({
-
-});
-
-const CheckboxField = Field.extend({
-
-});
-
-const FilesUploadField = Field.extend({
-
-});
-
-const ImageUploadField = FilesUploadField.extend({});
-
-const ImageGalleryUploadField = {};
-
-module.exports = {
-  TextField,
-  TextFieldWithLabel,
-  EmailField,
-  TextField,
-  TextareaField,
-  URLField,
-  SocialNetworkField,
-  PasswordField,
-  SelectField,
-  DateField,
-  RadioGroupField,
-  CheckboxField,
-  MoneyField,
-  PercentField,
-  NestedField,
-  FilesUploadField,
-  ImageUploadField,
-  ImageGalleryUploadField,
-};
+}

@@ -1,41 +1,56 @@
-Backbone.View.prototype.assignLabels = function () {
-  _(this.fields).each((el, key) => {
-    if (el.type == 'nested') {
-      _(el.schema).each((subel, subkey) => {
-        if (this.labels[key])
-          subel.label = this.labels[key][subkey];
-      });
-    } else {
-      el.label = this.labels[key];
-    }
-  });
-};
+_.extend(Backbone.View.prototype, {
 
-Backbone.View.prototype.checkForm = function () {
-  if (app.getParams().check == '1') {
-    if (!app.validation.validate(this.fields, this.model, this)) {
-      Object.keys(app.validation.errors).forEach((key) => {
-        let errors = app.validation.errors[key];
-        if (this.el.querySelector('#' + key)) {
-          app.validation.invalidMsg(this, key, errors);
+  assignLabels() {
+    _(this.fields).each((el, key) => {
+      if (el.type == 'nested') {
+        _(el.schema).each((subel, subkey) => {
+          if (this.labels[key])
+            subel.label = this.labels[key][subkey];
+        });
+      } else {
+        el.label = this.labels[key];
+      }
+    });
+  },
+
+  checkForm() {
+    if (app.getParams().check == '1') {
+      if (!app.validation.validate(this.fields, this.model, this)) {
+        Object.keys(app.validation.errors).forEach((key) => {
+          let errors = app.validation.errors[key];
+          if (this.el.querySelector('#' + key)) {
+            app.validation.invalidMsg(this, key, errors);
+          }
+        });
+
+        if(this.el.querySelector('.help-block') != null) {
+          this.$('.help-block').prev().scrollTo(5);
         }
-      });
-
-      if(this.el.querySelector('.help-block') != null) {
-        this.$('.help-block').prev().scrollTo(5);
       }
     }
-  }
-};
+  },
 
-$.fn.scrollTo = function (padding=0, duration='fast') {
-  $('html, body').animate({
-    scrollTop: $(this).offset().top - padding + 'px',
-  }, duration);
-  return this;
-};
+  destroy() {
+    if (!this.fields)
+      return;
 
-$.fn.equalHeights = function () {
+    _(this.fields).each(field => field.destroy());
+
+    this.undelegateEvents();
+  },
+
+});
+
+_.extend($.fn, {
+
+  scrollTo(padding=0, duration='fast') {
+    $('html, body').animate({
+      scrollTop: $(this).offset().top - padding + 'px',
+    }, duration);
+    return this;
+  },
+
+  equalHeights() {
   var maxHeight = 0;
   var $this = $(this);
 
@@ -47,7 +62,9 @@ $.fn.equalHeights = function () {
   });
 
   return $this.css('height', maxHeight);
-};
+},
+
+});
 
 $.serializeJSON.defaultOptions = _.extend($.serializeJSON.defaultOptions, {
   customTypes: {
