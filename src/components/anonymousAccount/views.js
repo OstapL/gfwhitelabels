@@ -195,6 +195,8 @@ const Views = {
           }
         })
       };
+
+      this.listenToNavigate();
     },
 
     render() {
