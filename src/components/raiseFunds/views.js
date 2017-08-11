@@ -435,6 +435,14 @@ module.exports = {
         },
       });
 
+      this.fields.video = _.extend(this.fields.video, {
+        fn(name, value, attr, data, computed) {
+          const info = app.getVideoInfo(value);
+          if (!info.provider)
+            throw 'YouTube or Vimeo links only, please';
+        },
+      });
+
       this.labels = {
         gallery_data: {
           url: 'Gallery',
