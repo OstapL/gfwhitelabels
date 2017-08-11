@@ -1,5 +1,6 @@
 const templateMap = {
   'custom-element-design': 'custom_element_design',
+  'custom-element-newsleter': 'custom_newsleter',
 };
 
 module.exports = {
