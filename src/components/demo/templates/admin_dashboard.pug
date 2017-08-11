@@ -1,0 +1,53 @@
+- pug_html += app.breadcrumbs('Administration panel', 'control main crowdfunding things', [ ['Home', '/'], ['Administration panel', ''], ]);
+
+section.custom-admin-dashboard
+  .container
+    .row
+      .col-lg-4.col-xl-3.hidden-md-down  
+        .page_title.border-bottom.mb25
+          h4.text-uppercase additional features
+        ul.list-unstyled.custom.pages-left-menu
+          li
+            a(href='/demo/custom-element-design').d-inline-block.w-100 Custom Design Elements
+          li
+            a(href='/demo/custom-element-newsleter').d-inline-block.w-100 Custom Newsletter Layout
+          li
+            a(href='/demo/google-analytics').d-inline-block.w-100 Statistics and Trecking
+          li.active
+            a(href='/demo/admin-dashboard').d-inline-block.w-100 Administration Panel
+          li
+            a(href='/demo/storage').d-inline-block.w-100 Material and Files Storage
+
+      .col-xl-9.col-lg-8
+        .row
+          .col-xl-12
+            h2.text-uppercase.text-xs-center.m-t-0.m-b-2 more specific info about key actions
+            h3.font-weight-light.text-xs-center.m-t-0.m-b-3 With our administration panel you’ll be able to control user’s registrations,
+              br
+              | investments and all campaigns created on your website 
+        .row
+          .col-xl-12
+            .one-item
+              .icon
+                i.fa.fa-user-plus
+              .text
+                p 
+                  strong User’s registrations.
+                  |  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat 
+          .col-xl-12
+            .one-item
+              .icon
+                i.fa.fa-money
+              .text
+                p 
+                  strong Investments.
+                  |  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat 
+          .col-xl-12
+            .one-item
+              .icon
+                i.fa.fa-bar-chart
+              .text
+                p 
+                  strong Fundraising Campaings .
+                  |  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+          img(src=require("images/demo/demo_dashboard.jpg"), alt="").m-t-1

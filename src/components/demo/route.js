@@ -1,6 +1,9 @@
 const templateMap = {
   'custom-element-design': 'custom_element_design',
   'custom-element-newsleter': 'custom_newsleter',
+  'google-analytics': 'google_analytics',
+  'admin-dashboard': 'admin_dashboard',
+  'storage': 'storage'
 };
 
 module.exports = {
