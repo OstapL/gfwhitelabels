@@ -115,65 +115,67 @@ section.issuer-dashbord-top
     
 section.issuer-dashboard-tabs.m-t-3
   .container
-    ul(role="tablist").nav.standart-nav-tabs.col-xl-12
-      li.nav-item
-        a.nav-link.text-uppercase.active#documents-tab(
-          data-toggle="tab"
-          href="#documents"
-          role="tab"
-          aria-controls="documents"
-          aria-expanded="true"
-        ) documents
-      li.nav-item
-        a.nav-link.text-uppercase#investors-tab(
-          data-toggle="tab"
-          href="#investors"
-          role="tab"
-          aria-controls="investors"
-          aria-expanded="false"
-        ) investors
-      li.nav-item
-        a.nav-link.text-uppercase#investorq-tab(
-          data-toggle="tab"
-          href="#investorq"
-          role="tab"
-          aria-controls="investorq"
-          aria-expanded="false"
-        ) investor Q&A
-      li.nav-item
-        a.nav-link.text-uppercase#material-change-tab(
-          data-toggle="tab"
-          href="#material-change"
-          role="tab"
-          aria-controls="material-change"
-          aria-expanded="false"
-        ) Material change
-          .clearfix
-    .tab-content
-      .tab-pane.fade.active.in#documents(
-        role="tabpanel"
-        aria-labelledby="documents-tab"
-        aria-expanded="true"
-      )
-        include snippets/issuerDocuments.pug
-      .tab-pane.fade#investors(
-        role="tabpanel"
-        aria-labelledby="investors-tab"
-        aria-expanded="true"
-      )
-        include snippets/issuerInvestors.pug
-      .tab-pane.fade#investorq(
-        role="tabpanel"
-        aria-labelledby="investorq-tab"
-        aria-expanded="true"
-      )
-        include snippets/issuerComments.pug
-      .tab-pane.fade#material-change(
-        role="tabpanel"
-        aria-labelledby="material-change-tab"
-        aria-expanded="true"
-      )
-        include snippets/issuerMaterial.pug
+    .col-xl-12
+      ul(role="tablist").nav.standart-nav-tabs.row
+        li.nav-item
+          a.nav-link.text-uppercase.active#documents-tab(
+            data-toggle="tab"
+            href="#documents"
+            role="tab"
+            aria-controls="documents"
+            aria-expanded="true"
+          ) documents
+        li.nav-item
+          a.nav-link.text-uppercase#investors-tab(
+            data-toggle="tab"
+            href="#investors"
+            role="tab"
+            aria-controls="investors"
+            aria-expanded="false"
+          ) investors
+        li.nav-item
+          a.nav-link.text-uppercase#investorq-tab(
+            data-toggle="tab"
+            href="#investorq"
+            role="tab"
+            aria-controls="investorq"
+            aria-expanded="false"
+          ) investor Q&A
+        li.nav-item
+          a.nav-link.text-uppercase#material-change-tab(
+            data-toggle="tab"
+            href="#material-change"
+            role="tab"
+            aria-controls="material-change"
+            aria-expanded="false"
+          ) Material change
+            .clearfix
+      .row
+        .tab-content
+          .tab-pane.fade.active.in#documents(
+            role="tabpanel"
+            aria-labelledby="documents-tab"
+            aria-expanded="true"
+          )
+            include snippets/issuerDocuments.pug
+          .tab-pane.fade#investors(
+            role="tabpanel"
+            aria-labelledby="investors-tab"
+            aria-expanded="true"
+          )
+            include snippets/issuerInvestors.pug
+          .tab-pane.fade#investorq(
+            role="tabpanel"
+            aria-labelledby="investorq-tab"
+            aria-expanded="true"
+          )
+            include snippets/issuerComments.pug
+          .tab-pane.fade#material-change(
+            role="tabpanel"
+            aria-labelledby="material-change-tab"
+            aria-expanded="true"
+          )
+            include snippets/issuerMaterial.pug
 
 
 
