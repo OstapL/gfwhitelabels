@@ -61,6 +61,8 @@ module.exports = {
         });
       });
 
+      this.listenToNavigate();
+
       $(window).on('scroll', paralaxScrollHandler);
     },
 
