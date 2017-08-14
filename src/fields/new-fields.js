@@ -1,6 +1,8 @@
 class Field {
   //should be overriden in descendant
-  get template() {};
+  get template() {
+    throw 'Not implemented';
+  };
 
   get events() {
     return {};
@@ -13,6 +15,8 @@ class Field {
     ]));
 
     this.buildAttributes();
+    this.errors = [];
+    _.extend(this, Backbone.Events);
   };
 
   buildAttributes() {
@@ -24,13 +28,12 @@ class Field {
       type: 'text',
       id: '',
       placeholder: '',
-      helpText: '',
       readonly: false,
       disabled: false,
-      fieldContainerClass: 'form-group row ' + (this.schema.required ? 'required' : ''),
+      fieldContainerClass: 'form-group row ',
       labelClass: 'col-xl-12 text-xl-left',
       inputContainerClass: 'col-xl-12',
-      inputClass: 'form-control ' + (this.attr.help_text ? 'showPopover' : ''),
+      inputClass: 'form-control',
       dataContent: this.attr.help_text || '',
       value: this.getValue(),
       valueType: this.schema.type,
@@ -38,6 +41,12 @@ class Field {
 
     if (!this.attr.id)
       this.attr.id = this.attr.name;
+
+    if (this.schema.required)
+      this.attr.fieldContainerClass += ' required';
+
+    if (this.attr.help_text)
+      this.attr.inputClass += ' showPopover';
 
   };
 
@@ -58,6 +67,7 @@ class Field {
     return this.template({
       schema: this.schema,
       attr: this.attr,
+      tmp: {},
     });
   };
 
@@ -88,6 +98,7 @@ class Field {
   };
 
   destroy() {
+    this.off();
     this.unbindEvents();
     this.$el.remove();
   }
@@ -97,15 +108,19 @@ class Field {
   };
 
   showErrors() {
+    if (!this.errors.length)
+      return;
+
+    const errors = this.errors.join(', ') + '.';
     const $group = this.$el.find('input').parent();
     if (!$group.hasClass('has-error'))
       $group.addClass('has-error');
 
     const $helpBlock = $group.find('.help-block');
     if ($helpBlock.length) {
-      $helpBlock.html('Error Message');
+      $helpBlock.html(errors);
     } else {
-      $group.append('<div class="help-block">' + 'Error Message' + '</div>');
+      $group.append('<div class="help-block">' + errors + '</div>');
     }
   };
 
@@ -144,11 +159,163 @@ class TextFieldWithLabel  extends TextField {
 
 }
 
+const URLPatternRx = /^(https?|ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i;
+
+class URLField extends TextFieldWithLabel {
+  get events() {
+    return _.extend(super.events, {
+      'change input': 'onChange',
+    });
+  }
+
+  getValue() {
+    return this.$el
+      ? this.$el.find('input').val()
+      : (this.attr.value || '');
+  }
+
+  onChange(e) {
+    e.preventDefault();
+    if (!this.validate()) {
+      this.showErrors();
+    }
+    return false;
+  }
+
+  validate() {
+    const value = this.getValue();
+    if (!value)
+      return true;
+
+    if (!value.match(URLPatternRx)) {
+      this.errors.push('Please, enter valid URL');
+    }
+
+    return !this.errors.length;
+  }
+}
+
+class VideoLinkField extends URLField {
+  constructor(options) {
+    super(options);
+  }
+
+  get template() {
+    return require('./templates/videoLinkField.pug');
+  }
+
+  validate() {
+    if (!super.validate()) {
+      return false;
+    }
+
+    const url = this.getValue();
+    if (!url)
+      return true;
+
+    const info = app.getVideoInfo(url);
+    if (!info.provider) {
+      this.errors.push('Youtube or Vimeo link only, please');
+    }
+  }
+
+  onChange(e) {
+    super.onChange(e);
+    if (!this.errors.length)
+      this.updateVideo();
+  }
+
+  updateVideo() {
+    const url = this.getValue();
+    const $videoContainer = this.$el.find('.video-container') || this.$el;
+    const img = $videoContainer.find('img')[0];
+
+    if (!url) {
+      img.src = require('images/default/default-video.png');
+      return;
+    }
+
+    const videoInfo = app.getVideoInfo(url);
+    if (videoInfo.provider === 'youtube')
+      this._updateYoutubeThumbnail(img, videoInfo.id);
+    else if (videoInfo.provider === 'vimeo')
+      this._updateVimeoThumbnail(img, videoInfo.id);
+  }
+
+  _updateYoutubeThumbnail(img, videoID) {
+    img.src = videoID
+      ? '//img.youtube.com/vi/' + videoID + '/0.jpg'
+      : require('images/default/default-video.png');
+  }
+
+  _updateVimeoThumbnail(img, videoID) {
+    if (!videoID) {
+      img.src = require('images/default/default-video.png');
+      return;
+    }
+
+    $.getJSON('//vimeo.com/api/v2/video/' + videoID + '.json').then((response) => {
+      if (!response || !response[0] || !response[0].thumbnail_large) {
+        console.error('Unexpected response format');
+        console.log(response);
+        return;
+      }
+
+      img.src = response[0].thumbnail_large;
+    }).fail((err) => {
+      console.error('Failed to load thumbnail from vimeo');
+      img.src = require('images/default/default-video.png');
+    });
+  }
+
+  _initVimeoVideoThumbnails() {
+    const $images = this.$('img[data-vimeo-id]');
+    if (!$images.length)
+      return;
+
+    $images.each((idx, img) => {
+      this._updateVimeoThumbnail(img, img.dataset.vimeoId);
+    });
+  }
+
+}
+
+class NestedField extends Field {
+  get events() {
+    return _.extend(super.events, {
+      'click .addField': 'addField',
+      'click .removeField': 'removeField',
+    });
+  }
+
+  constructor(options) {
+    super(options);
+
+  }
+
+  render() {
+
+  }
+
+  addField() {
+
+  }
+
+  removeField() {
+
+  }
+
+  editField() {
+
+  }
+}
+
 const SYSTEM_FIELDS = ['domain', 'checkbox1'];
 
 const createField = (schema={}, attr={}) => {
   if (_.contains(SYSTEM_FIELDS, attr.name))
     return null;
+
 
   switch(schema.type) {
     case 'boolean':
@@ -158,7 +325,10 @@ const createField = (schema={}, attr={}) => {
     case 'percent':
     case 'money':
     case 'integer':
-    case 'url':
+    case 'url': {
+      //temporary
+      return new VideoLinkField({ schema, attr });
+    }
     case 'password': {
       attr.type = 'password';
       if (attr.label)
