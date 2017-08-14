@@ -1,5 +1,5 @@
 const socialAuth = require('./social-auth.js');
-const { TextField } = require('fields/new-fields.js');
+const { createFields } = require('fields/new-fields.js');
 
 const LOGIN_FIELDS = {
   email: {
@@ -126,7 +126,7 @@ const Views = {
     template: require('./templates/popupLogin.pug'),
     events: popupAuthHelper.events,
 
-    initialize(options) {
+    initialize() {
       this.fields = LOGIN_FIELDS;
     },
 
@@ -181,27 +181,22 @@ const Views = {
     },
 
     initialize() {
-      this.fields = {
-        email: new TextField({
-          schema: LOGIN_FIELDS.email,
-          attr: {
-            placeholder: 'E-mail',
-            autocomplete: 'off',
-            inputContainerClass: 'form-group row clearfix',
-            name: 'email',
-          },
-        }),
-        password: new TextField({
-          schema: LOGIN_FIELDS.password,
-          attr: {
-            type: 'password',
-            placeholder: 'Password',
-            autocomplete: 'off',
-            inputContainerClass: 'form-group row clearfix',
-            name: 'password',
-          }
-        })
+      this.fieldsSchema = LOGIN_FIELDS;
+
+      this.fieldsAttr = {
+        email: {
+          placeholder: 'E-mail',
+          autocomplete: 'off',
+          inputContainerClass: 'form-group row clearfix',
+        },
+        password: {
+          placeholder: 'Password',
+          autocomplete: 'off',
+          inputContainerClass: 'form-group row clearfix',
+        },
       };
+
+      this.fields = createFields(this.fieldsSchema, this.fieldsAttr);
 
       this.listenToNavigate();
     },
@@ -239,13 +234,40 @@ const Views = {
     },
 
     initialize() {
-      this.fields = SIGNUP_FIELDS;
+      //this fields left for backward compatibility;
+      this.fieldsSchema = SIGNUP_FIELDS;
+
+      this.fieldsAttr = {
+        first_name: {
+          placeholder: 'First Name',
+          inputContainerClass: 'form-group row clearfix',
+        },
+        last_name: {
+          placeholder: 'Last Name',
+          inputContainerClass: 'form-group row clearfix',
+        },
+        email: {
+          placeholder: 'E-mail',
+          inputContainerClass: 'form-group row clearfix',
+        },
+        password1: {
+          placeholder: 'Password',
+          inputContainerClass: 'form-group row clearfix',
+        },
+      };
+
+      this.fields = createFields(this.fieldsSchema, this.fieldsAttr);
     },
 
     render() {
       this.$el.html(
-        this.template({})
+        this.template({
+          fields: this.fields,
+        })
       );
+
+      _(this.fields).each(field => field.bindEvents());
+
       return this;
     },
 

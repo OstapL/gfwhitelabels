@@ -117,7 +117,7 @@ class Field {
   };
 }
 
-export class TextField extends Field {
+class TextField extends Field {
   get template() {
     return require('./templates/textField.pug');
   }
@@ -133,13 +133,64 @@ export class TextField extends Field {
   };
 }
 
-export class EmailField extends TextField {
+class EmailField extends TextField {
 
 }
 
-export class TextFieldFieldWithLabel  extends TextField {
+class TextFieldWithLabel  extends TextField {
   get template() {
     return require('./templates/textFieldWithLabel.pug');
   }
 
 }
+
+const SYSTEM_FIELDS = ['domain', 'checkbox1'];
+
+const createField = (schema={}, attr={}) => {
+  if (_.contains(SYSTEM_FIELDS, attr.name))
+    return null;
+
+  switch(schema.type) {
+    case 'boolean':
+      return null;
+
+    case 'decimal':
+    case 'percent':
+    case 'money':
+    case 'integer':
+    case 'url':
+    case 'password': {
+      attr.type = 'password';
+      if (attr.label)
+        return new TextFieldWithLabel({ schema, attr });
+
+      return new TextField({ schema, attr });
+    }
+    case 'email': {
+      attr.type = 'email';
+      if (attr.label)
+        return new TextFieldWithLabel({ schema, attr });
+
+      return new TextField({ schema, attr });
+    }
+  }
+
+  /* default: 'text' */
+  if (attr.label)
+    return new TextFieldWithLabel({ schema, attr });
+
+  return new TextField({ schema, attr });
+};
+
+export const createFields = (schemas, attrs) => {
+  const fields = {};
+  _(schemas).each((schema, name) => {
+    const attr = attrs[name] || {};
+    attr.name = name;
+    const field = createField(schema, attr);
+    if (field)
+      fields[name] = field;
+  });
+  return fields;
+};
+
