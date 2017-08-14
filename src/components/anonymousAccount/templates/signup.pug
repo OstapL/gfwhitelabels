@@ -60,36 +60,16 @@ section.singup.m-t-85
                   .first-last.row
                     .col-xl-6
                       -
-                        pug_html += app.fields.fieldText('first_name', {
-                          required: true,
-                          type: 'text',
-                          placeholder: 'First Name',
-                          'class': 'form-group row clearfix',
-                        });
+                        pug_html += fields.first_name.render();
 
                     .col-xl-6
                       -
-                        pug_html += app.fields.fieldText('last_name', {
-                          required: true,
-                          type: 'text',
-                          placeholder: 'Last Name',
-                          'class': 'form-group row clearfix',
-                        });
+                        pug_html += fields.last_name.render();
+
                     .col-xl-12
                       -
-                        pug_html += app.fields.fieldText('email', {
-                          require: true,
-                          type: 'email',
-                          placeholder: 'E-mail',
-                          'class': 'form-group row clearfix',
-                        });
-                        pug_html += app.fields.fieldText('password1', {
-                          required: true,
-                          type: 'password',
-                          placeholder: 'Password',
-                          'class': 'form-group row clearfix',
-                        });
-                  
+                        pug_html += fields.email.render();
+                        pug_html += fields.password1.render();
                 .col-xs-12.m-t-1
                   .row.text-xs-center
                     button(type="submit")#register-submit-btn.btn.btn-primary.text-uppercase Sign Up
