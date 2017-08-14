@@ -380,30 +380,76 @@
     border: 1px $alabaster solid
     .item
       padding-top: 30px
-      padding-bottom: 30px
-      border-bottom: solid 1px $alabaster
-      .photo
-        margin-right: rem(20)
-        display: inline-block
-        vertical-align: middle
-        img
-          width: 65px
-          border-radius: 100px
-      .name
-        display: inline-block
+      .photo-wrap
+        @media only screen and (max-width : 991px)
+          text-align: center
+        .photo
+          margin-right: rem(20)
+          display: inline-block
+          vertical-align: middle
+          @media only screen and (max-width : 991px)
+            margin-right: 0
+            margin-bottom: 20px
+          @media only screen and (max-width : 767px)
+            margin-right: rem(20)
+            margin-bottom: 0
+          img
+            width: 65px
+            border-radius: 100px
+        .name
+          display: inline-block
+          vertical-align: middle
+          @media only screen and (max-width : 767px)
+            text-align: left
+          h4
+            font-size: rem(15)
+            margin-bottom: 0
+          p
+            color: $small-text
+            font-size: rem(15)
+        margin-bottom: 30px
+        @media only screen and (max-width : 767px)
+          margin-bottom: 0
       .city
         display: inline-block
         vertical-align: middle
         font-size: rem(12)
-        font-weight: bold
         line-height: 66px
+        @media only screen and (max-width : 991px)
+          line-height: 120px
+        @media only screen and (max-width : 767px)
+          line-height: 66px
+          margin-bottom: 30px
+        @media only screen and (max-width : 543px)
+          margin-bottom: 0
         i
           font-size: rem(25)
           color: $sandy-brown-two
           margin-right: rem(14)
           vertical-align: middle
+        .street
+          display: inline-block
+          vertical-align: middle
+          max-width: 200px
+          @media only screen and (max-width : 991px)
+            max-width: 160px
+          p.font-weight-bold
+            color: $black
+            line-height: 24px
+          p
+            color: $small-text
+            line-height: 15px
+
       .invest
         line-height: 66px
+        @media only screen and (max-width : 991px)
+          line-height: 120px
+        @media only screen and (max-width : 767px)
+          line-height: 66px
+        @media only screen and (max-width : 543px)
+          margin-bottom: 30px
+          line-height: 33px
+          margin-top: 10px
         .money
           vertical-align: middle
           margin-right: rem(20)
@@ -413,9 +459,15 @@
           line-height: rem(18)
           font-weight: bold
           color: $white
+          opacity: 0.8
         .date
           display: inline-block
           font-size: rem(12)
           color: $small-text
           line-height: rem(15)
           vertical-align: middle
+      .border-bottom
+        border-bottom: solid 1px $alabaster
+      &:last-child
+        .border-bottom
+          display: none
