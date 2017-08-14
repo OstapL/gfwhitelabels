@@ -27,7 +27,57 @@ const fixGATrackerID = (data) => {
     data.ga_id = 'UA-' + data.ga_id;
 };
 
+const paralaxScrollHandler = (e) => {
+  var st = $(this).scrollTop() /15;
+
+  $(".scroll-paralax .background").css({
+    "transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+    "-o-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+    "-webkit-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+    "-moz-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+    "-ms-transform" : "translate3d(0px, " + st /2 + "%, .01px)"
+
+  });
+};
+
 module.exports = {
+  landing: Backbone.View.extend({
+    el: '#content',
+    template: require('./templates/landing.pug'),
+
+    initialize() {
+      const calendlyStyleURL = 'https://calendly.com/assets/external/widget.css';
+      const calendlyScriptURL = 'https://calendly.com/assets/external/widget.js';
+
+      Promise.all([
+        app.helpers.scripts.loadStyle(calendlyStyleURL),
+        app.helpers.scripts.load(calendlyScriptURL),
+      ]).then(() => {
+        Calendly.initBadgeWidget({
+          url: 'https://calendly.com/morganatgrowthfountain/15min',
+          text: 'Want to Fundraise?',
+          color: '#00a2ff',
+          branding: true
+        });
+      });
+
+      $(window).on('scroll', paralaxScrollHandler);
+    },
+
+    render() {
+      this.$el.html(
+        this.template()
+      );
+    },
+
+    destroy() {
+      $(window).off('scroll', paralaxScrollHandler);
+
+      if (window.Calendly)
+        Calendly.destroyBadgeWiget();
+    },
+  }),
+
   company: Backbone.View.extend(_.extend({
     urlRoot: app.config.raiseCapitalServer + '/company',
     template: require('./templates/company.pug'),
