@@ -368,7 +368,7 @@
     line-height: 18px
     color: $small-text
   .text-p-t-6
-    padding-top: 6px
+    padding-top: rem(6)
   .m-b-25
     margin-bottom: rem(18)
 @media only screen and (max-width : 460px)
@@ -384,7 +384,40 @@
     .nav-item
       .nav-link
         @media only screen and (max-width : 767px)
-          padding: 10px
+          padding: rem(10)
+  .panel-message
+    background-color: $alabaster
+    padding: rem(20) rem(30)
+    
+    .left-wrap
+      border-right: solid 1px $border_color
+      width: 50%
+      display: inline-block
+      vertical-align: middle
+      .see-message
+        display: inline-block
+        margin-left: rem(45)
+        vertical-align: top
+        a
+          i
+            margin-right: rem(5)
+        p
+          color: $small-text
+      .create-message
+        display: inline-block
+        vertical-align: middle
+        p
+          color: $small-text
+          margin-bottom: rem(8)
+    .right-wrap
+      width: 50%
+      display: inline-block
+      vertical-align: middle
+      .send-payment
+        margin-left: 80px
+        p
+          color: $small-text
+          margin-bottom: rem(8)
   .all-investors
     border: 1px $alabaster solid
     .item
