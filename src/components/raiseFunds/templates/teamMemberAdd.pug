@@ -98,12 +98,13 @@ section.team-members.container.m-b-85
               value: model.facebook, 
               label:  'Your Facebook Link', 
               placeholder: 'Your Facebook Profile',})
-        -
-          pug_html += new imageDropzone.ImageDropzone(view, 
-            'photo_image_id', 
-            'photo_data', 
-            view.fields.photo_image_id
-          ).render().resultHTML;
+        #photo_data
+          -
+            pug_html += new imageDropzone.ImageDropzone(view, 
+              'photo_image_id', 
+              'photo_data', 
+              view.fields.photo_image_id
+            ).render().resultHTML;
 
         .col-lg-12.text-lg-right.p-l-0.p-r-0.p-t-2.text-md-center.text-sm-center.text-xs-center
           button.btn.btn-secondary.text-uppercase.mr30.cancel cancel

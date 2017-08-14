@@ -1,4 +1,4 @@
-div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#sign_in.modal.fade
+div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#sign_in.modal.fade.login
   div(role="document").modal-dialog
     .modal-content
       .container
@@ -7,11 +7,26 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
             span(aria-hidden="true")
               i.fa.fa-times
           h2.dosis.text-uppercase.text-sm-center.text-xs-center.mt50 Log in
-          p.small-text.text-xs-center New to GrowthFountain? &nbsp;
+          p.small-text.text-xs-center.m-b-0 New to GrowthFountain? &nbsp;
             a(href="#").link-3.switchAuthPopup Sign Up
         .modal-body
           .form-section
             form(novalidate autocomplete="off")#sign-in-form.login-form.col-lg-10.offset-lg-1
+              .row
+                input(type="checkbox" id="agree-rules" name="checkbox1" value="1" checked="1" style="display: none")
+                .social-btn.col-lg-12.p-xs-0.m-t-0
+                  a(data-original-title="facebook" data-network="facebook" href="#")#signup-facebook.btn.btn-block.btn-social-network.btn-facebook.text-uppercase
+                    i.fa.fa-facebook
+                    |  log in with Facebook
+                  a(data-original-title="Linkedin" data-network="linkedin" href="#")#signup-linkedin.btn.btn-block.btn-social-network.btn-linkedin.text-uppercase
+                    i.fa.fa-linkedin
+                    |  log in with linkedin
+                  a(data-original-title="Google Plus" data-network="google" href="#")#signup-google.btn.btn-block.btn-social-network.btn-google.text-uppercase
+                    i.fa.fa-google-plus
+                    |  log in with Google
+                .col-lg-12.p-xs-0
+                  .border-bottom.or
+                    span or
               .col-lg-12.p-xs-0
                 -
                   pug_html += app.fields.fieldText('email', {
@@ -39,17 +54,13 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
               .col-lg-12
                 .row.text-sm-center.text-xs-center
                   button(type="submit")#login-btn.btn.btn-primary.btn-login.text-uppercase Log In
-            //-
-              .col-lg-12.border-bottom.or
-                span or
-              .social-btn.col-lg-12
-                a(data-original-title="facebook" href="#")#login-facebook.btn.btn-block.btn-facebook.text-uppercase
-                  i.fa.fa-facebook
-                  |  Log In with Facebook
-                a(data-original-title="Linkedin" href="#")#login-linkedin.btn.btn-block.btn-linkedin.text-uppercase
-                  i.fa.fa-linkedin
-                  |  Log In with linkedin
-                a(data-original-title="Google Plus" href="#")#login-google.btn.btn-block.btn-google.text-uppercase
-                  i.fa.fa-google-plus
-                  |  Log In with Google
+              .row
+                .col-lg-12.m-t-3.p-x-0
+                  .bottom
+                    span.label-text I agree to the 
+                      a(href="/pg/terms_of_use" target="_blank").link-3 Terms of Use
+                      | , 
+                      a(href="/pg/privacy_policy" target="_blank").link-3 Privacy Policy
+                      |  and 
+                      a(href="/pg/electronic_signature" target="_blank").link-3 Electronic Signature and Electronic Delivery of Documentation.
     .modal-footer

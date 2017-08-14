@@ -116,8 +116,7 @@ module.exports = {
         40,   //up arrow
         91,   //left window
       ];
-      
-      
+
       if (_.contains(SKIP_KEY_CODES, e.keyCode))
         return;
 
@@ -436,6 +435,14 @@ module.exports = {
         },
       });
 
+      this.fields.video = _.extend(this.fields.video, {
+        fn(name, value, attr, data, computed) {
+          const info = app.getVideoInfo(value);
+          if (!info.provider)
+            throw 'YouTube or Vimeo links only, please';
+        },
+      });
+
       this.labels = {
         gallery_data: {
           url: 'Gallery',
@@ -478,6 +485,8 @@ module.exports = {
     },
 
     updateVideo(e) {
+      const name = e.target.getAttribute('name');
+      app.validation.clearMsg(this, name);
       appendHttpIfNecessary(e, true);
 
       const $videoContainer = $(e.target).closest('.video-container');
@@ -489,7 +498,8 @@ module.exports = {
       }
 
       const videoInfo = app.getVideoInfo(e.target.value);
-      if (!videoInfo) {
+      if (!videoInfo.provider) {
+        app.validation.invalidMsg(this, name, ['YouTube or Vimeo links only, please.']);
         return;
       }
 

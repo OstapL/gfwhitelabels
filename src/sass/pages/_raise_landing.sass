@@ -20,17 +20,35 @@
         color: rgba($white, .7)
         text-decoration: none
   .top-baner
-    height: 70vh
+    height: 75vh
     background-size: cover
+    &:after
+      height: 75px
+      width: 100%
+      position: absolute
+      bottom: 0
+      content: ''
+      background-image: linear-gradient(to bottom, transparent 0%, #010103 100%)
+      background-image: -ms-linear-gradient(top, transparent 0%, #010103 100%)
+      background-image: -moz-linear-gradient(top, transparent 0%, #010103 100%)
+      background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, transparent), color-stop(100, #010103))
+      background-image: -webkit-linear-gradient(top, transparent 0%, #010103 100%)
+      background-image: linear-gradient(to bottom, transparent 0%, #010103 100%)
+      z-index: 1
+    @media only screen and (max-width : 767px)
+      height: 550px
+
     .background
       top: -50px
       height: 80vh
     .center-wrap
       @media only screen and (max-width : 768px)
-        top: 55%
+        top: 50%
     h1
       color: $white
       line-height: rem(60)
+      max-width: 1140px
+      margin: auto
       @media only screen and (max-width : 1100px)
         font-size: rem(36)!important
         line-height: 36px
@@ -54,6 +72,14 @@
         top: 0
     @media only screen and (max-width : 768px)
       background-attachment: initial
+    .bottom-text
+      text-align: center
+      position: absolute
+      bottom: 20px
+      z-index: 2
+      width: 100%
+      span
+        color: $white
   .top-section
     position: relative
     &:before
