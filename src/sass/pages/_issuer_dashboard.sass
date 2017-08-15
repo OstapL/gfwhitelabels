@@ -390,7 +390,7 @@
     padding: rem(20) rem(30)
     
     .left-wrap
-      border-right: solid 1px $border_color
+      border-right: solid 1px $gallery
       width: 50%
       display: inline-block
       vertical-align: middle
@@ -509,7 +509,35 @@
           line-height: rem(15)
           vertical-align: middle
       .border-bottom
-        border-bottom: solid 1px $alabaster
+        border-bottom: solid 1px $gallery
       &:last-child
         .border-bottom
           display: none
+  .send-message
+    .line-row
+      padding: 10px 15px
+    .title
+      background-color: $puerto-rico
+      color: $white
+      h4
+        margin-bottom: 0
+        margin-left: 10px
+      .delete
+        float: right
+        position: relative
+        right: -15px
+        color: $white
+        font-size: rem(18)
+        line-height: initial
+        &:hover
+          +mt(.2s)
+          color: $crimson
+    .from,
+    .to
+      color: $small-text
+      h4
+        margin-bottom: 0
+        margin-right: 5px
+      border: solid 1px $gallery
+      border-top: none
+
