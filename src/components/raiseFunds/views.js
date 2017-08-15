@@ -789,19 +789,20 @@ module.exports = {
         if (!confirmed)
           return;
 
-        api.makeRequest(this.urlRoot + '/' + memberId, 'DELETE').
-        then((data) => {
-          this.model.team_members.members.splice(memberId, 1);
+        api.makeRequest(this.urlRoot + '/' + memberId, 'DELETE')
+          .then((data) => {
+            this.model.team_members.members.splice(memberId, 1);
 
-          $(e.currentTarget).parent().remove();
-          if (this.model.team_members.members.length < 1) {
-            this.$el.find('.notification').show();
-            this.$el.find('.buttons-row').hide();
-          } else {
-            this.$el.find('.notification').hide();
-            this.$el.find('.buttons-row').show();
-          }
-        });
+            $(e.currentTarget).closest('.team-add-item').parent().remove();
+
+            if (this.model.team_members.members.length < 1) {
+              this.$el.find('.notification').show();
+              this.$el.find('.buttons-row').hide();
+            } else {
+              this.$el.find('.notification').hide();
+              this.$el.find('.buttons-row').show();
+            }
+          });
       });
     },
 
