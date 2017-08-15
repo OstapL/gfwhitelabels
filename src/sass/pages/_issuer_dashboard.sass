@@ -388,16 +388,29 @@
   .panel-message
     background-color: $alabaster
     padding: rem(20) rem(30)
-    
+    @media only screen and (max-width : 991px)
+      padding: rem(20) rem(15)
     .left-wrap
       border-right: solid 1px $gallery
       width: 50%
       display: inline-block
       vertical-align: middle
+      @media only screen and (max-width : 991px)
+        width: 100%
+        border-right: none
+        border-bottom: solid 1px $gallery
+        padding-bottom: 20px
       .see-message
         display: inline-block
         margin-left: rem(45)
         vertical-align: top
+        @media only screen and (max-width : 1199px)
+          margin-left: rem(10)
+        @media only screen and (max-width : 991px)
+          margin-left: rem(45)
+        @media only screen and (max-width : 505px)
+          margin-left: rem(20)
+          max-width: 110px
         a
           i
             margin-right: rem(5)
@@ -406,18 +419,39 @@
       .create-message
         display: inline-block
         vertical-align: middle
+        @media only screen and (max-width : 505px)
+          max-width: 130px
         p
           color: $small-text
           margin-bottom: rem(8)
+        .btn
+          @media only screen and (max-width : 505px)
+            padding-left: 0
+            padding-right: 0
+            font-size: rem(10)!important
+            display: block
     .right-wrap
       width: 50%
       display: inline-block
       vertical-align: middle
+      @media only screen and (max-width : 991px)
+        width: 100%
+        margin-top: rem(10)
       .send-payment
-        margin-left: 80px
+        margin-left: rem(80)
+        @media only screen and (max-width : 991px)
+          margin-left: 0
+        @media only screen and (max-width : 505px)
+          max-width: 130px
         p
           color: $small-text
           margin-bottom: rem(8)
+        @media only screen and (max-width : 505px)
+          .btn
+            font-size: rem(10)!important
+            display: block
+            padding-left: 0
+            padding-right: 0
   .all-investors
     border: 1px $alabaster solid
     .item
@@ -516,6 +550,8 @@
   .send-message
     .line-row
       padding: 10px 15px
+      @media only screen and (max-width : 991px)
+        padding: 10px 0
     .title
       background-color: $puerto-rico
       color: $white
@@ -529,15 +565,66 @@
         color: $white
         font-size: rem(18)
         line-height: initial
+        @media only screen and (max-width : 991px)
+          right: 0
         &:hover
           +mt(.2s)
           color: $crimson
     .from,
-    .to
+    .to,
+    .panel
       color: $small-text
       h4
         margin-bottom: 0
         margin-right: 5px
       border: solid 1px $gallery
       border-top: none
+    .from
+      input
+        border: none
+        width: auto
+        color: $small-text
+        font-size: rem(15)
+    .panel
+      background-color: $alabaster
+      border-bottom: none
+      i
+        font-size: rem(15)
+        margin-right: 20px
+      .attach-file
+        i
+          margin-right: 5px
+          font-size: rem(16)
+      .line-vertical
+        border-right: solid 1px $small-text
+        margin-right: 20px
+    .textarea
+      textarea
+        min-height: 155px
+        border-top: none
+        border-bottom: dashed 1px $gallery
+        border-color: $gallery
+        resize: none
+    .file-row
+      padding: 5px 0
+      border:
+        left: solid 1px $gallery
+        right: solid 1px $gallery
+        bottom: solid 1px $gallery
+        top: none
+      .file
+        i
+          font-size: rem(15)
+          margin-right: rem(5)
+        a
+          font-size: rem(12)
+        .delete
+          font-size: rem(15)
+          i
+            margin-left: 5px
+          &:hover
+            +mt(.2s)
+            color: $crimson
+
+
 

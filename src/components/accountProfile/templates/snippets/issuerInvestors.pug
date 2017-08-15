@@ -32,18 +32,49 @@ section
     
     .from.line-row.row
       .col-xl-12
-        h4.text-uppercase.d-inline-block From:
-        span Company name
+        h4.text-uppercase.d-inline-block.m-r-0 From:
+        input(value="Company name").d-inline-block.form-control
     
     .to.line-row.row
       .col-xl-12
         h4.text-uppercase.d-inline-block to:
         span All Investors
+    .panel.line-row.row
+      .col-xl-12
+        a(href="#")
+          i.fa.fa-bold
+        a(href="#")
+          i.fa.fa-italic
+        a(href="#")
+          i.fa.fa-underline
+        //a(href="#") A
+        span.line-vertical
+        a(href="#")
+          i.fa.fa-list-ol
+        a(href="#")
+          i.fa.fa-list-ul
+        span.line-vertical
+        a(href="#").attach-file
+          i.fa.fa-paperclip
+          strong Attach a file
+    .textarea.row
+      form.form-section
+        .form-group.m-b-0
+          textarea.w-100.form-control
+    .row.file-row
+      .col-xl-12
+        .file
+          a(href="#")
+            i.fa.fa-file-o
+            | filename.pdf
+          a(href="#").delete
+            i.fa.fa-times
 
 
 
 
-  .col-xl-12.all-investors
+
+  .col-xl-12.all-investors(style="display: none;")
     .col-xl-12
       .row.item
         .col-xl-5.col-lg-5.col-md-4.col-sm-12.col-xs-12.photo-wrap
