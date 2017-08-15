@@ -761,6 +761,8 @@ module.exports = {
       this.fields = options.fields.campaign;
       this.formc = options.formc;
       this.model = options.campaign;
+      //fix bug with deleting team members
+      this.renumberTeamMembers();
 
       this.urlRoot = this.urlRoot.replace(':id', this.model.id);
     },
@@ -782,26 +784,47 @@ module.exports = {
       return this;
     },
 
+    renumberTeamMembers() {
+      if (!this.model.team_members || !this.model.team_members.members || !this.model.team_members.members.length)
+        return;
+
+      _.each(this.model.team_members.members, (m, idx) => {
+        if (m.hasOwnProperty('id')) {
+          const $memberItemDelete = this.$el.find(`[data-id=${m.id}]`);
+          if ($memberItemDelete && $memberItemDelete.length)
+            $memberItemDelete[0].dataset.id = idx;
+        }
+        m.id = idx;
+      });
+    },
+
     deleteMember: function (e) {
-      let memberId = e.currentTarget.dataset.id;
+      let memberId = Number(e.currentTarget.dataset.id);
 
       app.dialogs.confirm('Are you sure you would like to delete this team member?').then((confirmed) => {
         if (!confirmed)
           return;
 
-        api.makeRequest(this.urlRoot + '/' + memberId, 'DELETE').
-        then((data) => {
-          this.model.team_members.members.splice(memberId, 1);
+        api.makeRequest(this.urlRoot + '/' + memberId, 'DELETE')
+          .then((data) => {
+            const idx = this.model.team_members.members.findIndex(m => m.id === memberId);
+            if (idx < 0)
+              return console.error(`Team member with id: ${memberId} not found`);
 
-          $(e.currentTarget).parent().remove();
-          if (this.model.team_members.members.length < 1) {
-            this.$el.find('.notification').show();
-            this.$el.find('.buttons-row').hide();
-          } else {
-            this.$el.find('.notification').hide();
-            this.$el.find('.buttons-row').show();
-          }
-        });
+            this.model.team_members.members.splice(idx, 1);
+
+            $(e.currentTarget).closest('.team-add-item').parent().remove();
+
+            if (this.model.team_members.members.length < 1) {
+              this.$el.find('.notification').show();
+              this.$el.find('.buttons-row').hide();
+            } else {
+              this.$el.find('.notification').hide();
+              this.$el.find('.buttons-row').show();
+            }
+
+            this.renumberTeamMembers();
+          });
       });
     },
 
