@@ -4,6 +4,8 @@ const should    = chai.should();
 const expect    = chai.expect;
 
 const Views = require('src/components/anonymousAccount/views.js');
+const socialAuth = require('src/components/anonymousAccount/social-auth.js');
+
 const eventEmitter = _.extend({}, Backbone.Events);
 
 const inst = {};
@@ -60,6 +62,12 @@ describe('Log-in page', () => {
 
   beforeEach(() => {
     stubMakeRequest(fakeLoginResponse);
+
+    socialAuth.login = sinon.stub(socialAuth, 'login');
+    socialAuth.login.returns(new Promise((resolve) => {
+      resolve(JSON.parse(JSON.stringify({ cancelled: false, data: fakeLoginResponse, })));
+    }));
+
     inst.LoginView = new Views.login({
       el: '#content',
       model: {}
@@ -68,10 +76,12 @@ describe('Log-in page', () => {
   });
 
   afterEach(() => {
-    inst.LoginView.undelegateEvents();
+    inst.LoginView.destroy();
     delete inst.LoginView;
     $('#content').empty();
     api.makeRequest.restore();
+    socialAuth.login.restore();
+    localStorage.clear();
     eventEmitter.off('done');
   });
 
@@ -85,7 +95,7 @@ describe('Log-in page', () => {
     };
 
     testHelpers.fillForm($loginForm, _.pick(userData, 'email', 'password'));
-
+    eventEmitter.off('done');
     eventEmitter.on('done', () => {
       const data = api.makeRequest.args[0][2];
 
@@ -116,6 +126,36 @@ describe('Log-in page', () => {
 
     expect(app.validation.errors.email).to.include('Invalid email');
     expect(app.validation.errors.password).to.include('Password must be at least 8 characters');
+  });
+
+  it('Should log-in via FB', (done) => {
+    eventEmitter.off('done');
+    eventEmitter.on('done', () => {
+      const data = readUserData();
+      expect(data.user).to.deep.equal(fakeLoginResponse);
+      done();
+    });
+    inst.LoginView.$el.find('.btn-facebook').click();
+  });
+
+  it('Should log-in via LinkedIn', (done) => {
+    eventEmitter.off('done');
+    eventEmitter.on('done', () => {
+      const data = readUserData();
+      expect(data.user).to.deep.equal(fakeLoginResponse);
+      done();
+    });
+    inst.LoginView.$el.find('.btn-linkedin').click();
+  });
+
+  it('Should log-in via Google', (done) => {
+    eventEmitter.off('done');
+    eventEmitter.on('done', () => {
+      const data = readUserData();
+      expect(data.user).to.deep.equal(fakeLoginResponse);
+      done();
+    });
+    inst.LoginView.$el.find('.btn-google').click();
   });
 
 });
@@ -179,7 +219,7 @@ describe('Sign-up page', () => {
     const $signupForm = $('.signup-form');
     testHelpers.fillForm($signupForm, _.omit(userData, 'checkbox1', 'domain'));
     $signupForm.find('input[name="checkbox1"]').prop('checked', true);
-
+    eventEmitter.off('done');
     eventEmitter.on('done', () => {
       const actualData = api.makeRequest.args[0][2];
       expect(actualData).to.deep.equal(userData);
@@ -193,6 +233,23 @@ describe('Sign-up page', () => {
       done();
     });
     $signupForm.submit();
+  });
+  describe('Sign-up via social networks', () => {
+    beforeEach(() => {
+
+    });
+
+    afterEach(() => {
+
+    });
+
+    it('Should sign-up', () => {
+
+    });
+
+    it('Should show validation message: First agree with rules', () => {
+
+    });
   });
 });
 
@@ -251,7 +308,7 @@ describe('Sign-up popup', () => {
 
     testHelpers.fillForm($signupForm, _.omit(userData, 'checkbox1', 'domain'));
     $signupForm.find('input[name=checkbox1]').prop('checked', true);
-
+    eventEmitter.off('done');
     eventEmitter.on('done', () => {
       const data = api.makeRequest.args[0][2];
       expect(data).to.deep.equal(userData);
@@ -264,7 +321,6 @@ describe('Sign-up popup', () => {
 
       done();
     });
-    debugger;
     $signupForm.submit();
   });
 
@@ -281,6 +337,11 @@ describe('Sign-up popup', () => {
       password1: ['Is required', 'Password must be at least 8 characters'],
     });
   });
+
+  describe('Sign-up with social networks', () => {
+
+  });
+
 });
 
 describe('Log-in popup', () => {
@@ -336,7 +397,7 @@ describe('Log-in popup', () => {
     const $loginForm = $('#sign-in-form');
 
     testHelpers.fillForm($loginForm, _.omit(userData, 'domain'));
-
+    eventEmitter.off('done');
     eventEmitter.on('done', () => {
       const data = api.makeRequest.args[0][2];
 
@@ -362,6 +423,18 @@ describe('Log-in popup', () => {
     expect(app.validation.errors).to.deep.equal({
       email: ['Is required'],
       password: ['Is required', 'Password must be at least 8 characters'],
+    });
+  });
+
+  describe('Log-in with social networks', () => {
+    beforeEach(() => {
+
+    });
+    afterEach(() => {
+
+    });
+    it('Should log-in via social network', () => {
+
     });
   });
 });
