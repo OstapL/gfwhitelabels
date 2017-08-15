@@ -762,10 +762,7 @@ module.exports = {
       this.formc = options.formc;
       this.model = options.campaign;
       //fix bug with deleting team members
-      if (this.model.team_members && this.model.team_members.members && this.model.team_members.members.length)
-        _.each(this.model.team_members.members, (m, idx) => {
-          m.id = idx;
-        });
+      this.renumberTeamMembers();
 
       this.urlRoot = this.urlRoot.replace(':id', this.model.id);
     },
@@ -785,6 +782,20 @@ module.exports = {
       this.$el.find('.team-add-item').equalHeights();
       this.model.updateMenu(this.model.calcProgress(this.model));
       return this;
+    },
+
+    renumberTeamMembers() {
+      if (!this.model.team_members || !this.model.team_members.members || !this.model.team_members.members.length)
+        return;
+
+      _.each(this.model.team_members.members, (m, idx) => {
+        if (m.hasOwnProperty('id')) {
+          const $memberItemDelete = this.$el.find(`[data-id=${m.id}]`);
+          if ($memberItemDelete && $memberItemDelete.length)
+            $memberItemDelete[0].dataset.id = idx;
+        }
+        m.id = idx;
+      });
     },
 
     deleteMember: function (e) {
@@ -811,6 +822,8 @@ module.exports = {
               this.$el.find('.notification').hide();
               this.$el.find('.buttons-row').show();
             }
+
+            this.renumberTeamMembers();
           });
       });
     },
