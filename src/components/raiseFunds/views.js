@@ -761,6 +761,11 @@ module.exports = {
       this.fields = options.fields.campaign;
       this.formc = options.formc;
       this.model = options.campaign;
+      //fix bug with deleting team members
+      if (this.model.team_members && this.model.team_members.members && this.model.team_members.members.length)
+        _.each(this.model.team_members.members, (m, idx) => {
+          m.id = idx;
+        });
 
       this.urlRoot = this.urlRoot.replace(':id', this.model.id);
     },
@@ -783,7 +788,7 @@ module.exports = {
     },
 
     deleteMember: function (e) {
-      let memberId = e.currentTarget.dataset.id;
+      let memberId = Number(e.currentTarget.dataset.id);
 
       app.dialogs.confirm('Are you sure you would like to delete this team member?').then((confirmed) => {
         if (!confirmed)
@@ -791,7 +796,11 @@ module.exports = {
 
         api.makeRequest(this.urlRoot + '/' + memberId, 'DELETE')
           .then((data) => {
-            this.model.team_members.members.splice(memberId, 1);
+            const idx = this.model.team_members.members.findIndex(m => m.id === memberId);
+            if (idx < 0)
+              return console.error(`Team member with id: ${memberId} not found`);
+
+            this.model.team_members.members.splice(idx, 1);
 
             $(e.currentTarget).closest('.team-add-item').parent().remove();
 
