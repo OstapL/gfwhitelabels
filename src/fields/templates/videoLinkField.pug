@@ -6,7 +6,7 @@ div(id=attr.elementID).video-container
 
   .col-xl-5.col-lg-6
     -
-      var videoInfo = app.getVideoInfo('');
+      var videoInfo = app.getVideoInfo(attr.value);
     if videoInfo.provider === 'youtube'
       .img-media.youtube-media
         img(src="https://img.youtube.com/vi/" + videoInfo.id + "/0.jpg")

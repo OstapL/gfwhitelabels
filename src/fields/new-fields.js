@@ -51,7 +51,10 @@ class Field {
   };
 
   getValue() {
+    if (this.$el && this.$el.length)
+      return this.$el.val();
 
+    return this.attr.value || '';
   };
 
   setValue() {
@@ -70,6 +73,10 @@ class Field {
       tmp: {},
     });
   };
+
+  postRender() {
+    this.bindEvents();
+  }
 
   bindEvents() {
     if (this.$el)
@@ -104,6 +111,8 @@ class Field {
   }
 
   validate() {
+    this.errors = [];
+    this.hideErrors();
     return true;
   };
 
@@ -176,13 +185,19 @@ class URLField extends TextFieldWithLabel {
 
   onChange(e) {
     e.preventDefault();
+
+    app.helpers.format.appendHttpIfNecessary(e);
+
     if (!this.validate()) {
       this.showErrors();
     }
+
     return false;
   }
 
   validate() {
+    super.validate();
+
     const value = this.getValue();
     if (!value)
       return true;
@@ -202,6 +217,11 @@ class VideoLinkField extends URLField {
 
   get template() {
     return require('./templates/videoLinkField.pug');
+  }
+
+  postRender() {
+    super.postRender();
+    this._initVimeoVideoThumbnails();
   }
 
   validate() {
@@ -227,8 +247,7 @@ class VideoLinkField extends URLField {
 
   updateVideo() {
     const url = this.getValue();
-    const $videoContainer = this.$el.find('.video-container') || this.$el;
-    const img = $videoContainer.find('img')[0];
+    const img = this.$el[0].querySelector('img');
 
     if (!url) {
       img.src = require('images/default/default-video.png');
@@ -236,6 +255,7 @@ class VideoLinkField extends URLField {
     }
 
     const videoInfo = app.getVideoInfo(url);
+
     if (videoInfo.provider === 'youtube')
       this._updateYoutubeThumbnail(img, videoInfo.id);
     else if (videoInfo.provider === 'vimeo')
@@ -244,7 +264,7 @@ class VideoLinkField extends URLField {
 
   _updateYoutubeThumbnail(img, videoID) {
     img.src = videoID
-      ? '//img.youtube.com/vi/' + videoID + '/0.jpg'
+      ? '//img.youtube.com/vi/' + videoID + '/mqdefault.jpg'
       : require('images/default/default-video.png');
   }
 
@@ -269,7 +289,7 @@ class VideoLinkField extends URLField {
   }
 
   _initVimeoVideoThumbnails() {
-    const $images = this.$('img[data-vimeo-id]');
+    const $images = this.$el.find('img[data-vimeo-id]');
     if (!$images.length)
       return;
 

@@ -503,6 +503,7 @@ module.exports = {
           label: 'Main Video for Campaign',
           placeholder: 'http://www.',
           help_text: 'YouTube or Vimeo links only, please.',
+          value: this.model.video,
         }
       };
 
@@ -544,7 +545,7 @@ module.exports = {
         })
       );
 
-      this.videoField.bindEvents();
+      this.videoField.postRender();
 
       app.helpers.disableEnter.disableEnter.call(this);
       this.checkForm();
