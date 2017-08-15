@@ -664,6 +664,7 @@ module.exports = {
       this.model = this.company;
       this.campaign = options.campaign;
       this.formc = options.formc;
+      this.investors = options.investors;
 
       //this is auth cookie for downloadable files
       app.cookies.set('token', app.user.data.token, {
@@ -680,6 +681,7 @@ module.exports = {
           company: this.company,
           campaign: this.campaign,
           formc: this.formc,
+          investors: this.investors
         })
       );
 
@@ -739,5 +741,4 @@ module.exports = {
       });
     },
   }),
-
 };
