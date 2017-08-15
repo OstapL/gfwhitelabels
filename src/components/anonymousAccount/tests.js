@@ -264,7 +264,6 @@ describe('Sign-up popup', () => {
 
       done();
     });
-    debugger;
     $signupForm.submit();
   });
 

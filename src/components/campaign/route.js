@@ -2,6 +2,10 @@
 const helpers = require('./helpers.js');
 const GENERAL = require('consts/general.json');
 
+if (process.env.NODE_ENV === 'test') {
+  require.ensure = (deps, cb) => cb(require);
+}
+
 module.exports = {
   routes: {
     ':name/:investmentId/invest-thanks': 'investmentThankYou',
@@ -112,32 +116,36 @@ module.exports = {
 
       require.ensure([], () => {
         const View = require('./views.js');
-        $.when(
-          api.makeCacheRequest(app.config.raiseCapitalServer + '/company', 'OPTIONS'),
-          api.makeCacheRequest(app.config.raiseCapitalServer + '/' + name)
-        ).done((companyFields, companyData) => {
+        Promise.all([
+          api.makeRequest(app.config.raiseCapitalServer + '/company', 'OPTIONS'),
+          api.makeRequest(app.config.raiseCapitalServer + '/' + name)
+        ]).then((data) => {
 
-          let model = new app.models.Company(companyData[0], companyFields[0]);
-          let metaDescription = companyData[0].tagline + '. ';
+          let companyFields = data[0];
+          let companyData = data[1];
+
+          let model = new app.models.Company(companyData, companyFields);
+          let metaDescription = companyData.tagline + '. ';
           try {
-            metaDescription += companyData[0].description.split('.')[0];
+            metaDescription += companyData.description.split('.')[0];
           } catch(e) {
           }
 
-          document.title = companyData[0].short_name || companyData[0].name;
+          document.title = companyData.short_name || companyData.name;
           document.head.querySelector('meta[name="description"]').content = metaDescription;
 
-          document.head.querySelector('meta[property="og:title"]').content = companyData[0].short_name || companyData[0].name;
+          document.head.querySelector('meta[property="og:title"]').content = companyData.short_name || companyData.name;
           document.head.querySelector('meta[property="og:description"]').content = metaDescription;
           document.head.querySelector('meta[property="og:image"]').content = model.campaign.getMainImage();
           document.head.querySelector('meta[property="og:url"]').content = window.location.href;
-          // document.head.querySelector('meta[name="keywords"]').content = companyData[0].tagline.replace(/ /g,',');
 
           let i = new View.detail({
             model: model
           });
           i.render();
           $('body').scrollTo();
+        }).catch((error) => {
+          console.debug(error);
         });
       }, 'campaign_chunk');
     },
