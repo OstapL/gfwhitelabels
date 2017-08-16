@@ -1,3 +1,4 @@
+const { createFields } = require('fields/new-fields.js');
 const raiseHelpers = require('./helpers.js');
 const appendHttpIfNecessary = app.helpers.format.appendHttpIfNecessary;
 
@@ -355,7 +356,8 @@ module.exports = {
 
     events: _.extend({
         'click #submitForm': api.submitAction,
-        'change #video,.additional-video-link': 'updateVideo',
+        // 'change #video,.additional-video-link': 'updateVideo',
+        'change .additional-video-link': 'updateVideo',
         'change .press_link': 'appendHttpIfNecessary',
         'click .submit_form': raiseHelpers.submitCampaign,
         'click #postForReview': raiseHelpers.postForReview,
@@ -495,6 +497,18 @@ module.exports = {
         },
       });
 
+      const fieldsSchema = _.pick(this.fields, ['video']);
+      const fieldsAttr = {
+        video: {
+          label: 'Main Video for Campaign',
+          placeholder: 'http://www.',
+          help_text: 'YouTube or Vimeo links only, please.',
+          value: this.model.video,
+        }
+      };
+
+      this.videoField = createFields(fieldsSchema, fieldsAttr).video;
+
       this.labels = {
         gallery_data: {
           url: 'Gallery',
@@ -509,11 +523,12 @@ module.exports = {
         },
         list_image_image_id: 'Thumbnail Picture',
         header_image_image_id: 'Header Image',
-        video: 'Main Video for Campaign',
+        // video: 'Main Video for Campaign',
         gallery_group_id: 'Gallery'
       };
 
       this.assignLabels();
+
       this.createIndexes();
       this.buildSnippets(snippets);
     },
@@ -526,8 +541,11 @@ module.exports = {
           formc: this.formc,
           view: this,
           templates: this.jsonTemplates,
+          video: this.videoField,
         })
       );
+
+      this.videoField.postRender();
 
       app.helpers.disableEnter.disableEnter.call(this);
       this.checkForm();
