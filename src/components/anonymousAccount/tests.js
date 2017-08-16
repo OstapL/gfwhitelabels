@@ -95,7 +95,7 @@ describe('Log-in page', () => {
     };
 
     testHelpers.fillForm($loginForm, _.pick(userData, 'email', 'password'));
-    eventEmitter.off('done');
+
     eventEmitter.on('done', () => {
       const data = api.makeRequest.args[0][2];
 
@@ -129,7 +129,6 @@ describe('Log-in page', () => {
   });
 
   it('Should log-in via FB', (done) => {
-    eventEmitter.off('done');
     eventEmitter.on('done', () => {
       const data = readUserData();
       expect(data.user).to.deep.equal(fakeLoginResponse);
@@ -139,7 +138,6 @@ describe('Log-in page', () => {
   });
 
   it('Should log-in via LinkedIn', (done) => {
-    eventEmitter.off('done');
     eventEmitter.on('done', () => {
       const data = readUserData();
       expect(data.user).to.deep.equal(fakeLoginResponse);
@@ -149,7 +147,6 @@ describe('Log-in page', () => {
   });
 
   it('Should log-in via Google', (done) => {
-    eventEmitter.off('done');
     eventEmitter.on('done', () => {
       const data = readUserData();
       expect(data.user).to.deep.equal(fakeLoginResponse);
@@ -192,6 +189,11 @@ describe('Sign-up page', () => {
   beforeEach(() => {
     stubMakeRequest(fakeLoginResponse);
 
+    socialAuth.login = sinon.stub(socialAuth, 'login');
+    socialAuth.login.returns(new Promise((resolve) => {
+      resolve(JSON.parse(JSON.stringify({ cancelled: false, data: fakeLoginResponse, })));
+    }));
+
     inst.SignupView = new Views.signup({
       el: '#content',
       model: {}
@@ -203,6 +205,7 @@ describe('Sign-up page', () => {
     $('#content').empty();
     delete inst.SignupView;
     api.makeRequest.restore();
+    socialAuth.login.restore();
     eventEmitter.off('done');
   });
 
@@ -234,23 +237,58 @@ describe('Sign-up page', () => {
     });
     $signupForm.submit();
   });
-  describe('Sign-up via social networks', () => {
-    beforeEach(() => {
 
+  it('Should sign-up via Facebook', (done) => {
+    eventEmitter.on('done', () => {
+      const actualData = readUserData();
+      expect(actualData.user).to.deep.equal(fakeLoginResponse);
+      done();
     });
 
-    afterEach(() => {
-
-    });
-
-    it('Should sign-up', () => {
-
-    });
-
-    it('Should show validation message: First agree with rules', () => {
-
-    });
+    inst.SignupView.$el.find('[name=checkbox1]').prop('checked', true);
+    inst.SignupView.$el.find('.btn-facebook').click();
   });
+
+  it('Should sign-up via LinkedIn', (done) => {
+    eventEmitter.on('done', () => {
+      const actualData = readUserData();
+      expect(actualData.user).to.deep.equal(fakeLoginResponse);
+      done();
+    });
+
+    inst.SignupView.$el.find('[name=checkbox1]').prop('checked', true);
+    inst.SignupView.$el.find('.btn-linkedin').click();
+  });
+
+  it('Should sign-up via Google', (done) => {
+    eventEmitter.on('done', () => {
+      const actualData = readUserData();
+      expect(actualData.user).to.deep.equal(fakeLoginResponse);
+      done();
+    });
+
+    inst.SignupView.$el.find('[name=checkbox1]').prop('checked', true);
+    inst.SignupView.$el.find('.btn-google').click();
+  });
+
+  it('Should show validation message when not agreed with rules, click facebook button', () => {
+    inst.SignupView.$el.find('[name=checkbox1]').prop('checked', false);
+    inst.SignupView.$el.find('.btn-facebook').click();
+    expect(app.validation.errors.checkbox1).to.include('You must agree to the terms before creating an account');
+  });
+
+  it('Should show validation message when not agreed with rules, click linkedin button', () => {
+    inst.SignupView.$el.find('[name=checkbox1]').prop('checked', false);
+    inst.SignupView.$el.find('.btn-linkedin').click();
+    expect(app.validation.errors.checkbox1).to.include('You must agree to the terms before creating an account');
+  });
+
+  it('Should show validation message when not agreed with rules, click google button', () => {
+    inst.SignupView.$el.find('[name=checkbox1]').prop('checked', false);
+    inst.SignupView.$el.find('.btn-google').click();
+    expect(app.validation.errors.checkbox1).to.include('You must agree to the terms before creating an account');
+  });
+
 });
 
 describe('Sign-up popup', () => {
@@ -284,6 +322,11 @@ describe('Sign-up popup', () => {
 
   beforeEach(() => {
     stubMakeRequest(fakeSignupResponse);
+    socialAuth.login = sinon.stub(socialAuth, 'login');
+    socialAuth.login.returns(new Promise((resolve) => {
+      resolve(JSON.parse(JSON.stringify({ cancelled: false, data: fakeSignupResponse, })));
+    }));
+
     inst.SignupPopup = new Views.popupSignup();
     inst.SignupPopup.render();
   });
@@ -292,6 +335,7 @@ describe('Sign-up popup', () => {
     inst.SignupPopup.destroy();
     delete inst.SignupPopup;
     api.makeRequest.restore();
+    socialAuth.login.restore();
     eventEmitter.off('done');
   });
 
@@ -338,8 +382,55 @@ describe('Sign-up popup', () => {
     });
   });
 
-  describe('Sign-up with social networks', () => {
+  it('Should sign-up via Facebook', (done) => {
+    eventEmitter.on('done', () => {
+      const actualData = readUserData();
+      expect(actualData.user).to.deep.equal(fakeSignupResponse);
+      done();
+    });
 
+    inst.SignupPopup.$el.find('[name=checkbox1]').prop('checked', true);
+    inst.SignupPopup.$el.find('.btn-facebook').click();
+  });
+
+  it('Should sign-up via LinkedIn', (done) => {
+    eventEmitter.on('done', () => {
+      const actualData = readUserData();
+      expect(actualData.user).to.deep.equal(fakeSignupResponse);
+      done();
+    });
+
+    inst.SignupPopup.$el.find('[name=checkbox1]').prop('checked', true);
+    inst.SignupPopup.$el.find('.btn-linkedin').click();
+  });
+
+  it('Should sign-up via Google', (done) => {
+    eventEmitter.on('done', () => {
+      const actualData = readUserData();
+      expect(actualData.user).to.deep.equal(fakeSignupResponse);
+      done();
+    });
+
+    inst.SignupPopup.$el.find('[name=checkbox1]').prop('checked', true);
+    inst.SignupPopup.$el.find('.btn-google').click();
+  });
+
+  it('Should show validation message when not agreed with rules, click facebook button', () => {
+    inst.SignupPopup.$el.find('[name=checkbox1]').prop('checked', false);
+    inst.SignupPopup.$el.find('.btn-facebook').click();
+    expect(app.validation.errors.checkbox1).to.include('You must agree to the terms before creating an account');
+  });
+
+  it('Should show validation message when not agreed with rules, click linkedin button', () => {
+    inst.SignupPopup.$el.find('[name=checkbox1]').prop('checked', false);
+    inst.SignupPopup.$el.find('.btn-linkedin').click();
+    expect(app.validation.errors.checkbox1).to.include('You must agree to the terms before creating an account');
+  });
+
+  it('Should show validation message when not agreed with rules, click google button', () => {
+    inst.SignupPopup.$el.find('[name=checkbox1]').prop('checked', false);
+    inst.SignupPopup.$el.find('.btn-google').click();
+    expect(app.validation.errors.checkbox1).to.include('You must agree to the terms before creating an account');
   });
 
 });
@@ -375,14 +466,21 @@ describe('Log-in popup', () => {
 
   beforeEach(() => {
     stubMakeRequest(fakeLoginResponse);
-    inst.SignupPopup = new Views.popupLogin({});
-    inst.SignupPopup.render();
+
+    socialAuth.login = sinon.stub(socialAuth, 'login');
+    socialAuth.login.returns(new Promise((resolve) => {
+      resolve(JSON.parse(JSON.stringify({ cancelled: false, data: fakeLoginResponse, })));
+    }));
+
+    inst.LoginPopup = new Views.popupLogin({});
+    inst.LoginPopup.render();
   });
 
   afterEach(() => {
-    inst.SignupPopup.destroy();
-    delete inst.SignupPopup;
+    inst.LoginPopup.destroy();
+    delete inst.LoginPopup;
     api.makeRequest.restore();
+    socialAuth.login.restore();
     eventEmitter.off('done');
   });
 
@@ -426,15 +524,32 @@ describe('Log-in popup', () => {
     });
   });
 
-  describe('Log-in with social networks', () => {
-    beforeEach(() => {
-
+  it('Should log-in via Facebook', (done) => {
+    eventEmitter.on('done', () => {
+      const data = readUserData();
+      expect(data.user).to.deep.equal(fakeLoginResponse);
+      done();
     });
-    afterEach(() => {
 
-    });
-    it('Should log-in via social network', () => {
-
-    });
+    inst.LoginPopup.$el.find('.btn-facebook').click();
   });
+
+  it('Should log-in via LinkedIn', (done) => {
+    eventEmitter.on('done', () => {
+      const data = readUserData();
+      expect(data.user).to.deep.equal(fakeLoginResponse);
+      done();
+    });
+    inst.LoginPopup.$el.find('.btn-linkedin').click();
+  });
+
+  it('Should log-in via Google', (done) => {
+    eventEmitter.on('done', () => {
+      const data = readUserData();
+      expect(data.user).to.deep.equal(fakeLoginResponse);
+      done();
+    });
+    inst.LoginPopup.$el.find('.btn-google').click();
+  });
+
 });
