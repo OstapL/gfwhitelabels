@@ -210,7 +210,7 @@ const Views = {
         })
       );
 
-      _.each(this.fields, (field) => field.bindEvents());
+      _.each(this.fields, (field) => field.postRender());
 
       return this;
     },
@@ -266,7 +266,7 @@ const Views = {
         })
       );
 
-      _(this.fields).each(field => field.bindEvents());
+      _(this.fields).each(field => field.postRender());
 
       return this;
     },
