@@ -291,17 +291,27 @@ const Views = {
       'submit form': api.submitAction,
     },
 
+    initialize() {
+      this.fieldsSchema = _.pick(SIGNUP_FIELDS, ['email', 'domain']);
+      this.fieldsAttr = {
+        email: {
+          id: 'email',
+          placeholder: 'E-mail',
+          inputContainerClass: 'form-group row clearfix',
+          inputClass: 'form-control',
+        },
+      };
+
+      this.fields = createFields(this.fieldsSchema, this.fieldsAttr);
+    },
+
     render() {
-      this.fields = {};
-      this.fields.email = {
-        type: 'email',
-        required: true,
-      };
-      this.fields.domain = {
-        type: 'text',
-        required: true,
-      };
-      this.el.innerHTML = this.template();
+      this.el.innerHTML = this.template({
+        fields: this.fields,
+      });
+
+      _.each(this.fields, field => field.postRender());
+
       return this;
     },
 
@@ -347,10 +357,10 @@ const Views = {
       this.title = options.title;
       this.company_name = options.company_name;
       this.id = options.id;
+      this.urlRoot = this.urlRoot.replace(':id', this.id);
     },
 
     render() {
-      this.urlRoot = this.urlRoot.replace(':id', this.id);
       this.$el.html(
         this.template({
           title: this.title,
