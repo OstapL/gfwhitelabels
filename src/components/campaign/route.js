@@ -2,10 +2,6 @@
 const helpers = require('./helpers.js');
 const GENERAL = require('consts/general.json');
 
-if (process.env.NODE_ENV === 'test') {
-  require.ensure = (deps, cb) => cb(require);
-}
-
 module.exports = {
   routes: {
     ':name/:investmentId/invest-thanks': 'investmentThankYou',
@@ -31,48 +27,7 @@ module.exports = {
 
     investThanksShareDetail(name) {
       app.showLoading();
-
-      require.ensure([], () => {
-        const View = require('./views.js');
-        $.when(
-          api.makeCacheRequest(app.config.raiseCapitalServer + '/company', 'OPTIONS'),
-          api.makeCacheRequest(app.config.raiseCapitalServer + '/' + name)
-        ).done((companyFields, companyData) => {
-
-          let model = new app.models.Company(companyData[0], companyFields[0]);
-          let metaDescription = companyData[0].tagline + '. ';
-          try {
-            metaDescription += companyData[0].description.split('.')[0];
-          } catch(e) {
-          }
-
-          document.title = companyData[0].short_name || companyData[0].name;
-          document.head.querySelector('meta[name="description"]').content = metaDescription;
-
-          const siteName = window.location.host.replace(/growthfountain/i, 'GrowthFountain');
-          const ogTitle = `Everyone’s doing it! I just invested in ${(companyData[0].short_name || companyData[0].name)} on ${siteName}`;
-          const ogDescription = companyData[0].description;
-          const ogURL = window.location.origin + '/' + (model.slug || model.id);
-
-          document.head.querySelector('meta[property="og:title"]').content = ogTitle;
-          document.head.querySelector('meta[property="og:description"]').content = ogDescription;
-          document.head.querySelector('meta[property="og:image"]').content = model.campaign.getMainImage();
-          document.head.querySelector('meta[property="og:url"]').content = ogURL;
-          let fbAppIDTag = document.head.querySelector('meta[property="fb:app_id"]');
-          if (!fbAppIDTag) {
-            fbAppIDTag = document.createElement('meta');
-            fbAppIDTag.setAttribute('property', 'fb:app_id');
-            document.head.appendChild(fbAppIDTag);
-          }
-          fbAppIDTag.content = app.config.facebookClientId;
-
-          let i = new View.detail({
-            model: model
-          });
-          i.render();
-          $('body').scrollTo();
-        });
-      }, 'campaign_chunk');
+      this.detail(name, 'share');
     },
 
     list() {
@@ -111,41 +66,58 @@ module.exports = {
       }, 'campaign_chunk');
     },
 
-    detail(name) {
+    detail(name, params) {
       app.showLoading();
 
       require.ensure([], () => {
         const View = require('./views.js');
-        Promise.all([
-          api.makeRequest(app.config.raiseCapitalServer + '/company', 'OPTIONS'),
-          api.makeRequest(app.config.raiseCapitalServer + '/' + name)
-        ]).then((data) => {
+        $.when(
+          api.makeCacheRequest(app.config.raiseCapitalServer + '/company', 'OPTIONS'),
+          api.makeCacheRequest(app.config.raiseCapitalServer + '/' + name)
+        ).done((companyFields, companyData) => {
+          const model = new app.models.Company(companyData[0], companyFields[0]);
+          let metaDescription = model.tagline + '. ';
+          const dotIdx = model.description ? model.description.indexOf('.') : 0;
+          if (dotIdx > 0)
+            metaDescription += model.description.substring(0, dotIdx);
 
-          let companyFields = data[0];
-          let companyData = data[1];
+          const companyName = companyData[0].short_name || companyData[0].name;
 
-          let model = new app.models.Company(companyData, companyFields);
-          let metaDescription = companyData.tagline + '. ';
-          try {
-            metaDescription += companyData.description.split('.')[0];
-          } catch(e) {
-          }
-
-          document.title = companyData.short_name || companyData.name;
+          document.title = companyName;
           document.head.querySelector('meta[name="description"]').content = metaDescription;
 
-          document.head.querySelector('meta[property="og:title"]').content = companyData.short_name || companyData.name;
-          document.head.querySelector('meta[property="og:description"]').content = metaDescription;
-          document.head.querySelector('meta[property="og:image"]').content = model.campaign.getMainImage();
-          document.head.querySelector('meta[property="og:url"]').content = window.location.href;
+          const getShareTags = () => {
+            if (params === 'share') {
+              const siteName = window.location.host.replace(/growthfountain/i, 'GrowthFountain');
+
+              const title = `Everyone’s doing it! I just invested in ${companyName} on ${siteName}`;
+              const description = model.description;
+              const url = `${window.location.origin}/${(model.slug || model.id)}`;
+              const image = model.campaign.getMainImage();
+
+              return { title, description, url, image };
+            }
+
+            const title = companyName;
+            const description = metaDescription;
+            const image = model.campaign.getMainImage();
+            const url = window.location.href;
+
+            return { title, description, url, image };
+          };
+
+          const tags = getShareTags();
+
+          document.head.querySelector('meta[property="og:title"]').content = tags.title;
+          document.head.querySelector('meta[property="og:description"]').content = tags.description;
+          document.head.querySelector('meta[property="og:image"]').content = tags.image;
+          document.head.querySelector('meta[property="og:url"]').content = tags.url;
 
           let i = new View.detail({
             model: model
           });
           i.render();
           $('body').scrollTo();
-        }).catch((error) => {
-          console.debug(error);
         });
       }, 'campaign_chunk');
     },

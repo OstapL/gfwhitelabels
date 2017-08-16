@@ -90,18 +90,18 @@ _.extend($.fn, {
   },
 
   equalHeights() {
-    var maxHeight = 0;
-    var $this = $(this);
+  var maxHeight = 0;
+  var $this = $(this);
 
-    $this.each(function () {
-      var height = $(this).innerHeight();
-      if (height > maxHeight) {
-        maxHeight = height;
-      }
-    });
+  $this.each(function () {
+    var height = $(this).innerHeight();
+    if (height > maxHeight) {
+      maxHeight = height;
+    }
+  });
 
-    return $this.css('height', maxHeight);
-  },
+  return $this.css('height', maxHeight);
+},
 
 });
 

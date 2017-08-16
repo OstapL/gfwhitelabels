@@ -373,6 +373,7 @@ module.exports = {
 
       this.$('#documents-modal').modal('hide');
 
+      api.makeRequest(app.config.emailServer + '/subscribe', 'PUT');
       return this;
     },
 
