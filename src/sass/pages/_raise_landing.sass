@@ -307,3 +307,61 @@
     h3
       font-size: rem(16)
       line-height: rem(22)
+.calendly
+  position: fixed
+  right: 20px
+  bottom: 90px
+  z-index: 9998
+  width: 275px
+  height: 180px
+  &.hide
+    display: none
+  .raise-landing
+    background-color: $white
+    border-radius: 30px 30px 0px 30px
+    -webkit-box-shadow: 0px 0px 2px -1px rgba(0, 0, 0, 0.61)
+    -moz-box-shadow: 0px 0px 2px -1px rgba(0, 0, 0, 0.61)
+    box-shadow: 0px 0px 2px -1px rgba(0, 0, 0, 0.61)
+    padding: 20px
+    .header
+      h3
+        margin-top: 0
+        margin-bottom: 10px
+      .fa-circle
+        color: $puerto-rico
+        font-size: 24px
+        margin-right: 8px
+      .close
+        font-size: rem(15)
+    .content
+      p 
+        color: $boulderapprox
+
+  .triangle
+    height: 36px
+    width: 40px
+    position: absolute
+    overflow: hidden;
+    transform: rotate(-45deg)
+    box-shadow: -3px 0 5px -5px rgba(0, 0, 0, 0.61)
+    right: -21px
+    bottom: -20px
+    &:after
+      height: 100%;
+      width: 100%;
+      position: relative;
+      -webkit-transform: rotate(45deg);
+      -moz-transform: rotate(45deg);
+      transform: rotate(45deg);
+      content: '';
+      display: block;
+      position: absolute;
+      left: -75%;
+      background-color: #fff
+      background-size: cover
+      box-shadow: 3px -1px 6px -6px rgba(0, 0, 0, 0.61)
+
+
+    
+
+
