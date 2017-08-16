@@ -373,6 +373,7 @@ module.exports = {
 
       this.$('#documents-modal').modal('hide');
 
+      api.makeRequest(app.config.emailServer + '/subscribe', 'PUT');
       return this;
     },
 
@@ -1140,7 +1141,6 @@ module.exports = {
       // if not 5 digit, return
       if (e.target.value.length < 5) return;
       if (!e.target.value.match(/\d{5}/)) return;
-      // else console.log('hello');
       app.helpers.location(e.target.value, ({ success=false, city="", state=""}) => {
         // this.zipCodeField.closest('div').find('.help-block').remove();
         if (success) {

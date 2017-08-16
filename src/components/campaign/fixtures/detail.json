@@ -1,0 +1,204 @@
+[{
+    "name": "Name",
+    "description": "Description",
+    "fields": {
+        "twitter": {"type": "string", "validate": {"_Length": "Length"}, "required": false},
+        "is_approved": {"type": "integer", "validate": {}, "required": false},
+        "facebook": {"type": "string", "validate": {"_Length": "Length"}, "required": false},
+        "name": {"type": "string", "validate": {"_Length": "Length"}, "required": true},
+        "city": {"type": "string", "validate": {"_Length": "Length"}, "required": true},
+        "approved_date": {"type": "integer", "validate": {}, "required": false},
+        "id": {"type": "integer", "validate": {}, "required": false},
+        "instagram": {"type": "string", "validate": {"_Length": "Length"}, "required": false},
+        "corporate_structure": {"type": "intchoice", "validate": {"_OneOf": "OneOf"}, "required": true},
+        "website": {"type": "url", "validate": {"_URL": "URL", "_Length": "Length"}, "required": true},
+        "address_2": {"type": "string", "validate": {"_Length": "Length"}, "required": false},
+        "industry": {"type": "intchoice", "validate": {"_OneOf": "OneOf"}, "required": true},
+        "brief": {"type": "string", "validate": {"_Length": "Length"}, "required": false},
+        "founding_state": {"type": "choice", "validate": {"_OneOf": "OneOf"}, "required": true},
+        "phone": {"type": "string", "validate": {"_Length": "Length"}, "required": true},
+        "total_views": {"type": "integer", "validate": {}, "required": false},
+        "short_name": {"type": "string", "validate": {"_Length": "Length"}, "required": false},
+        "slug": {"type": "string", "validate": {"_Length": "Length"}, "required": true},
+        "state": {"type": "string", "validate": {"_Length": "Length"}, "required": true},
+        "address_1": {"type": "string", "validate": {"_Length": "Length"}, "required": true},
+        "tagline": {"type": "string", "validate": {"_Length": "Length"}, "required": false},
+        "zip_code": {"type": "string", "validate": {"_Length": "Length"}, "required": true},
+        "linkedin": {"type": "string", "validate": {"_Length": "Length"}, "required": false},
+        "description": {"type": "string", "validate": {"_Length": "Length"}, "required": true},
+        "ga_id": {"type": "string", "validate": {"_Length": "Length"}, "required": false},
+        "tour": {"type": "choice", "validate": {"_OneOf": "OneOf"}, "required": true},
+        "founding_date": {"type": "date", "validate": {}, "required": true}
+    }
+}, {
+	"twitter": "https://twitter.com/rustiktavern",
+    "formc": {
+        "fiscal_prior_group_data": [],
+        "link_to_formc": "https://www.sec.gov/cgi-bin/browse-edgar?company=rustik&owner=exclude&action=getcompany",
+        "fiscal_recent_group_data": [{
+            "id": 9013,
+            "mime": "application/pdf",
+            "name": "Rustik 2016 Reviewed Financial Statements.pdf",
+            "urls": {
+                "origin": "/b6ae9bb657933a05fc2acb656c0de379618edeb0.pdf"
+            },
+            "site_id": 23
+        }]
+    },
+    "is_approved": 6,
+    "facebook": "https://www.facebook.com/rustiktavernny/",
+    "name": "Rustik 77, LLC",
+    "city": "Brooklyn",
+    "owner_id": 1155,
+    "approved_date": "2017-08-11T21:14:56+00:00",
+    "campaign": {
+        "cap": 2,
+        "valuation_determination": 0,
+        "premoney_valuation": 0,
+        "valuation_determination_other": "",
+        "header_image_image_id": 8929,
+        "additional_video": [],
+        "perks": [{
+            "perk": "Enjoy 10% off once per month at Rustik Tavern until the Revenue Share payout is complete!\r\n",
+            "amount": 2000
+        }],
+        "minimum_increment": 100,
+        "gallery_group_id": 579,
+        "press": [{
+            "link": "http://www.amny.com/eat-and-drink/brooklyn-navy-yard-s-new-food-tenants-the-food-sermon-brooklyn-greenery-and-more-1.12904193",
+            "name": "AM NY",
+            "headline": "Brooklyn Navy Yard's new food tenants: The Food Sermon, Brooklyn Greenery and more"
+        }, {
+            "link": "http://bklyner.com/six-pack-deliciousness-coming-brooklyn-navy-yards-food-hub/",
+            "name": "BKLYNER",
+            "headline": "Six-Pack Of Deliciousness Coming To Brooklyn Navy Yard\u2019s Food Hub"
+        }, {
+            "link": "https://www.dnainfo.com/new-york/20170109/navy-yard/building-77-food-hall-russ-and-daughters-brooklyn-brewery-mast-brothers",
+            "name": "DNA INFO",
+            "headline": "6 Local Eateries to Open at New Food Hall in Brooklyn Navy Yard"
+        }, {
+            "link": "http://bedfordandbowery.com/2017/01/brooklyn-navy-yard-adds-six-new-tenants-to-food-manufacturing-hub/",
+            "name": "BEDFORD and BOWERY",
+            "headline": "Brooklyn Navy Yard Adds Six New Tenants to Food Manufacturing Hub"
+        }, {
+            "link": "http://gothamist.com/2017/01/09/food_hub_brooklyn_navy_yard.php",
+            "name": "GOTHAMIST",
+            "headline": "Brooklyn Navy Yard's Food Scene Is Shaping Up Nicely"
+        }, {
+            "link": "http://www.bkmag.com/2015/08/24/5-of-brooklyns-best-black-owned-restaurants/",
+            "name": "BK MAG",
+            "headline": "5 of Brooklyn\u2019s Best Black-Owned Restaurants"
+        }],
+        "id": 924,
+        "minimum_raise": 150000,
+        "investor_presentation_data": {
+            "id": 8996,
+            "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            "name": "Rustik Tavern - Business Plan 6.9.17.docx",
+            "urls": {
+                "origin": "http://growthfountain-master-storage.s3-website-us-east-1.amazonaws.com/6b6030fe1e245cbfce6204982af58ea58ca4542e.docx"
+            },
+            "site_id": 23
+        },
+        "amount_raised": 0.0,
+        "video": "",
+        "price_per_share": 0.01,
+        "percentage_revenue": 5,
+        "intended_use_of_proceeds": "Rustik 77 is based off Rustik 471, a fully operational and successful restaurant located at 471 Dekalb Avenue in Brooklyn. Although Rustik 471\u2019s concept is more reminiscent of a full-service single location restaurant, Rustik 77 will serve as a fast casual, quick service restaurant concept to appease the palates of Navy Yard employees. \r\n\r\nWhether lunch, dinner or a refreshing alcoholic beverage after a long day of work, patrons of Rustik Tavern will be able to enjoy an extensive range of delectable food items and beverages with their family, friends and community. \r\n\r\nThe Company\u2019s menu is designed by owner Frantz Metellus and includes signatures such as BBQ ribs, Clermont calamari, steak frites, Butcherboy turkey sliders, salmon burgers, chicken and waffles, fried catfish and much more. In addition, the Company will also have an ample offering of carefully selected draft beers, bottled beers, craft cocktails, wines and other beverages. Patrons will order and pick-up food at the counter.\r\n\r\nRustik Tavern will provide its customers with fresh and high quality food, without the hassle of having to make a reservation and spending hours of their time. Rustik Tavern is convenient for those looking for a quick and delicious meal during their busy day.\r\n\r\n",
+        "length_days": 60,
+        "list_image_data": {
+            "id": 8934,
+            "mime": "image/png",
+            "name": "thumbnail.png",
+            "urls": {
+                "main": "/7b9a243ec047e92c008d723611354e767dce0970.png",
+                "origin": "/506918fbab571929bdcaa9e32ad1e00332d11dd1.png",
+                "350x209": "/7b9a243ec047e92c008d723611354e767dce0970.png"
+            },
+            "site_id": 23
+        },
+        "business_model": "Rustik Tavern will be owned and operated by Frantz Metellus, who has decades of experience in cuisine and restaurant management. The Company\u2019s requires $500,000 in funding towards the launch of the restaurant. \r\n",
+        "expiration_date": "2017-12-11",
+        "list_image_image_id": 8934,
+        "site_id": 23,
+        "investor_presentation_file_id": 8996,
+        "gallery_group_data": [{
+            "id": 8688,
+            "mime": "image/jpeg",
+            "name": "1.jpg",
+            "urls": {
+                "main": "/83dff331e95659b2ce253d72d1d8c5546158dc1b.jpg",
+                "origin": "/afc0a5968b5090668f3f1a9fa7a328aed5c90114.jpg",
+                "530x317": "/17e0cb8dc17e6b50500bb8a470abff0f203f686c.jpg"
+            },
+            "site_id": 23
+        }, {
+            "id": 8693,
+            "mime": "image/jpeg",
+            "name": "2.jpg",
+            "urls": {
+                "main": "/0ad0a3e746a6158c9a3df5218467516b48333a23.jpg",
+                "origin": "/3cf4c7722993e487f6f9005562fccbc57f74c78e.jpg",
+                "530x317": "/2e90fc677b833f50038cd1831d235b2e74ab0ed6.jpg"
+            },
+            "site_id": 23
+        }, {
+            "id": 8698,
+            "mime": "image/jpeg",
+            "name": "3.jpg",
+            "urls": {
+                "main": "/470d4657ec2959d7ecc241ef12ee5c625cef8a5a.jpg",
+                "origin": "/b30373843e78759a109637008c083d69f066cbb8.jpg",
+                "530x317": "/11db1ce7070c4773535db7d35bc1aef3747abe8f.jpg"
+            },
+            "site_id": 23
+        }, {
+            "id": 8940, "mime": "image/jpeg", "name": "_mg_0120.jpg", "urls": {"main": "/ea8269be57fd24581e20393f62884d43550fc4b8.jpg", "origin": "/127083a8ea99a59c2b6f47d25f261dee2ef0b7bc.jpg", "530x317": "/71ff0fb1ecb12d73536f889a7892e5ff68215224.jpg"}, "site_id": 23}, {"id": 8945, "mime": "image/jpeg", "name": "d1d792aa18df6a3273dad74df6e30453765b7479.jpg", "urls": {"main": "/75b685272dd56df3b5e7272efce445010fda7b02.jpg", "origin": "/6b85719c883459141e01995be4ed92aa56e01103.jpg", "530x317": "/5873d4fa12865a1a789c829c432eb39bf725b414.jpg"}, "site_id": 23}, {"id": 8950, "mime": "image/jpeg", "name": "_mg_0128.jpg", "urls": {"main": "/9f06d7254a92cbfbfdac6088b425007b8e83b41a.jpg", "origin": "/edf475dc454d3770d098a611b26ef4b8a4b7848a.jpg", "530x317": "/5932b7ef139a58189c18002da7d8d592e8b387f6.jpg"}, "site_id": 23}, {"id": 8955, "mime": "image/jpeg", "name": "chcicken-n-waffles.jpg", "urls": {"main": "/43b88477628d7e5263613100ad902b8738cf00b0.jpg", "origin": "/6712f74af03bff29bf980f5957864130380e4e93.jpg", "530x317": "/02a8a24861ec101b2a5c3a3d554b511434ba0695.jpg"}, "site_id": 23}, {"id": 8960, "mime": "image/jpeg", "name": "mussels.jpg", "urls": {"main": "/eeecbc46eadca58d1b153e655e4464cbbe166692.jpg", "origin": "/ff6095edc23d667e556a75e897bb8241a500b635.jpg", "530x317": "/ad3b85e043ae4c26a6dca34bda97be25395a0c43.jpg"}, "site_id": 23}, {"id": 8965, "mime": "image/jpeg", "name": "calamari.jpg", "urls": {"main": "/1deeb1399d57d32e6022843e389099c668178e05.jpg", "origin": "/175e2cec8662328a46ae246ce9b5af152e0c6acf.jpg", "530x317": "/afe28d6216fee186350aec9ef5252b8644de09dd.jpg"}, "site_id": 23}, {"id": 8970, "mime": "image/png", "name": "Cocktail1.png", "urls": {"main": "/75926755f0379a7125bcf91d99c1935afe85912f.png", "origin": "/c09e0953e5ef74220cea7ba46a298d705cef84a2.png", "530x317": "/7b746cc3708dbe28528717bcc51eb7ead4060f52.png"}, "site_id": 23}, {"id": 8975, "mime": "image/png", "name": "Cocktail2.png", "urls": {"main": "/f4646b006ddb6936962bcf1cc0a68bfc367fb8a9.png", "origin": "/7490c67ef3837a405766c000e0b4fdcbf401361d.png", "530x317": "/8d6b90eccb3f76f632c35ea6ea70eb92d957524c.png"}, "site_id": 23}, {"id": 8980, "mime": "image/png", "name": "Cocktail3.png", "urls": {"main": "/4baa828d9cdb6ce738d5cf08e7d168264c448351.png", "origin": "/edeea69396d9d2310e0c44cd92c9849e9480c97a.png", "530x317": "/564ed09a722cfb8165361a3f05ef29e101d15dae.png"}, "site_id": 23
+        }], 
+        "team_members": [{"bio": "Assorted Flavors Entertainment, TCrawford Enterprises Entrepreneur, investor, motivational speaker, community leader\r\n", "city": "Brooklyn", "email": "tcrawford145@gmail.com", "order": null, "title": "Advisor", "college": "Suny Oswego", "facebook": "https://www.facebook.com/ted.crawford.961", "linkedin": "", "last_name": "Crawford", "first_name": "Ted ", "photo_data": {"id": 8819, "mime": "image/jpeg", "name": "ted.jpg", "urls": {"main": "/c342ade8f8f3a99bdff4a427c038663bdf42624a.jpg", "origin": "/2510200241a9eda9dde51c03af7ee1a73ae3b86f.jpg", "300x300": "/c342ade8f8f3a99bdff4a427c038663bdf42624a.jpg"}, "site_id": 23}, "photo_image_id": 8819}, {"bio": "Public relations professional with nearly two decades of experience in brand-building and issues management for clients including The Palm Restaurants, Bally\u2019s Total Fitness, Bank of America, Johnson & Johnson\r\n", "city": "Brooklyn", "email": "iyadavidson@gmail.com", "order": null, "title": "Advisor", "college": "University of Pennsylvania", "facebook": "https://linkedin.com/www.facebook.com/iya.davidson", "linkedin": "https://www.linkedin.com/in/iyadavidson/", "last_name": "Davidson", "first_name": "Iya ", "photo_data": {"id": 8825, "mime": "image/jpeg", "name": "iya.jpg", "urls": {"main": "/2cfe54de78cfe64de006b460d4b39d0f099aa896.jpg", "origin": "/256a2f01ef10ca18a054c1e29bb1cc52f335f53a.jpg", "300x300": "/2cfe54de78cfe64de006b460d4b39d0f099aa896.jpg"}, "site_id": 23}, "photo_image_id": 8825}, {"bio": "Designer of environments integrating art, design, marketing, and technology for clients including  Skype, Netflix, Panera Bread, Yale University, Food Network, Rustik\r\n", "city": "Brooklyn", "email": "dustinmalstrom@gmail.com", "order": null, "title": "Advisor", "college": "Pratt Institute", "facebook": "https://www.facebook.com/dustin.malstrom", "linkedin": "https://www.linkedin.com/in/dustinmalstrom/", "last_name": "Malstrom", "first_name": "Dustin", "photo_data": {"id": 8831, "mime": "image/jpeg", "name": "dm.jpg", "urls": {"main": "/733c76337e249387850396e037b96242366d2602.jpg", "origin": "/91f9f62cd2fba2e082d8c0b3dad5d5d28758bdb9.jpg", "300x300": "/733c76337e249387850396e037b96242366d2602.jpg"}, "site_id": 23}, "photo_image_id": 8831}, {"bio": "Marketing Director, Emmis NY - WBLS 107.5, 1190 WLIB, HOT 97.1 at Emmis Communication\r\nMarketing strategist with 16 years of entertainment and event marketing experience for leading broadcast organizations\r\n", "city": "Queens, NY", "email": "dasidi95@aol.com", "order": null, "title": "Advisor", "college": "Suny Oswego", "facebook": "https://www.facebook.com/koren.vaughan", "linkedin": "https://www.linkedin.com/in/koren-vaughan-8231a86/", "last_name": "Vaughan", "first_name": "Koren", "photo_data": {"id": 8836, "mime": "image/jpeg", "name": "koren.jpg", "urls": {"main": "/45a8a258c44e3fcf6195ba19f96a25f78b6e1728.jpg", "origin": "/7022248f2b9d9cd86b6fba7f4e2452f4189a6b89.jpg", "300x300": "/45a8a258c44e3fcf6195ba19f96a25f78b6e1728.jpg"}, "site_id": 23}, "photo_image_id": 8836}, {"bio": "Frantz Metellus, a Brooklyn born entrepreneur, a member of the Brooklyn Chamber of Commerce, and a father of three.  He owns the Rustik Tavern, located in the Clinton Hill neighborhood of Brooklyn, since 2008. Mr. Metellus\u2019 objective for conceptualizing the restaurant was for the satisfaction of his neighbors. He believes in catering to the Brooklyn community and does so by maintaining partnerships with schools, nonprofit organizations, and relationships with local politicians to address the needs of the community.\r\n\r\nBefore becoming the neighborhood tavern\u2019s keeper, Frantz Metellus worked as an investigator for the New York City Human Resources Administration for four years after graduating from St. John\u2019s University in 1994.  From 1999 to 2002, the Brooklynite attended Rutgers School of Law in Newark, which led him to practice in the areas of real estate and business transaction.  Mr. Metellus\u2019 law office was located in Brooklyn to serve Brooklyn residents until 2010.\r\n\r\n\r\n", "city": "Brooklyn", "email": "Frantz@rustiktavern.com", "order": null, "title": "Principal", "college": "St. Johns University", "facebook": "https://www.facebook.com/frantzpoo.metellus", "linkedin": "", "last_name": "Metellus", "first_name": "Frantz", "photo_data": {"id": 8991, "mime": "image/jpeg", "name": "me.jpg", "urls": {"main": "/a1c6ec4b412a8a13c4cf1344fe8bf20d0cc325ee.jpg", "origin": "/3192479045c904df22e23eea956b1b2787d4ac91.jpg", "300x300": "/a1c6ec4b412a8a13c4cf1344fe8bf20d0cc325ee.jpg"}, "site_id": 23}, "photo_image_id": 8991}],
+        "maximum_raise": 500000,
+        "additional_info": [{
+            "body": "Dee T....\r\nBrooklyn, Brooklyn, NY\r\n5.0 star rating 5/14/2017\r\nThe food is delicious. Great vibes, and the staff is awesome. I picked the perfect place to go to for mothers day.\r\n\r\nV J.\r\nBrooklyn, NY\r\n4.0 star rating 1/14/2017\r\nGreat food, chill ambiance and wonderful staff! We celebrated a friend's birthday and the staff did everything possible to make it great.\r\n\r\nLondon C.\r\nBrooklyn, NY\r\n5.0 star rating 12/12/2016\r\nEveryone was really nice and professional, the food was good and I enjoy unlimited drinks for brunch! I'll definitely be back with my girls for more good food, great music!\r\n\r\nShalyn S.\r\nBrooklyn, NY\r\n 4.0 star rating 11/16/2016\r\nThis is a great spot to meet up with friends and chill. The food is great and the drinks are priced well. I wouldn't say this place has regulars being that the times I've gone that the crowds always different, but that's a good thing. Its also at a great location\r\n",
+            "title": "Testimonials"
+        }],
+        "faq": [{"answer": "Investment are as little as $100.00.", "question": "How much can I invest?"}, {"answer": "Unfortunately, no.  ", "question": "Am I entitled to any  discounts for investing."}],
+        "header_image_data": {
+            "id": 8929,
+            "mime": "image/png",
+            "name": "Header-Rustik.png",
+            "urls": {
+                "main": "/997ee85f4815bd3339164cc702f6c97498815182.png",
+                "origin": "/a2a6edbcc42f4f84779d2b1aafe2b0176fe607f3.png",
+                "538x272": "/bba55991ab19b3190447f341c6155e1c08fbee75.png"
+            },
+            "site_id": 23
+        },
+        "security_type": 1,
+        "pitch": "A competitive return and the opportunity to help grow a community. \r\n\r\nRustik 77, LLC (also referred to as \u2018Rustik Tavern\u2019 or \u2018the Company\u2019) will be a unique, inviting and go-to restaurant and bar destination for all patrons within the Brooklyn Navy Yard and surrounding neighborhoods. Founded by Frantz Metellus in 2017, the Company\u2019s mission is to provide a wide variety of delicious, convenient, and flavorful food options for their customers in a warm and friendly atmosphere, culminating in a unique and memorable experience for every guest.",
+        "amount_commited": 0.0
+    },
+    "id": 924,
+    "instagram": "https://www.instagram.com/rustik_tavern/",
+    "corporate_structure": 2,
+    "website": "http://www.rustiktavern.com",
+    "address_2": "",
+    "industry": 2,
+    "brief": "<p>Beloved Local Tavern opening its second location</p>\r\n<ul>\r\n<li>Expansion of successful local business\r\n<li>Great new location in Brooklyn Navy Yard\r\n<li>Established Brand with rave reviews: \"Great food, chill ambiance and wonderful staff!\"\r\n</ul>",
+    "founding_state": "NY",
+    "total_views": 217,
+    "short_name": "Rustik Tavern",
+    "slug": "rustiktavern",
+    "state": "NY",
+    "address_1": "471 Dekalb Avenue",
+    "tagline": "Rustik...your neighborhood tavern",
+    "zip_code": "11205",
+    "linkedin": "",
+    "description": "One of Bed-Stuy/Clinton Hill\u2019s most beloved restaurants, Rustik Tavern has welcomed neighbors to enjoy its delicious American fare, friendly service, and an unparalleled cozy atmosphere. Rustik\u2019s fiercely flavorful menu consists of classic comfort dishes with a Rustik flair.\r\n\r\nRustik can be enjoyed through 3 distinct experiences; Brunch, Lunch & Dinner. Brunch boasts our very popular \u201cbottomless brunch.\u201d Lunch is creative pairing of burgers and beers or salad and a glass of wine. Dinner is a couples\u2019 delight led by our DateNight shared dinner menu.\r\n\r\nEven if you\u2019re just dropping by for a drink, you\u2019ll feel right at home among Rustik\u2019s regulars \u2014 neighborhood folks, hipsters, local musicians and artists.\r\n\r\nSo grab a seat and stay a while\u2026slow sippers allowed",
+    "ga_id": "",
+    "owner": {
+        "first_name": "Frantz",
+        "last_name": "Metellus",
+        "email": "frantz@rustiktavern.com"
+    },
+    "founding_date": "2016-12-02"
+}]

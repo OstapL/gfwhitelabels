@@ -9,6 +9,7 @@ var e = {
   esignServer: 'https://api-esign-dev.growthfountain.com',
   commentsServer: "https://api-comments-dev.growthfountain.com",
   blogServer: "https://api-blog-dev.growthfountain.com",
+  emailServer: "https://api-email-dev.growthfountain.com",
   bucketServer: "https://s3.amazonaws.com/growthfountain-alpha-storage",
   notificationsServer: "https://notifications-dev.growthfountain.com/",
   teamName: 'Team',
