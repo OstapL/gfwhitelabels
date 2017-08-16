@@ -37,7 +37,6 @@ const paralaxScrollHandler = (e) => {
     "-webkit-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
     "-moz-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
     "-ms-transform" : "translate3d(0px, " + st /2 + "%, .01px)"
-
   });
 };
 
@@ -45,6 +44,10 @@ module.exports = {
   landing: Backbone.View.extend({
     el: '#content',
     template: require('./templates/landing.pug'),
+
+    events: {
+      'click .close': 'hideHint',
+    },
 
     initialize() {
       const calendlyStyleURL = 'https://calendly.com/assets/external/widget.css';
@@ -60,11 +63,44 @@ module.exports = {
           color: '#00a2ff',
           branding: true
         });
+
+        this.displayHint(false);
       });
 
       this.listenToNavigate();
 
+      this.hintTimeout = null;
+
+      const showHintScrollHandler = () => {
+        if (this.hintTimeout) {
+          $(window).off('scroll', showHintScrollHandler);
+          return;
+        }
+
+        if (!this.$hintPopup)
+          return;
+
+        this.hintTimeout = setTimeout(() => {
+          this.displayHint(true);
+        }, 2000);
+      };
+
+      $(window).on('scroll', showHintScrollHandler);
       $(window).on('scroll', paralaxScrollHandler);
+    },
+
+    hideHint(e) {
+      this.displayHint(false);
+    },
+
+    displayHint(show=true) {
+      if (!this.$hintPopup)
+        this.$hintPopup = this.$el.find('.calendly');
+
+      if (show)
+        this.$hintPopup.show();
+      else
+        this.$hintPopup.hide();
     },
 
     render() {
@@ -75,7 +111,6 @@ module.exports = {
 
     destroy() {
       $(window).off('scroll', paralaxScrollHandler);
-
       if (window.Calendly)
         Calendly.destroyBadgeWiget();
     },
