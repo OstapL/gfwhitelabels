@@ -373,7 +373,6 @@ module.exports = {
 
       this.$('#documents-modal').modal('hide');
 
-      api.makeRequest(app.config.emailServer + '/subscribe', 'PUT');
       return this;
     },
 
@@ -671,6 +670,11 @@ module.exports = {
       setTimeout(this.attachUpdateNetWorthModalEvents.bind(this), 100);
 
       $('span.current-limit').text(this._maxAllowedAmount.toLocaleString('en-US'));
+      api.makeRequest(
+        app.config.emailServer + '/subscribe',
+        'PUT',
+        {'company_id': self.model.id}
+      );
 
       return this;
     },
@@ -1230,6 +1234,11 @@ module.exports = {
         this.template({
           investment: this.model,
         })
+      );
+      api.makeRequest(
+        app.config.emailServer + '/unsubscribe',
+        'PUT',
+        {'company_id': self.model.id}
       );
       return this;
     },

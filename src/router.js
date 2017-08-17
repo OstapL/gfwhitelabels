@@ -2,6 +2,7 @@ const componentRoutes = [
   require('components/payBackShareCalculator/route.js'),
   require('components/capitalRaiseCalculator/route.js'),
   require('components/whatMyBusinessWorthCalculator/route.js'),
+  require('components/blog/route.js'),
   require('components/raiseFunds/route.js'),
   require('components/pg/route.js'),
   require('components/campaign/route.js'),
@@ -9,7 +10,6 @@ const componentRoutes = [
   require('components/accountProfile/route.js'),
   require('components/establishedBusinessCalculator/route.js'),
   require('components/formc/route.js'),
-  // require('components/blog/route'),
 ];
 
 const checkSafeExtend = (dest={}, src={}) => {
