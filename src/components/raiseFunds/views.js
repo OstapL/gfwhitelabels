@@ -50,8 +50,8 @@ module.exports = {
     },
 
     initialize() {
-      const scrollTimeout = 3000;
-      const noscrollTimeout = 6000;
+      const scrollTimeout = 5000;
+      const noscrollTimeout = 8000;
 
       this.noscrollTimeout = null;
       this.scrollTimeout = null;
@@ -111,7 +111,7 @@ module.exports = {
 
       this.$hintPopup = this.$el.find('.calendly');
 
-      this.$hintPopup.show();
+      this.$hintPopup.animate({'opacity': 1});
     },
 
     render() {
