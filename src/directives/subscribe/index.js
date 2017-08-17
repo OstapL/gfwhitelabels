@@ -25,7 +25,7 @@ class MailSubscriber {
         data: data,
         dataType: 'jsonp',
       }).then((response) => {
-        app.routers.navigate('/subscription-thanks');
+        app.routers.navigate('/subscription-thanks', { trigger: true, });
         // if (response.result == 'success') {
         //   app.dialogs.info(removeHTMLFromMessage(response.msg || 'Check your email to proceed with your subscription.'));
         //   $form.find('[type=email]').val('');
@@ -33,7 +33,7 @@ class MailSubscriber {
         // }
         // app.dialogs.error(removeHTMLFromMessage(response.msg));
       }).fail((jqXHR, textStatus, errorThrown) => {
-        app.routers.navigate('/subscription-thanks');
+        app.routers.navigate('/subscription-thanks', { trigger: true, });
         // console.error(errorThrown);
         // app.dialogs.error('An error occurred, try again later.');
       });
