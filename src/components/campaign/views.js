@@ -1235,10 +1235,11 @@ module.exports = {
           investment: this.model,
         })
       );
+
       api.makeRequest(
         app.config.emailServer + '/unsubscribe',
         'PUT',
-        {'company_id': this.model.id}
+        { company_id: this.model.company_id }
       );
       return this;
     },

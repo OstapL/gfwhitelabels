@@ -37,7 +37,6 @@ const paralaxScrollHandler = (e) => {
     "-webkit-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
     "-moz-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
     "-ms-transform" : "translate3d(0px, " + st /2 + "%, .01px)"
-
   });
 };
 
@@ -46,7 +45,33 @@ module.exports = {
     el: '#content',
     template: require('./templates/landing.pug'),
 
+    events: {
+      'click .close': 'hideHint',
+    },
+
     initialize() {
+      const scrollTimeout = 5000;
+      const noscrollTimeout = 8000;
+
+      this.noscrollTimeout = null;
+      this.scrollTimeout = null;
+
+      const showHintOnScroll = () => {
+        if (this.noscrollTimeout) {
+          clearTimeout(this.noscrollTimeout);
+          this.noscrollTimeout = null;
+        }
+
+        if (this.scrollTimeout)
+          return;
+
+        $(window).off('scroll', showHintOnScroll);
+        this.scrollTimeout = setTimeout(() => {
+          this.displayHintOnce();
+        }, scrollTimeout);
+
+      };
+
       const calendlyStyleURL = 'https://calendly.com/assets/external/widget.css';
       const calendlyScriptURL = 'https://calendly.com/assets/external/widget.js';
 
@@ -60,11 +85,33 @@ module.exports = {
           color: '#00a2ff',
           branding: true
         });
+
+        this.noscrollTimeout = setTimeout(() =>  {
+          this.displayHintOnce();
+          if (this.noscrollTimeout) {
+            clearTimeout(this.noscrollTimeout);
+            this.noscrollTimeout = null;
+          }
+        }, noscrollTimeout);
+        $(window).on('scroll', showHintOnScroll);
+        $('body').on('click', '.calendly-badge-widget', this.hideHint.bind(this));
       });
 
       this.listenToNavigate();
-
       $(window).on('scroll', paralaxScrollHandler);
+    },
+
+    hideHint(e) {
+      this.$el.find('.calendly').hide();
+    },
+
+    displayHintOnce() {
+      if (this.$hintPopup)
+        return;
+
+      this.$hintPopup = this.$el.find('.calendly');
+
+      this.$hintPopup.animate({'opacity': 1});
     },
 
     render() {
@@ -75,7 +122,7 @@ module.exports = {
 
     destroy() {
       $(window).off('scroll', paralaxScrollHandler);
-
+      $('body').off('click', '.calendly-badge-widget');
       if (window.Calendly)
         Calendly.destroyBadgeWiget();
     },
