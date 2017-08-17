@@ -1,5 +1,7 @@
 
 const InvestmentModel = require('src/models/investment.js');
+const Image = require('src/models/image.js');
+
 // ToDo
 // Refactor, this consts shouden't be here
 const FEES = require('consts/raisecapital/companyFees.json');
@@ -665,6 +667,10 @@ module.exports = {
       this.campaign = options.campaign;
       this.formc = options.formc;
       this.investors = options.investors;
+
+      _.each(this.investors.data, (investor) => {
+        investor.user.image_data = new Image(app.config.authServer + '/rest-auth/data', investor.user.image_data);
+      });
 
       //this is auth cookie for downloadable files
       app.cookies.set('token', app.user.data.token, {
