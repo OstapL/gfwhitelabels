@@ -261,11 +261,19 @@ class FileDropzone {
 
     dropbox.on('error', (file, error, xhr) => {
       $(this.element).find('.uploading').hide().addClass('collapse').css('z-index', '');
+
       app.validation.invalidMsg(
         this.view,
         this.fileElement.fieldName,
         Object.values(error)[0]
       ); 
+
+      if (this.element.classList.contains('galleryDropzone') === true) {
+        let errorMsg = document.createRange().createContextualFragment(
+          require('./templates/snippets/image_errormsg.pug')()
+        );
+        this.element.querySelector('.dropzone__gallery_group_id').append(errorMsg);
+      }
     });
     this.dropzone = dropbox;
   }

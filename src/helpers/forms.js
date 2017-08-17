@@ -225,6 +225,10 @@ module.exports = {
             form[0].removeAttribute('disabled');
           }
           e.target.removeAttribute('disabled');
+          if (typeof this._error == 'function') {
+            debugger;
+            this._error(xhr.responseJSON, newData, method);
+          }
           api.errorAction(this, xhr, status, text, fields);
         });
     }
