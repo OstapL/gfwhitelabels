@@ -673,7 +673,7 @@ module.exports = {
       api.makeRequest(
         app.config.emailServer + '/subscribe',
         'PUT',
-        {'company_id': self.model.id}
+        {'company_id': this.model.id}
       );
 
       return this;
@@ -1238,7 +1238,7 @@ module.exports = {
       api.makeRequest(
         app.config.emailServer + '/unsubscribe',
         'PUT',
-        {'company_id': self.model.id}
+        {'company_id': this.model.id}
       );
       return this;
     },
