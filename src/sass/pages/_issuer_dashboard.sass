@@ -548,28 +548,6 @@
         .border-bottom
           display: none
   .send-message
-    .line-row
-      padding: 10px 15px
-      @media only screen and (max-width : 991px)
-        padding: 10px 0
-    .title
-      background-color: $puerto-rico
-      color: $white
-      h4
-        margin-bottom: 0
-        margin-left: 10px
-      .delete
-        float: right
-        position: relative
-        right: -15px
-        color: $white
-        font-size: rem(18)
-        line-height: initial
-        @media only screen and (max-width : 991px)
-          right: 0
-        &:hover
-          +mt(.2s)
-          color: $crimson
     .from,
     .to,
     .panel
@@ -625,6 +603,86 @@
           &:hover
             +mt(.2s)
             color: $crimson
+.send-message,
+.see-previous-messages
+  .line-row
+    padding: 10px 15px
+    @media only screen and (max-width : 991px)
+      padding: 10px 0
+  .title
+    background-color: $puerto-rico
+    color: $white
+    h4
+      margin-bottom: 0
+      margin-left: 10px
+    .delete
+      float: right
+      position: relative
+      right: -15px
+      color: $white
+      font-size: rem(18)
+      line-height: initial
+      @media only screen and (max-width : 991px)
+        right: 0
+      &:hover
+        +mt(.2s)
+        color: $crimson
+.see-previous-messages
+  .all-message
+    border: solid 1px $gallery
+    .one-message
+      border-bottom: solid 1px $gallery
+      padding-left: 30px
+      padding-right: 15px
+      padding-top: 15px
+      padding-bottom: 15px
+      cursor: pointer
+      &:last-child
+        border-bottom: none
+      .link
+        display: inline-block
+        width: 130px
+        font-size: rem(12)
+        color: $small-text
+        i
+          margin-left: 5px
+      .text
+        display: inline-block
+        max-width: 915px
+        height: 17px
+        overflow: hidden
+        position: relative
+        &:after
+          position: absolute
+          content: '...'
+          background-color: $white
+          right: 0
+          top: 0
+          width: 50px
 
-
+        .file
+          border-top: dashed 1px $gallery
+          padding: rem(10) rem(15)
+          .attach-file
+            font-size: rem(12)
+            i
+              font-size: rem(15)
+              margin-right: 5px
+      .open-message
+        display: inline-block
+        float: right
+      &.in
+        background-color: $alabaster
+        border-bottom: none
+        +mt(.9s)
+        .link
+          vertical-align: top
+          width: 115px
+        .text
+          background-color: $white
+          height: auto
+          &:after
+            display: none
+          p
+            padding: 15px
 

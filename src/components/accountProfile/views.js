@@ -659,6 +659,7 @@ module.exports = {
     template: require('./templates/issuerDashboard.pug'),
     events: {
       'click .cancel-campaign': 'cancelCampaign',
+      'click .open-message': 'openMessage',
     },
 
     initialize(options) {
@@ -739,6 +740,9 @@ module.exports = {
         $('.interactions-count').animateCount();
 
       });
+    },
+    openMessage() {
+      $('.one-message').addClass('in');
     },
   }),
 

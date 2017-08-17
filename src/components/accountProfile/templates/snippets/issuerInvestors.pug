@@ -19,10 +19,10 @@ section
         .right-wrap
           .send-payment
             p Send Payment to Investors
-            a(href="#").btn.btn-sm.btn-secondary Send Payment
+            button(href="#" data-toggle="modal" data-target="#send_payment").btn.btn-sm.btn-secondary Send Payment
               i.fa.fa-angle-right
 
-  .col-xl-12.send-message
+  .col-xl-12.send-message(style="display: none")
     .title.line-row.row
       .col-xl-12
         i.fa.fa-envelope-o
@@ -71,9 +71,6 @@ section
             i.fa.fa-times
 
 
-
-
-
   .col-xl-12.all-investors(style="display: none;")
     .col-xl-12
       .row.item
@@ -118,3 +115,52 @@ section
               | 2:08:00 pm
         .col-xs-12
           .border-bottom
+
+  .col-xl-12.see-previous-messages
+    .title.line-row.row
+      .col-xl-12
+        i.fa.fa-paper-plane
+        h4.text-uppercase.d-inline-block Previous messages sent
+        a(href="#").delete.d-inline-block
+          i.fa.fa-times
+    .row
+      .all-message
+        .one-message
+          .link
+            | 02/10/2017
+            i.fa.fa-paperclip
+          .text
+            P Dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur  occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam. 
+            .file
+              a(href="#").attach-file
+                i.fa.fa-file-o
+                | Attach a file
+          a(href="#").open-message
+            i.fa.fa-angle-down
+        .one-message
+          .link
+            | 02/10/2017
+            i.fa.fa-paperclip
+          .text
+            P Dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur  occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam. 
+            .file
+              a(href="#").attach-file
+                i.fa.fa-file-o
+                | Attach a file
+          a(href="#").open-message
+            i.fa.fa-angle-down
+
+
+//popup
+div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#send_payment.modal.fade
+  div(role="document").modal-dialog
+    .modal-content
+      .container
+        .modal-header.p-x-0
+          button(type="button" data-dismiss="modal" aria-label="Close").close
+            span(aria-hidden="true")
+              i.fa.fa-times
+          h2.text-uppercase.text-xs-center.mt50 Send payment
+        .modal-body
+          h3.m-t-0 Call us at 646-759-8229 to discuss payment options.
+        .modal-footer
