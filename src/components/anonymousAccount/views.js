@@ -1,4 +1,5 @@
 const socialAuth = require('./social-auth.js');
+const { createFields } = require('fields/new-fields.js');
 
 const LOGIN_FIELDS = {
   email: {
@@ -125,7 +126,7 @@ const Views = {
     template: require('./templates/popupLogin.pug'),
     events: popupAuthHelper.events,
 
-    initialize(options) {
+    initialize() {
       this.fields = LOGIN_FIELDS;
     },
 
@@ -180,15 +181,37 @@ const Views = {
     },
 
     initialize() {
-      this.fields = LOGIN_FIELDS;
+      this.fieldsSchema = LOGIN_FIELDS;
+
+      this.fieldsAttr = {
+        email: {
+          placeholder: 'E-mail',
+          autocomplete: 'off',
+          inputContainerClass: 'form-group row clearfix',
+        },
+        password: {
+          placeholder: 'Password',
+          autocomplete: 'off',
+          inputContainerClass: 'form-group row clearfix',
+        },
+      };
+
+      this.fields = createFields(this.fieldsSchema, this.fieldsAttr);
+
+      this.listenToNavigate();
     },
 
     render() {
       $('body').scrollTo();
 
       this.$el.html(
-        this.template()
+        this.template({
+          fields: this.fields,
+        })
       );
+
+      _.each(this.fields, (field) => field.postRender());
+
       return this;
     },
 
@@ -211,13 +234,40 @@ const Views = {
     },
 
     initialize() {
-      this.fields = SIGNUP_FIELDS;
+      //this fields left for backward compatibility;
+      this.fieldsSchema = SIGNUP_FIELDS;
+
+      this.fieldsAttr = {
+        first_name: {
+          placeholder: 'First Name',
+          inputContainerClass: 'form-group row clearfix',
+        },
+        last_name: {
+          placeholder: 'Last Name',
+          inputContainerClass: 'form-group row clearfix',
+        },
+        email: {
+          placeholder: 'E-mail',
+          inputContainerClass: 'form-group row clearfix',
+        },
+        password1: {
+          placeholder: 'Password',
+          inputContainerClass: 'form-group row clearfix',
+        },
+      };
+
+      this.fields = createFields(this.fieldsSchema, this.fieldsAttr);
     },
 
     render() {
       this.$el.html(
-        this.template({})
+        this.template({
+          fields: this.fields,
+        })
       );
+
+      _(this.fields).each(field => field.postRender());
+
       return this;
     },
 
@@ -241,17 +291,27 @@ const Views = {
       'submit form': api.submitAction,
     },
 
+    initialize() {
+      this.fieldsSchema = _.pick(SIGNUP_FIELDS, ['email', 'domain']);
+      this.fieldsAttr = {
+        email: {
+          id: 'email',
+          placeholder: 'E-mail',
+          inputContainerClass: 'form-group row clearfix',
+          inputClass: 'form-control',
+        },
+      };
+
+      this.fields = createFields(this.fieldsSchema, this.fieldsAttr);
+    },
+
     render() {
-      this.fields = {};
-      this.fields.email = {
-        type: 'email',
-        required: true,
-      };
-      this.fields.domain = {
-        type: 'text',
-        required: true,
-      };
-      this.el.innerHTML = this.template();
+      this.el.innerHTML = this.template({
+        fields: this.fields,
+      });
+
+      _.each(this.fields, field => field.postRender());
+
       return this;
     },
 
@@ -297,10 +357,10 @@ const Views = {
       this.title = options.title;
       this.company_name = options.company_name;
       this.id = options.id;
+      this.urlRoot = this.urlRoot.replace(':id', this.id);
     },
 
     render() {
-      this.urlRoot = this.urlRoot.replace(':id', this.id);
       this.$el.html(
         this.template({
           title: this.title,

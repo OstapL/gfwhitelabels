@@ -162,6 +162,8 @@ module.exports = {
       this.cityStateArea = null;
       this.cityField = null;
       this.stateField = null;
+
+      this.listenToNavigate();
     },
 
     render() {
