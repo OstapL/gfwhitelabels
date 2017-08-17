@@ -50,6 +50,28 @@ module.exports = {
     },
 
     initialize() {
+      const scrollTimeout = 3000;
+      const noscrollTimeout = 6000;
+
+      this.noscrollTimeout = null;
+      this.scrollTimeout = null;
+
+      const showHintOnScroll = () => {
+        if (this.noscrollTimeout) {
+          clearTimeout(this.noscrollTimeout);
+          this.noscrollTimeout = null;
+        }
+
+        if (this.scrollTimeout)
+          return;
+
+        $(window).off('scroll', showHintOnScroll);
+        this.scrollTimeout = setTimeout(() => {
+          this.displayHintOnce();
+        }, scrollTimeout);
+
+      };
+
       const calendlyStyleURL = 'https://calendly.com/assets/external/widget.css';
       const calendlyScriptURL = 'https://calendly.com/assets/external/widget.js';
 
@@ -64,43 +86,32 @@ module.exports = {
           branding: true
         });
 
-        this.displayHint(false);
+        this.noscrollTimeout = setTimeout(() =>  {
+          this.displayHintOnce();
+          if (this.noscrollTimeout) {
+            clearTimeout(this.noscrollTimeout);
+            this.noscrollTimeout = null;
+          }
+        }, noscrollTimeout);
+        $(window).on('scroll', showHintOnScroll);
+        $('body').on('click', '.calendly-badge-widget', this.hideHint.bind(this));
       });
 
       this.listenToNavigate();
-
-      this.hintTimeout = null;
-
-      const showHintScrollHandler = () => {
-        if (this.hintTimeout) {
-          $(window).off('scroll', showHintScrollHandler);
-          return;
-        }
-
-        if (!this.$hintPopup)
-          return;
-
-        this.hintTimeout = setTimeout(() => {
-          this.displayHint(true);
-        }, 2000);
-      };
-
-      $(window).on('scroll', showHintScrollHandler);
       $(window).on('scroll', paralaxScrollHandler);
     },
 
     hideHint(e) {
-      this.displayHint(false);
+      this.$el.find('.calendly').hide();
     },
 
-    displayHint(show=true) {
-      if (!this.$hintPopup)
-        this.$hintPopup = this.$el.find('.calendly');
+    displayHintOnce() {
+      if (this.$hintPopup)
+        return;
 
-      if (show)
-        this.$hintPopup.show();
-      else
-        this.$hintPopup.hide();
+      this.$hintPopup = this.$el.find('.calendly');
+
+      this.$hintPopup.show();
     },
 
     render() {
@@ -111,6 +122,7 @@ module.exports = {
 
     destroy() {
       $(window).off('scroll', paralaxScrollHandler);
+      $('body').off('click', '.calendly-badge-widget');
       if (window.Calendly)
         Calendly.destroyBadgeWiget();
     },
