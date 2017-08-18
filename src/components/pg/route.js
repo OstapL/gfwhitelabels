@@ -15,6 +15,7 @@ module.exports = {
   routes: {
     '': 'mainPage',
     'pg/:name': 'pagePG',
+    'subscription-thanks': 'subscriptionThanks',
   },
   methods: {
     mainPage() {
@@ -250,5 +251,17 @@ module.exports = {
         });
       }, 'pg_chunk');
     },
+
+    subscriptionThanks() {
+      require.ensure([], (require) => {
+        const Views = require('./views.js');
+        const v = new Views.subscriptionThanks();
+        v.render();
+
+        $('body').scrollTo();
+        app.hideLoading();
+      }, 'pg_chunk');
+    },
+
   },
 };

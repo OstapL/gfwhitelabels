@@ -25,15 +25,17 @@ class MailSubscriber {
         data: data,
         dataType: 'jsonp',
       }).then((response) => {
-        if (response.result == 'success') {
-          app.dialogs.info(removeHTMLFromMessage(response.msg || 'Check your email to proceed with your subscription.'));
-          $form.find('[type=email]').val('');
-          return;
-        }
-        app.dialogs.error(removeHTMLFromMessage(response.msg));
+        app.routers.navigate('/subscription-thanks', { trigger: true, });
+        // if (response.result == 'success') {
+        //   app.dialogs.info(removeHTMLFromMessage(response.msg || 'Check your email to proceed with your subscription.'));
+        //   $form.find('[type=email]').val('');
+        //   return;
+        // }
+        // app.dialogs.error(removeHTMLFromMessage(response.msg));
       }).fail((jqXHR, textStatus, errorThrown) => {
-        console.error(errorThrown);
-        app.dialogs.error('An error occurred, try again later.');
+        app.routers.navigate('/subscription-thanks', { trigger: true, });
+        // console.error(errorThrown);
+        // app.dialogs.error('An error occurred, try again later.');
       });
 
       return false;

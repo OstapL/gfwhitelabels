@@ -49,4 +49,17 @@ module.exports = {
       });
     }
   }),
+
+  subscriptionThanks: Backbone.View.extend({
+    el: '#content',
+    template: require('./templates/subscription-thanks.pug'),
+
+    render() {
+      this.$el.html(
+        this.template()
+      );
+    },
+
+  }),
+
 };
