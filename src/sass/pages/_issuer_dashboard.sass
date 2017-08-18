@@ -222,6 +222,11 @@
       font-weight: normal
     &:hover
       color: $link-3-hover
+    &:nth-child(3n)
+      @media only screen and (max-width : 442px)
+        h2
+          margin-bottom: rem(30)!important
+          margin-top: rem(30)!important
     @media only screen and (max-width : 768px)
       h2
         font-size: rem(16)
@@ -237,6 +242,7 @@
       .img-document
         width: 20px
         height: 20px
+
     @media only screen and (max-width : 360px)
       h2
         width: 9%
@@ -248,10 +254,13 @@
 
       h3
         width: 80%
-        vertical-align: bottom
+        vertical-align: middle
         &.listing
           vertical-align: middle
-
+  .link-1
+    @media only screen and (max-width : 442px)
+      &:nth-child(3)
+        margin-bottom: 10px
 //end section top-line
 //start section Graphic
 .grafic-dashboard
