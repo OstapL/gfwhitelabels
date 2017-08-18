@@ -96,7 +96,9 @@ class GalleryDropzone extends imageDropzone.ImageDropzone {
 
     if(options.onSaved) {
       this.galleryElement.options.onSaved = options.onSaved;
-    }
+    };
+
+    this.cropperQuery = [];
   }
 
   getTemplate() {
@@ -122,6 +124,7 @@ class GalleryDropzone extends imageDropzone.ImageDropzone {
       }
     });
 
+    reorgData.name = '';
     reorgData.site_id = app.sites.getId();
     this.galleryElement.file.data.push(reorgData);
     let fileObj = new imageDropzone.ImageElement(
@@ -145,11 +148,16 @@ class GalleryDropzone extends imageDropzone.ImageDropzone {
       }
 
       this.element.querySelector('.fileHolder').insertAdjacentHTML('beforeend', fileObj.resultHTML);
-      new imageDropzone.CropperDropzone(
+      let cropEl = new imageDropzone.CropperDropzone(
         this,
         fileObj,
         this.cropperOptions
-      ).render($(this.element).closest('.dropzone')[0]);
+      );
+      this.cropperQuery.push(cropEl);
+
+      if(this.cropperQuery.length === 1) {
+        cropEl.render($(this.element).closest('.dropzone')[0]);
+      };
     });
   }
 }
