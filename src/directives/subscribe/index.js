@@ -38,6 +38,8 @@ class MailSubscriber {
         // app.dialogs.error('An error occurred, try again later.');
       });
 
+      app.analytics.emitEvent('EmailSubscription', data);
+
       return false;
     });
 
