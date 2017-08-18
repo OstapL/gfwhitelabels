@@ -103,7 +103,15 @@ section.raise-capital-landing
             img(src=require('images/raise-landing/icon/icon-6.png'))
         .col-xl-12.text-xs-center
           h4.font-weight-bold.text-uppercase.m-b-0 Need help? Call your dedicated Account Representative anytime.
-
+        -
+          var subscriber = require('directives/subscribe/index.js');
+          pug_html += subscriber.render({
+            containerClass: 'subscription-wrap',
+            emailClass: 'col-xs-12 p-l-0',
+            subscribeClass: 'subscription-btn',
+            id: 'f650548bc3',
+            next: '/subscription-thanks?type=1',
+          });
 
   section.raise-landing-table
     .container
