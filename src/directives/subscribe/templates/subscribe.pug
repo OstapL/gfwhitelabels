@@ -1,16 +1,19 @@
 -
   containerClass = containerClass || '';
   emailClass = emailClass || 'col-xl-12 col-lg-12 p-x-xl-0 p-xs-0';
-  subscribeClass = subscribeClass || 'col-xl-12 col-lg-12 p-x-xl-0 p-xs-0'
+  subscribeClass = subscribeClass || 'col-xl-12 col-lg-12 p-x-xl-0 p-xs-0';
 
 -
   u = u || '50ee1beec395ee0f981299099';
   id = id || 'aa35949664';
   var subscribeURL = '//Growthfountain.us3.list-manage.com/subscribe/post-json?u=' + u + '&id=' + id + '&c=?'
+  next = next || '/subscription-thanks'
+  buttonText = buttonText || 'Subscribe';
 form(
   action=subscribeURL
   method="post"
   name="mc-embedded-subscribe-form"
+  data-next=next
 ).email-subscribe.form-section
   div(class=containerClass)
     div(class=emailClass)
@@ -29,6 +32,6 @@ form(
     div(class=subscribeClass)
       input(
         type="submit"
-        value="Subscribe"
+        value=buttonText
         name="subscribe"
       ).button.btn.btn-block.btn-primary
