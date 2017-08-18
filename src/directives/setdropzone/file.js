@@ -166,6 +166,8 @@ class FileDropzone {
 
         if(errorMessages) {
           errorMessages.remove();
+          $('.imageErrorMsg').remove();
+          $('.has-error')[0].classList.remove('has-error')
         }
 
         $(this.element).find('.uploading').removeClass('collapse').show().css('z-index', 999);
