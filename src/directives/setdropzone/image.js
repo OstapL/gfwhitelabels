@@ -336,6 +336,11 @@ class CropperDropzone {
         });
 
         if (this.$modal.find('#name').length) {
+          if (this.dropzone.galleryElement) {
+            this.dropzone.galleryElement.files.find((el) => { 
+              return el.file.id == this.file.file.id;
+            }).file.name = this.$modal.find('#name').val();
+          }
           this.file.file.name = this.$modal.find('#name').val();
         }
 
@@ -343,12 +348,14 @@ class CropperDropzone {
           this.$modal.modal('hide');
           setTimeout(() => {
             this.$modal.remove();
-            this.dropzone.cropperQuery.shift();
+            if (this.dropzone.cropperQuery) {
+              this.dropzone.cropperQuery.shift();
 
-            if (this.dropzone.cropperQuery.length !== 0) {
-              this.dropzone.cropperQuery[0].render(
-                this.dropzone.element.closest('.dropzone')
-              );
+              if (this.dropzone.cropperQuery.length !== 0) {
+                this.dropzone.cropperQuery[0].render(
+                  this.dropzone.element.closest('.dropzone')
+                );
+              }
             }
           }, 400);
         });
