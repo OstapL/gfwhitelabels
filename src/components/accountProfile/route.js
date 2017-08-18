@@ -178,7 +178,7 @@ module.exports = {
           api.makeCacheRequest(app.config.raiseCapitalServer + '/company/' + companyData.company_id + '?noi=1', 'GET'),
           app.user.getCampaignR(companyData.campaign_id),
           app.user.getFormcR(companyData.formc_id),
-          api.makeRequest(app.config.investmentServer + '/company/' + companyData.company_id)
+          api.makeRequest(app.config.investmentServer + '/company/' + companyData.company_id + '?limit=300')
         ).done((company, campaign, formc, investors) => {
 
           if(company[0]) app.user.company = company[0];
