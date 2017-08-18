@@ -674,6 +674,10 @@ module.exports = {
         investor.user.image_data = new Image(app.config.authServer + '/rest-auth/data', investor.user.image_data);
       });
 
+      this.investors.data = _.sortBy(this.investors.data, (investment) => {
+        return -(new Date(investment.created_date)).valueOf();
+      });
+
       //this is auth cookie for downloadable files
       app.cookies.set('token', app.user.data.token, {
         domain: '.' + app.config.domainUrl,
