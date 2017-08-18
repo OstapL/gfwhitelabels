@@ -224,19 +224,7 @@ section
         #revenue-share-calculator
     .container-fluid.p-l-0.p-r-0
       #gallery1.col-lg-12.pt50.photo-gallegy.text-center-flex
-        - var gallery_company_film = require('components/campaign/templates/snippets/gallery_company_film.pug')
-        - var gallery_company_cogent = require('components/campaign/templates/snippets/gallery_company_cogent.pug')
-        - var gallery_company_venue = require('components/campaign/templates/snippets/gallery_company_venue.pug')
-        - var gallery_company_oma = require('components/campaign/templates/snippets/gallery_company_oma.pug')
-        if values.id == 564
-          | !{ gallery_company_film()}
-        else if values.id == 52
-          | !{ gallery_company_cogent()}
-        else if values.id == 51
-          | !{ gallery_company_venue()}
-        else if values.id == 536
-          | !{ gallery_company_oma()}
-        else if values.campaign.gallery_group_id.data.length
+        if values.campaign.gallery_group_id.data.length
           each v,k in values.campaign.gallery_group_id.data
             .col-lg-4.col-sm-12.col-xs-12.col-md-6.no-padding-img
               a(href=(v.getUrl('main')) data-size='1440x900' rel="gallery1" title=(v.name) onclick="return false;").fancybox
