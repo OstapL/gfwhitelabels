@@ -40,7 +40,7 @@ section.create-company.container.m-b-85
                 span.color-red *
               .col-xl-12
                 .prefix_input_prefix
-                  input(value=window.location.origin disabled="disabled").form-control
+                  input(value=window.location.origin + '/' disabled="disabled").form-control
                 .prefix_input_field#slug
                   -
                     pug_html += app.fields.fieldText('slug', {
