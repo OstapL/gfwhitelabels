@@ -8,6 +8,7 @@
   id = id || 'aa35949664';
   var subscribeURL = '//Growthfountain.us3.list-manage.com/subscribe/post-json?u=' + u + '&id=' + id + '&c=?'
   next = next || '/subscription-thanks'
+  buttonText = buttonText || 'Subscribe';
 form(
   action=subscribeURL
   method="post"
@@ -31,6 +32,6 @@ form(
     div(class=subscribeClass)
       input(
         type="submit"
-        value="Subscribe"
+        value=buttonText
         name="subscribe"
       ).button.btn.btn-block.btn-primary
