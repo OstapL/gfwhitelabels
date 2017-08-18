@@ -726,7 +726,7 @@ module.exports = {
         const [commentsData] = data;
         commentsData.id = this.company.id;
         commentsData.owner_id = this.company.owner_id;
-        debugger;
+
         if (!commentsData.data || !commentsData.data.length) {
           this.$el.find('.no-comments').show();
           this.$el.find('.comments-container').closest('.row').hide();
