@@ -19,6 +19,22 @@ section.raise-capital-landing
       span GrowthFountain is the preferred equity crowdfunding platform for 
         strong 1 million
         |  credit union members and counting
+  secetion.email-subscription.subscription-campaing-list.raise-subscription.m-b-0.p-t-3.p-b-3
+    .container
+      .row
+        .col-xs-12
+          h2.text-xs-center.font-weight-light.m-t-0 Want to learn how we can help your business?
+      .row
+        .col-xl-12
+          -
+            var subscriber = require('directives/subscribe/index.js');
+            pug_html += subscriber.render({
+              containerClass: 'subscription-wrap',
+              emailClass: 'col-xs-12 p-l-0',
+              subscribeClass: 'subscription-btn',
+              id: 'f650548bc3',
+              next: '/subscription-thanks?type=1',
+            });
   .content-section
     .top-section
       .container
@@ -101,17 +117,7 @@ section.raise-capital-landing
               br
               br
             img(src=require('images/raise-landing/icon/icon-6.png'))
-        .col-xl-12.text-xs-center
-          h4.font-weight-bold.text-uppercase.m-b-0 Need help? Call your dedicated Account Representative anytime.
-        -
-          var subscriber = require('directives/subscribe/index.js');
-          pug_html += subscriber.render({
-            containerClass: 'subscription-wrap',
-            emailClass: 'col-xs-12 p-l-0',
-            subscribeClass: 'subscription-btn',
-            id: 'f650548bc3',
-            next: '/subscription-thanks?type=1',
-          });
+        
 
   section.raise-landing-table
     .container
