@@ -27,7 +27,13 @@ class GalleryElement extends imageDropzone.ImageElement {
       );
       fileObj.delete = () => this.delete.call(this, fileObj.file.id);
       fileObj.getTemplate = this.getTemplate;
-      fileObj.save = () => this.save.call(this);
+      fileObj.save = () => {
+        let index = this.file.data.findIndex((el) => { 
+          return el.id == fileObj.file.id;
+        });
+        this.file.data[index].name = fileObj.file.name;
+        return this.save.call(this);
+      };
       fileObj.elementSelector = '.' + fieldName + ' .fileContainer' + el.id;
       fileObj.options = this.options;
       this.files.push(fileObj);

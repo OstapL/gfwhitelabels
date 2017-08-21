@@ -341,6 +341,9 @@ class CropperDropzone {
               return el.id == this.file.file.id;
             }).name = this.$modal.find('#name').val();
           }
+          if (this.dropzone.file) {
+            this.dropzone.file.name = this.$modal.find('#name').val();
+          }
           this.file.file.name = this.$modal.find('#name').val();
         }
 
