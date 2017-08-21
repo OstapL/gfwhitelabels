@@ -121,6 +121,7 @@ module.exports = {
     },
 
     destroy() {
+      this.hideHint();
       $(window).off('scroll', paralaxScrollHandler);
       $('body').off('click', '.calendly-badge-widget');
       if (window.Calendly)
