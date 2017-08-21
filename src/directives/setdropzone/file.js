@@ -285,10 +285,9 @@ class FileDropzone {
     if(data[0]) {
       data = data[0];
     }
-    const urls = data.urls;
 
     data.urls = {};
-    data.urls.origin = urls[0];
+    data.urls.origin = data.url_filename;
     data.site_id = app.sites.getId();
 
     this.model.data[this.fileElement.fieldName].id = data.id;
