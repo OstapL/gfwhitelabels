@@ -1,4 +1,5 @@
 const file = require('./file.js');
+const imageTypes = require('../../consts/imageTypes.json');
 const defaultImage = require('images/default/255x153.png');
 
 
@@ -89,10 +90,10 @@ class ImageDropzone extends file.FileDropzone {
       urls: {}
     };
     data.forEach((image) => {
-      if(image.name.indexOf('_r_') != -1) {
+      if(image.type === imageTypes.CROPRESIZE) {
         var cropName = this.cropperOptions.resize.width + 'x' + this.cropperOptions.resize.height;
         reorgData.urls[cropName] = image.url_filename;
-      } else if(image.name.indexOf('_c_') != -1) {
+      } else if (image.type === imageTypes.CROP) {
         reorgData.urls.main = image.url_filename;
       } else {
         reorgData.id = image.id;
@@ -315,6 +316,7 @@ class CropperDropzone {
       data.actions = [
         {
           filename: this.options.auto.width + 'x' + this.options.auto.height + '.' + this.file.file.getExtention(),
+          type: imageTypes.CROP,
           transformations: [ 
             cropTransformation,
             { type: "fill", fillWidth: this.options.auto.width, fillHeight: this.options.auto.height },
@@ -322,6 +324,7 @@ class CropperDropzone {
         },
         {
           filename: this.options.resize.width + 'x' + this.options.resize.height + '.' + this.file.file.getExtention(),
+          type: imageTypes.CROPRESIZE,
           transformations: [
             cropTransformation,
             { type: "resize", resizeWidth: this.options.resize.width, resizeHeight: this.options.resize.height },
@@ -337,10 +340,10 @@ class CropperDropzone {
 
         let thumbSize = '';
         responseData.forEach((image) => {
-          if(image.name.indexOf(this.options.auto.width + 'x' + this.options.auto.height) != -1) {
+          if(image.type === imageTypes.CROP) {
             this.file.file.urls.main = image.url_filename;
-          } 
-          if(this.options.resize && image.name.indexOf(this.options.resize.width + 'x' + this.options.resize.height) != -1) {
+          }
+          if(image.type === imageTypes.CROPRESIZE) {
             thumbSize = this.options.resize.width + 'x' + this.options.resize.height;
             this.file.file.urls[thumbSize] = image.url_filename;
           }
