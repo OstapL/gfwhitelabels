@@ -49,9 +49,13 @@ module.exports = {
       });
     }
   }),
+
   subscriptionThanks: Backbone.View.extend({
     el: '#content',
-    template: require('./templates/subscription-thanks.pug'),
+
+    initialize(options) {
+      this.template = options.template;
+    },
 
     render() {
       this.$el.html(
@@ -60,4 +64,5 @@ module.exports = {
     },
 
   }),
+
 };
