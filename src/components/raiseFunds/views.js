@@ -1,9 +1,6 @@
 const { createFields } = require('fields/new-fields.js');
 const raiseHelpers = require('./helpers.js');
 const appendHttpIfNecessary = app.helpers.format.appendHttpIfNecessary;
-
-const validation = require('components/validation/validation.js');
-
 const valuation_determination = require('consts/raisecapital/valuation_determination.json');
 
 const snippets = {
@@ -28,7 +25,7 @@ const fixGATrackerID = (data) => {
     data.ga_id = 'UA-' + data.ga_id;
 };
 
-const paralaxScrollHandler = (e) => {
+function paralaxScrollHandler(e) {
   var st = $(this).scrollTop() /15;
 
   $(".scroll-paralax .background").css({
@@ -118,6 +115,12 @@ module.exports = {
       this.$el.html(
         this.template()
       );
+    },
+
+    onBeforeNavigate() {
+      //hack to prevent undelegate events when login popup is shown to the user
+      if (!app.user.is_anonymous())
+        return this.destroy();
     },
 
     destroy() {
