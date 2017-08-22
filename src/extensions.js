@@ -64,7 +64,7 @@ const navigate = Backbone.Router.prototype.navigate;
 
 _.extend(Backbone.Router.prototype, {
 
-  navigate(...args) {
+  navigate(fragment, options) {
     const outData = {
       preventNavigate: false,
     };
@@ -74,7 +74,7 @@ _.extend(Backbone.Router.prototype, {
     if (outData.preventNavigate)
       return false;
 
-    return navigate.call(this, ...args);
+    return navigate.call(this, fragment, options);
   },
 
 });
