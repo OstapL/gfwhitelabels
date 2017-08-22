@@ -17,6 +17,8 @@ class MailSubscriber {
       e.preventDefault();
       const $form = $(e.target).closest('form');
       const url = $form.attr('action');
+      const next = $form.data('next');
+
       let data = $form.serializeJSON();
       //TODO: fix 'Access-Control-Allow-Origin' header is present on the requested resource.
       // Origin 'http://alpha.growthfountain.com:7070' is therefore not allowed access.
@@ -25,21 +27,21 @@ class MailSubscriber {
         data: data,
         dataType: 'jsonp',
       }).then((response) => {
-        app.routers.navigate('/subscription-thanks');
-        // if (response.result == 'success') {
-        //   app.dialogs.info(removeHTMLFromMessage(response.msg || 'Check your email to proceed with your subscription.'));
-        //   $form.find('[type=email]').val('');
-        //   return;
-        // }
-        // app.dialogs.error(removeHTMLFromMessage(response.msg));
+        if (response.result == 'success') {
+          return app.routers.navigate(next, { trigger: true, });
+          // app.dialogs.info(removeHTMLFromMessage(response.msg || 'Check your email to proceed with your subscription.'));
+          // $form.find('[type=email]').val('');
+          // return;
+        }
+        app.dialogs.error(removeHTMLFromMessage(response.msg));
       }).fail((jqXHR, textStatus, errorThrown) => {
-        app.routers.navigate('/subscription-thanks');
-        // console.error(errorThrown);
-        // app.dialogs.error('An error occurred, try again later.');
+        // app.routers.navigate(next, { trigger: true, });
+        console.error(errorThrown);
+        app.dialogs.error('An error occurred, try again later.');
       });
-      
+
       app.analytics.emitEvent('EmailSubscription', data);
-      
+
       return false;
     });
 

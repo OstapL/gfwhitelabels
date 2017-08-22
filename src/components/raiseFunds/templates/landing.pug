@@ -9,7 +9,9 @@ section.raise-capital-landing
       .col-xl-10.offset-xl-1
         .text-xs-center
           img(src=require('images/gf_icon.png')).logo-banner
-          h1.big-h1.text-uppercase.m-t-0 Raise Capital By Turning Customers Into Owners
+          h1.big-h1.text-uppercase.m-t-0 Raise Capital By Turning Customers
+            br
+            |  Into Owners
           h2.font-weight-light.m-t-1.m-b-2 Raise $25,000 - $1,000,000
           a(href="/company/create?nolanding=1").btn.btn-primary.btn-lg Start Campaign
   
@@ -17,6 +19,23 @@ section.raise-capital-landing
       span GrowthFountain is the preferred equity crowdfunding platform for 
         strong 1 million
         |  credit union members and counting
+  secetion.email-subscription.subscription-campaing-list.raise-subscription.m-b-0.p-t-3.p-b-3
+    .container
+      .row
+        .col-xs-12
+          h2.text-xs-center.font-weight-light.m-t-0 Want to learn how we can help your business?
+      .row
+        .col-xl-12
+          -
+            var subscriber = require('directives/subscribe/index.js');
+            pug_html += subscriber.render({
+              containerClass: 'subscription-wrap',
+              emailClass: 'col-xs-12 p-l-0',
+              subscribeClass: 'subscription-btn',
+              buttonText: 'Submit',
+              id: 'f650548bc3',
+              next: '/subscription-thanks?type=1',
+            });
   .content-section
     .top-section
       .container
@@ -99,9 +118,7 @@ section.raise-capital-landing
               br
               br
             img(src=require('images/raise-landing/icon/icon-6.png'))
-        .col-xl-12.text-xs-center
-          h4.font-weight-bold.text-uppercase.m-b-0 Need help? Call your dedicated Account Representative anytime.
-
+        
 
   section.raise-landing-table
     .container
