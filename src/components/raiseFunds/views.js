@@ -196,6 +196,8 @@ module.exports = {
       if(this.model.hasOwnProperty('id')) {
         this.urlRoot += '/:id';
       }
+
+      this.listenToNavigate();
     },
 
     submitCompanyInfo(e) {
@@ -1137,4 +1139,4 @@ module.exports = {
     }
 
   }, app.helpers.confirmOnLeave.methods, app.helpers.menu.methods, app.helpers.section.methods)),
-}
+};

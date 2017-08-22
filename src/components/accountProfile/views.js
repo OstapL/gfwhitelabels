@@ -344,6 +344,10 @@ module.exports = {
       'submit form': api.submitAction,
     },
 
+    initialize() {
+      this.listenToNavigate();
+    },
+
     getSuccessUrl(data) {
       // app.user.passwordChanged(data.key);
       return '/account/profile';
@@ -360,6 +364,10 @@ module.exports = {
     urlRoot: app.config.authServer + '/reset-password/do',
     events: {
       'submit form': api.submitAction,
+    },
+
+    initialize() {
+      this.listenToNavigate();
     },
 
     getSuccessUrl(data) {
@@ -401,6 +409,8 @@ module.exports = {
         expires: 1000 * 60 * 60 * 24 * 30 * 12,
         path: '/',
       });
+
+      this.listenToNavigate();
     },
 
     render() {
@@ -684,6 +694,8 @@ module.exports = {
         expires: 1000 * 60 * 60 * 24 * 30 * 12,
         path: '/',
       });
+
+      this.listenToNavigate();
     },
 
     render() {
@@ -734,7 +746,7 @@ module.exports = {
           this.$el.find('.no-comments').hide();
           this.$el.find('.comments-container').closest('.row').show();
 
-          let comments = new View.comments({
+          this.commentsView = new View.comments({
             model: commentsData,
             fields: options[0].fields,
             allowQuestion: false,
@@ -742,7 +754,7 @@ module.exports = {
             cssClass: 'col-xl-8 offset-xl-0',
           });
 
-          comments.render();
+          this.commentsView.render();
 
           function countComments(comments) {
             let count = comments.length || 0;
@@ -759,6 +771,12 @@ module.exports = {
           $('.interactions-count').animateCount();
         }
       });
+    },
+
+    destroy() {
+      Backbone.View.prototype.destroy.call(this);
+      if (this.commentsView)
+        this.commentsView.destroy();
     },
   }),
 };
