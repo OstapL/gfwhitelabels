@@ -47,7 +47,7 @@
             .col-lg-12.mb20.text-xs-center.bootstrap-slider-calc
               input(
                 type='text',
-                data-slider-value= data.workingCapital,
+                data-slider-value= data.workingCapital || 0
                 name="workingCapital"
               )#workingCapital.form-control.js-bootstrap-slider
 
@@ -90,8 +90,8 @@
 
             .col-lg-12.mb20.text-xs-center.bootstrap-slider-calc
               input(
-                type='text',
-                data-slider-value= data.taxRate,
+                type='text'
+                data-slider-value= data.taxRate || 0
                 name="taxRate"
               )#taxRate.form-control.js-bootstrap-slider
 

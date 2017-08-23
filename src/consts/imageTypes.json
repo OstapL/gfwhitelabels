@@ -1,0 +1,6 @@
+{
+  "CROP": "crop",
+  "CROPRESIZE": "cropresize",
+  "RESIZE": "resize",
+  "ORIGINAL": "original"
+}
