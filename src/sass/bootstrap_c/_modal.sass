@@ -91,9 +91,9 @@
 				.label-text
 					display: block
 					padding-left: rem(20)
-					line-height: rem(14)
-					font-size: rem(12)
-					line-height: 18px
+					font-size: rem(11)
+					line-height: 14px
+					text-align: left
 				.p-t-6
 					padding-top: rem(6)
 			.btn
@@ -132,19 +132,35 @@
 			font-weight: normal
 #sign_up,
 #sign_in
-  .modal-dialog
-    max-width: 540px
-    .modal-body
-      padding: rem(15) rem(45) 0
-      @media only screen and (max-width : 480px)
-      	padding: rem(15) rem(15) 0
-      @media only screen and (max-width : 360px)
-      	padding: rem(15) 0 0
+	.modal-dialog
+		max-width: 540px
+		.modal-body
+			padding: rem(15) rem(45) 0
+			@media only screen and (max-width : 480px)
+				padding: rem(15) rem(15) 0
+			@media only screen and (max-width : 360px)
+				padding: rem(15) 0 0
 
-      .label-text
-        line-height: 14px
-        font-size: rem(12)
-	
+#sign_up
+	.first-last
+		.row
+			margin-left: 0
+			margin-right: 0
+	.social-btn
+		margin-bottom: rem(30)
+		max-width: 290px
+		margin: auto
+		@media only screen and (max-width : 360px)
+			max-width: 320px
+	.or
+		margin-bottom: rem(30)
+	.bottom-line
+		background-color: $alabaster
+		line-height: 14px
+		font-size: rem(11)
+		padding-top: rem(5)
+		padding-bottom: rem(5)
+		text-align: center
 
 @media only screen and (max-width : 991px)
 	[id^="videoModal"]

@@ -166,8 +166,7 @@
 
 .home-our-partners
   background-color: $alabaster
-  padding: rem(25) 0 rem(20) 0
-  padding-bottom: rem(25)
+  padding-top: rem(25)
   display: $home-our-partners-display
   text-align: center
   .partners-line
@@ -197,6 +196,14 @@
         &:before,
         &:after
           background-color: transparent
+  .bottom-line
+    margin-top: rem(20)
+    background-color: $gallery
+    padding:
+      top: 7px
+      bottom: 7px
+    span
+      color: $small-text
 
 
   .item
@@ -497,3 +504,5 @@
   .news-img
     @media only screen and (max-width : 767px)
       padding-bottom: 30px!important
+.main-subscription
+  margin-top: rem($margin-section-main-top-news)
