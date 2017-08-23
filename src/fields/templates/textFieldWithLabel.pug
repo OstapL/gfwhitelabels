@@ -1,0 +1,5 @@
+div(class=attr.fieldContainerClass id=(tmp.elementIDUsed ? false : (attr.elementID || false)))
+  label(class=attr.labelClass for=attr.id) #{ attr.label }
+    if schema.required
+      span.color-red *
+  include ./textField

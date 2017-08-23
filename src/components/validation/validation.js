@@ -2,8 +2,19 @@ const rules = require('./rules.js');
 const fixedProps = ['type', 'label', 'placeholder'];
 const fixedRegex = ['number', 'url', 'email', 'money', 'file', 'image'];
 
+const escapeSelector = (selector) => {
+  const rx = /\[\d*\]|\d/gi;
+
+  if (rx.test(selector))
+    selector = selector.replace(/\[/gi, '\\[').replace(/\]/gi, '\\]');
+
+  return selector;
+};
+
 module.exports = {
   clearMsg(view, attr, selector) {
+    attr = escapeSelector(attr);
+
     var $el = view.$('[name=' + attr + ']');
     var $group = $el.parent();
 
@@ -40,9 +51,16 @@ module.exports = {
       }
     }
 
-    let $el = view.$('#' + attr);
-    if ($el.length == 0)
+    let $el = null;
+    try {
+      $el = view.$('#' + attr);
+    } catch(e){}
+
+
+    if (!$el || !$el.length) {
+      attr = escapeSelector(attr);
       $el = view.$('[name=' + attr + ']');
+    }
 
     if (Array.isArray(error) !== true) {
       error = [error];

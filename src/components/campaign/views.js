@@ -7,6 +7,18 @@ const validation = require('components/validation/validation.js');
 
 const CalculatorView = require('./revenueShareCalculator.js');
 
+function paralaxScrollHandler() {
+  var st = $(this).scrollTop() /15;
+
+  $(".scroll-paralax .background").css({
+    "transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+    "-o-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+    "-webkit-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+    "-moz-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+    "-ms-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+  });
+}
+
 module.exports = {
   list: Backbone.View.extend({
     el: '#content',
@@ -16,6 +28,7 @@ module.exports = {
     },
     initialize(options) {
       this.collection = options.collection;
+      this.listenToNavigate();
     },
 
     render() {
@@ -87,6 +100,15 @@ module.exports = {
       if (this.model.ga_id) {
         app.analytics.emitCompanyCustomEvent(this.model.ga_id);
       }
+
+      this.listenToNavigate();
+    },
+
+    destroy() {
+      Backbone.View.prototype.destroy.call(this);
+      $(document).off("scroll", this.onScrollListener);
+      if (this.commentsView)
+        this.commentsView.destroy();
     },
 
     submitCampaign(e) {
@@ -294,14 +316,14 @@ module.exports = {
           data[0].id = this.model.id;
           data[0].owner_id = this.model.owner_id;
 
-          let comments = new View.comments({
+          this.commentsView = new View.comments({
             // model: commentsModel,
             model: data[0],
             fields: options[0].fields,
             cssClass: 'offset-xl-2',
             readonly: this.model.is_approved != STATUSES.VERIFIED,
           });
-          comments.render();
+          this.commentsView.render();
 
           if (location.hash && location.hash.indexOf('comment') >= 0) {
             let $comments = $(location.hash);
@@ -339,18 +361,8 @@ module.exports = {
         this.initAsyncUI();
       }, 100);
 
-      $(window).scroll(function() {
-            var st = $(this).scrollTop() /15;
+      $(window).on('scroll', paralaxScrollHandler);
 
-            $(".scroll-paralax .background").css({
-              "transform" : "translate3d(0px, " + st /2 + "%, .01px)",
-              "-o-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
-              "-webkit-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
-              "-moz-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
-              "-ms-transform" : "translate3d(0px, " + st /2 + "%, .01px)"
-
-            });
-          });
       this.$el.find('.perks .col-xl-4 p').equalHeights();
       this.$el.find('.team .auto-height').equalHeights();
       this.$el.find('.card-inverse p').equalHeights();
@@ -645,6 +657,23 @@ module.exports = {
 
       if (this.model.ga_id)
         app.analytics.emitCompanyCustomEvent(this.model.ga_id);
+
+      this.listenToNavigate();
+    },
+
+    destroy() {
+      Backbone.View.prototype.destroy.call(this);
+
+      if (this.$amount)
+        this.$amount.popover('dispose');
+
+      const $modal = this.$('#income_worth_modal');
+
+      $modal.modal('hide');
+
+      ['show.bs.modal', 'shown.bs.modal', 'hide.bs.modal', 'hidden.bs.modal',].forEach((event) => {
+        $modal.off(event);
+      });
     },
 
     render() {
@@ -670,6 +699,11 @@ module.exports = {
       setTimeout(this.attachUpdateNetWorthModalEvents.bind(this), 100);
 
       $('span.current-limit').text(this._maxAllowedAmount.toLocaleString('en-US'));
+      api.makeRequest(
+        app.config.emailServer + '/subscribe',
+        'PUT',
+        {'company_id': this.model.id}
+      );
 
       return this;
     },
@@ -1140,7 +1174,6 @@ module.exports = {
       // if not 5 digit, return
       if (e.target.value.length < 5) return;
       if (!e.target.value.match(/\d{5}/)) return;
-      // else console.log('hello');
       app.helpers.location(e.target.value, ({ success=false, city="", state=""}) => {
         // this.zipCodeField.closest('div').find('.help-block').remove();
         if (success) {
@@ -1230,6 +1263,12 @@ module.exports = {
         this.template({
           investment: this.model,
         })
+      );
+
+      api.makeRequest(
+        app.config.emailServer + '/unsubscribe',
+        'PUT',
+        { company_id: this.model.company_id }
       );
       return this;
     },
