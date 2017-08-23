@@ -49,4 +49,20 @@ module.exports = {
       });
     }
   }),
+
+  subscriptionThanks: Backbone.View.extend({
+    el: '#content',
+
+    initialize(options) {
+      this.template = options.template;
+    },
+
+    render() {
+      this.$el.html(
+        this.template()
+      );
+    },
+
+  }),
+
 };

@@ -26,6 +26,7 @@ const analytics = {
     CalculatorUsed: 'CalculatorUsed',
     VideoViewed: 'VideoViewed',
     CompanyCustomEvent: 'CompanyCustomEvent',
+    EmailSubscription: 'EmailSubscription',
   },
 
   emitEvent(name, data) {

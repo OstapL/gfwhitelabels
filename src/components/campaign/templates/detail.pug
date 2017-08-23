@@ -219,9 +219,9 @@ section
 
         h2.dosis.our.text-uppercase.text-lg-center.text-xs-center.campaign-subheading Why You Should Invest
         p !{ app.helpers.text.restoreLineBreak(values.campaign.pitch) }
-
-      .col-lg-12.p-x-0
-        #revenue-share-calculator
+      if values.id !== 924
+        .col-lg-12.p-x-0
+          #revenue-share-calculator
     .container-fluid.p-l-0.p-r-0
       #gallery1.col-lg-12.pt50.photo-gallegy.text-center-flex
         - var gallery_company_film = require('components/campaign/templates/snippets/gallery_company_film.pug')
