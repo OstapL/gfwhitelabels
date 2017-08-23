@@ -68,7 +68,7 @@ if (isDev) {
   plugins.push(new BrowserSyncPlugin({
     // browse to http://localhost:3000/ during development
     host: 'localhost',
-    port: 3000,
+    port: 7070,
     // proxy the Webpack Dev Server endpoint
     // (which should be serving on http://localhost:3100/)
     // through BrowserSync

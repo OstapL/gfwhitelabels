@@ -269,12 +269,12 @@ $('body').on('click', 'a', (event) => {
   var url = href;
 
   // Clear page
-  $('#content').undelegate();
-  $('form').undelegate();
-  $('.popover').remove();
-
-  $('.modal-backdrop').remove();
-  $('.modal-open').removeClass('modal-open');
+  // $('#content').undelegate();
+  // $('form').undelegate();
+  // $('.popover').remove();
+  //
+  // $('.modal-backdrop').remove();
+  // $('.modal-open').removeClass('modal-open');
 
   if (app.cache.hasOwnProperty(url) == false) {
     //fix for comments
@@ -290,15 +290,11 @@ $('body').on('click', 'a', (event) => {
     app.routers.navigate(
       url, {trigger: true, replace: false}
     );
-    // app.trigger('userReady');
-    // app.trigger('menuReady');
   } else {
     $('#content').html(app.cache[url]);
     app.routers.navigate(
       url, {trigger: false, replace: false}
     );
-    // app.trigger('userReady');
-    // app.trigger('menuReady');
   }
 });
 
