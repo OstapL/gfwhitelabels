@@ -1,0 +1,14 @@
+div(class=attr.inputContainerClass id=(tmp.elementIDUsed ? false : (attr.elementID || false)))
+  input(
+    id=attr.id
+    name=attr.name
+    placeholder=attr.placeholder
+    type=attr.type
+    class=attr.inputClass
+    data-content=attr.help_text
+    readonly=attr.readonly
+    value=attr.value
+    maxlength=attr.maxlength || false
+    disabled=attr.disabled || false
+    data-value-type=attr.valueType || attr.type
+  )

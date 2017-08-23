@@ -1,0 +1,18 @@
+div(id=attr.elementID).video-container
+  - tmp.elementIDUsed = true;
+
+  .col-xl-7.col-lg-6
+    include ./textFieldWithLabel
+
+  .col-xl-5.col-lg-6
+    -
+      var videoInfo = app.getVideoInfo(attr.value);
+    if videoInfo.provider === 'youtube'
+      .img-media.youtube-media
+        img(src="https://img.youtube.com/vi/" + videoInfo.id + "/0.jpg")
+    else if videoInfo.provider === 'vimeo'
+      .img-media
+        img(src="" data-vimeo-id=videoInfo.id).card-img.w-100.vimeo-thumbnail
+    else
+      .img-media
+        img(src=require("images/default/default-video.png"))
