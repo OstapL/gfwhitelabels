@@ -99,14 +99,6 @@ module.exports = {
       'click .submit_formc': submitFormc,
     }, app.helpers.menu.events, app.helpers.yesNo.events, /*app.helpers.confirmOnLeave.events*/),
 
-    preinitialize() {
-      // ToDo
-      // Hack for undelegate previous events
-      for (let k in this.events) {
-        $('#content ' + k.split(' ')[1]).undelegate();
-      }
-    },
-
     initialize(options) {
       this.model = options.formc;
       this.campaign = options.campaign;
@@ -118,6 +110,8 @@ module.exports = {
           required: true 
         };
       }
+
+      this.listenToNavigate();
     },
 
     render() {
@@ -375,14 +369,6 @@ module.exports = {
       'click .delete-member': 'deleteMember',
     }, app.helpers.menu.events, app.helpers.confirmOnLeave.events),
 
-    preinitialize() {
-      // ToDo
-      // Hack for undelegate previous events
-      for (let k in this.events) {
-        $('#content ' + k.split(' ')[1]).undelegate();
-      }
-    },
-
     initialize(options) {
       this.model = options.formc;
       this.campaign = options.campaign;
@@ -390,6 +376,8 @@ module.exports = {
       this.fields.full_time_employers.label = 'Full Time Employees';
       this.fields.part_time_employers.label = 'Part Time Employees';
       this.urlRoot = this.urlRoot.replace(':id', this.model.id);
+
+      this.listenToNavigate();
     },
 
     _success(data, newData) {
@@ -494,14 +482,6 @@ module.exports = {
       'click .team-current-date': 'setCurrentDate',
     }, app.helpers.section.events, app.helpers.menu.events, app.helpers.yesNo.events, app.helpers.confirmOnLeave.events),
 
-    preinitialize() {
-      // ToDo
-      // Hack for undelegate previous events
-      for (let k in this.events) {
-        $('#content ' + k.split(' ')[1]).undelegate();
-      }
-    },
-
     initialize(options) {
       if(options.user_id != 'new') {
         let t = options.formc.team_members.filter(function(el) { return el.user_id == options.user_id})[0]
@@ -556,6 +536,8 @@ module.exports = {
 
       this.createIndexes();
       this.buildSnippets(snippets);
+
+      this.listenToNavigate();
     },
 
     render() {
@@ -699,14 +681,6 @@ module.exports = {
       'click .submit_formc': submitFormc,
     }, app.helpers.section.events, app.helpers.menu.events, app.helpers.yesNo.events, app.helpers.confirmOnLeave.events),
 
-    preinitialize() {
-      // ToDo
-      // Hack for undelegate previous events
-      for (let k in this.events) {
-        $('#content ' + k.split(' ')[1]).undelegate();
-      }
-    },
-
     initialize(options) {
       this.model = options.formc;
       this.fields = options.fields;
@@ -724,6 +698,8 @@ module.exports = {
 
       this.createIndexes();
       this.buildSnippets(snippets);
+
+      this.listenToNavigate();
     },
 
     submit(e) {
@@ -764,14 +740,6 @@ module.exports = {
 
   useOfProceeds: Backbone.View.extend(_.extend({
     urlRoot: app.config.formcServer + '/:id/use-of-proceeds',
-
-    preinitialize() {
-      // ToDo
-      // Hack for undelegate previous events
-      for (let k in this.events) {
-        $('#content ' + k.split(' ')[1]).undelegate();
-      }
-    },
 
     initialize(options) {
       this.model = options.formc;
@@ -821,6 +789,8 @@ module.exports = {
       this.assignLabels();
       this.createIndexes();
       this.buildSnippets(snippets);
+
+      this.listenToNavigate();
     },
 
     events: _.extend({
@@ -949,14 +919,6 @@ module.exports = {
   }, app.helpers.menu.methods, app.helpers.section.methods, app.helpers.confirmOnLeave.methods)),
 
   riskFactorsInstruction: Backbone.View.extend(_.extend({
-    preinitialize() {
-      // ToDo
-      // Hack for undelegate previous events
-      for (let k in this.events) {
-        $('#content ' + k.split(' ')[1]).undelegate();
-      }
-    },
-
     events: _.extend({
       'submit form': api.submitAction,
       'click .submit_formc': submitFormc,
@@ -965,6 +927,7 @@ module.exports = {
     initialize(options) {
       this.model = options.formc;
       this.campaign = options.campaign;
+      this.listenToNavigate();
     },
 
     render() {
@@ -986,14 +949,6 @@ module.exports = {
     events: _.extend({
       'click .submit_formc': submitFormc,
     }, app.helpers.menu.events, riskFactors.events, app.helpers.confirmOnLeave.events),
-
-    preinitialize() {
-      // ToDo
-      // Hack for undelegate previous events
-      for (let k in this.events) {
-        $('#content ' + k.split(' ')[1]).undelegate();
-      }
-    },
 
     initialize(options) {
       this.model = options.formc;
@@ -1069,6 +1024,7 @@ module.exports = {
       };
       this.labels = labels;
       this.assignLabels();
+      this.listenToNavigate();
     },
 
     render() {
@@ -1095,14 +1051,6 @@ module.exports = {
     events: _.extend({
       'click .submit_formc': submitFormc,
     }, app.helpers.menu.events, riskFactors.events, app.helpers.confirmOnLeave.events),
-
-    preinitialize() {
-      // ToDo
-      // Hack for undelegate previous events
-      for (let k in this.events) {
-        $('#content ' + k.split(' ')[1]).undelegate();
-      }
-    },
 
     initialize(options) {
       this.model = options.formc;
@@ -1186,6 +1134,8 @@ module.exports = {
 
       this.labels = labels;
       this.assignLabels();
+
+      this.listenToNavigate();
     },
 
     render() {
@@ -1212,14 +1162,6 @@ module.exports = {
     events: _.extend({
       'click .submit_formc': submitFormc,
     }, app.helpers.menu.events, riskFactors.events, app.helpers.confirmOnLeave.events),
-
-    preinitialize() {
-      // ToDo
-      // Hack for undelegate previous events
-      for (let k in this.events) {
-        $('#content ' + k.split(' ')[1]).undelegate();
-      }
-    },
 
     initialize(options) {
       this.model = options.formc;
@@ -1330,6 +1272,8 @@ module.exports = {
 
       this.labels = labels;
       this.assignLabels();
+
+      this.listenToNavigate();
     },
 
     render() {
@@ -1358,14 +1302,6 @@ module.exports = {
     events: _.extend({
       'click .submit_formc': submitFormc,
     }, app.helpers.menu.events, riskFactors.events, app.helpers.confirmOnLeave.methods),
-
-    preinitialize() {
-      // ToDo
-      // Hack for undelegate previous events
-      for (let k in this.events) {
-        $('#content ' + k.split(' ')[1]).undelegate();
-      }
-    },
 
     initialize(options) {
       this.model = options.formc;
@@ -1421,6 +1357,8 @@ module.exports = {
 
       this.labels = labels;
       this.assignLabels();
+
+      this.listenToNavigate();
     },
 
     render() {
@@ -1448,14 +1386,6 @@ module.exports = {
     events: _.extend({
       'click .submit_formc': submitFormc,
     }, app.helpers.menu.events, riskFactors.events, app.helpers.confirmOnLeave.events),
-
-    preinitialize() {
-      // ToDo
-      // Hack for undelegate previous events
-      for (let k in this.events) {
-        $('#content ' + k.split(' ')[1]).undelegate();
-      }
-    },
 
     initialize(options) {
       this.model = options.formc;
@@ -1530,6 +1460,8 @@ module.exports = {
 
       this.labels = labels;
       this.assignLabels();
+
+      this.listenToNavigate();
     },
 
     render() {
@@ -1556,14 +1488,6 @@ module.exports = {
     events: _.extend({
       'click .submit_formc': submitFormc,
     }, app.helpers.menu.events, riskFactors.events, app.helpers.confirmOnLeave.events),
-
-    preinitialize() {
-      // ToDo
-      // Hack for undelegate previous events
-      for (let k in this.events) {
-        $('#content ' + k.split(' ')[1]).undelegate();
-      }
-    },
 
     initialize(options) {
       this.model = options.formc;
@@ -1660,6 +1584,8 @@ module.exports = {
       };
       this.labels = labels;
       this.assignLabels();
+
+      this.listenToNavigate();
     },
 
     render() {
@@ -1687,14 +1613,6 @@ module.exports = {
       'click .submit_formc': submitFormc,
     }, app.helpers.menu.events, riskFactors.events, app.helpers.confirmOnLeave.events),
 
-    preinitialize() {
-      // ToDo
-      // Hack for undelegate previous events
-      for (let k in this.events) {
-        $('#content ' + k.split(' ')[1]).undelegate();
-      }
-    },
-
     initialize(options) {
       this.model = options.formc;
       this.campaign = options.campaign;
@@ -1704,6 +1622,8 @@ module.exports = {
       this.defaultRisks = {};
       this.labels = labels;
       this.assignLabels();
+
+      this.listenToNavigate();
     },
 
     render() {
@@ -1734,6 +1654,8 @@ module.exports = {
     }),
 
     initialize(options) {
+      this.listenToNavigate();
+
       if(document.location.href.indexOf('oauth_token=') !== -1) {
         this.xeroGrabData();
       }
@@ -1852,14 +1774,6 @@ module.exports = {
       'click .submit_formc': submitFormc,
     }, app.helpers.menu.events, app.helpers.yesNo.events, app.helpers.section.events, /*app.helpers.confirmOnLeave.events*/),
 
-    preinitialize() {
-      // ToDo
-      // Hack for undelegate previous events
-      for (let k in this.events) {
-        $('#content ' + k.split(' ')[1]).undelegate();
-      }
-    },
-
     initialize(options) {
       this.model = options.formc;
       this.campaign = options.campaign;
@@ -1888,6 +1802,8 @@ module.exports = {
 
       this.createIndexes();
       this.buildSnippets(snippets, {campaign: this.campaign});
+
+      this.listenToNavigate();
     },
 
     _success(data, newData) {
@@ -1940,14 +1856,6 @@ module.exports = {
       'click .editOutstanding': 'editOutstanding',
       'click .delete-outstanding': 'deleteOutstanding',
     }, app.helpers.section.events, app.helpers.menu.events, app.helpers.yesNo.events, /*app.helpers.confirmOnLeave.events*/),
-
-    preinitialize() {
-      // ToDo
-      // Hack for undelegate previous events
-      for (let k in this.events) {
-        $('#content ' + k.split(' ')[1]).undelegate();
-      }
-    },
 
     initialize(options) {
       this.model = options.formc;
@@ -2019,7 +1927,7 @@ module.exports = {
 
       this.createIndexes();
       this.buildSnippets(snippets);
-
+      this.listenToNavigate();
     },
 
     newOustanding(e) {
@@ -2225,13 +2133,6 @@ module.exports = {
   backgroundCheck: Backbone.View.extend(_.extend({
     urlRoot: app.config.formcServer + '/:id' + '/background-check',
 
-    preinitialize() {
-      // ToDo
-      // Hack for undelegate previous events
-      for (let k in this.events) {
-        $('#content ' + k.split(' ')[1]).undelegate();
-      }
-    },
     initialize(options) {
       this.model = options.formc;
       this.campaign = options.campaign;
@@ -2249,6 +2150,7 @@ module.exports = {
             'are made, not misleading.',
       };
       this.assignLabels();
+      this.listenToNavigate();
     },
 
     _success(data) {
@@ -2279,22 +2181,22 @@ module.exports = {
   finalReview: Backbone.View.extend({
     urlRoot: app.config.formcServer + '/:id/final-review',
 
-    preinitialize() {
-      // ToDo
-      // Hack for undelegate previous events
-      for (let k in this.events) {
-        $('#content ' + k.split(' ')[1]).undelegate();
-      }
+    events: {
+      'click .createField': 'createField',
     },
+
     initialize(options) {
       this.formcId = options.formcId;
       this.fields = options.fields;
       this.campaign = options.model.campaign;
 
       app.helpers.disableEnter.disableEnter.call(this);
+      this.listenToNavigate();
     },
-    events: {
-      'click .createField': 'createField',
+
+    destroy() {
+      Backbone.View.prototype.destroy.call(this);
+      $('body').off('click', '.createField');
     },
 
     _success(data, newData) {
@@ -2555,8 +2457,8 @@ module.exports = {
     initialize(options) {
       this.fields = options.fields;
       this.name = {};
-
     },
+
     render() {
       this.$el.html(
         this.template({
@@ -2567,7 +2469,8 @@ module.exports = {
       return this;
     },
   }),
-    electronicSignatureCompany: Backbone.View.extend({
+
+  electronicSignatureCompany: Backbone.View.extend({
     el: '#content',
     template: require('./templates/formc_els_company_formc.pug'),
     
@@ -2586,6 +2489,7 @@ module.exports = {
       return this;
     },
   }),
+
   electronicSignatureCik: Backbone.View.extend({
     el: '#content',
     template: require('./templates/formc_els_cik_code.pug'),
@@ -2614,6 +2518,7 @@ module.exports = {
       return this;
     },
   }),
+
   electronicSignatureFinancials: Backbone.View.extend({
     el: '#content',
     template: require('./templates/formc_els_financials_certification.pug'),

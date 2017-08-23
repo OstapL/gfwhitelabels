@@ -98,7 +98,7 @@ module.exports = {
       $(window).on('scroll', paralaxScrollHandler);
     },
 
-    hideHint(e) {
+    hideHint() {
       this.$el.find('.calendly').hide();
     },
 
@@ -118,6 +118,7 @@ module.exports = {
     },
 
     onBeforeNavigate() {
+      this.hideHint();
       //hack to prevent undelegate events when login popup is shown to the user
       if (!app.user.is_anonymous())
         return this.destroy();
@@ -196,6 +197,8 @@ module.exports = {
       if(this.model.hasOwnProperty('id')) {
         this.urlRoot += '/:id';
       }
+
+      this.listenToNavigate();
     },
 
     submitCompanyInfo(e) {
@@ -1137,4 +1140,4 @@ module.exports = {
     }
 
   }, app.helpers.confirmOnLeave.methods, app.helpers.menu.methods, app.helpers.section.methods)),
-}
+};

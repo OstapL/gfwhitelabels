@@ -257,6 +257,8 @@ const Views = {
       };
 
       this.fields = createFields(this.fieldsSchema, this.fieldsAttr);
+      
+      this.listenToNavigate();
     },
 
     render() {
@@ -303,6 +305,8 @@ const Views = {
       };
 
       this.fields = createFields(this.fieldsSchema, this.fieldsAttr);
+
+      this.listenToNavigate();
     },
 
     render() {
@@ -358,6 +362,8 @@ const Views = {
       this.company_name = options.company_name;
       this.id = options.id;
       this.urlRoot = this.urlRoot.replace(':id', this.id);
+
+      this.listenToNavigate();
     },
 
     render() {
