@@ -1650,10 +1650,15 @@ module.exports = {
     events: _.extend({
       'click .xeroConnect': 'xeroConnect',
       'click .xeroGrabData': 'xeroGrabData',
+      'click .saveCheckboxValue': 'saveCheckboxValue',
     }),
 
-    initialize() {
+    initialize(options) {
       this.listenToNavigate();
+
+      if(document.location.href.indexOf('oauth_token=') !== -1) {
+        this.xeroGrabData();
+      }
     },
 
     render() {
@@ -1672,7 +1677,6 @@ module.exports = {
             }
           },
         }
-
       }
 
       this.$el.html(
@@ -1684,11 +1688,35 @@ module.exports = {
       return this;
     },
 
+    saveCheckboxValue(e) {
+      let docs = localStorage.getItem('xero_docs');
+
+      if(docs !== null) {
+        docs = JSON.parse(docs);
+      } else {
+        docs = [];
+      }
+
+      if (e.target.checked == true) {
+        let index = docs.findIndex((el) => el == e.target.value);
+        if (index === -1) {
+          docs.push(e.target.value);
+        }
+      } else {
+        let index = docs.findIndex((el) => el == e.target.value);
+        if (index !== -1) {
+          docs.slice(index-1, 1);
+        }
+      }
+
+      localStorage.setItem('xero_docs', JSON.stringify(docs));
+    },
+
     xeroConnect(e) {
       api.makeRequest(this.urlRoot.replace(':id', this.model.id)).
         then((data) => {
-          this.el.querySelector('#code').dataset.token = data.token;
-          this.el.querySelector('#code').dataset.secret = data.token_secret;
+          localStorage.setItem('xero_docs', '[]');
+          localStorage.setItem('xero_credentials', data.credentials);
           this.el.querySelector('#url').href = data.url;
           this.$el.find('#xeroModal').modal('show');
         });
@@ -1696,21 +1724,17 @@ module.exports = {
 
     xeroGrabData(e) {
 
-      e.preventDefault();
+      if (e) {
+        e.preventDefault();
+      }
+
       this.$('.help-block').remove();
 
-      let code = e.currentTarget.parentElement.parentElement.querySelector('#code');
       let data = {};
-      data.token = code.dataset.token;
-      data.token_secret = code.dataset.secret;
+      data.credentials = localStorage.getItem('xero_credentials');
       data.id = this.model.id;
-      data.documents = [];
-      data.code = code.value;
-      this.el.querySelectorAll('[name="documents[]"]').forEach((el) => { 
-        if(el.checked == true) {
-          data.documents.push(el.value)
-        }
-      })
+      data.documents = JSON.parse(localStorage.getItem('xero_docs'));
+      data.code = app.getParams().oauth_verifier;
 
       if(!app.validation.validate(this.fields, data, this)) {
         _(app.validation.errors).each((errors, key) => {
@@ -1726,7 +1750,12 @@ module.exports = {
             'PUT',
             data
         ).then((data) => {
-          window.location.reload();
+          debugger;
+          console.log(data);
+          localStorage.removeItem('xero_docs');
+          localStorage.removeItem('xero_credentials');
+          $('#xeroBlock').scrollTo(-25);
+          //window.location.reload();
         }).fail((xhr, message) => {
           app.hideLoading();
           this.$el.find('#xeroModal .modal-body').html('<h3>' + xhr.responseJSON.message + '</h3>');

@@ -34,8 +34,13 @@ const analytics = {
   },
 
   emitCompanyCustomEvent(trackerId) {
-    if (!trackerId)
+    if (!trackerId) {
       return;
+    }
+
+    if (trackerId.substr(0,3) != 'UA-') {
+      trackerId = 'UA-' + trackerId;
+    }
 
     return analytics.emitEvent(analytics.events.CompanyCustomEvent, { trackerId });
   },
