@@ -90,6 +90,12 @@ module.exports = {
           validate: {},
         },
       };
+      this.listenToNavigate();
+    },
+
+    destroy() {
+      Backbone.View.prototype.destroy.call(this);
+      this.$('[data-toggle="tooltip"]').tooltip('dispose');
     },
 
     events: _.extend({
@@ -144,10 +150,6 @@ module.exports = {
       'blur [type=money]': saveValue,
     }),
 
-    preinitialize() {
-      $('#content').undelegate();
-    },
-
     initialize() {
       this.fields = {
         monthlyOperatingTwoYears: {
@@ -185,6 +187,12 @@ module.exports = {
           validate: {},
         },
       };
+      this.listenToNavigate();
+    },
+
+    destroy() {
+      Backbone.View.prototype.destroy.call(this);
+      this.$('[data-toggle="tooltip"]').tooltip('dispose');
     },
 
     doCalculation(e) {
@@ -290,7 +298,7 @@ module.exports = {
       return fieldsWithValue && fieldsWithValue.length;
     },
 
-    render: function () {
+    render() {
       // disable enter to the step 2 of capitalraise calculator without data entered on the first step
       // if (!this.isFirstStepFilled()) {
       //     app.routers.navigate('/calculator/whatmybusinessworth/step-1', {trigger: true});

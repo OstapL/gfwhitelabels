@@ -14,6 +14,21 @@ const createScript = (url, options={}) => {
   return script;
 };
 
+const createStyle = (url, options={}) => {
+  let style = document.createElement('link');
+  style.rel = 'stylesheet';
+  style.href = url;
+
+  if (options.onLoad)
+    style.onload = options.onLoad;
+
+  if (options.onError)
+    style.onerror = options.onError;
+
+  return style;
+};
+
+
 const scriptLoader = _.extend({
   load(url) {
     return new Promise((resolve, reject) => {
@@ -111,7 +126,17 @@ const scriptLoader = _.extend({
 
   onGoogleMapsAPILoaded() {
     scriptLoader.trigger('google-maps-loaded');
-  }
+  },
+
+  loadStyle(url) {
+    return new Promise((resolve, reject) => {
+      const style = createStyle(url, {
+        onLoad: resolve,
+        onError: reject,
+      });
+      document.head.appendChild(style);
+    });
+  },
 
 }, Backbone.Events);
 
