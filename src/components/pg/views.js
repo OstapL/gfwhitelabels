@@ -4,7 +4,16 @@ module.exports = {
 
     initialize(options) {
       this.template = options.template;
-      this.eventsAttached = false;
+      this.scrollHandler = null;
+      this.listenToNavigate();
+    },
+
+    destroy() {
+      Backbone.View.prototype.destroy.call(this);
+      if (this.scrollHandler) {
+        $(window).off('scroll', this.scrollHandler);
+        this.scrollHandler = null;
+      }
     },
 
     render() {
@@ -14,9 +23,9 @@ module.exports = {
         ),
       );
 
-      if (!this.eventsAttached) {
-        $(window).on('scroll', this.updateMenuOnScroll.bind(this));
-        this.eventsAttached = true;
+      if (!this.scrollHandler) {
+        this.scrollHandler = this.updateMenuOnScroll.bind(this);
+        $(window).on('scroll', this.scrollHandler);
       }
 
       return this;
@@ -49,4 +58,20 @@ module.exports = {
       });
     }
   }),
+
+  subscriptionThanks: Backbone.View.extend({
+    el: '#content',
+
+    initialize(options) {
+      this.template = options.template;
+    },
+
+    render() {
+      this.$el.html(
+        this.template()
+      );
+    },
+
+  }),
+
 };

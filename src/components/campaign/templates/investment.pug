@@ -26,19 +26,19 @@ mixin confirmStatement(name, attr)
         .col-lg-6.col-md-6.col-sm-6.col-xs-6.text-lg-center
           label.d-block.label-true-false
             | TRUE
-          input(
-            type="radio"
-            value="true"
-            name=name
-          ).d-block.m-x-auto
+            input(
+              type="radio"
+              value="true"
+              name=name
+            ).d-block.m-x-auto
         .col-lg-6.col-md-6.col-sm-6.col-xs-6.text-lg-center
           label.d-block.label-true-false
             | FALSE
-          input(
-            type="radio"
-            value="false"
-            name=name
-          ).d-block.m-x-auto
+            input(
+              type="radio"
+              value="false"
+              name=name
+            ).d-block.m-x-auto
 
     .col-lg-10
       label #{attr.label}

@@ -1,0 +1,13 @@
+section.danger-zone-dashboard
+  .row
+    .col-lg-12
+      h2.text-uppercase.m-t-3 material change?
+  .row
+    .col-lg-12
+      p Do you have new information that a reasonable investor would consider important in deciding whether or not to purchase your securities?  If so, click here to amend your offering.
+  .row
+    .col-lg-12.m-t-1
+      if campaign.expired
+        a(href="#").btn.danger-cancel.text-uppercase.disabled Material change
+      else
+        a(href="#").btn.danger-cancel.text-uppercase.cancel-campaign Material change
