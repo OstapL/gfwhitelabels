@@ -26,7 +26,7 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
           p.text-xs-center Have an account? &nbsp;
             a(href="#").link-3.switchAuthPopup
               | Log In
-          form(novalidate autocomplete="off")#sign-up-form.col-lg-10.offset-lg-1
+          form(novalidate autocomplete="off")#sign-up-form.col-lg-12
             input(type="hidden" name="domain" value=window.location.host)
             .row
               .social-btn.m-t-2.m-b-2
@@ -39,52 +39,54 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
                 button(data-network="google")#signup-google.btn.btn-block.btn-social-network.btn-google.text-uppercase
                   i.fa.fa-google-plus
                   |  SIGN UP with Google
-            .form-group.row.clearfix.required
-              .row
-                .col-lg-12
-                  label.p-t-0
-                    input(type="checkbox" name="checkbox1" value="1")#agree-rules
-                    p.label-text I agree to the 
-                      a(href="/pg/terms_of_use" target="_blank").link-3 Terms of Use
-                      | , 
-                      a(href="/pg/privacy_policy" target="_blank").link-3 Privacy Policy
-                      |  and 
-                      a(href="/pg/electronic_signature" target="_blank").link-3 Electronic Signature and Electronic Delivery of Documentation.
+            .fields-group.m-x-auto
+              .form-group.clearfix.required.m-b-0.text-xs-center
+                .row
+                  .col-lg-12.p-xs-0
+                    label.p-t-0.m-b-0
+                      input(type="checkbox" name="checkbox1" value="1")#agree-rules
+                      span.label-text I agree to the 
+                        a(href="/pg/terms_of_use" target="_blank").link-3 Terms of Use
+                        | , 
+                        a(href="/pg/privacy_policy" target="_blank").link-3 Privacy Policy
+                        |  and 
+                        a(href="/pg/electronic_signature" target="_blank").link-3 Electronic Signature and Electronic Delivery of Documentation.
                 
-              .col-lg-12.border-bottom.or
-                span or
-
-            -
-              pug_html += app.fields.fieldText('first_name', {
-                required: true,
-                placeholder: 'First Name',
-                type: 'text',
-                'class': 'form-group row clearfix',
-              });
-              pug_html += app.fields.fieldText('last_name', {
-                required: true,
-                placeholder: 'Last Name',
-                type: 'text',
-                'class': 'form-group row clearfix',
-              });
-              pug_html += app.fields.fieldText('email', {
-                required: true,
-                placeholder: 'E-mail',
-                type: 'email',
-                'class': 'form-group row clearfix',
-              });
-              pug_html += app.fields.fieldText('password1', {
-                required: true,
-                placeholder: 'Password',
-                type: 'password',
-                'class': 'form-group row clearfix',
-              });
-              pug_html += app.fields.fieldText('password2', {
-                required: true,
-                placeholder: 'Re-enter Password',
-                type: 'password',
-                'class': 'form-group row clearfix',
-              });
+              .row
+                .col-xs-12.p-xs-0
+                  .border-bottom.or
+                    span or
+            .first-last.row
+              .col-xl-6.p-xs-0
+                -
+                  pug_html += app.fields.fieldText('first_name', {
+                    required: true,
+                    placeholder: 'First Name',
+                    type: 'text',
+                    'class': 'form-group row clearfix',
+                  });
+              .col-xl-6.p-xs-0
+                -
+                  pug_html += app.fields.fieldText('last_name', {
+                    required: true,
+                    placeholder: 'Last Name',
+                    type: 'text',
+                    'class': 'form-group row clearfix',
+                  });
+              .col-xl-12.p-xs-0
+                -
+                  pug_html += app.fields.fieldText('email', {
+                    required: true,
+                    placeholder: 'E-mail',
+                    type: 'email',
+                    'class': 'form-group row clearfix',
+                  });
+                  pug_html += app.fields.fieldText('password1', {
+                    required: true,
+                    placeholder: 'Password',
+                    type: 'password',
+                    'class': 'form-group row clearfix',
+                  });
             input(
               type="hidden"
               value=window.location.host
@@ -93,4 +95,8 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
             .col-lg-12.text-xs-center
               button(type="submit")#signup-btn.btn.btn-primary.text-uppercase Sign up
             
-        .modal-footer
+      .modal-footer
+        .bottom-line.col-xs-12
+          span Be signing up I agree to receive occasional issuer and investor notifications 
+            br
+            | from GrowthFountain.
