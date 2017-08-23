@@ -1,0 +1,85 @@
+section(style="display: none").grafic-dashboard
+  div.container
+    .row
+      .col-md-12
+        .portlet.light.portlet-fit.bordered
+          .portlet-title.portlet-hei75
+            .caption
+              h2.text-uppercase.m-t-0 Investments
+            .actions
+              div(data-toggle="buttons").btn-group.btn-group-devided
+                label.btn.btn-transparent.dark.btn-outline.btn-circle.btn-sm.active
+                  input(
+                    type="radio"
+                    name="options").toggle#option1
+                  | Actions
+                label.btn.btn-transparent.dark.btn-outline.btn-circle.btn-sm
+                  input(
+                    type="radio"
+                    name="options").toggle#option2 
+                  | Settings
+          .portlet-body.grafic-padding
+            .chart#chart_2
+              canvas(
+                width="1110"
+                height="300"
+                style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 1110; height: 300px").flot-base
+              .flot-text
+                .flot-x-axis.flot-x1-axis.xAxis.x1Axis
+                  div 1 MAY
+                  .flot-tick-label.tickLabel 2 MAY
+                  .flot-tick-label.tickLabel 3 MAY
+                  .flot-tick-label.tickLabel 4 MAY
+                  .flot-tick-label.tickLabel 5 MAY
+                  .flot-tick-label.tickLabel 6 MAY
+                  .flot-tick-label.tickLabel 7 MAY
+                  .flot-tick-label.tickLabel 8 MAY
+                  .flot-tick-label.tickLabel 9 MAY
+                  .flot-tick-label.tickLabel 10 MAY
+                  .flot-tick-label.tickLabel 11 MAY
+                  .flot-tick-label.tickLabel 12 MAY
+                  .flot-tick-label.tickLabel 13 MAY
+                  .flot-tick-label.tickLabel 14 MAY
+                  .flot-tick-label.tickLabel 15 MAY
+                .flot-y-axis.flot-y1-axis.yAxis.y1Axis
+                  .flot-tick-label.tickLabel 0
+                  .flot-tick-label.tickLabel 10
+                  .flot-tick-label.tickLabel 20
+                  .flot-tick-label.tickLabel 30
+                  .flot-tick-label.tickLabel 40
+                  .flot-tick-label.tickLabel 50
+                  .flot-tick-label.tickLabel 60
+                  .flot-tick-label.tickLabel 70
+                  .flot-tick-label.tickLabel 80
+                  .flot-tick-label.tickLabel 90
+                  .flot-tick-label.tickLabel 100
+                  .flot-tick-label.tickLabel 110
+                  .flot-tick-label.tickLabel 120
+                  .flot-tick-label.tickLabel 130
+                  .flot-tick-label.tickLabel 140
+              canvas(
+                width="1110"
+                height="300"
+                style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 1110px; height: 300px;").flot-overlay
+              .legend
+                table
+                  tr
+                    td.legendLabel Unique Visits
+                  tr
+                    td.legendLabel Page Views
+      .col-lg-12
+        .border-bottom.m-t-3.m-b-3
+section.investors-dashbord-comment
+  .form-group.row.no-comments.m-t-3(style='display: none')
+    .col-lg-12
+      .warning-block.m-b-0
+        i.fa.fa-info-circle
+        span.warning-text
+          | You have no questions
+
+  .row
+    .col-xl-12
+      h2.text-uppercase.m-b-0 Investor question & answer
+    .col-xl-12.p-l-0.p-r-0.p-xs-1
+      .comments-container
+
