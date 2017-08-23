@@ -1,12 +1,12 @@
 module.exports = {
   routes: {
-    'blog': 'list',
-    'blog/:id': 'detail',
+    'blog': 'blogList',
+    'blog/:id': 'blogDetail',
     'blog/create': 'createEdit',
     'blog/:id/edit': 'createEdit',
   },
   methods: {
-    list() {
+    blogList() {
       require.ensure([], () => {
         const View = require('components/blog/views.js');
         api.makeCacheRequest(app.config.blogServer + '/', 'GET').then((data) => {
@@ -31,7 +31,7 @@ module.exports = {
       }, 'blog_chunk');
     },
 
-    detail(id) {
+    blogDetail(id) {
       require.ensure([], () => {
         const View = require('components/blog/views.js');
         api.makeCacheRequest(app.config.blogServer + '/' + id, 'GET').then((data) => {
