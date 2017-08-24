@@ -38,7 +38,7 @@ const analytics = {
       return;
     }
 
-    if (trackerId.substr(0,3) != 'UA') {
+    if (trackerId.substr(0,3) != 'UA-') {
       trackerId = 'UA-' + trackerId;
     }
 

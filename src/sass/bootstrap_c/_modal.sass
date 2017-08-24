@@ -55,6 +55,11 @@
 				height: 1px
 				margin-top: rem(25)
 				width: 260px
+				&.mobile
+					margin-top: 11px
+					width: 260px!important
+					@media only screen and (min-width : 544px)
+						display: none
 			.text
 				p
 					color: $white
