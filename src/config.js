@@ -19,7 +19,7 @@ var e = {
   notificationsServer: "https://notifications-dev.growthfountain.com/",
   teamName: 'GrowthFountain Team',
   teamTitle: "Meet The Team",
-  title: "Crowdfunding | Digital Federal Credit Union",
+  siteTitle: "Crowdfunding | Digital Federal Credit Union",
   //serverUrl: "http://192.168.99.100:8000",
   //serverUrl: "http://gfauth.com:8000",
 
