@@ -14,7 +14,7 @@ var e = {
   
   teamName: 'GrowthFountain Team',
   teamTitle: "Meet The Team",
-  siteTitle: '| GrowthFountain Equity Crowdfunding',
+  siteTitle: 'Crowdfunding | GrowthFountain Equity Crowdfunding',
 
   // Growth Fountain production keys:
   // facebookClientId: "191471871275050",
