@@ -19,7 +19,7 @@ var e = {
 
   teamName: 'GrowthFountain Team',
   teamTitle: "Meet The Team",
-  title: "Crowdfunding | Momentum3 Growth",
+  siteTitle: "Crowdfunding | Momentum3 Growth",
 // serverUrl: "http://192.168.99.100:8000",
 // serverUrl: "http://gfauth.com:8000",
 
