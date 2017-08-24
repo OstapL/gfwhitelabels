@@ -19,7 +19,7 @@ module.exports = {
 
  teamName: 'GrowthFountain Team',
  teamTitle: "Meet The Team",
- title: "Crowdfunding | Rivermark Community CU",
+ siteTitle: "Crowdfunding | Rivermark Community CU",
 // serverUrl: "http://192.168.99.100:8000",
 // serverUrl: "http://gfauth.com:8000",
 
