@@ -45,6 +45,7 @@ module.exports = {
           type: 'percent',
         },
       };
+      this.listenToNavigate();
     },
 
     events: _.extend({

@@ -7,7 +7,6 @@
 
   var infoProvider = new CampaignInfoProvider(this.company);
   var directiveKey = 'issuerDashboard';
-
 section.issuer-dashbord-top
   .container
     .row
@@ -34,8 +33,8 @@ section.issuer-dashbord-top
               span $
               span(
                 data-counter="counterup"
-                data-num=campaign.amount_raised
-                data-value=campaign.amount_raised)
+                class="count-num"
+                data-value=campaign.amount_raised) #{ campaign.amount_raised }
             .desc Amount Raised
 
       .col-xl-2.col-lg-2.col-md-3.col-sm-6.col-xs-6
@@ -46,8 +45,8 @@ section.issuer-dashbord-top
             .number
               span(
                 data-counter="counterup"
-                data-num=company.number_of_investors
-                data-value=company.number_of_investors) 0
+                class="count-num"
+                data-value=company.number_of_investors) #{ company.number_of_investors }
             .desc Number of Investments
 
       .col-xl-2.col-lg-2.col-md-3.col-sm-6.col-xs-6
@@ -58,8 +57,8 @@ section.issuer-dashbord-top
             .number
               span(
                 data-counter="counterup"
-                data-num=company.total_views
-                data-value=0)
+                class="count-num"
+                data-value=0) #{ company.total_views }
             .desc Page Views
 
       .col-xl-2.col-lg-2.col-md-3.col-sm-6.col-xs-6
@@ -70,8 +69,8 @@ section.issuer-dashbord-top
             .number
               span(
                 data-counter="counterup"
-                data-num=0
-                data-value=0).interactions-count 0
+                data-value=0
+              ).interactions-count 0
             .desc New Interactions
 
       .col-xl-7.col-lg-7.col-md-10.col-sm-10.p-r-0.col-xs-10.hidden-xs-down
@@ -113,116 +112,78 @@ section.issuer-dashbord-top
         if !campaign.expired
           a(href="/" + company.slug).btn-sm.btn.btn-secondary.text-uppercase view Campaign
             i(aria-hidden="true").fa.fa-angle-right
-    .col-lg-12.border-bottom-50
-
-section.investors-dashbord-document
+    
+section.issuer-dashboard-tabs.m-t-3
   .container
-    .row
-      .col-xl-12
-        h2.text-uppercase documents with growthfountain
-        a(href=formc.link_to_formc target="_blank").link-1
-          img(src=require('images/icons/lrg_US_Department_of_State35.gif')).img-document.d-inline-block
-          h3.d-inline-block.m-t-0.m-b-0.listing  Form C
-        br
-        a(href=app.config.esignServer + '/pdf-doc/investors/' + formc.id + '/' + 3 target="_blank").link-1
-          h2.d-inline-block.m-t-1.m-b-0.listing
-            i.fa.fa-file-pdf-o
-          h3.d-inline-block.m-t-0.m-b-0.listing  Listing Agreement
-        br
-        a(href=require('doc/GrowthFountain_Crowdfunding_Success_Checklist.pdf') target="_blank").link-1
-          h2.d-inline-block.m-t-1.m-b-0
-            i.fa.fa-file-pdf-o
-          h3.d-inline-block.m-t-0.m-b-0  GrowthFountain Crowdfunding Success Checklist
-        br
-        a(href=require('doc/How_to_Run_a_Successful_Crowdfunding_Campaign_MoneyInc.pdf') target="_blank").link-1
-          h2.d-inline-block.m-t-1.m-b-0
-            i.fa.fa-file-pdf-o
-          h3.d-inline-block.m-t-0.m-b-0  How to Run a Successful Crowdfunding Campaign
-      .col-lg-12
-        .border-bottom.m-t-3.m-b-0
+    .col-xl-12
+      ul(role="tablist").nav.standart-nav-tabs.row
+        li.nav-item
+          a.nav-link.text-uppercase.active#documents-tab(
+            data-toggle="tab"
+            href="#documents"
+            role="tab"
+            aria-controls="documents"
+            aria-expanded="true"
+          ) 
+            h4.text-uppercase documents
+        li.nav-item
+          a.nav-link.text-uppercase#investors-tab(
+            data-toggle="tab"
+            href="#investors"
+            role="tab"
+            aria-controls="investors"
+            aria-expanded="false"
+          ) 
+            h4.text-uppercase investors
+        li.nav-item
+          a.nav-link.text-uppercase#investorq-tab(
+            data-toggle="tab"
+            href="#investorq"
+            role="tab"
+            aria-controls="investorq"
+            aria-expanded="false"
+          ) 
+            h4.text-uppercase investor Q&A
+        li.nav-item
+          a.nav-link.text-uppercase#material-change-tab(
+            data-toggle="tab"
+            href="#material-change"
+            role="tab"
+            aria-controls="material-change"
+            aria-expanded="false"
+          ) 
+            h4.text-uppercase Material change
+            .clearfix
+      .row
+        .tab-content
+          .tab-pane.fade.active.in#documents(
+            role="tabpanel"
+            aria-labelledby="documents-tab"
+            aria-expanded="true"
+          )
+            include snippets/issuerDocuments.pug
+          .tab-pane.fade#investors(
+            role="tabpanel"
+            aria-labelledby="investors-tab"
+            aria-expanded="true"
+          )
+            include snippets/issuerInvestors.pug
+          .tab-pane.fade#investorq(
+            role="tabpanel"
+            aria-labelledby="investorq-tab"
+            aria-expanded="true"
+          )
+            include snippets/issuerComments.pug
+          .tab-pane.fade#material-change(
+            role="tabpanel"
+            aria-labelledby="material-change-tab"
+            aria-expanded="true"
+          )
+            include snippets/issuerMaterial.pug
 
-section.grafic-dashboard
-  div(style="display: none").container
-    .row
-      .col-md-12
-        .portlet.light.portlet-fit.bordered
-          .portlet-title.portlet-hei75
-            .caption
-              h2.text-uppercase.m-t-0 Investments
-            .actions
-              div(data-toggle="buttons").btn-group.btn-group-devided
-                label.btn.btn-transparent.dark.btn-outline.btn-circle.btn-sm.active
-                  input(
-                    type="radio"
-                    name="options").toggle#option1
-                  | Actions
-                label.btn.btn-transparent.dark.btn-outline.btn-circle.btn-sm
-                  input(
-                    type="radio"
-                    name="options").toggle#option2 
-                  | Settings
-          .portlet-body.grafic-padding
-            .chart#chart_2
-              canvas(
-                width="1110"
-                height="300"
-                style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 1110; height: 300px").flot-base
-              .flot-text
-                .flot-x-axis.flot-x1-axis.xAxis.x1Axis
-                  div 1 MAY
-                  .flot-tick-label.tickLabel 2 MAY
-                  .flot-tick-label.tickLabel 3 MAY
-                  .flot-tick-label.tickLabel 4 MAY
-                  .flot-tick-label.tickLabel 5 MAY
-                  .flot-tick-label.tickLabel 6 MAY
-                  .flot-tick-label.tickLabel 7 MAY
-                  .flot-tick-label.tickLabel 8 MAY
-                  .flot-tick-label.tickLabel 9 MAY
-                  .flot-tick-label.tickLabel 10 MAY
-                  .flot-tick-label.tickLabel 11 MAY
-                  .flot-tick-label.tickLabel 12 MAY
-                  .flot-tick-label.tickLabel 13 MAY
-                  .flot-tick-label.tickLabel 14 MAY
-                  .flot-tick-label.tickLabel 15 MAY
-                .flot-y-axis.flot-y1-axis.yAxis.y1Axis
-                  .flot-tick-label.tickLabel 0
-                  .flot-tick-label.tickLabel 10
-                  .flot-tick-label.tickLabel 20
-                  .flot-tick-label.tickLabel 30
-                  .flot-tick-label.tickLabel 40
-                  .flot-tick-label.tickLabel 50
-                  .flot-tick-label.tickLabel 60
-                  .flot-tick-label.tickLabel 70
-                  .flot-tick-label.tickLabel 80
-                  .flot-tick-label.tickLabel 90
-                  .flot-tick-label.tickLabel 100
-                  .flot-tick-label.tickLabel 110
-                  .flot-tick-label.tickLabel 120
-                  .flot-tick-label.tickLabel 130
-                  .flot-tick-label.tickLabel 140
-              canvas(
-                width="1110"
-                height="300"
-                style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 1110px; height: 300px;").flot-overlay
-              .legend
-                table
-                  tr
-                    td.legendLabel Unique Visits
-                  tr
-                    td.legendLabel Page Views
-      .col-lg-12
-        .border-bottom.m-t-3.m-b-3
 
-section.investors-dashbord-comment
-  .container
-    .row
-      .col-xl-10
-        h2.dosis.text-uppercase.m-t-0.m-b-0 Investor question & answer
-      .col-xl-12.p-l-0.p-r-0.p-xs-1
-        .comments-container
 
-section.danger-zone-dashboard
-  .container
+//section.danger-zone-dashboard
     .row
       .col-lg-12
         .border-bottom.m-t-3.m-b-3

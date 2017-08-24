@@ -12,8 +12,8 @@ module.exports = {
     return this.formatDate(date);
   },
 
-  formatDate(date) {
-    return moment(date).format('YYYY-MM-DD');
+  formatDate(date, format='YYYY-MM-DD') {
+    return moment(date).format(format);
   },
 
   formatTime(date) {

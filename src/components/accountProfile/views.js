@@ -1,5 +1,7 @@
 
 const InvestmentModel = require('src/models/investment.js');
+const Image = require('src/models/image.js');
+
 // ToDo
 // Refactor, this consts shouden't be here
 const FEES = require('consts/raisecapital/companyFees.json');
@@ -162,6 +164,8 @@ module.exports = {
       this.cityStateArea = null;
       this.cityField = null;
       this.stateField = null;
+
+      this.listenToNavigate();
     },
 
     render() {
@@ -340,6 +344,10 @@ module.exports = {
       'submit form': api.submitAction,
     },
 
+    initialize() {
+      this.listenToNavigate();
+    },
+
     getSuccessUrl(data) {
       // app.user.passwordChanged(data.key);
       return '/account/profile';
@@ -356,6 +364,10 @@ module.exports = {
     urlRoot: app.config.authServer + '/reset-password/do',
     events: {
       'submit form': api.submitAction,
+    },
+
+    initialize() {
+      this.listenToNavigate();
     },
 
     getSuccessUrl(data) {
@@ -397,6 +409,8 @@ module.exports = {
         expires: 1000 * 60 * 60 * 24 * 30 * 12,
         path: '/',
       });
+
+      this.listenToNavigate();
     },
 
     render() {
@@ -664,6 +678,15 @@ module.exports = {
       this.model = this.company;
       this.campaign = options.campaign;
       this.formc = options.formc;
+      this.investors = options.investors;
+
+      _.each(this.investors.data, (investor) => {
+        investor.user.image_data = new Image(app.config.authServer + '/rest-auth/data', investor.user.image_data);
+      });
+
+      this.investors.data = _.sortBy(this.investors.data, (investment) => {
+        return -(new Date(investment.created_date)).valueOf();
+      });
 
       //this is auth cookie for downloadable files
       app.cookies.set('token', app.user.data.token, {
@@ -671,6 +694,8 @@ module.exports = {
         expires: 1000 * 60 * 60 * 24 * 30 * 12,
         path: '/',
       });
+
+      this.listenToNavigate();
     },
 
     render() {
@@ -680,8 +705,13 @@ module.exports = {
           company: this.company,
           campaign: this.campaign,
           formc: this.formc,
+          investors: this.investors
         })
       );
+
+      setTimeout(() => {
+        $('.count-num').animateCount();
+      },100);
 
       this.initComments();
 
@@ -689,27 +719,7 @@ module.exports = {
         require('src/js/graph/graph.js');
         require('src/js/graph_data.js');
       }, 'graph_chunk');
-      setTimeout(()=>{
-        var time = 2;
-        $('.dashboard-stat').each(function(){
-          $('span').each(function(){
-            var 
-            i = 1,
-            num = $(this).data('num'),
-            step = 1000 * time / num,
-            that = $(this),
-            int = setInterval(function(){
-              if (i <= num) {
-                that.html(i);
-              }
-              else {
-                clearInterval(int);
-              }
-              i++;
-            },step);
-          });
-        });
-      },100)
+
       return this;
     },
 
@@ -725,52 +735,48 @@ module.exports = {
       let dataR = api.makeRequest(urlComments);
 
       $.when(optionsR, dataR).done((options, data) => {
-        data[0].id = this.company.id;
-        data[0].owner_id = this.company.owner_id;
+        const [commentsData] = data;
+        commentsData.id = this.company.id;
+        commentsData.owner_id = this.company.owner_id;
 
-        let comments = new View.comments({
-          model: data[0],
-          fields: options[0].fields,
-          allowQuestion: false,
-          readonly: this.campaign.expired,
-          cssClass: 'col-xl-8 offset-xl-0',
-        });
-        comments.render();
+        if (!commentsData.data || !commentsData.data.length) {
+          this.$el.find('.no-comments').show();
+          this.$el.find('.comments-container').closest('.row').hide();
+        } else {
+          this.$el.find('.no-comments').hide();
+          this.$el.find('.comments-container').closest('.row').show();
 
-        let commentsCount = 0;
-
-        function countComments(comments) {
-          commentsCount += comments.length;
-          _.each(comments, (c) => {
-            countComments(c.children);
+          this.commentsView = new View.comments({
+            model: commentsData,
+            fields: options[0].fields,
+            allowQuestion: false,
+            readonly: this.campaign.expired,
+            cssClass: 'col-xl-8 offset-xl-0',
           });
+
+          this.commentsView.render();
+
+          function countComments(comments) {
+            let count = comments.length || 0;
+            _.each(comments, (c) => {
+              count += countComments(c.children);
+            });
+
+            return count;
+          }
+
+          const commentsCount = countComments(commentsData.data);
+
+          $('.interactions-count').data('value', commentsCount).text(commentsCount);
+          $('.interactions-count').animateCount();
         }
-
-        countComments(data[0].data);
-        $('.interactions-count').data('num', commentsCount);
-        setTimeout(()=>{
-        var time = 2;
-        $('.dashboard-stat').each(function(){
-          $('.interactions-count').each(function(){
-            var 
-            i = 1,
-            num = $(this).data('num'),
-            step = 1000 * time / num,
-            that = $(this),
-            int = setInterval(function(){
-              if (i <= num) {
-                that.html(i);
-              }
-              else {
-                clearInterval(int);
-              }
-              i++;
-            },step);
-          });
-        });
-      },100)
       });
     },
-  }),
 
+    destroy() {
+      Backbone.View.prototype.destroy.call(this);
+      if (this.commentsView)
+        this.commentsView.destroy();
+    },
+  }),
 };

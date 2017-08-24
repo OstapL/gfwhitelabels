@@ -9,7 +9,7 @@ do
         git submodule update --init
         cd consts && git checkout master && git pull origin master 
         cd ..
-        cd staticdata && git checkout `cd .. && git rev-parse --abbrev-ref HEAD` && git pull && git fetch --all && git merge --no-ff alpha-`cd .. && git rev-parse --abbrev-ref HEAD` && git push
+        cd staticdata && git checkout `cd .. && git rev-parse --abbrev-ref HEAD` && git pull && git fetch --all && git merge --no-ff origin/alpha-`cd .. && git rev-parse --abbrev-ref HEAD` && git push
         cd ..
         git add staticdata
         git add consts
@@ -20,7 +20,7 @@ do
             git merge vladyslav2/$b > /dev/null
         fi
 
-        git merge --no-ff alpha-$b > /dev/null
+        git merge --no-ff origin/alpha-$b > /dev/null
 
         if git st | grep --quiet 'UU '; then
             echo "Error after merge"

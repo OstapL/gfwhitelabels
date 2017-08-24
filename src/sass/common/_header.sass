@@ -41,10 +41,12 @@ html.show-menu
         transform: rotate(-45deg) translate(5px, -7px)
 
     .mobile-menu.full-height
-      right: 0
       overflow-y: auto
       background-color: $menu-backgound-mobile
       display: block
+      width: 260px
+      transition: width 0.6s
+
 //================================
 
 //=================================
@@ -223,6 +225,7 @@ header
             p 
               margin-bottom: 0
               font-weight: 600
+              color: $submenu-color-title
 
         &.notification-container 
           left: -340px
@@ -533,21 +536,20 @@ header
           position: relative
           top: 25%
       .mobile-menu.full-height
-        transition: right .6s
+        transition: width 0.6s
         position: absolute
         -webkit-backface-visibility: hidden
         -webkit-transform: translateZ(0)
         box-sizing: border-box
         z-index: 999
-        right: -260px
+        right: 0
         min-height: 568px
         height: 100vh
         overflow: hidden
-        width: 260px
+        width: 0
         overflow-y: auto
         top: $navbar_height_mobile
         background-color: $menu-backgound-mobile
-        display: block
         box-shadow: $mobile-menu-box-shadow
       #menuList
         float: none!important
