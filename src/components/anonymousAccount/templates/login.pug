@@ -28,14 +28,14 @@ section.login
             pug_html += fields.email.render();
             pug_html += fields.password.render();
 
-        .col-lg-12
+        .col-lg-12.p-xs-0
           .row.forgot
             a(href="/account/reset").link-3 Forgot Your Password?
         .col-lg-12
           .row.text-sm-center.text-xs-center
             button(type="submit")#login-btn.btn.btn-primary.text-uppercase Log In
       .row
-        .col-lg-12.m-t-3
+        .col-lg-12.p-xs-0
           .bottom
             span.label-text I agree to the 
               a(href="/pg/terms_of_use" target="_blank").link-3 Terms of Use
