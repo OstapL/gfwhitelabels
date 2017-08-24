@@ -13,6 +13,7 @@ var e = {
   notificationsServer: "https://notifications-dev.growthfountain.com/",
   teamName: 'GrowthFountain Team',
   teamTitle: "Meet The Team",
+  siteTitle: 'Crowdfunding | Infinity Federal Credit Union',
   //serverUrl: "http://192.168.99.100:8000",
   //serverUrl: "http://gfauth.com:8000",
 
