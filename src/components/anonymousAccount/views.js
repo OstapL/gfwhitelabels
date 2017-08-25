@@ -54,7 +54,6 @@ const popupAuthHelper = {
     'submit form': api.submitAction,
     'click .reset-password-link': 'resetPassword',
     'click .switchAuthPopup': 'switchPopupView',
-    'click .btn-social-network': 'loginWithSocial',
   },
   methods: {
     renderModal(selector, switchToView) {
@@ -71,10 +70,6 @@ const popupAuthHelper = {
       this.initModal(selector, switchToView);
 
       return this;
-    },
-
-    loginWithSocial(e) {
-      socialAuth.loginWithSocialNetwork.call(this, e);
     },
 
     resetPassword(e) {
@@ -120,11 +115,29 @@ const popupAuthHelper = {
   },
 };
 
+const onRegistrationComplete = (data) => {
+  if (typeof(data) !== 'object')
+    return;
+
+  const analyticsData = Object.assign({
+    referrer: document.referrer,
+  }, data);
+
+  app.analytics.emitEvent(app.analytics.events.RegistrationCompleted, analyticsData);
+
+  api.makeRequest(app.config.authServer + '/log', 'POST', {
+    path: document.referrer,
+    device: navigator.userAgent
+  });
+};
+
 const Views = {
   popupLogin: Backbone.View.extend(_.extend({
     urlRoot: app.config.authServer + '/rest-auth/login',
     template: require('./templates/popupLogin.pug'),
-    events: popupAuthHelper.events,
+    events: _.extend({
+      'click .btn-social-network': 'loginWithSocial',
+    }, popupAuthHelper.events),
 
     initialize() {
       this.fields = LOGIN_FIELDS;
@@ -151,7 +164,9 @@ const Views = {
     urlRoot: `${app.config.authServer}/rest-auth/registration`,
     template: require('./templates/popupSignup.pug'),
 
-    events: popupAuthHelper.events,
+    events: _.extend({
+      'click .btn-social-network': 'signUpWithSocial',
+    }, popupAuthHelper.events),
 
     initialize() {
       this.fields = SIGNUP_FIELDS;
@@ -163,11 +178,24 @@ const Views = {
 
     _success(data) {
       app.user.setData(data).then(() => {
-        app.analytics.emitEvent(app.analytics.events.RegistrationCompleted, app.user.stats);
+        onRegistrationComplete(app.user.stats);
       });
+
       this.$modal.modal('hide');
     },
 
+    signUpWithSocial(e) {
+      const network = $(e.target).closest('.btn-social-network').data('network');
+
+      socialAuth.signupWithSocialNetwork.call(this, network).then((data) => {
+        if (data === false)
+          return;
+
+        app.user.setData(data).then(() => {
+          onRegistrationComplete(app.user.stats);
+        });
+      });
+    },
   },
     popupAuthHelper.methods
   )),
@@ -230,7 +258,7 @@ const Views = {
     template: require('./templates/signup.pug'),
     events: {
       'submit .signup-form': api.submitAction,
-      'click .btn-social-network': 'loginWithSocial',
+      'click .btn-social-network': 'signUpWithSocial',
     },
 
     initialize() {
@@ -275,14 +303,22 @@ const Views = {
 
     _success(data) {
       app.user.setData(data).then(() => {
-        app.analytics.emitEvent(app.analytics.events.RegistrationCompleted, app.user.stats);
+        onRegistrationComplete(app.user.stats);
       });
     },
 
-    loginWithSocial(e) {
-      socialAuth.loginWithSocialNetwork.call(this, e);
-    },
+    signUpWithSocial(e) {
+      const network = $(e.target).closest('.btn-social-network').data('network');
 
+      socialAuth.signupWithSocialNetwork.call(this, network).then((data) => {
+        if (data === false)
+          return;
+
+        app.user.setData(data).then(() => {
+          onRegistrationComplete(app.user.stats);
+        });
+      });
+    },
   }),
 
   reset: Backbone.View.extend({
