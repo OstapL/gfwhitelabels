@@ -103,36 +103,9 @@ let functions = {
     return true;
   },
 
-  loginWithSocialNetwork(e) {
-    e.preventDefault();
-
-    if (!functions._ensureAgreedWithRules(this)) {
-      return false;
-    }
-
-    const network = $(e.target).closest('.btn-social-network').data('network');
-
+  loginWithSocialNetwork(network) {
     app.showLoading();
-    functions.login(network).then((data) => {
-      if (data.cancelled)
-        return app.hideLoading();
-
-      app.user.setData(data.data);
-    }, (err) => {
-      app.hideLoading();
-      app.dialogs.error(err);
-    });
-
-    return false;
-  },
-
-  signupWithSocialNetwork(network) {
-    return new Promise((resolve, reject) => {
-      if (!functions._ensureAgreedWithRules(this))
-        return resolve(false);
-
-      app.showLoading();
-      
+    return new Promise((resolve) => {
       functions.login(network).then((data) => {
         if (data.cancelled) {
           app.hideLoading();
@@ -140,8 +113,19 @@ let functions = {
         }
 
         return resolve(data.data);
+      }, (err) => {
+        app.hideLoading();
+        app.dialogs.error(err);
+        resolve(false);
       });
     });
+  },
+
+  signupWithSocialNetwork(network) {
+    if (!functions._ensureAgreedWithRules(this))
+      return Promise.resolve(false);
+
+    return functions.loginWithSocialNetwork.call(this, network);
   },
 };
 

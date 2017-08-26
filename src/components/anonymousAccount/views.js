@@ -55,6 +55,7 @@ const popupAuthHelper = {
     'click .reset-password-link': 'resetPassword',
     'click .switchAuthPopup': 'switchPopupView',
   },
+
   methods: {
     renderModal(selector, switchToView) {
       $('body').scrollTo();
@@ -106,6 +107,7 @@ const popupAuthHelper = {
         backdrop: 'static',
       });
     },
+
     destroy() {
       this.$modal.off('hidden.bs.modal');
       this.$modal.remove();
@@ -113,6 +115,7 @@ const popupAuthHelper = {
       this.$el.remove();
     },
   },
+
 };
 
 const onRegistrationComplete = (data) => {
@@ -122,12 +125,38 @@ const onRegistrationComplete = (data) => {
   const analyticsData = Object.assign({
     referrer: document.referrer,
   }, data);
-
+  debugger;
   app.analytics.emitEvent(app.analytics.events.RegistrationCompleted, analyticsData);
 
   api.makeRequest(app.config.authServer + '/log', 'POST', {
     path: document.referrer,
     device: navigator.userAgent
+  });
+};
+
+function signUpWithSocialNetwork(e) {
+  e.preventDefault();
+  const network = $(e.target).closest('.btn-social-network').data('network');
+
+  socialAuth.signupWithSocialNetwork.call(this, network).then((data) => {
+    if (data === false)
+      return;
+
+    app.user.setData(data).then(() => {
+      onRegistrationComplete(app.user.stats);
+    });
+  });
+};
+
+function logInWithSocialNetwork(e) {
+  e.preventDefault();
+  const network = $(e.target).closest('.btn-social-network').data('network');
+
+  socialAuth.loginWithSocialNetwork.call(this, network).then((data) => {
+    if (data === false)
+      return;
+
+    app.user.setData(data);
   });
 };
 
@@ -153,7 +182,15 @@ const Views = {
     },
 
     loginWithSocial(e) {
-      socialAuth.loginWithSocialNetwork.call(this, e);
+      e.preventDefault();
+      const network = $(e.target).closest('.btn-social-network').data('network');
+
+      socialAuth.loginWithSocialNetwork.call(this, network).then((data) => {
+        if (data === false)
+          return;
+
+        app.user.setData(data);
+      });
     },
 
   },
@@ -185,16 +222,7 @@ const Views = {
     },
 
     signUpWithSocial(e) {
-      const network = $(e.target).closest('.btn-social-network').data('network');
-
-      socialAuth.signupWithSocialNetwork.call(this, network).then((data) => {
-        if (data === false)
-          return;
-
-        app.user.setData(data).then(() => {
-          onRegistrationComplete(app.user.stats);
-        });
-      });
+      signUpWithSocialNetwork.call(this, e);
     },
   },
     popupAuthHelper.methods
@@ -244,7 +272,7 @@ const Views = {
     },
 
     loginWithSocial(e) {
-      socialAuth.loginWithSocialNetwork.call(this, e);
+      logInWithSocialNetwork.call(this, e);
     },
 
     _success(data) {
@@ -308,16 +336,7 @@ const Views = {
     },
 
     signUpWithSocial(e) {
-      const network = $(e.target).closest('.btn-social-network').data('network');
-
-      socialAuth.signupWithSocialNetwork.call(this, network).then((data) => {
-        if (data === false)
-          return;
-
-        app.user.setData(data).then(() => {
-          onRegistrationComplete(app.user.stats);
-        });
-      });
+      signUpWithSocialNetwork.call(this, e);
     },
   }),
 
