@@ -125,7 +125,7 @@ const onRegistrationComplete = (data) => {
   const analyticsData = Object.assign({
     referrer: document.referrer,
   }, data);
-  debugger;
+
   app.analytics.emitEvent(app.analytics.events.RegistrationCompleted, analyticsData);
 
   api.makeRequest(app.config.authServer + '/log', 'POST', {
