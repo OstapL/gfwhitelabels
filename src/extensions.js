@@ -2,16 +2,6 @@
 _.extend(Backbone.View.prototype, {
 
   listenToNavigate() {
-    // WHY?
-    if (!this.onBeforeNavigate) {
-      // Зачем так вообще сложно?
-      // Для чего делать фукнцию в фукнции ?
-      // почему просто нельзя вызывать destory для view в route.execute и все?
-      this.onBeforeNavigate = function() {
-        this.destroy();
-      };
-    }
-
     app.routers.on('before-navigate', this.onBeforeNavigate, this);
   },
 
@@ -45,16 +35,14 @@ _.extend(Backbone.View.prototype, {
     }
   },
 
-  destroy() {
-    if (!this.fields) {
-      // WHY?
-      return false;
-    }
+  destroy(e) {
 
-    _(this.fields).each((field) => {
-      if (_.isFunction(field.destroy))
-        field.destroy()
-    });
+    if (!this.fields) {
+      _(this.fields).each((field) => {
+        if (_.isFunction(field.destroy))
+          field.destroy()
+      });
+    }
 
     this.undelegateEvents();
 
@@ -62,6 +50,11 @@ _.extend(Backbone.View.prototype, {
       app.routers.off('before-navigate', this.onBeforeNavigate, this);
     }
 
+    // ToDo
+    // Refactor
+    $('.popover').remove();
+    $('.modal-backdrop').remove();
+    $('.modal-open').removeClass('modal-open');
   },
 
 });

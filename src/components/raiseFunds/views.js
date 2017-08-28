@@ -202,7 +202,6 @@ module.exports = {
     },
 
     destroy(e) {
-      debugger;
     },
 
     submitCompanyInfo(e) {

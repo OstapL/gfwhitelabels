@@ -61,9 +61,9 @@ function getOCCF(optionsR, viewName, params = {}, View) {
 
     if (typeof viewName == 'string') {
       new View[viewName](Object.assign({}, params)).render();
-      app.hideLoading();
+      this.currentView = app.hideLoading();
     } else {
-      viewName();
+      this.currentView = viewName();
     }
 
     params.formc.updateMenu(params.formc.calcProgress());
