@@ -49,7 +49,7 @@ var e = {
     //bottom banner (1 - raise capital/ 0 - INVEST)
     bottomBunner: 1,
   },
-  currentSiteUrl: 'alpha.growthfountain.com',
+  currentSiteUrl: 'beta.growthfountain.com',
 };
 
 module.exports = e;

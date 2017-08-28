@@ -42,6 +42,8 @@ const notFound = () => {
 
 module.exports = Backbone.Router.extend(_.extend({
   routes: _.extend({}, routesMap.routes, { '*notFound': notFound }),
+  previousUrl: '',
+  currentUrl: '',
 
   initialize() {
   },
@@ -54,11 +56,23 @@ module.exports = Backbone.Router.extend(_.extend({
       window.location = window.location.pathname.substr(0, window.location.pathname.length-1);
     }
 
+    // WHY?!
     app.clearClasses('#page', ['page']);
 
     if (_.contains(routesMap.auth, name) && !app.user.ensureLoggedIn()) {
+      // Revert back the current URL, 
+      // Do not update url
+      if (app.routers.currentUrl) {
+        app.routers.navigate(app.routers.currentUrl, {trigger: false});
+      }
       return false;
     }
+
+    if (app.currentView) {
+      app.currentView.destroy();
+    }
+    this.previousUrl = this.currentUrl;
+    this.currentUrl = window.location.pathname;
 
     if(app.seo.title[window.location.pathname]) {
       document.title = app.seo.title[window.location.pathname];
@@ -93,6 +107,8 @@ module.exports = Backbone.Router.extend(_.extend({
     $('.popover').popover('hide');
   },
 
+  // WHY ?
+  // Зачем это ?
   navigateWithReload(href, options) {
     const currentLocation = window.location.pathname + (window.location.search || '');
     if (href === currentLocation) {
