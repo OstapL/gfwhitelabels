@@ -8,7 +8,7 @@ module.exports = {
     calculatorCapitalraiseIntro() {
       require.ensure([], () => {
         const View = require('./views');
-        new View.intro().render();
+        app.currentView = new View.intro().render();
         $('body').scrollTo();
         app.hideLoading();
       }, 'raise_capital_calculator_chunk');
@@ -17,7 +17,7 @@ module.exports = {
     calculatorCapitalraiseStep1() {
       require.ensure([], () => {
         const View = require('./views');
-        new View.step1().render();
+        app.currentView = new View.step1().render();
         $('body').scrollTo();
         app.hideLoading();
       }, 'raise_capital_calculator_chunk');
@@ -26,7 +26,7 @@ module.exports = {
     calculatorCapitalraiseFinish() {
       require.ensure([], () => {
         const View = require('./views');
-        new View.finish().render();
+        app.currentView = new View.finish().render();
         $('body').scrollTo();
         app.hideLoading();
       }, 'raise_capital_calculator_chunk');
