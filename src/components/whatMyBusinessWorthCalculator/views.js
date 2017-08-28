@@ -57,7 +57,6 @@ module.exports = {
     template: require('./templates/step1.pug'),
     events: _.extend({
       'submit form': 'nextStep',
-      'click .next': '',
       'blur [type=money]': saveValue,
     }),
     initialize() {
