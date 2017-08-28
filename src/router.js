@@ -54,6 +54,7 @@ module.exports = Backbone.Router.extend(_.extend({
       window.location = window.location.pathname.substr(0, window.location.pathname.length-1);
     }
 
+    // WHY?!
     app.clearClasses('#page', ['page']);
 
     if (_.contains(routesMap.auth, name) && !app.user.ensureLoggedIn()) {

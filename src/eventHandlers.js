@@ -269,12 +269,12 @@ $('body').on('click', 'a', (event) => {
   var url = href;
 
   // Clear page
-  // $('#content').undelegate();
-  // $('form').undelegate();
-  // $('.popover').remove();
+  $('#content').undelegate();
+  $('form').undelegate();
+  $('.popover').remove();
   //
-  // $('.modal-backdrop').remove();
-  // $('.modal-open').removeClass('modal-open');
+  $('.modal-backdrop').remove();
+  $('.modal-open').removeClass('modal-open');
 
   if (app.cache.hasOwnProperty(url) == false) {
     //fix for comments

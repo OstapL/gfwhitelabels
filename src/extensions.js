@@ -2,7 +2,11 @@
 _.extend(Backbone.View.prototype, {
 
   listenToNavigate() {
+    // WHY?
     if (!this.onBeforeNavigate) {
+      // Зачем так вообще сложно?
+      // Для чего делать фукнцию в фукнции ?
+      // почему просто нельзя вызывать destory для view в route.execute и все?
       this.onBeforeNavigate = function() {
         this.destroy();
       };
@@ -42,8 +46,10 @@ _.extend(Backbone.View.prototype, {
   },
 
   destroy() {
-    if (!this.fields)
-      return;
+    if (!this.fields) {
+      // WHY?
+      return false;
+    }
 
     _(this.fields).each((field) => {
       if (_.isFunction(field.destroy))
@@ -52,8 +58,9 @@ _.extend(Backbone.View.prototype, {
 
     this.undelegateEvents();
 
-    if (this.onBeforeNavigate)
+    if (this.onBeforeNavigate) {
       app.routers.off('before-navigate', this.onBeforeNavigate, this);
+    }
 
   },
 

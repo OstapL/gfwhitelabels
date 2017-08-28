@@ -119,9 +119,15 @@ const popupAuthHelper = {
 };
 
 const onRegistrationComplete = (data) => {
+  // WHY ??
+  // для чего тут этот if?
   if (typeof(data) !== 'object')
     return;
 
+  // WHY ??
+  // Почему просто не перенести этот код в events.RegiatrsionComplete?
+  // мы же там собираем events и наш лог это тоже событие
+  // зачем это отдельно выносить?
   const analyticsData = Object.assign({
     referrer: document.referrer,
   }, data);

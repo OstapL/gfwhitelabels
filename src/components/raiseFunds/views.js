@@ -201,6 +201,10 @@ module.exports = {
       this.listenToNavigate();
     },
 
+    destroy(e) {
+      debugger;
+    },
+
     submitCompanyInfo(e) {
       let $form = $(e.target).closest('form');
 
