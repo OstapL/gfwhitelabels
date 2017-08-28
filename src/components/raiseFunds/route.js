@@ -34,12 +34,13 @@ function getOCCF(optionsR, viewName, params = {}, View) {
     params.formc = new app.models.Formc(app.user.formc);
 
     if(typeof viewName == 'string') {
-      app.currentView = new View[viewName](Object.assign({}, params)).render();
+      app.currentView = new View[viewName](Object.assign({}, params));
+      app.currentView.render();
       app.hideLoading();
     } else {
       app.currentView = viewName();
+      app.currentView.render();
     }
-
   });
 };
 
