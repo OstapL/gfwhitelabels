@@ -201,9 +201,6 @@ module.exports = {
       this.listenToNavigate();
     },
 
-    destroy(e) {
-    },
-
     submitCompanyInfo(e) {
       let $form = $(e.target).closest('form');
 
