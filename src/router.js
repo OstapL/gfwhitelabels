@@ -55,7 +55,6 @@ module.exports = Backbone.Router.extend(_.extend({
         ) {
       window.location = window.location.pathname.substr(0, window.location.pathname.length-1);
     }
-    debugger;
 
     // WHY?!
     app.clearClasses('#page', ['page']);
@@ -70,7 +69,7 @@ module.exports = Backbone.Router.extend(_.extend({
     }
 
     if (app.currentView) {
-      app.currentView.destory();
+      app.currentView.destroy();
     }
     this.previousUrl = this.currentUrl;
     this.currentUrl = window.location.pathname;

@@ -55,6 +55,11 @@ module.exports = {
   step1: Backbone.View.extend(_.extend({
     el: '#content',
     template: require('./templates/step1.pug'),
+    events: _.extend({
+      'submit form': 'nextStep',
+      'click .next': '',
+      'blur [type=money]': saveValue,
+    }),
     initialize() {
       this.fields = {
         excessCash: {
@@ -98,17 +103,15 @@ module.exports = {
       this.$('[data-toggle="tooltip"]').tooltip('dispose');
     },
 
-    events: _.extend({
-      'submit form': 'nextStep',
-      'blur [type=money]': saveValue,
-    }),
-
     nextStep(e) {
       e.preventDefault();
+
       if (this.validate(e)) {
         app.routers.navigate('/calculator/whatmybusinessworth/step-2', {trigger: true});
       } else {
-        this.$('.help-block').prev().scrollTo(50);
+        const $help = this.$('.help-block').prev();
+        if ($help && $help.length)
+          $help.scrollTo(50);
       }
     },
 
