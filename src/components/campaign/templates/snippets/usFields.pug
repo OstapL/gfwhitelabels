@@ -14,7 +14,7 @@
     .form-group.row
       label.col-xl-12.text-xl-left City/State
         span.color-red *
-      .col-xl-12
+      .col-xl-12#personal_information_data__city
         input(type="hidden" name="personal_information_data[city]" id="personal_information_data__city" value=user.city)
         span(data-toggle="modal" data-target="#city_state_modal" href="#city_state_modal").change_state_city
           span.input-value.js-city-state #{user.city || '(City)'}, #{user.state || '(State)'}
