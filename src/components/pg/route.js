@@ -7,6 +7,7 @@ const templateMap = {
   'privacy-policy': 'privacy_policy',
   'electronic-signature': 'electronic_signature',
   'formc-review-congratulations': 'formc_review_congratulations',
+  'invest-thankyou-expressing': 'invest-thankyou-expressing',
 };
 
 const withLeftMenuPages = ['education', 'advertising', 'terms-of-use', 'privacy-policy'];
