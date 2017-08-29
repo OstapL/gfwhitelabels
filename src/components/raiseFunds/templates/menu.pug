@@ -137,10 +137,11 @@ mixin menu(currentSection, currentStep)
                 .row
                   button(type="button").btn.btn-primary.text-uppercase.m-t-2.submit_form submit campaign
               else if app.user.company.is_approved == STATUSES.PENDING 
-                .row 
-                  .warning-block.warning-team-add.text-lg-left.m-t-2
-                    i.fa.fa-info-circle
-                    span.warning-text We are reviewing your campaign
+                .row
+                  .col-xl-12
+                    .warning-block.warning-team-add.text-lg-left.m-t-2
+                      i.fa.fa-info-circle
+                      span.warning-text We are reviewing your campaign
               else if app.user.company.is_approved  > STATUSES.PENDING
                 .row
                   a(href="/formc/" + app.user.formc.id + "/introduction").btn.btn-primary.text-uppercase.m-t-2 Open Form C
