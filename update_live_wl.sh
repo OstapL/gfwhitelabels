@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-git fetch origin
 git fetch -q --all
 git checkout master > /dev/null
 for b in dcu momentum3 rivermarkcu jdcu infinityfcu tvfcu
@@ -21,6 +20,7 @@ do
             git merge vladyslav2/$b > /dev/null
         fi
 
+        git fetch origin > /dev/null
         git merge --no-ff origin/alpha-$b > /dev/null
 
         if git st | grep --quiet 'UU '; then
