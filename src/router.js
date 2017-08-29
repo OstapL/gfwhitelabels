@@ -58,6 +58,7 @@ module.exports = Backbone.Router.extend(_.extend({
 
     // WHY?!
     app.clearClasses('#page', ['page']);
+    // debugger;
 
     if (_.contains(routesMap.auth, name) && !app.user.ensureLoggedIn()) {
       // Revert back the current URL, 
