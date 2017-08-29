@@ -334,12 +334,13 @@ section
                           a(href="#").show-more-members.link-3 Read More
                       .d-block.text-lg-left.cite_education
                         if v.city && v.college
-                          p.color-grey.pull-left
-                            i.fa.fa-home.p-l-0
-                            |  #{v.city}
-                          p.color-grey.pull-right
-                            i.fa.fa-graduation-cap
-                            |  #{v.college}
+                          .text-xs-center
+                            p.color-grey
+                              i.fa.fa-home.p-l-0
+                              |  #{v.city}
+                            p.color-grey
+                              i.fa.fa-graduation-cap
+                              |  #{v.college}
                         else
                           .text-xs-center
                             if v.city
