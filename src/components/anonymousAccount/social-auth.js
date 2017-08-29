@@ -38,12 +38,13 @@ let functions = {
   // resolves with `true` when canceled
   // rejects with error message otherwise
   login(network) {
-    return initLibrary().then(() => {
-      return new Promise((resolve, reject) => {
-        if (!_.contains(SUPPORTED_NETWORKS, network))
-          return reject(`Network ${network} is not supported`);
+    return new Promise((resolve, reject) => {
+      if (!_.contains(SUPPORTED_NETWORKS, network))
+        return reject(`${network} is not supported`);
 
-        console.log(`${network} logging in ...`);
+      initLibrary().then(() => {
+        console.log(`Logging in via ${network}`);
+
         hello(network).login({
           scope: SCOPES[network],
         }).then((data) => {
@@ -51,24 +52,26 @@ let functions = {
         }).then((data) => {
           return resolve({
             cancelled: false,
-            data: data
+            data,
           });
         }).then(null, (data) => {
-          console.log(`${network} error`);
+          const error = `Failed to log in via ${network}`;
+
+          console.log(error);
           console.log(data);
 
           if (_.isBoolean(data))
-            return reject(`Authentication with ${network} account failed.`);
+            return reject(error);
 
-          if (data.error.code == 'cancelled')
+          if (data.error.code === 'cancelled')
             return resolve({
               cancelled: true,
-              data: {}
+              data: {},
             });
 
-          return reject(data.error.message || `Authentication with ${network} account failed.`);
+          return reject(data.error.message || error);
         });
-      });
+      }).catch(reject);
     });
   },
 
@@ -100,33 +103,30 @@ let functions = {
     return true;
   },
 
-  loginWithSocialNetwork(e) {
-    e.preventDefault();
-
-    if (!functions._ensureAgreedWithRules(this)) {
-      return false;
-    }
-
-    const network = $(e.target).closest('.btn-social-network').data('network');
-
+  loginWithSocialNetwork(network) {
     app.showLoading();
-    functions.login(network).then((data) => {
-      if (data.cancelled) {
+    return new Promise((resolve) => {
+      functions.login(network).then((data) => {
+        if (data.cancelled) {
+          app.hideLoading();
+          return resolve(false);
+        }
+
+        return resolve(data.data);
+      }, (err) => {
         app.hideLoading();
-        return;
-      }
-
-      app.user.setData(data.data);
-
-      $('#sign_up').modal('hide');
-      $('#sign_in').modal('hide');
-    }, (err) => {
-      app.hideLoading();
-      app.dialogs.error(err);
+        app.dialogs.error(err);
+        resolve(false);
+      });
     });
+  },
 
-    return false;
-  }
+  signupWithSocialNetwork(network) {
+    if (!functions._ensureAgreedWithRules(this))
+      return Promise.resolve(false);
+
+    return functions.loginWithSocialNetwork.call(this, network);
+  },
 };
 
 module.exports = functions;
