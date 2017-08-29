@@ -174,6 +174,13 @@ module.exports = {
       changedFields = patchFields;
     }
 
+    if(form.length > 0) {
+      let errorsInput = form[0].querySelectorAll('.has-error');
+      if (errorsInput.length > 0) {
+        errorsInput.forEach((er) => er.classList.remove('has-error'));
+      }
+    }
+
     if(!app.validation.validate(changedFields, newData, this)) {
       _(app.validation.errors).each((errors, key) => {
         app.validation.invalidMsg(this, key, errors);
