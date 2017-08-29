@@ -2309,7 +2309,7 @@ module.exports = {
       } else if(name.indexOf('campaign.') !== -1) {
         fieldName = name.split('campaign.')[1];
 
-        if (fieldName = 'security_type')  {
+        if (fieldName === 'security_type')  {
           val = parseInt(val);
         }
 
