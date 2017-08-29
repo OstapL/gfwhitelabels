@@ -31,8 +31,10 @@ module.exports = {
           el: '#content',
           model: {},
         });
+
         loginView.render();
         app.hideLoading();
+
       }, 'anonymous_account_chunk');
     },
 

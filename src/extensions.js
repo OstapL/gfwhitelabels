@@ -1,41 +1,95 @@
-Backbone.View.prototype.assignLabels = function () {
-  _(this.fields).each((el, key) => {
-    if (el.type == 'nested') {
-      _(el.schema).each((subel, subkey) => {
-        if (this.labels[key])
-          subel.label = this.labels[key][subkey];
-      });
-    } else {
-      el.label = this.labels[key];
+//Backbone.View extension methods
+_.extend(Backbone.View.prototype, {
+
+  listenToNavigate() {
+    if (!this.onBeforeNavigate) {
+      this.onBeforeNavigate = function() {
+        this.destroy();
+      };
     }
-  });
-};
 
-Backbone.View.prototype.checkForm = function () {
-  if (app.getParams().check == '1') {
-    if (!app.validation.validate(this.fields, this.model, this)) {
-      Object.keys(app.validation.errors).forEach((key) => {
-        let errors = app.validation.errors[key];
-        if (this.el.querySelector('#' + key)) {
-          app.validation.invalidMsg(this, key, errors);
+    app.routers.on('before-navigate', this.onBeforeNavigate, this);
+  },
+
+  assignLabels() {
+    _(this.fields).each((el, key) => {
+      if (el.type == 'nested') {
+        _(el.schema).each((subel, subkey) => {
+          if (this.labels[key])
+            subel.label = this.labels[key][subkey];
+        });
+      } else {
+        el.label = this.labels[key];
+      }
+    });
+  },
+
+  checkForm() {
+    if (app.getParams().check == '1') {
+      if (!app.validation.validate(this.fields, this.model, this)) {
+        Object.keys(app.validation.errors).forEach((key) => {
+          let errors = app.validation.errors[key];
+          if (this.el.querySelector('#' + key)) {
+            app.validation.invalidMsg(this, key, errors);
+          }
+        });
+
+        if(this.el.querySelector('.help-block') != null) {
+          this.$('.help-block').prev().scrollTo(5);
         }
-      });
-
-      if(this.el.querySelector('.help-block') != null) {
-        this.$('.help-block').prev().scrollTo(5);
       }
     }
-  }
-};
+  },
 
-$.fn.scrollTo = function (padding=0, duration='fast') {
-  $('html, body').animate({
-    scrollTop: $(this).offset().top - padding + 'px',
-  }, duration);
-  return this;
-};
+  destroy() {
+    if (!this.fields)
+      return;
 
-$.fn.equalHeights = function () {
+    _(this.fields).each((field) => {
+      if (_.isFunction(field.destroy))
+        field.destroy()
+    });
+
+    this.undelegateEvents();
+
+    if (this.onBeforeNavigate)
+      app.routers.off('before-navigate', this.onBeforeNavigate, this);
+
+  },
+
+});
+
+//Backbone.Router extension methods
+const navigate = Backbone.Router.prototype.navigate;
+
+_.extend(Backbone.Router.prototype, {
+
+  navigate(fragment, options) {
+    const outData = {
+      preventNavigate: false,
+    };
+
+    this.trigger('before-navigate', outData);
+
+    if (outData.preventNavigate)
+      return false;
+
+    return navigate.call(this, fragment, options);
+  },
+
+});
+
+//jQuery extensions methods
+_.extend($.fn, {
+
+  scrollTo(padding=0, duration='fast') {
+    $('html, body').animate({
+      scrollTop: $(this).offset().top - padding + 'px',
+    }, duration);
+    return this;
+  },
+
+  equalHeights() {
   var maxHeight = 0;
   var $this = $(this);
 
@@ -47,7 +101,9 @@ $.fn.equalHeights = function () {
   });
 
   return $this.css('height', maxHeight);
-};
+},
+
+});
 
 $.fn.animateCount = function(options={}) {
   const defaultOptions = {
