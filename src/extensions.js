@@ -2,12 +2,6 @@
 _.extend(Backbone.View.prototype, {
 
   listenToNavigate() {
-    if (!this.onBeforeNavigate) {
-      this.onBeforeNavigate = function() {
-        this.destroy();
-      };
-    }
-
     app.routers.on('before-navigate', this.onBeforeNavigate, this);
   },
 
@@ -41,20 +35,26 @@ _.extend(Backbone.View.prototype, {
     }
   },
 
-  destroy() {
-    if (!this.fields)
-      return;
+  destroy(e) {
 
-    _(this.fields).each((field) => {
-      if (_.isFunction(field.destroy))
-        field.destroy()
-    });
+    if (!this.fields) {
+      _(this.fields).each((field) => {
+        if (_.isFunction(field.destroy))
+          field.destroy()
+      });
+    }
 
     this.undelegateEvents();
 
-    if (this.onBeforeNavigate)
+    if (this.onBeforeNavigate) {
       app.routers.off('before-navigate', this.onBeforeNavigate, this);
+    }
 
+    // ToDo
+    // Refactor
+    $('.popover').remove();
+    $('.modal-backdrop').remove();
+    $('.modal-open').removeClass('modal-open');
   },
 
 });
