@@ -51,17 +51,19 @@
             | !{company.brief}
 
         .bottom_text
-          // тут дожен быть IF
-          //span.left_desc
-            i.fa.fa-get-pocket
-            h6.text-uppercase  #{company.campaign.security_type == security_type.CommonEquity ? 'Common Equity' : 'Revenue Share'}
-          // label belowe
-          span.left_desc.new-label
-            i.fa.fa-get-pocket
-            h6 Testing the Waters
+          if company.campaign.type == 2
+            span.left_desc.new-label
+              i.fa.fa-get-pocket
+              h6 Testing the Waters
+          else
+            span.left_desc
+              i.fa.fa-get-pocket
+              h6.text-uppercase  #{company.campaign.security_type == security_type.CommonEquity ? 'Common Equity' : 'Revenue Share'}
           span.right_desc
             i.fa.fa-tags
             h6.text-uppercase  !{ industry[company.industry] || "Other" }
           .clear
-      p.reg.text-xs-center Reg A offering through Intelligent Crowd, LLC
-      //p.reg.text-xs-center Reg CF offering through GrowthFountain Capital LLC
+      if company.campaign.type == 2
+        p.reg.text-xs-center Reg A offering through Intelligent Crowd, LLC
+      else
+        p.reg.text-xs-center Reg CF offering through GrowthFountain Capital LLC

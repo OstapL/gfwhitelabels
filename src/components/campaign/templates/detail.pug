@@ -37,7 +37,7 @@ section.company-header.scroll-paralax.no-paralax-mobile
     .container
       .top-info-wrap
         .top-info-wrap-item
-          // тут должен быть IF
+          if values.campaign.type == 1
             .col-xl-3.col-lg-4.col-md-4.col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left.one-block
               p Type of Security
               h2.font-weight-bold #{ values.campaign.security_type == SECURITY.CommonEquity ? 'Common Equity' : 'Revenue Share' }
@@ -66,14 +66,14 @@ section.company-header.scroll-paralax.no-paralax-mobile
               h2.font-weight-bold.no-margin #{ values.campaign.daysLeft() }
             .col-xl-4.col-lg-3.col-md-12.col-xs-12.one-block.share.text-xl-right.text-lg-right.text-md-center.text-sm-center.text-xs-center.pull-xl-right
               | !{ socialDirective.render(directiveKey, infoProvider) }
-          // ELSE
-          .col-xl-4.col-lg-5.col-md-6.col-sm-12.col-xs-12.text-xl-left.text-lg-left.text-md-left.text-sm-center.text-xs-center
-            .reg-label-company-page
-              span
-                i.fa.fa-get-pocket
-                h2 Testing the Waters
-          .col-xl-4.col-lg-5.col-md-6.col-sm-12.col-xs-12.one-block.share.text-xl-right.text-lg-right.text-md-center.text-sm-center.text-xs-center.pull-xl-right.pull-lg-right.pull-md-right
-            | !{ socialDirective.render(directiveKey, infoProvider) }
+          else if values.campaign.type == 2
+            .col-xl-4.col-lg-5.col-md-6.col-sm-12.col-xs-12.text-xl-left.text-lg-left.text-md-left.text-sm-center.text-xs-center
+              .reg-label-company-page
+                span
+                  i.fa.fa-get-pocket
+                  h2 Testing the Waters
+            .col-xl-4.col-lg-5.col-md-6.col-sm-12.col-xs-12.one-block.share.text-xl-right.text-lg-right.text-md-center.text-sm-center.text-xs-center.pull-xl-right.pull-lg-right.pull-md-right
+              | !{ socialDirective.render(directiveKey, infoProvider) }
             
 
 if app.getParams().preview == '1'
@@ -180,7 +180,7 @@ section.campaigndetail
     
     .col-xl-6.col-lg-12.col-md-12.col-sm-12.col-xs-12.right-block-investors.p-xs-0
       // IF
-      div(style="display: none")
+      if values.campaign.type == 1
         .progress_bar_container
           -
             var percentage_raised = values.campaign.fundedPercentage();
@@ -199,19 +199,19 @@ section.campaigndetail
               h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.minimum_increment) }
           .col-xl-12.hidden-xl-up.text-xs-center
             a(href=investURL disabled=disableInvest).btn.btn-primary.text-uppercase Invest
-      // ELSE
-      .expressed-interest
-        span.text-expressed Expressed Interest
-        h2.d-inline-block.font-weight-bold $500,000
-        p #{ values.short_name || values.name } is currently testing the waters to gauge demand from potential investors for an Offering under Tier II of Regulation A. No sale of securities will be made or commitment accepted until the Securities and Exchange Commission (the “SEC”) qualifies the Offering Statement. Any expression of interest made by a prospective investor is non-binding and involves no commitment or obligation of any kind. No money or other consideration is being solicited and if sent, will be returned.
-        .col-xl-12.hidden-xl-up.text-xs-center
-          a(data-target="#express_interest" data-toggle="modal" href="#express_interest").btn.btn-primary.text-uppercase Express Interest
+      else if values.campaign.type == 2
+        .expressed-interest
+          span.text-expressed Expressed Interest
+          h2.d-inline-block.font-weight-bold $500,000
+          p #{ values.short_name || values.name } is currently testing the waters to gauge demand from potential investors for an Offering under Tier II of Regulation A. No sale of securities will be made or commitment accepted until the Securities and Exchange Commission (the “SEC”) qualifies the Offering Statement. Any expression of interest made by a prospective investor is non-binding and involves no commitment or obligation of any kind. No money or other consideration is being solicited and if sent, will be returned.
+          .col-xl-12.hidden-xl-up.text-xs-center
+            a(data-target="#express_interest" data-toggle="modal" href="#express_interest").btn.btn-primary.text-uppercase Express Interest
 
 section.border-bottom-scroll.hidden-lg-down
   .container.tabs-scroll.p-t-2
     nav(data-toggle="sticky-onscroll").navbar.navbar-default.sticky
       ul.nav.nav-pills.nav-pills-values
-        // IF
+        if values.campaign.type == 1
           li.nav-item.text-uppercase
             a(href="#about").nav-link.active About
           li.nav-item.text-uppercase
@@ -225,18 +225,18 @@ section.border-bottom-scroll.hidden-lg-down
           li.nav-item.text-uppercase
             a(href="#ask").nav-link Ask a Question
           a(href=investURL disabled=disableInvest).btn.btn-primary.text-uppercase.pull-xl-right.pull-lg-left invest
-        //ELSE
-        li.nav-item.text-uppercase
-          a(href="#about").nav-link.active About
-        li.nav-item.text-uppercase
-          a(href="#team").nav-link Team
-        li.nav-item.text-uppercase
-          a(href="#faq").nav-link faq
-        .express-wrap-company.pull-xl-right.pull-lg-left
-          .text
-            i.fa.fa-info-circle
-            | Expressions of interest are non-binding. No money or other consideration is being solicited.
-          a(data-target="#express_interest" data-toggle="modal" href="#express_interest").btn.btn-primary.text-uppercase Express Interest
+        else if values.campaign.type == 2
+          li.nav-item.text-uppercase
+            a(href="#about").nav-link.active About
+          li.nav-item.text-uppercase
+            a(href="#team").nav-link Team
+          li.nav-item.text-uppercase
+            a(href="#faq").nav-link faq
+          .express-wrap-company.pull-xl-right.pull-lg-left
+            .text
+              i.fa.fa-info-circle
+              | Expressions of interest are non-binding. No money or other consideration is being solicited.
+            a(data-target="#express_interest" data-toggle="modal" href="#express_interest").btn.btn-primary.text-uppercase Express Interest
 div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#express_interest.modal.fade.express-interest-modal
   div(role="document").modal-dialog
     .modal-content
@@ -416,7 +416,7 @@ section
                                 i.fa.fa-graduation-cap
                                 |  #{v.college}
     .col-lg-12.border-bottom.m-t-0.m-b-0
-  if values.campaign.press && Object.keys(values.campaign.press).length > 0 && values.campaign.press[0].headline != ''
+  if values.campaign.press && Object.keys(values.campaign.press).length > 0 && values.campaign.press[0].headline != '' && values.campaign.type == 1
     section.articles#articles
       .container
         
@@ -471,137 +471,138 @@ section
     .col-lg-12.border-bottom.m-t-0.m-b-0
   else
     .col-lg-12
+  if values.campaign.type == 1
+    section.document.border-bottom
+      .container
+        .row
+          h2#documents.col-lg-12.text-uppercase.text-lg-center.text-xs-center.campaign-subheading.m-t-0 Documents
+          .col-xl-8.offset-xl-2.col-lg-10.offset-lg-1.col-sm-12.offset-sm-0
+            .col-xl-4.col-lg-4.col-md-6.col-sm-6.col-xs-12.text-xs-center
+              p Official filing on SEC.gov
+              if values.formc.link_to_formc
+                a(href=values.formc.link_to_formc target="_blank")
+                  img(src=require('images/icons/lrg_US_Department_of_State35.gif')).img-document.d-inline-block
+                  h3.d-inline-block  Form C
 
-  section.document.border-bottom
-    .container
-      .row
-        h2#documents.col-lg-12.text-uppercase.text-lg-center.text-xs-center.campaign-subheading.m-t-0 Documents
-        .col-xl-8.offset-xl-2.col-lg-10.offset-lg-1.col-sm-12.offset-sm-0
-          .col-xl-4.col-lg-4.col-md-6.col-sm-6.col-xs-12.text-xs-center
-            p Official filing on SEC.gov
-            if values.formc.link_to_formc
-              a(href=values.formc.link_to_formc target="_blank")
-                img(src=require('images/icons/lrg_US_Department_of_State35.gif')).img-document.d-inline-block
-                h3.d-inline-block  Form C
+            .col-xl-4.col-lg-4.col-md-6.col-sm-6.col-xs-12.text-xs-center
+              p Company documents
+              a(href="#" target="_blank").company-documents
+                i.fa.fa-file-pdf-o.d-inline-block
+                h3.d-inline-block Financials
 
-          .col-xl-4.col-lg-4.col-md-6.col-sm-6.col-xs-12.text-xs-center
-            p Company documents
-            a(href="#" target="_blank").company-documents
-              i.fa.fa-file-pdf-o.d-inline-block
-              h3.d-inline-block Financials
-
-          .col-xl-4.col-lg-4.col-md-12.col-sm-12.col-xs-12.text-xs-center
-            p Company documents
-            if values.campaign.investor_presentation_file_id.id
-              a(href=values.campaign.investor_presentation_file_id.getUrl('origin') target="_blank")
-                i.fa.fa-file-powerpoint-o.d-inline-block
-                h3.d-inline-block.m-b-0 Investor Presentation
-  section.overview-detail
-    .container
-      div
-        h2#overview.col-lg-12.text-uppercase.text-xs-center.campaign-subheading.m-t-0 overview and terms
-        .col-xl-8.offset-xl-2.col-lg-10.offset-lg-1.col-md-12.offset-md-0.fundraising.p-xs-0
-          if values.campaign.security_type == 0
-            table.table.table-bordered.m-b-0
-              tbody
-                tr.bgc-row-top
-                  td(colspan="2").p-x-0.p-y-0
-                    h4.text-uppercase.text-lg-center.text-xs-center.campaign-subheading.section-bg-line.m-y-0 Fundraising Description
-                tr.bgc-row-middle.text-xs-center
-                  td.width-50
-                    p Type of Security
-                  td
-                    p Pre-Money Valuation
-                tr.text-xs-center
-                  td.width-50
-                    h2.font-weight-bold Common Equity
-                      div.d-inline-block
-                        div.showPopover.hidden-xs-down(data-content="Equity represents ownership in a Company. As owners, equity investors will generally receive a share of the proceeds upon trade sale or IPO. Alternatively, investors can theoretically sell their ownership interest when the overall value of the Company has increased – though shares of common stock purchased in a crowdfunding transaction would have certain holding restrictions which are described in greater detail in our educational material. <br>The Pre-Money valuation is the valuation prior to this round of financing. Post-Money valuation is based on Pre-Money valuation plus the proceeds from the financing.")
-                          i(aria-hidden="true").fa.fa-question-circle.text-muted.detail-security-type-icon
-                  td
-                    h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.premoney_valuation) }
-                tr.bgc-row-middle.text-xs-center
-                  td.width-50
-                    p Minimum Investment
-                  td
-                    p Price per Share
-                tr.text-xs-center
-                  td.width-50
-                    h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.minimum_increment) }
-                  td
-                    h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.price_per_share) }
-                tr.bgc-row-middle.text-xs-center
-                  td.width-50
-                    p Minimum # of Shares
-                  td
-                    p Maximum # of Shares
-                tr.text-xs-center
-                  td.width-50
-                    h2.font-weight-bold #{ (Math.round(values.campaign.minimum_raise / values.campaign.price_per_share)).toLocaleString('en-US') }
-                  td
-                    h2.font-weight-bold #{ (Math.round(values.campaign.maximum_raise / values.campaign.price_per_share)).toLocaleString('en-US') }
-          else
-            table.table.table-bordered.m-b-0
-              tbody
-                tr.bgc-row-top
-                  td(colspan="2").p-x-0.p-y-0
-                    h4.text-uppercase.text-lg-center.text-xs-center.campaign-subheading.section-bg-line.m-y-0  Fundraising Description
-                tr.bgc-row-middle.text-xs-center
-                  td.width-50
-                    p Type of Security
-                  td
-                    p Percentage Revenue
-                tr.text-xs-center
-                  td.width-50
-                    h2.font-weight-bold Revenue Share
-                      div.d-inline-block
-                        div.showPopover.hidden-xs-down(data-content="A Revenue Share Agreement is a form of investment contract in which the Company shares 5% of its revenue annually with investors.<br> Here’s how it works:<ol class='p-l-1'><li>Investors earn 5% of the company’s revenue annually;</li><li>No distributions are required until the second full calendar year and the company is allowed one year of orbearance as needed;</li><li>Distributions are capped at two times the invested amount (2x);</li><li>In the event of default, investors become general unsecured creditors (senior to equity).</li>")
-                          i(aria-hidden="true").fa.fa-question-circle.text-muted.detail-security-type-icon
-                  td
-                    h2.font-weight-bold #{ values.campaign.percentage_revenue }%
-                tr.bgc-row-middle.text-xs-center
-                  td.width-50
-                    p Target Minimum Raise Amount
-                  td
-                    p Target Maximum Raise Amount
-                tr.text-xs-center
-                  td.width-50
-                    h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.minimum_raise) }
-                  td
-                    h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.maximum_raise) }
-                tr.bgc-row-middle.text-xs-center
-                  td.width-50
-                    p Minimum Investment
-                  td
-                    p Cap
-                tr.text-xs-center
-                  td.width-50
-                    h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.minimum_increment) }
-                  td
-                    h2.font-weight-bold #{ values.campaign.cap }X
-
-    if values.campaign.perks.length > 0 && values.campaign.perks[0].amount != ''
-      section#perks
-        - values.campaign.perks = $.map(values.campaign.perks, function(value, index) {return [value];});
-        - values.campaign.perks = values.campaign.perks.filter(function(value) { return value && value.perk; });
-        - values.campaign.perks.sort(function (a, b) { return Number(a.amount) - Number(b.amount); });
-        .container
-          div
-            .col-xl-8.offset-xl-2.col-lg-10.offset-lg-1.col-md-12.offset-md-0.perks.p-xs-0
+            .col-xl-4.col-lg-4.col-md-12.col-sm-12.col-xs-12.text-xs-center
+              p Company documents
+              if values.campaign.investor_presentation_file_id.id
+                a(href=values.campaign.investor_presentation_file_id.getUrl('origin') target="_blank")
+                  i.fa.fa-file-powerpoint-o.d-inline-block
+                  h3.d-inline-block.m-b-0 Investor Presentation
+  if values.campaign.type == 1
+    section.overview-detail
+      .container
+        div
+          h2#overview.col-lg-12.text-uppercase.text-xs-center.campaign-subheading.m-t-0 overview and terms
+          .col-xl-8.offset-xl-2.col-lg-10.offset-lg-1.col-md-12.offset-md-0.fundraising.p-xs-0
+            if values.campaign.security_type == 0
               table.table.table-bordered.m-b-0
                 tbody
                   tr.bgc-row-top
                     td(colspan="2").p-x-0.p-y-0
-                      h4.text-uppercase.text-lg-center.text-xs-center.campaign-subheading.section-bg-line.m-y-0 Perks
-                each v,k in values.campaign.perks
-                  if v
-                    tr.perks-invest
-                      td.bgc-row-middle.w-35
-                        h3 Invest 
-                          span.font-weight-bold #{ app.helpers.format.formatPrice(v.amount) }
-                          |  or more
-                      td
-                        p.text-justify.perks-intro #{ v.perk }
+                      h4.text-uppercase.text-lg-center.text-xs-center.campaign-subheading.section-bg-line.m-y-0 Fundraising Description
+                  tr.bgc-row-middle.text-xs-center
+                    td.width-50
+                      p Type of Security
+                    td
+                      p Pre-Money Valuation
+                  tr.text-xs-center
+                    td.width-50
+                      h2.font-weight-bold Common Equity
+                        div.d-inline-block
+                          div.showPopover.hidden-xs-down(data-content="Equity represents ownership in a Company. As owners, equity investors will generally receive a share of the proceeds upon trade sale or IPO. Alternatively, investors can theoretically sell their ownership interest when the overall value of the Company has increased – though shares of common stock purchased in a crowdfunding transaction would have certain holding restrictions which are described in greater detail in our educational material. <br>The Pre-Money valuation is the valuation prior to this round of financing. Post-Money valuation is based on Pre-Money valuation plus the proceeds from the financing.")
+                            i(aria-hidden="true").fa.fa-question-circle.text-muted.detail-security-type-icon
+                    td
+                      h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.premoney_valuation) }
+                  tr.bgc-row-middle.text-xs-center
+                    td.width-50
+                      p Minimum Investment
+                    td
+                      p Price per Share
+                  tr.text-xs-center
+                    td.width-50
+                      h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.minimum_increment) }
+                    td
+                      h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.price_per_share) }
+                  tr.bgc-row-middle.text-xs-center
+                    td.width-50
+                      p Minimum # of Shares
+                    td
+                      p Maximum # of Shares
+                  tr.text-xs-center
+                    td.width-50
+                      h2.font-weight-bold #{ (Math.round(values.campaign.minimum_raise / values.campaign.price_per_share)).toLocaleString('en-US') }
+                    td
+                      h2.font-weight-bold #{ (Math.round(values.campaign.maximum_raise / values.campaign.price_per_share)).toLocaleString('en-US') }
+            else
+              table.table.table-bordered.m-b-0
+                tbody
+                  tr.bgc-row-top
+                    td(colspan="2").p-x-0.p-y-0
+                      h4.text-uppercase.text-lg-center.text-xs-center.campaign-subheading.section-bg-line.m-y-0  Fundraising Description
+                  tr.bgc-row-middle.text-xs-center
+                    td.width-50
+                      p Type of Security
+                    td
+                      p Percentage Revenue
+                  tr.text-xs-center
+                    td.width-50
+                      h2.font-weight-bold Revenue Share
+                        div.d-inline-block
+                          div.showPopover.hidden-xs-down(data-content="A Revenue Share Agreement is a form of investment contract in which the Company shares 5% of its revenue annually with investors.<br> Here’s how it works:<ol class='p-l-1'><li>Investors earn 5% of the company’s revenue annually;</li><li>No distributions are required until the second full calendar year and the company is allowed one year of orbearance as needed;</li><li>Distributions are capped at two times the invested amount (2x);</li><li>In the event of default, investors become general unsecured creditors (senior to equity).</li>")
+                            i(aria-hidden="true").fa.fa-question-circle.text-muted.detail-security-type-icon
+                    td
+                      h2.font-weight-bold #{ values.campaign.percentage_revenue }%
+                  tr.bgc-row-middle.text-xs-center
+                    td.width-50
+                      p Target Minimum Raise Amount
+                    td
+                      p Target Maximum Raise Amount
+                  tr.text-xs-center
+                    td.width-50
+                      h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.minimum_raise) }
+                    td
+                      h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.maximum_raise) }
+                  tr.bgc-row-middle.text-xs-center
+                    td.width-50
+                      p Minimum Investment
+                    td
+                      p Cap
+                  tr.text-xs-center
+                    td.width-50
+                      h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.minimum_increment) }
+                    td
+                      h2.font-weight-bold #{ values.campaign.cap }X
+
+      if values.campaign.perks.length > 0 && values.campaign.perks[0].amount != ''
+        section#perks
+          - values.campaign.perks = $.map(values.campaign.perks, function(value, index) {return [value];});
+          - values.campaign.perks = values.campaign.perks.filter(function(value) { return value && value.perk; });
+          - values.campaign.perks.sort(function (a, b) { return Number(a.amount) - Number(b.amount); });
+          .container
+            div
+              .col-xl-8.offset-xl-2.col-lg-10.offset-lg-1.col-md-12.offset-md-0.perks.p-xs-0
+                table.table.table-bordered.m-b-0
+                  tbody
+                    tr.bgc-row-top
+                      td(colspan="2").p-x-0.p-y-0
+                        h4.text-uppercase.text-lg-center.text-xs-center.campaign-subheading.section-bg-line.m-y-0 Perks
+                  each v,k in values.campaign.perks
+                    if v
+                      tr.perks-invest
+                        td.bgc-row-middle.w-35
+                          h3 Invest 
+                            span.font-weight-bold #{ app.helpers.format.formatPrice(v.amount) }
+                            |  or more
+                        td
+                          p.text-justify.perks-intro #{ v.perk }
 
   //-section(style="display: none").investors-all.border-bottom
     .container
@@ -700,12 +701,13 @@ section
                   class=(counter == 0 ? 'in' : '') + ' panel-collapse collapse'
                   ) !{ app.helpers.text.restoreLineBreak(v.answer) }
                   - counter ++;
-        
-  #comments
-  .border-bottom.m-t-0
-  section.ask.border-bottom#ask-section
-    .container.comments-container
-
+  if values.campaign.type == 1
+    #comments
+    .border-bottom.m-t-0
+    section.ask.border-bottom#ask-section
+      .container.comments-container
+  else
+    .border-bottom.m-t-0
   section.like-detail
     .container
       .col-lg-12
@@ -713,11 +715,11 @@ section
             h2.font-weight-light
               .like-detail-icon.d-inline-block
                 i.fa.fa-thumbs-o-up.like-icon-circle
-              //IF
+              if values.campaign.type == 1
                 |  I’d Like to Invest in #{ values.short_name || values.name }!
-              //ELSE
-              |  I’d Like to Express Interest in #{ values.short_name || values.name }!
-            //IF
+              else if values.campaign.type == 2
+                |  I’d Like to Express Interest in #{ values.short_name || values.name }!
+            if values.campaign.type == 1
               a(href=investURL disabled=disableInvest).btn.btn-lg.btn-primary.text-uppercase.m-t-2.large-btn-mobile-main invest in this company
-            //ELSE
-            a(data-target="#express_interest" data-toggle="modal" href="#express_interest").btn.btn-primary.text-uppercase.m-t-2 Express Interest
+            else if values.campaign.type == 2
+              a(data-target="#express_interest" data-toggle="modal" href="#express_interest").btn.btn-primary.text-uppercase.m-t-2 Express Interest
