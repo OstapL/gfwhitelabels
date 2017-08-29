@@ -158,7 +158,7 @@ class Campaign {
           this.list_image_image_id.id != null &&
           this.gallery_group_id.data.length > 5,
         'specifics':
-          this.minimum_raise >= 25000 &&
+          this.minimum_raise >= 10000 &&
           this.maximum_raise <= 1000000 &&
           this.minimum_increment >= 100 &&
           this.length_days >= 60 &&

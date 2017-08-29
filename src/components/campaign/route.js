@@ -16,10 +16,10 @@ module.exports = {
         api.makeRequest(app.config.investmentServer + '/' + investmentId).done((data) => {
           data.id = investmentId;
           const View = require('./views.js');
-          let i = new View.investmentThankYou({
+          app.currentView = new View.investmentThankYou({
             model: new app.models.Company(data),
           });
-          i.render();
+          app.currentView.render();
           app.hideLoading();
         });
       }, 'campaign_chunk');
@@ -47,12 +47,12 @@ module.exports = {
           modelData = modelData.filter(d => !d.campaign.expired && !d.isClosed());
           data.data = modelData;
 
-          let i = new View.list({
+          app.currentView = new View.list({
             el: '#content',
             collection: data,
           });
           $('body').scrollTo();
-          i.render();
+          app.currentView.render();
           app.hideLoading();
         });
 
@@ -113,10 +113,10 @@ module.exports = {
           document.head.querySelector('meta[property="og:image"]').content = tags.image;
           document.head.querySelector('meta[property="og:url"]').content = tags.url;
 
-          let i = new View.detail({
+          app.currentView = new View.detail({
             model: model
           });
-          i.render();
+          app.currentView.render();
           $('body').scrollTo();
         });
       }, 'campaign_chunk');
@@ -134,12 +134,12 @@ module.exports = {
 
         $.when(investmentR, companyR, userR).done((investmentMeta, companyData, userData) => {
           Object.assign(app.user.data, userData[0]);
-          const i = new View.investment({
+          app.currentView = new View.investment({
             model: new app.models.Company(companyData[0], investmentMeta[0].fields),
             user: userData[0],
             fields: investmentMeta[0].fields,
           });
-          i.render();
+          app.currentView.render();
           $('body').scrollTo();
           app.hideLoading();
           app.analytics.emitEvent(app.analytics.events.InvestmentClicked, app.user.stats);

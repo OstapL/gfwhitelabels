@@ -22,6 +22,7 @@ class App {
     this.sites = require('./sites.js');
     this.seo = require('./seo.js');
     this.user = new User();
+    this.currentView = null;
 
     this.utils = {};
     this.utils.isBoolean = function(val) {
