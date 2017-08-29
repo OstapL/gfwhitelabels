@@ -157,6 +157,8 @@ module.exports = {
         data.industry = 'Machinery';
         app.helpers.calculator.saveCalculatorData(CALCULATOR_NAME, data);
       }
+
+      this.listenToNavigate();
     },
 
     nextStep(e) {
@@ -193,10 +195,6 @@ module.exports = {
       'submit form': 'nextStep',
       'blur [type=money]': saveValue,
     }, app.helpers.calculatorValidation.events),
-
-    preinitialize() {
-      $('#content').undelegate();
-    },
 
     initialize(options) {
       this.fields = {
@@ -236,6 +234,12 @@ module.exports = {
           validate: {},
         },
       };
+      this.listenToNavigate();
+    },
+
+    destroy() {
+      Backbone.View.prototype.destroy.call(this);
+      this.$('[data-toggle="tooltip"]').tooltip('dispose');
     },
 
     nextStep(e) {
@@ -331,6 +335,12 @@ module.exports = {
           validate: {},
         },
       };
+      this.listenToNavigate();
+    },
+
+    destroy() {
+      Backbone.View.prototype.destroy.call(this);
+      this.$('[data-toggle="tooltip"]').tooltip('dispose');
     },
 
     goToStep2() {

@@ -26,19 +26,19 @@ mixin confirmStatement(name, attr)
         .col-lg-6.col-md-6.col-sm-6.col-xs-6.text-lg-center
           label.d-block.label-true-false
             | TRUE
-          input(
-            type="radio"
-            value="true"
-            name=name
-          ).d-block.m-x-auto
+            input(
+              type="radio"
+              value="true"
+              name=name
+            ).d-block.m-x-auto
         .col-lg-6.col-md-6.col-sm-6.col-xs-6.text-lg-center
           label.d-block.label-true-false
             | FALSE
-          input(
-            type="radio"
-            value="false"
-            name=name
-          ).d-block.m-x-auto
+            input(
+              type="radio"
+              value="false"
+              name=name
+            ).d-block.m-x-auto
 
     .col-lg-10
       label #{attr.label}
@@ -172,7 +172,7 @@ mixin confirmStatement(name, attr)
                     var idx = 0;
                   while (idx < 2 && perks[idx])
                     - var p = perks[idx];
-                    a(href="#" data-amount=p.amount).list-group-item.list-group-item-action.perk
+                    div(data-amount=p.amount).list-group-item.list-group-item-action.perk
                       h3.list-group-item-heading
                         span.text-color-puerto_rico.font-weight-bold $#{p.amount}
                         |  Investment 
@@ -184,7 +184,7 @@ mixin confirmStatement(name, attr)
                   - var showMore = perks.length > 2
                   while idx < perks.length && perks[idx]
                     - var p = perks[idx];
-                    a(href="#" data-amount=p.amount).list-group-item.list-group-item-action.perk
+                    div(data-amount=p.amount).list-group-item.list-group-item-action.perk
                       h3.list-group-item-heading
                         span.text-color-puerto_rico.font-weight-bold $#{p.amount}
                         |  Investment
@@ -499,7 +499,7 @@ mixin confirmStatement(name, attr)
 
         .list-group.list-group-border-invest.invest-right-margin.m-b-3
           each v,k in values.campaign.perks
-            a(href="#" data-amount=v.amount).list-group-item.list-group-item-action.perk
+            div(data-amount=v.amount).list-group-item.list-group-item-action.perk
               h3.list-group-item-heading
                 span.text-color-puerto_rico.font-weight-bold $#{v.amount}
                 |  Investment 

@@ -87,7 +87,9 @@ let functions = {
     if (cb.checked)
       data.checkbox1 = cb.value;
 
-    if (!app.validation.validate({ checkbox1: view.fields.checkbox1 }, data, this)) {
+    const fields = view.fieldsSchema || view.fields;
+    
+    if (!app.validation.validate({ checkbox1: fields.checkbox1 }, data, this)) {
       _(app.validation.errors).each((errors, key) => {
         app.validation.invalidMsg(view, key, errors);
       });

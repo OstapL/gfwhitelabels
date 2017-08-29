@@ -6,9 +6,8 @@ section.reset
     .col-lg-4.offset-lg-4
       form(data-method="PUT").form-section.login-form
         .col-lg-12.p-xs-0
-          .form-group.row.clearfix.required
-            input(type="email" placeholder="E-mail" name="email")#email.form-control
-            input(type="hidden" name="domain" value=window.location.host)#domain.form-control
+          input(type="hidden" name="domain" value=window.location.host)#domain.form-control
+          - pug_html += fields.email.render();
         .col-lg-12
           .row.text-xs-center
             button(type="submit").btn.btn-primary.text-uppercase Reset

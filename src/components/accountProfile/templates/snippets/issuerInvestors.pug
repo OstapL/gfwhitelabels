@@ -1,0 +1,40 @@
+- var COUNTRIES = require('consts/countries.json');
+
+section
+  .row
+    .col-xl-12
+      h2.text-uppercase investors
+  if locals.investors.data.length == 0 
+    .form-group.row
+      .col-lg-12
+        .warning-block.m-b-0
+          i.fa.fa-info-circle
+          span.warning-text
+            | You have no investors
+  else
+    .col-xl-12.all-investors
+      .col-xl-12.p-xs-0
+        each invest in locals.investors.data
+          .row.item
+            .col-xl-5.col-lg-5.col-md-4.col-sm-12.col-xs-12.photo-wrap
+              .photo
+                img(src=invest.user.image_data.getUrl('main', 'Default_photo') alt="")
+              .name
+                h4.text-uppercase #{invest.personal_information_data.first_name} #{invest.personal_information_data.last_name }
+                if locals.campaign.successful && locals.campaign.expired
+                  p #{invest.user.email}
+            .col-xl-4.col-lg-4.col-md-4.col-sm-7.col-xs-12
+              .city
+                i.fa.fa-map-marker
+                .street
+                  p.font-weight-bold #{ COUNTRIES[invest.personal_information_data.country] || invest.personal_information_data.country }
+                  if locals.campaign.successful && locals.campaign.expired
+                    p #{invest.personal_information_data.street_address_1}, #{invest.personal_information_data.street_address_2}
+                    p #{invest.personal_information_data.city}, #{invest.personal_information_data.state}, #{invest.personal_information_data.zip_code}
+            .col-xl-3.col-lg-3.col-md-4.col-sm-5.col-xs-12
+              .invest
+                span.money $#{invest.amount}
+                .date
+                  | !{ app.helpers.date.formatDate(invest.created_date, 'MMM DD, YYYY<br>HH:mm:ss') }
+            .col-xs-12
+              .border-bottom
