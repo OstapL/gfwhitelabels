@@ -188,7 +188,7 @@ section.formc-team-members-officer.container.m-b-85
             .col-xl-6.col-lg-6.col-md-6
               -
                 pug_html += app.fields.textLabel('voting_power_percent', {
-                schema: fields.voting_power_percent,
+                schema: fields.voting_power_percent || { type: 'percent' },
                 label: '% of Voting Power Prior to Offering',  
                 value: values.voting_power_percent,})
         .row

@@ -26,6 +26,7 @@ const analytics = {
     CalculatorUsed: 'CalculatorUsed',
     VideoViewed: 'VideoViewed',
     CompanyCustomEvent: 'CompanyCustomEvent',
+    EmailSubscription: 'EmailSubscription',
   },
 
   emitEvent(name, data) {
@@ -33,8 +34,13 @@ const analytics = {
   },
 
   emitCompanyCustomEvent(trackerId) {
-    if (!trackerId)
+    if (!trackerId) {
       return;
+    }
+
+    if (trackerId.substr(0,3) != 'UA-') {
+      trackerId = 'UA-' + trackerId;
+    }
 
     return analytics.emitEvent(analytics.events.CompanyCustomEvent, { trackerId });
   },

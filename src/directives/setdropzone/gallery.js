@@ -27,7 +27,13 @@ class GalleryElement extends imageDropzone.ImageElement {
       );
       fileObj.delete = () => this.delete.call(this, fileObj.file.id);
       fileObj.getTemplate = this.getTemplate;
-      fileObj.save = () => this.save.call(this);
+      fileObj.save = () => {
+        let index = this.file.data.findIndex((el) => { 
+          return el.id == fileObj.file.id;
+        });
+        this.file.data[index].name = fileObj.file.name;
+        return this.save.call(this);
+      };
       fileObj.elementSelector = '.' + fieldName + ' .fileContainer' + el.id;
       fileObj.options = this.options;
       this.files.push(fileObj);
@@ -96,7 +102,9 @@ class GalleryDropzone extends imageDropzone.ImageDropzone {
 
     if(options.onSaved) {
       this.galleryElement.options.onSaved = options.onSaved;
-    }
+    };
+
+    this.cropperQuery = [];
   }
 
   getTemplate() {
@@ -122,6 +130,7 @@ class GalleryDropzone extends imageDropzone.ImageDropzone {
       }
     });
 
+    reorgData.name = '';
     reorgData.site_id = app.sites.getId();
     this.galleryElement.file.data.push(reorgData);
     let fileObj = new imageDropzone.ImageElement(
@@ -145,11 +154,16 @@ class GalleryDropzone extends imageDropzone.ImageDropzone {
       }
 
       this.element.querySelector('.fileHolder').insertAdjacentHTML('beforeend', fileObj.resultHTML);
-      new imageDropzone.CropperDropzone(
+      let cropEl = new imageDropzone.CropperDropzone(
         this,
         fileObj,
         this.cropperOptions
-      ).render($(this.element).closest('.dropzone')[0]);
+      );
+      this.cropperQuery.push(cropEl);
+
+      if(this.cropperQuery.length === 1) {
+        cropEl.render($(this.element).closest('.dropzone')[0]);
+      };
     });
   }
 }

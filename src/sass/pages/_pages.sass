@@ -5,6 +5,12 @@
 .page.overview
   .icon-block
     vertical-align: top
+  .list-block
+    .black-link
+      color: $black
+      &:hover
+        +mt(.2s)
+        color: rgba($black, 0.7)
   @media screen and (max-width: 543px)
     .list-block
       .row.m-b-2
@@ -55,3 +61,9 @@
   background: $alabaster
   h3
     line-height: rem(25)
+.text-grey
+  color: $small-text
+.page.advertising
+  .help-block.text-justify
+    font-size: rem(12)
+    line-height: rem(16)

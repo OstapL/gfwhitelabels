@@ -83,7 +83,7 @@ class User {
       app.config.authServer + '/rest-auth/data',
       this.data.image_data
     );
-    document.getElementById('user-thumbnail').src = this.data.image_image_id.getUrl('50x50');
+    document.getElementById('user-thumbnail').src = this.data.image_image_id.getUrl('main');
     this.updateLocalStorage();
   }
 
