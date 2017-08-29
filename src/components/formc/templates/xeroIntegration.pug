@@ -32,34 +32,27 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
                 .col-xl-6.col-lg-6.col-md-6.col-sm-6.col-xs-12
                   .form-group
                     label Balance sheet
-                      input(type="checkbox" name="documents[]" value="balance_sheet")
+                      input(type="checkbox" name="documents[]" value="BalanceSheet").saveCheckboxValue
                   .form-group
                     label Bank statement
-                      input(type="checkbox" name="documents[]" value="bank_statement")
+                      input(type="checkbox" name="documents[]" value="BankStatement").saveCheckboxValue
                   .form-group
                     label Bank Summary
-                      input(type="checkbox" name="documents[]" value="bank_summary")
+                      input(type="checkbox" name="documents[]" value="BankSummary").saveCheckboxValue
                   .form-group
                     label Budget Summary
-                      input(type="checkbox" name="documents[]" value="budget_summary")
+                      input(type="checkbox" name="documents[]" value="BudgetSummary").saveCheckboxValue
                 .col-xl-6.col-lg-6.col-md-6.col-sm-6.col-xs-12.p-r-0
                   .form-group
                     label Executive Summary
-                      input(type="checkbox" name="documents[]" value="executive_summary")
+                      input(type="checkbox" name="documents[]" value="ExecutiveSummary").saveCheckboxValue
                   .form-group
                     label Profit and Loss
-                      input(type="checkbox" name="documents[]" value="profit_and_loss")
+                      input(type="checkbox" name="documents[]" value="ProfitAndLoss").saveCheckboxValue
                   .form-group
                     label Trial Balance
-                      input(type="checkbox" name="documents[]" value="trial_balance")
+                      input(type="checkbox" name="documents[]" value="TrialBalance").saveCheckboxValue
           .row
-            .col-xl-12
-              .form-group
-                .input-wrap
-                  label
-                    a(href="" id="url" target="_blank").link-2 Get the access code here
-                    |  and write below
-                  input(text="text" name="code" id="code" data-token="" data-secret="").col-xl-12.form-control
             .col-xl-12.text-xs-center
-              input(type="button" class="btn btn-primary xeroGrabData" value="upload files")
+              a#url(href="" class="btn btn-primary" value="upload files") upload files
       .modal-footer

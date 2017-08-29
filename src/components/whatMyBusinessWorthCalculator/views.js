@@ -55,6 +55,10 @@ module.exports = {
   step1: Backbone.View.extend(_.extend({
     el: '#content',
     template: require('./templates/step1.pug'),
+    events: _.extend({
+      'submit form': 'nextStep',
+      'blur [type=money]': saveValue,
+    }),
     initialize() {
       this.fields = {
         excessCash: {
@@ -90,19 +94,23 @@ module.exports = {
           validate: {},
         },
       };
+      this.listenToNavigate();
     },
 
-    events: _.extend({
-      'submit form': 'nextStep',
-      'blur [type=money]': saveValue,
-    }),
+    destroy() {
+      Backbone.View.prototype.destroy.call(this);
+      this.$('[data-toggle="tooltip"]').tooltip('dispose');
+    },
 
     nextStep(e) {
       e.preventDefault();
+
       if (this.validate(e)) {
         app.routers.navigate('/calculator/whatmybusinessworth/step-2', {trigger: true});
       } else {
-        this.$('.help-block').prev().scrollTo(50);
+        const $help = this.$('.help-block').prev();
+        if ($help && $help.length)
+          $help.scrollTo(50);
       }
     },
 
@@ -144,10 +152,6 @@ module.exports = {
       'blur [type=money]': saveValue,
     }),
 
-    preinitialize() {
-      $('#content').undelegate();
-    },
-
     initialize() {
       this.fields = {
         monthlyOperatingTwoYears: {
@@ -185,6 +189,12 @@ module.exports = {
           validate: {},
         },
       };
+      this.listenToNavigate();
+    },
+
+    destroy() {
+      Backbone.View.prototype.destroy.call(this);
+      this.$('[data-toggle="tooltip"]').tooltip('dispose');
     },
 
     doCalculation(e) {
@@ -208,7 +218,7 @@ module.exports = {
 
       app.helpers.calculator.saveCalculatorData(CALCULATOR_NAME, data);
 
-      setTimeout(() => app.routers.navigateWithReload('/calculator/whatmybusinessworth/finish', {trigger: true}), 10);
+      app.routers.navigate('/calculator/whatmybusinessworth/finish', {trigger: true});
     },
 
     calculateWithDelta(data, type = 'default') {
@@ -290,7 +300,7 @@ module.exports = {
       return fieldsWithValue && fieldsWithValue.length;
     },
 
-    render: function () {
+    render() {
       // disable enter to the step 2 of capitalraise calculator without data entered on the first step
       // if (!this.isFirstStepFilled()) {
       //     app.routers.navigate('/calculator/whatmybusinessworth/step-1', {trigger: true});

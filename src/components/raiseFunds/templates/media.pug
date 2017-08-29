@@ -42,23 +42,8 @@ section.create-company-media.container.media-container
           h3.text-lg-center.col-md-center.col-xs-center.m-t-0 Recommended Additional Media
 
         .row.m-b-2.recommended.main-video-block
-          .video-container
-            .col-xl-7.col-lg-6
-              - pug_html += app.fields.textLabel('video', {placeholder: 'http://www.', help_text: 'YouTube or Vimeo links only please.', schema: fields.video, value: values.video,})
-
-            #video_source.col-xl-5.col-lg-6
-              -
-                var videoInfo = app.getVideoInfo(values.video);
-              if videoInfo.provider === 'youtube'
-                .img-media.youtube-media
-                  img(src="https://img.youtube.com/vi/" + videoInfo.id + "/0.jpg")
-              else if videoInfo.provider === 'vimeo'
-                .img-media
-                  img(src="" data-vimeo-id=videoInfo.id).card-img.w-100.vimeo-thumbnail
-              else
-                .img-media
-                  img(src=require("images/default/default-video.png"))
-
+          -
+            pug_html += video.render();
 
         .row.additional-video-block
           |!{ templates.additional_video }

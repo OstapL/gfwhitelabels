@@ -1,8 +1,6 @@
+const { createFields } = require('fields/new-fields.js');
 const raiseHelpers = require('./helpers.js');
 const appendHttpIfNecessary = app.helpers.format.appendHttpIfNecessary;
-
-const validation = require('components/validation/validation.js');
-
 const valuation_determination = require('consts/raisecapital/valuation_determination.json');
 
 const snippets = {
@@ -27,7 +25,114 @@ const fixGATrackerID = (data) => {
     data.ga_id = 'UA-' + data.ga_id;
 };
 
+function paralaxScrollHandler(e) {
+  var st = $(this).scrollTop() /15;
+
+  $(".scroll-paralax .background").css({
+    "transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+    "-o-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+    "-webkit-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+    "-moz-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+    "-ms-transform" : "translate3d(0px, " + st /2 + "%, .01px)"
+  });
+};
+
 module.exports = {
+  landing: Backbone.View.extend({
+    el: '#content',
+    template: require('./templates/landing.pug'),
+
+    events: {
+      'click .close': 'hideHint',
+    },
+
+    initialize() {
+      const scrollTimeout = 5000;
+      const noscrollTimeout = 8000;
+
+      this.noscrollTimeout = null;
+      this.scrollTimeout = null;
+
+      const showHintOnScroll = () => {
+        if (this.noscrollTimeout) {
+          clearTimeout(this.noscrollTimeout);
+          this.noscrollTimeout = null;
+        }
+
+        if (this.scrollTimeout)
+          return;
+
+        $(window).off('scroll', showHintOnScroll);
+        this.scrollTimeout = setTimeout(() => {
+          this.displayHintOnce();
+        }, scrollTimeout);
+
+      };
+
+      const calendlyStyleURL = 'https://calendly.com/assets/external/widget.css';
+      const calendlyScriptURL = 'https://calendly.com/assets/external/widget.js';
+
+      Promise.all([
+        app.helpers.scripts.loadStyle(calendlyStyleURL),
+        app.helpers.scripts.load(calendlyScriptURL),
+      ]).then(() => {
+        Calendly.initBadgeWidget({
+          url: 'https://calendly.com/morganatgrowthfountain/15min',
+          text: 'Want to Fundraise?',
+          color: '#00a2ff',
+          branding: true
+        });
+
+        this.noscrollTimeout = setTimeout(() =>  {
+          this.displayHintOnce();
+          if (this.noscrollTimeout) {
+            clearTimeout(this.noscrollTimeout);
+            this.noscrollTimeout = null;
+          }
+        }, noscrollTimeout);
+        $(window).on('scroll', showHintOnScroll);
+        $('body').on('click', '.calendly-badge-widget', this.hideHint.bind(this));
+      });
+
+      this.listenToNavigate();
+      $(window).on('scroll', paralaxScrollHandler);
+    },
+
+    hideHint() {
+      this.$el.find('.calendly').hide();
+    },
+
+    displayHintOnce() {
+      if (this.$hintPopup)
+        return;
+
+      this.$hintPopup = this.$el.find('.calendly');
+
+      this.$hintPopup.animate({'opacity': 1});
+    },
+
+    render() {
+      this.$el.html(
+        this.template()
+      );
+    },
+
+    onBeforeNavigate() {
+      this.hideHint();
+      //hack to prevent undelegate events when login popup is shown to the user
+      if (!app.user.is_anonymous())
+        return this.destroy();
+    },
+
+    destroy() {
+      this.hideHint();
+      $(window).off('scroll', paralaxScrollHandler);
+      $('body').off('click', '.calendly-badge-widget');
+      if (window.Calendly)
+        Calendly.destroyBadgeWiget();
+    },
+  }),
+
   company: Backbone.View.extend(_.extend({
     urlRoot: app.config.raiseCapitalServer + '/company',
     template: require('./templates/company.pug'),
@@ -92,6 +197,8 @@ module.exports = {
       if(this.model.hasOwnProperty('id')) {
         this.urlRoot += '/:id';
       }
+
+      this.listenToNavigate();
     },
 
     submitCompanyInfo(e) {
@@ -303,7 +410,8 @@ module.exports = {
 
     events: _.extend({
         'click #submitForm': api.submitAction,
-        'change #video,.additional-video-link': 'updateVideo',
+        // 'change #video,.additional-video-link': 'updateVideo',
+        'change .additional-video-link': 'updateVideo',
         'change .press_link': 'appendHttpIfNecessary',
         'click .submit_form': raiseHelpers.submitCampaign,
         'click #postForReview': raiseHelpers.postForReview,
@@ -435,6 +543,26 @@ module.exports = {
         },
       });
 
+      this.fields.video = _.extend(this.fields.video, {
+        fn(name, value, attr, data, computed) {
+          const info = app.getVideoInfo(value);
+          if (!info.provider)
+            throw 'YouTube or Vimeo links only, please';
+        },
+      });
+
+      const fieldsSchema = _.pick(this.fields, ['video']);
+      const fieldsAttr = {
+        video: {
+          label: 'Main Video for Campaign',
+          placeholder: 'http://www.',
+          help_text: 'YouTube or Vimeo links only, please.',
+          value: this.model.video,
+        }
+      };
+
+      this.videoField = createFields(fieldsSchema, fieldsAttr).video;
+
       this.labels = {
         gallery_data: {
           url: 'Gallery',
@@ -449,11 +577,12 @@ module.exports = {
         },
         list_image_image_id: 'Thumbnail Picture',
         header_image_image_id: 'Header Image',
-        video: 'Main Video for Campaign',
+        // video: 'Main Video for Campaign',
         gallery_group_id: 'Gallery'
       };
 
       this.assignLabels();
+
       this.createIndexes();
       this.buildSnippets(snippets);
     },
@@ -466,8 +595,11 @@ module.exports = {
           formc: this.formc,
           view: this,
           templates: this.jsonTemplates,
+          video: this.videoField,
         })
       );
+
+      this.videoField.postRender();
 
       app.helpers.disableEnter.disableEnter.call(this);
       this.checkForm();
@@ -701,6 +833,8 @@ module.exports = {
       this.fields = options.fields.campaign;
       this.formc = options.formc;
       this.model = options.campaign;
+      //fix bug with deleting team members
+      this.renumberTeamMembers();
 
       this.urlRoot = this.urlRoot.replace(':id', this.model.id);
     },
@@ -722,26 +856,47 @@ module.exports = {
       return this;
     },
 
+    renumberTeamMembers() {
+      if (!this.model.team_members || !this.model.team_members.members || !this.model.team_members.members.length)
+        return;
+
+      _.each(this.model.team_members.members, (m, idx) => {
+        if (m.hasOwnProperty('id')) {
+          const $memberItemDelete = this.$el.find(`[data-id=${m.id}]`);
+          if ($memberItemDelete && $memberItemDelete.length)
+            $memberItemDelete[0].dataset.id = idx;
+        }
+        m.id = idx;
+      });
+    },
+
     deleteMember: function (e) {
-      let memberId = e.currentTarget.dataset.id;
+      let memberId = Number(e.currentTarget.dataset.id);
 
       app.dialogs.confirm('Are you sure you would like to delete this team member?').then((confirmed) => {
         if (!confirmed)
           return;
 
-        api.makeRequest(this.urlRoot + '/' + memberId, 'DELETE').
-        then((data) => {
-          this.model.team_members.members.splice(memberId, 1);
+        api.makeRequest(this.urlRoot + '/' + memberId, 'DELETE')
+          .then((data) => {
+            const idx = this.model.team_members.members.findIndex(m => m.id === memberId);
+            if (idx < 0)
+              return console.error(`Team member with id: ${memberId} not found`);
 
-          $(e.currentTarget).parent().remove();
-          if (this.model.team_members.members.length < 1) {
-            this.$el.find('.notification').show();
-            this.$el.find('.buttons-row').hide();
-          } else {
-            this.$el.find('.notification').hide();
-            this.$el.find('.buttons-row').show();
-          }
-        });
+            this.model.team_members.members.splice(idx, 1);
+
+            $(e.currentTarget).closest('.team-add-item').parent().remove();
+
+            if (this.model.team_members.members.length < 1) {
+              this.$el.find('.notification').show();
+              this.$el.find('.buttons-row').hide();
+            } else {
+              this.$el.find('.notification').hide();
+              this.$el.find('.buttons-row').show();
+            }
+
+            this.renumberTeamMembers();
+          });
       });
     },
 
@@ -985,4 +1140,4 @@ module.exports = {
     }
 
   }, app.helpers.confirmOnLeave.methods, app.helpers.menu.methods, app.helpers.section.methods)),
-}
+};

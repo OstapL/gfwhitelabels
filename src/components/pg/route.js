@@ -152,9 +152,10 @@ module.exports = {
         const template = require('./templates/' + (templateMap[name] || name) + '.pug');
         if (_.contains(withLeftMenuPages, name)) {
           const Views = require('./views.js');
-          (new Views.WithLeftMenu({
+          app.currentView = new Views.WithLeftMenu({
             template,
-          })).render();
+          });
+          app.currentView.render();
         } else {
           $('#content').html(template());
         }
@@ -264,8 +265,8 @@ module.exports = {
           ? require('./templates/subscription-thanks-urgent.pug')
           : require('./templates/subscription-thanks.pug');
 
-        const v = new Views.subscriptionThanks({ template });
-        v.render();
+        app.currentView = new Views.subscriptionThanks({ template });
+        app.currentView.render();
 
         $('body').scrollTo();
         app.hideLoading();

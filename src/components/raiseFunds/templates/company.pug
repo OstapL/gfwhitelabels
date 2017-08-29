@@ -40,7 +40,7 @@ section.create-company.container.m-b-85
                 span.color-red *
               .col-xl-12
                 .prefix_input_prefix
-                  input(value=window.location.origin disabled="disabled").form-control
+                  input(value=window.location.origin + '/' disabled="disabled").form-control
                 .prefix_input_field#slug
                   -
                     pug_html += app.fields.fieldText('slug', {
@@ -55,7 +55,7 @@ section.create-company.container.m-b-85
                 .row.form-group
                   label.col-xl-12.text-xl-left
                     | Google Analytic ID. 
-                    a(href="https://support.google.com/analytics/topic/2790009?hl=en&ref_topic=3544906" target="_blank").link-2 Set Up Google Analytics
+                    a(href="https://www.google.com/analytics/#?modal_active=none" target="_blank").link-2 Set Up Google Analytics
                   .col-xl-12
                     .prefix_input_prefix
                       input(value="UA -" disabled="disabled").form-control
