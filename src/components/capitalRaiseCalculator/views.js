@@ -145,6 +145,8 @@ module.exports = {
       if (!data || _.isEmpty(data)) {
         app.helpers.calculator.saveCalculatorData(CALCULATOR_NAME, defaultCalculatorData);
       }
+
+      this.listenToNavigate();
     },
 
     events: _.extend({
