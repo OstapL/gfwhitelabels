@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+git fetch origin
 git fetch -q --all
 git checkout master > /dev/null
 for b in dcu momentum3 rivermarkcu jdcu infinityfcu tvfcu
