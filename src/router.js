@@ -2,6 +2,7 @@ const componentRoutes = [
   require('components/payBackShareCalculator/route.js'),
   require('components/capitalRaiseCalculator/route.js'),
   require('components/whatMyBusinessWorthCalculator/route.js'),
+  require('components/blog/route.js'),
   require('components/raiseFunds/route.js'),
   require('components/pg/route.js'),
   require('components/campaign/route.js'),
@@ -9,7 +10,6 @@ const componentRoutes = [
   require('components/accountProfile/route.js'),
   require('components/establishedBusinessCalculator/route.js'),
   require('components/formc/route.js'),
-  // require('components/blog/route'),
 ];
 
 const checkSafeExtend = (dest={}, src={}) => {
@@ -47,9 +47,7 @@ module.exports = Backbone.Router.extend(_.extend({
   },
 
   execute(callback, args, name) {
-    //as we send custom events to pixel default events we will sent explicitly
-    //
-    if(
+    if (
         window.location.pathname.substr(window.location.pathname.length-1, 1) == '/' &&
         window.location.pathname != '/'
         ) {
@@ -67,8 +65,9 @@ module.exports = Backbone.Router.extend(_.extend({
       document.head.querySelector('meta[name="description"]').content = app.seo.meta[window.location.pathname];
       document.head.querySelector('meta[property="og:title"]').content = app.seo.title[window.location.pathname];
       document.head.querySelector('meta[property="og:description"]').content = app.seo.meta[window.location.pathname];
-      document.head.querySelector('meta[property="og:url"]').content = window.location.href;
     }
+
+    document.head.querySelector('meta[property="og:url"]').content = window.location.href;
 
     if (!app.user.is_anonymous()) {
       api.makeRequest(app.config.authServer + '/log', 'POST', {

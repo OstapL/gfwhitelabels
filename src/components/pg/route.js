@@ -15,6 +15,7 @@ module.exports = {
   routes: {
     '': 'mainPage',
     'pg/:name': 'pagePG',
+    'subscription-thanks': 'subscriptionThanks',
   },
   methods: {
     mainPage() {
@@ -250,5 +251,26 @@ module.exports = {
         });
       }, 'pg_chunk');
     },
+
+    subscriptionThanks() {
+      const pageType = {
+        urgent: '1',
+      };
+
+      require.ensure([], (require) => {
+        const Views = require('./views.js');
+
+        const template = app.getParams().type == pageType.urgent
+          ? require('./templates/subscription-thanks-urgent.pug')
+          : require('./templates/subscription-thanks.pug');
+
+        const v = new Views.subscriptionThanks({ template });
+        v.render();
+
+        $('body').scrollTo();
+        app.hideLoading();
+      }, 'pg_chunk');
+    },
+
   },
 };
