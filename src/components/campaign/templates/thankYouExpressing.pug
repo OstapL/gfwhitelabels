@@ -1,0 +1,11 @@
+| !{app.breadcrumbs('Success!', '', [ ['Home', '/'],[investment.company.name, '/' + investment.company_id], ['Express interest ''']])}
+
+
+.container.thank-you-page
+  .row
+    .col-sm-8.offset-sm-2
+      h2.text-xs-center.m-b-1.font-weight-light.m-t-0.thank-you-page-title
+        .icon-in-circle.m-r-1.d-inline-block.align-middle
+          i(aria-hidden="true").fa.fa-thumbs-o-up
+        | Thank you for your investment.
+      h2.text-xs-center.m-t-0.m-b-0.font-weight-light #{ investment.company.name } is now $#{ investment.amount } closer to their goal!

@@ -397,4 +397,51 @@
 				margin: auto
 			.btn
 				margin-top: 25px
+.express-interest-modal
+	.modal-dialog
+		max-width: 730px
+		.modal-header
+			.close
+				margin-right: 15px
+		.modal-body
+			padding-left: rem(65)
+			padding-right: rem(65)
+			margin-bottom: rem(50)
+			@media only screen and (max-width : 567px)
+				padding-left: 10px
+				padding-right: 10px
+			.input-wrap
+				max-width: 180px
+				margin: auto
+				position: relative
+				margin-bottom: 20px
+				input
+					padding-left: 30px
+					border:
+						left: none
+						right: none
+						top: none
+				.dollar
+					color: $black
+					font-weight: normal
+					&:before
+						content: '$'
+						position: absolute
+						left: 12px
+						top: 6px
+			.text-close
+				font-size: rem(13)
+				color: $small_text
+				margin-top: 10px
+				cursor: pointer
+				+mt(.2s)
+				&:hover
+					+mt(.2s)
+					color: rgba($small_text, 0.7)
 
+		.modal-footer
+			background-color: $alabaster
+			padding: 10px 5px
+			text-align: center
+			p
+				font-size: rem(12)

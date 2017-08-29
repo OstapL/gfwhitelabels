@@ -6,7 +6,7 @@
   for company in collection.data
     if company.isClosed() || company.campaign.expired
       - continue;
-    .col-xl-4.col-lg-6.col-md-6.col-xs-12.col-sm-12
+    .col-xl-4.col-lg-6.col-md-6.col-xs-12.col-sm-12.list-campaign-item
       a(href="/" + company.slug).block_link
       .one_block
         .for_img
@@ -51,10 +51,17 @@
             | !{company.brief}
 
         .bottom_text
-          span.left_desc
+          // тут дожен быть IF
+          //span.left_desc
             i.fa.fa-get-pocket
             h6.text-uppercase  #{company.campaign.security_type == security_type.CommonEquity ? 'Common Equity' : 'Revenue Share'}
+          // label belowe
+          span.left_desc.new-label
+            i.fa.fa-get-pocket
+            h6 Testing the Waters
           span.right_desc
             i.fa.fa-tags
             h6.text-uppercase  !{ industry[company.industry] || "Other" }
           .clear
+      p.reg.text-xs-center Reg A offering through Intelligent Crowd, LLC
+      //p.reg.text-xs-center Reg CF offering through GrowthFountain Capital LLC
