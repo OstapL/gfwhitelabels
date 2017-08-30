@@ -101,7 +101,7 @@ class ImageDropzone extends file.FileDropzone {
       }
     });
 
-    reorgData.site_id = app.sites.getId(),
+    reorgData.site_id = app.sites.getId();
     reorgData.name = '';
     this.fileElement.update(reorgData);
     // this.model[this.fileElement.fieldName] = reorgData.id;
