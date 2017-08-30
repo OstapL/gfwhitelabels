@@ -31,6 +31,7 @@ do
             git merge vladyslav2/$b > /dev/null
         fi
 
+        git fetch origin
         git merge --no-ff origin/alpha > /dev/null
         ./fix_merge.sh
 
