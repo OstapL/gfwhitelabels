@@ -336,7 +336,7 @@ module.exports = {
     },
 
     render() {
-      if (this.model.isClosed() || this.model.campaign.expired) {
+      if (this.model.isClosed() || (this.model.is_approved >= 6 && this.model.campaign.expired)) {
         const template = require('./templates/detailNotAvailable.pug');
         this.$el.html(template());
         app.hideLoading();
@@ -677,7 +677,7 @@ module.exports = {
     },
 
     render() {
-      if (this.model.isClosed() || this.model.campaign.expired) {
+      if (this.model.isClosed() || (this.model.is_approved >= 6 && this.model.campaign.expired)) {
         const template = require('./templates/detailNotAvailable.pug');
         this.$el.html(template());
         return this;
