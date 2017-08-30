@@ -5,8 +5,8 @@ section.slider-main
     p GrowthFountain is coming to your town. 
       a(href="/pg/heartland-tour") Apply Now
       |  to join The Heartland Tour and present your fundraise live!
-  include slider
-include topbanner
+  include ../../../templates/slider
+include ../../../templates/topbanner
 
 secetion.email-subscription.subscription-campaing-list.main-subscription
   .container
@@ -26,7 +26,7 @@ section.campaing-list.campaign-list-main-page
   .container#campaignList
     .col-lg-12
       h2.text-uppercase.text-sm-center.text-xs-center.m-t-0 !{app.config.indexPage.campaignListTitle}
-    include ../components/campaign/templates/_list
+    include ../../campaign/templates/_list
     .col-lg-12.text-lg-center.text-md-center.text-xs-center
       if collection && collection.count && collection.count > GENERAL.COMPANIES_ON_MAINPAGE
         a(href="/companies").btn.btn-sm.btn-secondary.btn-see-all 
@@ -142,7 +142,7 @@ section.better
           p.small-powered-by Powered by
           img(src=require('images/pages/news4.png'), alt="")
 
-include bottombanner
+include ../../../templates/bottombanner
 
 section.news-on-main-page
   .container

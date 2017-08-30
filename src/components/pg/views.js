@@ -146,7 +146,7 @@ module.exports = {
 
   main: Backbone.View.extend({
     el: '#content',
-    template: require('src/templates/mainPage.pug'),
+    template: require('./templates/mainPage.pug'),
     initialize(options) {
       this.collection = options.collection;
       //TODO: universal optimization in scriptLoader
@@ -177,16 +177,16 @@ module.exports = {
     },
 
     attachEvents() {
-      if (!this.srollHandler) 
-        $(window).on('scroll', this.scrollHandler = paralaxScrollHandler.bind(this));
+      if (!this.scrollHandler)
+        $(window).on('scroll', this.scrollHandler = paralaxScrollHandler);
 
       if (!this.resizeHandler) {
         scaleVideoContainer();
         initBannerVideoSize('.video-container .poster img');
         initBannerVideoSize('.video-container .filter');
         initBannerVideoSize('.video-container video');
-        
-        $(window).on('resize', this.resizeHandler = resizeHandler.bind(this));
+
+        $(window).on('resize', this.resizeHandler = resizeHandler);
       }
     },
 
