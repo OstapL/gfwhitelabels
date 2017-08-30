@@ -62,7 +62,9 @@ function getOCCF(optionsR, viewName, params = {}, View) {
     if(typeof viewName == 'string') {
       app.currentView = new View[viewName](Object.assign({}, params));
       app.currentView.render();
-      app.hideLoading();
+      if(document.location.href.indexOf('oauth_token=') === -1) {
+        app.hideLoading();
+      }
     } else {
       app.currentView = viewName();
       app.currentView.render();
