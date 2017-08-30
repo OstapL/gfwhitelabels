@@ -66,7 +66,7 @@ function resizeHandler() {
   scaleBannerVideoSize('.video-container .poster img');
   scaleBannerVideoSize('.video-container .filter');
   scaleBannerVideoSize('.video-container video');
-}
+};
 
 module.exports = {
   WithLeftMenu: Backbone.View.extend({
