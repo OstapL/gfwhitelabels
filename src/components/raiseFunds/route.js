@@ -85,18 +85,20 @@ module.exports = {
         });
       }
 
-      let head = document.getElementsByTagName('head')[0];
-      let css = document.createElement('link');
-      css.rel = 'stylesheet';
-      css.href = "https://calendly.com/assets/external/widget.css";
-      head.appendChild(css);
+      if ((document.location.search || '').indexOf('nometric') < 0) {
+        let head = document.getElementsByTagName('head')[0];
+        let css = document.createElement('link');
+        css.rel = 'stylesheet';
+        css.href = "https://calendly.com/assets/external/widget.css";
+        head.appendChild(css);
 
-      let script = document.createElement('script');
-      script.type = 'text/javascript';
-      script.src = "https://calendly.com/assets/external/widget.js";
-      script.onreadystatechange = runCalendry;
-      script.onload = runCalendry;
-      head.appendChild(script);
+        let script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = "https://calendly.com/assets/external/widget.js";
+        script.onreadystatechange = runCalendry;
+        script.onload = runCalendry;
+        head.appendChild(script);
+      }
     },
 
     company() {
