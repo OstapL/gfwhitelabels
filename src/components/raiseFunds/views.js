@@ -47,6 +47,12 @@ module.exports = {
     },
 
     initialize() {
+      this.listenToNavigate();
+      $(window).on('scroll', paralaxScrollHandler);
+
+      if ((document.location.search || '').indexOf('nometric') >= 0)
+        return;
+
       const scrollTimeout = 5000;
       const noscrollTimeout = 8000;
 
@@ -93,9 +99,6 @@ module.exports = {
         $(window).on('scroll', showHintOnScroll);
         $('body').on('click', '.calendly-badge-widget', this.hideHint.bind(this));
       });
-
-      this.listenToNavigate();
-      $(window).on('scroll', paralaxScrollHandler);
     },
 
     hideHint() {
