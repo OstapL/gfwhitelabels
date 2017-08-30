@@ -1757,7 +1757,6 @@ module.exports = {
             return false;
           }
 
-          console.log(data);
           localStorage.removeItem('xero_docs');
           localStorage.removeItem('xero_credentials');
           $('#xeroBlock').scrollTo(-25);
@@ -1769,7 +1768,6 @@ module.exports = {
             this.model.fiscal_recent_group_data
           );
           var fileFolderDropzone = require('directives/setdropzone/folder.js'); 
-          debugger;
           var el = new fileFolderDropzone.FolderDropzone(this.oldView,
             'fiscal_recent_group_id',
             'fiscal_recent_group_data',
