@@ -1654,9 +1654,11 @@ module.exports = {
     }),
 
     initialize(options) {
+      this.oldView = options.oldView;
       this.listenToNavigate();
 
       if(document.location.href.indexOf('oauth_token=') !== -1) {
+        app.showLoading();
         this.xeroGrabData();
       }
     },
@@ -1744,21 +1746,38 @@ module.exports = {
         e.target.removeAttribute('disabled');
         return false;
       } else {
-        app.showLoading();
         api.makeRequest(
             app.config.formcServer + '/' + this.model.id + '/financial-condition/xero',
             'PUT',
             data
         ).then((data) => {
-          debugger;
-          console.log(data);
+
+          if (data.length  === 0) {
+            app.hideLoading();
+            return false;
+          }
+
           localStorage.removeItem('xero_docs');
           localStorage.removeItem('xero_credentials');
           $('#xeroBlock').scrollTo(-25);
+          const Folder = require('models/folder.js');
+          this.model.fiscal_recent_group_data = data;
+          this.model.fiscal_recent_group_id = new Folder(
+            this.model.url,
+            this.model.fiscal_recent_group_id.id,
+            this.model.fiscal_recent_group_data
+          );
+          var fileFolderDropzone = require('directives/setdropzone/folder.js'); 
+          var el = new fileFolderDropzone.FolderDropzone(this.oldView,
+            'fiscal_recent_group_id',
+            'fiscal_recent_group_data',
+            this.oldView.fields.fiscal_recent_group_id
+          );
+          document.querySelector('.fiscal_recent_group_id').parentElement.innerHTML = el.render().resultHTML;
+          app.hideLoading();
           //window.location.reload();
         }).fail((xhr, message) => {
           app.hideLoading();
-          this.$el.find('#xeroModal .modal-body').html('<h3>' + xhr.responseJSON.message + '</h3>');
         });
       }
 
@@ -1820,7 +1839,6 @@ module.exports = {
 
       const View = require('components/formc/views.js');
 
-
       this.$el.html(
         template({
           view: this,
@@ -1836,7 +1854,8 @@ module.exports = {
 
       let xeroIntegration =  new View.xeroIntegration({
         model: this.model,
-        el: this.el.querySelector('#xeroBlock')
+        el: this.el.querySelector('#xeroBlock'),
+        oldView: this
       });
       xeroIntegration.render();
       xeroIntegration.delegateEvents();
@@ -2309,7 +2328,7 @@ module.exports = {
       } else if(name.indexOf('campaign.') !== -1) {
         fieldName = name.split('campaign.')[1];
 
-        if (fieldName = 'security_type')  {
+        if (fieldName === 'security_type')  {
           val = parseInt(val);
         }
 
