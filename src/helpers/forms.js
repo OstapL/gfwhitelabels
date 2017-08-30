@@ -108,9 +108,11 @@ module.exports = {
     }
     e.target.setAttribute('disabled', true);
 
-    api.deleteEmptyNested.call(this, this.fields, newData);
-    api.fixDateFields.call(this, this.fields, newData);
-    // api.fixFieldTypes.call(this, this.fields, newData);
+    const fields = this.fieldsSchema || this.fields;
+
+    api.deleteEmptyNested.call(this, fields, newData);
+    api.fixDateFields.call(this, fields, newData);
+    // api.fixFieldTypes.call(this, fields, newData);
 
     // if view already have some data - extend that info
     if(this.hasOwnProperty('model') && Object.keys(this.model).length > 0 && !this.doNotExtendModel && method != 'PATCH') {
@@ -124,8 +126,8 @@ module.exports = {
       _(d).forEach((el, i) => {
         if(el.kind == 'E' || el.kind == 'A') {
           patchData[el.path[0]] = newData[el.path[0]];
-          if(this.fields[el.path[0]] && this.fields[el.path[0]].hasOwnProperty('dependies')) {
-            this.fields[el.path[0]].dependies.forEach((dep, index) => {
+          if(fields[el.path[0]] && fields[el.path[0]].hasOwnProperty('dependies')) {
+            fields[el.path[0]].dependies.forEach((dep, index) => {
               patchData[dep] = newData[dep];
             });
           }
@@ -136,8 +138,8 @@ module.exports = {
             newArr.push(arr);
           });
           patchData[el.path[0]] = newArr;
-          if(this.fields[el.path[0]] && this.fields[el.path[0]].hasOwnProperty('dependies')) {
-            this.fields[el.path[0]].dependies.forEach((dep, index) => {
+          if(fields[el.path[0]] && fields[el.path[0]].hasOwnProperty('dependies')) {
+            fields[el.path[0]].dependies.forEach((dep, index) => {
               patchData[dep] = newData[dep];
             });
           }
@@ -158,7 +160,8 @@ module.exports = {
     };
 
     this.$('.help-block').remove();
-    let fields = this.fields;
+    // let fields = this.fields;
+    let changedFields = fields;
     if (method == 'PATCH') {
       let patchFields = {};
       _(newData).each((el, key) => {
@@ -168,10 +171,17 @@ module.exports = {
           console.error('field meta data not found: ' + key);
         }
       });
-      fields = patchFields;
+      changedFields = patchFields;
     }
 
-    if(!app.validation.validate(fields, newData, this)) {
+    if(form.length > 0) {
+      let errorsInput = form[0].querySelectorAll('.has-error');
+      if (errorsInput.length > 0) {
+        errorsInput.forEach((er) => er.classList.remove('has-error'));
+      }
+    }
+
+    if(!app.validation.validate(changedFields, newData, this)) {
       _(app.validation.errors).each((errors, key) => {
         app.validation.invalidMsg(this, key, errors);
       });
@@ -222,7 +232,11 @@ module.exports = {
             form[0].removeAttribute('disabled');
           }
           e.target.removeAttribute('disabled');
-          api.errorAction(this, xhr, status, text, this.fields);
+          if (typeof this._error == 'function') {
+            debugger;
+            this._error(xhr.responseJSON, newData, method);
+          }
+          api.errorAction(this, xhr, status, text, fields);
         });
     }
 

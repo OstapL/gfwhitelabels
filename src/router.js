@@ -2,6 +2,7 @@ const componentRoutes = [
   require('components/payBackShareCalculator/route.js'),
   require('components/capitalRaiseCalculator/route.js'),
   require('components/whatMyBusinessWorthCalculator/route.js'),
+  require('components/blog/route.js'),
   require('components/raiseFunds/route.js'),
   require('components/pg/route.js'),
   require('components/campaign/route.js'),
@@ -9,7 +10,6 @@ const componentRoutes = [
   require('components/accountProfile/route.js'),
   require('components/establishedBusinessCalculator/route.js'),
   require('components/formc/route.js'),
-  // require('components/blog/route'),
 ];
 
 const checkSafeExtend = (dest={}, src={}) => {
@@ -42,33 +42,47 @@ const notFound = () => {
 
 module.exports = Backbone.Router.extend(_.extend({
   routes: _.extend({}, routesMap.routes, { '*notFound': notFound }),
+  previousUrl: '',
+  currentUrl: '',
 
   initialize() {
   },
 
   execute(callback, args, name) {
-    //as we send custom events to pixel default events we will sent explicitly
-    //
-    if(
+    if (
         window.location.pathname.substr(window.location.pathname.length-1, 1) == '/' &&
         window.location.pathname != '/'
         ) {
       window.location = window.location.pathname.substr(0, window.location.pathname.length-1);
     }
 
+    // WHY?!
     app.clearClasses('#page', ['page']);
+    // debugger;
 
     if (_.contains(routesMap.auth, name) && !app.user.ensureLoggedIn()) {
+      // Revert back the current URL, 
+      // Do not update url
+      if (app.routers.currentUrl) {
+        app.routers.navigate(app.routers.currentUrl, {trigger: false});
+      }
       return false;
     }
+
+    if (app.currentView) {
+      app.currentView.destroy();
+    }
+    this.previousUrl = this.currentUrl;
+    this.currentUrl = window.location.pathname;
 
     if(app.seo.title[window.location.pathname]) {
       document.title = app.seo.title[window.location.pathname];
       document.head.querySelector('meta[name="description"]').content = app.seo.meta[window.location.pathname];
       document.head.querySelector('meta[property="og:title"]').content = app.seo.title[window.location.pathname];
       document.head.querySelector('meta[property="og:description"]').content = app.seo.meta[window.location.pathname];
-      document.head.querySelector('meta[property="og:url"]').content = window.location.href;
     }
+
+    document.head.querySelector('meta[property="og:url"]').content = window.location.href;
 
     if (!app.user.is_anonymous()) {
       api.makeRequest(app.config.authServer + '/log', 'POST', {
@@ -94,6 +108,8 @@ module.exports = Backbone.Router.extend(_.extend({
     $('.popover').popover('hide');
   },
 
+  // WHY ?
+  // Зачем это ?
   navigateWithReload(href, options) {
     const currentLocation = window.location.pathname + (window.location.search || '');
     if (href === currentLocation) {

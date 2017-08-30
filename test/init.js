@@ -6,18 +6,25 @@ if (require.extensions) {
       pretty: false,
       client: true,
       inlineRuntimeFunctions: true,
-      globals: ['require', 'app'],
     });
     module.exports = template
   }
 }
 
+
 const { LocalStorage } = require('node-localstorage');
 const { JSDOM } = require('jsdom');
 
 global.localStorage = new LocalStorage('./test/localStorageTemp');
-global.window = (new JSDOM('<body><div id="page"><div id="content"></div></div></body>', {
-  url: 'https://alpha.growthfountain.com'
+global.window = (new JSDOM(`<html><head>
+      <meta name="description" />
+      <meta property="og:title" content=""/>
+      <meta property="og:description" content=""/>
+      <meta property="og:image" content=""/>
+      <meta property="og:url" content=""/>
+      <body><div id="page"><div id="content"></div></div>
+      </body></html>`, {
+  url: process.env.URL || 'https://alpha.growthfountain.com'
 })).window;
 
 global.document = window.document;

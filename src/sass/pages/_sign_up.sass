@@ -17,6 +17,8 @@
 
   .position-relative
     position: relative
+    @media only screen and (max-width : 576px)
+      padding: 0
 
   .sign-up-left-banner
     height: 100%
@@ -52,8 +54,12 @@
         p
           font-size: rem(12)
           line-height: 16px
+          max-width: 335px
+          margin: auto
   .sign-up-right
     border: solid 1px $light_grey
+    @media only screen and (max-width : 576px)
+      border: none
     .label-text
       font-size: rem(11)
     p
@@ -87,10 +93,19 @@
         margin-right: 0
     .bottom-line
       background-color: $alabaster
-      line-height: 14px
-      font-size: rem(11)
+      line-height: 15px
+      font-size: rem(12)
       padding-top: rem(5)
       padding-bottom: rem(5)
+      p
+        max-width: 440px
+        line-height: 15px
+        font-size: rem(12)
+        padding-top: rem(2)
+        padding-bottom: rem(2)
+        margin-bottom: 0
+        color: $black
+        margin: auto
   .p-r-block
     padding-right: 0
     @media only screen and (max-width : 767px)
@@ -215,7 +230,12 @@
   .modal-body
     .or
       margin-top: 30px!important
+  .forgot
+    margin-bottom: rem(20)
   .bottom
     line-height: rem(15)
     font-size: rem(12)
     text-align: center
+    margin-top: rem(45)
+    @media only screen and (max-width : 576px)
+      margin-top: 20px

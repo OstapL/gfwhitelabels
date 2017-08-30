@@ -1,4 +1,5 @@
 const socialAuth = require('./social-auth.js');
+const { createFields } = require('fields/new-fields.js');
 
 const LOGIN_FIELDS = {
   email: {
@@ -53,8 +54,8 @@ const popupAuthHelper = {
     'submit form': api.submitAction,
     'click .reset-password-link': 'resetPassword',
     'click .switchAuthPopup': 'switchPopupView',
-    'click .btn-social-network': 'loginWithSocial',
   },
+
   methods: {
     renderModal(selector, switchToView) {
       $('body').scrollTo();
@@ -70,10 +71,6 @@ const popupAuthHelper = {
       this.initModal(selector, switchToView);
 
       return this;
-    },
-
-    loginWithSocial(e) {
-      socialAuth.loginWithSocialNetwork.call(this, e);
     },
 
     resetPassword(e) {
@@ -110,6 +107,7 @@ const popupAuthHelper = {
         backdrop: 'static',
       });
     },
+
     destroy() {
       this.$modal.off('hidden.bs.modal');
       this.$modal.remove();
@@ -117,15 +115,66 @@ const popupAuthHelper = {
       this.$el.remove();
     },
   },
+
+};
+
+const onRegistrationComplete = (data) => {
+  // WHY ??
+  // для чего тут этот if?
+  if (typeof(data) !== 'object')
+    return;
+
+  // WHY ??
+  // Почему просто не перенести этот код в events.RegiatrsionComplete?
+  // мы же там собираем events и наш лог это тоже событие
+  // зачем это отдельно выносить?
+  const analyticsData = Object.assign({
+    referrer: document.referrer,
+  }, data);
+
+  app.analytics.emitEvent(app.analytics.events.RegistrationCompleted, analyticsData);
+
+  api.makeRequest(app.config.authServer + '/log', 'POST', {
+    path: document.referrer,
+    device: navigator.userAgent
+  });
+};
+
+function signUpWithSocialNetwork(e) {
+  e.preventDefault();
+  const network = $(e.target).closest('.btn-social-network').data('network');
+
+  socialAuth.signupWithSocialNetwork.call(this, network).then((data) => {
+    if (data === false)
+      return;
+
+    app.user.setData(data).then(() => {
+      onRegistrationComplete(app.user.stats);
+    });
+  });
+};
+
+function logInWithSocialNetwork(e) {
+  e.preventDefault();
+  const network = $(e.target).closest('.btn-social-network').data('network');
+
+  socialAuth.loginWithSocialNetwork.call(this, network).then((data) => {
+    if (data === false)
+      return;
+
+    app.user.setData(data);
+  });
 };
 
 const Views = {
   popupLogin: Backbone.View.extend(_.extend({
     urlRoot: app.config.authServer + '/rest-auth/login',
     template: require('./templates/popupLogin.pug'),
-    events: popupAuthHelper.events,
+    events: _.extend({
+      'click .btn-social-network': 'loginWithSocial',
+    }, popupAuthHelper.events),
 
-    initialize(options) {
+    initialize() {
       this.fields = LOGIN_FIELDS;
     },
 
@@ -139,7 +188,15 @@ const Views = {
     },
 
     loginWithSocial(e) {
-      socialAuth.loginWithSocialNetwork.call(this, e);
+      e.preventDefault();
+      const network = $(e.target).closest('.btn-social-network').data('network');
+
+      socialAuth.loginWithSocialNetwork.call(this, network).then((data) => {
+        if (data === false)
+          return;
+
+        app.user.setData(data);
+      });
     },
 
   },
@@ -150,7 +207,9 @@ const Views = {
     urlRoot: `${app.config.authServer}/rest-auth/registration`,
     template: require('./templates/popupSignup.pug'),
 
-    events: popupAuthHelper.events,
+    events: _.extend({
+      'click .btn-social-network': 'signUpWithSocial',
+    }, popupAuthHelper.events),
 
     initialize() {
       this.fields = SIGNUP_FIELDS;
@@ -162,11 +221,15 @@ const Views = {
 
     _success(data) {
       app.user.setData(data).then(() => {
-        app.analytics.emitEvent(app.analytics.events.RegistrationCompleted, app.user.stats);
+        onRegistrationComplete(app.user.stats);
       });
+
       this.$modal.modal('hide');
     },
 
+    signUpWithSocial(e) {
+      signUpWithSocialNetwork.call(this, e);
+    },
   },
     popupAuthHelper.methods
   )),
@@ -180,20 +243,42 @@ const Views = {
     },
 
     initialize() {
-      this.fields = LOGIN_FIELDS;
+      this.fieldsSchema = LOGIN_FIELDS;
+
+      this.fieldsAttr = {
+        email: {
+          placeholder: 'E-mail',
+          autocomplete: 'off',
+          inputContainerClass: 'form-group row clearfix',
+        },
+        password: {
+          placeholder: 'Password',
+          autocomplete: 'off',
+          inputContainerClass: 'form-group row clearfix',
+        },
+      };
+
+      this.fields = createFields(this.fieldsSchema, this.fieldsAttr);
+
+      this.listenToNavigate();
     },
 
     render() {
       $('body').scrollTo();
 
       this.$el.html(
-        this.template()
+        this.template({
+          fields: this.fields,
+        })
       );
+
+      _.each(this.fields, (field) => field.postRender());
+
       return this;
     },
 
     loginWithSocial(e) {
-      socialAuth.loginWithSocialNetwork.call(this, e);
+      logInWithSocialNetwork.call(this, e);
     },
 
     _success(data) {
@@ -207,30 +292,58 @@ const Views = {
     template: require('./templates/signup.pug'),
     events: {
       'submit .signup-form': api.submitAction,
-      'click .btn-social-network': 'loginWithSocial',
+      'click .btn-social-network': 'signUpWithSocial',
     },
 
     initialize() {
-      this.fields = SIGNUP_FIELDS;
+      //this fields left for backward compatibility;
+      this.fieldsSchema = SIGNUP_FIELDS;
+
+      this.fieldsAttr = {
+        first_name: {
+          placeholder: 'First Name',
+          inputContainerClass: 'form-group row clearfix',
+        },
+        last_name: {
+          placeholder: 'Last Name',
+          inputContainerClass: 'form-group row clearfix',
+        },
+        email: {
+          placeholder: 'E-mail',
+          inputContainerClass: 'form-group row clearfix',
+        },
+        password1: {
+          placeholder: 'Password',
+          inputContainerClass: 'form-group row clearfix',
+        },
+      };
+
+      this.fields = createFields(this.fieldsSchema, this.fieldsAttr);
+      
+      this.listenToNavigate();
     },
 
     render() {
       this.$el.html(
-        this.template({})
+        this.template({
+          fields: this.fields,
+        })
       );
+
+      _(this.fields).each(field => field.postRender());
+
       return this;
     },
 
     _success(data) {
       app.user.setData(data).then(() => {
-        app.analytics.emitEvent(app.analytics.events.RegistrationCompleted, app.user.stats);
+        onRegistrationComplete(app.user.stats);
       });
     },
 
-    loginWithSocial(e) {
-      socialAuth.loginWithSocialNetwork.call(this, e);
+    signUpWithSocial(e) {
+      signUpWithSocialNetwork.call(this, e);
     },
-
   }),
 
   reset: Backbone.View.extend({
@@ -241,17 +354,29 @@ const Views = {
       'submit form': api.submitAction,
     },
 
+    initialize() {
+      this.fieldsSchema = _.pick(SIGNUP_FIELDS, ['email', 'domain']);
+      this.fieldsAttr = {
+        email: {
+          id: 'email',
+          placeholder: 'E-mail',
+          inputContainerClass: 'form-group row clearfix',
+          inputClass: 'form-control',
+        },
+      };
+
+      this.fields = createFields(this.fieldsSchema, this.fieldsAttr);
+
+      this.listenToNavigate();
+    },
+
     render() {
-      this.fields = {};
-      this.fields.email = {
-        type: 'email',
-        required: true,
-      };
-      this.fields.domain = {
-        type: 'text',
-        required: true,
-      };
-      this.el.innerHTML = this.template();
+      this.el.innerHTML = this.template({
+        fields: this.fields,
+      });
+
+      _.each(this.fields, field => field.postRender());
+
       return this;
     },
 
@@ -297,10 +422,12 @@ const Views = {
       this.title = options.title;
       this.company_name = options.company_name;
       this.id = options.id;
+      this.urlRoot = this.urlRoot.replace(':id', this.id);
+
+      this.listenToNavigate();
     },
 
     render() {
-      this.urlRoot = this.urlRoot.replace(':id', this.id);
       this.$el.html(
         this.template({
           title: this.title,

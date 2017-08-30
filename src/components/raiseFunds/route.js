@@ -34,12 +34,13 @@ function getOCCF(optionsR, viewName, params = {}, View) {
     params.formc = new app.models.Formc(app.user.formc);
 
     if(typeof viewName == 'string') {
-      new View[viewName](Object.assign({}, params)).render();
+      app.currentView = new View[viewName](Object.assign({}, params));
+      app.currentView.render();
       app.hideLoading();
     } else {
-      viewName();
+      app.currentView = viewName();
+      app.currentView.render();
     }
-
   });
 };
 
@@ -60,45 +61,12 @@ module.exports = {
     landing() {
       $('body').scrollTo();
       app.addClassesTo('#page', ['raise-capital-landing']);
-      let view = require('./templates/landing.pug');
-      document.getElementById('content').innerHTML = view();
-      app.hideLoading();
-      $(window).scroll(function() {
-        var st = $(this).scrollTop() /15;
-
-        $(".scroll-paralax .background").css({
-          "transform" : "translate3d(0px, " + st /2 + "%, .01px)",
-          "-o-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
-          "-webkit-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
-          "-moz-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
-          "-ms-transform" : "translate3d(0px, " + st /2 + "%, .01px)"
-
-        });
-      });
-
-      function runCalendry() {
-        Calendly.initBadgeWidget({
-          url: 'https://calendly.com/morganatgrowthfountain/15min',
-          text: 'Schedule a Call!',
-          color: '#00a2ff',
-          branding: true
-        });
-      }
-
-      if ((document.location.search || '').indexOf('nometric') < 0) {
-        let head = document.getElementsByTagName('head')[0];
-        let css = document.createElement('link');
-        css.rel = 'stylesheet';
-        css.href = "https://calendly.com/assets/external/widget.css";
-        head.appendChild(css);
-
-        let script = document.createElement('script');
-        script.type = 'text/javascript';
-        script.src = "https://calendly.com/assets/external/widget.js";
-        script.onreadystatechange = runCalendry;
-        script.onload = runCalendry;
-        head.appendChild(script);
-      }
+      require.ensure([], () => {
+        const Views = require('components/raiseFunds/views.js');
+        const v = new Views.landing();
+        v.render();
+        app.hideLoading();
+      }, 'raise_funds_chunk');
     },
 
     company() {

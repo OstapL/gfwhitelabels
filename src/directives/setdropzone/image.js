@@ -101,7 +101,8 @@ class ImageDropzone extends file.FileDropzone {
       }
     });
 
-    reorgData.site_id = app.sites.getId(),
+    reorgData.site_id = app.sites.getId();
+    reorgData.name = '';
     this.fileElement.update(reorgData);
     // this.model[this.fileElement.fieldName] = reorgData.id;
     this.model[this.fileElement.fieldDataName] = reorgData;
@@ -128,7 +129,7 @@ class CropperDropzone {
     this.options = options;
 
     this.options.control = Object.assign({}, {
-      viewMode: 0,
+      viewMode: 2,
       dragMode: 'crop',
       aspectRatio: 1,
       data: {}, //prev stored cropper data. We may need it when we allow user to change img cropping
@@ -176,7 +177,7 @@ class CropperDropzone {
         '</div>' +
         '<div class="row">' +
           '<div class="col-xl-12 m-t-3 m-b-2 text-xs-center">' +
-            '<button type="button" class="btn btn-secondary m-r-2 cropper-cancel" data-dismiss="modal">' +
+            '<button type="button" class="btn btn-secondary m-r-2 cropper-cancel cropperCancel" data-dismiss="modal">' +
               'Cancel' +
             '</button>' +
             '<button type="button" class="btn btn-primary cropper-ok" data-dissmiss="modal">' +
@@ -195,7 +196,7 @@ class CropperDropzone {
         '</div>' +
         '<div class="row">' +
           '<div class="col-xl-12 m-t-3 m-b-0 text-xs-right image-crop-padding">' +
-            '<button type="button" class="btn btn-secondary m-r-2 cropper-cancel" data-dismiss="modal">' +
+            '<button type="button" class="btn btn-secondary m-r-2 cropper-cancel cropperCancel" data-dismiss="modal">' +
               'Cancel' +
             '</button>' +
             '<button type="button" class="btn btn-primary cropper-ok" data-dissmiss="modal">' +
@@ -217,7 +218,7 @@ class CropperDropzone {
         '<div class="modal-dialog" role="document">' +
           '<div class="modal-content">' +
             '<div class="modal-header">' +
-              '<button type="button" class="close" data-dismiss="modal" aria-label="Close">' +
+              '<button type="button" class="close cropperCancel" data-dismiss="modal" aria-label="Close">' +
                 '<span aria-hidden="true"><i class="fa fa-times"> </i></span> ' +
               '</button>' +
               '<h4 class="modal-title" id="exampleModalLabel"></h4>' +
@@ -229,7 +230,22 @@ class CropperDropzone {
         '</div>' +
       '</div>' +
     '</div>';
-    this.element = document.createRange().createContextualFragment(this.element).firstChild;
+    this.element = document.createRange().createContextualFragment(this.element);
+    this.element.querySelectorAll('.cropperCancel').forEach((el) => {
+      el.addEventListener(
+        'click',
+        (ev) => {
+          this.dropzone.cropperQuery.shift();
+
+          if (this.dropzone.cropperQuery.length !== 0) {
+            this.dropzone.cropperQuery[0].render(
+              this.dropzone.element.closest('.dropzone')
+            );
+          }
+        },
+        {once: true}
+      );
+    });
 
     document.querySelectorAll('.cropModal').forEach((el, i) => {
       el.remove();
@@ -319,14 +335,31 @@ class CropperDropzone {
           }
         });
 
-        if (this.element.querySelector('#name')) {
-          this.file.file.name = this.element.querySelector('#name').value;
+        if (this.$modal.find('#name').length) {
+          if (this.dropzone.galleryElement) {
+            this.dropzone.galleryElement.file.data.find((el) => { 
+              return el.id == this.file.file.id;
+            }).name = this.$modal.find('#name').val();
+          }
+          if (this.dropzone.file) {
+            this.dropzone.file.name = this.$modal.find('#name').val();
+          }
+          this.file.file.name = this.$modal.find('#name').val();
         }
 
         this.file.update(this.file.file).done(() => {
           this.$modal.modal('hide');
           setTimeout(() => {
             this.$modal.remove();
+            if (this.dropzone.cropperQuery) {
+              this.dropzone.cropperQuery.shift();
+
+              if (this.dropzone.cropperQuery.length !== 0) {
+                this.dropzone.cropperQuery[0].render(
+                  this.dropzone.element.closest('.dropzone')
+                );
+              }
+            }
           }, 400);
         });
       });

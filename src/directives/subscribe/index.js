@@ -27,17 +27,17 @@ class MailSubscriber {
         data: data,
         dataType: 'jsonp',
       }).then((response) => {
-        app.routers.navigate(next, { trigger: true, });
-        // if (response.result == 'success') {
-        //   app.dialogs.info(removeHTMLFromMessage(response.msg || 'Check your email to proceed with your subscription.'));
-        //   $form.find('[type=email]').val('');
-        //   return;
-        // }
-        // app.dialogs.error(removeHTMLFromMessage(response.msg));
+        if (response.result == 'success') {
+          return app.routers.navigate(next, { trigger: true, });
+          // app.dialogs.info(removeHTMLFromMessage(response.msg || 'Check your email to proceed with your subscription.'));
+          // $form.find('[type=email]').val('');
+          // return;
+        }
+        app.dialogs.error(removeHTMLFromMessage(response.msg));
       }).fail((jqXHR, textStatus, errorThrown) => {
-        app.routers.navigate(next, { trigger: true, });
-        // console.error(errorThrown);
-        // app.dialogs.error('An error occurred, try again later.');
+        // app.routers.navigate(next, { trigger: true, });
+        console.error(errorThrown);
+        app.dialogs.error('An error occurred, try again later.');
       });
 
       app.analytics.emitEvent('EmailSubscription', data);
