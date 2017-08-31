@@ -192,8 +192,11 @@ module.exports = {
 
     destroy() {
       if (this.$carousel) {
-        this.$carousel.owlCarousel('destroy');
-        this.$carousel = null;
+        setTimeout(() => {
+          this.$carousel.hide();
+          this.$carousel.owlCarousel('destroy');
+          this.$carousel = null;
+        }, 4000);
       }
 
       if (this.scrollHandler) {
