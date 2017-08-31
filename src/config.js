@@ -14,7 +14,7 @@ module.exports = {
 
   teamName: 'Team',
   teamTitle: "Meet The Team",
-  siteTitle: ' | GrowthFountain Equity Crowdfunding',
+  siteTitle: 'GrowthFountain | Equity Crowdfunding Platform',
 
   facebookClientId: '1071081646296574',
   googleClientId: '805823281871-ve3unmva9aer69papghudk0dnpf8tqr2.apps.googleusercontent.com',
