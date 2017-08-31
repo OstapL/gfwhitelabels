@@ -8,7 +8,7 @@ module.exports = {
     calculatorPaybackshareStep1() {
       require.ensure([], () => {
         const View = require('./views');
-        new View.step1().render();
+        app.currentView = new View.step1().render();
         $('body').scrollTo();
         app.hideLoading();
       }, 'payback_share_calculator_chunk');
@@ -17,7 +17,7 @@ module.exports = {
     calculatorPaybackshareStep2() {
       require.ensure([], () => {
         const View = require('./views');
-        new View.step2().render();
+        app.currentView = new View.step2().render();
         $('body').scrollTo();
         app.hideLoading();
       }, 'payback_share_calculator_chunk');
@@ -26,7 +26,7 @@ module.exports = {
     calculatorPaybackshareStep3: function () {
       require.ensure([], () => {
         const View = require('./views');
-        new View.step3().render();
+        app.currentView = new View.step3().render();
         $('body').scrollTo();
         app.hideLoading();
       }, 'payback_share_calculator_chunk');
