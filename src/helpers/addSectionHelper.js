@@ -122,14 +122,14 @@ module.exports = {
        */
 
       this.jsonTemplates = {};
-
-      _(this.fields).each((el, key) => {
+      Object.keys(this.fields).forEach((key) => {
+        const el = this.fields[key];
         if(el.type == 'nested') {
           if(typeof this.model[key] != 'object') {
             this[key + 'Index'] =  0;
           }
           else {
-            this[key + 'Index'] = Array.isArray(this.model[key]) ? 
+            this[key + 'Index'] = Array.isArray(this.model[key]) ?
               this.model[key].length - 1: Object.keys(this.model[key]).length - 1;
             if(this[key + 'Index'] == -1) {
               this[key + 'Index'] = 0;
@@ -164,8 +164,8 @@ module.exports = {
 
     buildSnippets(snippets, context={}) {
       this.snippets = snippets;
-
-      _(this.fields).each((el, key) => {
+      Object.keys(this.fields).forEach((key) => {
+        const el = this.fields[key];
         if (el.type !== 'nested' || el.schema.urls)
           return;
 
@@ -186,8 +186,8 @@ module.exports = {
        * PARAMS:
        *    - using this.labels dict
        */
-
-      _(this.fields).each((el, key) => {
+      Object.keys(this.fields).each((key) => {
+        const el = this.fields[key];
         if(el.type == 'nested') {
           _(el.schema).each((subel, subkey) => {
             if(this.labels[key])

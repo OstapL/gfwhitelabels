@@ -1,5 +1,3 @@
-const validation = require('components/validation/validation.js');
-
 function countChildComments(comment) {
   let cnt = comment.children.length;
   (comment.children || []).forEach((childComment) => {
@@ -223,8 +221,9 @@ module.exports = {
         data.related = relatedRole;
       }
 
-      if (!validation.validate(this.fields, data)) {
-        _(validation.errors).each((errors, name) => {
+      if (!app.validation.validate(this.fields, data)) {
+        Object.keys(app.validation.errors).forEach((key) => {
+          const errors = app.validation.errors[key];
           this.invalidMsg(name, errors, $form);
         });
         $target.prop('disabled', false);

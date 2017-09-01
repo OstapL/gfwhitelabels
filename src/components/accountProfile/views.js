@@ -226,11 +226,10 @@ module.exports = {
       this.$('.help-block').remove();
       if (!app.validation.validate(fields, data)) {
         e.preventDefault();
-
-        _(app.validation.errors).each((errors, key) => {
-          validation.invalidMsg(this, key, errors);
+        Object.keys(app.validation.errors).forEach((key) => {
+          const errors = app.validation.errors[key];
+          app.validation.invalidMsg(this, key, errors);
         });
-
         return false;
       }
 

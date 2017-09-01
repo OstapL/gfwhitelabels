@@ -60,8 +60,8 @@ const submitFormc = function submitFormc(e) {
   ) {
     $('#formc_publish_confirm').modal('show');
   } else {
-    let errors = {};
-    _(progress).each((d, k) => {
+    Object.keys(progress).forEach((k) => {
+      const d = progress[k];
       if(k != 'perks') {
         if(d == false)  {
           $('#formc_publish .'+k).removeClass('collapse');
@@ -1739,7 +1739,8 @@ module.exports = {
       data.code = app.getParams().oauth_verifier;
 
       if(!app.validation.validate(this.fields, data, this)) {
-        _(app.validation.errors).each((errors, key) => {
+        Object.keys(app.validation.errors).forEach((key) => {
+          const errors = app.validation.errors[key];
           app.validation.invalidMsg(this, key, errors);
         });
         this.$('.help-block').prev().scrollTo(5);
@@ -2026,7 +2027,8 @@ module.exports = {
       }
 
       if (!app.validation.validate(this.fields.outstanding_securities.schema, data, this)) {
-        _(app.validation.errors).each((errors, key) => {
+        Object.keys(app.validation.errors).forEach((key) => {
+          const errors = app.validation.errors[key];
           app.validation.invalidMsg(this, key, errors);
         });
         this.$('.help-block').prev().scrollTo(5);
@@ -2255,7 +2257,8 @@ module.exports = {
         element.onblur = (e) => this.update(e);
 
         let v = app.valByKeyReplaceArray(this.fields, target.dataset.name).validate;
-        _(v.choices).each((el, i) => {
+        Object.keys(v.choices).forEach((i) => {
+          const el = v.choices[i];
           let e = document.createElement('option');
           e.innerHTML = el;
           e.value = i;
@@ -2427,7 +2430,8 @@ module.exports = {
           input.remove();
         })
         .fail((response) => {
-          _(response.responseJSON).each((val, key) => {
+          Object.keys(response.responseJSON).forEach((key) => {
+            let val = response.responseJSON[key];
             val = Array.isArray(val) ? val : [val];
             let errorDiv = document.createElement('div');
             e.target.classList.add('form-control-danger');

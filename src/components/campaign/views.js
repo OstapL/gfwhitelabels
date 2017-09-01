@@ -3,7 +3,6 @@ const typeOfDocuments = require('consts/typeOfDocuments.json');
 const STATUSES = require('consts/raisecapital/companyStatuses.json').STATUS;
 
 const COUNTRIES = require('consts/countries.json');
-const validation = require('components/validation/validation.js');
 
 const CalculatorView = require('./revenueShareCalculator.js');
 
@@ -124,8 +123,8 @@ module.exports = {
         ) {
           $('#company_publish_confirm').modal('show');
         } else {
-          var errors = {};
-          _(data.progress).each((d, k) => {
+          Object.keys(data.progress || {}).forEach((k) => {
+            const d = data.progress[k];
             if(k != 'perks') {
               if(d == false)  {
                 $('#company_publish .'+k).removeClass('collapse');
@@ -1013,10 +1012,11 @@ module.exports = {
 
       $('#income_worth_modal .helper-block').remove();
 
-      if(!validation.validate(fields, data, this)) {
+      if(!app.validation.validate(fields, data, this)) {
         e.preventDefault();
-        _(validation.errors).each((errors, key) => {
-          validation.invalidMsg(this, key, errors);
+        Object.keys(app.validation.errors).forEach((key) => {
+          const errors = app.validation.errors[key];
+          app.validation.invalidMsg(this, key, errors);
         });
         return false;
       }

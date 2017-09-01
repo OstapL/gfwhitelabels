@@ -13,8 +13,7 @@ const componentRoutes = [
 ];
 
 const checkSafeExtend = (dest={}, src={}) => {
-  let keys = Object.keys(dest);
-  _(keys).each((key) => {
+  Object.keys(dest).forEach((key) => {
     if (src[key])
       console.error(`Method ${key} is already in Router`, src);
   });

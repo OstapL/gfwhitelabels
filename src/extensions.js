@@ -6,9 +6,11 @@ _.extend(Backbone.View.prototype, {
   },
 
   assignLabels() {
-    _(this.fields).each((el, key) => {
+    Object.keys(this.fields).forEach((key) => {
+      const el = this.fields[key];
       if (el.type == 'nested') {
-        _(el.schema).each((subel, subkey) => {
+        Object.keys(el.schema || {}).forEach((subkey) => {
+          const subel = el.schema[subkey];
           if (this.labels[key])
             subel.label = this.labels[key][subkey];
         });
@@ -36,11 +38,11 @@ _.extend(Backbone.View.prototype, {
   },
 
   destroy(e) {
-
-    if (!this.fields) {
-      _(this.fields).each((field) => {
-        if (_.isFunction(field.destroy))
-          field.destroy()
+    if (this.fields) {
+      Object.keys(this.fields).forEach((name) => {
+        const field = this.fields[name];
+        if (typeof(field.destroy) === 'function')
+          field.destroy();
       });
     }
 

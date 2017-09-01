@@ -84,10 +84,11 @@ class Field {
 
     this.$el = $('#' + this.attr.elementID);
 
-    _(this.events).each((method, eventParam) => {
+    Object.keys(this.events).forEach((eventParam) => {
+      const method = this.events[eventParam];
       const [event, selector] = eventParam.split(' ');
       const handler = this[method];
-      if (!_.isFunction(handler))
+      if (typeof(handler) !== 'function')
         return;
 
       this.$el.on(event, selector, handler.bind(this));
@@ -98,7 +99,7 @@ class Field {
     if (!this.$el)
       return;
 
-    _(this.events).each((method, eventParam) => {
+    Object.keys(this.events).forEach((eventParam) => {
       const [event] = eventParam.split(' ');
       this.$el.off(event)
     });
@@ -374,7 +375,8 @@ const createField = (schema={}, attr={}) => {
 
 export const createFields = (schemas, attrs) => {
   const fields = {};
-  _(schemas).each((schema, name) => {
+  Object.keys(schemas).forEach((name) => {
+    const schema = schemas[name];
     const attr = attrs[name] || {};
     attr.name = name;
     const field = createField(schema, attr);

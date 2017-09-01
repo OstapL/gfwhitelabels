@@ -164,7 +164,7 @@ module.exports = {
     let changedFields = fields;
     if (method == 'PATCH') {
       let patchFields = {};
-      _(newData).each((el, key) => {
+      Object.keys(newData).forEach((key) => {
         if(fields[key]) {
           patchFields[key] = fields[key];
         } else {
@@ -182,7 +182,8 @@ module.exports = {
     }
 
     if(!app.validation.validate(changedFields, newData, this)) {
-      _(app.validation.errors).each((errors, key) => {
+      Object.keys(app.validation.errors).forEach((key) => {
+        const errors = app.validation.errors[key];
         app.validation.invalidMsg(this, key, errors);
       });
       this.$('.help-block').prev().scrollTo(25);
@@ -299,7 +300,8 @@ module.exports = {
   },
 
   fixDateFields(fields, data) {
-    _(fields).each((el, key) => {
+    Object.keys(fields).forEach((key) => {
+      const el = fields[key];
       if(el.type == 'date') {
         var key_year = key + '__year';
         var key_month = key + '__month';
@@ -331,7 +333,8 @@ module.exports = {
   },
 
   deleteEmptyNested(fields, data) {
-    _(fields).each((el, key) => {
+    Object.keys(fields).forEach((key) => {
+      const el = fields[key];
       if(el.type == 'nested') {
         if(Array.isArray(data[key])) {
           data[key] = data[key].filter(function(el) { return el !== null;})
@@ -365,7 +368,8 @@ module.exports = {
   },
 
   fixFieldsTypes(fields, data) {
-    _(fields).each((el, key) => {
+    Object.keys(fields).forEach((key) => {
+      const el = fields[key];
       if(el.type == 'string') {
         if (data && data[key]) {
           data[key] = app.helpers.format.unformatPrice(data[key]);

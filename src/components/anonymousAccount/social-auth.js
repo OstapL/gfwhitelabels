@@ -93,10 +93,10 @@ let functions = {
     const fields = view.fieldsSchema || view.fields;
     
     if (!app.validation.validate({ checkbox1: fields.checkbox1 }, data, this)) {
-      _(app.validation.errors).each((errors, key) => {
+      Object.keys(app.validation.errors).forEach((key) => {
+        const errors = app.validation.errors[key];
         app.validation.invalidMsg(view, key, errors);
       });
-
       return false;
     }
 

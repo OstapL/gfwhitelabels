@@ -330,7 +330,7 @@ const Views = {
         })
       );
 
-      _(this.fields).each(field => field.postRender());
+      Object.keys(this.fields).forEach((name) => this.fields[name].postRender());
 
       return this;
     },
