@@ -80,6 +80,8 @@ module.exports = Backbone.Router.extend(_.extend({
       document.head.querySelector('meta[name="description"]').content = app.seo.meta[window.location.pathname];
       document.head.querySelector('meta[property="og:title"]').content = app.seo.title[window.location.pathname];
       document.head.querySelector('meta[property="og:description"]').content = app.seo.meta[window.location.pathname];
+    } else {
+      document.title = 'GrowthFountain | Equity Crowdfunding Platform';
     }
 
     document.head.querySelector('meta[property="og:url"]').content = window.location.href;
