@@ -15,12 +15,16 @@ const componentRoutes = [
 const checkSafeExtend = (dest={}, src={}) => {
   let keys = Object.keys(dest);
   _(keys).each((key) => {
+    // ToDo
+    // src[key] is always undefined
     if (src[key]) {
       console.error(`Method ${key} is already in Router`, src);
     } 
-    if (src[key] && src[key].match(/[A-Z]/) !== null) {
+    /*
+    if (key.indexOf('/') !== -1 && key.match(/[A-Z]/) !== null) {
       console.error(`Method ${key} contains upper letters please fix`, src);
     }
+    */
   });
 };
 
