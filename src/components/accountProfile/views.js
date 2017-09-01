@@ -213,11 +213,10 @@ module.exports = {
 
     saveAccountInfo(e) {
       //validate link fields if they have value
-      const linkFields = ['twitter', 'facebook', 'instagram', 'linkedin'];
       let fields = {};
       let data = {};
 
-      _.each(linkFields, (name) => {
+      ['twitter', 'facebook', 'instagram', 'linkedin'].forEach((name) => {
         let field = this.$('#' + name);
         if (field.val()) {
           fields[name] = _.extend({}, this.fields[name], { type: 'url' });
@@ -472,7 +471,7 @@ module.exports = {
     onCancel(investment) {
       app.analytics.emitEvent(app.analytics.events.InvestmentCancelled, app.user.stats);
 
-      _.each(this.model.data, (i) => {
+      (this.model.data || []).forEach((i) => {
         if (i.campaign_id != investment.campaign_id)
           return;
 
@@ -680,12 +679,12 @@ module.exports = {
       this.formc = options.formc;
       this.investors = options.investors;
 
-      _.each(this.investors.data, (investor) => {
+      (this.investors.data || []).forEach((investor) => {
         investor.user.image_data = new Image(app.config.authServer + '/rest-auth/data', investor.user.image_data);
       });
 
-      this.investors.data = _.sortBy(this.investors.data, (investment) => {
-        return -(new Date(investment.created_date)).valueOf();
+      (this.investors.data || []).sort((i1, i2) => {
+        return (new Date(i2.created_date)).valueOf() - (new Date(i1.created_date)).valueOf();
       });
 
       //this is auth cookie for downloadable files
@@ -758,10 +757,9 @@ module.exports = {
 
           function countComments(comments) {
             let count = comments.length || 0;
-            _.each(comments, (c) => {
+            (comments || []).forEach((c) => {
               count += countComments(c.children);
             });
-
             return count;
           }
 

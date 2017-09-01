@@ -2,7 +2,7 @@ const validation = require('components/validation/validation.js');
 
 function countChildComments(comment) {
   let cnt = comment.children.length;
-  _.each(comment.children, (childComment) => {
+  (comment.children || []).forEach((childComment) => {
     cnt += countChildComments(childComment);
   });
   comment.count = cnt;
@@ -57,13 +57,13 @@ module.exports = {
       this.urlRoot = this.urlRoot.replace(':model', 'company').replace(':id', this.model.id);
 
       this.userRole = 0;
-      _.each(app.user.companiesMember, (company) => {
+      (app.user.companiesMember || []).forEach((company) => {
         if (company.company_id == this.model.id)
           this.userRole = company.role;
       });
 
-      //init dates, count
-      _.each(this.model.data, (c) => {
+      //init count
+      (this.model.data || []).forEach((c) => {
         countChildComments(c);
       });
 

@@ -245,7 +245,8 @@ module.exports = {
     render() {
       const data = app.helpers.calculator.readCalculatorData(CALCULATOR_NAME);
       let dataSameAsDefault = true;
-      _.each(data || {}, (value, key) => {
+
+      Object.keys(data || {}).forEach((key) => {
         if (data[key] === defaultCalculatorData[key]) {
           ;
         } else if (data[key] === '') {

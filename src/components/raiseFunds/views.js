@@ -861,7 +861,7 @@ module.exports = {
       if (!this.model.team_members || !this.model.team_members.members || !this.model.team_members.members.length)
         return;
 
-      _.each(this.model.team_members.members, (m, idx) => {
+      this.model.team_members.members.forEach((m, idx) => {
         if (m.hasOwnProperty('id')) {
           const $memberItemDelete = this.$el.find(`[data-id=${m.id}]`);
           if ($memberItemDelete && $memberItemDelete.length)

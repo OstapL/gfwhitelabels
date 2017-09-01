@@ -2302,7 +2302,7 @@ module.exports = {
           return;
 
         //this method just fill plain dependencies
-        _.each(dependencies, (dep) => {
+        dependencies.forEach((dep) => {
           if (data[dep])
             return;
 

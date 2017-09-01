@@ -317,9 +317,15 @@ module.exports = {
         delete data[key_month];
         delete data[key_day];
       } else if(el.type == 'nested' && data[key]) {
-        _.each(data[key], (val, index, list) => {
-          api.fixDateFields.call(this, el.schema, data[key][index]);
-        });
+        if (Array.isArray(data[key])) {
+          data[key].forEach((val, index) => {
+            api.fixDateFields.call(this, el.schema, data[key][index]);
+          });
+        } else if (typeof(data[key]) === 'object') {
+          Object.keys(data[key]).forEach((name) => {
+            api.fixDateFields.call(this, el.schema, data[key][name]);
+          });
+        }
       }
     });
   },
@@ -369,9 +375,15 @@ module.exports = {
           data[key] = app.helpers.format.unformatPrice(data[key]);
         }
       } else if(el.type == 'nested' && data[key]) {
-        _.each(data[key], (val, index, list) => {
-          api.fixFieldsTypes.call(this, el.schema, data[key][index]);
-       });
+        if (Array.isArray(data[key]) && data[key].length) {
+          data[key].forEach((val, index) => {
+            api.fixFieldsTypes.call(this, el.schema, data[key][index]);
+          });
+        } else if (typeof(data[key]) === 'object' && data[key]) {
+          Object.keys(data[key]).forEach((name) => {
+            api.fixFieldsTypes.call(this, el.schema, data[key][name]);
+          });
+        }
       }
     });
   }

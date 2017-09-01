@@ -129,7 +129,7 @@ module.exports = {
 
     countUnreadMessages() {
       let count = 0;
-      _.each(this.model.data, (n) => {
+      (this.model.data || []).forEach((n) => {
         count += n.read_flag ? 0 : 1;
       });
       return count;
@@ -188,11 +188,11 @@ module.exports = {
 
     markAllAsRead(e) {
       //TODO: mark all notifications as read
-      let unreadNotifications = _.filter(this.model.data, n => !n.read_flag);
+      let unreadNotifications = (this.model.data || []).filter(n => !n.read_flag);
       if (!unreadNotifications || !unreadNotifications.length)
         return;
 
-      _.each(unreadNotifications, (n) => {
+      unreadNotifications.forEach((n) => {
         n.read_flag = true;
         this.notifications.markAsRead(n.id);
         this.updateNotification(n);

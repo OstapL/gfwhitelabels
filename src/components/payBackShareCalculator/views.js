@@ -133,14 +133,11 @@ module.exports = {
 
     // get sum of last Annual Distributions
     getPreviousSum(data, index) {
-
       let selectedRange = data.slice(2, index + 1),
         sum = 0;
-
-      _.each(selectedRange, (el) => {
+      (selectedRange || []).forEach((el) => {
         sum += el.annual;
       });
-
       return sum;
     },
 

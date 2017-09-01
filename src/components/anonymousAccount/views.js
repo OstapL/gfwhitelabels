@@ -272,7 +272,7 @@ const Views = {
         })
       );
 
-      _.each(this.fields, (field) => field.postRender());
+      Object.keys(this.fields).forEach((name) => this.fields[name].postRender());
 
       return this;
     },
@@ -375,7 +375,7 @@ const Views = {
         fields: this.fields,
       });
 
-      _.each(this.fields, field => field.postRender());
+      Object.keys(this.fields).forEach((name) => this.fields[name].postRender());
 
       return this;
     },

@@ -118,7 +118,7 @@ module.exports = {
       if (!visibleTopmostElement)
         return;
 
-      _.each(menuItems, (menuItem) => {
+      (menuItems || []).forEach((menuItem) => {
         const href = menuItem.getAttribute('href').replace('#', '');
         const elementID = visibleTopmostElement.getAttribute('id');
         if (href=== elementID)

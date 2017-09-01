@@ -8,15 +8,15 @@ class Notifications {
     this.__socket.on('connect', () => {
       this.__socket.emit('subscribe', {
         jwt: app.user.token,
-        channels: channels,
-        "numMessagesFromArchive": 0,
+        channels,
+        numMessagesFromArchive: 0,
       });
     });
     this.__attachEvents();
   }
 
   __attachEvents() {
-    _.each(channels, (channel) => {
+    channels.forEach((channel) => {
       this.__socket.on(channel, (data) => {
         if (data === null || typeof data[Symbol.iterator] !== 'function')
           data = [data];

@@ -221,7 +221,7 @@ class User {
 
     const role_data = [];
 
-    _.each(this.companiesMember, (data) => {
+    (this.companiesMember || []).forEach((data) => {
       let roles = app.helpers.role.extractRoles(data.role);
       role_data.push({
         company: {

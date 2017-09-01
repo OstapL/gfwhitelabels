@@ -116,8 +116,7 @@ module.exports = {
 
       let selectedRange = outputData.slice(2, index + 1),
         sum = 0;
-
-      _.each(selectedRange, (el) => {
+      (selectedRange || []).forEach((el) => {
         sum += el.annual;
       });
 
