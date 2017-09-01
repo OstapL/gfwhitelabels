@@ -44,7 +44,7 @@ module.exports = {
           data.data.forEach((d) => {
             modelData.push(new app.models.Company(d));
           });
-          modelData = modelData.filter(d => !d.campaign.expired && !d.isClosed());
+          modelData = modelData.filter(d => !(d.campaign.expired && d.is_approved >= 6) && !d.isClosed());
           data.data = modelData;
 
           app.currentView = new View.list({

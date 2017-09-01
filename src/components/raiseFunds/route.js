@@ -63,8 +63,8 @@ module.exports = {
       app.addClassesTo('#page', ['raise-capital-landing']);
       require.ensure([], () => {
         const Views = require('components/raiseFunds/views.js');
-        const v = new Views.landing();
-        v.render();
+        app.currentView = new Views.landing();
+        app.currentView.render();
         app.hideLoading();
       }, 'raise_funds_chunk');
     },
