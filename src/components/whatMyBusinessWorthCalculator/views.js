@@ -127,7 +127,7 @@ module.exports = {
           min: 0,
           max: 100,
           formatter(value) {
-            return app.helpers.format.formatPercent(value);
+            return app.helpers.format.formatPercent(value) || '0%';
           }
         }).on('slideStop', saveValue);
       });
@@ -319,7 +319,7 @@ module.exports = {
           min: 0,
           max: 100,
           formatter(value) {
-            return app.helpers.format.formatPercent(value);
+            return app.helpers.format.formatPercent(value) || '0%';
           }
         }).on('slideStop', saveValue);
       });
