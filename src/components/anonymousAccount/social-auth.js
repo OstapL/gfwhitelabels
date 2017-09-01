@@ -39,7 +39,7 @@ let functions = {
   // rejects with error message otherwise
   login(network) {
     return new Promise((resolve, reject) => {
-      if (!_.contains(SUPPORTED_NETWORKS, network))
+      if (!SUPPORTED_NETWORKS.includes(network))
         return reject(`${network} is not supported`);
 
       initLibrary().then(() => {

@@ -60,7 +60,7 @@ module.exports = Backbone.Router.extend(_.extend({
     app.clearClasses('#page', ['page']);
     // debugger;
 
-    if (_.contains(routesMap.auth, name) && !app.user.ensureLoggedIn()) {
+    if (routesMap.auth.includes(name) && !app.user.ensureLoggedIn()) {
       // Revert back the current URL, 
       // Do not update url
       if (app.routers.currentUrl) {

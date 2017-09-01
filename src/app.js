@@ -168,7 +168,7 @@ class App {
       url = '';
 
     const info = getVideoId(url);
-    if (!info || !_.contains(['youtube', 'vimeo'], info.service))
+    if (!info || !['youtube', 'vimeo'].includes(info.service))
       return {};
 
     const videoURL = (info.service === 'youtube')

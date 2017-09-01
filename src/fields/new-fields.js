@@ -333,7 +333,7 @@ class NestedField extends Field {
 const SYSTEM_FIELDS = ['domain', 'checkbox1'];
 
 const createField = (schema={}, attr={}) => {
-  if (_.contains(SYSTEM_FIELDS, attr.name))
+  if (SYSTEM_FIELDS.includes(attr.name))
     return null;
 
 

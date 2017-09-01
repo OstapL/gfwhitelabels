@@ -225,7 +225,7 @@ module.exports = {
         91,   //left window
       ];
 
-      if (_.contains(SKIP_KEY_CODES, e.keyCode))
+      if (SKIP_KEY_CODES.includes(e.keyCode))
         return;
 
       const rx = /^\d{4,9}-\d{1,4}$/;
