@@ -10,7 +10,8 @@ module.exports = {
     calculatorEstablishedBusinessIntro() {
       require.ensure([], () => {
         const View = require('./views');
-        app.currentView = new View.intro().render();
+        app.currentView = new View.intro();
+        app.currentView.render();
         app.hideLoading();
         $('body').scrollTo();
       }, 'establish_business_calculator_chunk');
@@ -19,7 +20,8 @@ module.exports = {
     calculatorEstablishedBusinessStep1() {
       require.ensure([], () => {
         const View = require('./views');
-        app.currentView = new View.step1().render();
+        app.currentView = new View.step1();
+        app.currentView.render();
         $('body').scrollTo();
         app.hideLoading();
       }, 'establish_business_calculator_chunk');
@@ -28,7 +30,8 @@ module.exports = {
     calculatorEstablishedBusinessStep2() {
       require.ensure([], () => {
         const View = require('./views');
-        new View.step2().render();
+        app.currentView = new View.step2();
+        app.currentView.render();
         $('body').scrollTo();
         app.hideLoading();
       }, 'establish_business_calculator_chunk');
@@ -37,7 +40,8 @@ module.exports = {
     calculatorEstablishedBusinessStep3() {
       require.ensure([], () => {
         const View = require('./views');
-        app.currentView = new View.step3().render();
+        app.currentView = new View.step3();
+        app.currentView.render();
         $('body').scrollTo();
         app.hideLoading();
       }, 'establish_business_calculator_chunk');
@@ -46,7 +50,8 @@ module.exports = {
     calculatorEstablishedBusinessFinish() {
       require.ensure([], () => {
         const View = require('./views');
-        app.currentView = new View.finish().render();
+        app.currentView = new View.finish();
+        app.currentView.render();
         $('body').scrollTo();
         app.hideLoading();
       }, 'establish_business_calculator_chunk');
