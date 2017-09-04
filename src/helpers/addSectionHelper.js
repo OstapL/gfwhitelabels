@@ -151,8 +151,8 @@ module.exports = {
     //     if (el.type !== 'nested' || el.schema.urls)
     //       return;
     //
-    //     this.jsonTemplates[key] = require('components/' + component + '/templates/snippets/' + key + '.pug')(_.extend({
-    //       attr: _.extend(
+    //     this.jsonTemplates[key] = require('components/' + component + '/templates/snippets/' + key + '.pug')(Object.assign({
+    //       attr: Object.assign(
     //         {}, this.fields[key]
     //       ),
     //       name: key,
@@ -169,8 +169,8 @@ module.exports = {
         if (el.type !== 'nested' || el.schema.urls)
           return;
 
-        this.jsonTemplates[key] = snippets[key](_.extend({
-          attr: _.extend(
+        this.jsonTemplates[key] = snippets[key](Object.assign({
+          attr: Object.assign(
             {}, this.fields[key]
           ),
           name: key,
@@ -186,10 +186,11 @@ module.exports = {
        * PARAMS:
        *    - using this.labels dict
        */
-      Object.keys(this.fields).each((key) => {
+      Object.keys(this.fields).forEach((key) => {
         const el = this.fields[key];
         if(el.type == 'nested') {
-          _(el.schema).each((subel, subkey) => {
+          Object.keys(el.schema).forEach((subkey) => {
+            const subel = el.schema[subkey];
             if(this.labels[key])
               subel.label = this.labels[key][subkey];
           });

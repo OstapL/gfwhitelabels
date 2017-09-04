@@ -79,17 +79,15 @@ class App {
 
   getParams() {
     // gets url parameters and builds an object
-    return _.chain(location.search.slice(1).split('&'))
-      .map(function (item) {
-        if (item) {
-          let arr = item.split('=');
-          arr[1] = decodeURIComponent(arr[1]);
-          return arr;
-        }
-      })
-      .compact()
-      .object()
-      .value();
+    const res = {};
+    (location.search.slice(1).split('&') || []).forEach((item) => {
+      if (!item)
+        return;
+
+      const [name, value] = item.split('=');
+      res[name] = decodeURIComponent(value);
+    });
+    return res;
   }
 
   valByKey(obj, keyString) {
@@ -197,7 +195,7 @@ class App {
   }
 
   getFilerUrl(file) {
-    if (!file.origin || !_.isString(file.origin))
+    if (!file.origin || typeof(file.origin) !== 'string')
       return null;
 
     if (file.origin.startsWith('http://') || file.origin.startsWith('https://') )
@@ -298,10 +296,10 @@ class App {
     if (visibleElementHeight <= 0)
       return false;
 
-    if (_.isNumber(percentsInView)) {
+    percentsInView = Number(percentsInView);
+    if (!isNaN(percentsInView)) {
       const visiblePercents = visibleElementHeight / $el.height();
       return visiblePercents >= percentsInView;
-      // return ((windowTop < elementTop) && (windowBottom > elementBottom));
     }
 
     return ((elementTop <= windowBottom) && (elementBottom >= windowTop));

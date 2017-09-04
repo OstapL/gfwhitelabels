@@ -172,7 +172,7 @@ module.exports = {
 
       const id = $(e.target).closest('.notification-item').data('id');
 
-      let notification = _.find(this.model.data, m => m.id == id);
+      let notification = (this.model.data || []).find(m => m.id == id);
       if (!notification || notification.read_flag)
         return;
 

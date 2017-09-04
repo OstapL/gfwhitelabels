@@ -550,7 +550,7 @@ module.exports = {
 
       this.model.campaign.expiration_date = new Date(this.model.campaign.expiration_date);
 
-      this.fields.personal_information_data.schema.country = _.extend(this.fields.personal_information_data.schema.country, {
+      this.fields.personal_information_data.schema.country = Object.assign(this.fields.personal_information_data.schema.country, {
         type: 'select',
         validate: {
           OneOf: {
@@ -561,7 +561,7 @@ module.exports = {
         messageRequired: 'Not a valid choice',
       });
 
-      this.fields.personal_information_data.schema.phone = _.extend(this.fields.personal_information_data.schema.phone, {
+      this.fields.personal_information_data.schema.phone = Object.assign(this.fields.personal_information_data.schema.phone, {
         // required: false,
         // fn: function(name, value, attr, data, schema) {
         //   let country = this.getData(data, 'personal_information_data.country');
@@ -572,7 +572,7 @@ module.exports = {
         // },
       });
 
-      this.fields.personal_information_data.schema.city = _.extend(this.fields.personal_information_data.schema.city, {
+      this.fields.personal_information_data.schema.city = Object.assign(this.fields.personal_information_data.schema.city, {
         // fn: function(name, value, attr, data, schema) {
         //   let country = this.getData(data, 'personal_information_data.country');
         //   if (country == 'US')
@@ -582,7 +582,7 @@ module.exports = {
         // required: false,
       });
 
-      this.fields.personal_information_data.schema.state = _.extend(this.fields.personal_information_data.schema.state, {
+      this.fields.personal_information_data.schema.state = Object.assign(this.fields.personal_information_data.schema.state, {
         required: false,
         // fn: function(name, value, attr, data, schema) {
         //   let country = this.getData(data, 'personal_information_data.country');
@@ -912,7 +912,7 @@ module.exports = {
     updatePerks(amount) {
       function updatePerkElements($elms, amount) {
         $elms.removeClass('active').find('i.fa.fa-check').hide();
-        let filteredPerks = _($elms).filter(el =>  {
+        let filteredPerks = ($elms || []).filter(el =>  {
           const perkAmount = parseInt(el.dataset.amount);
           return perkAmount <= amount;
         });

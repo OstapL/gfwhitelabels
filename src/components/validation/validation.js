@@ -35,8 +35,10 @@ module.exports = {
     // we need get all keys and show error for each key
     // individually
     if (Array.isArray(error) !== true && typeof error == 'object') {
-      _(error).forEach((el, k) => {
-        _(el).forEach((errors, key) => {
+      Object.keys(error).forEach((k) => {
+        const el = error[k];
+        Object.keys(el).forEach((key) => {
+          const errors = el[key];
           this.invalidMsg(view, attr + '__' + k + '__' + key, errors, selector);
         });
       });

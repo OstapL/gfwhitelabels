@@ -22,11 +22,11 @@ function findComment(comments, uid) {
 }
 
 module.exports = {
-  comments: Backbone.View.extend(_.extend({
+  comments: Backbone.View.extend(Object.assign({
     urlRoot: app.config.commentsServer + '/:model/:id',
     template: require('./templates/comments.pug'),
     el: '.comments-container',
-    events: _.extend({
+    events: Object.assign({
       'keydown .text-body': 'keydownHandler',
       'keyup .text-body': 'keyupHandler',
       'click .ask-question, .submit-comment': 'submitComment',
@@ -40,7 +40,7 @@ module.exports = {
 
     initialize(options) {
       this.fields = options.fields;
-      this.fields.message = _.extend(this.fields.message, {
+      this.fields.message = Object.assign(this.fields.message, {
         fn: function (name, value, attr, data, schema) {
           if (value.length > 2000)
             throw 'Length of comment should not exceed more than 2000 characters.';

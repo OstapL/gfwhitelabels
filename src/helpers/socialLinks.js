@@ -18,7 +18,7 @@ module.exports = {
         return false;
       }
 
-      const withNetwork = !!_(socialNetworksMap[network]).find(link => value.indexOf(link) >= 0);
+      const withNetwork = !!(socialNetworksMap[network] || []).find(link => value.indexOf(link) >= 0);
 
       if (withNetwork) {
         return e.target.value = app.helpers.format.ensureLinkProtocol(value, true);

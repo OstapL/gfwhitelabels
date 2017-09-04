@@ -13,7 +13,7 @@ class InfoProvider {
   }
 
   set data(newData) {
-    this._data = _.extend(this._data, newData);
+    this._data = Object.assign(this._data, newData);
   }
 
   _stripHtml(html) {

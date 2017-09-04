@@ -9,14 +9,14 @@ class Field {
   };
 
   constructor(options) {
-    _.extend(this, _.pick(options, [
+    Object.assign(this, _.pick(options, [
       'schema',
       'attr',
     ]));
 
     this.buildAttributes();
     this.errors = [];
-    _.extend(this, Backbone.Events);
+    Object.assign(this, Backbone.Events);
   };
 
   buildAttributes() {
@@ -24,7 +24,7 @@ class Field {
     if (!this.attr.elementID)
       this.attr.elementID = _.uniqueId('field_');
 
-    this.attr = _.extend({
+    this.attr = Object.assign({
       type: 'text',
       id: '',
       placeholder: '',
@@ -148,7 +148,7 @@ class TextField extends Field {
   }
 
   get events() {
-    return _.extend(super.events, {
+    return Object.assign(super.events, {
       'change input': 'onChange',
     });
   };
@@ -173,7 +173,7 @@ const URLPatternRx = /^(https?|ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF9
 
 class URLField extends TextFieldWithLabel {
   get events() {
-    return _.extend(super.events, {
+    return Object.assign(super.events, {
       'change input': 'onChange',
     });
   }
@@ -303,7 +303,7 @@ class VideoLinkField extends URLField {
 
 class NestedField extends Field {
   get events() {
-    return _.extend(super.events, {
+    return Object.assign(super.events, {
       'click .addField': 'addField',
       'click .removeField': 'removeField',
     });

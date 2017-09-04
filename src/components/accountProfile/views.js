@@ -11,11 +11,11 @@ import 'bootstrap-slider/dist/css/bootstrap-slider.css';
 
 
 module.exports = {
-  profile: Backbone.View.extend(_.extend({
+  profile: Backbone.View.extend(Object.assign({
     template: require('./templates/profile.pug'),
     urlRoot: app.config.authServer + '/rest-auth/data',
     doNotExtendModel: true,
-    events: _.extend({
+    events: Object.assign({
       'click #saveAccountInfo': api.submitAction,
       // 'click #saveFinancialInfo': api.submitAction,
       'change #not-qualify': 'changeQualify',
@@ -32,11 +32,11 @@ module.exports = {
 
       this.fields = options.fields;
 
-      this.fields.phone = _.extend(this.fields.phone, {
+      this.fields.phone = Object.assign(this.fields.phone, {
         required: true,
       });
 
-      this.fields.image_image_id = _.extend(this.fields.image_image_id, {
+      this.fields.image_image_id = Object.assign(this.fields.image_image_id, {
         templateDropzone: 'profileDropzone.pug',
         defaultImage: require('images/default/Default_photo.png'),
         onSaved: (data) => {
@@ -219,7 +219,7 @@ module.exports = {
       ['twitter', 'facebook', 'instagram', 'linkedin'].forEach((name) => {
         let field = this.$('#' + name);
         if (field.val()) {
-          fields[name] = _.extend({}, this.fields[name], { type: 'url' });
+          fields[name] = Object.assign({}, this.fields[name], { type: 'url' });
           data[name] = field.val();
         }
       });
@@ -448,7 +448,7 @@ module.exports = {
     },
 
     _findInvestment(id) {
-      return _.find(this.model.data, inv => inv.id == id);
+      return (this.model.data || []).find(inv => inv.id == id);
     },
 
     showFinancialDocs(e) {
@@ -568,7 +568,7 @@ module.exports = {
 
           if (historicalInvestmentElements.length) {
             //find investment to insert before it
-            let block = _.find(historicalInvestmentElements, (elem) => {
+            let block = (historicalInvestmentElements || []).find((elem) => {
               const investmentId = Number(elem.dataset.investmentid);
               return investment.id > investmentId;
             });

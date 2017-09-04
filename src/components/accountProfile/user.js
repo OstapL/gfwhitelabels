@@ -72,7 +72,7 @@ class User {
     if (this.formc.id === formcID)
       this.formc.is_paid = true;
 
-    const companyInfo = _.find(this.companiesMember, companyInfo => companyInfo.formc_id === formcID);
+    const companyInfo = (this.companiesMember || []).find(companyInfo => companyInfo.formc_id === formcID);
     if (companyInfo)
       companyInfo.is_paid = true;
   }
@@ -141,7 +141,7 @@ class User {
   updateUserData(data, next) {
     const infoRequest = data.info ? null : api.makeRequest(app.config.authServer + '/info',  'GET');
     $.when(infoRequest).done((responseData) => {
-      this.data = _.extend({}, this.data, responseData || data);
+      this.data = Object.assign({}, this.data, responseData || data);
       this.data.image_image_id = new app.models.Image(
         app.config.authServer + '/rest-auth/data',
         data.image_data
@@ -237,13 +237,14 @@ class User {
   }
 
   getRolesInCompany(company_id) {
-    if (!_.isNumber(company_id)) {
+    company_id = Number(company_id);
+    if (isNaN(company_id)) {
       return;
     }
 
     const role_data = this.getRoles();
 
-    return _(role_data).find((data) => { return data.company.id == company_id; });
+    return role_data.find((data) => { return data.company.id == company_id; });
   }
 
   ensureLoggedIn(next) {

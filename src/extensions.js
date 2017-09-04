@@ -1,5 +1,5 @@
 //Backbone.View extension methods
-_.extend(Backbone.View.prototype, {
+Object.assign(Backbone.View.prototype, {
 
   listenToNavigate() {
     app.routers.on('before-navigate', this.onBeforeNavigate, this);
@@ -64,7 +64,7 @@ _.extend(Backbone.View.prototype, {
 //Backbone.Router extension methods
 const navigate = Backbone.Router.prototype.navigate;
 
-_.extend(Backbone.Router.prototype, {
+Object.assign(Backbone.Router.prototype, {
 
   navigate(fragment, options) {
     const outData = {
@@ -82,7 +82,7 @@ _.extend(Backbone.Router.prototype, {
 });
 
 //jQuery extensions methods
-_.extend($.fn, {
+Object.assign($.fn, {
 
   scrollTo(padding=0, duration='fast') {
     $('html, body').animate({
@@ -116,7 +116,7 @@ $.fn.animateCount = function(options={}) {
     }
   };
 
-  options = _.extend(defaultOptions, options);
+  options = Object.assign(defaultOptions, options);
 
   $(this).each(function() {
     const $this = $(this);
@@ -126,7 +126,7 @@ $.fn.animateCount = function(options={}) {
   });
 };
 
-$.serializeJSON.defaultOptions = _.extend($.serializeJSON.defaultOptions, {
+$.serializeJSON.defaultOptions = Object.assign($.serializeJSON.defaultOptions, {
   customTypes: {
     decimal(val) {
       return app.helpers.format.unformatPrice(val);

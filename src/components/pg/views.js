@@ -107,7 +107,7 @@ module.exports = {
         return;
 
       const menuItems = leftMenu.querySelectorAll('a');
-      const visibleElements = _(menuItems).map((menuItem) => {
+      const visibleElements = (menuItems || []).map((menuItem) => {
         const href = menuItem.getAttribute('href');
         return href && href.startsWith('#')
           ? document.getElementById(href.replace('#', ''))

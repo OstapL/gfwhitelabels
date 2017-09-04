@@ -4,10 +4,10 @@
 const minPersents = 200;
 
 module.exports = {
-  calculator: Backbone.View.extend(_.extend({
+  calculator: Backbone.View.extend(Object.assign({
     el: '#revenue-share-calculator',
     template: require('./templates/calculator/calculator.pug'),
-    events: _.extend({
+    events: Object.assign({
       // calculate your income
       'submit .js-calc-form': 'doCalculation',
     }, app.helpers.calculatorValidation.events),
@@ -270,7 +270,7 @@ module.exports = {
     mapToPlot(data) {
       let notEmpty = false;
 
-      return _(data).map((item, idx) => {
+      return (data || []).map((item, idx) => {
         if (item.multiple) {
           notEmpty = true;
           return [idx, item.multiple];

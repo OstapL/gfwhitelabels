@@ -43,7 +43,7 @@ module.exports = {
         data = JSON.stringify(data);
       }
 
-      let params = _.extend({
+      let params = Object.assign({
         url: url,
         type: type,
         data: data,
@@ -116,14 +116,14 @@ module.exports = {
 
     // if view already have some data - extend that info
     if(this.hasOwnProperty('model') && Object.keys(this.model).length > 0 && !this.doNotExtendModel && method != 'PATCH') {
-      newData = _.extend({}, this.model.toJSON ? this.model.toJSON() : this.model, newData);
+      newData = Object.assign({}, this.model.toJSON ? this.model.toJSON() : this.model, newData);
     }
 
     // for PATCH method we will send only difference
     if(method == 'PATCH') {
       let patchData = {};
       let d = deepDiff(newData, this.model.toJSON ? this.model.toJSON() : this.model);
-      _(d).forEach((el, i) => {
+      d.forEach((el, i) => {
         if(el.kind == 'E' || el.kind == 'A') {
           patchData[el.path[0]] = newData[el.path[0]];
           if(fields[el.path[0]] && fields[el.path[0]].hasOwnProperty('dependies')) {
@@ -199,7 +199,7 @@ module.exports = {
           // ToDo
           // Do we really need this ?!
           if(method != 'POST') {
-            _.extend(this.model, newData);
+            Object.assign(this.model, newData);
           }
           app.showLoading();
 
@@ -337,10 +337,11 @@ module.exports = {
       const el = fields[key];
       if(el.type == 'nested') {
         if(Array.isArray(data[key])) {
-          data[key] = data[key].filter(function(el) { return el !== null;})
+          data[key] = data[key].filter((el) => el !== null);
           data[key].forEach((el, i) => {
             let emptyValues = 0;
-            _(el).each((val, subkey) => {
+            Object.keys(el).forEach((subkey) => {
+              const val = el[subkey];
               if(val === '' || Number.isNaN(val)) {
                 emptyValues ++;
               }

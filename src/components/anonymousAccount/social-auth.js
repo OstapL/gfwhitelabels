@@ -60,7 +60,7 @@ let functions = {
           console.log(error);
           console.log(data);
 
-          if (_.isBoolean(data))
+          if (typeof(data) === 'boolean')
             return reject(error);
 
           if (data.error.code === 'cancelled')

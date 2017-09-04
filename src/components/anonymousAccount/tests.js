@@ -6,7 +6,7 @@ const expect    = chai.expect;
 const Views = require('src/components/anonymousAccount/views.js');
 const socialAuth = require('src/components/anonymousAccount/social-auth.js');
 
-const eventEmitter = _.extend({}, Backbone.Events);
+const eventEmitter = Object.assign({}, Backbone.Events);
 
 const inst = {};
 const setData = app.user.setData;

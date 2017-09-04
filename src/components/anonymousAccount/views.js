@@ -44,9 +44,9 @@ const SIGNUP_FIELDS = {
   },
   email: LOGIN_FIELDS.email,
   domain: LOGIN_FIELDS.domain,
-  password1: _.extend({}, LOGIN_FIELDS.password, { label: 'Password' }),
+  password1: Object.assign({}, LOGIN_FIELDS.password, { label: 'Password' }),
   //we left only one password field
-  // password2: _.extend({}, LOGIN_FIELDS.password, { label: 'Re-enter Password'}),
+  // password2: Object.assign({}, LOGIN_FIELDS.password, { label: 'Re-enter Password'}),
 };
 
 const popupAuthHelper = {
@@ -167,10 +167,10 @@ function logInWithSocialNetwork(e) {
 };
 
 const Views = {
-  popupLogin: Backbone.View.extend(_.extend({
+  popupLogin: Backbone.View.extend(Object.assign({
     urlRoot: app.config.authServer + '/rest-auth/login',
     template: require('./templates/popupLogin.pug'),
-    events: _.extend({
+    events: Object.assign({
       'click .btn-social-network': 'loginWithSocial',
     }, popupAuthHelper.events),
 
@@ -203,11 +203,11 @@ const Views = {
     popupAuthHelper.methods
   )),
 
-  popupSignup: Backbone.View.extend(_.extend({
+  popupSignup: Backbone.View.extend(Object.assign({
     urlRoot: `${app.config.authServer}/rest-auth/registration`,
     template: require('./templates/popupSignup.pug'),
 
-    events: _.extend({
+    events: Object.assign({
       'click .btn-social-network': 'signUpWithSocial',
     }, popupAuthHelper.events),
 

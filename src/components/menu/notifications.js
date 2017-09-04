@@ -3,7 +3,7 @@ const channels = ['general'];
 class Notifications {
 
   constructor(io) {
-    _.extend(this, Backbone.Events);
+    Object.assign(this, Backbone.Events);
     this.__socket = io(app.config.notificationsServer);
     this.__socket.on('connect', () => {
       this.__socket.emit('subscribe', {

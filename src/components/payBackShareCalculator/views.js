@@ -25,7 +25,7 @@ module.exports = {
     }
   }),
 
-  step2: Backbone.View.extend(_.extend({
+  step2: Backbone.View.extend(Object.assign({
     el: '#content',
 
     template: require('./templates/step2.pug'),
@@ -48,7 +48,7 @@ module.exports = {
       this.listenToNavigate();
     },
 
-    events: _.extend({
+    events: Object.assign({
       // calculate your income
       'submit .js-calc-form': 'doCalculation',
       'blur [name=growLevel]': saveValue,
