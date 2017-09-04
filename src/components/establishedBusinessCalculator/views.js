@@ -169,7 +169,7 @@ module.exports = {
         return;
       }
 
-      app.routers.navigate('/calculator/establishedBusiness/step-2', {trigger: true});
+      app.routers.navigate('/calculator/establishedbusiness/step-2', {trigger: true});
     },
 
     render: function () {
@@ -250,11 +250,11 @@ module.exports = {
         return;
       }
 
-      app.routers.navigate('/calculator/establishedBusiness/step-3', {trigger: true});
+      app.routers.navigate('/calculator/establishedbusiness/step-3', {trigger: true});
     },
 
     goToStep1() {
-      app.routers.navigate('/calculator/establishedBusiness/step-1', {trigger: true});
+      app.routers.navigate('/calculator/establishedbusiness/step-1', {trigger: true});
     },
 
     render: function () {
@@ -344,7 +344,7 @@ module.exports = {
     },
 
     goToStep2() {
-      app.routers.navigate('/calculator/establishedBusiness/step-2', {trigger: true});
+      app.routers.navigate('/calculator/establishedbusiness/step-2', {trigger: true});
     },
 
     events: _.extend({
@@ -451,7 +451,7 @@ module.exports = {
 
       app.helpers.calculator.saveCalculatorData(CALCULATOR_NAME, data);
 
-      setTimeout(() => app.routers.navigateWithReload('/calculator/establishedBusiness/finish', {trigger: true}), 10);
+      setTimeout(() => app.routers.navigateWithReload('/calculator/establishedbusiness/finish', {trigger: true}), 10);
     },
 
     render: function () {
@@ -491,7 +491,7 @@ module.exports = {
     template: require('./templates/finish.pug'),
 
     goToStep3() {
-      app.routers.navigate('/calculator/establishedBusiness/step-3', {trigger: true});
+      app.routers.navigate('/calculator/establishedbusiness/step-3', {trigger: true});
     },
 
     render: function () {
