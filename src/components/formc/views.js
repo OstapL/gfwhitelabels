@@ -2444,13 +2444,13 @@ module.exports = {
 
     render() {
       let template = require('./templates/finalReview.pug');
-      this.fields.company.industry.validate.choices = require('consts/raisecapital/industry.json');
-      this.fields.company.founding_state.validate.choices = require('consts/usaStatesChoices.json');
-      this.fields.company.state.validate.choices = require('consts/usaStatesChoices.json');
-      this.fields.company.corporate_structure.validate.choices = require('consts/raisecapital/corporate_structure.json');
-      this.fields.campaign.length_days.validate.choices = require('consts/raisecapital/length_days.json');
-      this.fields.campaign.security_type.validate.choices = require('consts/raisecapital/security_type_options.json');
-      this.fields.campaign.valuation_determination.validate.choices = require('consts/raisecapital/valuation_determination_options.json');
+      this.fields.company.industry.validate.choices = require('consts/raisecapital/industry.json').INDUSTRY;
+      this.fields.company.founding_state.validate.choices = require('consts/usaStates.json').USA_STATES;
+      this.fields.company.state.validate.choices = require('consts/usaStates.json').USA_STATES;
+      this.fields.company.corporate_structure.validate.choices = require('consts/raisecapital/corporate_structure.json').CORPORATE_STRUCTURE;
+      this.fields.campaign.length_days.validate.choices = require('consts/raisecapital/length_days.json').LENGTH_DAYS;
+      this.fields.campaign.security_type.validate.choices = require('consts/raisecapital/security_type.json').SECURITY_TYPE;
+      this.fields.campaign.valuation_determination.validate.choices = require('consts/raisecapital/valuation_determination.json').VALUATION_DETERMINATION;
       this.fields.formc.outstanding_securities.schema.security_type.type = 'choice';
       this.fields.formc.outstanding_securities.schema.security_type.validate = {};
       this.fields.formc.outstanding_securities.schema.security_type.validate.choices = securityTypeConsts.SECURITY_TYPES;

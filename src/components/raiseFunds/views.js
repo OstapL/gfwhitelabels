@@ -164,9 +164,9 @@ module.exports = {
       this.campaign = options.campaign || {};
       this.model = options.company;
 
-      this.fields.industry.validate.choices = require('consts/raisecapital/industry.json');
-      this.fields.founding_state.validate.choices = require('consts/usaStatesChoices.json');
-      this.fields.corporate_structure.validate.choices = require('consts/raisecapital/corporate_structure.json');
+      this.fields.industry.validate.choices = require('consts/raisecapital/industry.json').INDUSTRY;
+      this.fields.founding_state.validate.choices = require('consts/usaStates.json').USA_STATES;
+      this.fields.corporate_structure.validate.choices = require('consts/raisecapital/corporate_structure.json').CORPORATE_STRUCTURE;
       this.fields.tour.validate.choices = require('consts/raisecapital/tour.json').TOUR;
 
       this.fields.founding_date.required = true;
@@ -940,9 +940,9 @@ module.exports = {
       this.fields.valuation_determination = Object.assign(this.fields.valuation_determination, {
         dependies: ['valuation_determination_other'],
       });
-      this.fields.length_days.validate.choices = require('consts/raisecapital/length_days.json');
-      this.fields.security_type.validate.choices = require('consts/raisecapital/security_type_options.json');
-      this.fields.valuation_determination.validate.choices = require('consts/raisecapital/valuation_determination_options.json');
+      this.fields.length_days.validate.choices = require('consts/raisecapital/length_days.json').LENGTH_DAYS;
+      this.fields.security_type.validate.choices = require('consts/raisecapital/security_type.json').SECURITY_TYPE;
+      this.fields.valuation_determination.validate.choices = require('consts/raisecapital/valuation_determination.json').VALUATION_DETERMINATION;
       this.fields.investor_presentation_file_id = Object.assign(this.fields.investor_presentation_file_id, {
         label: 'Upload an Investor Presentation',
         onSaved: (data) => {
@@ -1072,12 +1072,14 @@ module.exports = {
 
       this.checkForm();
 
+      /*
       if (this.company.corporate_structure == 2) {
         this.$('input[name=security_type][value=0]').prop('disabled', true);
         this.$('input[name=security_type][value=1]').attr('checked', true);
         $('.security_type_list').hide();
         $('.security_type_1').show();
       }
+      */
       $('#description_determine').parent().parent().hide();
 
       app.helpers.disableEnter.disableEnter.call(this);
