@@ -7,8 +7,20 @@ module.exports = {
       ? prefix + id
       : id;
   },
+  isNull(val) {
+    return val === null;
+  },
+  isUndefined(val) {
+    return typeof(val) === 'undefined';
+  },
   isBoolean(val) {
     return val == 0 || val == 1 || val == true || val == false;
+  },
+  isString(val) {
+    return typeof(val) === 'string';
+  },
+  isNumber(val) {
+    return typeof(val) === 'number';
   },
   last(arr) {
     if (!Array.isArray(arr) || !arr || !arr.length)

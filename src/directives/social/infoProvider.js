@@ -27,8 +27,8 @@ class InfoProvider {
     if (!data)
       return this.templates[template];
 
-    return (data || []).reduce((tmpl, val, key) => {
-      return tmpl.replace(':' + key, val);
+    return Object.keys(data).reduce((tmpl, key) => {
+      return tmpl.replace(':' + key, data[key]);
     }, this.templates[template]);
   }
 

@@ -87,12 +87,10 @@ module.exports = {
     initialize(options) {
       $(document).off("scroll", this.onScrollListener);
       $(document).on("scroll", this.onScrollListener);
-
       this.companyDocsData = {
         title: 'Financials',
         files: this.model.formc
-          ? _.union(this.model.formc.fiscal_prior_group_data,
-                this.model.formc.fiscal_recent_group_data)
+          ? (this.model.formc.fiscal_prior_group_data || []).concat(this.model.formc.fiscal_recent_group_data || [])
           : []
       };
 
