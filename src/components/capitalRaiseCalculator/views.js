@@ -142,7 +142,7 @@ module.exports = {
       };
 
       const data = app.helpers.calculator.readCalculatorData(CALCULATOR_NAME);
-      if (!data || _.isEmpty(data)) {
+      if (!data || app.utils.isEmpty(data)) {
         app.helpers.calculator.saveCalculatorData(CALCULATOR_NAME, defaultCalculatorData);
       }
 

@@ -554,7 +554,7 @@ module.exports = {
         type: 'select',
         validate: {
           OneOf: {
-            choices: _.keys(COUNTRIES),
+            choices: Object.keys(COUNTRIES),
           },
           choices: COUNTRIES
         },
@@ -917,7 +917,7 @@ module.exports = {
           return perkAmount <= amount;
         });
 
-        let activePerk = _.last(filteredPerks);
+        let activePerk = app.utils.last(filteredPerks);
 
         if (activePerk) {
           $(activePerk).addClass('active').find('i.fa.fa-check').show();

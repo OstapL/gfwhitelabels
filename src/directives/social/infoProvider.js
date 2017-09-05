@@ -17,7 +17,7 @@ class InfoProvider {
   }
 
   _stripHtml(html) {
-    if (!_.isString(html))
+    if (!typeof(html) !== 'string')
       return html;
 
     return html.replace(/(<([^>]+)>)/ig,'');
@@ -27,7 +27,7 @@ class InfoProvider {
     if (!data)
       return this.templates[template];
 
-    return _.reduce(data, (tmpl, val, key) => {
+    return (data || []).reduce((tmpl, val, key) => {
       return tmpl.replace(':' + key, val);
     }, this.templates[template]);
   }

@@ -14,7 +14,7 @@ section.create-company.container.m-b-85
       h2.text-uppercase.text-xs-center.m-t-0.title Company
       form.form-section
           -
-            pug_html += app.fields.fieldChoiceLabel('tour', _.extend({
+            pug_html += app.fields.fieldChoiceLabel('tour', Object.assign({
             'empty': { '': 'Choose Option' },
             'reverse': 1,
             'value': values.tour,
@@ -70,13 +70,13 @@ section.create-company.container.m-b-85
           .row
             .col-xl-6.col-lg-6.col-md-6
               -
-                pug_html += app.fields.fieldChoiceLabel('industry', _.extend({
+                pug_html += app.fields.fieldChoiceLabel('industry', Object.assign({
                     'empty': { '': 'Choose Industry' },
                     'value': values.industry,
                   }, fields.industry));
             .col-xl-6.col-lg-6.col-md-6
               -
-                pug_html += app.fields.fieldChoiceLabel('founding_state', _.extend({
+                pug_html += app.fields.fieldChoiceLabel('founding_state', Object.assign({
                     'empty': { '': 'Choose State' },
                     'value': values.founding_state,
                   }, fields.founding_state));
@@ -96,7 +96,7 @@ section.create-company.container.m-b-85
             .col-xl-6.col-lg-6.col-md-6
               .showPopover(data-content="C-corps can choose to issue Common Equity or a Revenue Share. LLC’s can only issue a Revenue Share.")
                 -
-                  pug_html += app.fields.fieldChoiceLabel('corporate_structure', _.extend({
+                  pug_html += app.fields.fieldChoiceLabel('corporate_structure', Object.assign({
                       empty: { '': 'Choose Structure' },
                       'value': values.corporate_structure,
                     }, fields.corporate_structure));
@@ -108,17 +108,17 @@ section.create-company.container.m-b-85
                   .col-xl-12
                     div#founding_date
                       - 
-                        pug_html += app.fields.dateMonth('founding_date', _.extend({
+                        pug_html += app.fields.dateMonth('founding_date', Object.assign({
                         'empty': { '': 'Choose' },
                         'value': values.founding_date,
                         }, fields.founding_date));
                       - 
-                        pug_html += app.fields.dateDay('founding_date', _.extend({
+                        pug_html += app.fields.dateDay('founding_date', Object.assign({
                         'empty': { '': 'Choose' },
                         'value': values.founding_date,
                         }, fields.founding_date));
                       - 
-                        pug_html += app.fields.dateYear('founding_date', _.extend({
+                        pug_html += app.fields.dateYear('founding_date', Object.assign({
                         'value': values.founding_date,
                         'placeholder': 'YYYY',
                         }, fields.founding_date));

@@ -283,7 +283,7 @@ module.exports = {
           //options.series.points.show = true;
           //$.plot($chart, dataArr, options);
 
-          let last = _.last($plot.getData()[0].data);
+          let last = app.utils.last($plot.getData()[0].data);
           if (last && last.length > 1) {
             let o = $plot.pointOffset({x: last[0], y: last[1]});
             if (last[1] * 100 >= minPersents) {

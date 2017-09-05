@@ -300,7 +300,7 @@ class CropperDropzone {
             maxHeight = imageData.naturalHeight;
 
       const data = {};
-      const cropData = _.pick(this.cropper.getData(true), ['x', 'y', 'width', 'height']);
+      const cropData = app.utils.pick(this.cropper.getData(true), ['x', 'y', 'width', 'height']);
 
       cropData.x = cropData.x < 0 ? 0 : cropData.x;
       cropData.y = cropData.y < 0 ? 0 : cropData.y;

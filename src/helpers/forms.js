@@ -267,7 +267,7 @@ module.exports = {
       let data = xhr.responseJSON;
 
       data = data ? data : { Server: status };
-      if (_.isString(data)) {
+      if (typeof(data) === 'string') {
         app.validation.invalidMsg(
           view, 'error', data
         );

@@ -292,7 +292,7 @@ module.exports = {
 
     isFirstStepFilled() {
       const data = app.helpers.calculator.readCalculatorData(CALCULATOR_NAME);
-      if (!data || _.isEmpty(data))
+      if (!data || app.utils.isEmpty(data))
         return false;
 
       const props = ['excessCash', 'ownCache', 'projectedRevenueYear', 'projectedRevenueTwoYears', 'grossMargin', 'monthlyOperatingYear'];

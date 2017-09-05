@@ -66,7 +66,7 @@ module.exports = analytics;
 //     'CompleteRegistration',
 //   ];
 //
-//   let trackType = (_.contains(STANDARD_EVENTS, eventName)) ? 'track' : 'trackCustom';
+//   let trackType = STANDARD_EVENTS.includes(eventName) ? 'track' : 'trackCustom';
 //
 //   safeDataLayerPush({
 //     event: 'fb-pixel-event',

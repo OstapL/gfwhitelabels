@@ -21,13 +21,9 @@ class App {
     this.models = require('./models.js');
     this.sites = require('./sites.js');
     this.seo = require('./seo.js');
+    this.utils = require('./utils.js');
     this.user = new User();
     this.currentView = null;
-
-    this.utils = {};
-    this.utils.isBoolean = function(val) {
-      return val == 0 || val == 1 || val == true || val == false;
-    }
 
     return this;
   }

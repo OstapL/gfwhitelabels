@@ -210,7 +210,7 @@ module.exports = {
           //$.plot(this.$chart, dataArr, options);
 
           let plotData = this.$plot.getData();
-          let last = _.last(plotData[0].data);
+          let last = app.utils.last(plotData[0].data);
           if (last && last.length > 1) {
             let o = this.$plot.pointOffset({x: last[0], y: last[1]});
             if (last[1] * 100 >= minPersents) {

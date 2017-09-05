@@ -557,7 +557,7 @@ module.exports = {
 
           $target.closest('.one_table').remove();
 
-          let hasActiveInvestments = _.some(this.model.data, i => i.active);
+          let hasActiveInvestments = (this.model.data || []).some(i => i.active);
           if (!hasActiveInvestments)
             $('#active .investor_table')
               .append(this.snippets.noInvestments());

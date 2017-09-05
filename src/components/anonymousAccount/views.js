@@ -355,7 +355,7 @@ const Views = {
     },
 
     initialize() {
-      this.fieldsSchema = _.pick(SIGNUP_FIELDS, ['email', 'domain']);
+      this.fieldsSchema = app.utils.pick(SIGNUP_FIELDS, ['email', 'domain']);
       this.fieldsAttr = {
         email: {
           id: 'email',

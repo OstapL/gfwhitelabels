@@ -552,7 +552,7 @@ module.exports = {
         },
       });
 
-      const fieldsSchema = _.pick(this.fields, ['video']);
+      const fieldsSchema = app.utils.pick(this.fields, ['video']);
       const fieldsAttr = {
         video: {
           label: 'Main Video for Campaign',

@@ -9,7 +9,7 @@ class Field {
   };
 
   constructor(options) {
-    Object.assign(this, _.pick(options, [
+    Object.assign(this, app.utils.pick(options, [
       'schema',
       'attr',
     ]));
@@ -22,7 +22,7 @@ class Field {
   buildAttributes() {
     this.attr = this.attr || {};
     if (!this.attr.elementID)
-      this.attr.elementID = _.uniqueId('field_');
+      this.attr.elementID = app.utils.uniqueId('field_');
 
     this.attr = Object.assign({
       type: 'text',
