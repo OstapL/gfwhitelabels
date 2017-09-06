@@ -54,7 +54,7 @@ module.exports = {
       'blur [name=growLevel]': saveValue,
       'blur [name=raiseMoney]': saveValue,
       'blur [name=nextYearRevenue]': saveValue,
-    }),
+    }, app.helpers.calculatorValidation.events),
 
     doCalculation(e) {
       e.preventDefault();
