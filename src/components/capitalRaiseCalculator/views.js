@@ -55,10 +55,6 @@ module.exports = {
   step1: Backbone.View.extend(Object.assign({
     el: '#content',
     template: require('./templates/step1.pug'),
-    preinitialize() {
-      $('#content').undelegate();
-    },
-
     initialize() {
       this.fields = {
         industry: {
