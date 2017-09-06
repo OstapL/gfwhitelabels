@@ -582,34 +582,34 @@ module.exports = {
       });
 
       this.fields.personal_information_data.schema.phone = Object.assign(this.fields.personal_information_data.schema.phone, {
-        // required: false,
-        // fn: function(name, value, attr, data, schema) {
-        //   let country = this.getData(data, 'personal_information_data.country');
-        //   if (country == 'US')
-        //     return;
-        //
-        //   return this.required(name, true, attr, data);
-        // },
+        required: false,
+        fn: function(name, value, attr, data, schema) {
+          let country = this.getData(data, 'personal_information_data.country');
+          if (country == 'US')
+            return;
+
+          return this.required(name, true, attr, data);
+        },
       });
 
       this.fields.personal_information_data.schema.city = Object.assign(this.fields.personal_information_data.schema.city, {
-        // fn: function(name, value, attr, data, schema) {
-        //   let country = this.getData(data, 'personal_information_data.country');
-        //   if (country == 'US')
-        //     return;
-        //   return this.required(name, true, attr, data);
-        // },
-        // required: false,
+        required: false,
+        fn: function(name, value, attr, data, schema) {
+          let country = this.getData(data, 'personal_information_data.country');
+          if (country == 'US')
+            return;
+          return this.required(name, true, attr, data);
+        },
       });
 
       this.fields.personal_information_data.schema.state = Object.assign(this.fields.personal_information_data.schema.state, {
         required: false,
-        // fn: function(name, value, attr, data, schema) {
-        //   let country = this.getData(data, 'personal_information_data.country');
-        //   if (country == 'US')
-        //     return;
-        //   return this.required(name, true, attr, data);
-        // },
+        fn: function(name, value, attr, data, schema) {
+          let country = this.getData(data, 'personal_information_data.country');
+          if (country == 'US')
+            return;
+          return this.required(name, true, attr, data);
+        },
       });
 
       // this.user.ssn_re = this.user.ssn;
