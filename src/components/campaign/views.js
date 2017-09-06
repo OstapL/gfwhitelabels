@@ -19,6 +19,30 @@ function paralaxScrollHandler() {
   });
 }
 
+const emitCustomEvent = (data) => {
+  if (!data)
+    return;
+
+  let trackerId = data.ga_id;
+  let pixelId = data.fb_pixel;
+
+  if (!trackerId && !pixelId)
+    return;
+
+  const ids = {};
+
+  if (trackerId && !trackerId.startsWith('UA-'))
+    trackerId = 'UA-' + trackerId;
+
+  if (trackerId)
+    ids.trackerId = trackerId;
+
+  if (pixelId)
+    ids.pixelId = pixelId;
+
+  app.analytics.emitCompanyCustomEvent(ids);
+};
+
 module.exports = {
   list: Backbone.View.extend({
     el: '#content',
@@ -97,9 +121,7 @@ module.exports = {
           : []
       };
 
-      if (this.model.ga_id) {
-        app.analytics.emitCompanyCustomEvent(this.model.ga_id);
-      }
+      emitCustomEvent(this.model);
 
       this.listenToNavigate();
     },
@@ -655,8 +677,7 @@ module.exports = {
 
       this.initMaxAllowedAmount();
 
-      if (this.model.ga_id)
-        app.analytics.emitCompanyCustomEvent(this.model.ga_id);
+      emitCustomEvent(this.model);
 
       this.listenToNavigate();
     },
@@ -1252,9 +1273,7 @@ module.exports = {
     template: require('./templates/thankYou.pug'),
     el: '#content',
     initialize() {
-      if (this.model.company.ga_id)
-        app.analytics.emitCompanyCustomEvent(this.model.company.ga_id);
-
+      emitCustomEvent(this.model.company);
       $('.popover').popover('hide');
     },
 

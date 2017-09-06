@@ -61,12 +61,24 @@ section.create-company.container.m-b-85
                       input(value="UA -" disabled="disabled").form-control
                     .prefix_input_field
                       -
-
                         pug_html += app.fields.fieldText('ga_id', {
                           schema: fields.ga_id,
                           class: '',
                           placeholder: 'xxxxxx-xx',
                           value: ((values.ga_id || '').replace(/^UA-/i, ''))})
+            .col-xl-6.col-lg-6.col-md-6
+              .row.form-group
+                label.col-xl-12.text-xl-left
+                  | Facebook Pixel. 
+                  a(href="https://www.facebook.com/business/a/facebook-pixel" target="_blank").link-2 Set Up Facebook Pixel
+                .col-xl-12
+                  .prefix_input_field
+                    -
+                      pug_html += app.fields.fieldText('fb_pixel', {
+                        schema: fields.fb_pixel,
+                        class: '',
+                        placeholder: '',
+                        value: values.fb_pixel})
           .row
             .col-xl-6.col-lg-6.col-md-6
               -
