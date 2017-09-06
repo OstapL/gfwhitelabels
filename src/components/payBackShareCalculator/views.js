@@ -25,7 +25,7 @@ module.exports = {
     }
   }),
 
-  step2: Backbone.View.extend(_.extend({
+  step2: Backbone.View.extend(Object.assign({
     el: '#content',
 
     template: require('./templates/step2.pug'),
@@ -48,7 +48,7 @@ module.exports = {
       this.listenToNavigate();
     },
 
-    events: _.extend({
+    events: Object.assign({
       // calculate your income
       'submit .js-calc-form': 'doCalculation',
       'blur [name=growLevel]': saveValue,
@@ -133,14 +133,11 @@ module.exports = {
 
     // get sum of last Annual Distributions
     getPreviousSum(data, index) {
-
       let selectedRange = data.slice(2, index + 1),
         sum = 0;
-
-      _.each(selectedRange, (el) => {
+      (selectedRange || []).forEach((el) => {
         sum += el.annual;
       });
-
       return sum;
     },
 
@@ -286,7 +283,7 @@ module.exports = {
           //options.series.points.show = true;
           //$.plot($chart, dataArr, options);
 
-          let last = _.last($plot.getData()[0].data);
+          let last = app.utils.last($plot.getData()[0].data);
           if (last && last.length > 1) {
             let o = $plot.pointOffset({x: last[0], y: last[1]});
             if (last[1] * 100 >= minPersents) {

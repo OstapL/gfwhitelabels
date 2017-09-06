@@ -1,8 +1,8 @@
 module.exports = {
-  list: Backbone.View.extend(_.extend({
+  list: Backbone.View.extend(Object.assign({
     el: '#content',
     template: require('./templates/list.pug'),
-    events: _.extend({
+    events: Object.assign({
     }),
 
     initialize(options) {
@@ -19,10 +19,10 @@ module.exports = {
 
   })),
 
-  detail: Backbone.View.extend(_.extend({
+  detail: Backbone.View.extend(Object.assign({
     el: '#content',
     template: require('./templates/detail.pug'),
-    events: _.extend({
+    events: Object.assign({
     }),
 
     initialize(options) {
@@ -38,10 +38,10 @@ module.exports = {
 
   })),
 
-  createEdit: Backbone.View.extend(_.extend({
+  createEdit: Backbone.View.extend(Object.assign({
     el: '#content',
     template: require('./templates/createEdit.pug'),
-    events: _.extend({
+    events: Object.assign({
     }),
 
     initialize(options) {
