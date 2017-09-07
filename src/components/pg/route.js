@@ -26,6 +26,7 @@ module.exports = {
           data.data = data.data.map(c => new app.models.Company(c));
           app.currentView = new Views.main({ collection: data, });
           app.currentView.render();
+          $('body').scrollTo();
           app.hideLoading();
         });
       }, 'main_page_chunk');
@@ -83,17 +84,16 @@ module.exports = {
         app.hideLoading();
 
         $(window).scroll(function() {
-					var st = $(this).scrollTop() /15;
+          var st = $(this).scrollTop() /15;
 
-					$(".scroll-paralax .background").css({
-						"transform" : "translate3d(0px, " + st /2 + "%, .01px)",
-						"-o-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
-						"-webkit-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
-						"-moz-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
-						"-ms-transform" : "translate3d(0px, " + st /2 + "%, .01px)"
-
-					});
-				}); 
+            $(".scroll-paralax .background").css({
+              "transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+              "-o-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+              "-webkit-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+              "-moz-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+              "-ms-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+          });
+        });
 
         // pause for modal on page news
         $('#audio-modal').on('hidden.bs.modal', function (e) {
