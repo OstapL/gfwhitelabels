@@ -12,7 +12,7 @@ module.exports = {
   methods: {
     selectYourBusiness() {
       //left just for backward compatibility
-      app.routers.navigate('/calculator/BusinessValuation', { trigger: true });
+      app.routers.navigate('/calculator/businessvaluation', { trigger: true });
     },
 
     businessValuation() {
