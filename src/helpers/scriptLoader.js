@@ -29,7 +29,7 @@ const createStyle = (url, options={}) => {
 };
 
 
-const scriptLoader = _.extend({
+const scriptLoader = Object.assign({
   load(url) {
     return new Promise((resolve, reject) => {
       if (!url)

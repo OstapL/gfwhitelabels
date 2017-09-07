@@ -250,7 +250,7 @@ class FileDropzone {
     this.element.classList.add('dropzone');
 
     dropbox.on('addedfile', (file) => {
-      _(this.files).each((f, i) => {
+      (this.files || []).forEach((f) => {
         if (f.lastModified != file.lastModified) {
           this.removeFile(f);
         }

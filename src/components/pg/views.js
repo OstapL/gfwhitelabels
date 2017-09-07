@@ -107,7 +107,7 @@ module.exports = {
         return;
 
       const menuItems = leftMenu.querySelectorAll('a');
-      const visibleElements = _(menuItems).map((menuItem) => {
+      const visibleElements = (menuItems || []).map((menuItem) => {
         const href = menuItem.getAttribute('href');
         return href && href.startsWith('#')
           ? document.getElementById(href.replace('#', ''))
@@ -118,7 +118,7 @@ module.exports = {
       if (!visibleTopmostElement)
         return;
 
-      _.each(menuItems, (menuItem) => {
+      (menuItems || []).forEach((menuItem) => {
         const href = menuItem.getAttribute('href').replace('#', '');
         const elementID = visibleTopmostElement.getAttribute('id');
         if (href=== elementID)

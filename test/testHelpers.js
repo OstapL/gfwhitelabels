@@ -1,8 +1,8 @@
 
 module.exports = {
   fillForm($form, data) {
-    _.each(data, (value, name) => {
-      $form.find(`[name=${name}]`).val(value);
+    Object.keys(data || {}).forEach((name) => {
+      $form.find(`[name=${name}]`).val(data[name]);
     });
   },
 
