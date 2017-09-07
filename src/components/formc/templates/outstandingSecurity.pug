@@ -101,7 +101,7 @@ section.formc-outstanding-security.container.m-b-85
         form(data-section='outstanding_securities' data-update=-1)#security_model_form.modal-form
           .form-section
             -
-              pug_html += app.fields.fieldChoiceLabel('security_type', _.extend({
+              pug_html += app.fields.fieldChoiceLabel('security_type', Object.assign({
               'value': security_type,
               class1: 'col-lg-12 p-t-0',
               class2: 'col-lg-12',
