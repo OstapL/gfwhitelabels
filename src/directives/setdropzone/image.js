@@ -319,7 +319,7 @@ class CropperDropzone {
           type: imageTypes.CROP,
           transformations: [ 
             cropTransformation,
-            { type: "fill", fillWidth: this.options.auto.width, fillHeight: this.options.auto.height },
+            { type: "fit", fillWidth: this.options.auto.width, fillHeight: this.options.auto.height },
           ],
         },
         {
