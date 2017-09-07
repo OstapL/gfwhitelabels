@@ -1,6 +1,4 @@
 .row.us-fields
-  input(type="hidden" name="personal_information_data[state]" id="personal_information_data__state" value=user.state)
-  
   .col-xl-6.col-lg-6.col-md-6
     -
       pug_html += app.fields.nestedTextLabel(
@@ -12,6 +10,7 @@
         }, fields.personal_information_data.schema.zip_code);
   .col-xl-6.col-lg-6.col-md-6.city_states.city-state-us
     .form-group.row
+      input(type="hidden" name="personal_information_data[state]" id="personal_information_data__state" value=user.state)
       label.col-xl-12.text-xl-left City/State
         span.color-red *
       .col-xl-12#personal_information_data__city

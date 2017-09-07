@@ -33,16 +33,8 @@ const analytics = {
     return safeDataLayerPush(name, data);
   },
 
-  emitCompanyCustomEvent(trackerId) {
-    if (!trackerId) {
-      return;
-    }
-
-    if (trackerId.substr(0,3) != 'UA-') {
-      trackerId = 'UA-' + trackerId;
-    }
-
-    return analytics.emitEvent(analytics.events.CompanyCustomEvent, { trackerId });
+  emitCompanyCustomEvent(ids) {
+    return analytics.emitEvent(analytics.events.CompanyCustomEvent, ids);
   },
 };
 
@@ -66,7 +58,7 @@ module.exports = analytics;
 //     'CompleteRegistration',
 //   ];
 //
-//   let trackType = (_.contains(STANDARD_EVENTS, eventName)) ? 'track' : 'trackCustom';
+//   let trackType = STANDARD_EVENTS.includes(eventName) ? 'track' : 'trackCustom';
 //
 //   safeDataLayerPush({
 //     event: 'fb-pixel-event',

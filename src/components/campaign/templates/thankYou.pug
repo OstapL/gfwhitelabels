@@ -4,7 +4,7 @@
   var socialDirective = require('directives/social/index.js');
   var InvestorInfoProvider = require('directives/social/InvestInfoProvider.js');
 
-  var socialShare = _.extend({
+  var socialShare = Object.assign({
     campaign: investment.campaign,
   }, investment.company);
 

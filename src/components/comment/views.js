@@ -1,8 +1,6 @@
-const validation = require('components/validation/validation.js');
-
 function countChildComments(comment) {
   let cnt = comment.children.length;
-  _.each(comment.children, (childComment) => {
+  (comment.children || []).forEach((childComment) => {
     cnt += countChildComments(childComment);
   });
   comment.count = cnt;
@@ -24,11 +22,11 @@ function findComment(comments, uid) {
 }
 
 module.exports = {
-  comments: Backbone.View.extend(_.extend({
+  comments: Backbone.View.extend(Object.assign({
     urlRoot: app.config.commentsServer + '/:model/:id',
     template: require('./templates/comments.pug'),
     el: '.comments-container',
-    events: _.extend({
+    events: Object.assign({
       'keydown .text-body': 'keydownHandler',
       'keyup .text-body': 'keyupHandler',
       'click .ask-question, .submit-comment': 'submitComment',
@@ -42,7 +40,7 @@ module.exports = {
 
     initialize(options) {
       this.fields = options.fields;
-      this.fields.message = _.extend(this.fields.message, {
+      this.fields.message = Object.assign(this.fields.message, {
         fn: function (name, value, attr, data, schema) {
           if (value.length > 2000)
             throw 'Length of comment should not exceed more than 2000 characters.';
@@ -50,20 +48,20 @@ module.exports = {
       });
 
       this.readonly = options.readonly;
-      this.allowQuestion = _.isBoolean(options.allowQuestion) ? options.allowQuestion : true;
-      this.allowResponse = _.isBoolean(options.allowResponse) ? options.allowResponse : true;
-      this.cssClass = _.isString(options.cssClass) ? options.cssClass : '';
+      this.allowQuestion = app.utils.isBoolean(options.allowQuestion) ? options.allowQuestion : true;
+      this.allowResponse = app.utils.isBoolean(options.allowResponse) ? options.allowResponse : true;
+      this.cssClass = app.utils.isBoolean(options.cssClass) ? options.cssClass : '';
 
       this.urlRoot = this.urlRoot.replace(':model', 'company').replace(':id', this.model.id);
 
       this.userRole = 0;
-      _.each(app.user.companiesMember, (company) => {
+      (app.user.companiesMember || []).forEach((company) => {
         if (company.company_id == this.model.id)
           this.userRole = company.role;
       });
 
-      //init dates, count
-      _.each(this.model.data, (c) => {
+      //init count
+      (this.model.data || []).forEach((c) => {
         countChildComments(c);
       });
 
@@ -223,8 +221,9 @@ module.exports = {
         data.related = relatedRole;
       }
 
-      if (!validation.validate(this.fields, data)) {
-        _(validation.errors).each((errors, name) => {
+      if (!app.validation.validate(this.fields, data)) {
+        Object.keys(app.validation.errors).forEach((key) => {
+          const errors = app.validation.errors[key];
           this.invalidMsg(name, errors, $form);
         });
         $target.prop('disabled', false);
