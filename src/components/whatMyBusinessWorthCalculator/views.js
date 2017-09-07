@@ -58,7 +58,8 @@ module.exports = {
     events: Object.assign({
       'submit form': 'nextStep',
       'blur [type=money]': saveValue,
-    }),
+    }, app.helpers.calculatorValidation.events),
+
     initialize() {
       this.fields = {
         excessCash: {
@@ -150,7 +151,7 @@ module.exports = {
       // calculate your income
       'submit .js-calc-form': 'doCalculation',
       'blur [type=money]': saveValue,
-    }),
+    }, app.helpers.calculatorValidation.events),
 
     initialize() {
       this.fields = {

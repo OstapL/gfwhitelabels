@@ -139,13 +139,13 @@ module.exports = {
       // requiredTemp - temp fix to validate fields on investment page only
       if (attr.type == 'nested' && attr.requiredTemp == true) {
         Object.keys(attr.schema).forEach((subname) => {
-          const attr = attr.schema[name];
-          if (fixedRegex.indexOf(attr.type) != -1) {
-            if (Array.isArray(attr.validate)) {
-              attr.validate.forEach((jsonFields, index) => {
+          const subattr = attr.schema[subname];
+          if (fixedRegex.indexOf(subattr.type) != -1) {
+            if (Array.isArray(subattr.validate)) {
+              subattr.validate.forEach((jsonFields, index) => {
                 try {
-                  rules.regex(name, attr, data, attr.type);
-                  this.runRules(attr, name);
+                  rules.regex(name, subattr, data, subattr.type);
+                  this.runRules(subattr, name);
                 } catch (e) {
                   this.finalResult = false;
                   Array.isArray(this.errors[name])
@@ -153,11 +153,11 @@ module.exports = {
                     : this.errors[name] = [e];
                 }
               });
-            } else if (typeof(attr.validate) === 'object') {
-              Object.keys(attr.validate).forEach((key) => {
+            } else if (typeof(subattr.validate) === 'object') {
+              Object.keys(subattr.validate).forEach((key) => {
                 try {
-                  rules.regex(name, attr, data, attr.type);
-                  this.runRules(attr, name);
+                  rules.regex(name, subattr, data, subattr.type);
+                  this.runRules(subattr, name);
                 } catch (e) {
                   this.finalResult = false;
                   Array.isArray(this.errors[name])
@@ -167,7 +167,7 @@ module.exports = {
               });
             }
           } else {
-            this.runRules(attr, name + '.' + subname);
+            this.runRules(subattr, name + '.' + subname);
           }
         });
         if (attr.fn) {

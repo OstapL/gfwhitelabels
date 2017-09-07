@@ -131,7 +131,7 @@ module.exports = {
       'change select': saveValue,
       'blur [type=money]': saveValue,
       'submit form': 'nextStep',
-    }),
+    }, app.helpers.calculatorValidation.events),
 
     initialize() {
       this.fields = {
@@ -292,10 +292,6 @@ module.exports = {
     el: '#content',
 
     template: require('./templates/step3.pug'),
-
-    preinitialize() {
-      $('#content').undelegate();
-    },
 
     initialize() {
       this.fields = {

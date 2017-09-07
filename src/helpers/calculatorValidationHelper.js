@@ -12,7 +12,9 @@ module.exports = {
             app.validation.invalidMsg(this, key, errors);
           });
 
-          // this.$('.help-block').prev().scrollTo(5);
+          const $el = this.$('.help-block').prev();
+          if (!app.isElementInView($el))
+            $el.scrollTo(5);
           return false;
         }
         return true;
