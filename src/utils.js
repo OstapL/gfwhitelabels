@@ -30,12 +30,12 @@ module.exports = {
   },
   isEmpty(obj) {
     if (!obj)
-      return false;
+      return true;
 
     if (Array.isArray(obj))
-      return !!obj.length;
+      return !obj.length;
     
-    return !!Object.keys(obj).length;
+    return !Object.keys(obj).length;
   },
   pick(obj, props) {
     const res = {};
