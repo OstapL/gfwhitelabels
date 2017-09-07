@@ -1,9 +1,9 @@
 module.exports = {
   routes: {
-    'calculator/selectYourBusiness': 'selectYourBusiness',
-    'calculator/BusinessValuation': 'businessValuation',
-    'calculator/selectCalculator': 'selectCalculator',
-    'calculator/selectCalculator2': 'selectCalculator2',
+    'calculator/selectyourbusiness': 'selectYourBusiness',
+    'calculator/businessvaluation': 'businessValuation',
+    'calculator/selectcalculator': 'selectCalculator',
+    'calculator/selectcalculator2': 'selectCalculator2',
     'calculator/whatmybusinessworth/intro': 'calculatorWhatMyBusinessWorthIntro',
     'calculator/whatmybusinessworth/step-1': 'calculatorWhatMyBusinessWorthStep1',
     'calculator/whatmybusinessworth/step-2': 'calculatorWhatMyBusinessWorthStep2',
@@ -12,7 +12,7 @@ module.exports = {
   methods: {
     selectYourBusiness() {
       //left just for backward compatibility
-      app.routers.navigate('/calculator/BusinessValuation', { trigger: true });
+      app.routers.navigate('/calculator/businessvaluation', { trigger: true });
     },
 
     businessValuation() {

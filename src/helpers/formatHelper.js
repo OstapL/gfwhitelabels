@@ -181,7 +181,7 @@ module.exports = {
       return /^[0-9]$/.test(str);
     };
 
-    if (_.contains(SKIP_KEY_CODES, e.keyCode)) {
+    if (SKIP_KEY_CODES.includes(e.keyCode)) {
       e.target.dataset.prevCursor = e.target.selectionStart;
       return;
     }
@@ -257,7 +257,7 @@ module.exports = {
   },
 
   formatPercentFieldOnKeyUp(e) {
-    if (_.contains(SKIP_KEY_CODES, e.keyCode))
+    if (SKIP_KEY_CODES.includes(e.keyCode))
       return;
 
     const rawValue = e.target.value;

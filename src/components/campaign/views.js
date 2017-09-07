@@ -3,7 +3,6 @@ const typeOfDocuments = require('consts/typeOfDocuments.json');
 const STATUSES = require('consts/raisecapital/companyStatuses.json').STATUS;
 
 const COUNTRIES = require('consts/countries.json');
-const validation = require('components/validation/validation.js');
 
 const CalculatorView = require('./revenueShareCalculator.js');
 
@@ -18,6 +17,30 @@ function paralaxScrollHandler() {
     "-ms-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
   });
 }
+
+const emitCustomEvent = (data) => {
+  if (!data)
+    return;
+
+  let trackerId = data.ga_id;
+  let pixelId = data.fb_pixel;
+
+  if (!trackerId && !pixelId)
+    return;
+
+  const ids = {};
+
+  if (trackerId && !trackerId.startsWith('UA-'))
+    trackerId = 'UA-' + trackerId;
+
+  if (trackerId)
+    ids.trackerId = trackerId;
+
+  if (pixelId)
+    ids.pixelId = pixelId;
+
+  app.analytics.emitCompanyCustomEvent(ids);
+};
 
 module.exports = {
   list: Backbone.View.extend({
@@ -88,18 +111,14 @@ module.exports = {
     initialize(options) {
       $(document).off("scroll", this.onScrollListener);
       $(document).on("scroll", this.onScrollListener);
-
       this.companyDocsData = {
         title: 'Financials',
         files: this.model.formc
-          ? _.union(this.model.formc.fiscal_prior_group_data,
-                this.model.formc.fiscal_recent_group_data)
+          ? (this.model.formc.fiscal_prior_group_data || []).concat(this.model.formc.fiscal_recent_group_data || [])
           : []
       };
 
-      if (this.model.ga_id) {
-        app.analytics.emitCompanyCustomEvent(this.model.ga_id);
-      }
+      emitCustomEvent(this.model);
 
       this.listenToNavigate();
     },
@@ -124,8 +143,8 @@ module.exports = {
         ) {
           $('#company_publish_confirm').modal('show');
         } else {
-          var errors = {};
-          _(data.progress).each((d, k) => {
+          Object.keys(data.progress || {}).forEach((k) => {
+            const d = data.progress[k];
             if(k != 'perks') {
               if(d == false)  {
                 $('#company_publish .'+k).removeClass('collapse');
@@ -551,40 +570,41 @@ module.exports = {
 
       this.model.campaign.expiration_date = new Date(this.model.campaign.expiration_date);
 
-      this.fields.personal_information_data.schema.country = _.extend(this.fields.personal_information_data.schema.country, {
+      this.fields.personal_information_data.schema.country = Object.assign(this.fields.personal_information_data.schema.country, {
         type: 'select',
         validate: {
           OneOf: {
-            choices: _.keys(COUNTRIES),
+            choices: Object.keys(COUNTRIES),
           },
           choices: COUNTRIES
         },
         messageRequired: 'Not a valid choice',
       });
 
-      this.fields.personal_information_data.schema.phone = _.extend(this.fields.personal_information_data.schema.phone, {
-        // required: false,
-        // fn: function(name, value, attr, data, schema) {
-        //   let country = this.getData(data, 'personal_information_data.country');
-        //   if (country == 'US')
-        //     return;
-        //
-        //   return this.required(name, true, attr, data);
-        // },
-      });
-
-      this.fields.personal_information_data.schema.city = _.extend(this.fields.personal_information_data.schema.city, {
-        // fn: function(name, value, attr, data, schema) {
-        //   let country = this.getData(data, 'personal_information_data.country');
-        //   if (country == 'US')
-        //     return;
-        //   return this.required(name, true, attr, data);
-        // },
-        // required: false,
-      });
-
-      this.fields.personal_information_data.schema.state = _.extend(this.fields.personal_information_data.schema.state, {
+      this.fields.personal_information_data.schema.phone = Object.assign(this.fields.personal_information_data.schema.phone, {
         required: false,
+        fn: function(name, value, attr, data, schema) {
+          let country = this.getData(data, 'personal_information_data.country');
+          if (country == 'US')
+            return;
+
+          return this.required(name, true, attr, data);
+        },
+      });
+
+      this.fields.personal_information_data.schema.city = Object.assign(this.fields.personal_information_data.schema.city, {
+        required: false,
+        fn: function(name, value, attr, data, schema) {
+          let country = this.getData(data, 'personal_information_data.country');
+          if (country == 'US')
+            return;
+          return this.required(name, true, attr, data);
+        },
+      });
+
+      this.fields.personal_information_data.schema.state = Object.assign(this.fields.personal_information_data.schema.state, {
+        // required: false,
+        required: true,
         // fn: function(name, value, attr, data, schema) {
         //   let country = this.getData(data, 'personal_information_data.country');
         //   if (country == 'US')
@@ -655,8 +675,7 @@ module.exports = {
 
       this.initMaxAllowedAmount();
 
-      if (this.model.ga_id)
-        app.analytics.emitCompanyCustomEvent(this.model.ga_id);
+      emitCustomEvent(this.model);
 
       this.listenToNavigate();
     },
@@ -913,12 +932,12 @@ module.exports = {
     updatePerks(amount) {
       function updatePerkElements($elms, amount) {
         $elms.removeClass('active').find('i.fa.fa-check').hide();
-        let filteredPerks = _($elms).filter(el =>  {
+        let filteredPerks = ($elms || []).filter(el =>  {
           const perkAmount = parseInt(el.dataset.amount);
           return perkAmount <= amount;
         });
 
-        let activePerk = _.last(filteredPerks);
+        let activePerk = app.utils.last(filteredPerks);
 
         if (activePerk) {
           $(activePerk).addClass('active').find('i.fa.fa-check').show();
@@ -1013,10 +1032,11 @@ module.exports = {
 
       $('#income_worth_modal .helper-block').remove();
 
-      if(!validation.validate(fields, data, this)) {
+      if(!app.validation.validate(fields, data, this)) {
         e.preventDefault();
-        _(validation.errors).each((errors, key) => {
-          validation.invalidMsg(this, key, errors);
+        Object.keys(app.validation.errors).forEach((key) => {
+          const errors = app.validation.errors[key];
+          app.validation.invalidMsg(this, key, errors);
         });
         return false;
       }
@@ -1252,9 +1272,7 @@ module.exports = {
     template: require('./templates/thankYou.pug'),
     el: '#content',
     initialize() {
-      if (this.model.company.ga_id)
-        app.analytics.emitCompanyCustomEvent(this.model.company.ga_id);
-
+      emitCustomEvent(this.model.company);
       $('.popover').popover('hide');
     },
 

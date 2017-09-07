@@ -42,7 +42,7 @@ module.exports = {
 
         app.addClassesTo('#page', [name]);
         const template = require('./templates/' + (templateMap[name] || name) + '.pug');
-        if (_.contains(withLeftMenuPages, name)) {
+        if (withLeftMenuPages.includes(name)) {
           const Views = require('./views.js');
           app.currentView = new Views.WithLeftMenu({
             template,
