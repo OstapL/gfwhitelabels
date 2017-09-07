@@ -932,8 +932,8 @@ module.exports = {
     updatePerks(amount) {
       function updatePerkElements($elms, amount) {
         $elms.removeClass('active').find('i.fa.fa-check').hide();
-        let filteredPerks = ($elms || []).filter(el =>  {
-          const perkAmount = parseInt(el.dataset.amount);
+        let filteredPerks = $elms.filter((idx, el) =>  {
+          const perkAmount = Number(el.dataset.amount);
           return perkAmount <= amount;
         });
 
