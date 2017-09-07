@@ -52,7 +52,7 @@ describe('Attribute validation', function () {``
 
     // valid urls
     let valid_urls = ['http://arthuryip.xyz', 'https://arthuryip.xyz', 'http://www.ya.pro', ];
-    _(valid_urls).each((url) => {
+    valid_urls.forEach((url) => {
       data.test = url;
       expect(rules.regex.bind(rules, 'test', attr, data, attr.type)).to.not.throw();
     });
@@ -66,11 +66,10 @@ describe('Attribute validation', function () {``
       'mail@mail.com',
       'http://arthuryip',
     ];
-    _(unvalid_urls).each((url) => {
+    unvalid_urls.forEach((url) => {
       data.test = url;
       expect(rules.regex.bind(rules, 'test', attr, data, attr.type)).to.throw();
     });
-
   });
 
   it('Email', function () {
