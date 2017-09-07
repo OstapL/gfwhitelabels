@@ -6,7 +6,7 @@ const expect    = chai.expect;
 const Views = require('src/components/anonymousAccount/views.js');
 const socialAuth = require('src/components/anonymousAccount/social-auth.js');
 
-const eventEmitter = _.extend({}, Backbone.Events);
+const eventEmitter = Object.assign({}, Backbone.Events);
 
 const inst = {};
 const setData = app.user.setData;
@@ -94,7 +94,7 @@ describe('Log-in page', () => {
       checkbox1: 1,
     };
 
-    testHelpers.fillForm($loginForm, _.pick(userData, 'email', 'password'));
+    testHelpers.fillForm($loginForm, app.utils.pick(userData, ['email', 'password']));
 
     eventEmitter.on('done', () => {
       const data = api.makeRequest.args[0][2];
@@ -220,7 +220,7 @@ describe('Sign-up page', () => {
     };
 
     const $signupForm = $('.signup-form');
-    testHelpers.fillForm($signupForm, _.omit(userData, 'checkbox1', 'domain'));
+    testHelpers.fillForm($signupForm, app.utils.omit(userData, ['checkbox1', 'domain']));
     $signupForm.find('input[name="checkbox1"]').prop('checked', true);
     eventEmitter.off('done');
     eventEmitter.on('done', () => {
@@ -350,7 +350,7 @@ describe('Sign-up popup', () => {
     };
     const $signupForm = $('#sign-up-form');
 
-    testHelpers.fillForm($signupForm, _.omit(userData, 'checkbox1', 'domain'));
+    testHelpers.fillForm($signupForm, app.utils.omit(userData, ['checkbox1', 'domain']));
     $signupForm.find('input[name=checkbox1]').prop('checked', true);
     eventEmitter.off('done');
     eventEmitter.on('done', () => {
@@ -494,7 +494,7 @@ describe('Log-in popup', () => {
 
     const $loginForm = $('#sign-in-form');
 
-    testHelpers.fillForm($loginForm, _.omit(userData, 'domain'));
+    testHelpers.fillForm($loginForm, app.utils.omit(userData, ['domain']));
     eventEmitter.off('done');
     eventEmitter.on('done', () => {
       const data = api.makeRequest.args[0][2];

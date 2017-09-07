@@ -9,22 +9,22 @@ class Field {
   };
 
   constructor(options) {
-    _.extend(this, _.pick(options, [
+    Object.assign(this, app.utils.pick(options, [
       'schema',
       'attr',
     ]));
 
     this.buildAttributes();
     this.errors = [];
-    _.extend(this, Backbone.Events);
+    Object.assign(this, Backbone.Events);
   };
 
   buildAttributes() {
     this.attr = this.attr || {};
     if (!this.attr.elementID)
-      this.attr.elementID = _.uniqueId('field_');
+      this.attr.elementID = app.utils.uniqueId('field_');
 
-    this.attr = _.extend({
+    this.attr = Object.assign({
       type: 'text',
       id: '',
       placeholder: '',
@@ -84,10 +84,11 @@ class Field {
 
     this.$el = $('#' + this.attr.elementID);
 
-    _(this.events).each((method, eventParam) => {
+    Object.keys(this.events).forEach((eventParam) => {
+      const method = this.events[eventParam];
       const [event, selector] = eventParam.split(' ');
       const handler = this[method];
-      if (!_.isFunction(handler))
+      if (typeof(handler) !== 'function')
         return;
 
       this.$el.on(event, selector, handler.bind(this));
@@ -98,7 +99,7 @@ class Field {
     if (!this.$el)
       return;
 
-    _(this.events).each((method, eventParam) => {
+    Object.keys(this.events).forEach((eventParam) => {
       const [event] = eventParam.split(' ');
       this.$el.off(event)
     });
@@ -147,7 +148,7 @@ class TextField extends Field {
   }
 
   get events() {
-    return _.extend(super.events, {
+    return Object.assign(super.events, {
       'change input': 'onChange',
     });
   };
@@ -172,7 +173,7 @@ const URLPatternRx = /^(https?|ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF9
 
 class URLField extends TextFieldWithLabel {
   get events() {
-    return _.extend(super.events, {
+    return Object.assign(super.events, {
       'change input': 'onChange',
     });
   }
@@ -302,7 +303,7 @@ class VideoLinkField extends URLField {
 
 class NestedField extends Field {
   get events() {
-    return _.extend(super.events, {
+    return Object.assign(super.events, {
       'click .addField': 'addField',
       'click .removeField': 'removeField',
     });
@@ -333,7 +334,7 @@ class NestedField extends Field {
 const SYSTEM_FIELDS = ['domain', 'checkbox1'];
 
 const createField = (schema={}, attr={}) => {
-  if (_.contains(SYSTEM_FIELDS, attr.name))
+  if (SYSTEM_FIELDS.includes(attr.name))
     return null;
 
 
@@ -374,7 +375,8 @@ const createField = (schema={}, attr={}) => {
 
 export const createFields = (schemas, attrs) => {
   const fields = {};
-  _(schemas).each((schema, name) => {
+  Object.keys(schemas).forEach((name) => {
+    const schema = schemas[name];
     const attr = attrs[name] || {};
     attr.name = name;
     const field = createField(schema, attr);

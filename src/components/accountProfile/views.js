@@ -11,11 +11,11 @@ import 'bootstrap-slider/dist/css/bootstrap-slider.css';
 
 
 module.exports = {
-  profile: Backbone.View.extend(_.extend({
+  profile: Backbone.View.extend(Object.assign({
     template: require('./templates/profile.pug'),
     urlRoot: app.config.authServer + '/rest-auth/data',
     doNotExtendModel: true,
-    events: _.extend({
+    events: Object.assign({
       'click #saveAccountInfo': api.submitAction,
       // 'click #saveFinancialInfo': api.submitAction,
       'change #not-qualify': 'changeQualify',
@@ -32,11 +32,11 @@ module.exports = {
 
       this.fields = options.fields;
 
-      this.fields.phone = _.extend(this.fields.phone, {
+      this.fields.phone = Object.assign(this.fields.phone, {
         required: true,
       });
 
-      this.fields.image_image_id = _.extend(this.fields.image_image_id, {
+      this.fields.image_image_id = Object.assign(this.fields.image_image_id, {
         templateDropzone: 'profileDropzone.pug',
         defaultImage: require('images/default/Default_photo.png'),
         onSaved: (data) => {
@@ -213,25 +213,23 @@ module.exports = {
 
     saveAccountInfo(e) {
       //validate link fields if they have value
-      const linkFields = ['twitter', 'facebook', 'instagram', 'linkedin'];
       let fields = {};
       let data = {};
 
-      _.each(linkFields, (name) => {
+      ['twitter', 'facebook', 'instagram', 'linkedin'].forEach((name) => {
         let field = this.$('#' + name);
         if (field.val()) {
-          fields[name] = _.extend({}, this.fields[name], { type: 'url' });
+          fields[name] = Object.assign({}, this.fields[name], { type: 'url' });
           data[name] = field.val();
         }
       });
       this.$('.help-block').remove();
       if (!app.validation.validate(fields, data)) {
         e.preventDefault();
-
-        _(app.validation.errors).each((errors, key) => {
-          validation.invalidMsg(this, key, errors);
+        Object.keys(app.validation.errors).forEach((key) => {
+          const errors = app.validation.errors[key];
+          app.validation.invalidMsg(this, key, errors);
         });
-
         return false;
       }
 
@@ -450,7 +448,7 @@ module.exports = {
     },
 
     _findInvestment(id) {
-      return _.find(this.model.data, inv => inv.id == id);
+      return (this.model.data || []).find(inv => inv.id == id);
     },
 
     showFinancialDocs(e) {
@@ -472,7 +470,7 @@ module.exports = {
     onCancel(investment) {
       app.analytics.emitEvent(app.analytics.events.InvestmentCancelled, app.user.stats);
 
-      _.each(this.model.data, (i) => {
+      (this.model.data || []).forEach((i) => {
         if (i.campaign_id != investment.campaign_id)
           return;
 
@@ -559,7 +557,7 @@ module.exports = {
 
           $target.closest('.one_table').remove();
 
-          let hasActiveInvestments = _.some(this.model.data, i => i.active);
+          let hasActiveInvestments = (this.model.data || []).some(i => i.active);
           if (!hasActiveInvestments)
             $('#active .investor_table')
               .append(this.snippets.noInvestments());
@@ -570,7 +568,7 @@ module.exports = {
 
           if (historicalInvestmentElements.length) {
             //find investment to insert before it
-            let block = _.find(historicalInvestmentElements, (elem) => {
+            let block = (historicalInvestmentElements || []).find((elem) => {
               const investmentId = Number(elem.dataset.investmentid);
               return investment.id > investmentId;
             });
@@ -680,12 +678,12 @@ module.exports = {
       this.formc = options.formc;
       this.investors = options.investors;
 
-      _.each(this.investors.data, (investor) => {
+      (this.investors.data || []).forEach((investor) => {
         investor.user.image_data = new Image(app.config.authServer + '/rest-auth/data', investor.user.image_data);
       });
 
-      this.investors.data = _.sortBy(this.investors.data, (investment) => {
-        return -(new Date(investment.created_date)).valueOf();
+      (this.investors.data || []).sort((i1, i2) => {
+        return (new Date(i2.created_date)).valueOf() - (new Date(i1.created_date)).valueOf();
       });
 
       //this is auth cookie for downloadable files
@@ -758,10 +756,9 @@ module.exports = {
 
           function countComments(comments) {
             let count = comments.length || 0;
-            _.each(comments, (c) => {
+            (comments || []).forEach((c) => {
               count += countComments(c.children);
             });
-
             return count;
           }
 

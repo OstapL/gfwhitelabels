@@ -45,7 +45,7 @@ section.campaign-specifics.container.m-b-85
                 });
           .col-xl-6.col-lg-6.col-md-6
             -
-              pug_html += app.fields.fieldChoiceLabel('length_days', _.extend({
+              pug_html += app.fields.fieldChoiceLabel('length_days', Object.assign({
                   'value': values.length_days,
                 }, fields.length_days));
 
@@ -97,7 +97,7 @@ section.campaign-specifics.container.m-b-85
           .row
             .col-xl-12
               -
-                pug_html += app.fields.fieldChoiceLabel('valuation_determination', _.extend({
+                pug_html += app.fields.fieldChoiceLabel('valuation_determination', Object.assign({
                     'value': values.valuation_determination,
                   }, fields.valuation_determination));
           .row
@@ -105,7 +105,7 @@ section.campaign-specifics.container.m-b-85
                 div(class=(values.valuation_determination == 2 ? '' : 'collapse'))
                   -
                     pug_html += app.fields.textareaLabel('valuation_determination_other', {
-                        schema: _.extend({}, fields.valuation_determination_other, { required: true }),
+                        schema: Object.assign({}, fields.valuation_determination_other, { required: true }),
                         help_text: 'How are the securities being offered being valued? Include examples of methods for how such securities may be valued by the issuer in the future, including during subsequent corporate actions.',
                         value: values.valuation_determination_other,
                       });
