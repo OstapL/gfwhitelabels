@@ -18,44 +18,43 @@
             'image_data', 
             view.fields.image_image_id
           ).render().resultHTML;
-      .row
-        .col-xl-12.col-lg-12.col-md-6.offset-md-3.col-xs-12.offset-xl-0.offset-lg-0.credit-password-block
-          -
-            var roles = app.user.getRoles();
-            var company = app.user.getCompany();
-          if roles && roles.length
-            each roleInfo, idx in roles
-              .profile-type-user
-                .profile-type-user-wrap
-                  if roleInfo.roles && roleInfo.roles.length && roleInfo.company.is_paid
-                    each role in roleInfo.roles
-                      span.user-type #{ role.title }
-                    .user-company
-                      | in 
-                      a(href=app.getIssuerDashboardUrl(roleInfo.company.id)).link-3 #{ roleInfo.company.name }
-                      |  company.
-          else if company && company.name && company.is_paid
+      .col-xl-12.col-lg-12.col-md-6.offset-md-3.col-xs-12.offset-xl-0.offset-lg-0.credit-password-block
+        -
+          var roles = app.user.getRoles();
+          var company = app.user.getCompany();
+        if roles && roles.length
+          each roleInfo, idx in roles
             .profile-type-user
               .profile-type-user-wrap
-                .user-company
-                  a(href="/dashboard/" + company.formc_id + "/issuer-dashboard").link-3 #{ company.name }
-                  |  company.
-          if user.credit > 0 && user.days_left > 0
-            hr.profile-type-user-hr
-            .profile-type-user.credit-all
-              
-              h3.text-uppercase.m-t-0 your credit
-                .small-text Credit valid for #{ user.days_left } days.
-              .profile-comission
-                .wrap
-                  h2.m-t-0.m-b-0 $#{ user.credit }
-              .text-xs-center
-                a(href="/companies").btn.btn-secondary invest
-          .profile-reset-password      
-            hr
-            a(href="/account/change-password").link-3
-              i.fa.fa-lock
-              |  Need to change your password?
+                if roleInfo.roles && roleInfo.roles.length && roleInfo.company.is_paid
+                  each role in roleInfo.roles
+                    span.user-type #{ role.title }
+                  .user-company
+                    | in 
+                    a(href=app.getIssuerDashboardUrl(roleInfo.company.id)).link-3 #{ roleInfo.company.name }
+                    |  company.
+        else if company && company.name && company.is_paid
+          .profile-type-user
+            .profile-type-user-wrap
+              .user-company
+                a(href="/dashboard/" + company.formc_id + "/issuer-dashboard").link-3 #{ company.name }
+                |  company.
+        if user.credit > 0 && user.days_left > 0
+          hr.profile-type-user-hr
+          .profile-type-user.credit-all
+            
+            h3.text-uppercase.m-t-0 your credit
+              .small-text Credit valid for #{ user.days_left } days.
+            .profile-comission
+              .wrap
+                h2.m-t-0.m-b-0 $#{ user.credit }
+            .text-xs-center
+              a(href="/companies").btn.btn-secondary invest
+        .profile-reset-password      
+          hr
+          a(href="/account/change-password").link-3
+            i.fa.fa-lock
+            |  Need to change your password?
     .col-xl-8.col-lg-8
       ul.nav.nav-tabs.profile-tabs
         li(aria-expanded="false").nav-item
@@ -85,7 +84,7 @@
             section.form-section.clearfix
               form(method="post" action="").form
                 .form-body.clearfix
-                  .col-xs-12.p-xs-0
+                  .col-xs-12.p-x-0
                     section.right-block
                       .form-group.row.required
                         label.col-xs-12.text-xl-left Legal Name
@@ -108,26 +107,26 @@
                       .row.m-b-0
                         .col-xl-6.col-lg-6.col-md-6
                           -
-                            pug_html += app.fields.textLabel("twitter", _.extend({
+                            pug_html += app.fields.textLabel("twitter", Object.assign({
                                 'type': 'text',
                                 'value': user.twitter,
                               }, fields.twitter))
                         .col-xl-6.col-lg-6.col-md-6
                           -
-                            pug_html += app.fields.textLabel("facebook", _.extend({
+                            pug_html += app.fields.textLabel("facebook", Object.assign({
                                 'type': 'text',
                                 'value': user.facebook,
                               }, fields.facebook))
                       .row.m-b-0
                         .col-xl-6.col-lg-6.col-md-6
                           -
-                            pug_html += app.fields.textLabel("instagram", _.extend({
+                            pug_html += app.fields.textLabel("instagram", Object.assign({
                                 'type': 'text',
                                 'value': user.instagram,
                               }, fields.instagram))
                         .col-xl-6.col-lg-6.col-md-6
                           -
-                            pug_html += app.fields.textLabel("linkedin", _.extend({
+                            pug_html += app.fields.textLabel("linkedin", Object.assign({
                                 'type': 'text',
                                 'value': user.linkedin,
                               }, fields.linkedin))
@@ -149,7 +148,7 @@
               form(method="post" action="")
                 .form-body.clearfix
 
-                  .col-xl-12.p-xs-0
+                  .col-xl-12.p-x-0
                     section.right-block
                       .form-group.row
                         .col-lg-12
@@ -242,40 +241,40 @@
                       .row
                         .col-xl-6.col-lg-6.col-md-6
                           -
-                            pug_html += app.fields.textLabel('bank_name', _.extend({
+                            pug_html += app.fields.textLabel('bank_name', Object.assign({
                                 'type': 'text',
                                 'value': user.bank_name
                               }, fields.bank_name))
                         .col-xl-6.col-lg-6.col-md-6
                           -
-                            pug_html += app.fields.textLabel('name_on_bank_account', _.extend({
+                            pug_html += app.fields.textLabel('name_on_bank_account', Object.assign({
                                 'type': 'text',
                                 'value': user.name_on_bank_account
                               }, fields.name_on_bank_account))
                         .col-xl-6.col-lg-6.col-md-6
                           -
-                            pug_html += app.fields.textLabel('account_number', _.extend({
+                            pug_html += app.fields.textLabel('account_number', Object.assign({
                                 'help_text': '<div class="img-routing-number"></div>',
                                 'type': 'text',
                                 'value': user.account_number
                               }, fields.account_number))
                         .col-xl-6.col-lg-6.col-md-6
                           -
-                            pug_html += app.fields.textLabel('account_number_re', _.extend({
+                            pug_html += app.fields.textLabel('account_number_re', Object.assign({
                                 'help_text': '<div class="img-routing-number"></div>',
                                 'type': 'text',
                                 'value': user.account_number
                               }, fields.account_number_re))
                         .col-xl-6.col-lg-6.col-md-6
                           -
-                            pug_html += app.fields.textLabel('routing_number', _.extend({
+                            pug_html += app.fields.textLabel('routing_number', Object.assign({
                                 'help_text': '<div class="img-routing-number"></div>',
                                 'type': 'text',
                                 'value': user.routing_number
                               }, fields.routing_number))
                         .col-xl-6.col-lg-6.col-md-6
                           -
-                            pug_html += app.fields.textLabel('routing_number_re', _.extend({
+                            pug_html += app.fields.textLabel('routing_number_re', Object.assign({
                                 'help_text': '<div class="img-routing-number"></div>',
                                 'type': 'text',
                                 'value': user.routing_number

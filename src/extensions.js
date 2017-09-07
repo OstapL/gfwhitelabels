@@ -1,20 +1,16 @@
 //Backbone.View extension methods
-_.extend(Backbone.View.prototype, {
+Object.assign(Backbone.View.prototype, {
 
   listenToNavigate() {
-    if (!this.onBeforeNavigate) {
-      this.onBeforeNavigate = function() {
-        this.destroy();
-      };
-    }
-
     app.routers.on('before-navigate', this.onBeforeNavigate, this);
   },
 
   assignLabels() {
-    _(this.fields).each((el, key) => {
+    Object.keys(this.fields).forEach((key) => {
+      const el = this.fields[key];
       if (el.type == 'nested') {
-        _(el.schema).each((subel, subkey) => {
+        Object.keys(el.schema || {}).forEach((subkey) => {
+          const subel = el.schema[subkey];
           if (this.labels[key])
             subel.label = this.labels[key][subkey];
         });
@@ -41,20 +37,26 @@ _.extend(Backbone.View.prototype, {
     }
   },
 
-  destroy() {
-    if (!this.fields)
-      return;
-
-    _(this.fields).each((field) => {
-      if (_.isFunction(field.destroy))
-        field.destroy()
-    });
+  destroy(e) {
+    if (this.fields) {
+      Object.keys(this.fields).forEach((name) => {
+        const field = this.fields[name];
+        if (typeof(field.destroy) === 'function')
+          field.destroy();
+      });
+    }
 
     this.undelegateEvents();
 
-    if (this.onBeforeNavigate)
+    if (this.onBeforeNavigate) {
       app.routers.off('before-navigate', this.onBeforeNavigate, this);
+    }
 
+    // ToDo
+    // Refactor
+    $('.popover').remove();
+    $('.modal-backdrop').remove();
+    $('.modal-open').removeClass('modal-open');
   },
 
 });
@@ -62,9 +64,9 @@ _.extend(Backbone.View.prototype, {
 //Backbone.Router extension methods
 const navigate = Backbone.Router.prototype.navigate;
 
-_.extend(Backbone.Router.prototype, {
+Object.assign(Backbone.Router.prototype, {
 
-  navigate(...args) {
+  navigate(fragment, options) {
     const outData = {
       preventNavigate: false,
     };
@@ -74,13 +76,13 @@ _.extend(Backbone.Router.prototype, {
     if (outData.preventNavigate)
       return false;
 
-    return navigate.call(this, ...args);
+    return navigate.call(this, fragment, options);
   },
 
 });
 
 //jQuery extensions methods
-_.extend($.fn, {
+Object.assign($.fn, {
 
   scrollTo(padding=0, duration='fast') {
     $('html, body').animate({
@@ -114,7 +116,7 @@ $.fn.animateCount = function(options={}) {
     }
   };
 
-  options = _.extend(defaultOptions, options);
+  options = Object.assign(defaultOptions, options);
 
   $(this).each(function() {
     const $this = $(this);
@@ -124,7 +126,7 @@ $.fn.animateCount = function(options={}) {
   });
 };
 
-$.serializeJSON.defaultOptions = _.extend($.serializeJSON.defaultOptions, {
+$.serializeJSON.defaultOptions = Object.assign($.serializeJSON.defaultOptions, {
   customTypes: {
     decimal(val) {
       return app.helpers.format.unformatPrice(val);

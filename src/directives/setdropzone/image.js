@@ -1,5 +1,5 @@
 const file = require('./file.js');
-const imageTypes = require('../../consts/imageTypes.json');
+const imageTypes = require('consts/imageTypes.json');
 const defaultImage = require('images/default/255x153.png');
 
 

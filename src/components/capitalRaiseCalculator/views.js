@@ -52,13 +52,9 @@ module.exports = {
     },
   }),
 
-  step1: Backbone.View.extend(_.extend({
+  step1: Backbone.View.extend(Object.assign({
     el: '#content',
     template: require('./templates/step1.pug'),
-    preinitialize() {
-      $('#content').undelegate();
-    },
-
     initialize() {
       this.fields = {
         industry: {
@@ -142,12 +138,14 @@ module.exports = {
       };
 
       const data = app.helpers.calculator.readCalculatorData(CALCULATOR_NAME);
-      if (!data || _.isEmpty(data)) {
+      if (!data || app.utils.isEmpty(data)) {
         app.helpers.calculator.saveCalculatorData(CALCULATOR_NAME, defaultCalculatorData);
       }
+
+      this.listenToNavigate();
     },
 
-    events: _.extend({
+    events: Object.assign({
       // calculate your income
       'submit .js-calc-form': 'doCalculation',
 
@@ -172,13 +170,13 @@ module.exports = {
         ntmEv = row[5];
 
       // calculate NTM and post capital raise
-      _.extend(calculatedData, {
+      Object.assign(calculatedData, {
         ntmPs,
         ntmEv,
         postCapitalRaise: data.CashOnHand - data.yourDebt + data.cashRaise
       });
       // calculate P/S and EV/EBIT for year1 and year5
-      _.extend(calculatedData, {
+      Object.assign(calculatedData, {
         year1Ps: ntmPs * data.projectedRevenue,
         year1Ev: ntmEv * data.operatingProfit + calculatedData.postCapitalRaise,
         year5Ps: ntmPs * data.projectedRevenueTwo + calculatedData.postCapitalRaise,
@@ -186,13 +184,13 @@ module.exports = {
       });
 
       // calculate Average for year1 and year5
-      _.extend(calculatedData, {
+      Object.assign(calculatedData, {
         year1Average: (calculatedData.year1Ps + calculatedData.year1Ev) / 2,
         year5Average: (calculatedData.year5Ps + calculatedData.year5Ev) / 2
       });
 
       // calculate NPV for year1 and year5
-      _.extend(calculatedData, {
+      Object.assign(calculatedData, {
         year1Npv: calculatedData.year1Average,
         year5Npv: calculatedData.year5Average / Math.pow(1.1, 4)
       });
@@ -217,7 +215,7 @@ module.exports = {
       calculatedData.PreMoneyValuation = Math.ceil(calculatedData.liquidityAdjustmentAverageNPV / (1 + calculatedData.probabilityOfFailure))
 
       // save calculated data
-      app.helpers.calculator.saveCalculatorData(CALCULATOR_NAME, _.extend(data, calculatedData));
+      app.helpers.calculator.saveCalculatorData(CALCULATOR_NAME, Object.assign(data, calculatedData));
 
       setTimeout(() => app.routers.navigateWithReload('/calculator/capitalraise/finish', {trigger: true}), 10);
     },
@@ -243,7 +241,8 @@ module.exports = {
     render() {
       const data = app.helpers.calculator.readCalculatorData(CALCULATOR_NAME);
       let dataSameAsDefault = true;
-      _.each(data || {}, (value, key) => {
+
+      Object.keys(data || {}).forEach((key) => {
         if (data[key] === defaultCalculatorData[key]) {
           ;
         } else if (data[key] === '') {

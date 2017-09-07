@@ -27,12 +27,12 @@ module.exports = {
         }
 
         const View = require('./views.js');
-        let loginView = new View.login({
+        app.currentView = new View.login({
           el: '#content',
           model: {},
         });
 
-        loginView.render();
+        app.currentView.render();
         app.hideLoading();
 
       }, 'anonymous_account_chunk');
@@ -43,11 +43,11 @@ module.exports = {
         $('body').scrollTo();
 
         const View = require('./views.js');
-        const signView = new View.signup({
+        app.currentView = new View.signup({
           el: '#content',
           model: {},
         });
-        signView.render();
+        app.currentView.render();
         app.hideLoading();
       }, 'anonymous_account_chunk');
     },
@@ -78,8 +78,8 @@ module.exports = {
         //TODO: app.user.passwordChanged?
         app.user.emptyLocalStorage();
         $('body').scrollTo();
-        const i = new View.reset();
-        i.render();
+        app.currentView = new View.reset();
+        app.currentView.render();
         app.hideLoading();
       }, 'anonymous_account_chunk');
     },
@@ -119,10 +119,10 @@ module.exports = {
             code: code,
           };
 
-          const i = new View.membershipConfirmation(_.extend({
+          app.currentView = new View.membershipConfirmation(Object.assign({
             el: '#content',
           }, data));
-          i.render();
+          app.currentView.render();
           app.hideLoading();
         }).fail((response) => {
           const template = require('./templates/expiredCode.pug');

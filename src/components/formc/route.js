@@ -59,11 +59,15 @@ function getOCCF(optionsR, viewName, params = {}, View) {
     params.campaign = new app.models.Campaign(app.user.campaign);
     params.formc = new app.models.Formc(app.user.formc);
 
-    if (typeof viewName == 'string') {
-      new View[viewName](Object.assign({}, params)).render();
-      app.hideLoading();
+    if(typeof viewName == 'string') {
+      app.currentView = new View[viewName](Object.assign({}, params));
+      app.currentView.render();
+      if(document.location.href.indexOf('oauth_token=') === -1) {
+        app.hideLoading();
+      }
     } else {
-      viewName();
+      app.currentView = viewName();
+      app.currentView.render();
     }
 
     params.formc.updateMenu(params.formc.calcProgress());

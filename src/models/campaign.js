@@ -158,7 +158,7 @@ class Campaign {
           this.list_image_image_id.id != null &&
           this.gallery_group_id.data.length > 5,
         'specifics':
-          this.minimum_raise >= 25000 &&
+          this.minimum_raise >= 10000 &&
           this.maximum_raise <= 1000000 &&
           this.minimum_increment >= 100 &&
           this.length_days >= 60 &&
@@ -177,7 +177,8 @@ class Campaign {
 
   updateMenu(progress) {
     let complited = 0;
-    _(progress).each((v,k) => {
+    Object.keys(progress).forEach((k) => {
+      const v = progress[k];
       let el = null;
       if(v == false) {
         el = document.querySelector('#menu_c_' + k + ' .icon-check');
@@ -193,7 +194,6 @@ class Campaign {
         }
       }
     });
-
     if(complited == 4) {
       document.querySelectorAll('#form_c a.disabled').forEach((v, i) => {
         v.className = v.className.replace('disabled', '');

@@ -13,19 +13,26 @@ const componentRoutes = [
 ];
 
 const checkSafeExtend = (dest={}, src={}) => {
-  let keys = Object.keys(dest);
-  _(keys).each((key) => {
-    if (src[key])
+  Object.keys(dest).forEach((key) => {
+    // ToDo
+    // src[key] is always undefined
+    if (src[key]) {
       console.error(`Method ${key} is already in Router`, src);
+    } 
+    /*
+    if (key.indexOf('/') !== -1 && key.match(/[A-Z]/) !== null) {
+      console.error(`Method ${key} contains upper letters please fix`, src);
+    }
+    */
   });
 };
 
-const routesMap = _.reduce(componentRoutes, (dest, route) => {
+const routesMap = componentRoutes.reduce((dest, route) => {
   checkSafeExtend(dest.routes, route.routes);
   checkSafeExtend(dest.methods, route.methods);
 
-  dest.routes = _.extend(dest.routes, route.routes);
-  dest.methods = _.extend(dest.methods, route.methods);
+  dest.routes = Object.assign(dest.routes, route.routes);
+  dest.methods = Object.assign(dest.methods, route.methods);
   if (Array.isArray(route.auth)) {
     dest.auth = dest.auth.concat(route.auth);
   } else if (route.auth === '*') {
@@ -40,8 +47,10 @@ const notFound = () => {
   app.hideLoading();
 };
 
-module.exports = Backbone.Router.extend(_.extend({
-  routes: _.extend({}, routesMap.routes, { '*notFound': notFound }),
+module.exports = Backbone.Router.extend(Object.assign({
+  routes: Object.assign({}, routesMap.routes, { '*notFound': notFound }),
+  previousUrl: '',
+  currentUrl: '',
 
   initialize() {
   },
@@ -52,19 +61,42 @@ module.exports = Backbone.Router.extend(_.extend({
         window.location.pathname != '/'
         ) {
       window.location = window.location.pathname.substr(0, window.location.pathname.length-1);
-    }
-
-    app.clearClasses('#page', ['page']);
-
-    if (_.contains(routesMap.auth, name) && !app.user.ensureLoggedIn()) {
       return false;
     }
+
+    // Fix 903
+    if (window.location.pathname.match(/[A-Z]/) !== null) {
+      window.location = window.location.pathname.toLowerCase();
+      return false;
+    }
+
+
+    // WHY?!
+    app.clearClasses('#page', ['page']);
+    // debugger;
+
+    if (routesMap.auth.includes(name) && !app.user.ensureLoggedIn()) {
+      // Revert back the current URL, 
+      // Do not update url
+      if (app.routers.currentUrl) {
+        app.routers.navigate(app.routers.currentUrl, {trigger: false});
+      }
+      return false;
+    }
+
+    if (app.currentView) {
+      app.currentView.destroy();
+    }
+    this.previousUrl = this.currentUrl;
+    this.currentUrl = window.location.pathname;
 
     if(app.seo.title[window.location.pathname]) {
       document.title = app.seo.title[window.location.pathname];
       document.head.querySelector('meta[name="description"]').content = app.seo.meta[window.location.pathname];
       document.head.querySelector('meta[property="og:title"]').content = app.seo.title[window.location.pathname];
       document.head.querySelector('meta[property="og:description"]').content = app.seo.meta[window.location.pathname];
+    } else {
+      document.title = 'GrowthFountain | Equity Crowdfunding Platform';
     }
 
     document.head.querySelector('meta[property="og:url"]').content = window.location.href;
@@ -93,6 +125,8 @@ module.exports = Backbone.Router.extend(_.extend({
     $('.popover').popover('hide');
   },
 
+  // WHY ?
+  // Зачем это ?
   navigateWithReload(href, options) {
     const currentLocation = window.location.pathname + (window.location.search || '');
     if (href === currentLocation) {

@@ -34,12 +34,13 @@ function getOCCF(optionsR, viewName, params = {}, View) {
     params.formc = new app.models.Formc(app.user.formc);
 
     if(typeof viewName == 'string') {
-      new View[viewName](Object.assign({}, params)).render();
+      app.currentView = new View[viewName](Object.assign({}, params));
+      app.currentView.render();
       app.hideLoading();
     } else {
-      viewName();
+      app.currentView = viewName();
+      app.currentView.render();
     }
-
   });
 };
 
@@ -62,8 +63,8 @@ module.exports = {
       app.addClassesTo('#page', ['raise-capital-landing']);
       require.ensure([], () => {
         const Views = require('components/raiseFunds/views.js');
-        const v = new Views.landing();
-        v.render();
+        app.currentView = new Views.landing();
+        app.currentView.render();
         app.hideLoading();
       }, 'raise_funds_chunk');
     },

@@ -20,120 +20,12 @@ module.exports = {
   methods: {
     mainPage() {
       require.ensure([], (require) => {
-        const template = require('src/templates/mainPage.pug');
+        const Views = require('src/components/pg/views.js');
 
         api.makeCacheRequest(app.config.raiseCapitalServer + '?limit=6').then((data) => {
-          let dataClass = [];
-          data.data.forEach((el) => {
-            dataClass.push(new app.models.Company(el));
-          });
-          data.data = dataClass;
-          var html = template({
-            collection: data,
-          });
-
-          //TODO: universal optimization in scriptLoader
-          app.helpers.video.preloadScripts(['vimeo']);
-          // app.cache[window.location.pathname] = html;
-          $('#content').html(html);
-
-          $('.carousel-test').owlCarousel({
-            loop: true,
-            nav: false,
-            autoplay: true,
-            autoplayTimeout: 9000,
-            smartSpeed: 2000,
-            responsiveClass: true,
-            animateOut: 'fadeOuts',
-            items: 1,
-            navText: [
-              '<i class="fa fa-angle-left" aria-hidden="true"></i>',
-              '<i class="fa fa-angle-right" aria-hidden="true"></i>',
-            ],
-            responsive: {
-              0: { items: 1 },
-              600: { items: 1 },
-              1000: { items: 1 },
-            },
-          });
-          
-          $(window).scroll(function() {
-            var st = $(this).scrollTop() /15;
-
-            $(".scroll-paralax .background").css({
-              "transform" : "translate3d(0px, " + st /2 + "%, .01px)",
-              "-o-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
-              "-webkit-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
-              "-moz-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
-              "-ms-transform" : "translate3d(0px, " + st /2 + "%, .01px)"
-              
-            });
-          });
-          // video main page
-          $( document ).ready(function() {
-
-            scaleVideoContainer();
-
-            initBannerVideoSize('.video-container .poster img');
-            initBannerVideoSize('.video-container .filter');
-            initBannerVideoSize('.video-container video');
-
-            $(window).on('resize', function() {
-                scaleVideoContainer();
-                scaleBannerVideoSize('.video-container .poster img');
-                scaleBannerVideoSize('.video-container .filter');
-                scaleBannerVideoSize('.video-container video');
-            });
-
-        });
-
-          function scaleVideoContainer() {
-
-          var height = $(window).height() + 5;
-          var unitHeight = parseInt(height) + 'px';
-          $('.homepage-hero-module').css('height',unitHeight);
-
-          };
-
-          function initBannerVideoSize(element){
-
-              $(element).each(function(){
-                  $(this).data('height', $(this).height());
-                  $(this).data('width', $(this).width());
-              });
-
-              scaleBannerVideoSize(element);
-
-          };
-
-          function scaleBannerVideoSize(element){
-
-              var windowWidth = $(window).width(),
-              windowHeight = $(window).height() + 5,
-              videoWidth,
-              videoHeight;
-
-              // console.log(windowHeight);
-
-              $(element).each(function(){
-                  var videoAspectRatio = $(this).data('height')/$(this).data('width');
-
-                  $(this).width(windowWidth);
-
-                  if(windowWidth < 1000){
-                      videoHeight = windowHeight;
-                      videoWidth = videoHeight / videoAspectRatio;
-                      $(this).css({'margin-top' : 0, 'margin-left' : -(videoWidth - windowWidth) / 2 + 'px'});
-
-                      $(this).width(videoWidth).height(videoHeight);
-                  }
-
-                  $('.homepage-hero-module .video-container video').addClass('fadeIn animated');
-
-              });
-          };
-
-          $('body').scrollTo();
+          data.data = data.data.map(c => new app.models.Company(c));
+          app.currentView = new Views.main({ collection: data, });
+          app.currentView.render();
           app.hideLoading();
         });
       }, 'main_page_chunk');
@@ -150,11 +42,12 @@ module.exports = {
 
         app.addClassesTo('#page', [name]);
         const template = require('./templates/' + (templateMap[name] || name) + '.pug');
-        if (_.contains(withLeftMenuPages, name)) {
+        if (withLeftMenuPages.includes(name)) {
           const Views = require('./views.js');
-          (new Views.WithLeftMenu({
+          app.currentView = new Views.WithLeftMenu({
             template,
-          })).render();
+          });
+          app.currentView.render();
         } else {
           $('#content').html(template());
         }
@@ -264,8 +157,8 @@ module.exports = {
           ? require('./templates/subscription-thanks-urgent.pug')
           : require('./templates/subscription-thanks.pug');
 
-        const v = new Views.subscriptionThanks({ template });
-        v.render();
+        app.currentView = new Views.subscriptionThanks({ template });
+        app.currentView.render();
 
         $('body').scrollTo();
         app.hideLoading();

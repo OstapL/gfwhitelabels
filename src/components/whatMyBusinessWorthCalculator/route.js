@@ -1,9 +1,9 @@
 module.exports = {
   routes: {
-    'calculator/selectYourBusiness': 'selectYourBusiness',
-    'calculator/BusinessValuation': 'businessValuation',
-    'calculator/selectCalculator': 'selectCalculator',
-    'calculator/selectCalculator2': 'selectCalculator2',
+    'calculator/selectyourbusiness': 'selectYourBusiness',
+    'calculator/businessvaluation': 'businessValuation',
+    'calculator/selectcalculator': 'selectCalculator',
+    'calculator/selectcalculator2': 'selectCalculator2',
     'calculator/whatmybusinessworth/intro': 'calculatorWhatMyBusinessWorthIntro',
     'calculator/whatmybusinessworth/step-1': 'calculatorWhatMyBusinessWorthStep1',
     'calculator/whatmybusinessworth/step-2': 'calculatorWhatMyBusinessWorthStep2',
@@ -12,7 +12,7 @@ module.exports = {
   methods: {
     selectYourBusiness() {
       //left just for backward compatibility
-      app.routers.navigate('/calculator/BusinessValuation', { trigger: true });
+      app.routers.navigate('/calculator/businessvaluation', { trigger: true });
     },
 
     businessValuation() {
@@ -78,7 +78,7 @@ module.exports = {
     calculatorWhatMyBusinessWorthIntro() {
       require.ensure([], () => {
         let View = require('./views');
-        new View.intro().render();
+        app.currentView = new View.intro().render();
         $('body').scrollTo();
         app.hideLoading();
       }, 'what_my_business_worth_chunk');
@@ -87,7 +87,7 @@ module.exports = {
     calculatorWhatMyBusinessWorthStep1() {
       require.ensure([], () => {
         const View = require('./views');
-        new View.step1().render();
+        app.currentView = new View.step1().render();
         $('body').scrollTo();
         app.hideLoading();
       }, 'what_my_business_worth_chunk');
@@ -96,7 +96,7 @@ module.exports = {
     calculatorWhatMyBusinessWorthStep2() {
       require.ensure([], () => {
         const View = require('./views');
-        new View.step2().render();
+        app.currentView = new View.step2().render();
         $('body').scrollTo();
         app.hideLoading();
       }, 'what_my_business_worth_chunk');
@@ -105,7 +105,7 @@ module.exports = {
     calculatorWhatMyBusinessWorthFinish() {
       require.ensure([], () => {
         const View = require('./views');
-        new View.finish().render();
+        app.currentView = new View.finish().render();
         $('body').scrollTo();
         app.hideLoading();
       }, 'what_my_business_worth_chunk');
