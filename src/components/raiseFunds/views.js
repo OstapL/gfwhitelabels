@@ -762,6 +762,7 @@ module.exports = {
         this.model = new TeamMember.TeamMember(
           {
             photo_image_id: null,
+            photo_data: [],
             type: this.type
           },
           this.fields,

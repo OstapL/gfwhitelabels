@@ -75,6 +75,8 @@ class ImageDropzone extends file.FileDropzone {
     if(imageOptions.defaultImage) {
       this.fileElement.options.defaultImage = imageOptions.defaultImage;
     }
+
+    this.cropperQuery = [];
   }
 
   getTemplate() {

@@ -303,9 +303,9 @@ section
           - 
             function memberSort(a, b) {
               if(a.order == null) {
-                return true;
+                return false;
               }
-              return a.order > b.order;
+              return a.order < b.order;
             }
             values.campaign.team_members.members.sort(memberSort);
           h2#team.text-uppercase.text-lg-center.text-xs-center.col-lg-12.campaign-subheading.m-t-0 Team
