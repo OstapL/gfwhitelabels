@@ -118,6 +118,7 @@ module.exports = {
       this.$el.html(
         this.template()
       );
+      this.$el.find('.calculator-block-click .calculator-item .text-wrap').equalHeights();
     },
 
     onBeforeNavigate() {

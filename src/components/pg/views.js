@@ -217,6 +217,7 @@ module.exports = {
 
     render() {
       this.$el.html(this.template({ collection: this.collection, }));
+      this.$el.find('.calculator-block-click .calculator-item .text-wrap').equalHeights();
       this.postRender();
       return this;
     },
