@@ -59,7 +59,6 @@ module.exports = {
     doCalculation(e) {
       e.preventDefault();
       if (!this.validate(e)) {
-        this.$('.help-block').prev().scrollTo(50);
         return;
       }
 

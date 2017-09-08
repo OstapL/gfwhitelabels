@@ -158,7 +158,6 @@ module.exports = {
       e.preventDefault();
 
       if (!this.validate(e)) {
-        this.$('.help-block').prev().scrollTo(50);
         return;
       }
 
@@ -241,7 +240,6 @@ module.exports = {
     render() {
       const data = app.helpers.calculator.readCalculatorData(CALCULATOR_NAME);
       let dataSameAsDefault = true;
-
       Object.keys(data || {}).forEach((key) => {
         if (data[key] === defaultCalculatorData[key]) {
           ;

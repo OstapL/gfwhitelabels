@@ -108,11 +108,7 @@ module.exports = {
 
       if (this.validate(e)) {
         app.routers.navigate('/calculator/whatmybusinessworth/step-2', {trigger: true});
-      } else {
-        const $help = this.$('.help-block').prev();
-        if ($help && $help.length)
-          $help.scrollTo(50);
-      }
+      } 
     },
 
     render: function () {
@@ -202,7 +198,6 @@ module.exports = {
       e.preventDefault();
 
       if (!this.validate(e)) {
-        this.$('.help-block').prev().scrollTo(50);
         return;
       }
 

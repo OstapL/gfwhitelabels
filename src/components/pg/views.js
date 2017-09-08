@@ -107,12 +107,17 @@ module.exports = {
         return;
 
       const menuItems = leftMenu.querySelectorAll('a');
-      const visibleElements = (menuItems || []).map((menuItem) => {
+      const visibleElements = [];
+
+      (menuItems || []).forEach((menuItem) => {
         const href = menuItem.getAttribute('href');
-        return href && href.startsWith('#')
-          ? document.getElementById(href.replace('#', ''))
-          : null;
-      }).filter(scrollElement => scrollElement && app.isElementInView(scrollElement, 0.9));
+        if (!href || !href.startsWith('#'))
+          return;
+
+        const element = document.getElementById(href.replace('#', ''));
+        if (element && app.isElementInView(element))
+          visibleElements.push(element);
+      });
 
       const visibleTopmostElement = visibleElements ? visibleElements[0] : null;
       if (!visibleTopmostElement)
@@ -191,13 +196,13 @@ module.exports = {
     },
 
     destroy() {
-      if (this.$carousel) {
-        setTimeout(() => {
+      setTimeout(() => {
+        if (this.$carousel) {
           this.$carousel.hide();
           this.$carousel.owlCarousel('destroy');
           this.$carousel = null;
-        }, 4000);
-      }
+        }
+      }, 4000);
 
       if (this.scrollHandler) {
         $(window).off('scroll', this.scrollHandler);
