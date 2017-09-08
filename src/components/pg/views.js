@@ -196,13 +196,13 @@ module.exports = {
     },
 
     destroy() {
-      if (this.$carousel) {
-        setTimeout(() => {
+      setTimeout(() => {
+        if (this.$carousel) {
           this.$carousel.hide();
           this.$carousel.owlCarousel('destroy');
           this.$carousel = null;
-        }, 4000);
-      }
+        }
+      }, 4000);
 
       if (this.scrollHandler) {
         $(window).off('scroll', this.scrollHandler);
