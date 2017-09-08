@@ -148,7 +148,7 @@ module.exports = {
     events: Object.assign({
       // calculate your income
       'submit .js-calc-form': 'doCalculation',
-
+      'click .next': () => { $('.js-calc-form').submit(); },
       'change .js-select': saveValue,
       'blur input[type=money]': saveValue,
 
