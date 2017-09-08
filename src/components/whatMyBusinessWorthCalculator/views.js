@@ -146,6 +146,7 @@ module.exports = {
     events: Object.assign({
       // calculate your income
       'submit .js-calc-form': 'doCalculation',
+      'click .next': (e) => { e.preventDefault(); $('.js-calc-form').submit(); return false; },
       'blur [type=money]': saveValue,
     }, app.helpers.calculatorValidation.events),
 

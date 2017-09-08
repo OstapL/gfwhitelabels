@@ -345,6 +345,7 @@ module.exports = {
       // calculate your income
       'blur [type=money]': saveValue,
       'submit .js-calc-form': 'doCalculation',
+      'click .next': (e) => { e.preventDefault(); $('.js-calc-form').submit(); return false; },
     }, app.helpers.calculatorValidation.events),
 
     doCalculation(e) {
