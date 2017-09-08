@@ -51,6 +51,7 @@ module.exports = {
     events: Object.assign({
       // calculate your income
       'submit .js-calc-form': 'doCalculation',
+      'click': (e) => { e.preventDefault(); $('.js-calc-form').submit(); return false; },
       'blur [name=growLevel]': saveValue,
       'blur [name=raiseMoney]': saveValue,
       'blur [name=nextYearRevenue]': saveValue,
