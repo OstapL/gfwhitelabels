@@ -890,6 +890,7 @@ module.exports = {
             if (this.model.team_members.members.length < 1) {
               this.$el.find('.notification').show();
               this.$el.find('.buttons-row').hide();
+              this.$el.find('.photoNotification').hide();
             } else {
               this.$el.find('.notification').hide();
               this.$el.find('.buttons-row').show();

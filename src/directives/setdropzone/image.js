@@ -277,7 +277,7 @@ class CropperDropzone {
       // self.$modal.on('shown.bs.modal', () => {
 
         self.cropper = new Cropper(this, self.options.control);
-        const cropData = self.options.auto ? _.extend({x: 0, y: 0}, self.options.auto) : null;
+        const cropData = self.options.auto ? Object.assign({x: 0, y: 0}, self.options.auto) : null;
         self.$modal.modal('show');
         if (cropData) {
           self.cropper.setData(cropData);
@@ -302,7 +302,7 @@ class CropperDropzone {
             maxHeight = imageData.naturalHeight;
 
       const data = {};
-      const cropData = _.pick(this.cropper.getData(true), ['x', 'y', 'width', 'height']);
+      const cropData = app.utils.pick(this.cropper.getData(true), ['x', 'y', 'width', 'height']);
 
       const cropTransformation = {
         type: "crop",
