@@ -6,18 +6,6 @@ const COUNTRIES = require('consts/countries.json');
 
 const CalculatorView = require('./revenueShareCalculator.js');
 
-function paralaxScrollHandler() {
-  var st = $(this).scrollTop() /15;
-
-  $(".scroll-paralax .background").css({
-    "transform" : "translate3d(0px, " + st /2 + "%, .01px)",
-    "-o-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
-    "-webkit-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
-    "-moz-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
-    "-ms-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
-  });
-}
-
 const emitCustomEvent = (data) => {
   if (!data)
     return;
@@ -379,8 +367,6 @@ module.exports = {
       setTimeout(() => {
         this.initAsyncUI();
       }, 100);
-
-      $(window).on('scroll', paralaxScrollHandler);
 
       this.$el.find('.perks .col-xl-4 p').equalHeights();
       this.$el.find('.team .auto-height').equalHeights();
