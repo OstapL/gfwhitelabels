@@ -1,3 +1,38 @@
+function paralaxScrollHandler() {
+  const $paralax = $(".scroll-paralax .background");
+  if (!$paralax || !$paralax.length)
+    return;
+
+  const st = $(this).scrollTop() /15;
+  $paralax.css({
+    "transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+    "-o-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+    "-webkit-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+    "-moz-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+    "-ms-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
+  });
+}        
+
+// show bottom logo while scrolling page
+function bottomLogoScrollHandler() {
+  const $bottomLogo = $('#fade_in_logo');
+  const $window = $(window);
+  const offsetTopBottomLogo = $bottomLogo.offset().top;
+
+  if (($window.scrollTop() + $window.height() >= offsetTopBottomLogo) && !$bottomLogo.hasClass('fade-in'))
+    $bottomLogo.addClass('fade-in');
+}
+// для скролл шапки та разшерениях меньше 991px класс "sticky-active" - меняет цвет шапки
+function stickyScrollHandler() {
+  const $header = $('header');
+  if ($(this).scrollTop() > 70) {
+    if (!$header.hasClass('sticky-active'))
+      $header.addClass("sticky-active");
+  } else {
+    $('header').removeClass("sticky-active");
+  }
+}
+
 function scrollLogoHandler() {
   let $bottomLogo = $('#fade_in_logo');
   let offsetTopBottomLogo = $bottomLogo.offset().top;
@@ -89,6 +124,9 @@ $(window).scroll((e) => {
   // scrollMenuItemsHandler(e);
   scrollAnimateHandler(e);
   scrollToTopHandler(e);
+  paralaxScrollHandler(e);
+  stickyScrollHandler(e);
+  bottomLogoScrollHandler(e);
 });
 
 //attach global event handlers
@@ -112,23 +150,7 @@ $('body').on('mouseout', '.showPopover', function () {
     template: popoverTemplate.replace('divPopover', 'textareaPopover'),
   });
 });
-// для скролл шапки та разшерениях меньше 991px класс "sticky-active" - меняет цвет шапки
-$(window).scroll(function() {
-  if ($(this).scrollTop() > 70){
-    $('header').addClass("sticky-active");
-  }
-  else{
-    $('header').removeClass("sticky-active");
-  }
-});
-// show bottom logo while scrolling page
 $(window).scroll(function () {
-  var $bottomLogo = $('#fade_in_logo');
-  var offsetTopBottomLogo = $bottomLogo.offset().top;
-
-  if (($(window).scrollTop() + $(window).height() >= offsetTopBottomLogo) && !$bottomLogo.hasClass('fade-in')) {
-    $bottomLogo.addClass('fade-in');
-  }
 });
 
 // Money field auto correction
