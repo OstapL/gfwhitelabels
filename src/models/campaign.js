@@ -168,10 +168,10 @@ class Campaign {
            (this.security_type == 0 && this.premoney_valuation > 0)
           ),
         'team-members': 
-          this.team_members.members.length > 0 && 
+          this.team_members.members.length > 0  /* && 
           (this.team_members.members.find((el) => {
             return el.data.photo_image_id.id == null }
-          ) === undefined),
+          ) === undefined)*/,
         'perks': this.perks.length > 0
       }
     } catch(e) {

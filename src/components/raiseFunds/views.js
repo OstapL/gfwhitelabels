@@ -99,6 +99,7 @@ module.exports = {
       this.$el.html(
         this.template()
       );
+      this.$el.find('.calculator-block-click .calculator-item .text-wrap').equalHeights();
     },
 
     onBeforeNavigate() {
@@ -742,6 +743,7 @@ module.exports = {
         this.model = new TeamMember.TeamMember(
           {
             photo_image_id: null,
+            photo_data: [],
             type: this.type
           },
           this.fields,
