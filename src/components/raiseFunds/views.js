@@ -37,6 +37,8 @@ module.exports = {
     initialize() {
       this.listenToNavigate();
 
+      app.addClassesTo('#page', ['raise-capital-landing']);
+
       if ((document.location.search || '').indexOf('nometric') >= 0)
         return;
 

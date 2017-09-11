@@ -38,6 +38,9 @@ Object.assign(Backbone.View.prototype, {
   },
 
   destroy(e) {
+    // WHY?!
+    app.clearClasses('#page', ['page']);
+    // debugger;
     if (this.fields) {
       Object.keys(this.fields).forEach((name) => {
         const field = this.fields[name];

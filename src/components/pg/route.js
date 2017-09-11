@@ -28,7 +28,6 @@ module.exports = {
         if (authPages.includes(name) && !app.user.ensureLoggedIn(window.location.pathname))
           return false;
 
-        app.addClassesTo('#page', [name]);
 
         const Views = require('./views.js');
 

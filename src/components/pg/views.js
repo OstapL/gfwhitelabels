@@ -357,6 +357,7 @@ const Views = {
 
 module.exports = Object.assign({
   createView(page) {
+    app.addClassesTo('#page', [page]);
     const template = templateMap[page] || page;
     return withLeftMenuPages.includes(page)
       ? new Views.WithLeftMenu({ template })

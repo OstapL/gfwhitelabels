@@ -79,9 +79,6 @@ module.exports = Backbone.Router.extend(Object.assign({
       return false;
     }
 
-    // WHY?!
-    app.clearClasses('#page', ['page']);
-    // debugger;
 
     if (app.currentView) {
       app.currentView.destroy();
