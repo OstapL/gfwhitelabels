@@ -25,18 +25,6 @@ const fixGATrackerID = (data) => {
     data.ga_id = 'UA-' + data.ga_id;
 };
 
-function paralaxScrollHandler(e) {
-  var st = $(this).scrollTop() /15;
-
-  $(".scroll-paralax .background").css({
-    "transform" : "translate3d(0px, " + st /2 + "%, .01px)",
-    "-o-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
-    "-webkit-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
-    "-moz-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
-    "-ms-transform" : "translate3d(0px, " + st /2 + "%, .01px)"
-  });
-};
-
 module.exports = {
   landing: Backbone.View.extend({
     el: '#content',
@@ -48,7 +36,8 @@ module.exports = {
 
     initialize() {
       this.listenToNavigate();
-      $(window).on('scroll', paralaxScrollHandler);
+
+      app.addClassesTo('#page', ['raise-capital-landing']);
 
       if ((document.location.search || '').indexOf('nometric') >= 0)
         return;
@@ -75,13 +64,7 @@ module.exports = {
 
       };
 
-      const calendlyStyleURL = 'https://calendly.com/assets/external/widget.css';
-      const calendlyScriptURL = 'https://calendly.com/assets/external/widget.js';
-
-      Promise.all([
-        app.helpers.scripts.loadStyle(calendlyStyleURL),
-        app.helpers.scripts.load(calendlyScriptURL),
-      ]).then(() => {
+      app.helpers.scripts.loadCalendlyAPI().then(() => {
         Calendly.initBadgeWidget({
           url: 'https://calendly.com/morganatgrowthfountain/15min',
           text: 'Want to Fundraise?',
@@ -118,6 +101,7 @@ module.exports = {
       this.$el.html(
         this.template()
       );
+      this.$el.find('.calculator-block-click .calculator-item .text-wrap').equalHeights();
     },
 
     onBeforeNavigate() {
@@ -126,8 +110,8 @@ module.exports = {
     },
 
     destroy() {
+      app.clearClasses('#page', ['page']);
       this.hideHint();
-      $(window).off('scroll', paralaxScrollHandler);
       $('body').off('click', '.calendly-badge-widget');
       if (window.Calendly)
         Calendly.destroyBadgeWiget();
@@ -891,6 +875,7 @@ module.exports = {
             if (this.model.team_members.members.length < 1) {
               this.$el.find('.notification').show();
               this.$el.find('.buttons-row').hide();
+              this.$el.find('.photoNotification').hide();
             } else {
               this.$el.find('.notification').hide();
               this.$el.find('.buttons-row').show();

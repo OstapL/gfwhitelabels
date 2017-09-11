@@ -106,12 +106,11 @@ section.create-company.container.m-b-85
             help_text: 'Explain what your company does in a way that everyone  will understand.<br />  “If you can’t explain it simply, you don’t understand it well enough.” – Albert Einstein.', value: values.description,})
           .row
             .col-xl-6.col-lg-6.col-md-6
-              .showPopover(data-content="C-corps can choose to issue Common Equity or a Revenue Share. LLC’s can only issue a Revenue Share.")
-                -
-                  pug_html += app.fields.fieldChoiceLabel('corporate_structure', Object.assign({
-                      empty: { '': 'Choose Structure' },
-                      'value': values.corporate_structure,
-                    }, fields.corporate_structure));
+              -
+                pug_html += app.fields.fieldChoiceLabel('corporate_structure', Object.assign({
+                    empty: { '': 'Choose Structure' },
+                    'value': values.corporate_structure,
+                  }, fields.corporate_structure));
             .col-xl-6.col-lg-6.col-md-6
               .row.form-group
                 .col-date
