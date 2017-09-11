@@ -71,7 +71,6 @@ class GalleryElement extends imageDropzone.ImageElement {
       this.file.data.splice(indexFile, 1);
       this.save().then(() => {
         imageRender.element.remove()
-        delete this.file.data[index];
         if(imageRender.options.onSaved) {
           imageRender.options.onSaved(this);
         }
