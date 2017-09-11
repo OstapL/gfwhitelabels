@@ -3,6 +3,7 @@ const folderDropzone = require('./folder.js');
 const imageDropzone = require('./image.js');
 const ImageClass = require('models/image.js');
 const defaultImage = require('images/default/255x153.png');
+const imageTypes = require('consts/imageTypes.json');
 
 
 class GalleryElement extends imageDropzone.ImageElement {
@@ -65,7 +66,7 @@ class GalleryElement extends imageDropzone.ImageElement {
     let imageRender = this.files.filter((el) => {return fileId == el.file.id})[0];
     let index = this.files.indexOf(imageRender);
 
-    this.files[index].file.delete().done(() => {
+    this.files[index].file.delete().then(() => {
       let indexFile = this.file.data.indexOf(this.file.data.filter((el) => {return fileId == el.id})[0]);
       this.file.data.splice(indexFile, 1);
       this.save().then(() => {
@@ -77,11 +78,9 @@ class GalleryElement extends imageDropzone.ImageElement {
       });
     }).fail((xhr, error) => {
       // If file was already deleted in filer - just update model
-      if(xhr.status == 503) {
-        let indexFile = this.file.data.indexOf(this.file.data.filter((el) => {return fileId == el.id})[0]);
-        this.file.data.splice(indexFile, 1);
-        this.save().then(() => imageRender.element.remove());
-      }
+      let indexFile = this.file.data.indexOf(this.file.data.filter((el) => {return fileId == el.id})[0]);
+      this.file.data.splice(indexFile, 1);
+      this.save().then(() => imageRender.element.remove());
     });
   }
 };
@@ -117,16 +116,16 @@ class GalleryDropzone extends imageDropzone.ImageDropzone {
     };
 
     data.forEach((image) => {
-      if(image.name.indexOf('_c_') != -1) {
-        reorgData.urls.main = this.fileElement.fixUrl(image.urls[0]);
-      } else if(image.name.indexOf('_r_') != -1) {
+      if(image.type === imageTypes.CROPRESIZE) {
         var cropName = this.cropperOptions.resize.width + 'x' + this.cropperOptions.resize.height;
-        reorgData.urls[cropName] = this.fileElement.fixUrl(image.urls[0]);
+        reorgData.urls[cropName] = image.url_filename;
+      } else if (image.type === imageTypes.CROP) {
+        reorgData.urls.main = image.url_filename;
       } else {
         reorgData.id = image.id;
         reorgData.name = image.name;
         reorgData.mime = image.mime;
-        reorgData.urls.origin = this.fileElement.fixUrl(image.urls[0]);
+        reorgData.urls.origin = image.url_filename;
       }
     });
 

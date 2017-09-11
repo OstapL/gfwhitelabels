@@ -39,7 +39,7 @@ let functions = {
   // rejects with error message otherwise
   login(network) {
     return new Promise((resolve, reject) => {
-      if (!_.contains(SUPPORTED_NETWORKS, network))
+      if (!SUPPORTED_NETWORKS.includes(network))
         return reject(`${network} is not supported`);
 
       initLibrary().then(() => {
@@ -60,7 +60,7 @@ let functions = {
           console.log(error);
           console.log(data);
 
-          if (_.isBoolean(data))
+          if (typeof(data) === 'boolean')
             return reject(error);
 
           if (data.error.code === 'cancelled')
@@ -93,10 +93,10 @@ let functions = {
     const fields = view.fieldsSchema || view.fields;
     
     if (!app.validation.validate({ checkbox1: fields.checkbox1 }, data, this)) {
-      _(app.validation.errors).each((errors, key) => {
+      Object.keys(app.validation.errors).forEach((key) => {
+        const errors = app.validation.errors[key];
         app.validation.invalidMsg(view, key, errors);
       });
-
       return false;
     }
 

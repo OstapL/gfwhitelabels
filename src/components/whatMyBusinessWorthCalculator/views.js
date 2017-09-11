@@ -52,13 +52,14 @@ module.exports = {
     },
   }),
 
-  step1: Backbone.View.extend(_.extend({
+  step1: Backbone.View.extend(Object.assign({
     el: '#content',
     template: require('./templates/step1.pug'),
-    events: _.extend({
+    events: Object.assign({
       'submit form': 'nextStep',
       'blur [type=money]': saveValue,
-    }),
+    }, app.helpers.calculatorValidation.events),
+
     initialize() {
       this.fields = {
         excessCash: {
@@ -107,11 +108,7 @@ module.exports = {
 
       if (this.validate(e)) {
         app.routers.navigate('/calculator/whatmybusinessworth/step-2', {trigger: true});
-      } else {
-        const $help = this.$('.help-block').prev();
-        if ($help && $help.length)
-          $help.scrollTo(50);
-      }
+      } 
     },
 
     render: function () {
@@ -143,14 +140,15 @@ module.exports = {
 
   }, app.helpers.calculatorValidation.methods)),
 
-  step2: Backbone.View.extend(_.extend({
+  step2: Backbone.View.extend(Object.assign({
     el: '#content',
     template: require('./templates/step2.pug'),
-    events: _.extend({
+    events: Object.assign({
       // calculate your income
       'submit .js-calc-form': 'doCalculation',
+      'click .next': (e) => { e.preventDefault(); $('.js-calc-form').submit(); return false; },
       'blur [type=money]': saveValue,
-    }),
+    }, app.helpers.calculatorValidation.events),
 
     initialize() {
       this.fields = {
@@ -201,7 +199,6 @@ module.exports = {
       e.preventDefault();
 
       if (!this.validate(e)) {
-        this.$('.help-block').prev().scrollTo(50);
         return;
       }
 
@@ -233,7 +230,7 @@ module.exports = {
         addValue = type == 'overBaseline' ? data.additionalOperating : 0,
         finalKey = type == 'overBaseline' ? 'raiseAmount2' : 'raiseAmount';
 
-      _.extend(calculatedData, {
+      Object.assign(calculatedData, {
         grossProfitYear1: Math.round(grossMargin * data.projectedRevenueYear * delta),
         grossProfitYear2: Math.round(grossMargin * data.projectedRevenueTwoYears * delta),
         operatingExpensesYear1: (data.monthlyOperatingYear + addValue) * 12,
@@ -241,43 +238,43 @@ module.exports = {
       });
 
       // calculate "Operating Profit"
-      _.extend(calculatedData, {
+      Object.assign(calculatedData, {
         operatingProfitYear1: calculatedData.grossProfitYear1 - calculatedData.operatingExpensesYear1,
         operatingProfitYear2: calculatedData.grossProfitYear2 - calculatedData.operatingExpensesYear2
       });
 
       // calculate "Pre-Tax Profit"
-      _.extend(calculatedData, {
+      Object.assign(calculatedData, {
         preTaxProfitYear1: calculatedData.operatingProfitYear1 - data.annualInterest,
         preTaxProfitYear2: calculatedData.operatingProfitYear2 - data.annualInterest
       });
 
       // calculate "Taxes"
-      _.extend(calculatedData, {
+      Object.assign(calculatedData, {
         taxesYear1: taxRate * calculatedData.preTaxProfitYear1,
         taxesYear2: taxRate * calculatedData.preTaxProfitYear2
       });
 
       // calculate "Net Income"
-      _.extend(calculatedData, {
+      Object.assign(calculatedData, {
         netIncomeYear1: calculatedData.preTaxProfitYear1 - calculatedData.taxesYear1,
         netIncomeYear2: calculatedData.preTaxProfitYear2 - calculatedData.taxesYear2
       });
 
       // calculate "Working Capital Needs"
-      _.extend(calculatedData, {
+      Object.assign(calculatedData, {
         workingCapitalNeedsYear1: workingCapital * data.projectedRevenueYear * delta,
         workingCapitalNeedsYear2: workingCapital * data.projectedRevenueTwoYears * delta
       });
 
       // calculate "Total Cash Generated"
-      _.extend(calculatedData, {
+      Object.assign(calculatedData, {
         totalCashGeneratedYear1: calculatedData.netIncomeYear1 - calculatedData.workingCapitalNeedsYear1 - data.capitalExpenditures,
         totalCashGeneratedYear2: calculatedData.netIncomeYear2 - calculatedData.workingCapitalNeedsYear2
       });
 
       // calculate "Additional Cash Needed"
-      _.extend(calculatedData, {
+      Object.assign(calculatedData, {
         addCashNeeded1Year1: data.excessCash - data.ownCache - calculatedData.totalCashGeneratedYear1,
         addCashNeeded1Year2: calculatedData.totalCashGeneratedYear2 > 0 ? 0 : -calculatedData.totalCashGeneratedYear2
       });
@@ -287,12 +284,12 @@ module.exports = {
       calculatedData[finalKey] = calculatedData.addCashNeeded1Year1 + calculatedData.addCashNeeded1Year2;
 
       // save calculated data
-      _.extend(data, calculatedData);
+      Object.assign(data, calculatedData);
     },
 
     isFirstStepFilled() {
       const data = app.helpers.calculator.readCalculatorData(CALCULATOR_NAME);
-      if (!data || _.isEmpty(data))
+      if (!data || app.utils.isEmpty(data))
         return false;
 
       const props = ['excessCash', 'ownCache', 'projectedRevenueYear', 'projectedRevenueTwoYears', 'grossMargin', 'monthlyOperatingYear'];

@@ -80,7 +80,7 @@ module.exports = {
         const dataR = api.makeCacheRequest(app.config.investmentServer);
 
         Promise.all([fieldsR, dataR, userDataR]).then((values) => {
-          _.extend(app.user.data, values[2]);
+          Object.assign(app.user.data, values[2]);
           app.currentView = new View.InvestorDashboard({
             fields: values[0].fields,
             model: values[1],
