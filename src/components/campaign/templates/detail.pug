@@ -319,14 +319,14 @@ section
                       h4.text-xs-center.card-title.text-uppercase #{v.first_name} #{v.last_name }
                       p.card-text
                         small.text-muted #{v.title }
-                      .team-social
+                      .team-social.auto-height
                         if v.linkedin
                           a(href=v.linkedin target="_blank").link-1.linkedin-share-team
                             i.fa.fa-linkedin-square.more
                         if v.facebook
                           a(href=v.facebook target="_blank").link-1.facebook-share-team
                             i.fa.fa-facebook-square
-                        if !v.linkedin && !v.facebook
+                        //if !v.linkedin && !v.facebook
                           a.linkedin-share-team.link-1(style="visibility:hidden;")
                             i.fa.fa-linkedin-square.more
                       p.card-text.text-justify.hide-more-detail !{app.helpers.text.restoreLineBreak(v.bio)}
