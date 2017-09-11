@@ -7,7 +7,7 @@
 // ToDo
 // extend Backbone.Events ?
 const mainElement = '#content';
-const usaStates = require('consts/usaStatesChoices.json');
+const usaStates = require('consts/usaStates.json').USA_STATES;
 const countries = require('consts/countries.json');
 
 class GeoCoder {

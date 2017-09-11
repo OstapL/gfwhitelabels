@@ -3,7 +3,7 @@
   var STATUSES = require('consts/raisecapital/companyStatuses.json').STATUS;
   var CampaignInfoProvider = require('directives/social/CampaignInfoProvider.js');
   var SECURITY = require('consts/raisecapital/security_type.json');
-  var INDASTRY = require('consts/raisecapital/industry.json');
+  var INDASTRY = require('consts/raisecapital/industry.json').INDUSTRY;
 
   var infoProvider = new CampaignInfoProvider(this.model);
   var directiveKey = 'campaign';
@@ -300,18 +300,10 @@ section
     section#members
       .container
         if Array.isArray(values.campaign.team_members.members) && values.campaign.team_members.members.length > 0
-          - 
-            function memberSort(a, b) {
-              if(a.order == null) {
-                return true;
-              }
-              return a.order > b.order;
-            }
-            values.campaign.team_members.members.sort(memberSort);
           h2#team.text-uppercase.text-lg-center.text-xs-center.col-lg-12.campaign-subheading.m-t-0 Team
           .row
             .col-lg-12.text-center-flex
-              each v in values.campaign.team_members.members
+              each v,k in values.campaign.team_members.reorder()
                 .col-xl-4.col-lg-4.col-md-6.col-sm-12.col-xs-12.team.team-detail.p-xs-0
                   .card.text-lg-center.text-xs-center
                     img(src=v.photo_image_id.getUrl('Default_photo') alt="").img-circle
@@ -319,14 +311,14 @@ section
                       h4.text-xs-center.card-title.text-uppercase #{v.first_name} #{v.last_name }
                       p.card-text
                         small.text-muted #{v.title }
-                      .team-social
+                      .team-social.auto-height
                         if v.linkedin
                           a(href=v.linkedin target="_blank").link-1.linkedin-share-team
                             i.fa.fa-linkedin-square.more
                         if v.facebook
                           a(href=v.facebook target="_blank").link-1.facebook-share-team
                             i.fa.fa-facebook-square
-                        if !v.linkedin && !v.facebook
+                        //if !v.linkedin && !v.facebook
                           a.linkedin-share-team.link-1(style="visibility:hidden;")
                             i.fa.fa-linkedin-square.more
                       p.card-text.text-justify.hide-more-detail !{app.helpers.text.restoreLineBreak(v.bio)}

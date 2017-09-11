@@ -1,9 +1,7 @@
 module.exports = {
   routes: {
-    'calculator/selectYourBusiness': 'selectYourBusiness',
-    'calculator/BusinessValuation': 'businessValuation',
-    'calculator/selectCalculator': 'selectCalculator',
-    'calculator/selectCalculator2': 'selectCalculator2',
+    'calculator/selectyourbusiness': 'selectYourBusiness',
+    'calculator/businessvaluation': 'businessValuation',
     'calculator/whatmybusinessworth/intro': 'calculatorWhatMyBusinessWorthIntro',
     'calculator/whatmybusinessworth/step-1': 'calculatorWhatMyBusinessWorthStep1',
     'calculator/whatmybusinessworth/step-2': 'calculatorWhatMyBusinessWorthStep2',
@@ -12,7 +10,7 @@ module.exports = {
   methods: {
     selectYourBusiness() {
       //left just for backward compatibility
-      app.routers.navigate('/calculator/BusinessValuation', { trigger: true });
+      app.routers.navigate('/calculator/businessvaluation', { trigger: true });
     },
 
     businessValuation() {
@@ -23,46 +21,6 @@ module.exports = {
             this.render();
           },
           template: require('./templates/selectYourBusiness.pug'),
-          render() {
-            this.$el.html(this.template());
-            return this;
-          },
-        });
-
-        new View();
-        $('body').scrollTo();
-        app.hideLoading();
-      }, 'what_my_business_worth_chunk');
-    },
-
-    selectCalculator() {
-      require.ensure([], () => {
-        let View = Backbone.View.extend({
-          el: '#content',
-          initialize() {
-            this.render();
-          },
-          template: require('./templates/selectCalculator.pug'),
-          render() {
-            this.$el.html(this.template());
-            return this;
-          },
-        });
-
-        new View();
-        $('body').scrollTo();
-        app.hideLoading();
-      }, 'what_my_business_worth_chunk');
-    },
-
-    selectCalculator2() {
-      require.ensure([], () => {
-        let View = Backbone.View.extend({
-          el: '#content',
-          initialize() {
-            this.render();
-          },
-          template: require('./templates/selectCalculator2.pug'),
           render() {
             this.$el.html(this.template());
             return this;

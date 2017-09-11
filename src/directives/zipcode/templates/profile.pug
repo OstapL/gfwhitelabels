@@ -4,7 +4,7 @@ input(type="hidden" name="city" value=user.city disabled=((user.country=='US') ?
     .col-xl-6.col-lg-6.col-md-6
       //if user.country == 'US'
       -
-        pug_html += app.fields.textLabel('zip_code', _.extend({
+        pug_html += app.fields.textLabel('zip_code', Object.assign({
         'type': 'text',
         'value': user.zip_code,
         }, fields.zip_code))
