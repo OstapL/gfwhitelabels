@@ -133,7 +133,7 @@ class CropperDropzone {
     this.options = options;
 
     this.options.control = Object.assign({}, {
-      viewMode: 0,
+      viewMode: 2,
       dragMode: 'crop',
       aspectRatio: 1,
       data: {}, //prev stored cropper data. We may need it when we allow user to change img cropping
@@ -321,7 +321,7 @@ class CropperDropzone {
           type: imageTypes.CROP,
           transformations: [ 
             cropTransformation,
-            { type: "fit", fillWidth: this.options.auto.width, fillHeight: this.options.auto.height },
+            { type: "fit", fitWidth: this.options.auto.width, fitHeight: this.options.auto.height },
           ],
         },
         {
