@@ -50,7 +50,10 @@ class TeamMemberFactory {
 
   reorder() {
     function memberSort(a, b) {
-      if(a.order == null) {
+      if(a.order === null) {
+        return false;
+      }
+      if(b.order === null) {
         return false;
       }
       return a.order > b.order;
