@@ -311,6 +311,7 @@ const Views = {
 
     destroy() {
       Backbone.View.prototype.destroy.call(this);
+      app.clearClasses('#page', ['page']);
       if (this.$owlCarousel && this.$owlCarousel.length) {
         this.$carousel.hide();
         this.$carousel.owlCarousel('destroy');

@@ -110,6 +110,7 @@ module.exports = {
     },
 
     destroy() {
+      app.clearClasses('#page', ['page']);
       this.hideHint();
       $('body').off('click', '.calendly-badge-widget');
       if (window.Calendly)
