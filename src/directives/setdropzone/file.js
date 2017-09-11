@@ -282,19 +282,18 @@ class FileDropzone {
 
   success(file, data) {
 
-    if(data[0]) {
-      data = data[0];
-    }
-    const urls = data.urls;
+    const reorgData = data[0];
+    reorgData.site_id = app.sites.getId();
+    reorgData.urls = {};
+    reorgData.urls.origin = reorgData.url_filename;
+    delete reorgData.url_filename;
 
-    data.urls = {};
-    data.urls.origin = urls[0];
-    data.site_id = app.sites.getId();
+    reorgData.site_id = app.sites.getId();
 
-    this.model.data[this.fileElement.fieldName].id = data.id;
-    this.model.data[this.fileElement.fieldDataName] = data;
+    this.model.data[this.fileElement.fieldName].id = reorgData.id;
+    this.model.data[this.fileElement.fieldDataName] = reorgData;
 
-    this.fileElement.update(data);
+    this.fileElement.update(reorgData);
   }
 
 };
