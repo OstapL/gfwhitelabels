@@ -165,7 +165,6 @@ module.exports = {
       e.preventDefault();
 
       if (!this.validate(e)) {
-        this.$('.help-block').prev().scrollTo(50);
         return;
       }
 
@@ -246,7 +245,6 @@ module.exports = {
       e.preventDefault();
 
       if (!this.validate(e)) {
-        this.$('.help-block').prev().scrollTo(50);
         return;
       }
 
@@ -347,13 +345,13 @@ module.exports = {
       // calculate your income
       'blur [type=money]': saveValue,
       'submit .js-calc-form': 'doCalculation',
+      'click .next': (e) => { e.preventDefault(); $('.js-calc-form').submit(); return false; },
     }, app.helpers.calculatorValidation.events),
 
     doCalculation(e) {
       e.preventDefault();
 
       if (!this.validate(e)) {
-        this.$('.help-block').prev().scrollTo(50);
         return;
       }
 

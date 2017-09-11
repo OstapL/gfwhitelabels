@@ -1,3 +1,7 @@
+//TODO: refactor
+//potential problem: if we call load(url) multiple times before script is loaded
+//we load script multiple times
+//solution cache Promise and return that Promise
 const loadedScripts = {};
 
 const createScript = (url, options={}) => {
@@ -128,7 +132,23 @@ const scriptLoader = Object.assign({
     scriptLoader.trigger('google-maps-loaded');
   },
 
+  loadCalendlyAPI() {
+    const calendlyStyleURL = 'https://calendly.com/assets/external/widget.css';
+    const calendlyScriptURL = 'https://calendly.com/assets/external/widget.js';
+
+    if (loadedScripts[calendlyScriptURL])
+      return Promise.resolve();
+
+    return Promise.all([
+      app.helpers.scripts.loadStyle(calendlyStyleURL),
+      app.helpers.scripts.load(calendlyScriptURL),
+    ]);
+  },
+
   loadStyle(url) {
+    if (loadedScripts[url])
+      return Promise.resolve();
+
     return new Promise((resolve, reject) => {
       const style = createStyle(url, {
         onLoad: resolve,
