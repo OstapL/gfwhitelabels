@@ -300,18 +300,10 @@ section
     section#members
       .container
         if Array.isArray(values.campaign.team_members.members) && values.campaign.team_members.members.length > 0
-          - 
-            function memberSort(a, b) {
-              if(a.order == null) {
-                return false;
-              }
-              return a.order < b.order;
-            }
-            values.campaign.team_members.members.sort(memberSort);
           h2#team.text-uppercase.text-lg-center.text-xs-center.col-lg-12.campaign-subheading.m-t-0 Team
           .row
             .col-lg-12.text-center-flex
-              each v in values.campaign.team_members.members
+              each v,k in values.campaign.team_members.reorder()
                 .col-xl-4.col-lg-4.col-md-6.col-sm-12.col-xs-12.team.team-detail.p-xs-0
                   .card.text-lg-center.text-xs-center
                     img(src=v.photo_image_id.getUrl('Default_photo') alt="").img-circle
