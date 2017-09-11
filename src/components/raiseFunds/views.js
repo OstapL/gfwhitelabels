@@ -106,7 +106,7 @@ module.exports = {
 
     onBeforeNavigate() {
       this.hideHint();
-      this.destroy();
+      // this.destroy();
     },
 
     destroy() {
