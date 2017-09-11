@@ -551,7 +551,6 @@ module.exports = {
           return;
 
         data.rating = data.rating || 0;
-
         api.makeRequest(app.config.investmentServer + '/' + id + '/decline', 'PUT', data).done((response) => {
           investment.deposit_cancelled_by_investor = true;
 
@@ -568,11 +567,14 @@ module.exports = {
 
           if (historicalInvestmentElements.length) {
             //find investment to insert before it
-            let block = (historicalInvestmentElements || []).find((elem) => {
+            let block = historicalInvestmentElements.filter((idx, elem) => {
               const investmentId = Number(elem.dataset.investmentid);
               return investment.id > investmentId;
             });
             if (block)
+              block = block.first();
+
+            if (block && block.length)
               $(block).before(cancelledInvestmentElem);
             else
               historicalInvestmentsBlock.append(cancelledInvestmentElem);

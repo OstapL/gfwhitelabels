@@ -198,7 +198,7 @@ module.exports = {
         .then((responseData) => {
           // ToDo
           // Do we really need this ?!
-          if(method != 'POST') {
+          if(method != 'POST' && this.model) {
             Object.assign(this.model, newData);
           }
           app.showLoading();
@@ -300,7 +300,7 @@ module.exports = {
   },
 
   fixDateFields(fields, data) {
-    Object.keys(fields).forEach((key) => {
+    Object.keys(fields || {}).forEach((key) => {
       const el = fields[key];
       if(el.type == 'date') {
         var key_year = key + '__year';
@@ -333,7 +333,7 @@ module.exports = {
   },
 
   deleteEmptyNested(fields, data) {
-    Object.keys(fields).forEach((key) => {
+    Object.keys(fields || {}).forEach((key) => {
       const el = fields[key];
       if(el.type == 'nested') {
         if(Array.isArray(data[key])) {
