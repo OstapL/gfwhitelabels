@@ -1,6 +1,6 @@
-module.exports = require('consts/usaStates.json');
+let e = require('consts/usaStates.json').USA_STATES_FULL;
 
-Object.defineProperties(module.exports, {
+Object.defineProperties(e, {
 
     getFullState: {
         enumerable: false,
@@ -27,3 +27,5 @@ Object.defineProperties(module.exports, {
     }
 
 });
+
+module.exports = e;
