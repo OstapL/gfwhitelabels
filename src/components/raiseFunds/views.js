@@ -37,6 +37,8 @@ module.exports = {
     initialize() {
       this.listenToNavigate();
 
+      app.addClassesTo('#page', ['raise-capital-landing']);
+
       if ((document.location.search || '').indexOf('nometric') >= 0)
         return;
 
@@ -108,6 +110,7 @@ module.exports = {
     },
 
     destroy() {
+      app.clearClasses('#page', ['page']);
       this.hideHint();
       $('body').off('click', '.calendly-badge-widget');
       if (window.Calendly)

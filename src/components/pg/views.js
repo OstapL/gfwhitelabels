@@ -311,6 +311,7 @@ const Views = {
 
     destroy() {
       Backbone.View.prototype.destroy.call(this);
+      app.clearClasses('#page', ['page']);
       if (this.$owlCarousel && this.$owlCarousel.length) {
         this.$carousel.hide();
         this.$carousel.owlCarousel('destroy');
@@ -357,6 +358,7 @@ const Views = {
 
 module.exports = Object.assign({
   createView(page) {
+    app.addClassesTo('#page', [page]);
     const template = templateMap[page] || page;
     return withLeftMenuPages.includes(page)
       ? new Views.WithLeftMenu({ template })
