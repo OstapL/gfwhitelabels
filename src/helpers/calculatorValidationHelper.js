@@ -6,12 +6,16 @@ module.exports = {
     validate(e, data) {
         data = data || $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
         this.$('.help-block').remove();
-        if(!app.validation.validate(this.fields, data, this)) {
-            _(app.validation.errors).each((errors, key) => {
-                app.validation.invalidMsg(this, key, errors);
-            });
-            // this.$('.help-block').prev().scrollTo(5);
-            return false;
+        if (!app.validation.validate(this.fields, data, this)) {
+          Object.keys(app.validation.errors).forEach((key) => {
+            const errors = app.validation.errors[key];
+            app.validation.invalidMsg(this, key, errors);
+          });
+
+          const $el = this.$('.help-block').closest('.form-group').first();
+          if (!app.isElementInView($el[0]))
+            $el.scrollTo();
+          return false;
         }
         return true;
     },

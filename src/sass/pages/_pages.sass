@@ -67,3 +67,55 @@
   .help-block.text-justify
     font-size: rem(12)
     line-height: rem(16)
+.page.partners
+  .scroll-paralax
+    .center-wrap
+      @media screen and (max-width: 430px)
+        a.btn
+          &:nth-child(2)
+            margin-left: rem(20)
+            margin-right: rem(20)
+            margin-top: rem(25)
+// on main page and raise-capital landing
+.calculator-block-click
+  margin-top: rem(70)
+  margin-bottom: rem(70)
+  .calculator-item
+    border: solid 1px #f1f1f1
+    background-color: $white
+    padding: 30px
+    +mt(.2s)
+    @media screen and (max-width: 991px)
+      margin-bottom: 30px
+    i
+      color: $icon-color-calculator-click
+      font-size: rem(50)
+      opacity: 0.25
+      margin-bottom: 5px
+    .text-wrap
+      max-width: 210px
+      margin: auto
+      position: relative
+      height: 75px
+      h3
+        position: absolute
+        top: 50%
+        transform: translate(-50%,-50%)
+        left: 50%
+        width: 100%
+    .btn
+      margin-top: 20px
+    &:hover
+      +mt(.2s)
+      -webkit-box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.1);
+      -moz-box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.1);
+      box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.1);
+      cursor: pointer
+  .col-xl-4
+    &:last-child
+      .calculator-item
+        @media screen and (max-width: 991px)
+          margin-bottom: 0
+
+
+

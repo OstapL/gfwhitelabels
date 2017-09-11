@@ -8,7 +8,7 @@
         user,
         -1, {
           id: 'personal_information_data__city',
-        }, _.extend({}, fields.personal_information_data.schema.city, { required: true }));
+        }, Object.assign({}, fields.personal_information_data.schema.city, { required: true }));
     .col-xl-6.col-lg-6.col-md-6
       -
         pug_html += app.fields.nestedTextLabel(
@@ -16,7 +16,7 @@
           'state',
           user,
           -1, {
-          }, _.extend({}, fields.personal_information_data.schema.state, { required: true, label: 'State/Province/ Region', placeholder: 'State/Province/Region' })
+          }, Object.assign({}, fields.personal_information_data.schema.state, { required: true, label: 'State/Province/ Region', placeholder: 'State/Province/Region' })
         );
   .row
     .col-xl-6.col-lg-6.col-md-6
@@ -26,7 +26,7 @@
           'zip_code',
           user,
           -1, {
-          }, _.extend({}, fields.personal_information_data.schema.zip_code, { required: true, label: 'Postal Code'})
+          }, Object.assign({}, fields.personal_information_data.schema.zip_code, { required: true, label: 'Postal Code'})
         );
     .col-xl-6.col-lg-6.col-md-6
       -
@@ -37,4 +37,4 @@
           -1, {
             label: 'Phone',
             id: 'personal_information_data__phone__0',
-          }, _.extend({}, fields.personal_information_data.schema.phone, { required: true }));
+          }, Object.assign({}, fields.personal_information_data.schema.phone, { required: true }));

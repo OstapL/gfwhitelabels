@@ -60,7 +60,6 @@ module.exports = {
   methods: {
     landing() {
       $('body').scrollTo();
-      app.addClassesTo('#page', ['raise-capital-landing']);
       require.ensure([], () => {
         const Views = require('components/raiseFunds/views.js');
         app.currentView = new Views.landing();

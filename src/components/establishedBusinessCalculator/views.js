@@ -122,16 +122,16 @@ module.exports = {
     }
   }),
 
-  step1: Backbone.View.extend(_.extend({
+  step1: Backbone.View.extend(Object.assign({
     el: '#content',
 
     template: require('./templates/step1.pug'),
 
-    events: _.extend({
+    events: Object.assign({
       'change select': saveValue,
       'blur [type=money]': saveValue,
       'submit form': 'nextStep',
-    }),
+    }, app.helpers.calculatorValidation.events),
 
     initialize() {
       this.fields = {
@@ -165,11 +165,10 @@ module.exports = {
       e.preventDefault();
 
       if (!this.validate(e)) {
-        this.$('.help-block').prev().scrollTo(50);
         return;
       }
 
-      app.routers.navigate('/calculator/establishedBusiness/step-2', {trigger: true});
+      app.routers.navigate('/calculator/establishedbusiness/step-2', {trigger: true});
     },
 
     render: function () {
@@ -186,12 +185,12 @@ module.exports = {
     }
   }, app.helpers.calculatorValidation.methods)),
 
-  step2: Backbone.View.extend(_.extend({
+  step2: Backbone.View.extend(Object.assign({
     el: '#content',
 
     template: require('./templates/step2.pug'),
 
-    events: _.extend({
+    events: Object.assign({
       'submit form': 'nextStep',
       'blur [type=money]': saveValue,
     }, app.helpers.calculatorValidation.events),
@@ -246,15 +245,14 @@ module.exports = {
       e.preventDefault();
 
       if (!this.validate(e)) {
-        this.$('.help-block').prev().scrollTo(50);
         return;
       }
 
-      app.routers.navigate('/calculator/establishedBusiness/step-3', {trigger: true});
+      app.routers.navigate('/calculator/establishedbusiness/step-3', {trigger: true});
     },
 
     goToStep1() {
-      app.routers.navigate('/calculator/establishedBusiness/step-1', {trigger: true});
+      app.routers.navigate('/calculator/establishedbusiness/step-1', {trigger: true});
     },
 
     render: function () {
@@ -288,14 +286,10 @@ module.exports = {
     }
   }, app.helpers.calculatorValidation.methods)),
 
-  step3: Backbone.View.extend(_.extend({
+  step3: Backbone.View.extend(Object.assign({
     el: '#content',
 
     template: require('./templates/step3.pug'),
-
-    preinitialize() {
-      $('#content').undelegate();
-    },
 
     initialize() {
       this.fields = {
@@ -344,20 +338,20 @@ module.exports = {
     },
 
     goToStep2() {
-      app.routers.navigate('/calculator/establishedBusiness/step-2', {trigger: true});
+      app.routers.navigate('/calculator/establishedbusiness/step-2', {trigger: true});
     },
 
-    events: _.extend({
+    events: Object.assign({
       // calculate your income
       'blur [type=money]': saveValue,
       'submit .js-calc-form': 'doCalculation',
+      'click .next': (e) => { e.preventDefault(); $('.js-calc-form').submit(); return false; },
     }, app.helpers.calculatorValidation.events),
 
     doCalculation(e) {
       e.preventDefault();
 
       if (!this.validate(e)) {
-        this.$('.help-block').prev().scrollTo(50);
         return;
       }
 
@@ -374,26 +368,26 @@ module.exports = {
         ltmPe = row[0],
         liquidityDiscount = 0.2;
 
-      _.extend(calculatedData, {
+      Object.assign(calculatedData, {
         grossprofit: data.revenue - data.goodsCost,
         grossprofit2: data.revenue2 - data.goodsCost2,
         totalExpenses: data.operatingExpense + data.oneTimeExpenses,
         totalExpenses2: data.operatingExpense2 + data.oneTimeExpenses2
       });
 
-      _.extend(calculatedData, {
+      Object.assign(calculatedData, {
         ebit: calculatedData.grossprofit - data.operatingExpense + data.oneTimeExpenses,
         ebit2: calculatedData.grossprofit2 - data.operatingExpense2 + data.oneTimeExpenses2
       });
 
-      _.extend(calculatedData, {
+      Object.assign(calculatedData, {
         ebittda: calculatedData.ebit + data.depreciationAmortization,
         ebittda2: calculatedData.ebit2 + data.depreciationAmortization2,
         preTaxIncome: calculatedData.ebit - data.interestPaid,
         preTaxIncome2: calculatedData.ebit2 - data.interestPaid2
       });
 
-      _.extend(calculatedData, {
+      Object.assign(calculatedData, {
         netIncome: calculatedData.preTaxIncome - data.taxesPaid,
         netIncome2: calculatedData.preTaxIncome2 - data.taxesPaid2
       });
@@ -447,11 +441,11 @@ module.exports = {
       ];
 
       // save calculated data
-      _.extend(data, calculatedData);
+      Object.assign(data, calculatedData);
 
       app.helpers.calculator.saveCalculatorData(CALCULATOR_NAME, data);
 
-      setTimeout(() => app.routers.navigateWithReload('/calculator/establishedBusiness/finish', {trigger: true}), 10);
+      setTimeout(() => app.routers.navigateWithReload('/calculator/establishedbusiness/finish', {trigger: true}), 10);
     },
 
     render: function () {
@@ -491,7 +485,7 @@ module.exports = {
     template: require('./templates/finish.pug'),
 
     goToStep3() {
-      app.routers.navigate('/calculator/establishedBusiness/step-3', {trigger: true});
+      app.routers.navigate('/calculator/establishedbusiness/step-3', {trigger: true});
     },
 
     render: function () {
