@@ -106,10 +106,11 @@ module.exports = {
 
     onBeforeNavigate() {
       this.hideHint();
-      this.destroy();
+      // this.destroy();
     },
 
     destroy() {
+      debugger;
       app.clearClasses('#page', ['page']);
       this.hideHint();
       $('body').off('click', '.calendly-badge-widget');
