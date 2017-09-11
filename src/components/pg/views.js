@@ -81,6 +81,7 @@ const Views = {
 
     destroy() {
       Backbone.View.prototype.destroy.call(this);
+      app.clearClasses('#page', ['page']);
       if (this.scrollHandler) {
         $(window).off('scroll', this.scrollHandler);
         this.scrollHandler = null;
@@ -194,6 +195,7 @@ const Views = {
     },
 
     destroy() {
+      Backbone.View.prototype.destroy.call(this);
       setTimeout(() => {
         if (this.$carousel) {
           this.$carousel.hide();
