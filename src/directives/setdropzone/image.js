@@ -1,4 +1,5 @@
 const file = require('./file.js');
+const imageTypes = require('consts/imageTypes.json');
 const defaultImage = require('images/default/255x153.png');
 
 
@@ -39,6 +40,7 @@ class ImageDropzone extends file.FileDropzone {
 
   constructor(view, fieldName, fieldDataName, imageOptions) {
     super(view, fieldName, fieldDataName, imageOptions);
+    this.options.url = app.config.filerServer + '/image/upload'
     this.options.acceptedFiles = 'image/*,.jpg,.png,.jpeg';
 
     this.cropperOptions = imageOptions.crop;
@@ -73,6 +75,8 @@ class ImageDropzone extends file.FileDropzone {
     if(imageOptions.defaultImage) {
       this.fileElement.options.defaultImage = imageOptions.defaultImage;
     }
+
+    this.cropperQuery = [];
   }
 
   getTemplate() {
@@ -88,20 +92,20 @@ class ImageDropzone extends file.FileDropzone {
       urls: {}
     };
     data.forEach((image) => {
-      if(image.name.indexOf('_c_') != -1) {
-        reorgData.urls.main = this.fileElement.fixUrl(image.urls[0]);
-      } else if(image.name.indexOf('_r_') != -1) {
+      if(image.type === imageTypes.CROPRESIZE) {
         var cropName = this.cropperOptions.resize.width + 'x' + this.cropperOptions.resize.height;
-        reorgData.urls[cropName] = this.fileElement.fixUrl(image.urls[0]);
+        reorgData.urls[cropName] = image.url_filename;
+      } else if (image.type === imageTypes.CROP) {
+        reorgData.urls.main = image.url_filename;
       } else {
         reorgData.id = image.id;
         reorgData.name = image.name;
         reorgData.mime = image.mime;
-        reorgData.urls.origin = this.fileElement.fixUrl(image.urls[0]);
+        reorgData.urls.origin = image.url_filename;
       }
     });
 
-    reorgData.site_id = app.sites.getId();
+    reorgData.site_id = app.sites.getId(),
     reorgData.name = '';
     this.fileElement.update(reorgData);
     // this.model[this.fileElement.fieldName] = reorgData.id;
@@ -129,7 +133,7 @@ class CropperDropzone {
     this.options = options;
 
     this.options.control = Object.assign({}, {
-      viewMode: 2,
+      viewMode: 0,
       dragMode: 'crop',
       aspectRatio: 1,
       data: {}, //prev stored cropper data. We may need it when we allow user to change img cropping
@@ -302,36 +306,48 @@ class CropperDropzone {
       const data = {};
       const cropData = app.utils.pick(this.cropper.getData(true), ['x', 'y', 'width', 'height']);
 
-      cropData.x = cropData.x < 0 ? 0 : cropData.x;
-      cropData.y = cropData.y < 0 ? 0 : cropData.y;
-
-      cropData.width = cropData.width + cropData.x > maxWidth ? maxWidth-cropData.x : cropData.width;
-      cropData.height = cropData.height + cropData.y > maxHeight ? maxHeight-cropData.y : cropData.height;
-      cropData.name = this.options.auto.width + 'x' + this.options.auto.height + '.' + this.file.file.getExtention();
-
-      data.file_name = cropData.width + 'x' + cropData.height + '.' + this.file.file.getExtention();
-      data.id = this.file.file.id;
-      data.crop = cropData;
-      data.resize = {
-        name: this.options.resize.width + 'x' + this.options.resize.height + '.' + this.file.file.getExtention(),
-        width: this.options.resize.width,
-        height: this.options.resize.height,
+      const cropTransformation = {
+        type: "crop",
+        cropWidth: cropData.width + cropData.x > maxWidth ? maxWidth - cropData.x : cropData.width,
+        cropHeight: cropData.height + cropData.y > maxHeight ? maxHeight - cropData.y : cropData.height,
+        cropOffsetX: cropData.x < 0 ? 0 : cropData.x,
+        cropOffsetY: cropData.y < 0 ? 0 : cropData.y,
       };
 
+      data.id = this.file.file.id;
+      data.actions = [
+        {
+          filename: this.options.auto.width + 'x' + this.options.auto.height + '.' + this.file.file.getExtention(),
+          type: imageTypes.CROP,
+          transformations: [ 
+            cropTransformation,
+            { type: "fit", fillWidth: this.options.auto.width, fillHeight: this.options.auto.height },
+          ],
+        },
+        {
+          filename: this.options.resize.width + 'x' + this.options.resize.height + '.' + this.file.file.getExtention(),
+          type: imageTypes.CROPRESIZE,
+          transformations: [
+            cropTransformation,
+            { type: "resize", resizeWidth: this.options.resize.width, resizeHeight: this.options.resize.height },
+          ]
+        }
+      ]
+
       api.makeRequest(
-        app.config.filerServer + '/transform_image',
+        app.config.filerServer + '/image/transform',
         'PUT',
         data
       ).done((responseData) => {
 
         let thumbSize = '';
         responseData.forEach((image) => {
-          if(image.name.indexOf(this.options.auto.width + 'x' + this.options.auto.height) != -1) {
-            this.file.file.urls.main = this.file.fixUrl(image.urls[0]);
-          } 
-          if(this.options.resize && image.name.indexOf(this.options.resize.width + 'x' + this.options.resize.height) != -1) {
+          if(image.type === imageTypes.CROP) {
+            this.file.file.urls.main = image.url_filename;
+          }
+          if(image.type === imageTypes.CROPRESIZE) {
             thumbSize = this.options.resize.width + 'x' + this.options.resize.height;
-            this.file.file.urls[thumbSize] = this.file.fixUrl(image.urls[0]);
+            this.file.file.urls[thumbSize] = image.url_filename;
           }
         });
 
