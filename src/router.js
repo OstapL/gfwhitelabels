@@ -70,11 +70,6 @@ module.exports = Backbone.Router.extend(Object.assign({
       return false;
     }
 
-
-    // WHY?!
-    app.clearClasses('#page', ['page']);
-    // debugger;
-
     if (routesMap.auth.includes(name) && !app.user.ensureLoggedIn()) {
       // Revert back the current URL, 
       // Do not update url
@@ -83,6 +78,10 @@ module.exports = Backbone.Router.extend(Object.assign({
       }
       return false;
     }
+
+    // WHY?!
+    app.clearClasses('#page', ['page']);
+    // debugger;
 
     if (app.currentView) {
       app.currentView.destroy();
