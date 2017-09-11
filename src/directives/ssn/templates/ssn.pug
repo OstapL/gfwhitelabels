@@ -2,14 +2,14 @@ p.m-b-1 In order to pay you any dividends or revenue share, regulations require 
 .row
   .col-xl-6
     -
-      pug_html += app.fields.textLabel('ssn', _.extend({
+      pug_html += app.fields.textLabel('ssn', Object.assign({
           'placeholder': 'Social Security #',
           'label': 'Social Security Number (SSN) or Tax ID (ITIN/EIN)',
           'value': user.ssn
         }, fields.ssn));
-  .col-xl-6.m-t-ssn
+  .col-xl-6
     -
-      pug_html += app.fields.textLabel('ssn_re', _.extend({
+      pug_html += app.fields.textLabel('ssn_re', Object.assign({
         'label': 'Re-enter SSN',
         'value': user.ssn
         }, fields.ssn_re))

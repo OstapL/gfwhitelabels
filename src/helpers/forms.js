@@ -43,7 +43,7 @@ module.exports = {
         data = JSON.stringify(data);
       }
 
-      let params = _.extend({
+      let params = Object.assign({
         url: url,
         type: type,
         data: data,
@@ -116,14 +116,14 @@ module.exports = {
 
     // if view already have some data - extend that info
     if(this.hasOwnProperty('model') && Object.keys(this.model).length > 0 && !this.doNotExtendModel && method != 'PATCH') {
-      newData = _.extend({}, this.model.toJSON ? this.model.toJSON() : this.model, newData);
+      newData = Object.assign({}, this.model.toJSON ? this.model.toJSON() : this.model, newData);
     }
 
     // for PATCH method we will send only difference
     if(method == 'PATCH') {
       let patchData = {};
       let d = deepDiff(newData, this.model.toJSON ? this.model.toJSON() : this.model);
-      _(d).forEach((el, i) => {
+      d.forEach((el, i) => {
         if(el.kind == 'E' || el.kind == 'A') {
           patchData[el.path[0]] = newData[el.path[0]];
           if(fields[el.path[0]] && fields[el.path[0]].hasOwnProperty('dependies')) {
@@ -164,7 +164,7 @@ module.exports = {
     let changedFields = fields;
     if (method == 'PATCH') {
       let patchFields = {};
-      _(newData).each((el, key) => {
+      Object.keys(newData).forEach((key) => {
         if(fields[key]) {
           patchFields[key] = fields[key];
         } else {
@@ -174,8 +174,16 @@ module.exports = {
       changedFields = patchFields;
     }
 
+    if(form.length > 0) {
+      let errorsInput = form[0].querySelectorAll('.has-error');
+      if (errorsInput.length > 0) {
+        errorsInput.forEach((er) => er.classList.remove('has-error'));
+      }
+    }
+
     if(!app.validation.validate(changedFields, newData, this)) {
-      _(app.validation.errors).each((errors, key) => {
+      Object.keys(app.validation.errors).forEach((key) => {
+        const errors = app.validation.errors[key];
         app.validation.invalidMsg(this, key, errors);
       });
       this.$('.help-block').prev().scrollTo(25);
@@ -190,8 +198,8 @@ module.exports = {
         .then((responseData) => {
           // ToDo
           // Do we really need this ?!
-          if(method != 'POST') {
-            _.extend(this.model, newData);
+          if(method != 'POST' && this.model) {
+            Object.assign(this.model, newData);
           }
           app.showLoading();
 
@@ -259,7 +267,7 @@ module.exports = {
       let data = xhr.responseJSON;
 
       data = data ? data : { Server: status };
-      if (_.isString(data)) {
+      if (typeof(data) === 'string') {
         app.validation.invalidMsg(
           view, 'error', data
         );
@@ -292,7 +300,8 @@ module.exports = {
   },
 
   fixDateFields(fields, data) {
-    _(fields).each((el, key) => {
+    Object.keys(fields || {}).forEach((key) => {
+      const el = fields[key];
       if(el.type == 'date') {
         var key_year = key + '__year';
         var key_month = key + '__month';
@@ -310,21 +319,29 @@ module.exports = {
         delete data[key_month];
         delete data[key_day];
       } else if(el.type == 'nested' && data[key]) {
-        _.each(data[key], (val, index, list) => {
-          api.fixDateFields.call(this, el.schema, data[key][index]);
-        });
+        if (Array.isArray(data[key])) {
+          data[key].forEach((val, index) => {
+            api.fixDateFields.call(this, el.schema, data[key][index]);
+          });
+        } else if (typeof(data[key]) === 'object') {
+          Object.keys(data[key]).forEach((name) => {
+            api.fixDateFields.call(this, el.schema, data[key][name]);
+          });
+        }
       }
     });
   },
 
   deleteEmptyNested(fields, data) {
-    _(fields).each((el, key) => {
+    Object.keys(fields || {}).forEach((key) => {
+      const el = fields[key];
       if(el.type == 'nested') {
         if(Array.isArray(data[key])) {
-          data[key] = data[key].filter(function(el) { return el !== null;})
+          data[key] = data[key].filter((el) => el !== null);
           data[key].forEach((el, i) => {
             let emptyValues = 0;
-            _(el).each((val, subkey) => {
+            Object.keys(el).forEach((subkey) => {
+              const val = el[subkey];
               if(val === '' || Number.isNaN(val)) {
                 emptyValues ++;
               }
@@ -352,7 +369,8 @@ module.exports = {
   },
 
   fixFieldsTypes(fields, data) {
-    _(fields).each((el, key) => {
+    Object.keys(fields).forEach((key) => {
+      const el = fields[key];
       if(el.type == 'string') {
         if (data && data[key]) {
           data[key] = app.helpers.format.unformatPrice(data[key]);
@@ -362,9 +380,15 @@ module.exports = {
           data[key] = app.helpers.format.unformatPrice(data[key]);
         }
       } else if(el.type == 'nested' && data[key]) {
-        _.each(data[key], (val, index, list) => {
-          api.fixFieldsTypes.call(this, el.schema, data[key][index]);
-       });
+        if (Array.isArray(data[key]) && data[key].length) {
+          data[key].forEach((val, index) => {
+            api.fixFieldsTypes.call(this, el.schema, data[key][index]);
+          });
+        } else if (typeof(data[key]) === 'object' && data[key]) {
+          Object.keys(data[key]).forEach((name) => {
+            api.fixFieldsTypes.call(this, el.schema, data[key][name]);
+          });
+        }
       }
     });
   }

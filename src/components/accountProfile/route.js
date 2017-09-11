@@ -22,13 +22,13 @@ module.exports = {
 
         $.when(fieldsR, dataR).done((fields, data) => {
           app.user.updateUserData(data[0]);
-          const i = new View.profile({
+          app.currentView = new View.profile({
             el: '#content',
             model: app.user,
             fields: fields[0].fields,
             activeTab: activeTab,
           });
-          i.render();
+          app.currentView.render();
           app.hideLoading();
         });
       }, 'profile_chunk');
@@ -44,11 +44,11 @@ module.exports = {
       require.ensure([], (require) => {
         $('body').scrollTo();
         const View = require('components/accountProfile/views.js');
-        let i = new View.changePassword({
+        app.currentView = new View.changePassword({
           el: '#content',
           model: {},
         });
-        i.render();
+        app.currentView.render();
         app.hideLoading();
       }, 'profile_chunk');
     },
@@ -59,12 +59,12 @@ module.exports = {
         const fieldsR = api.makeCacheRequest(app.config.authServer + '/rest-auth/password/change', 'OPTIONS');
         $.when(fieldsR).done((data) => {
           const View = require('components/accountProfile/views.js');
-          const i = new View.setNewPassword({
+          app.currentView = new View.setNewPassword({
             el: '#content',
             //TODO: add fields from response
             // fields: data[0].fields,
           });
-          i.render();
+          app.currentView.render();
           app.hideLoading();
         });
       }, 'profile_chunk');
@@ -80,12 +80,12 @@ module.exports = {
         const dataR = api.makeCacheRequest(app.config.investmentServer);
 
         Promise.all([fieldsR, dataR, userDataR]).then((values) => {
-          _.extend(app.user.data, values[2]);
-          let i = new View.InvestorDashboard({
+          Object.assign(app.user.data, values[2]);
+          app.currentView = new View.InvestorDashboard({
             fields: values[0].fields,
             model: values[1],
           });
-          i.render();
+          app.currentView.render();
           app.hideLoading();
         });
       }, 'profile_chunk');
@@ -94,10 +94,10 @@ module.exports = {
     companyDashboard() {
       require.ensure([], () => {
         const View = require('components/accountProfile/views.js');
-        let i = new View.companyDashboard({
+        app.currentView = new View.companyDashboard({
           el: '#content',
         });
-        i.render();
+        app.currentView.render();
         app.hideLoading();
       }, 'profile_chunk');
     },
@@ -105,10 +105,10 @@ module.exports = {
     companyDashboardFirst() {
       require.ensure([], (require) => {
         const View = require('components/accountProfile/views.js');
-        let i = new View.companyDashboardFirst({
+        app.currentView = new View.companyDashboardFirst({
           el: '#content',
         });
-        i.render();
+        app.currentView.render();
         app.hideLoading();
       }, 'profile_chunk');
     },
@@ -116,10 +116,10 @@ module.exports = {
     afterPaymentDashboard() {
       require.ensure([], (require) => {
         const View = require('components/accountProfile/views.js');
-        let i = new View.afterPaymentDashboard({
+        app.currentView = new View.afterPaymentDashboard({
           el: '#content',
         });
-        i.render();
+        app.currentView.render();
         app.hideLoading();
       }, 'profile_chunk');
     },
@@ -127,10 +127,10 @@ module.exports = {
     afterCompleteDashboard() {
       require.ensure([], (require) => {
         const View = require('components/accountProfile/views.js');
-        let i = new View.afterCompleteDashboard({
+        app.currentView = new View.afterCompleteDashboard({
           el: '#content',
         });
-        i.render();
+        app.currentView.render();
         app.hideLoading();
       }, 'profile_chunk');
     },
@@ -138,10 +138,10 @@ module.exports = {
     afterFinalDashboard() {
       require.ensure([], (require) => {
         const View = require('components/accountProfile/views.js');
-        let i = new View.afterFinalDashboard({
+        app.currentView = new View.afterFinalDashboard({
           el: '#content',
         });
-        i.render();
+        app.currentView.render();
         app.hideLoading();
       }, 'profile_chunk');
     },
@@ -149,10 +149,10 @@ module.exports = {
     afterSubmittingGovermentDashboard() {
       require.ensure([], (require) => {
         const View = require('components/accountProfile/views.js');
-        let i = new View.afterSubmittingGovermentDashboard({
+        app.currentView = new View.afterSubmittingGovermentDashboard({
           el: '#content',
         });
-        i.render();
+        app.currentView.render();
         app.hideLoading();
       }, 'profile_chunk');
     },
@@ -201,7 +201,8 @@ module.exports = {
           params.company.campaign = params.campaign;
 
           const View = require('components/accountProfile/views.js');
-          new View.issuerDashboard(params).render();
+          app.currentView = new View.issuerDashboard(params);
+          app.currentView.render();
           app.hideLoading();
 
         });
