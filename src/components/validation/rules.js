@@ -62,19 +62,19 @@ module.exports = {
 
   // Determines whether or not a value is a number
   isNumber: function (value) {
-    return _.isNumber(value) || (_.isString(value) && value.match(this.patterns.number));
+    return app.utils.isNumber(value) || (app.utils.isString(value) && value.match(this.patterns.number));
   },
 
   // Determines whether or not a value is empty
   hasValue: function (value) {
-    return !(_.isNull(value) || _.isUndefined(value) || (_.isString(value) &&
-          String.prototype.trim.call(value) === '') || (_.isArray(value) && _.isEmpty(value)));
+    return !(app.utils.isNull(value) || app.utils.isUndefined(value) || (app.utils.isString(value) &&
+          String.prototype.trim.call(value) === '') || (Array.isArray(value) && app.utils.isEmpty(value)));
   },
 
   // Function validator
   // Lets you implement a custom function used for validation
   fn: function (name, fn, attr, data, schema) {
-    if (_.isString(fn)) {
+    if (app.utils.isString(fn)) {
       fn = model[fn];
     }
     return fn.call(this, name, this.getData(data, name), attr, data, schema);
@@ -82,7 +82,7 @@ module.exports = {
 
   toNumber: function(value) {
     if (value && value.replace) value = value.replace(/\,/g, '');
-    return (_.isNumber(value) || (_.isString(value) && value.match(this.patterns.number))) ? Number(value) : false;
+    return (app.utils.isNumber(value) || (app.utils.isString(value) && value.match(this.patterns.number))) ? Number(value) : false;
   },
 
   // Required validator
@@ -102,7 +102,7 @@ module.exports = {
   // `true` or 'true' are valid
   // TODO FIX
   acceptance: function (name, rule, attr, data) {
-    if (value !== 'true' && (!_.isBoolean(value) || value === false)) {
+    if (value !== 'true' && (!app.utils.isBoolean(value) || value === false)) {
       throw this.format(this.messages.acceptance);
     }
   },
@@ -150,14 +150,14 @@ module.exports = {
   // the length value specified
   _length: function (name, rule, attr, data) {
     let value = this.getData(data, name);
-    if (!_.isString(value) || value.length !== rule) {
+    if (!app.utils.isString(value) || value.length !== rule) {
       throw this.format(this.messages.length, attr.label, rule);
     }
   },
 
   length: function (name, rule, attr, data) {
     let value = this.getData(data, name);
-    if (!_.isString(value) || value.length !== rule) {
+    if (!app.utils.isString(value) || value.length !== rule) {
       throw this.format(this.messages.length, attr.label, rule);
     }
   },
@@ -167,7 +167,7 @@ module.exports = {
   // the min length value specified
   minLength: function (name, rule, attr, data) {
     let value = this.getData(data, name);
-    if (!_.isString(value) || value.length < rule) {
+    if (!app.utils.isString(value) || value.length < rule) {
       throw this.format(this.messages.minLength, attr.label, rule);
     }
   },
@@ -177,7 +177,7 @@ module.exports = {
   // the max length value specified
   maxLength: function (name, rule, attr, data) {
     let value = this.getData(data, name);
-    if (!_.isString(value) || value.length > rule) {
+    if (!app.utils.isString(value) || value.length > rule) {
       throw this.format(this.messages.maxLength, attr.label, rule);
     }
   },
@@ -187,7 +187,7 @@ module.exports = {
   // the two numbers specified
   rangeLength: function (name, rule, attr, data) {
     let value = this.getData(data, name);
-    if (!_.isString(value) || value.length < rule[0] || value.length+1 > rule[1]) {
+    if (!app.utils.isString(value) || value.length < rule[0] || value.length+1 > rule[1]) {
       throw this.format(this.messages.rangeLength, attr.label, rule[0], rule[1]);
     }
   },
@@ -197,7 +197,7 @@ module.exports = {
   // the specified array. Case sensitive matching
   oneOf: function (name, rule, attr, data) {
     let value = this.getData(data, name);
-    if (!_.include(rule, value)) {
+    if (!app.utils.include(rule, value)) {
       throw this.format(this.messages.oneOf,  attr.label, rule.join(', '));
     }
   },

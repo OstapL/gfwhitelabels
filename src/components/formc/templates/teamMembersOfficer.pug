@@ -38,17 +38,17 @@ section.formc-team-members-officer.container.m-b-85
                   span.color-red *
                 .col-xl-12
                   - 
-                    pug_html += app.fields.dateMonth('dob', _.extend({
+                    pug_html += app.fields.dateMonth('dob', Object.assign({
                     'empty': { '': 'Choose' },
                     'value': values.dob,
                     }, fields.dob));
                   - 
-                    pug_html += app.fields.dateDay('dob', _.extend({
+                    pug_html += app.fields.dateDay('dob', Object.assign({
                     'empty': { '': 'Choose' },
                     'value': values.dob,
                     }, fields.dob));
                   - 
-                    pug_html += app.fields.dateYear('dob', _.extend({
+                    pug_html += app.fields.dateYear('dob', Object.assign({
                     'value': values.dob,
                     'placeholder': 'YYYY',
                     'divId': 'dob',
@@ -80,13 +80,13 @@ section.formc-team-members-officer.container.m-b-85
               .col-xl-12
                 #start_date.row
                   - 
-                    pug_html += app.fields.dateMonth('start_date', _.extend({
+                    pug_html += app.fields.dateMonth('start_date', Object.assign({
                     'empty': { '': 'Choose' },
                     'class1': 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-r-5',
                     'value': values.start_date,
                     }, fields.start_date));
                   - 
-                    pug_html += app.fields.dateYear('start_date', _.extend({
+                    pug_html += app.fields.dateYear('start_date', Object.assign({
                     'value': values.start_date,
                     'class1': 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-l-5',
                     'placeholder': 'YYYY',
@@ -112,20 +112,20 @@ section.formc-team-members-officer.container.m-b-85
                 .col-xl-12
                   .row#board_service_start_date
                     - 
-                      pug_html += app.fields.dateMonth('board_service_start_date', _.extend({
+                      pug_html += app.fields.dateMonth('board_service_start_date', Object.assign({
                       'empty': { '': 'Choose' },
                       'class1': 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-r-5',
                       'value': values.board_service_start_date,
                       }, fields.board_service_start_date));
                     - 
-                      pug_html += app.fields.dateYear('board_service_start_date', _.extend({
+                      pug_html += app.fields.dateYear('board_service_start_date', Object.assign({
                       'value': values.board_service_start_date,
                       'class1': 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-l-5',
                       'placeholder': 'YYYY',
                       }, fields.board_service_start_date));
             .col-xl-6.col-lg-7.col-md-6
               -
-                pug_html += app.fields.textLabel('principal_occupation', _.extend({
+                pug_html += app.fields.textLabel('principal_occupation', Object.assign({
                 schema: fields.principal_occupation, 
                 value: values.principal_occupation, 
                 label: 'Principal Occupation and Name of Employer',
@@ -133,7 +133,7 @@ section.formc-team-members-officer.container.m-b-85
                 fields.principal_occupation))
             .col-xl-6.col-lg-6.col-md-6
               -
-                pug_html += app.fields.textLabel('employer_principal_businesss', _.extend({
+                pug_html += app.fields.textLabel('employer_principal_businesss', Object.assign({
                 schema: fields.employer_principal_businesss, 
                 value: values.employer_principal_businesss, 
                 label: 'Employer’s Principal Business',
@@ -147,14 +147,14 @@ section.formc-team-members-officer.container.m-b-85
                   .row#employer_start_date
 
                     - 
-                      pug_html += app.fields.dateMonth('employer_start_date', _.extend({
+                      pug_html += app.fields.dateMonth('employer_start_date', Object.assign({
                       'empty': { '': 'Choose' },
                       'class1': 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-r-5',
                       'value': values.employer_start_date,
                       'name': 'employer_start_date',
                       }, fields.employer_start_date));
                     - 
-                      pug_html += app.fields.dateYear('employer_start_date', _.extend({
+                      pug_html += app.fields.dateYear('employer_start_date', Object.assign({
                       'value': values.employer_start_date,
                       'class1': 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-l-5',
                       'placeholder': 'YYYY',

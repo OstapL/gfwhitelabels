@@ -24,18 +24,18 @@ section.formc-team-members-director.container.m-b-85
             span.color-red *
           .col-xl-4.col-lg-6.p-r-0
             //- 
-              pug_html += app.fields.dateMonth('dob', _.extend({
+              pug_html += app.fields.dateMonth('dob', Object.assign({
               'empty': { '': 'Choose' },
               'value': values.dob,
               }, fields.dob));
 
             //- 
-              pug_html += app.fields.dateDay('dob', _.extend({
+              pug_html += app.fields.dateDay('dob', Object.assign({
               'empty': { '': 'Choose' },
               'value': values.dob,
               }, fields.dob));
             //- 
-              pug_html += app.fields.dateYear('dob', _.extend({
+              pug_html += app.fields.dateYear('dob', Object.assign({
               'value': values.dob,
               'placeholder': 'YYYY',
               'divId': 'dob',

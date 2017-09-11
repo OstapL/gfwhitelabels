@@ -45,6 +45,7 @@ function getOCCF(optionsR, viewName, params = {}, View) {
           replace: true,
         });
       });
+      app.hideLoading();
       return false;
     }
 

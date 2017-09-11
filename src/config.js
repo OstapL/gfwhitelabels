@@ -5,7 +5,7 @@ var e = {
   authServer: "https://api-auth-dev.growthfountain.com",
   formcServer: "https://api-formc-dev.growthfountain.com",
   investmentServer: "https://api-investment-dev.growthfountain.com",
-  filerServer: "https://api-filer-dev.growthfountain.com",
+  filerServer: "https://api-filer-go.growthfountain.com",
   esignServer: 'https://api-esign-dev.growthfountain.com',
   commentsServer: "https://api-comments-dev.growthfountain.com",
   blogServer: "https://api-blog-dev.growthfountain.com",
@@ -49,7 +49,7 @@ var e = {
     //bottom banner (1 - raise capital/ 0 - INVEST)
     bottomBunner: 1,
   },
-  currentSiteUrl: 'beta.growthfountain.com',
+  currentSiteUrl: 'alpha.growthfountain.com',
 };
 
 module.exports = e;
