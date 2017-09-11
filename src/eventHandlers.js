@@ -3,7 +3,7 @@ function paralaxScrollHandler() {
   if (!$paralax || !$paralax.length)
     return;
 
-  const st = $(this).scrollTop() /15;
+  const st = $(window).scrollTop() /15;
   $paralax.css({
     "transform" : "translate3d(0px, " + st /2 + "%, .01px)",
     "-o-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
@@ -119,7 +119,7 @@ function initPopover(elem, options={}) {
 }
 
 // show bottom logo while scrolling page
-$(window).scroll((e) => {
+$(window).on('scroll', function(e) {
   scrollLogoHandler(e);
   // scrollMenuItemsHandler(e);
   scrollAnimateHandler(e);
