@@ -60,8 +60,8 @@ const submitFormc = function submitFormc(e) {
   ) {
     $('#formc_publish_confirm').modal('show');
   } else {
-    let errors = {};
-    _(progress).each((d, k) => {
+    Object.keys(progress).forEach((k) => {
+      const d = progress[k];
       if(k != 'perks') {
         if(d == false)  {
           $('#formc_publish .'+k).removeClass('collapse');
@@ -87,10 +87,10 @@ const snippets = {
 };
 
 module.exports = {
-  introduction: Backbone.View.extend(_.extend({
+  introduction: Backbone.View.extend(Object.assign({
     urlRoot: app.config.formcServer + '/:id/introduction',
 
-    events: _.extend({
+    events: Object.assign({
       'click .save-and-continue': 'submit',
       // 'submit form': 'submit',
       'click .link-2': 'openPdf',
@@ -359,9 +359,9 @@ module.exports = {
 
   }, app.helpers.menu.methods, app.helpers.yesNo.methods, app.helpers.confirmOnLeave.methods)),
 
-  teamMembers: Backbone.View.extend(_.extend({
+  teamMembers: Backbone.View.extend(Object.assign({
     urlRoot: app.config.formcServer + '/:id/team-members/employers',
-    events: _.extend({
+    events: Object.assign({
       'click #submitForm': api.submitAction,
       'click .inviteAction': 'repeatInvitation',
       'blur #full_time_employers,#part_time_employers': 'updateEmployees',
@@ -472,11 +472,11 @@ module.exports = {
 
   }, app.helpers.menu.methods, app.helpers.section.methods, app.helpers.confirmOnLeave.methods)),
 
-	teamMemberAdd: Backbone.View.extend(_.extend({
+	teamMemberAdd: Backbone.View.extend(Object.assign({
     urlRoot: app.config.formcServer + '/:id/team-members',
     doNotExtendModel: true,
     roles: ['shareholder', 'director', 'officer'],
-    events: _.extend({
+    events: Object.assign({
       'click #submitForm': 'submit',
       'click .submit_formc': submitFormc,
       'click .team-current-date': 'setCurrentDate',
@@ -604,7 +604,7 @@ module.exports = {
         // delete data['positions'];
         // data['number_of_shares'] = 100;
         if(data.voting_shareholder_choice == 1) {
-          _.extend(this.fields, this.allFields.shareholder.fields);
+          Object.assign(this.fields, this.allFields.shareholder.fields);
           if((newRole & 1) != 1) {
             newRole += 1;
           }
@@ -617,7 +617,7 @@ module.exports = {
           delete data.voting_power_percent;
         }
         if(data.individual_director_choice == 1) {
-          _.extend(this.fields, this.allFields.director.fields);
+          Object.assign(this.fields, this.allFields.director.fields);
           if((newRole & 2) != 2) {
             newRole += 2;
           }
@@ -672,11 +672,11 @@ module.exports = {
   }, app.helpers.section.methods, app.helpers.menu.methods, app.helpers.yesNo.methods, app.helpers.confirmOnLeave.methods)),
 
 
-  relatedParties: Backbone.View.extend(_.extend({
+  relatedParties: Backbone.View.extend(Object.assign({
     el: '#content',
     urlRoot: app.config.formcServer + '/:id/related-parties',
 
-    events: _.extend({
+    events: Object.assign({
       'submit form': 'submit',
       'click .submit_formc': submitFormc,
     }, app.helpers.section.events, app.helpers.menu.events, app.helpers.yesNo.events, app.helpers.confirmOnLeave.events),
@@ -738,7 +738,7 @@ module.exports = {
     },
   }, app.helpers.section.methods, app.helpers.menu.methods, app.helpers.yesNo.methods, app.helpers.confirmOnLeave.methods)),
 
-  useOfProceeds: Backbone.View.extend(_.extend({
+  useOfProceeds: Backbone.View.extend(Object.assign({
     urlRoot: app.config.formcServer + '/:id/use-of-proceeds',
 
     initialize(options) {
@@ -775,7 +775,7 @@ module.exports = {
       }
 
       let less_offering_expense = this.model['less_offering_express'];
-      let commission = _(less_offering_expense).find((item) => {
+      let commission = (less_offering_expense || []).find((item) => {
         return item.title == 'Commissions and Broker Expenses';
       });
 
@@ -793,7 +793,7 @@ module.exports = {
       this.listenToNavigate();
     },
 
-    events: _.extend({
+    events: Object.assign({
       'click #submit': api.submitAction,
       'click .submit_formc': submitFormc,
       'change input[type=radio][name=doc_type]': 'changeDocType',
@@ -918,8 +918,8 @@ module.exports = {
     }, 
   }, app.helpers.menu.methods, app.helpers.section.methods, app.helpers.confirmOnLeave.methods)),
 
-  riskFactorsInstruction: Backbone.View.extend(_.extend({
-    events: _.extend({
+  riskFactorsInstruction: Backbone.View.extend(Object.assign({
+    events: Object.assign({
       'submit form': api.submitAction,
       'click .submit_formc': submitFormc,
     }, app.helpers.menu.events),
@@ -943,10 +943,10 @@ module.exports = {
     },
   }, app.helpers.menu.methods)),
 
-  riskFactorsMarket: Backbone.View.extend(_.extend({
+  riskFactorsMarket: Backbone.View.extend(Object.assign({
     urlRoot: app.config.formcServer + '/:id' + '/risk-factors-market/:index',
     riskType: 'market_and_customer_risk',
-    events: _.extend({
+    events: Object.assign({
       'click .submit_formc': submitFormc,
     }, app.helpers.menu.events, riskFactors.events, app.helpers.confirmOnLeave.events),
 
@@ -1045,10 +1045,10 @@ module.exports = {
     },
   }, app.helpers.menu.methods, app.helpers.section.methods, riskFactors.methods, app.helpers.confirmOnLeave.methods)),
 
-  riskFactorsFinancial: Backbone.View.extend(_.extend({
+  riskFactorsFinancial: Backbone.View.extend(Object.assign({
     urlRoot: app.config.formcServer + '/:id' + '/risk-factors-financial/:index',
     riskType: 'financial_risk',
-    events: _.extend({
+    events: Object.assign({
       'click .submit_formc': submitFormc,
     }, app.helpers.menu.events, riskFactors.events, app.helpers.confirmOnLeave.events),
 
@@ -1156,10 +1156,10 @@ module.exports = {
     },
   }, app.helpers.menu.methods, app.helpers.section.methods, riskFactors.methods, app.helpers.confirmOnLeave.methods)),
 
-  riskFactorsOperational: Backbone.View.extend(_.extend({
+  riskFactorsOperational: Backbone.View.extend(Object.assign({
     urlRoot: app.config.formcServer + '/:id' + '/risk-factors-operational/:index',
     riskType: 'operational_risk',
-    events: _.extend({
+    events: Object.assign({
       'click .submit_formc': submitFormc,
     }, app.helpers.menu.events, riskFactors.events, app.helpers.confirmOnLeave.events),
 
@@ -1296,10 +1296,10 @@ module.exports = {
 
   }, app.helpers.menu.methods, app.helpers.section.methods, riskFactors.methods, app.helpers.confirmOnLeave.methods)),
 
-  riskFactorsCompetitive: Backbone.View.extend(_.extend({
+  riskFactorsCompetitive: Backbone.View.extend(Object.assign({
     urlRoot: app.config.formcServer + '/:id' + '/risk-factors-competitive/:index',
     riskType: 'competitive_risk',
-    events: _.extend({
+    events: Object.assign({
       'click .submit_formc': submitFormc,
     }, app.helpers.menu.events, riskFactors.events, app.helpers.confirmOnLeave.methods),
 
@@ -1380,10 +1380,10 @@ module.exports = {
 
   }, app.helpers.menu.methods, app.helpers.section.methods, riskFactors.methods, app.helpers.confirmOnLeave.methods)),
 
-  riskFactorsPersonnel: Backbone.View.extend(_.extend({
+  riskFactorsPersonnel: Backbone.View.extend(Object.assign({
     urlRoot: app.config.formcServer + '/:id' + '/risk-factors-personnel/:index',
     riskType: 'personnel_and_third_parties_risk',
-    events: _.extend({
+    events: Object.assign({
       'click .submit_formc': submitFormc,
     }, app.helpers.menu.events, riskFactors.events, app.helpers.confirmOnLeave.events),
 
@@ -1482,10 +1482,10 @@ module.exports = {
     },
   }, app.helpers.menu.methods, app.helpers.section.methods, riskFactors.methods, app.helpers.confirmOnLeave.methods)),
 
-  riskFactorsLegal: Backbone.View.extend(_.extend({
+  riskFactorsLegal: Backbone.View.extend(Object.assign({
     urlRoot: app.config.formcServer + '/:id' + '/risk-factors-legal/:index',
     riskType: 'legal_and_regulatory_risk',
-    events: _.extend({
+    events: Object.assign({
       'click .submit_formc': submitFormc,
     }, app.helpers.menu.events, riskFactors.events, app.helpers.confirmOnLeave.events),
 
@@ -1606,10 +1606,10 @@ module.exports = {
     },
   }, app.helpers.menu.methods, app.helpers.section.methods, riskFactors.methods, app.helpers.confirmOnLeave.methods)),
 
-  riskFactorsMisc: Backbone.View.extend(_.extend({
+  riskFactorsMisc: Backbone.View.extend(Object.assign({
     urlRoot: app.config.formcServer + '/:id' + '/risk-factors-misc/:index',
     riskType: 'miscellaneous_risk',
-    events: _.extend({
+    events: Object.assign({
       'click .submit_formc': submitFormc,
     }, app.helpers.menu.events, riskFactors.events, app.helpers.confirmOnLeave.events),
 
@@ -1647,16 +1647,18 @@ module.exports = {
   xeroIntegration: Backbone.View.extend({
     urlRoot: app.config.formcServer + '/:id/financial-condition/xero',
 
-    events: _.extend({
+    events: Object.assign({
       'click .xeroConnect': 'xeroConnect',
       'click .xeroGrabData': 'xeroGrabData',
       'click .saveCheckboxValue': 'saveCheckboxValue',
     }),
 
     initialize(options) {
+      this.oldView = options.oldView;
       this.listenToNavigate();
 
       if(document.location.href.indexOf('oauth_token=') !== -1) {
+        app.showLoading();
         this.xeroGrabData();
       }
     },
@@ -1737,28 +1739,46 @@ module.exports = {
       data.code = app.getParams().oauth_verifier;
 
       if(!app.validation.validate(this.fields, data, this)) {
-        _(app.validation.errors).each((errors, key) => {
+        Object.keys(app.validation.errors).forEach((key) => {
+          const errors = app.validation.errors[key];
           app.validation.invalidMsg(this, key, errors);
         });
         this.$('.help-block').prev().scrollTo(5);
         e.target.removeAttribute('disabled');
         return false;
       } else {
-        app.showLoading();
         api.makeRequest(
             app.config.formcServer + '/' + this.model.id + '/financial-condition/xero',
             'PUT',
             data
         ).then((data) => {
-          debugger;
-          console.log(data);
+
+          if (data.length  === 0) {
+            app.hideLoading();
+            return false;
+          }
+
           localStorage.removeItem('xero_docs');
           localStorage.removeItem('xero_credentials');
           $('#xeroBlock').scrollTo(-25);
+          const Folder = require('models/folder.js');
+          this.model.fiscal_recent_group_data = data;
+          this.model.fiscal_recent_group_id = new Folder(
+            this.model.url,
+            this.model.fiscal_recent_group_id.id,
+            this.model.fiscal_recent_group_data
+          );
+          var fileFolderDropzone = require('directives/setdropzone/folder.js'); 
+          var el = new fileFolderDropzone.FolderDropzone(this.oldView,
+            'fiscal_recent_group_id',
+            'fiscal_recent_group_data',
+            this.oldView.fields.fiscal_recent_group_id
+          );
+          document.querySelector('.fiscal_recent_group_id').parentElement.innerHTML = el.render().resultHTML;
+          app.hideLoading();
           //window.location.reload();
         }).fail((xhr, message) => {
           app.hideLoading();
-          this.$el.find('#xeroModal .modal-body').html('<h3>' + xhr.responseJSON.message + '</h3>');
         });
       }
 
@@ -1766,10 +1786,10 @@ module.exports = {
 
   }),
 
-  financialCondition: Backbone.View.extend(_.extend({
+  financialCondition: Backbone.View.extend(Object.assign({
     urlRoot: app.config.formcServer + '/:id/financial-condition',
 
-    events: _.extend({
+    events: Object.assign({
       'submit form': api.submitAction,
       'click .submit_formc': submitFormc,
     }, app.helpers.menu.events, app.helpers.yesNo.events, app.helpers.section.events, /*app.helpers.confirmOnLeave.events*/),
@@ -1820,7 +1840,6 @@ module.exports = {
 
       const View = require('components/formc/views.js');
 
-
       this.$el.html(
         template({
           view: this,
@@ -1836,7 +1855,8 @@ module.exports = {
 
       let xeroIntegration =  new View.xeroIntegration({
         model: this.model,
-        el: this.el.querySelector('#xeroBlock')
+        el: this.el.querySelector('#xeroBlock'),
+        oldView: this
       });
       xeroIntegration.render();
       xeroIntegration.delegateEvents();
@@ -1845,9 +1865,9 @@ module.exports = {
 
   }, app.helpers.menu.methods, app.helpers.yesNo.methods, app.helpers.section.methods, app.helpers.confirmOnLeave.methods)),
 
-  outstandingSecurity: Backbone.View.extend(_.extend({
+  outstandingSecurity: Backbone.View.extend(Object.assign({
     urlRoot: app.config.formcServer + '/:id/outstanding-security',
-    events: _.extend({
+    events: Object.assign({
       'submit #security_model_form': 'addOutstanding',
       'change #security_type': 'outstandingSecurityUpdate',
       'click #submitForm': 'submit',
@@ -2007,7 +2027,8 @@ module.exports = {
       }
 
       if (!app.validation.validate(this.fields.outstanding_securities.schema, data, this)) {
-        _(app.validation.errors).each((errors, key) => {
+        Object.keys(app.validation.errors).forEach((key) => {
+          const errors = app.validation.errors[key];
           app.validation.invalidMsg(this, key, errors);
         });
         this.$('.help-block').prev().scrollTo(5);
@@ -2130,7 +2151,7 @@ module.exports = {
     },
   }, app.helpers.section.methods, app.helpers.menu.methods, app.helpers.yesNo.methods, app.helpers.confirmOnLeave.methods)),
 
-  backgroundCheck: Backbone.View.extend(_.extend({
+  backgroundCheck: Backbone.View.extend(Object.assign({
     urlRoot: app.config.formcServer + '/:id' + '/background-check',
 
     initialize(options) {
@@ -2159,7 +2180,7 @@ module.exports = {
       return false;
     },
 
-    events: _.extend({
+    events: Object.assign({
       'submit form': api.submitAction,
       'click .submit_formc': submitFormc,
     }, app.helpers.menu.events, app.helpers.yesNo.events, app.helpers.confirmOnLeave.events),
@@ -2236,7 +2257,8 @@ module.exports = {
         element.onblur = (e) => this.update(e);
 
         let v = app.valByKeyReplaceArray(this.fields, target.dataset.name).validate;
-        _(v.choices).each((el, i) => {
+        Object.keys(v.choices).forEach((i) => {
+          const el = v.choices[i];
           let e = document.createElement('option');
           e.innerHTML = el;
           e.value = i;
@@ -2283,7 +2305,7 @@ module.exports = {
           return;
 
         //this method just fill plain dependencies
-        _.each(dependencies, (dep) => {
+        dependencies.forEach((dep) => {
           if (data[dep])
             return;
 
@@ -2309,7 +2331,7 @@ module.exports = {
       } else if(name.indexOf('campaign.') !== -1) {
         fieldName = name.split('campaign.')[1];
 
-        if (fieldName = 'security_type')  {
+        if (fieldName === 'security_type')  {
           val = parseInt(val);
         }
 
@@ -2359,7 +2381,7 @@ module.exports = {
       api.makeRequest(url, method, data)
         .then((responseData) => {
 
-          _.extend(updateModel, data);
+          Object.assign(updateModel, data);
 
           if(reloadRequiredFields.indexOf(fieldName) != -1) {
             this.render();
@@ -2408,7 +2430,8 @@ module.exports = {
           input.remove();
         })
         .fail((response) => {
-          _(response.responseJSON).each((val, key) => {
+          Object.keys(response.responseJSON).forEach((key) => {
+            let val = response.responseJSON[key];
             val = Array.isArray(val) ? val : [val];
             let errorDiv = document.createElement('div');
             e.target.classList.add('form-control-danger');
@@ -2421,13 +2444,13 @@ module.exports = {
 
     render() {
       let template = require('./templates/finalReview.pug');
-      this.fields.company.industry.validate.choices = require('consts/raisecapital/industry.json');
-      this.fields.company.founding_state.validate.choices = require('consts/usaStatesChoices.json');
-      this.fields.company.state.validate.choices = require('consts/usaStatesChoices.json');
-      this.fields.company.corporate_structure.validate.choices = require('consts/raisecapital/corporate_structure.json');
-      this.fields.campaign.length_days.validate.choices = require('consts/raisecapital/length_days.json');
-      this.fields.campaign.security_type.validate.choices = require('consts/raisecapital/security_type_options.json');
-      this.fields.campaign.valuation_determination.validate.choices = require('consts/raisecapital/valuation_determination_options.json');
+      this.fields.company.industry.validate.choices = require('consts/raisecapital/industry.json').INDUSTRY;
+      this.fields.company.founding_state.validate.choices = require('consts/usaStates.json').USA_STATES;
+      this.fields.company.state.validate.choices = require('consts/usaStates.json').USA_STATES;
+      this.fields.company.corporate_structure.validate.choices = require('consts/raisecapital/corporate_structure.json').CORPORATE_STRUCTURE;
+      this.fields.campaign.length_days.validate.choices = require('consts/raisecapital/length_days.json').LENGTH_DAYS;
+      this.fields.campaign.security_type.validate.choices = require('consts/raisecapital/security_type.json').SECURITY_TYPE;
+      this.fields.campaign.valuation_determination.validate.choices = require('consts/raisecapital/valuation_determination.json').VALUATION_DETERMINATION;
       this.fields.formc.outstanding_securities.schema.security_type.type = 'choice';
       this.fields.formc.outstanding_securities.schema.security_type.validate = {};
       this.fields.formc.outstanding_securities.schema.security_type.validate.choices = securityTypeConsts.SECURITY_TYPES;

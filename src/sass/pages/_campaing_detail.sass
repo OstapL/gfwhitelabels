@@ -509,11 +509,12 @@
 
 
 .team.team-detail
-  padding-bottom: rem(15)
+  padding-bottom: rem(15)!important
   a,a:hover
     .card-text,.card-title
       color: $black_text
-  .team-social  
+  .team-social
+    margin-bottom: rem(8)
     .linkedin-share-team
       font-size: 18px
       margin: 2px
@@ -535,11 +536,13 @@
     border: none
     margin-bottom: 0
     .card-block
-      padding: rem(20) 0
+      padding: rem(30) 0
+      padding-top: rem(18)
       i
         padding: 0 rem(4) rem(15)
+        padding-bottom: 0
       .cite_education
-        margin-top: rem(15)
+        margin-top: rem(10)
 
     .card-title
       margin-bottom: 0
@@ -549,6 +552,9 @@
     .color-grey
       color: $small-text
       font-size: rem(12)
+      line-height: 18px
+      i
+        padding: 0
 
 
 .document

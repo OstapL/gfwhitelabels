@@ -55,7 +55,7 @@ mixin confirmStatement(name, attr)
           .row
             .col-xl-12.col-xs-8.col-sm-5.col-lg-8
               -
-                pug_html += app.fields.textLabel("amount", _.extend({
+                pug_html += app.fields.textLabel("amount", Object.assign({
                     class1: 'col-xl-3 col-lg-4 text-md-left text-lg-right text-xl-right p-t-6',
                     class2: 'col-xl-4 col-lg-8',
                     placeholder: '$',
@@ -91,7 +91,7 @@ mixin confirmStatement(name, attr)
                       else
                         -
                           var feeStr = '$' + feeInfo.fee;
-                          pug_html += app.fields.fieldText("fee", _.extend({
+                          pug_html += app.fields.fieldText("fee", Object.assign({
                             class: 'input-border-bottom',
                             placeholder: '+ ' + feeStr,
                             value: feeStr,
@@ -219,7 +219,7 @@ mixin confirmStatement(name, attr)
                     'placeholder': 'Last Name',
                   }, fields.personal_information_data.schema.last_name);
             -
-              pug_html += app.fields.fieldChoiceLabel('personal_information_data[country]', _.extend({
+              pug_html += app.fields.fieldChoiceLabel('personal_information_data[country]', Object.assign({
                 'required': true,
                 'empty': { '': 'Choose Country', 'value': '' },
                 'value': user.country,
@@ -284,7 +284,7 @@ mixin confirmStatement(name, attr)
               | Payment information
             .form-group.row
               -
-                pug_html += app.fields.fieldChoiceLabel('payment_information_type', _.extend({
+                pug_html += app.fields.fieldChoiceLabel('payment_information_type', Object.assign({
                   'required': true,
                   'row': false,
                 }, this.fields.payment_information_type));
@@ -441,21 +441,21 @@ mixin confirmStatement(name, attr)
             h2.text-uppercase.dosis.text-md-center.text-sm-center.text-xs-center.text-lg-left
               | CONFIRMATION OF UNDERSTANDING
             +confirmStatement('is_reviewed_educational_material',
-              _.extend({}, fields.is_reviewed_educational_material)
+              Object.assign({}, fields.is_reviewed_educational_material)
             )
             +confirmStatement('is_understand_restrictions_to_cancel_investment',
-              _.extend({}, fields.is_understand_restrictions_to_cancel_investment)
+              Object.assign({}, fields.is_understand_restrictions_to_cancel_investment)
             )
             +confirmStatement('is_understand_difficult_to_resell_purchashed',
-              _.extend({}, fields.is_understand_difficult_to_resell_purchashed)
+              Object.assign({}, fields.is_understand_difficult_to_resell_purchashed)
             )
             +confirmStatement('is_understand_investing_is_risky',
-              _.extend({}, fields.is_understand_investing_is_risky)
+              Object.assign({}, fields.is_understand_investing_is_risky)
             )
 
             if fields.is_understand_securities_related
               +confirmStatement('is_understand_securities_related',
-                _.extend({}, fields.is_understand_securities_related)
+                Object.assign({}, fields.is_understand_securities_related)
               )
             else
               input(type='hidden' value='1' name='is_understand_securities_related')

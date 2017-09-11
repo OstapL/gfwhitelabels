@@ -56,8 +56,8 @@ module.exports = {
   },
 
   extractRoles(roleBitmap, extractRoles=ALL_ROLES) {
-    return _(extractRoles)
-      .filter((r) => { return !!(r & roleBitmap); })
+    return (extractRoles || [])
+      .filter(r => !!(r & roleBitmap))
       .map((r) => {
         return {
           title: roles.ROLES_SHORT[r],
@@ -68,7 +68,7 @@ module.exports = {
 
   extractRolesByPriority(roleBitmap) {
     let extractRoles = COMMENTS_ROLES_PRIORITY;
-    let result = _(extractRoles).find((r) => { return !!(r & roleBitmap)});
+    let result = (extractRoles || []).find(r => !!(r & roleBitmap));
     return result
       ? [{
         title: roles.COMMENT_PRIORITY_ROLES_SHORT[result],
