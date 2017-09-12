@@ -9,7 +9,7 @@ const mimetypeIconMap = {
 
 module.exports = {
   resolveIcon(mime, defaultIcon='file') {
-    let type = _.isString(mime) ? mime.split('/')[1] : null;
+    let type = typeof(mime) === 'string' ? mime.split('/')[1] : null;
     return mimetypeIconMap[type] || defaultIcon;
   },
 

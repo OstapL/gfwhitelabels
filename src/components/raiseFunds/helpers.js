@@ -18,8 +18,8 @@ let exports = {
     ) {
       $('#company_publish_confirm').modal('show');
     } else {
-      var errors = {};
-      _(progress).each((d, k) => {
+      Object.keys(progress).forEach((k) => {
+        const d = progress[k];
         if(k != 'perks') {
           if(d == false)  {
             $('#company_publish .'+k).removeClass('collapse');
