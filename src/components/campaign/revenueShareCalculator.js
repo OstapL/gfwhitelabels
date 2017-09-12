@@ -4,10 +4,10 @@
 const minPersents = 200;
 
 module.exports = {
-  calculator: Backbone.View.extend(_.extend({
+  calculator: Backbone.View.extend(Object.assign({
     el: '#revenue-share-calculator',
     template: require('./templates/calculator/calculator.pug'),
-    events: _.extend({
+    events: Object.assign({
       // calculate your income
       'submit .js-calc-form': 'doCalculation',
     }, app.helpers.calculatorValidation.events),
@@ -116,8 +116,7 @@ module.exports = {
 
       let selectedRange = outputData.slice(2, index + 1),
         sum = 0;
-
-      _.each(selectedRange, (el) => {
+      (selectedRange || []).forEach((el) => {
         sum += el.annual;
       });
 
@@ -211,7 +210,7 @@ module.exports = {
           //$.plot(this.$chart, dataArr, options);
 
           let plotData = this.$plot.getData();
-          let last = _.last(plotData[0].data);
+          let last = app.utils.last(plotData[0].data);
           if (last && last.length > 1) {
             let o = this.$plot.pointOffset({x: last[0], y: last[1]});
             if (last[1] * 100 >= minPersents) {
@@ -271,7 +270,7 @@ module.exports = {
     mapToPlot(data) {
       let notEmpty = false;
 
-      return _(data).map((item, idx) => {
+      return (data || []).map((item, idx) => {
         if (item.multiple) {
           notEmpty = true;
           return [idx, item.multiple];
