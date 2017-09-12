@@ -85,12 +85,12 @@ section.formc.introduction.create-company-media.container
                         label Expiration
                       .col-xl-12
                         - 
-                          pug_html += app.fields.dateMonth('card_exp_month', _.extend({
+                          pug_html += app.fields.dateMonth('card_exp_month', Object.assign({
                           'empty': { '': 'Choose' },
                           'value': values.card_exp_month,
                           }, fields.card_exp_month));
                         - 
-                          pug_html += app.fields.dateYear('card_exp_date_year', _.extend({
+                          pug_html += app.fields.dateYear('card_exp_date_year', Object.assign({
                           'value': values.card_exp_date_year,
                           'placeholder': 'YYYY',
                           }, fields.card_exp_date_year));

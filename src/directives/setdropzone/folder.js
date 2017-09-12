@@ -64,11 +64,9 @@ class FolderElement extends fileDropzone.FileElement {
       this.save().then(() => imageRender.element.remove());
     }).fail((xhr, error) => {
       // If file was already deleted in filer - just update model
-      if(xhr.status == 503) {
-        let indexFile = this.file.data.indexOf(this.file.data.filter((el) => {return fileId == el.id})[0]);
-        this.file.data.splice(indexFile, 1);
-        this.save().then(() => imageRender.element.remove());
-      }
+      let indexFile = this.file.data.indexOf(this.file.data.filter((el) => {return fileId == el.id})[0]);
+      this.file.data.splice(indexFile, 1);
+      this.save().then(() => imageRender.element.remove());
     });
   }
 
@@ -92,11 +90,13 @@ class FolderDropzone extends fileDropzone.FileDropzone {
   }
 
   success(file, data) {
-    const reorgData = data;
-    reorgData.urls = {
-      origin: this.folderElement.fixUrl(data.urls[0])
-    };
+
+    const reorgData = data[0];
     reorgData.site_id = app.sites.getId();
+    reorgData.urls = {};
+    reorgData.urls.origin = reorgData.url_filename;
+    delete reorgData.url_filename;
+
     this.folderElement.file.data.push(reorgData);
     let fileObj = new fileDropzone.FileElement(
       new fileClass('', reorgData),

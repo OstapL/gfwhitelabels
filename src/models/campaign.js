@@ -156,7 +156,7 @@ class Campaign {
           this.video != '' &&
           this.header_image_image_id.id != null &&
           this.list_image_image_id.id != null &&
-          this.gallery_group_id.data.length > 5,
+          this.gallery_group_id.data.length > 1,
         'specifics':
           this.minimum_raise >= 10000 &&
           this.maximum_raise <= 1000000 &&
@@ -167,7 +167,11 @@ class Campaign {
           (this.security_type == 1 || 
            (this.security_type == 0 && this.premoney_valuation > 0)
           ),
-        'team-members': this.team_members.members.length > 0,
+        'team-members': 
+          this.team_members.members.length > 0  /* && 
+          (this.team_members.members.find((el) => {
+            return el.data.photo_image_id.id == null }
+          ) === undefined)*/,
         'perks': this.perks.length > 0
       }
     } catch(e) {
@@ -177,7 +181,8 @@ class Campaign {
 
   updateMenu(progress) {
     let complited = 0;
-    _(progress).each((v,k) => {
+    Object.keys(progress).forEach((k) => {
+      const v = progress[k];
       let el = null;
       if(v == false) {
         el = document.querySelector('#menu_c_' + k + ' .icon-check');
@@ -193,7 +198,6 @@ class Campaign {
         }
       }
     });
-
     if(complited == 4) {
       document.querySelectorAll('#form_c a.disabled').forEach((v, i) => {
         v.className = v.className.replace('disabled', '');
