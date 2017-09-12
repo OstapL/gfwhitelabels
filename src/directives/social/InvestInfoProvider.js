@@ -1,4 +1,4 @@
-const CORPORATE_STRUCTURE = require('consts/raisecapital/corporate_structure.json');
+const CORPORATE_STRUCTURE = require('consts/raisecapital/corporate_structure.json').CORPORATE_STRUCTURE;
 
 const ShareInfoProvider = require('src/directives/social/infoProvider.js');
 

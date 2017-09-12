@@ -47,7 +47,7 @@ class Company {
 
   isClosed() {
     return this.is_approved === COMPANY_STATUS['SUCCESSFULY CLOSED'] ||
-      this.is_approved === COMPANY_STATUS['UNSUCESSFULY CLOSED'];
+     this.is_approved === COMPANY_STATUS['UNSUCESSFULY CLOSED'];
   }
 }
 

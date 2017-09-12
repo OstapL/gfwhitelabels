@@ -20,6 +20,7 @@ do
             git merge vladyslav2/$b > /dev/null
         fi
 
+        git fetch origin > /dev/null
         git merge --no-ff origin/alpha-$b > /dev/null
 
         if git st | grep --quiet 'UU '; then

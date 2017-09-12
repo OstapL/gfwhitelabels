@@ -1,7 +1,7 @@
 const container = '#content';
 
 const __showModal = (options={}, type) => {
-  options = _.isString(options) ? { message: options } : options;
+  options = typeof(options) === 'string' ? { message: options } : options;
   options.type = type;
 
   return new Promise((resolve, reject) => {
