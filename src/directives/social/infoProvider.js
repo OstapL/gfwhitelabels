@@ -13,11 +13,11 @@ class InfoProvider {
   }
 
   set data(newData) {
-    this._data = _.extend(this._data, newData);
+    this._data = Object.assign(this._data, newData);
   }
 
   _stripHtml(html) {
-    if (!_.isString(html))
+    if (!typeof(html) !== 'string')
       return html;
 
     return html.replace(/(<([^>]+)>)/ig,'');
@@ -27,8 +27,8 @@ class InfoProvider {
     if (!data)
       return this.templates[template];
 
-    return _.reduce(data, (tmpl, val, key) => {
-      return tmpl.replace(':' + key, val);
+    return Object.keys(data).reduce((tmpl, key) => {
+      return tmpl.replace(':' + key, data[key]);
     }, this.templates[template]);
   }
 

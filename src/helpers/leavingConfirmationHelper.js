@@ -32,7 +32,7 @@ module.exports = {
       if(method == 'PATCH') {
         let patchData = {};
         let d = deepDiff(newData, this.model.toJSON());
-        _(d).forEach((el, i) => {
+        (d || []).forEach((el, i) => {
           if(el.kind == 'E' || el.kind == 'A') {
             patchData[el.path[0]] = newData[el.path[0]];
             if(this.fields[el.path[0]] && this.fields[el.path[0]].hasOwnProperty('dependies')) {
