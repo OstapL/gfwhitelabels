@@ -775,6 +775,13 @@ section.formc-review
                 +frField('formc.outstanding_securities[' + k + '].custom_security_type', 'text')
               |: 
               +frField('formc.outstanding_securities[' + k + '].terms_and_rights', 'text')
+          else
+            p.pb10
+              b 
+                +frField('formc.outstanding_securities[' + k + '].security_type', 'select')
+              |: 
+              +frField('formc.outstanding_securities[' + k + '].terms_and_rights', 'text')
+
 
       // page 14
       section.page-formc-review.m-t-1
@@ -924,15 +931,24 @@ section.formc-review
               for v,k in values.formc.less_offering_express
                 tr
                   td.text-xs-center
-                    +frField('formc.less_offering_express[' + k + '].title', 'text')
+                    if k == 0
+                      | #{ values.formc.less_offering_express[k].title }
+                    else
+                      +frField('formc.less_offering_express[' + k + '].title', 'text')
                   td.text-xs-center
-                    +frField('formc.less_offering_express[' + k + '].min', 'money')
+                    if k == 0
+                      | #{ values.formc.less_offering_express[k].min }
+                    else
+                      +frField('formc.less_offering_express[' + k + '].min', 'money')
                     - minSum += values.formc.less_offering_express[k].min
                   td.text-xs-center
                     | #{ ((parseFloat(v.min) * 100) / values.campaign.minimum_raise).toFixed(2) }%
                     - minP += ((parseFloat(v.min) * 100) / values.campaign.minimum_raise)
                   td.text-xs-center
-                    +frField('formc.less_offering_express[' + k + '].max', 'money')
+                    if k == 0
+                      | #{ values.formc.less_offering_express[k].max }
+                    else
+                      +frField('formc.less_offering_express[' + k + '].max', 'money')
                     - maxSum += values.formc.less_offering_express[k].max
                   td.text-xs-center
                     | #{ ((parseFloat(v.max) * 100) / values.campaign.maximum_raise).toFixed(2) }%
