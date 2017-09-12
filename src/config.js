@@ -5,7 +5,7 @@ var e = {
   authServer: "https://api-auth.growthfountain.com",
   formcServer: "https://api-formc.growthfountain.com",
   investmentServer: "https://api-investment.growthfountain.com",
-  filerServer: "https://api-filer.growthfountain.com",
+  filerServer: "https://api-filer-go.growthfountain.com",
   esignServer: 'https://api-esign.growthfountain.com',
   commentsServer: "https://api-comments.growthfountain.com",
   blogServer: "https://api-blog.growthfountain.com",
