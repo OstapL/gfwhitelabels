@@ -14,7 +14,7 @@ module.exports = {
       console.log('value for ' + name + ' is null ')
       value = {}
     }
-    _.extend(myAttr, schema);
+    Object.assign(myAttr, schema);
     myAttr.value = value.hasOwnProperty(name) ? value[name]: '';
 
     // Fix for nested fields not to be required in html
@@ -143,7 +143,7 @@ module.exports = {
 
   prepareField(name, attr) {
     if(attr.schema) {
-      attr = _.extend(attr, attr.schema)
+      attr = Object.assign(attr, attr.schema)
       delete attr.schema;
     }
     if(attr.placeholder == null || attr.placeholder == "") {

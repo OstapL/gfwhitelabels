@@ -12,7 +12,7 @@ section.raise-capital-landing
           h1.big-h1.text-uppercase.m-t-0 Raise Capital By Turning Customers
             br
             |  Into Owners
-          h2.font-weight-light.m-t-1.m-b-2 Raise $25,000 - $1,000,000
+          h2.font-weight-light.m-t-1.m-b-2 Raise $10,000 - $1,000,000
           a(href="/company/create?nolanding=1").btn.btn-primary.btn-lg Start Campaign
   
     .bottom-text.text-xs-center.col-xs-12
@@ -36,6 +36,8 @@ section.raise-capital-landing
               id: 'f650548bc3',
               next: '/subscription-thanks?type=1',
             });
+    .calculator-block-click
+      include ../../../templates/calculators-block
   .content-section
     .top-section
       .container
@@ -70,7 +72,7 @@ section.raise-capital-landing
               | might be worth? Register to
               br
               | use our 
-              a(href="/calculator/BusinessValuation" target="_blank").link-3 free calculators
+              a(href="/calculator/businessvaluation" target="_blank").link-3 free calculators
             img(src=require('images/raise-landing/icon/icon-1.png'))
         .col-xl-4.col-md-6
           .one-item.text-xs-center
