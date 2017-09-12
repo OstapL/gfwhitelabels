@@ -25,18 +25,6 @@ const fixGATrackerID = (data) => {
     data.ga_id = 'UA-' + data.ga_id;
 };
 
-function paralaxScrollHandler(e) {
-  var st = $(this).scrollTop() /15;
-
-  $(".scroll-paralax .background").css({
-    "transform" : "translate3d(0px, " + st /2 + "%, .01px)",
-    "-o-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
-    "-webkit-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
-    "-moz-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
-    "-ms-transform" : "translate3d(0px, " + st /2 + "%, .01px)"
-  });
-};
-
 module.exports = {
   landing: Backbone.View.extend({
     el: '#content',
@@ -48,7 +36,8 @@ module.exports = {
 
     initialize() {
       this.listenToNavigate();
-      $(window).on('scroll', paralaxScrollHandler);
+
+      app.addClassesTo('#page', ['raise-capital-landing']);
 
       if ((document.location.search || '').indexOf('nometric') >= 0)
         return;
@@ -75,13 +64,7 @@ module.exports = {
 
       };
 
-      const calendlyStyleURL = 'https://calendly.com/assets/external/widget.css';
-      const calendlyScriptURL = 'https://calendly.com/assets/external/widget.js';
-
-      Promise.all([
-        app.helpers.scripts.loadStyle(calendlyStyleURL),
-        app.helpers.scripts.load(calendlyScriptURL),
-      ]).then(() => {
+      app.helpers.scripts.loadCalendlyAPI().then(() => {
         Calendly.initBadgeWidget({
           url: 'https://calendly.com/morganatgrowthfountain/15min',
           text: 'Want to Fundraise?',
@@ -118,26 +101,27 @@ module.exports = {
       this.$el.html(
         this.template()
       );
+      this.$el.find('.calculator-block-click .calculator-item .text-wrap').equalHeights();
     },
 
     onBeforeNavigate() {
       this.hideHint();
-      this.destroy();
+      // this.destroy();
     },
 
     destroy() {
+      app.clearClasses('#page', ['page']);
       this.hideHint();
-      $(window).off('scroll', paralaxScrollHandler);
       $('body').off('click', '.calendly-badge-widget');
       if (window.Calendly)
         Calendly.destroyBadgeWiget();
     },
   }),
 
-  company: Backbone.View.extend(_.extend({
+  company: Backbone.View.extend(Object.assign({
     urlRoot: app.config.raiseCapitalServer + '/company',
     template: require('./templates/company.pug'),
-    events: _.extend({
+    events: Object.assign({
       'click #submitForm': 'submitCompanyInfo',
       'keyup #zip_code': 'changeZipCode',
       'click .update-location': 'updateLocation',
@@ -164,9 +148,9 @@ module.exports = {
       this.campaign = options.campaign || {};
       this.model = options.company;
 
-      this.fields.industry.validate.choices = require('consts/raisecapital/industry.json');
-      this.fields.founding_state.validate.choices = require('consts/usaStatesChoices.json');
-      this.fields.corporate_structure.validate.choices = require('consts/raisecapital/corporate_structure.json');
+      this.fields.industry.validate.choices = require('consts/raisecapital/industry.json').INDUSTRY;
+      this.fields.founding_state.validate.choices = require('consts/usaStates.json').USA_STATES;
+      this.fields.corporate_structure.validate.choices = require('consts/raisecapital/corporate_structure.json').CORPORATE_STRUCTURE;
       this.fields.tour.validate.choices = require('consts/raisecapital/tour.json').TOUR;
 
       this.fields.founding_date.required = true;
@@ -225,7 +209,7 @@ module.exports = {
         91,   //left window
       ];
 
-      if (_.contains(SKIP_KEY_CODES, e.keyCode))
+      if (SKIP_KEY_CODES.includes(e.keyCode))
         return;
 
       const rx = /^\d{4,9}-\d{1,4}$/;
@@ -319,7 +303,7 @@ module.exports = {
     app.helpers.social.methods,
   )),
 
-  inReview: Backbone.View.extend(_.extend({
+  inReview: Backbone.View.extend(Object.assign({
     el: '#content',
     template: require('./templates/companyInReview.pug'),
 
@@ -333,10 +317,10 @@ module.exports = {
     },
   })),
 
-  generalInformation: Backbone.View.extend(_.extend({
+  generalInformation: Backbone.View.extend(Object.assign({
     urlRoot: app.config.raiseCapitalServer + '/campaign/:id',
     template: require('./templates/generalInformation.pug'),
-    events: _.extend({
+    events: Object.assign({
         'click #submitForm': api.submitAction,
         'click .onPreview': raiseHelpers.onPreviewAction,
         'click .submit_form': raiseHelpers.submitCampaign,
@@ -405,11 +389,11 @@ module.exports = {
     },
   }, app.helpers.confirmOnLeave.methods, app.helpers.menu.methods, app.helpers.section.methods)),
 
-  media: Backbone.View.extend(_.extend({
+  media: Backbone.View.extend(Object.assign({
     urlRoot: app.config.raiseCapitalServer + '/campaign/:id',
     template: require('./templates/media.pug'),
 
-    events: _.extend({
+    events: Object.assign({
         'click #submitForm': api.submitAction,
         // 'change #video,.additional-video-link': 'updateVideo',
         'change .additional-video-link': 'updateVideo',
@@ -450,7 +434,7 @@ module.exports = {
       this.formc = options.formc;
       this.fields = options.fields.campaign;
 
-      this.fields.header_image_image_id = _.extend(this.fields.header_image_image_id, {
+      this.fields.header_image_image_id = Object.assign(this.fields.header_image_image_id, {
         title: 'Drop your photo here or click to upload',
         help_text: 'This is the image that will appear at the top of your campaign. A minimum size of 1600x800 is recommended.',
         templateDropzone: 'headerMedia.pug',
@@ -489,7 +473,7 @@ module.exports = {
         },
       });
 
-      this.fields.list_image_image_id = _.extend(this.fields.list_image_image_id, {
+      this.fields.list_image_image_id = Object.assign(this.fields.list_image_image_id, {
         title: 'Drop your photo here or click to upload',
         help_text: ' This image entices investors to view your campaign. A minimum size of 350x209 is recommended.',
         onSaved: (data) => {
@@ -514,9 +498,9 @@ module.exports = {
         },
       });
 
-      this.fields.gallery_group_id = _.extend(this.fields.gallery_group_id, {
+      this.fields.gallery_group_id = Object.assign(this.fields.gallery_group_id, {
         title: 'Drop your photo(s) here or click to upload',
-        help_text: 'We recommend uploading 6 images (minimum size of 1024x612 is recommended) that represent your service of business. These images will be displayed in a gallery format.',
+        help_text: 'We recommend uploading 3 images (minimum size of 1024x612 is recommended) that represent your service of business. These images will be displayed in a gallery format.',
         onSaved: (data) => {
           this.model.gallery_group_data = data.file.data;
           this.model.updateMenu(this.model.calcProgress(this.model));
@@ -538,13 +522,13 @@ module.exports = {
         },
 
         fn: function checkNotEmpty(name, value, attr, data, computed) { 
-          if(!data.gallery_group_data || data.gallery_group_data.length < 6) {
-            throw 'Please upload at least 6 images';
+          if(!data.gallery_group_data || data.gallery_group_data.length < 3) {
+            throw 'Please upload at least 3 images';
           }
         },
       });
 
-      this.fields.video = _.extend(this.fields.video, {
+      this.fields.video = Object.assign(this.fields.video, {
         fn(name, value, attr, data, computed) {
           const info = app.getVideoInfo(value);
           if (!info.provider)
@@ -552,7 +536,7 @@ module.exports = {
         },
       });
 
-      const fieldsSchema = _.pick(this.fields, ['video']);
+      const fieldsSchema = app.utils.pick(this.fields, ['video']);
       const fieldsAttr = {
         video: {
           label: 'Main Video for Campaign',
@@ -673,10 +657,10 @@ module.exports = {
   }, app.helpers.confirmOnLeave.methods, app.helpers.menu.methods,
     app.helpers.section.methods)),
 
-  teamMemberAdd: Backbone.View.extend(_.extend({
+  teamMemberAdd: Backbone.View.extend(Object.assign({
     urlRoot: app.config.raiseCapitalServer + '/campaign/:id/team-members',
     template: require('./templates/teamMemberAdd.pug'),
-    events: _.extend({
+    events: Object.assign({
       'click .delete-member': 'deleteMember',
       'click .submit_form': raiseHelpers.submitCampaign,
       'click #postForReview': raiseHelpers.postForReview,
@@ -722,7 +706,7 @@ module.exports = {
     initialize(options) {
       let TeamMember = require('models/teammembercampaign.js');
       this.fields = options.fields.campaign.team_members.schema;
-      this.fields.photo_image_id = _.extend(this.fields.photo_image_id, {
+      this.fields.photo_image_id = Object.assign(this.fields.photo_image_id, {
         label: 'Profile Picture',
         help_text: 'A minimum size of 300x300 is recommended.',
         defaultImage: require('images/default/Default_photo.png'),
@@ -813,9 +797,9 @@ module.exports = {
     app.helpers.menu.methods,
     app.helpers.social.methods)),
 
-  teamMembers: Backbone.View.extend(_.extend({
+  teamMembers: Backbone.View.extend(Object.assign({
     urlRoot: app.config.raiseCapitalServer + '/campaign/:id/team-members',
-    events: _.extend({
+    events: Object.assign({
       'click .delete-member': 'deleteMember',
       'click .submit_form': raiseHelpers.submitCampaign,
       'click #postForReview': raiseHelpers.postForReview,
@@ -861,7 +845,7 @@ module.exports = {
       if (!this.model.team_members || !this.model.team_members.members || !this.model.team_members.members.length)
         return;
 
-      _.each(this.model.team_members.members, (m, idx) => {
+      this.model.team_members.members.forEach((m, idx) => {
         if (m.hasOwnProperty('id')) {
           const $memberItemDelete = this.$el.find(`[data-id=${m.id}]`);
           if ($memberItemDelete && $memberItemDelete.length)
@@ -891,6 +875,7 @@ module.exports = {
             if (this.model.team_members.members.length < 1) {
               this.$el.find('.notification').show();
               this.$el.find('.buttons-row').hide();
+              this.$el.find('.photoNotification').hide();
             } else {
               this.$el.find('.notification').hide();
               this.$el.find('.buttons-row').show();
@@ -903,9 +888,9 @@ module.exports = {
 
   }, app.helpers.menu.methods)),
 
-  specifics: Backbone.View.extend(_.extend({
+  specifics: Backbone.View.extend(Object.assign({
     urlRoot: app.config.raiseCapitalServer + '/campaign/:id',
-    events: _.extend({
+    events: Object.assign({
       'click #submitForm': api.submitAction,
       'change input[name="security_type"]': 'updateSecurityType',
       'change #minimum_raise,#maximum_raise,#price_per_share,#premoney_valuation': 'calculateNumberOfShares',
@@ -929,7 +914,7 @@ module.exports = {
       this.formc = options.formc;
       this.model = options.campaign;
       this.company = options.company;
-      this.fields.valuation_determination_other = _.extend(this.fields.valuation_determination_other, {
+      this.fields.valuation_determination_other = Object.assign(this.fields.valuation_determination_other, {
         dependies: ['valuation_determination'],
         fn: function(name, value, attr, data, schema) {
           let valuation_determination_val = this.getData(data, 'valuation_determination');
@@ -937,13 +922,13 @@ module.exports = {
             return this.required(name, true, attr, data);
         }
       });
-      this.fields.valuation_determination = _.extend(this.fields.valuation_determination, {
+      this.fields.valuation_determination = Object.assign(this.fields.valuation_determination, {
         dependies: ['valuation_determination_other'],
       });
-      this.fields.length_days.validate.choices = require('consts/raisecapital/length_days.json');
-      this.fields.security_type.validate.choices = require('consts/raisecapital/security_type_options.json');
-      this.fields.valuation_determination.validate.choices = require('consts/raisecapital/valuation_determination_options.json');
-      this.fields.investor_presentation_file_id = _.extend(this.fields.investor_presentation_file_id, {
+      this.fields.length_days.validate.choices = require('consts/raisecapital/length_days.json').LENGTH_DAYS;
+      this.fields.security_type.validate.choices = require('consts/raisecapital/security_type.json').SECURITY_TYPE;
+      this.fields.valuation_determination.validate.choices = require('consts/raisecapital/valuation_determination.json').VALUATION_DETERMINATION;
+      this.fields.investor_presentation_file_id = Object.assign(this.fields.investor_presentation_file_id, {
         label: 'Upload an Investor Presentation',
         onSaved: (data) => {
           this.model.investor_presentation_file_id = data.file;
@@ -976,7 +961,7 @@ module.exports = {
       this.fields.maximum_raise.dependies = ['minimum_raise',];
       this.fields.premoney_valuation.dependies = ['security_type',];
       this.fields.security_type.dependies = ['premoney_valuation',];
-      this.fields.price_per_share = _.extend(this.fields.price_per_share, {
+      this.fields.price_per_share = Object.assign(this.fields.price_per_share, {
         type: 'money',
         max: 1000,
       });
@@ -1072,12 +1057,14 @@ module.exports = {
 
       this.checkForm();
 
+      /*
       if (this.company.corporate_structure == 2) {
         this.$('input[name=security_type][value=0]').prop('disabled', true);
         this.$('input[name=security_type][value=1]').attr('checked', true);
         $('.security_type_list').hide();
         $('.security_type_1').show();
       }
+      */
       $('#description_determine').parent().parent().hide();
 
       app.helpers.disableEnter.disableEnter.call(this);
@@ -1086,9 +1073,9 @@ module.exports = {
     },
   }, app.helpers.confirmOnLeave.methods, app.helpers.menu.methods, app.helpers.section.methods)),
 
-  perks: Backbone.View.extend(_.extend({
+  perks: Backbone.View.extend(Object.assign({
     urlRoot: app.config.raiseCapitalServer + '/campaign/:id',
-    events: _.extend({
+    events: Object.assign({
         'click #submitForm': api.submitAction,
         'click .onPreview': raiseHelpers.onPreviewAction,
         'click .submit_form': raiseHelpers.submitCampaign,
