@@ -33,6 +33,7 @@ module.exports = {
 
         app.currentView = Views.createView(name);
         app.currentView.render();
+        $('body').scrollTo();
         app.hideLoading();
       }, 'pg_chunk');
     },
