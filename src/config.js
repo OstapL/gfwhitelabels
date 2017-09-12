@@ -9,7 +9,7 @@ var e = {
 // formcServer: "http://localhost:8001",
   investmentServer: "https://api-investment.growthfountain.com",
 // investmentServer: "http://localhost:8003",
-  filerServer: "https://api-filer.growthfountain.com",
+  filerServer: "https://api-filer-go.growthfountain.com",
   esignServer: 'https://api-esign.growthfountain.com',
 //  esignServer: 'https://api-esign.growthfountain.com',
   commentsServer: "https://api-comments.growthfountain.com",
