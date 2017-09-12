@@ -256,6 +256,7 @@ module.exports = {
 
           $fancyBox.fancybox({
             openEffect  : 'elastic',
+            href: $(this).attr('href'),
             closeEffect : 'elastic',
 
             helpers: {

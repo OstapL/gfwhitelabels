@@ -156,7 +156,7 @@ class Campaign {
           this.video != '' &&
           this.header_image_image_id.id != null &&
           this.list_image_image_id.id != null &&
-          this.gallery_group_id.data.length > 1,
+          this.gallery_group_id.data.length > 2,
         'specifics':
           this.minimum_raise >= 10000 &&
           this.maximum_raise <= 1000000 &&
