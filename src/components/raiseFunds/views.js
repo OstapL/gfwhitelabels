@@ -286,6 +286,10 @@ module.exports = {
         data.company_id = data.id;
         delete data.id;
         app.user.data.info.push(data);
+        app.user.formc = {
+          id: data.formc_id,
+          is_paid: false
+        };
         localStorage.setItem('user', JSON.stringify(app.user.toJSON()));
       }
 
