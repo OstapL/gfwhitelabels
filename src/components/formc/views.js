@@ -2217,7 +2217,7 @@ module.exports = {
 
     destroy() {
       Backbone.View.prototype.destroy.call(this);
-      $('body').off('click', '.createField');
+      this.$el.off('click', '.createField');
     },
 
     _success(data, newData) {

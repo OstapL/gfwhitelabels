@@ -225,10 +225,13 @@ section
     .container-fluid.p-l-0.p-r-0
       #gallery1.col-lg-12.pt50.photo-gallegy.text-center-flex
         if values.campaign.gallery_group_id.data.length
-          each v,k in values.campaign.gallery_group_id.data
-            .col-lg-4.col-sm-12.col-xs-12.col-md-6.no-padding-img
-              a(href=(v.getUrl('main')) data-size='1440x900' rel="gallery1" title=(v.name) onclick="return false;").fancybox
-                img(src=(v.getUrl('530x441')) alt=(v.name)).w-100.img-responsive
+          if values.id == 964
+            include snippets/stakehaulGallery.pug
+          else
+            each v,k in values.campaign.gallery_group_id.data
+              .col-lg-4.col-sm-12.col-xs-12.col-md-6.no-padding-img
+                a(href=(v.getUrl('main')) data-size='1440x900' rel="gallery1" title=(v.name) onclick="return false;").fancybox
+                  img(src=(v.getUrl('530x441')) alt=(v.name)).w-100.img-responsive
     .container
       .col-lg-12.p-sm-0
         h2.dosis.our.text-uppercase.text-lg-center.text-xs-center.campaign-subheading How We Intend to Make Money

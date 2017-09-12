@@ -500,7 +500,7 @@ module.exports = {
 
       this.fields.gallery_group_id = Object.assign(this.fields.gallery_group_id, {
         title: 'Drop your photo(s) here or click to upload',
-        help_text: 'We recommend uploading 6 images (minimum size of 1024x612 is recommended) that represent your service of business. These images will be displayed in a gallery format.',
+        help_text: 'We recommend uploading 3 images (minimum size of 1024x612 is recommended) that represent your service of business. These images will be displayed in a gallery format.',
         onSaved: (data) => {
           this.model.gallery_group_data = data.file.data;
           this.model.updateMenu(this.model.calcProgress(this.model));
@@ -522,8 +522,8 @@ module.exports = {
         },
 
         fn: function checkNotEmpty(name, value, attr, data, computed) { 
-          if(!data.gallery_group_data || data.gallery_group_data.length < 6) {
-            throw 'Please upload at least 6 images';
+          if(!data.gallery_group_data || data.gallery_group_data.length < 3) {
+            throw 'Please upload at least 3 images';
           }
         },
       });
