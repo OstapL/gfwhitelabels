@@ -13,8 +13,7 @@ const componentRoutes = [
 ];
 
 const checkSafeExtend = (dest={}, src={}) => {
-  let keys = Object.keys(dest);
-  _(keys).each((key) => {
+  Object.keys(dest).forEach((key) => {
     // ToDo
     // src[key] is always undefined
     if (src[key]) {
@@ -28,12 +27,12 @@ const checkSafeExtend = (dest={}, src={}) => {
   });
 };
 
-const routesMap = _.reduce(componentRoutes, (dest, route) => {
+const routesMap = componentRoutes.reduce((dest, route) => {
   checkSafeExtend(dest.routes, route.routes);
   checkSafeExtend(dest.methods, route.methods);
 
-  dest.routes = _.extend(dest.routes, route.routes);
-  dest.methods = _.extend(dest.methods, route.methods);
+  dest.routes = Object.assign(dest.routes, route.routes);
+  dest.methods = Object.assign(dest.methods, route.methods);
   if (Array.isArray(route.auth)) {
     dest.auth = dest.auth.concat(route.auth);
   } else if (route.auth === '*') {
@@ -48,8 +47,8 @@ const notFound = () => {
   app.hideLoading();
 };
 
-module.exports = Backbone.Router.extend(_.extend({
-  routes: _.extend({}, routesMap.routes, { '*notFound': notFound }),
+module.exports = Backbone.Router.extend(Object.assign({
+  routes: Object.assign({}, routesMap.routes, { '*notFound': notFound }),
   previousUrl: '',
   currentUrl: '',
 
@@ -71,12 +70,7 @@ module.exports = Backbone.Router.extend(_.extend({
       return false;
     }
 
-
-    // WHY?!
-    app.clearClasses('#page', ['page']);
-    // debugger;
-
-    if (_.contains(routesMap.auth, name) && !app.user.ensureLoggedIn()) {
+    if (routesMap.auth.includes(name) && !app.user.ensureLoggedIn()) {
       // Revert back the current URL, 
       // Do not update url
       if (app.routers.currentUrl) {
@@ -84,6 +78,7 @@ module.exports = Backbone.Router.extend(_.extend({
       }
       return false;
     }
+
 
     if (app.currentView) {
       app.currentView.destroy();
@@ -96,6 +91,8 @@ module.exports = Backbone.Router.extend(_.extend({
       document.head.querySelector('meta[name="description"]').content = app.seo.meta[window.location.pathname];
       document.head.querySelector('meta[property="og:title"]').content = app.seo.title[window.location.pathname];
       document.head.querySelector('meta[property="og:description"]').content = app.seo.meta[window.location.pathname];
+    } else {
+      document.title = 'GrowthFountain | Equity Crowdfunding Platform';
     }
 
     document.head.querySelector('meta[property="og:url"]').content = window.location.href;

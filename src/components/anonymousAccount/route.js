@@ -119,7 +119,7 @@ module.exports = {
             code: code,
           };
 
-          app.currentView = new View.membershipConfirmation(_.extend({
+          app.currentView = new View.membershipConfirmation(Object.assign({
             el: '#content',
           }, data));
           app.currentView.render();

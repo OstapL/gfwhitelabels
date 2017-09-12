@@ -1,14 +1,14 @@
 .row.foreign-country-row.city-state-row
   .col-xl-6.col-lg-6.col-md-6
     -
-      pug_html += app.fields.textLabel('city', _.extend({
+      pug_html += app.fields.textLabel('city', Object.assign({
           'type': 'text',
           'value': user.city,
         }, fields.city));
 
   .col-xl-6.col-lg-6.col-md-6
     -
-      pug_html += app.fields.textLabel('state', _.extend({
+      pug_html += app.fields.textLabel('state', Object.assign({
           'type': 'text',
           'label': 'State/Province/ Region',
           'placeholder': 'State/Province/Region',
@@ -18,13 +18,13 @@
 .row.foreign-country-row.zipcode-phone-row
   .col-xl-6.col-lg-6.col-md-6
     -
-      pug_html += app.fields.textLabel('zip_code', _.extend({
+      pug_html += app.fields.textLabel('zip_code', Object.assign({
           'type': 'text',
           'value': user.zip_code,
         }, fields.zip_code, { 'label': 'Postal Code' }));
   .col-xl-6.col-lg-6.col-md-6.foreign-country-phone
     -
-      pug_html += app.fields.textLabel('phone', _.extend({
+      pug_html += app.fields.textLabel('phone', Object.assign({
           'type': 'text',
           'value': user.phone,
         }, fields.phone));
