@@ -1,11 +1,71 @@
 #blogList
+  @media only screen and (max-width : 991px)
+    .row
+      display: flex
+      flex-direction: column
+  .position
+    @media only screen and (max-width : 991px)
+      &:first-of-type
+        order: 1
   .subscribe-blogs
     margin-bottom: rem(50)
     p
       margin-bottom: rem(10)
-    label
-    	font-weight: normal
-    	font-size: rem(11)
-    	input
-    		margin-top: rem(3)
-    		margin-right: rem(5)
+    .check-block
+      margin-top: rem(5)
+      label
+        font-weight: normal
+        font-size: rem(11)
+        margin-bottom: 0
+        display: block
+        input
+          margin-top: rem(3)
+          margin-right: rem(5)
+    .btn
+      margin-top: rem(5)
+  .top-blog-list
+    margin-top: rem(30)
+    .item
+      margin-bottom: rem(25)
+      a
+        width: 100%
+        +mt(.2s)
+        img
+          margin-right: rem(10)
+        p
+          font-size: rem(12)
+          line-height: rem(15)
+          color: $black
+        .info
+          .author,
+          .date-blog
+            font-size: rem(11)
+            color: $small-text
+          .vert-line
+            margin-left: rem(5)
+            margin-right: rem(5)
+            color: $small-text
+            font-size: rem(11)
+        &:hover
+          p
+            +mt(.2s)
+            color: rgba($black, 0.7)
+  .list-blog
+    .blog-item
+      margin-bottom: 50px
+      h4
+        line-height: rem(18)
+        margin-top: rem(15)
+      .blog-info
+        margin-top: rem(10)
+        margin-bottom: rem(8)
+        .author,
+        .date-blog,
+        .vert-line
+          font-size: rem(12)
+          color: $small-text
+        .vert-line
+          margin-left: rem(5)
+          margin-right: rem(5)
+      .text
+        margin-bottom: rem(20)
