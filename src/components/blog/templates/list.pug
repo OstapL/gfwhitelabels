@@ -10,13 +10,14 @@ section.text_block
         ul.list-unstyled.list-blog.m0.row
           for post in values
             li.col-xl-6.blog-item
+              // закоментировал тк не работает
               //img(src=post.image_data.urls).img-fluid
               img(src=require('images/pages/bse4.png')).img-fluid.w-100
               h4.text-uppercase.m-b-0 #{ post.title }
                 .blog-info
                   span.author #{ post.author_id }
                   span.vert-line |
-                  span.date-blog #{ post.created }
+                  span.date-blog #{ app.helpers.date.formatDate(post.created, 'MMMM DD, YYYY') }
               p.text
                 | !{ post.body.replace(/(<([^>]+)>)/ig," ").substr(0, 120) + '...' }
               a(href="/blog/" + post.id).btn.btn-sm.btn-secondary.text-uppercase read more
