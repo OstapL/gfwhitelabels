@@ -269,7 +269,8 @@ module.exports = {
     },
 
     _success(data, formData) {
-      this.undelegateEvents();
+      //events will be unboound in destroy by default
+      // this.undelegateEvents();
 
       if(data == null) {
         data = {};
@@ -330,15 +331,6 @@ module.exports = {
         'click .submit_form': raiseHelpers.submitCampaign,
         'click #postForReview': raiseHelpers.postForReview,
       }, app.helpers.section.events, app.helpers.confirmOnLeave.events, app.helpers.menu.events),
-
-    preinitialize() {
-      // ToDo
-      // Hack for undelegate previous events
-      for (let k in this.events) {
-        console.log('#content ' + k.split(' ')[1]);
-        $('#content ' + k.split(' ')[1]).undelegate();
-      }
-    },
 
     _success(data, newData) {
       this.model.updateMenu(this.model.calcProgress(this.model));
@@ -423,14 +415,6 @@ module.exports = {
     },
 
     appendHttpIfNecessary: appendHttpIfNecessary,
-
-    preinitialize() {
-      // ToDo
-      // Hack for undelegate previous events
-      for (let k in this.events) {
-        $('#content ' + k.split(' ')[1]).undelegate();
-      }
-    },
 
     initialize(options) {
       this.model = options.campaign;
@@ -574,6 +558,15 @@ module.exports = {
 
       this.createIndexes();
       this.buildSnippets(snippets);
+      this.listenToNavigate();
+    },
+
+    destroy() {
+      Backbone.View.prototype.destroy.call(this);
+      if (this.videoField) {
+        this.videoField.destroy();
+        this.videoField = null;
+      }
     },
 
     render() {
@@ -699,14 +692,6 @@ module.exports = {
       return false;
     },
 
-    preinitialize() {
-      // ToDo
-      // Hack for undelegate previous events
-      for (let k in this.events) {
-        $('#content ' + k.split(' ')[1]).undelegate();
-      }
-    },
-
     initialize(options) {
       let TeamMember = require('models/teammembercampaign.js');
       this.fields = options.fields.campaign.team_members.schema;
@@ -758,6 +743,7 @@ module.exports = {
         )
         this.submitMethod = 'POST';
       }
+      this.listenToNavigate();
     },
 
     render() {
@@ -809,14 +795,6 @@ module.exports = {
       'click #postForReview': raiseHelpers.postForReview,
       'click .onPreview': raiseHelpers.onPreviewAction,
     }, app.helpers.menu.events),
-
-    preinitialize() {
-      // ToDo
-      // Hack for undelegate previous events
-      for (let k in this.events) {
-        $('#content ' + k.split(' ')[1]).undelegate();
-      }
-    },
 
     initialize(options) {
       this.fields = options.fields.campaign;
@@ -905,14 +883,6 @@ module.exports = {
       'change #valuation_determination': 'valuationDetermine',
     }, app.helpers.confirmOnLeave.events, app.helpers.menu.events),
 
-    preinitialize() {
-      // ToDo
-      // Hack for undelegate previous events
-      for (let k in this.events) {
-        $('#content ' + k.split(' ')[1]).undelegate();
-      }
-    },
-
     initialize(options) {
       this.fields = options.fields.campaign;
       this.formc = options.formc;
@@ -973,7 +943,7 @@ module.exports = {
       if(this.model.hasOwnProperty('id')) {
         this.urlRoot = this.urlRoot.replace(':id', this.model.id);
       }
-
+      this.listenToNavigate();
     },
 
     checkMinMaxRaise(e) {
@@ -1086,14 +1056,6 @@ module.exports = {
         'click #postForReview': raiseHelpers.postForReview,
     }, app.helpers.confirmOnLeave.events, app.helpers.menu.events, app.helpers.section.events),
 
-    preinitialize() {
-      // ToDo
-      // Hack for undelegate previous events
-      for (let k in this.events) {
-        $('#content ' + k.split(' ')[1]).undelegate();
-      }
-    },
-
     initialize(options) {
       this.fields = options.fields.campaign;
       this.formc = options.formc;
@@ -1107,6 +1069,7 @@ module.exports = {
       this.assignLabels();
       this.createIndexes();
       this.buildSnippets(snippets);
+      this.listenToNavigate();
     },
 
     render() {

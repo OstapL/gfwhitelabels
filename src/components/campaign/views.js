@@ -114,8 +114,10 @@ module.exports = {
     destroy() {
       Backbone.View.prototype.destroy.call(this);
       $(document).off("scroll", this.onScrollListener);
-      if (this.commentsView)
+      if (this.commentsView) {
         this.commentsView.destroy();
+        this.commentsView = null;
+      }
     },
 
     submitCampaign(e) {
@@ -214,8 +216,7 @@ module.exports = {
         if (refElement.position().top - $navBar.height() <= scrollPos && refElement.position().top + refElement.height() > scrollPos) {
           $link.removeClass("active");
           currLink.addClass("active");
-        }
-        else{
+        } else{
           currLink.removeClass("active");
         }
       });

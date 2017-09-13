@@ -101,6 +101,9 @@ module.exports = {
     destroy() {
       Backbone.View.prototype.destroy.call(this);
       this.$('[data-toggle="tooltip"]').tooltip('dispose');
+      this.bootstrapSlider.each(function() {
+        $(this).bootstrapSlider('destroy')
+      });
     },
 
     nextStep(e) {
@@ -193,6 +196,9 @@ module.exports = {
     destroy() {
       Backbone.View.prototype.destroy.call(this);
       this.$('[data-toggle="tooltip"]').tooltip('dispose');
+      this.bootstrapSlider.each(function() {
+        $(this).bootstrapSlider('destroy');
+      });
     },
 
     doCalculation(e) {

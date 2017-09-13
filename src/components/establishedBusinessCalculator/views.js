@@ -522,7 +522,7 @@ module.exports = {
         require('src/js/graph/jquery.flot.categories.js');
         require('src/js/graph/jquery.flot.growraf');
 
-        const $plot = $.plot($("#chart"), data, {
+        this.$plot = $.plot($("#chart"), data, {
           series: {
             lines: {
               fill: false
@@ -564,9 +564,18 @@ module.exports = {
           }
         });
 
-        app.helpers.calculator.bindResizeTo($plot);
+        app.helpers.calculator.bindResizeTo(this.$plot);
 
       }, 'graph_chunk');
-    }
+    },
+
+    destroy() {
+      Backbone.View.prototype.destroy.call(this);
+      if (this.$plot) {
+        app.helpers.calculator.unbindResizeFrom(this.$plot);
+        this.$plot.shutdown();
+        this.$plot = null;
+      }
+    },
   })
 };
