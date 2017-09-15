@@ -211,9 +211,19 @@
           height: 240px!important
       img
         width: 100%
+  .p-dropzone.header-media
+    i
+      margin-bottom: 0
+      padding-bottom: 0
   .thumbnail-picture
     .p-dropzone
-      margin-top: 30px
+      margin-top: rem(40)
+      @media screen and (min-width : 768px) and (max-width : 991px)
+        top: 30px!important
+      @media screen and (min-width : 992px) and (max-width : 1199px)
+        top: 10px!important
+      @media only screen and (max-width : 544px)
+        margin-bottom: 0px!important
 .team-members
   .imageDropzone
     .bgc-wrap
