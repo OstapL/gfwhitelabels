@@ -204,11 +204,6 @@ const Views = {
         }
       }, 4000);
 
-      if (this.scrollHandler) {
-        $(window).off('scroll', this.scrollHandler);
-        this.scrollHandler = null;
-      }
-
       if (this.resizeHandler) {
         $(window).off('resize', this.resizeHandler);
         this.resizeHandler = null;
