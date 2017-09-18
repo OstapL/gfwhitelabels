@@ -125,7 +125,9 @@
 		position: relative
 		img
 			width: 100%
-
+			min-height: 209px
+			@media screen and (min-width : 992px) and (max-width : 1199px)
+				min-height: 263px
 		.timer_day,
 		.deys-left,
 		.funded
@@ -150,6 +152,8 @@
 			top: -2px
 			left: -3px
 			z-index: 1
+			img
+				min-height: auto
 		.more_inform
 			opacity: 0
 			position: absolute
