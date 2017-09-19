@@ -2,6 +2,7 @@ const { createFields } = require('fields/new-fields.js');
 const raiseHelpers = require('./helpers.js');
 const appendHttpIfNecessary = app.helpers.format.appendHttpIfNecessary;
 const valuation_determination = require('consts/raisecapital/valuation_determination.json');
+const Sortable = require('sortablejs');
 
 const snippets = {
   additional_info: require('./templates/snippets/additional_info.pug'),
@@ -804,11 +805,86 @@ module.exports = {
       this.renumberTeamMembers();
 
       this.urlRoot = this.urlRoot.replace(':id', this.model.id);
+      this.listenToNavigate();
+    },
+
+    destroy() {
+      Backbone.View.prototype.destroy.call(this);
+      if (this.sortable) {
+        this.sortable.destroy();
+        this.sortable = null;
+      }
+    },
+
+    initDragDrop() {
+      this.sortable = Sortable.create(document.querySelector('.teamMembersContainer'), {
+        animation: 150,
+        draggable: '.itemContainer',
+        handle: '.teamMemberItem',
+        dataIdAttr: 'data-index',
+        onEnd: (e) => {
+          const oldIdx = e.oldIndex;
+          const newIdx = e.newIndex;
+          this.reorder({oldIdx, newIdx });
+        },
+      });
+      this.indices = this.sortable.toArray().map(idx => Number(idx));
+    },
+
+    reorder(params) {
+      const { oldIdx, newIdx } = params;
+      if (oldIdx === newIdx)
+        return;
+
+      const members = this.model.team_members && this.model.team_members.members
+        ? this.model.team_members.members
+        : [];
+
+      if (oldIdx < 0 || oldIdx >= members.length || newIdx < 0 || newIdx >= members.length)
+        return console.error(`Indices out of range old=${oldIdx}, new=${oldIdx}`);
+
+      const indices = this.sortable.toArray().map(idx => Number(idx));
+      if (!indices || !indices.length)
+        return console.error(`No sortable items with data-id`);
+
+      // const reorderedMembers = [];
+      // this.indices.forEach((idxVal, idx) => {
+      //   if (indices[idx] === idxVal) {
+      //     return;
+      //   }
+      //   const m = members.find(m => m.index == idxVal);
+      //   reorderedMembers.push(m);
+      // });
+
+      const reorderedMembers = indices
+        .filter((itemIdx, idx) => itemIdx !== this.indices[idx])
+        .map((oldIdx, newIdx) => {
+          const m = members.find(m => m.index === oldIdx);
+          m.order = newIdx;
+          return m;
+        });
+
+      if (!reorderedMembers || !reorderedMembers.length)
+        return;
+
+      this.sortable.option('disabled', true);
+
+      reorderedMembers.reduce((acc, member) => {
+        return acc.then(() => {
+          return api.makeRequest(`${this.urlRoot}/${member.index}`, 'PUT', member.toJSON());
+        }).catch((err) => {
+          console.log(err);
+        });
+      }, Promise.resolve()).then(() => {
+        this.sortable.option('disabled', false);
+      }).catch((err) => {
+        app.dialogs.error(err);
+        this.sortable.option('disabled', false);
+      });
     },
 
     render() {
       let template = require('./templates/teamMembers.pug');
-
       this.$el.html(
         template({
           values: this.model,
@@ -820,6 +896,7 @@ module.exports = {
       this.checkForm();
       this.$el.find('.team-add-item').equalHeights();
       this.model.updateMenu(this.model.calcProgress(this.model));
+      this.initDragDrop();
       return this;
     },
 
@@ -828,18 +905,17 @@ module.exports = {
         return;
 
       this.model.team_members.members.forEach((m, idx) => {
-        if (m.hasOwnProperty('id')) {
-          const $memberItemDelete = this.$el.find(`[data-id=${m.id}]`);
-          if ($memberItemDelete && $memberItemDelete.length)
-            $memberItemDelete[0].dataset.id = idx;
+        if (m.hasOwnProperty('index')) {
+          const $itemContainer = this.$el.find(`[data-index=${m.index}]`);
+          if ($itemContainer && $itemContainer.length)
+            $itemContainer[0].dataset.index = idx;
         }
-        m.id = idx;
+        m.index = idx;
       });
     },
 
-    deleteMember: function (e) {
-      let memberId = Number(e.currentTarget.dataset.id);
-
+    deleteMember(e) {
+      let memberId = Number(this.$(e.target).closest('.itemContainer')[0].dataset.id);
       app.dialogs.confirm('Are you sure you would like to delete this team member?').then((confirmed) => {
         if (!confirmed)
           return;
