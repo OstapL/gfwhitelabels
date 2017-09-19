@@ -21,8 +21,11 @@ section.create-company-team-add.container
                 i.fa.fa-info-circle 
                 span.warning-text You have to add at least 1 team member to proceed.
 
-        .row(role="alert").alert.alert-info
-          span Please feel free to drag and place your team members in the order you prefer.
+        .row
+          .col-lg-12.m-b-2
+            .warning-block.text-lg-left
+              i.fa.fa-info-circle 
+              span.warning-text Please feel free to drag and place your team members in the order you prefer.
         .row
           .col-lg-12.text-lg-center.text-md-center.text-sm-center.text-xs-center.m-b-2.add-button
             a(href='/campaign/' + values.id + '/team-members/add/member/new')#add_team_member.btn.text-uppercase
