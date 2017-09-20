@@ -386,7 +386,7 @@ class CropperDropzone {
 }
 
 module.exports = {
-  ImageElement: ImageElement,
-  ImageDropzone: ImageDropzone,
-  CropperDropzone: CropperDropzone
+  ImageElement,
+  ImageDropzone,
+  CropperDropzone,
 };

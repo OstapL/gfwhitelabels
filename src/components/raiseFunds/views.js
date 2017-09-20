@@ -494,6 +494,10 @@ module.exports = {
           this.model.gallery_group_data = data.file.data;
           this.model.updateMenu(this.model.calcProgress(this.model));
         },
+        onReorder: async (data) => {
+          this.model.gallery_group_data = data;
+          return await api.makeRequest(this.urlRoot, 'PATCH', { gallery_group_data: data });
+        },
         crop: {
           control: {
             aspectRatio: 1024 / 612,
@@ -846,15 +850,6 @@ module.exports = {
       const indices = this.sortable.toArray().map(idx => Number(idx));
       if (!indices || !indices.length)
         return console.error(`No sortable items with data-id`);
-
-      // const reorderedMembers = [];
-      // this.indices.forEach((idxVal, idx) => {
-      //   if (indices[idx] === idxVal) {
-      //     return;
-      //   }
-      //   const m = members.find(m => m.index == idxVal);
-      //   reorderedMembers.push(m);
-      // });
 
       const reorderedMembers = indices
         .filter((itemIdx, idx) => itemIdx !== this.indices[idx])
