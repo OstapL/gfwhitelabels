@@ -997,6 +997,7 @@ module.exports = {
         security_type: 'Security Type',
         valuation_determination: 'How Did You Determine Your Valuation?',
         valuation_determination_other: 'Please Explain',
+        hybrid_toggle_amount: 'Hybrid toggle amount',
       };
       this.assignLabels();
       this.createIndexes();
@@ -1080,8 +1081,12 @@ module.exports = {
 
     updateSecurityType(e) {
       let val = e.currentTarget.value;
-      $('.security_type_list').hide();
-      $('.security_type_'  + val).show();
+      if (val == 2) {
+        $('.security_type_list').show();
+      } else {
+        $('.security_type_list').hide();
+        $('.security_type_'  + val).show();
+      }
     },
 
     render() {

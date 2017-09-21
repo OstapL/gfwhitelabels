@@ -72,6 +72,15 @@ section.campaign-specifics.container.m-b-85
                   value: values.security_type,
                   schema: fields.security_type,
                 });
+        div(style=(values.security_type == 2 ? '' :  "display: none")).security_type_list.security_type_2
+          .row.m-t-2
+            .col-xl-6.col-lg-6.col-md-6
+              -
+                pug_html += app.fields.textLabel('hybrid_toggle_amount', {
+                schema: fields.hybrid_toggle_amount,
+                value: values.hybrid_toggle_amount,
+                placeholder: '$',
+                });
         div(style=(values.security_type == 0 ? '' :  "display: none")).security_type_list.security_type_0
           .row.m-t-2
             .col-xl-6.col-lg-6.col-md-6.clearfix
