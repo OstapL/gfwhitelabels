@@ -910,7 +910,7 @@ module.exports = {
     },
 
     deleteMember(e) {
-      let memberId = Number(this.$(e.target).closest('.itemContainer')[0].dataset.id);
+      let memberId = Number(this.$(e.target).closest('.itemContainer')[0].dataset.index);
       app.dialogs.confirm('Are you sure you would like to delete this team member?').then((confirmed) => {
         if (!confirmed)
           return;

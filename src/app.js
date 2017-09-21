@@ -8,6 +8,27 @@ const preventScrollHandler = (e) => {
   return false;
 };
 
+const SHOW_SPINNER_DURATION = 600;
+
+function showLoadingSpinner() {
+  $('.loader_overlay').show();
+  const now = new Date();
+  return now.valueOf();
+}
+
+function hideLoadingSpinner(time=500) {
+  if (time > 0) {
+    $('.loader_overlay').animate({
+      opacity: 0,
+    }, time, function () {
+      $(this).css('display', 'none');
+      $(this).css('opacity', '1');
+    });
+  } else {
+    $('.loader_overlay').css('display', 'none');
+  }
+}
+
 class App {
   constructor() {
     this.cache = {};
@@ -25,6 +46,8 @@ class App {
     this.user = new User();
     this.currentView = null;
 
+    this._spinnerTimeout = null;
+    this._spinnerStartTime = null;
     return this;
   }
 
@@ -56,21 +79,54 @@ class App {
     });
   }
 
-  showLoading() {
-    $('.loader_overlay').show();
+  showLoading(delay=300) {
+    delay = Number(delay);
+    delay = isNaN(delay) ? 0 : delay;
+    if (delay <= 0) {
+      this._spinnerTimeout && clearTimeout(this._spinnerTimeout);
+      this._spinnerStartTime = showLoadingSpinner();
+      return;
+    }
+
+    if (this._spinnerTimeout || this._spinnerStartTime)
+      return;
+
+    this._spinnerTimeout = setTimeout(() => {
+      clearTimeout(this._spinnerTimeout);
+      this._spinnerTimeout = null;
+      this._spinnerStartTime = showLoadingSpinner();
+    }, delay);
   }
 
-  hideLoading(time=500) {
-    if (time > 0) {
-      $('.loader_overlay').animate({
-        opacity: 0,
-      }, time, function () {
-        $(this).css('display', 'none');
-        $(this).css('opacity', '1');
-      });
-    } else {
-      $('.loader_overlay').css('display', 'block');
+  hideLoading(immediate=false) {
+    if (immediate) {
+      if (this._spinnerTimeout)
+        clearTimeout(this._spinnerTimeout);
+
+      hideLoadingSpinner();
+      this._spinnerStartTime = null;
+      return;
     }
+
+    if (!this._spinnerTimeout && !this._spinnerStartTime)
+      return;
+
+     if (this._spinnerTimeout)
+       return clearTimeout(this._spinnerTimeout);
+
+    const now = (new Date()).valueOf();
+    const passedTime = now - this._spinnerStartTime;
+    const timeToWait = SHOW_SPINNER_DURATION - passedTime;
+    if (timeToWait <= 0) {
+      hideLoadingSpinner();
+      this._spinnerStartTime = null;
+      return;
+    }
+
+    setTimeout(() => {
+      hideLoadingSpinner();
+      this._spinnerStartTime = null;
+    }, timeToWait);
   }
 
   getParams() {
