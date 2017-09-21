@@ -15,7 +15,7 @@ var e = {
   teamName: 'Team',
   teamTitle: "Meet The Team",
   siteTitle: 'GrowthFountain | Equity Crowdfunding Platform',
-  siteDescription: 'Invest in local small businesses and startups for as little as $100 with equity crowdfunding with GrowthFountain.',
+  siteDescription: 'Invest as little as $100 in startups and small businesses. GrowthFountain is the preferred equity crowdfunding platform of more than 1 million credit union members',
   // Growth Fountain production keys:
   // facebookClientId: "191471871275050",
   // googleClientId: "488593151885-87nqfd8gl444a1me0n149otrf37dbahq.apps.googleusercontent.com",
