@@ -32,8 +32,9 @@ div(class=klass)
               p.drop-photo #{text}
               .icon-gallery
                 i(class=" fa fa-file-image-o")
+        - var files = this.galleryElement.files;
         .row
-          .col-lg-12.m-t-1
+          .col-lg-12.m-t-1.dragDropHint(style=("display: " + (files.length >= 2 ? "block;" : "none;")))
             .warning-block.text-lg-left.m-b-0
               i.fa.fa-info-circle
               span.warning-text Please feel free to drag and place your photos in the order you prefer.

@@ -910,14 +910,14 @@ module.exports = {
     },
 
     deleteMember(e) {
-      let memberId = Number(this.$(e.target).closest('.itemContainer')[0].dataset.id);
+      let memberId = Number(this.$(e.target).closest('.itemContainer')[0].dataset.index);
       app.dialogs.confirm('Are you sure you would like to delete this team member?').then((confirmed) => {
         if (!confirmed)
           return;
 
         api.makeRequest(this.urlRoot + '/' + memberId, 'DELETE')
           .then((data) => {
-            const idx = this.model.team_members.members.findIndex(m => m.id === memberId);
+            const idx = this.model.team_members.members.findIndex(m => m.index === memberId);
             if (idx < 0)
               return console.error(`Team member with id: ${memberId} not found`);
 
