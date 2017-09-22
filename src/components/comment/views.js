@@ -224,7 +224,7 @@ module.exports = {
       if (!app.validation.validate(this.fields, data)) {
         Object.keys(app.validation.errors).forEach((key) => {
           const errors = app.validation.errors[key];
-          this.invalidMsg(name, errors, $form);
+          this.invalidMsg(key, errors, $form);
         });
         $target.prop('disabled', false);
 

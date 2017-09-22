@@ -80,6 +80,7 @@ module.exports = Backbone.Router.extend(Object.assign({
     }
 
 
+    app.showLoading();
     if (app.currentView) {
       app.currentView.destroy();
     }
