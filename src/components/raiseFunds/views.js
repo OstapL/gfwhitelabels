@@ -917,7 +917,7 @@ module.exports = {
 
         api.makeRequest(this.urlRoot + '/' + memberId, 'DELETE')
           .then((data) => {
-            const idx = this.model.team_members.members.findIndex(m => m.id === memberId);
+            const idx = this.model.team_members.members.findIndex(m => m.index === memberId);
             if (idx < 0)
               return console.error(`Team member with id: ${memberId} not found`);
 

@@ -8,8 +8,6 @@ const preventScrollHandler = (e) => {
   return false;
 };
 
-const SHOW_SPINNER_DURATION = 600;
-
 function showLoadingSpinner() {
   $('.loader_overlay').show();
   const now = new Date();
@@ -111,12 +109,17 @@ class App {
     if (!this._spinnerTimeout && !this._spinnerStartTime)
       return;
 
-     if (this._spinnerTimeout)
-       return clearTimeout(this._spinnerTimeout);
+     if (this._spinnerTimeout) {
+       hideLoadingSpinner();
+       clearTimeout(this._spinnerTimeout);
+       this._spinnerTimeout = null;
+       return;
+     }
 
     const now = (new Date()).valueOf();
     const passedTime = now - this._spinnerStartTime;
-    const timeToWait = SHOW_SPINNER_DURATION - passedTime;
+    const showSpinnerDuration = 600;
+    const timeToWait = showSpinnerDuration - passedTime;
     if (timeToWait <= 0) {
       hideLoadingSpinner();
       this._spinnerStartTime = null;
