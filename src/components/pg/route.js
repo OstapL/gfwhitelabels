@@ -5,6 +5,7 @@ module.exports = {
     '': 'mainPage',
     'pg/:name': 'pagePG',
     'subscription-thanks': 'subscriptionThanks',
+    'scrapper/unsubscribe': 'scrapperUnsubscribe',
   },
   methods: {
     mainPage() {
@@ -53,6 +54,19 @@ module.exports = {
         app.currentView = new Views.subscriptionThanks({ template });
         app.currentView.render();
 
+        $('body').scrollTo();
+        app.hideLoading();
+      }, 'pg_chunk');
+    },
+
+		scrapperUnsubscribe: function () {
+
+      require.ensure([], (require) => {
+
+        const Views = require('./views.js');
+
+        app.currentView = Views.createView('scrapper-unsubscribe');
+        app.currentView.render();
         $('body').scrollTo();
         app.hideLoading();
       }, 'pg_chunk');
