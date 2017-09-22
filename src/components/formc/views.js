@@ -389,7 +389,7 @@ module.exports = {
       return '/formc/' + this.model.id + '/related-parties';
     },
 
-    deleteMember: function (e) {
+    deleteMember(e) {
       e.preventDefault();
 
       const target = e.currentTarget;
@@ -669,6 +669,11 @@ module.exports = {
       yearControl.prop('disabled', isCurrentDate);
     },
 
+    destroy() {
+      Backbone.View.prototype.destroy.call(this);
+      this.$el.find('.selectpicker').selectpicker('destroy');
+    }
+
   }, app.helpers.section.methods, app.helpers.menu.methods, app.helpers.yesNo.methods, app.helpers.confirmOnLeave.methods)),
 
 
@@ -916,6 +921,12 @@ module.exports = {
       this.campaign.updateMenu(this.campaign.calcProgress());
       return this;
     }, 
+
+    destroy() {
+      Backbone.View.prototype.destroy.call(this);
+      this.$('.max-total-use,.min-total-use').popover('dispose');
+    },
+
   }, app.helpers.menu.methods, app.helpers.section.methods, app.helpers.confirmOnLeave.methods)),
 
   riskFactorsInstruction: Backbone.View.extend(Object.assign({
@@ -1843,7 +1854,6 @@ module.exports = {
       this.$el.html(
         template({
           view: this,
-          xeroIntegration: xeroIntegration,
           fields: this.fields,
           values: this.model,
           campaignId: this.campaign.id,
@@ -1853,16 +1863,23 @@ module.exports = {
       app.helpers.disableEnter.disableEnter.call(this);
       this.campaign.updateMenu(this.campaign.calcProgress());
 
-      let xeroIntegration =  new View.xeroIntegration({
+       this.xeroIntegration =  new View.xeroIntegration({
         model: this.model,
         el: this.el.querySelector('#xeroBlock'),
         oldView: this
       });
-      xeroIntegration.render();
-      xeroIntegration.delegateEvents();
+      this.xeroIntegration.render();
+      this.xeroIntegration.delegateEvents();
       return this;
     },
 
+    destroy() {
+      Backbone.View.prototype.destroy.call(this);
+      if (this.xeroIntegration) {
+        this.xeroIntegration.destroy();
+        this.xeroIntegration = null;
+      }
+    },
   }, app.helpers.menu.methods, app.helpers.yesNo.methods, app.helpers.section.methods, app.helpers.confirmOnLeave.methods)),
 
   outstandingSecurity: Backbone.View.extend(Object.assign({

@@ -75,6 +75,8 @@ class ImageDropzone extends file.FileDropzone {
     if(imageOptions.defaultImage) {
       this.fileElement.options.defaultImage = imageOptions.defaultImage;
     }
+
+    this.cropperQuery = [];
   }
 
   getTemplate() {
@@ -131,7 +133,7 @@ class CropperDropzone {
     this.options = options;
 
     this.options.control = Object.assign({}, {
-      viewMode: 0,
+      viewMode: 2,
       dragMode: 'crop',
       aspectRatio: 1,
       data: {}, //prev stored cropper data. We may need it when we allow user to change img cropping
@@ -277,7 +279,7 @@ class CropperDropzone {
       // self.$modal.on('shown.bs.modal', () => {
 
         self.cropper = new Cropper(this, self.options.control);
-        const cropData = self.options.auto ? _.extend({x: 0, y: 0}, self.options.auto) : null;
+        const cropData = self.options.auto ? Object.assign({x: 0, y: 0}, self.options.auto) : null;
         self.$modal.modal('show');
         if (cropData) {
           self.cropper.setData(cropData);
@@ -302,7 +304,7 @@ class CropperDropzone {
             maxHeight = imageData.naturalHeight;
 
       const data = {};
-      const cropData = _.pick(this.cropper.getData(true), ['x', 'y', 'width', 'height']);
+      const cropData = app.utils.pick(this.cropper.getData(true), ['x', 'y', 'width', 'height']);
 
       const cropTransformation = {
         type: "crop",
@@ -319,7 +321,7 @@ class CropperDropzone {
           type: imageTypes.CROP,
           transformations: [ 
             cropTransformation,
-            { type: "fill", fillWidth: this.options.auto.width, fillHeight: this.options.auto.height },
+            { type: "fit", fitWidth: this.options.auto.width, fitHeight: this.options.auto.height },
           ],
         },
         {
@@ -384,7 +386,7 @@ class CropperDropzone {
 }
 
 module.exports = {
-  ImageElement: ImageElement,
-  ImageDropzone: ImageDropzone,
-  CropperDropzone: CropperDropzone
+  ImageElement,
+  ImageDropzone,
+  CropperDropzone,
 };

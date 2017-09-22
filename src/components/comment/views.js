@@ -50,7 +50,7 @@ module.exports = {
       this.readonly = options.readonly;
       this.allowQuestion = app.utils.isBoolean(options.allowQuestion) ? options.allowQuestion : true;
       this.allowResponse = app.utils.isBoolean(options.allowResponse) ? options.allowResponse : true;
-      this.cssClass = app.utils.isBoolean(options.cssClass) ? options.cssClass : '';
+      this.cssClass = app.utils.isString(options.cssClass) && options.cssClass ? options.cssClass : '';
 
       this.urlRoot = this.urlRoot.replace(':model', 'company').replace(':id', this.model.id);
 
@@ -224,7 +224,7 @@ module.exports = {
       if (!app.validation.validate(this.fields, data)) {
         Object.keys(app.validation.errors).forEach((key) => {
           const errors = app.validation.errors[key];
-          this.invalidMsg(name, errors, $form);
+          this.invalidMsg(key, errors, $form);
         });
         $target.prop('disabled', false);
 

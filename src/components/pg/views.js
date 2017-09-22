@@ -1,13 +1,13 @@
-function paralaxScrollHandler() {
-  const st = $(this).scrollTop() /15;
-
-  $(".scroll-paralax .background").css({
-    "transform" : "translate3d(0px, " + st /2 + "%, .01px)",
-    "-o-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
-    "-webkit-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
-    "-moz-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
-    "-ms-transform" : "translate3d(0px, " + st /2 + "%, .01px)"
-  });
+const withLeftMenuPages = ['education', 'advertising', 'terms-of-use', 'privacy-policy'];
+const templateMap = {
+  'annual-privacy': 'annual_privacy',
+  'investor-tutorial': 'investor_tutorial',
+  'business-tutorial': 'business_tutorial',
+  'success-guide': 'success_guide',
+  'terms-of-use': 'terms_of_use',
+  'privacy-policy': 'privacy_policy',
+  'electronic-signature': 'electronic_signature',
+  'formc-review-congratulations': 'formc_review_congratulations',
 };
 
 function scaleVideoContainer(selector='.homepage-hero-module') {
@@ -68,18 +68,20 @@ function resizeHandler() {
   scaleBannerVideoSize('.video-container video');
 };
 
-module.exports = {
+const Views = {
   WithLeftMenu: Backbone.View.extend({
     el: '#content',
 
     initialize(options) {
-      this.template = options.template;
+      this.templateName = options.template;
+      this.template = require(`./templates/${ this.templateName }.pug`);
       this.scrollHandler = null;
       this.listenToNavigate();
     },
 
     destroy() {
       Backbone.View.prototype.destroy.call(this);
+      app.clearClasses('#page', ['page']);
       if (this.scrollHandler) {
         $(window).off('scroll', this.scrollHandler);
         this.scrollHandler = null;
@@ -182,9 +184,6 @@ module.exports = {
     },
 
     attachEvents() {
-      if (!this.scrollHandler)
-        $(window).on('scroll', this.scrollHandler = paralaxScrollHandler);
-
       if (!this.resizeHandler) {
         scaleVideoContainer();
         initBannerVideoSize('.video-container .poster img');
@@ -196,6 +195,7 @@ module.exports = {
     },
 
     destroy() {
+      Backbone.View.prototype.destroy.call(this);
       setTimeout(() => {
         if (this.$carousel) {
           this.$carousel.hide();
@@ -203,11 +203,6 @@ module.exports = {
           this.$carousel = null;
         }
       }, 4000);
-
-      if (this.scrollHandler) {
-        $(window).off('scroll', this.scrollHandler);
-        this.scrollHandler = null;
-      }
 
       if (this.resizeHandler) {
         $(window).off('resize', this.resizeHandler);
@@ -217,10 +212,153 @@ module.exports = {
 
     render() {
       this.$el.html(this.template({ collection: this.collection, }));
+      this.$el.find('.calculator-block-click .calculator-item .text-wrap').equalHeights();
       this.postRender();
       return this;
     },
 
   }),
 
+  pg: Backbone.View.extend({
+    el: '#content',
+    events: {
+      'click .list-group-item-action': 'accordeonHandler',
+    },
+
+    initCarousel() {
+      this.$owlCarousel = this.$el.find('.owl-carousel');
+      if (!this.$owlCarousel || !this.$owlCarousel.length)
+        return;
+      
+      this.$owlCarousel.owlCarousel({
+        loop: true,
+        nav: true,
+        autoplay: true,
+        autoplayTimeout: 9000,
+        smartSpeed: 2000,
+        responsiveClass: true,
+        animateOut: 'fadeOuts',
+        items: 1,
+        navText: [
+          '<i class="fa fa-angle-left" aria-hidden="true"></i>',
+          '<i class="fa fa-angle-right" aria-hidden="true"></i>',
+        ],
+        responsive: {
+          0: { items: 1 },
+          600: { items: 1 },
+          1000: { items: 1 },
+        },
+      });
+      this.$el.find('.customNextBtn').on('click', () => this.$owlCarousel.trigger('next.owl.carousel'));
+    },
+
+    initAudioModalEvents() {
+      this.$audioModal = this.$el.find('#audio-modal');
+      if (!this.$audioModal)
+        return;
+      
+      this.$audioModal.on('hidden.bs.modal', () => {
+        document.getElementById('news_audio').pause()
+      });
+    },
+
+    initStickySideMenu() {
+      this.$sideMenu = this.$el.find('.sticky-side-menu');
+      if (!this.$sideMenu || !this.$sideMenu.length)
+        return;
+
+      require('components/sticky-kit/js/sticky-kit.js');
+      this.$sideMenu.stick_in_parent()
+        .on('sticky_kit:bottom', function (e) {
+          $(this).parent().css('position', 'static');
+        })
+        .on('sticky_kit:unbottom', function (e) {
+          $(this).parent().css('position', 'relative');
+        });
+    },
+
+    initCalendly() {
+      app.helpers.scripts.loadCalendlyAPI().then(() => {
+        this.$el.find('.scheduleCall').on('click', (e) => {
+          e.preventDefault();
+          Calendly.showPopupWidget('https://calendly.com/morganatgrowthfountain/15min');
+          return false;
+        });
+      });
+    },
+
+    initialize(options) {
+      this.template = require(`./templates/${ options.template }.pug`);
+    },
+
+    render() {
+      this.$el.html(
+        this.template({})
+      );
+
+      setTimeout(() => {
+        this.initCalendly();
+        this.initCarousel();
+        this.initStickySideMenu();
+        this.initAudioModalEvents();
+      }, 10);
+
+      return this;
+    },
+
+    destroy() {
+      Backbone.View.prototype.destroy.call(this);
+      app.clearClasses('#page', ['page']);
+      if (this.$owlCarousel && this.$owlCarousel.length) {
+        this.$owlCarousel.hide();
+        this.$owlCarousel.owlCarousel('destroy');
+        this.$owlCarousel = null;
+      }
+
+      if (this.$audioModal) {
+        this.$audioModal.off('hidden.bs.modal');
+        this.$audioModal = null;
+      }
+
+      if (this.$sideMenu) {
+        //destroy sticky side menu
+        this.$sideMenu.trigger("sticky_kit:detach");
+        this.$sideMenu = null;
+      }
+    },
+
+    accordeonHandler(e) {
+      this.$el.find('.list-group-item-action').removeClass('active');
+      this.$el.find('.fa').removeClass('fa-angle-up').addClass('fa-angle-down');
+
+      const $elem = $(e.target);
+      const $icon = $elem.find('.fa');
+
+      if ($elem.is('.active')) {
+        $icon.removeClass('fa-angle-up').addClass('fa-angle-down');
+      } else {
+        // remove active state of all other panels
+        $elem.closest('.custom-accordion')
+          .find('.list-group-item-action')
+          .removeClass('active')
+          .find('.fa')
+          .removeClass('fa-angle-up')
+          .addClass('fa-angle-down');
+        $icon.removeClass('fa-angle-down')
+          .addClass('fa-angle-up');
+      }
+
+      $elem.toggleClass('active');
+    },
+  }),
 };
+
+module.exports = Object.assign({
+  createView(page) {
+    app.addClassesTo('#page', [page]);
+    const template = templateMap[page] || page;
+    return withLeftMenuPages.includes(page)
+      ? new Views.WithLeftMenu({ template })
+      : new Views.pg({ template });
+  },
+}, Views);

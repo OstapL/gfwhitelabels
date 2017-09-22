@@ -4,7 +4,7 @@ const imageDropzone = require('./image.js');
 const ImageClass = require('models/image.js');
 const defaultImage = require('images/default/255x153.png');
 const imageTypes = require('consts/imageTypes.json');
-
+const Sortable = require('sortablejs');
 
 class GalleryElement extends imageDropzone.ImageElement {
   constructor(file, fieldName, fieldDataName, options={}) {
@@ -24,7 +24,7 @@ class GalleryElement extends imageDropzone.ImageElement {
         new ImageClass('', el),
         fieldName,
         fieldDataName,
-        options
+        options,
       );
       fileObj.delete = () => this.delete.call(this, fileObj.file.id);
       fileObj.getTemplate = this.getTemplate;
@@ -71,7 +71,6 @@ class GalleryElement extends imageDropzone.ImageElement {
       this.file.data.splice(indexFile, 1);
       this.save().then(() => {
         imageRender.element.remove()
-        delete this.file.data[index];
         if(imageRender.options.onSaved) {
           imageRender.options.onSaved(this);
         }
@@ -104,6 +103,9 @@ class GalleryDropzone extends imageDropzone.ImageDropzone {
     };
 
     this.cropperQuery = [];
+    setTimeout(() => {
+      this.initDragDrop();
+    }, 10);
   }
 
   getTemplate() {
@@ -165,9 +167,57 @@ class GalleryDropzone extends imageDropzone.ImageDropzone {
       };
     });
   }
+
+  initDragDrop() {
+    const selectorParts = this.galleryElement.elementSelector.split(' ');
+    const dropzoneElement = selectorParts.reduce((element, selector) => {
+      return element.querySelector(selector) || element;
+    }, document);
+    const sortableElement = dropzoneElement.querySelector('.fileHolder');
+    this.sortable = Sortable.create(sortableElement, {
+      animation: 150,
+      draggable: '.one-photo',
+      handle: 'img',
+      dataIdAttr: 'data-id',
+      onEnd: (e) => {
+        //hide loading spinner
+        //loading spinner is shown because dropzone component listens for drop event
+        $(dropzoneElement).find('.uploading').addClass('.collapse').hide();
+        const oldIdx = e.oldIndex;
+        const newIdx = e.newIndex;
+        this.reorder({oldIdx, newIdx });
+      },
+    });
+    this.imgIds = this.sortable.toArray().map(id => Number(id));
+  }
+
+  getReorderedData(reorderedIds) {
+    const data = Array.from(this.galleryElement.file.data, img => img.toJSON());
+    return data.sort((a, b) => {
+      return reorderedIds.indexOf(a.id) - reorderedIds.indexOf(b.id);
+    });
+  }
+
+  reorder({ oldIdx, newIdx }) {
+    if (oldIdx === newIdx)
+      return;
+
+    const { length } = this.imgIds;
+    if (oldIdx < 0 || oldIdx >= length || newIdx < 0 || newIdx >= length)
+      return console.error(`indices out of range old: ${oldIdx}, new: ${newIdx}`);
+
+    const reorderedImgIds = this.sortable.toArray().map(id => Number(id));
+    const reorderedData = this.getReorderedData(reorderedImgIds);
+    if (this.fileOptions.onReorder) {
+      this.sortable.option('disabled', true);
+      this.fileOptions.onReorder(reorderedData)
+        .then(() => this.sortable.option('disabled', false))
+        .catch(() => this.sortable.option('disabled', false));
+    }
+  }
 }
 
 module.exports = {
-  GalleryElement: GalleryElement,
-  GalleryDropzone: GalleryDropzone
+  GalleryElement,
+  GalleryDropzone,
 };

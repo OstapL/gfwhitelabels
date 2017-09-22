@@ -6,18 +6,6 @@ const COUNTRIES = require('consts/countries.json');
 
 const CalculatorView = require('./revenueShareCalculator.js');
 
-function paralaxScrollHandler() {
-  var st = $(this).scrollTop() /15;
-
-  $(".scroll-paralax .background").css({
-    "transform" : "translate3d(0px, " + st /2 + "%, .01px)",
-    "-o-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
-    "-webkit-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
-    "-moz-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
-    "-ms-transform" : "translate3d(0px, " + st /2 + "%, .01px)",
-  });
-}
-
 const emitCustomEvent = (data) => {
   if (!data)
     return;
@@ -126,8 +114,10 @@ module.exports = {
     destroy() {
       Backbone.View.prototype.destroy.call(this);
       $(document).off("scroll", this.onScrollListener);
-      if (this.commentsView)
+      if (this.commentsView) {
         this.commentsView.destroy();
+        this.commentsView = null;
+      }
     },
 
     submitCampaign(e) {
@@ -226,8 +216,7 @@ module.exports = {
         if (refElement.position().top - $navBar.height() <= scrollPos && refElement.position().top + refElement.height() > scrollPos) {
           $link.removeClass("active");
           currLink.addClass("active");
-        }
-        else{
+        } else{
           currLink.removeClass("active");
         }
       });
@@ -268,6 +257,7 @@ module.exports = {
 
           $fancyBox.fancybox({
             openEffect  : 'elastic',
+            href: $(this).attr('href'),
             closeEffect : 'elastic',
 
             helpers: {
@@ -379,8 +369,6 @@ module.exports = {
       setTimeout(() => {
         this.initAsyncUI();
       }, 100);
-
-      $(window).on('scroll', paralaxScrollHandler);
 
       this.$el.find('.perks .col-xl-4 p').equalHeights();
       this.$el.find('.team .auto-height').equalHeights();

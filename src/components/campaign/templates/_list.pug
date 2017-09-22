@@ -22,7 +22,7 @@
             .is-new
               img(src=require("images/generals/is-new.png"), alt="")
           .more_inform
-            .title.text-center
+            .title
               if company.campaign.security_type == 0
                 h3.text-uppercase Valuation: #{app.helpers.format.formatPrice(company.campaign.premoney_valuation)}
               else
@@ -36,8 +36,30 @@
                 //- p % Revenue: #{campaign.percentage_revenue}%
                 p Cap: #{company.campaign.cap}X
                 p Minimum Investment: $#{company.campaign.minimum_increment}
-            hr
-            .small_text
+          // if company.campaign.security_type == 2
+            .more_inform.combi
+              .text-xs-left
+                .invest Invest up to $1999
+                .receive
+                  | receive
+                  h4.text-uppercase Revenue Share
+                .percentage Percentage revenue: #{company.campaign.percentage_revenue}%
+                .cap #{company.campaign.cap}X
+              .text-xs-right
+                .invest
+                  | Invest
+                  strong $2,000
+                  | or more,
+                .receive
+                  | receive
+                  h4.text-uppercase Common Equity
+                .val
+                  | Valuation: #{app.helpers.format.formatPrice(company.campaign.premoney_valuation)}
+                .price-par
+                  | Price per share: #{app.helpers.format.formatPrice(company.campaign.price_per_share)}
+
+            //hr
+              .small_text
               if company.tagline
                 h3.font-weight-light.letter-spacing-normal.m-t-2 #{company.tagline.substr(0, 120)}
         .title.text-xs-center

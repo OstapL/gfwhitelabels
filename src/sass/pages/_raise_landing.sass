@@ -63,15 +63,11 @@
     img
       width: 145px
       position: relative
-      top: -10px
+      top: -15px
       @media screen and (min-width : 1200px) and (max-width : 1300px)
         top: 0
-      @media only screen and (max-width : 768px)
-        width: 70px
-        top: 0
-      @media only screen and (max-width : 375px)
-        width: 50px
-        top: 0
+      @media only screen and (max-width : 576px)
+        width: 60px
     @media only screen and (max-width : 768px)
       background-attachment: initial
     .bottom-text
@@ -160,7 +156,8 @@
         margin-top: rem(75)
       @media only screen and (max-width : 575px)
         margin-top: rem(90)
-
+  .calculator-block-click
+    margin-bottom: rem(20)
   .simplify
     background-color: $alabaster
     position: relative
@@ -317,7 +314,7 @@
   position: fixed
   right: 15px
   bottom: 65px
-  z-index: 9998  
+  z-index: 9997
   .raise-landing
     background-image: url("img/generals/background-triangle.png")
     padding: rem(25)

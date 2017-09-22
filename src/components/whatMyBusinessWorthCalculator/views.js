@@ -101,6 +101,9 @@ module.exports = {
     destroy() {
       Backbone.View.prototype.destroy.call(this);
       this.$('[data-toggle="tooltip"]').tooltip('dispose');
+      this.bootstrapSlider.each(function() {
+        $(this).bootstrapSlider('destroy')
+      });
     },
 
     nextStep(e) {
@@ -146,6 +149,7 @@ module.exports = {
     events: Object.assign({
       // calculate your income
       'submit .js-calc-form': 'doCalculation',
+      'click .next': (e) => { e.preventDefault(); $('.js-calc-form').submit(); return false; },
       'blur [type=money]': saveValue,
     }, app.helpers.calculatorValidation.events),
 
@@ -192,6 +196,9 @@ module.exports = {
     destroy() {
       Backbone.View.prototype.destroy.call(this);
       this.$('[data-toggle="tooltip"]').tooltip('dispose');
+      this.bootstrapSlider.each(function() {
+        $(this).bootstrapSlider('destroy');
+      });
     },
 
     doCalculation(e) {

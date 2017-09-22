@@ -345,6 +345,7 @@ module.exports = {
       // calculate your income
       'blur [type=money]': saveValue,
       'submit .js-calc-form': 'doCalculation',
+      'click .next': (e) => { e.preventDefault(); $('.js-calc-form').submit(); return false; },
     }, app.helpers.calculatorValidation.events),
 
     doCalculation(e) {
@@ -521,7 +522,7 @@ module.exports = {
         require('src/js/graph/jquery.flot.categories.js');
         require('src/js/graph/jquery.flot.growraf');
 
-        const $plot = $.plot($("#chart"), data, {
+        this.$plot = $.plot($("#chart"), data, {
           series: {
             lines: {
               fill: false
@@ -563,9 +564,18 @@ module.exports = {
           }
         });
 
-        app.helpers.calculator.bindResizeTo($plot);
+        app.helpers.calculator.bindResizeTo(this.$plot);
 
       }, 'graph_chunk');
-    }
+    },
+
+    destroy() {
+      Backbone.View.prototype.destroy.call(this);
+      if (this.$plot) {
+        app.helpers.calculator.unbindResizeFrom(this.$plot);
+        this.$plot.shutdown();
+        this.$plot = null;
+      }
+    },
   })
 };
