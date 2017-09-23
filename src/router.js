@@ -30,9 +30,18 @@ const checkSafeExtend = (dest={}, src={}) => {
 const routesMap = componentRoutes.reduce((dest, route) => {
   checkSafeExtend(dest.routes, route.routes);
   checkSafeExtend(dest.methods, route.methods);
+  checkSafeExtend(dest.routes, route.historicalRoutes || {});
 
   dest.routes = Object.assign(dest.routes, route.routes);
   dest.methods = Object.assign(dest.methods, route.methods);
+
+  Object.keys(route.historicalRoutes || {}).forEach((historicalRoute) => {
+    const actualRoute = route.historicalRoutes[historicalRoute];
+    dest.routes[historicalRoute] = () => {
+      window.location = actualRoute.startsWith('/') ? actualRoute : `/${actualRoute}`;
+    }
+  });
+
   if (Array.isArray(route.auth)) {
     dest.auth = dest.auth.concat(route.auth);
   } else if (route.auth === '*') {
