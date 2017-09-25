@@ -95,8 +95,8 @@
 
 .top-info
   position: relative
-  padding-bottom: rem(20)
-  padding-top: rem(15)
+  padding-bottom: rem(10)
+  padding-top: rem(10)
   position: absolute
   bottom: 0
   width: 100%
@@ -120,10 +120,21 @@
         color: $white
         margin-bottom: 0
         margin-top: 0
-        @media only screen and (max-width : 767px)
-          margin-bottom: rem(25)
         @media only screen and (max-width : 575px)
           font-size: rem(16)
+      h3
+        line-height: 22px
+        position: relative
+        max-width: 160px
+        margin-bottom: 0
+        margin-top: 0
+        color: $white
+        @media only screen and (max-width : 991px)
+          margin: auto
+        div
+          position: absolute
+          right: -5px
+          top: 5px
       p
         color: $small-text
         margin-bottom: rem(3)
@@ -137,6 +148,30 @@
           top: -5px
         @media screen and (min-width : 992px) and (max-width : 1199px)
           margin-top: 0
+      .percentage-revenue
+        margin-left: rem(45)
+        @media only screen and (max-width : 1199px)
+          margin-left: 0
+
+      .hybrit
+        .one-block
+          min-height: 80px
+          @media only screen and (max-width : 767px)
+            min-height: 70px
+          .wrap
+            transform: translate(-50%, -50%)
+            position: absolute
+            left: 50%
+            top: 50%
+            width: 100%
+      .hybrit-soc
+        margin-top: 0
+        padding-top: 0
+        margin-right: rem(15)
+      .type-of-security
+        @media only screen and (min-width : 992px)
+          .wrap
+            padding-left: rem(15)
     .btn
       margin-top: rem(8)
 .edit-campaign-wrap
@@ -632,6 +667,10 @@
     td
       padding-left: 20px
       padding-right: 20px
+  .investmens
+    padding: rem(10)
+    color: $black
+
 
 #perks
   margin-top: rem(10)
@@ -727,7 +766,6 @@
   .top-info-wrap-item
     h2
       font-size: rem(19)
-      margin-bottom: rem(25)!important
       &.no-margin
         margin-bottom: 0!important
     p
