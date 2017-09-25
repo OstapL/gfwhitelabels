@@ -15,6 +15,7 @@ module.exports = {
 	commentsServer: "https://api-comments.growthfountain.com",
 	blogServer: "https://api-blog.growthfountain.com",
 	notificationsServer: "https://notifications.growthfountain.com/",
+	emailServer: "https://api-email.growthfountain.com",
 	bucketServer: "https://s3.amazonaws.com/growthfountain-alpha-storage",
 	teamName: 'GrowthFountain Team',
 	teamTitle: "Meet The Team",
@@ -30,13 +31,13 @@ module.exports = {
 	// linkedinClientId: "77wzj6tz0yyr33",
 
 	facebookClientId: '1071081646296574',
-  googleClientId: '805823281871-ve3unmva9aer69papghudk0dnpf8tqr2.apps.googleusercontent.com',
-  linkedinClientId: "77rg2wrcb8utfq",
+	googleClientId: '805823281871-ve3unmva9aer69papghudk0dnpf8tqr2.apps.googleusercontent.com',
+	linkedinClientId: "77rg2wrcb8utfq",
 
-  googleMapKey: "AIzaSyBpCl9-7bkVISZ0o-AaFCsKzZwGAxalkZU",
-  stripeKey: "pk_live_4ZF2RPjAVJ0tXrDNMauofmgb",
+	googleMapKey: "AIzaSyBpCl9-7bkVISZ0o-AaFCsKzZwGAxalkZU",
+	stripeKey: "pk_live_4ZF2RPjAVJ0tXrDNMauofmgb",
 
-  googleTagID: 'GTM-NC9XW5D',
+	googleTagID: 'GTM-NC9XW5D',
 	googleAnalyticsID: 'UA-47199302-3',
 	googleAnalyticsIDGeneral: 'UA-47199302-1',
 	facebookPixelID: 172026009946228,
@@ -50,11 +51,11 @@ module.exports = {
 		videoPopupUrl: 'https://player.vimeo.com/video/180959374?title=0&amp;byline=0&amp;portrait=0',
 		videoTitle: 'A NEW WAY TO INVEST OR RAISE CAPITAL',
 		videoText: '<p class="font-weight-normal">Through our partnership with Growth Fountain we\'re pleased to introduce Equity Crowdfunding. <br> With this innovative program:</p>'
-	    + '<p class="m-t-0 m-b-0">- Investors and entrepreneurs can connect to enrich each other.'
-	    +'<br>- Investors receive equity for their contributions to small businesses.'
-	    + '<br>- Entrepreneurs can raise capital for their businesses through these contributions'
-	    + '<br>- Opportunities are available on local and national levels.'
-	    + '<br>- Economic growth is spurred by greater exposure and interest.</p>',
+			+ '<p class="m-t-0 m-b-0">- Investors and entrepreneurs can connect to enrich each other.'
+			+'<br>- Investors receive equity for their contributions to small businesses.'
+			+ '<br>- Entrepreneurs can raise capital for their businesses through these contributions'
+			+ '<br>- Opportunities are available on local and national levels.'
+			+ '<br>- Economic growth is spurred by greater exposure and interest.</p>',
 		dataVideoIdPopup: '180959374',
 		dataProviderVideoPopup: 'vimeo',
 		// top banner (none - 0 / dcu - 1 / river - 2)
@@ -62,5 +63,5 @@ module.exports = {
 		//bottom banner (1 - raise capital/ 0 - INVEST)
 		bottomBunner: 0,
 	},
-  currentSiteUrl: 'jdcu.growthfountain.com',
+	currentSiteUrl: 'jdcu.growthfountain.com',
 };
