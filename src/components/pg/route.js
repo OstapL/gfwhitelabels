@@ -1,5 +1,10 @@
 const authPages = ['success-guide', 'advertising'];
 
+const historicalTemplates = {
+  'investorquestions': 'investor-questions',
+  'entrepreneurquestions': 'entrepreneur-questions',
+};
+
 module.exports = {
   routes: {
     '': 'mainPage',
@@ -23,12 +28,13 @@ module.exports = {
     },
 
     pagePG: function (name) {
+      if (historicalTemplates[name])
+        return window.location = `/pg/${historicalTemplates[name]}`;
 
       require.ensure([], (require) => {
         //TODO: move this to common router ensure logged in
         if (authPages.includes(name) && !app.user.ensureLoggedIn(window.location.pathname))
           return false;
-
 
         const Views = require('./views.js');
 
