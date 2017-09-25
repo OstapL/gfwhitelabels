@@ -15,6 +15,7 @@ module.exports = {
  commentsServer: "https://api-comments.growthfountain.com",
  blogServer: "https://api-blog.growthfountain.com",
  notificationsServer: "https://notifications.growthfountain.com/",
+ emailServer: "https://api-email.growthfountain.com",
  bucketServer: "https://s3.amazonaws.com/growthfountain-alpha-storage",
 
  teamName: 'GrowthFountain Team',
