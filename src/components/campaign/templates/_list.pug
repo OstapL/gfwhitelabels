@@ -23,20 +23,20 @@
               img(src=require("images/generals/is-new.png"), alt="")
           .more_inform
             .title
-              if company.campaign.security_type == 0
+              if company.campaign.security_type == security_type.CommonEquity
                 h3.text-uppercase Valuation: #{app.helpers.format.formatPrice(company.campaign.premoney_valuation)}
-              else
+              else if company.campaign.security_type == security_type.RevenueShare
                 h3.text-uppercase Percentage Revenue: #{company.campaign.percentage_revenue}%
 
             .bottom_pr
               if company.campaign.security_type == security_type.CommonEquity
                 p Price per share: #{app.helpers.format.formatPrice(company.campaign.price_per_share)}
                 p Number of shares: #{(Math.round(company.campaign.minimum_raise / company.campaign.price_per_share) || 0).toLocaleString('en-US')}
-              else
+              else if company.campaign.security_type == security_type.RevenueShare
                 //- p % Revenue: #{campaign.percentage_revenue}%
                 p Cap: #{company.campaign.cap}x
                 p Minimum Investment: $#{company.campaign.minimum_increment}
-          if company.campaign.security_type == 2
+          if company.campaign.security_type == security_type.HybridSecurity
             .more_inform.combi
               .text-xs-left
                 .invest
@@ -46,7 +46,7 @@
                   span.font-weight-light receive 
                   h4.text-uppercase.d-inline-block Revenue Share
                 .percentage Percentage revenue: #{company.campaign.percentage_revenue}%
-                .cap Cap: #{company.campaign.cap}X
+                .cap Cap: #{company.campaign.cap}x
               .text-xs-right
                 .invest
                   span.font-weight-light Invest 
