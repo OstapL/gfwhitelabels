@@ -81,7 +81,7 @@ section.campaign-specifics.container.m-b-85
                 value: values.hybrid_toggle_amount,
                 placeholder: '$',
                 });
-        div(style=(values.security_type == 1 ? '' :  "display: none")).security_type_list.security_type_1
+        div(style=([1,2].indexOf(values.security_type) !== -1 ? '' :  "display: none")).security_type_list.security_type_1
           .row.security_type_title(style=(values.security_type == 2 ? '' :  "display: none"))
             .col-xl-12
               h3.m-t-2.m-b-0 Revenue Share
@@ -129,7 +129,7 @@ section.campaign-specifics.container.m-b-85
                 li.p-b-1 You have paid investors back two times the invested amount (distributions are capped at (2x) the investment amount, at which point the contract is deemed fulfilled);
                 li.p-b-1 No distributions are required until the second full calendar year and the company is allowed one year of forbearance as needed;
                 li In the event of default, investors become general unsecured creditors (senior to equity).
-        div(style=(values.security_type == 0 ? '' :  "display: none")).security_type_list.security_type_0
+        div(style=([0,2].indexOf(values.security_type) !== -1 ? '' :  "display: none")).security_type_list.security_type_0
           .row.security_type_title(style=(values.security_type == 2 ? '' :  "display: none"))
             .col-xl-12
               h3.m-t-2.m-b-0 Common Equity
