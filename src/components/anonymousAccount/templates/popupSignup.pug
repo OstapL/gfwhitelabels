@@ -7,20 +7,26 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
             i.fa.fa-times
         .title-header-signup.m-t-1
           .row
-            .col-xl-6.col-lg-6.col-md-6.col-sm-6.col-xs-12.p-l-0.p-xs-0
-              .text-xs-center.text-sm-right.text-md-right.text-lg-right.text-xl-right
-                h1.title.text-uppercase Get
-                h1.number.text-uppercase.font-weight-bold
-                  | &nbsp;$25&nbsp;
-                h1.title.text-uppercase Credit
-              .title-header-bottom.text-xs-center.text-sm-right.text-md-right.text-lg-right.text-xl-right
-                span.font-weight-light If You Sign Up Now*
-                hr.mobile
-            .col-xl-6.col-lg-6.col-md-6.col-sm-6.col-xs-12.border-left 
-              .text.text-xs-left
-                p *Limited time offer for new accounts only. Credit valid for 90 days and can be used only for investments made on this platform. Other conditions apply, see 
-                  span
-                    a(href="/pg/terms_of_use").link-6 Terms of Use.
+            if window.location.pathname != '/calculator/revenue-share/step-2' && window.location.pathname != '/calculator/capital-raise/step-2' && window.location.pathname != '/calculator/established-business/step-3' && window.location.pathname != '/calculator/startup/step-1'
+              .col-xl-6.col-lg-6.col-md-6.col-sm-6.col-xs-12.p-l-0.p-xs-0
+                .text-xs-center.text-sm-right.text-md-right.text-lg-right.text-xl-right
+                  h1.title.text-uppercase Get
+                  h1.number.text-uppercase.font-weight-bold
+                    | &nbsp;$25&nbsp;
+                  h1.title.text-uppercase Credit
+                .title-header-bottom.text-xs-center.text-sm-right.text-md-right.text-lg-right.text-xl-right
+                  span.font-weight-light If You Sign Up Now*
+                  hr.mobile
+              .col-xl-6.col-lg-6.col-md-6.col-sm-6.col-xs-12.border-left 
+                .text.text-xs-left
+                  p *Limited time offer for new accounts only. Credit valid for 90 days and can be used only for investments made on this platform. Other conditions apply, see 
+                    span
+                      a(href="/pg/terms_of_use").link-6 Terms of Use.
+            else 
+              .col-xl-12.white-color
+                h3.font-weight-bold.m-t-1.m-b-0 Our calculators are free to use!
+                h3.font-weight-light.m-t-0.m-b-1 Simply register on the site to continue.
+
       .modal-body
         .container.form-section
           h2.text-xs-center.text-uppercase.dosis.modal-title Sign up
