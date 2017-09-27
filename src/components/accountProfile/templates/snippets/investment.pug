@@ -1,3 +1,5 @@
+-
+  var SECURITY = require('consts/raisecapital/security_type.json');
 div(data-investmentid=id).one_table
   -
     var url = campaign.getMainImage();
@@ -49,7 +51,13 @@ div(data-investmentid=id).one_table
         .col40
           span.light_grey Security
         .col60
-          span.dark_grey #{security_type == 0 ? 'Common Equity' : 'Revenue Share'}
+          span.dark_grey 
+            if security_type == SECURITY.CommonEquity
+              | Common Equity
+            if security_type == SECURITY.RevenueShare
+              | Revenue Share
+            if security_type == SECURITY.HybridSecurity
+              | Hybrid Security
       .one_line
         .col40.col-perks
           span.light_grey Perks
