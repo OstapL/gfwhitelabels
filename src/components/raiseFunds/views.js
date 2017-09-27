@@ -910,14 +910,14 @@ module.exports = {
     },
 
     deleteMember(e) {
-      let memberId = Number(this.$(e.target).closest('.itemContainer')[0].dataset.id);
+      let memberId = Number(this.$(e.target).closest('.itemContainer')[0].dataset.index);
       app.dialogs.confirm('Are you sure you would like to delete this team member?').then((confirmed) => {
         if (!confirmed)
           return;
 
         api.makeRequest(this.urlRoot + '/' + memberId, 'DELETE')
           .then((data) => {
-            const idx = this.model.team_members.members.findIndex(m => m.id === memberId);
+            const idx = this.model.team_members.members.findIndex(m => m.index === memberId);
             if (idx < 0)
               return console.error(`Team member with id: ${memberId} not found`);
 
@@ -1058,8 +1058,8 @@ module.exports = {
 
       this.$('#min_number_of_shares').val(min_number_of_shares.toLocaleString('en-US'));
       this.$('#max_number_of_shares').val(max_number_of_shares.toLocaleString('en-US'));
-      this.$('#min_equity_offered').val(min_equity_offered + '%');
-      this.$('#max_equity_offered').val(max_equity_offered + '%');
+      this.$('.security_type_0 #min_equity_offered').val(min_equity_offered + '%');
+      this.$('.security_type_0 #max_equity_offered').val(max_equity_offered + '%');
     },
 
     _success(data, newData) {

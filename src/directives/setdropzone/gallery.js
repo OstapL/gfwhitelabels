@@ -98,8 +98,10 @@ class GalleryDropzone extends imageDropzone.ImageDropzone {
       options.crop
     );
 
-    if(options.onSaved) {
-      this.galleryElement.options.onSaved = options.onSaved;
+    this.galleryElement.options.onSaved = (data) => {
+      this.updateDragDropHint();
+      if (options.onSaved)
+        options.onSaved.call(this.galleryElement, data);
     };
 
     this.cropperQuery = [];
@@ -110,6 +112,13 @@ class GalleryDropzone extends imageDropzone.ImageDropzone {
 
   getTemplate() {
     return require('./templates/galleryDropzone.pug');
+  }
+
+  updateDragDropHint() {
+    if (this.galleryElement.file.data.length >= 2)
+      $(this.element).find('.dragDropHint').show();
+    else
+      $(this.element).find('.dragDropHint').hide();
   }
 
   success(file, data) {

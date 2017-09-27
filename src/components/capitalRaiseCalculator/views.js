@@ -216,7 +216,7 @@ module.exports = {
       // save calculated data
       app.helpers.calculator.saveCalculatorData(CALCULATOR_NAME, Object.assign(data, calculatedData));
 
-      setTimeout(() => app.routers.navigateWithReload('/calculator/capitalraise/finish', {trigger: true}), 10);
+      setTimeout(() => app.routers.navigateWithReload('/calculator/startup/finish', {trigger: true}), 10);
     },
 
     render() {
@@ -252,7 +252,7 @@ module.exports = {
 
       //TODO: add data validation
       if (dataSameAsDefault || !data.PreMoneyValuation) {
-        setTimeout(() => app.routers.navigate('/calculator/capitalraise/step-1', {trigger: true}), 100);
+        setTimeout(() => app.routers.navigate('/calculator/startup/step-1', {trigger: true}), 100);
         return this;
       }
 
