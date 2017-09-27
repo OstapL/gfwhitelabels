@@ -165,7 +165,7 @@ class Campaign {
           this.investor_presentation_file_id.id != null &&
           (this.security_type == 1 || 
            (this.security_type == 0 && this.premoney_valuation > 0) || 
-           (this.security_type == 2 && this.premoney_valuation > 0 && this.hybrid_toggle_amount > 1000)
+           (this.security_type == 2 && this.premoney_valuation > 0 && this.hybrid_toggle_amount >= 1000)
           ),
         'team-members': 
           this.team_members.members.length > 0  /* && 

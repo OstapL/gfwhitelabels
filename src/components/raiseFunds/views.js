@@ -1058,8 +1058,8 @@ module.exports = {
 
       this.$('#min_number_of_shares').val(min_number_of_shares.toLocaleString('en-US'));
       this.$('#max_number_of_shares').val(max_number_of_shares.toLocaleString('en-US'));
-      this.$('#min_equity_offered').val(min_equity_offered + '%');
-      this.$('#max_equity_offered').val(max_equity_offered + '%');
+      this.$('.security_type_0 #min_equity_offered').val(min_equity_offered + '%');
+      this.$('.security_type_0 #max_equity_offered').val(max_equity_offered + '%');
     },
 
     _success(data, newData) {
