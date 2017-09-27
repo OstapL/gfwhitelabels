@@ -145,12 +145,13 @@ module.exports = {
 
     resizeArea() {
       setTimeout(() => {
-        var area = document.querySelector('.text-body');
+        var area = this.el.querySelector('.text-body');
+        var topButtonPosition = this.el.querySelector('.topButtonPosition');
         if (!area)
           return;
-
         area.style.height = 'auto';
         area.style.height = area.scrollHeight + 'px';
+        topButtonPosition.style.top = (area.scrollHeight - 37) + 'px';
       }, 0);
     },
 

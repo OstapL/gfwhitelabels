@@ -8,6 +8,8 @@ const templateMap = {
   'privacy-policy': 'privacy_policy',
   'electronic-signature': 'electronic_signature',
   'formc-review-congratulations': 'formc_review_congratulations',
+  'investor-questions': 'investorquestions',
+  'entrepreneur-questions': 'entrepreneurquestions',
 };
 
 function scaleVideoContainer(selector='.homepage-hero-module') {
