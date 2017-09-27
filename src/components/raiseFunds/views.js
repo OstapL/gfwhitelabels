@@ -997,7 +997,7 @@ module.exports = {
         security_type: 'Security Type',
         valuation_determination: 'How Did You Determine Your Valuation?',
         valuation_determination_other: 'Please Explain',
-        hybrid_toggle_amount: 'What would you like the toggle amount to be? <div class="icon-popover-specifics"><div class="showPopover" data-content="Investments over the toggle amount will receive Common Equity. Investments under the toggle amount will receive Revenue Share"><i class="fa fa fa-question-circle"></i></div></div>',
+        hybrid_toggle_amount: 'What Would You Like the Toggle Amount to Be? <div class="icon-popover-specifics"><div class="showPopover" data-content="Investments over the toggle amount will receive Common Equity. Investments under the toggle amount will receive Revenue Share."><i class="fa fa fa-question-circle"></i></div></div>',
       };
       this.assignLabels();
       this.createIndexes();
