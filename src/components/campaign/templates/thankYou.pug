@@ -47,51 +47,50 @@
                 h3.font-weight-bold.m-y-0 #{ investment.id }
               td
                 h3.font-weight-bold.m-y-0 #{ investment.company.name }
-            case investment.security_type
-              when SECURITY_TYPE.RevenueShare
+            if investment.security_type == SECURITY_TYPE.RevenueShare || investment.security_type == SECURITY_TYPE.HybridSecurity && investment.amount < investment.campaign.hybrid_toggle_amount
+              tr.bgc-row-middle
+                td.width-50
+                  p Revenue Share
+                td
+                  p Investment
+              tr
+                td
+                  h3.font-weight-bold.m-y-0 #{ investment.percentage_revenue}% Revenue Share Capped at #{investment.cap}x
+                td
+                  h3.font-weight-bold.m-y-0 $#{ investment.amount }
+              if investment.perk && investment.perk.length
                 tr.bgc-row-middle
-                  td.width-50
-                    p Revenue Share
-                  td
-                    p Investment
+                  td(colspan="2") Perk
+              
                 tr
-                  td
-                    h3.font-weight-bold.m-y-0 #{ investment.percentage_revenue}% Revenue Share Capped at #{investment.cap}x
-                  td
-                    h3.font-weight-bold.m-y-0 $#{ investment.amount }
-                if investment.perk && investment.perk.length
-                  tr.bgc-row-middle
-                    td(colspan="2") Perk
-                
-                  tr
-                    td(colspan="2")
+                  td(colspan="2")
+                    h3.font-weight-bold.m-y-0 #{ investment.perk }
+            if investment.security_type == SECURITY_TYPE.CommonEquity || investment.security_type == SECURITY_TYPE.HybridSecurity && investment.amount >= investment.campaign.hybrid_toggle_amount
+              tr.bgc-row-middle
+                td.width-50
+                  p Common Equity
+                td
+                  p Number of Shares
+              tr
+                td
+                  h3.font-weight-bold.m-y-0 Nonvoting Common Stock
+                td
+                  h3.font-weight-bold.m-y-0 #{ investment.number_of_shares }
+              tr.bgc-row-middle
+                td.width-50
+                  p Investment
+                td
+                  p Perk
+              tr
+                td
+                  h3.font-weight-bold.m-y-0 $#{ investment.amount }
+                td
+                  h3.font-weight-bold.m-y-0
+                    if investment.perk && investment.perk.length
                       h3.font-weight-bold.m-y-0 #{ investment.perk }
-              when SECURITY_TYPE.CommonEquity
-                tr.bgc-row-middle
-                  td.width-50
-                    p Common Equity
-                  td
-                    p Number of Shares
-                tr
-                  td
-                    h3.font-weight-bold.m-y-0 Nonvoting Common Stock
-                  td
-                    h3.font-weight-bold.m-y-0 #{ investment.number_of_shares }
-                tr.bgc-row-middle
-                  td.width-50
-                    p Investment
-                  td
-                    p Perk
-                tr
-                  td
-                    h3.font-weight-bold.m-y-0 $#{ investment.amount }
-                  td
-                    h3.font-weight-bold.m-y-0
-                      if investment.perk && investment.perk.length
-                        h3.font-weight-bold.m-y-0 #{ investment.perk }
-                      else
-                        h3.m-y-0
-                          hr(style="width:40px;")
+                    else
+                      h3.m-y-0
+                        hr(style="width:40px;")
         p.m-b-2.m-t-3 You will have the opportunity to track your investments in the Investor Dashboard
         .info-btn-block
           a(href="/account/investor-dashboard").btn.btn-secondary INVESTOR DASHBOARD
