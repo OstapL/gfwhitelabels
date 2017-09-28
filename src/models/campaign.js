@@ -159,7 +159,7 @@ class Campaign {
           this.gallery_group_id.data.length > 2,
         'specifics':
           this.minimum_raise >= 10000 &&
-          this.maximum_raise <= 1000000 &&
+          this.maximum_raise <= 1070000 &&
           this.minimum_increment >= 100 &&
           this.length_days >= 60 &&
           this.investor_presentation_file_id.id != null &&
