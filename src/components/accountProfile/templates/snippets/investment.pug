@@ -51,13 +51,16 @@ div(data-investmentid=id).one_table
         .col40
           span.light_grey Security
         .col60
-          span.dark_grey 
+          span.dark_grey
             if security_type == SECURITY.CommonEquity
               | Common Equity
             if security_type == SECURITY.RevenueShare
               | Revenue Share
             if security_type == SECURITY.HybridSecurity
-              | Hybrid Security
+              if amount >= campaign.hybrid_toggle_amount
+                | Common Equity
+              else
+                | Revenue Share
       .one_line
         .col40.col-perks
           span.light_grey Perks
