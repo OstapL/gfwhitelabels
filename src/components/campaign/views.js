@@ -1099,7 +1099,7 @@ module.exports = {
       ).done( (response) => {
         $('body').scrollTo();
         this.undelegateEvents();
-        app.routers.navigate(successRoute, {
+        app.routers.navigate(this.getSuccessUrl(responseData), {
             trigger: true,
             replace: false
         });

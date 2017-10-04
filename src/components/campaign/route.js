@@ -219,5 +219,5 @@ module.exports = {
 
   },
 
-  auth: ['investment', 'investmentThankYou']
+  auth: ['investment', 'investmentThankYou', 'previewPdf',]
 };
