@@ -1,5 +1,6 @@
 -
   var auth = require('consts/auth/user.json');
+  var SECURITY = require('consts/raisecapital/security_type.json');
   pug_html += app.breadcrumbs('Invest in '+ values.name, '', [ ['Home', '/'], ['Explore', '/companies'], [values.name, '/' + values.id], ['Invest in ' + values.name, '']]);
 
 mixin fieldInput(name, attr)
@@ -135,29 +136,55 @@ mixin confirmStatement(name, attr)
           section.hidden-sm-up.investment-summary
             h4.text-uppercase.section-bg-line.text-xs-center.m-b-0 Investment Summary
             .investment-summary-wrap
-              table.table.table-bordered
-                tr.grey
-                  td
-                    p Type of security
-                  td
-                    p Offering deadline
-                tr
-                  td.big-h
-                    p.font-weight-bold #{values.campaign.security_type == 0 ? 'Common Equity' : 'Revenue Share'}
-                  td.big-h
-                    p.text-uppercase.font-weight-bold #{ values.campaign.expirationDate.format('MMM DD, YYYY') }
-                tr.grey
-                  td
-                    p Target
-                  td
-                    p Committed
-                tr
-                  td.big-h.target
-                    p.text-uppercase.font-weight-bold
-                      | $#{values.campaign.minimum_raise.toLocaleString('en-US')} -
-                      | $#{values.campaign.maximum_raise.toLocaleString('en-US')}
-                  td.big-h
-                    p.text-uppercase.font-weight-bold $#{values.campaign.amount_raised.toLocaleString('en-US')}
+              if values.campaign.security_type == SECURITY.CommonEquity || values.campaign.security_type == SECURITY.RevenueShare
+                table.table.table-bordered
+                  tr.grey
+                    td
+                      p Type of security
+                    td
+                      p Offering deadline
+                  tr
+                    td.big-h
+                      p.font-weight-bold #{values.campaign.security_type == 0 ? 'Common Equity' : 'Revenue Share'}
+                    td.big-h
+                      p.font-weight-bold #{ values.campaign.expirationDate.format('MMM DD, YYYY') }
+                  tr.grey
+                    td
+                      p Target
+                    td
+                      p Committed
+                  tr
+                    td.big-h.target
+                      p.text-uppercase.font-weight-bold
+                        | $#{values.campaign.minimum_raise.toLocaleString('en-US')} -
+                        | $#{values.campaign.maximum_raise.toLocaleString('en-US')}
+                    td.big-h
+                      p.text-uppercase.font-weight-bold $#{values.campaign.amount_raised.toLocaleString('en-US')}
+              if values.campaign.security_type == SECURITY.HybridSecurity
+                table.table.table-bordered
+                  tr.grey
+                    td
+                      p.small-invest-text Investments up to #{ app.helpers.format.formatPrice(values.campaign.hybrid_toggle_amount -1)} receive
+                    td
+                      p.small-invest-text Investments #{ app.helpers.format.formatPrice(values.campaign.hybrid_toggle_amount)} and higher receive
+                  tr
+                    td.big-h
+                      p.font-weight-bold Revenue Share
+                    td.big-h
+                      p.font-weight-bold Common Equity
+                      
+                  tr.grey
+                    td
+                      p.small-invest-text Offering deadline
+                    td
+                      p.small-invest-text Target
+                  tr
+                    td.big-h.target
+                      p.text-uppercase.font-weight-bold #{ values.campaign.expirationDate.format('MMM DD, YYYY') }
+                    td.big-h
+                      p.text-uppercase.font-weight-bold
+                        | $#{values.campaign.minimum_raise.toLocaleString('en-US')} -
+                        | $#{values.campaign.maximum_raise.toLocaleString('en-US')}
           section.hidden-sm-up.invest-perks-mobile
             - var perks = values.campaign.perks;
             if perks && perks.length
@@ -463,9 +490,9 @@ mixin confirmStatement(name, attr)
             .col-lg-12.m-t-2
               .row
                 span By Signing You Acknowledge and Agree to the 
-                  a(href="#" data-path=app.config.esignServer + "/pdf-doc/invest/subscription_agreement.pdf" target="_blank").link-2 Subscription Agreement
+                  a(href="#" target="_blank" data-pdf-type=1).link-2.previewPdf Subscription Agreement
                   |  and 
-                  a(href="#" data-path=app.config.esignServer + "/pdf-doc/invest/participation_agreement.pdf" target="_blank").link-2 Participation Agreement
+                  a(href="#" target="_blank" data-pdf-type=0).link-2.previewPdf Participation Agreement
                   | .
             .col-lg-12.m-t-2
               .row
@@ -475,8 +502,8 @@ mixin confirmStatement(name, attr)
                     input(
                       type="text"
                       placeholder="Type Your Name"
-                      name='signature[full_name]'
-                      id='signature_full_name_input'
+                      name='signature'
+                      id='signature'
                     ).form-control.typed-name
                   .col-xl-5.col-lg-6.col-md-6
                     .electronically
@@ -508,29 +535,55 @@ mixin confirmStatement(name, attr)
       section.hidden-xs-down.investment-summary
         h4.text-uppercase.section-bg-line.text-xs-center.m-b-0 Investment Summary
         .investment-summary-wrap
-          table.table.table-bordered
-            tr.grey
-              td
-                p Type of security
-              td
-                p Offering deadline
-            tr
-              td.big-h
-                p.font-weight-bold #{values.campaign.security_type == 0 ? 'Common Equity' : 'Revenue Share'}
-              td.big-h
-                p.font-weight-bold #{ values.campaign.expirationDate.format('MMM DD, YYYY') }
-            tr.grey
-              td
-                p Target
-              td
-                p Committed
-            tr
-              td.big-h.target
-                p.text-uppercase.font-weight-bold
-                  | $#{values.campaign.minimum_raise.toLocaleString('en-US')} -
-                  | $#{values.campaign.maximum_raise.toLocaleString('en-US')}
-              td.big-h
-                p.text-uppercase.font-weight-bold $#{values.campaign.amount_raised.toLocaleString('en-US')}
+          if values.campaign.security_type == SECURITY.CommonEquity || values.campaign.security_type == SECURITY.RevenueShare
+            table.table.table-bordered
+              tr.grey
+                td
+                  p Type of security
+                td
+                  p Offering deadline
+              tr
+                td.big-h
+                  p.font-weight-bold #{values.campaign.security_type == 0 ? 'Common Equity' : 'Revenue Share'}
+                td.big-h
+                  p.font-weight-bold #{ values.campaign.expirationDate.format('MMM DD, YYYY') }
+              tr.grey
+                td
+                  p Target
+                td
+                  p Committed
+              tr
+                td.big-h.target
+                  p.text-uppercase.font-weight-bold
+                    | $#{values.campaign.minimum_raise.toLocaleString('en-US')} -
+                    | $#{values.campaign.maximum_raise.toLocaleString('en-US')}
+                td.big-h
+                  p.text-uppercase.font-weight-bold $#{values.campaign.amount_raised.toLocaleString('en-US')}
+          if values.campaign.security_type == SECURITY.HybridSecurity
+            table.table.table-bordered
+              tr.grey
+                td
+                  p.small-invest-text Investments up to #{ app.helpers.format.formatPrice(values.campaign.hybrid_toggle_amount -1)} receive
+                td
+                  p.small-invest-text Investments #{ app.helpers.format.formatPrice(values.campaign.hybrid_toggle_amount)} and higher receive
+              tr
+                td.big-h
+                  p.font-weight-bold Revenue Share
+                td.big-h
+                  p.font-weight-bold Common Equity
+                  
+              tr.grey
+                td
+                  p.small-invest-text Offering deadline
+                td
+                  p.small-invest-text Target
+              tr
+                td.big-h.target
+                  p.text-uppercase.font-weight-bold #{ values.campaign.expirationDate.format('MMM DD, YYYY') }
+                td.big-h
+                  p.text-uppercase.font-weight-bold
+                    | $#{values.campaign.minimum_raise.toLocaleString('en-US')} -
+                    | $#{values.campaign.maximum_raise.toLocaleString('en-US')}
 
 //MODAL
 div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#city_state_modal.modal.fade
