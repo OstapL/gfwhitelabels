@@ -95,16 +95,8 @@ module.exports = Backbone.Router.extend(Object.assign({
     }
     this.previousUrl = this.currentUrl;
     this.currentUrl = window.location.pathname;
-
-    if(app.seo.title[window.location.pathname]) {
-      document.title = app.seo.title[window.location.pathname];
-      document.head.querySelector('meta[name="description"]').content = app.seo.meta[window.location.pathname];
-      document.head.querySelector('meta[property="og:title"]').content = app.seo.title[window.location.pathname];
-      document.head.querySelector('meta[property="og:description"]').content = app.seo.meta[window.location.pathname];
-    } else {
-      document.title = 'GrowthFountain | Equity Crowdfunding Platform';
-    }
-
+    document.title = app.config.siteTitle
+    document.head.querySelector('meta[name="description"]').content = app.config.siteDescription
     document.head.querySelector('meta[property="og:url"]').content = window.location.href;
 
     if (!app.user.is_anonymous()) {

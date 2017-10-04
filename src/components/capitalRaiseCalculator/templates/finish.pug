@@ -1,18 +1,21 @@
-- pug_html += app.breadcrumbs('Startup Business Valuation Calculator', 'finish', [ ['Home', '/'], ["What's My Business Worth?", '/calculator/business-valuation'], ["Startup Business Valuation Calculator", ''],]);
+- document.title = 'Results - Free Startup Valuation Calculator | GrowthFountain';
+- document.head.querySelector('meta[name="description"]').content = 'Take advantage of our free startup valuation calculator to find out how much your startup idea is worth';
 
+- pug_html += app.breadcrumbs('Startup Valuation Calculator', 'finish', [ ['Home', '/'], ["What's My Business Worth?", '/calculator/businessvaluation'], ["Startup Valuation Calculator", ''],]);
 
 .container.calculator-container
   .row
     .offset-lg-2.col-lg-8
+      h2.text-uppercase.text-xs-center.m-t-0 Results
       ul.list-inline.top-breadcrambs.mb45.revenue-share-calculator
         li
-          a(href="/calculator/startup/intro").btn
+          a(href="/calculator/capitalraise/intro").btn
             h4.text-uppercase.m-b-0 Intro
         li
-          a(href="/calculator/startup/step-1").btn
+          a(href="/calculator/capitalraise/step-1").btn
             h4.text-uppercase.m-b-0 step 1
         li
-          a(href="/calculator/startup/finish").current.btn
+          a(href="/calculator/capitalraise/finish").current.btn
             h4.text-uppercase.m-b-0 finish
 
   .row
@@ -35,4 +38,4 @@
     .offset-lg-3.col-lg-6.text-xs-center.capitalraise-calculator-finish-bottom
       h4.text-uppercase Next steps
       p Now that you know what your business is worth, you can estimate how much capital to raise.
-      a(href="/calculator/capital-raise").btn.btn-primary how much should I rase
+      a(href="/calculator/whatmybusinessworth/intro").btn.btn-primary how much should I rase

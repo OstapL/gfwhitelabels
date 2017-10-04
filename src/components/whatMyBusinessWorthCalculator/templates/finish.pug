@@ -1,10 +1,13 @@
-- pug_html += app.breadcrumbs('Capital Raise Calculator', 'finish', [ ['Home', '/'], ["Capital Raise Calculator", '/'],]);
+- document.title = 'Results - Free Capital Raise Calculator for Equity Crowdfunding | GrowthFountain';
+- document.head.querySelector('meta[name="description"]').content = 'Take advantage of our free capital raise calculator to help map out your funding plan';
 
+- pug_html += app.breadcrumbs('Capital Raise Calculator', 'finish', [ ['Home', '/'], ["Capital Raise Calculator", '/'],]);
 
 .container.calculator-container
 
   .row
     .offset-lg-2.col-lg-8
+      h2.text-uppercase.text-xs-center.m-t-0 Results
       ul.list-inline.top-breadcrambs.mb45.capitalraise
         li
           a(href="/calculator/capital-raise").btn

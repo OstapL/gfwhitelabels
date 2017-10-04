@@ -83,8 +83,8 @@ module.exports = {
 
           const companyName = companyData[0].short_name || companyData[0].name;
 
-          document.title = companyName;
-          document.head.querySelector('meta[name="description"]').content = metaDescription;
+          document.title = companyName + ' | GrowthFountain Equity Crowdfunding';
+          document.head.querySelector('meta[name="description"]').content = companyName + ' is fundraising on GrowthFountain!';
 
           const getShareTags = () => {
             if (params === 'share') {
