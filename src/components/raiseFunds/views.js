@@ -997,6 +997,7 @@ module.exports = {
         security_type: 'Security Type',
         valuation_determination: 'How Did You Determine Your Valuation?',
         valuation_determination_other: 'Please Explain',
+        hybrid_toggle_amount: 'What Would You Like the Toggle Amount to Be? <div class="icon-popover-specifics"><div class="showPopover" data-content="Investments over the toggle amount will receive Common Equity. Investments under the toggle amount will receive Revenue Share."><i class="fa fa fa-question-circle"></i></div></div>',
       };
       this.assignLabels();
       this.createIndexes();
@@ -1057,8 +1058,8 @@ module.exports = {
 
       this.$('#min_number_of_shares').val(min_number_of_shares.toLocaleString('en-US'));
       this.$('#max_number_of_shares').val(max_number_of_shares.toLocaleString('en-US'));
-      this.$('#min_equity_offered').val(min_equity_offered + '%');
-      this.$('#max_equity_offered').val(max_equity_offered + '%');
+      this.$('.security_type_0 #min_equity_offered').val(min_equity_offered + '%');
+      this.$('.security_type_0 #max_equity_offered').val(max_equity_offered + '%');
     },
 
     _success(data, newData) {
@@ -1080,8 +1081,14 @@ module.exports = {
 
     updateSecurityType(e) {
       let val = e.currentTarget.value;
-      $('.security_type_list').hide();
-      $('.security_type_'  + val).show();
+      if (val == 2) {
+        $('.security_type_list').show();
+        $('.security_type_title').show();
+      } else {
+        $('.security_type_list').hide();
+        $('.security_type_title').hide();
+        $('.security_type_'  + val).show();
+      }
     },
 
     render() {
@@ -1111,7 +1118,7 @@ module.exports = {
       }
       */
       $('#description_determine').parent().parent().hide();
-
+      $('.security_type input[value="2"]').before('<div class="icon-popover-specifics"><div class="showPopover" data-content="<u>Revenue Share and Common Equity Agreement.</u> This hybrid enables you to offer both securities with one offering: a revenue share for smaller investors and equity for larger investors. You’ll get to set the toggle amount (for example, investor’s under $2,000 will receive the Revenue Share Agreement.  Investments of $2,000 or more will receive Common Equity)."><i class="fa fa fa-question-circle"></i></div></div>');
       app.helpers.disableEnter.disableEnter.call(this);
       this.model.updateMenu(this.model.calcProgress(this.model));
       return this;
