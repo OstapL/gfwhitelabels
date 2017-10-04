@@ -864,20 +864,24 @@ module.exports = {
     roundAmount(e) {
       // e.preventDefault();
 
-      //revenue share
-      if (this.model.campaign.security_type == 1)
-        return;
-
       let amount = this.getNumber(e.target.value);
+
       if (!amount)
         return;
 
       if (!this.validateAmount(amount))
         return;
 
-      let pricePerShare = this.model.campaign.price_per_share;
-      if (!pricePerShare)
+      //revenue share or amount is less that common equity amount
+      if (this.model.campaign.security_type == 1 ||
+        this.model.campaign.security_type == 2 && amount < this.model.campaign.hybrid_toggle_amount) {
         return;
+      }
+
+      let pricePerShare = this.model.campaign.price_per_share;
+      if (!pricePerShare) {
+        return;
+      }
 
       let newAmount = Math.ceil(amount / pricePerShare) *  pricePerShare;
 
