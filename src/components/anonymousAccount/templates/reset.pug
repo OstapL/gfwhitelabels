@@ -1,10 +1,12 @@
 - document.title = 'Reset Password | GrowthFountain';
 - document.head.querySelector('meta[name="description"]').content = 'Reset your GrowthFountain password';
 
+- pug_html += app.breadcrumbs('Reset Password', '', [ ['Home', '/'], ['Reset Password', ''], ]);
+
 section.reset
   .container
     .col-lg-12
-      h2.dosis.text-uppercase.text-sm-center.text-xs-center.m-t-85 Reset Password
+      h2.text-uppercase.text-xs-center.m-t-0 Fill out the field below
 
     .col-lg-4.offset-lg-4
       form(data-method="PUT").form-section.login-form
