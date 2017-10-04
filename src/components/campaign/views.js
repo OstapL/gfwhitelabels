@@ -918,22 +918,18 @@ module.exports = {
     },
 
     updatePerks(amount) {
-      function updatePerkElements($elms, amount) {
-        $elms.removeClass('active').find('i.fa.fa-check').hide();
-        let filteredPerks = $elms.filter((idx, el) =>  {
-          const perkAmount = Number(el.dataset.amount);
-          return perkAmount <= amount;
-        });
-
-        let activePerk = app.utils.last(filteredPerks);
-
-        if (activePerk) {
-          $(activePerk).addClass('active').find('i.fa.fa-check').show();
+      function updatePerkElements(allList, amount) {
+        allList.forEach((el) => {el.classList.remove('active')});
+        var activePerk = Array.prototype.filter.call(allList, function(el) {
+          return el.dataset.amount <= amount;
+        })
+        if (activePerk.length != 0) {
+          var result = activePerk.pop();
+          result.classList.add('active');
         }
       }
-
-      updatePerkElements($('.invest-perks-mobile .perk'), amount);
-      updatePerkElements($('.invest-perks .perk'), amount);
+      updatePerkElements(this.el.querySelectorAll('.invest-perks-mobile .perk'), amount);
+      updatePerkElements(this.el.querySelectorAll('.invest-perks .perk'), amount);  
     },
 
     _updateTotalAmount() {
