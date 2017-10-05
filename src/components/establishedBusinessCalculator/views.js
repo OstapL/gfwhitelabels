@@ -168,7 +168,7 @@ module.exports = {
         return;
       }
 
-      app.routers.navigate('/calculator/establishedbusiness/step-2', {trigger: true});
+      app.routers.navigate('/calculator/established-business/step-2', {trigger: true});
     },
 
     render: function () {
@@ -248,11 +248,11 @@ module.exports = {
         return;
       }
 
-      app.routers.navigate('/calculator/establishedbusiness/step-3', {trigger: true});
+      app.routers.navigate('/calculator/established-business/step-3', {trigger: true});
     },
 
     goToStep1() {
-      app.routers.navigate('/calculator/establishedbusiness/step-1', {trigger: true});
+      app.routers.navigate('/calculator/established-business/step-1', {trigger: true});
     },
 
     render: function () {
@@ -338,7 +338,7 @@ module.exports = {
     },
 
     goToStep2() {
-      app.routers.navigate('/calculator/establishedbusiness/step-2', {trigger: true});
+      app.routers.navigate('/calculator/established-business/step-2', {trigger: true});
     },
 
     events: Object.assign({
@@ -445,7 +445,7 @@ module.exports = {
 
       app.helpers.calculator.saveCalculatorData(CALCULATOR_NAME, data);
 
-      setTimeout(() => app.routers.navigateWithReload('/calculator/establishedbusiness/finish', {trigger: true}), 10);
+      setTimeout(() => app.routers.navigateWithReload('/calculator/established-business/finish', {trigger: true}), 10);
     },
 
     render: function () {
@@ -485,7 +485,7 @@ module.exports = {
     template: require('./templates/finish.pug'),
 
     goToStep3() {
-      app.routers.navigate('/calculator/establishedbusiness/step-3', {trigger: true});
+      app.routers.navigate('/calculator/established-business/step-3', {trigger: true});
     },
 
     render: function () {
@@ -522,7 +522,7 @@ module.exports = {
         require('src/js/graph/jquery.flot.categories.js');
         require('src/js/graph/jquery.flot.growraf');
 
-        const $plot = $.plot($("#chart"), data, {
+        this.$plot = $.plot($("#chart"), data, {
           series: {
             lines: {
               fill: false
@@ -564,9 +564,18 @@ module.exports = {
           }
         });
 
-        app.helpers.calculator.bindResizeTo($plot);
+        app.helpers.calculator.bindResizeTo(this.$plot);
 
       }, 'graph_chunk');
-    }
+    },
+
+    destroy() {
+      Backbone.View.prototype.destroy.call(this);
+      if (this.$plot) {
+        app.helpers.calculator.unbindResizeFrom(this.$plot);
+        this.$plot.shutdown();
+        this.$plot = null;
+      }
+    },
   })
 };
