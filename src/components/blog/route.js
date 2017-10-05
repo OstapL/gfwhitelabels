@@ -37,7 +37,7 @@ module.exports = {
       require.ensure([], () => {
         const View = require('components/blog/views.js');
         api.makeCacheRequest(app.config.blogServer + '/' + id, 'GET').then((data) => {
-          app.currentView = View.detail({
+          app.currentView = new View.detail({
             model: data,
           });
           app.currentView.render();
