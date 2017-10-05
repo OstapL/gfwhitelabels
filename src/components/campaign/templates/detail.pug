@@ -37,35 +37,64 @@ section.company-header.scroll-paralax.no-paralax-mobile
     .container
       .top-info-wrap
         .top-info-wrap-item
-          .col-xl-3.col-lg-4.col-md-4.col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left.one-block
-            p Type of Security
-            h2.font-weight-bold #{ values.campaign.security_type == SECURITY.CommonEquity ? 'Common Equity' : 'Revenue Share' }
-              if values.campaign.security_type == 0
-                div.d-inline-block
-                  div.showPopover.hidden-xs-down(data-content="Equity represents ownership in a Company. As owners, equity investors will generally receive a share of the proceeds upon trade sale or IPO. Alternatively, investors can theoretically sell their ownership interest when the overall value of the Company has increased – though shares of common stock purchased in a crowdfunding transaction would have certain holding restrictions which are described in greater detail in our educational material. <br>The Pre-Money valuation is the valuation prior to this round of financing. Post-Money valuation is based on Pre-Money valuation plus the proceeds from the financing.")
-                    i(aria-hidden="true").fa.fa-question-circle.text-muted.detail-security-type-icon
+          if values.campaign.security_type == SECURITY.CommonEquity || values.campaign.security_type == SECURITY.RevenueShare
+            .common-or-revenue
+              .col-xl-3.col-lg-4.col-md-4.col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left.one-block
+                p Type of Security
+                h2.font-weight-bold #{ values.campaign.security_type == SECURITY.CommonEquity ? 'Common Equity' : 'Revenue Share' }
+                  if values.campaign.security_type == SECURITY.CommonEquity
+                    div.d-inline-block
+                      div.showPopover.hidden-xs-down(data-content="Equity represents ownership in a Company. As owners, equity investors will generally receive a share of the proceeds upon trade sale or IPO. Alternatively, investors can theoretically sell their ownership interest when the overall value of the Company has increased – though shares of common stock purchased in a crowdfunding transaction would have certain holding restrictions which are described in greater detail in our educational material. <br>The Pre-Money valuation is the valuation prior to this round of financing. Post-Money valuation is based on Pre-Money valuation plus the proceeds from the financing.")
+                        i(aria-hidden="true").fa.fa-question-circle.text-muted.detail-security-type-icon
+                  else
+                    div.d-inline-block
+                      div.showPopover.hidden-xs-down(data-content="A Revenue Share Agreement is a form of investment contract in which the Company shares 5% of its revenue annually with investors.<br> Here’s how it works:<ol class='p-l-1'><li>Investors earn 5% of the company’s revenue annually;</li><li>No distributions are required until the second full calendar year and the company is allowed one year of forbearance as needed;</li><li>Distributions are capped at two times the invested amount (2x);</li><li>In the event of default, investors become general unsecured creditors (senior to equity).</li>")
+                        i(aria-hidden="true").fa.fa-question-circle.text-muted.detail-security-type-icon
+              if values.campaign.security_type == SECURITY.CommonEquity
+                .col-xl-2.col-lg-3.col-md-4.col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left.one-block
+                  p Pre-Money Valuation
+                  h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.premoney_valuation) }
               else
-                div.d-inline-block
-                  div.showPopover.hidden-xs-down(data-content="A Revenue Share Agreement is a form of investment contract in which the Company shares 5% of its revenue annually with investors.<br> Here’s how it works:<ol class='p-l-1'><li>Investors earn 5% of the company’s revenue annually;</li><li>No distributions are required until the second full calendar year and the company is allowed one year of forbearance as needed;</li><li>Distributions are capped at two times the invested amount (2x);</li><li>In the event of default, investors become general unsecured creditors (senior to equity).</li>")
-                    i(aria-hidden="true").fa.fa-question-circle.text-muted.detail-security-type-icon
-
-          if values.campaign.security_type == 0
-            .col-xl-2.col-lg-3.col-md-4.col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left.one-block
-              p Pre-Money Valuation
-              h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.premoney_valuation) }
+                .col-xl-2.col-lg-3.col-md-4.col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left.one-block
+                  p Percentage Revenue
+                  h2.font-weight-bold #{ values.campaign.percentage_revenue }%
+              .col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left.hidden-md-up.one-block
+                p Minimum Investment
+                h2.font-weight-bold.no-margin #{ app.helpers.format.formatPrice(values.campaign.minimum_increment) }
+              .col-xl-2.col-lg-2.col-md-4.col-sm-6.col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left.one-block
+                p Days Left
+                h2.font-weight-bold.no-margin #{ values.campaign.daysLeft() }
+              .col-xl-4.col-lg-3.col-md-12.col-xs-12.one-block.share.text-xl-right.text-lg-right.text-md-center.text-sm-center.text-xs-center.pull-xl-right
+                | !{ socialDirective.render(directiveKey, infoProvider) }
           else
-            .col-xl-2.col-lg-3.col-md-4.col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left.one-block
-              p Percentage Revenue
-              h2.font-weight-bold #{ values.campaign.percentage_revenue }%
-          .col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left.hidden-md-up.one-block
-            p Minimum Investment
-            h2.font-weight-bold.no-margin #{ app.helpers.format.formatPrice(values.campaign.minimum_increment) }
-          .col-xl-2.col-lg-2.col-md-4.col-sm-6.col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left.one-block
-            p Days Left
-            h2.font-weight-bold.no-margin #{ values.campaign.daysLeft() }
-          .col-xl-4.col-lg-3.col-md-12.col-xs-12.one-block.share.text-xl-right.text-lg-right.text-md-center.text-sm-center.text-xs-center.pull-xl-right
-            | !{ socialDirective.render(directiveKey, infoProvider) }
-            
+            .hybrit
+              .col-xl-2.col-lg-3.col-md-3.col-sm-4.col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left.one-block.type-of-security
+                .wrap
+                  p Type of Security
+                  h3.font-weight-bold Revenue Share Common Equity
+                    div.d-inline-block
+                      div.showPopover.hidden-xs-down(data-content="<u>Revenue Share Agreement and Common Equity:</u> Smaller investors will receive a revenue share and larger investors will receive common equity.  The Issuer has set the the toggle which can be seen in the Overview and Terms section.")
+                        i(aria-hidden="true").fa.fa-question-circle.text-muted.detail-security-type-icon
+              .col-xl-2.col-lg-3.col-md-4.col-sm-4.col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left.one-block.percentage-revenue
+                .wrap
+                  p Percentage Revenue
+                  h2.font-weight-bold #{ values.campaign.percentage_revenue }%
+              .col-xl-2.col-lg-3.col-md-3.col-sm-4.col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left.one-block
+                .wrap
+                  p Pre-Money Valuation
+                  h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.premoney_valuation) }
+              .col-xs-6.col-sm-6.p-r-0.p-sm-0.text-xs-center.text-lg-left.hidden-md-up.one-block
+                .wrap
+                  p Minimum Investment
+                  h2.font-weight-bold.no-margin #{ app.helpers.format.formatPrice(values.campaign.minimum_increment) }
+              .col-xl-1.col-lg-3.col-md-2.col-sm-6.col-xs-12.p-r-0.p-sm-0.text-xs-center.text-lg-left.one-block
+                .wrap
+                  p Days Left
+                  h2.font-weight-bold.no-margin #{ values.campaign.daysLeft() }
+              .col-xl-4.col-lg-12.col-md-12.col-xs-12.one-block.share.text-xl-right.text-lg-center.text-md-center.text-sm-center.text-xs-center.pull-xl-right.hybrit-soc
+                .wrap
+                  | !{ socialDirective.render(directiveKey, infoProvider) }
+
 
 if app.getParams().preview == '1'
   div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#company_publish.modal.fade
@@ -432,51 +461,16 @@ section
       div
         h2#overview.col-lg-12.text-uppercase.text-xs-center.campaign-subheading.m-t-0 overview and terms
         .col-xl-8.offset-xl-2.col-lg-10.offset-lg-1.col-md-12.offset-md-0.fundraising.p-xs-0
-          if values.campaign.security_type == 0
-            table.table.table-bordered.m-b-0
-              tbody
-                tr.bgc-row-top
-                  td(colspan="2").p-x-0.p-y-0
-                    h4.text-uppercase.text-lg-center.text-xs-center.campaign-subheading.section-bg-line.m-y-0 Fundraising Description
-                tr.bgc-row-middle.text-xs-center
-                  td.width-50
-                    p Type of Security
-                  td
-                    p Pre-Money Valuation
-                tr.text-xs-center
-                  td.width-50
-                    h2.font-weight-bold Common Equity
-                      div.d-inline-block
-                        div.showPopover.hidden-xs-down(data-content="Equity represents ownership in a Company. As owners, equity investors will generally receive a share of the proceeds upon trade sale or IPO. Alternatively, investors can theoretically sell their ownership interest when the overall value of the Company has increased – though shares of common stock purchased in a crowdfunding transaction would have certain holding restrictions which are described in greater detail in our educational material. <br>The Pre-Money valuation is the valuation prior to this round of financing. Post-Money valuation is based on Pre-Money valuation plus the proceeds from the financing.")
-                          i(aria-hidden="true").fa.fa-question-circle.text-muted.detail-security-type-icon
-                  td
-                    h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.premoney_valuation) }
-                tr.bgc-row-middle.text-xs-center
-                  td.width-50
-                    p Minimum Investment
-                  td
-                    p Price per Share
-                tr.text-xs-center
-                  td.width-50
-                    h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.minimum_increment) }
-                  td
-                    h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.price_per_share) }
-                tr.bgc-row-middle.text-xs-center
-                  td.width-50
-                    p Minimum # of Shares
-                  td
-                    p Maximum # of Shares
-                tr.text-xs-center
-                  td.width-50
-                    h2.font-weight-bold #{ (Math.round(values.campaign.minimum_raise / values.campaign.price_per_share)).toLocaleString('en-US') }
-                  td
-                    h2.font-weight-bold #{ (Math.round(values.campaign.maximum_raise / values.campaign.price_per_share)).toLocaleString('en-US') }
-          else
+          if values.campaign.security_type == SECURITY.RevenueShare || values.campaign.security_type == SECURITY.HybridSecurity
             table.table.table-bordered.m-b-0
               tbody
                 tr.bgc-row-top
                   td(colspan="2").p-x-0.p-y-0
                     h4.text-uppercase.text-lg-center.text-xs-center.campaign-subheading.section-bg-line.m-y-0  Fundraising Description
+                if values.campaign.security_type == SECURITY.HybridSecurity
+                  tr
+                    td(colspan="2").p-x-0.p-y-0
+                      h3.m-t-0.m-b-0.font-weight-light.investmens Investments up to #{ app.helpers.format.formatPrice(values.campaign.hybrid_toggle_amount - 1)} will receive:
                 tr.bgc-row-middle.text-xs-center
                   td.width-50
                     p Type of Security
@@ -510,6 +504,50 @@ section
                     h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.minimum_increment) }
                   td
                     h2.font-weight-bold #{ values.campaign.cap }X
+          if values.campaign.security_type == SECURITY.CommonEquity || values.campaign.security_type == SECURITY.HybridSecurity
+            table.table.table-bordered.m-b-0
+              tbody
+                if values.campaign.security_type == SECURITY.HybridSecurity
+                  tr
+                    td(colspan="2").p-x-0.p-y-0
+                      h3.m-t-0.m-b-0.font-weight-light.investmens Investments #{ app.helpers.format.formatPrice(values.campaign.hybrid_toggle_amount)} and higher will receive:
+                else
+                  tr.bgc-row-top
+                    td(colspan="2").p-x-0.p-y-0
+                      h4.text-uppercase.text-lg-center.text-xs-center.campaign-subheading.section-bg-line.m-y-0 Fundraising Description
+                tr.bgc-row-middle.text-xs-center
+                  td.width-50
+                    p Type of Security
+                  td
+                    p Pre-Money Valuation
+                tr.text-xs-center
+                  td.width-50
+                    h2.font-weight-bold Common Equity
+                      div.d-inline-block
+                        div.showPopover.hidden-xs-down(data-content="Equity represents ownership in a Company. As owners, equity investors will generally receive a share of the proceeds upon trade sale or IPO. Alternatively, investors can theoretically sell their ownership interest when the overall value of the Company has increased – though shares of common stock purchased in a crowdfunding transaction would have certain holding restrictions which are described in greater detail in our educational material. <br>The Pre-Money valuation is the valuation prior to this round of financing. Post-Money valuation is based on Pre-Money valuation plus the proceeds from the financing.")
+                          i(aria-hidden="true").fa.fa-question-circle.text-muted.detail-security-type-icon
+                  td
+                    h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.premoney_valuation) }
+                tr.bgc-row-middle.text-xs-center
+                  td.width-50
+                    p Minimum Investment
+                  td
+                    p Price per Share
+                tr.text-xs-center
+                  td.width-50
+                    h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.minimum_increment) }
+                  td
+                    h2.font-weight-bold #{ app.helpers.format.formatPrice(values.campaign.price_per_share) }
+                tr.bgc-row-middle.text-xs-center
+                  td.width-50
+                    p Minimum # of Shares
+                  td
+                    p Maximum # of Shares
+                tr.text-xs-center
+                  td.width-50
+                    h2.font-weight-bold #{ (Math.round(values.campaign.minimum_raise / values.campaign.price_per_share)).toLocaleString('en-US') }
+                  td
+                    h2.font-weight-bold #{ (Math.round(values.campaign.maximum_raise / values.campaign.price_per_share)).toLocaleString('en-US') }
 
     if values.campaign.perks.length > 0 && values.campaign.perks[0].amount != ''
       section#perks
