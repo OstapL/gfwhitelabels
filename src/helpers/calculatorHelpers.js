@@ -21,6 +21,20 @@ const helper = {
     }
   },
 
+  unbindResizeFrom($plot) {
+    if (!$plot)
+      return;
+    
+    if (!__$plot)
+      return console.warn('resize handler wasn\'t bound to process $plot');
+
+    if (__$plot !== $plot)
+      return console.warn('resize handler was bound to process other plot resizing');
+
+    $(window).off('resize', resizeHandler);
+    __$plot = null;
+  },
+
   readCalculatorData(calculatorName, defaultData={}) {
     const stringData = localStorage.getItem(calculatorName);
     return stringData ? JSON.parse(stringData) : defaultData;
