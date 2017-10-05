@@ -85,6 +85,7 @@ function getOCCF(optionsR, viewName, params = {}, View) {
 module.exports = {
   routes: {
     'formc/:id/introduction': 'introduction',
+    'formc/:slug/esignature/:pdfType': 'previewPdf',
     'formc/:id/team-members/:type/:index': 'teamMemberAdd',
     'formc/:id/team-members': 'teamMembers',
     'formc/:id/related-parties': 'relatedParties',
@@ -351,5 +352,63 @@ module.exports = {
         app.hideLoading();
       }, 'formc_chunk');
     },
+  },
+
+  previewPdf(slug, pdfType) {
+    app.showLoading();
+
+    function base64Encode(str) {
+        var CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+        var out = "", i = 0, len = str.length, c1, c2, c3;
+        while (i < len) {
+          c1 = str.charCodeAt(i++) & 0xff;
+          if (i == len) {
+            out += CHARS.charAt(c1 >> 2);
+            out += CHARS.charAt((c1 & 0x3) << 4);
+            out += "==";
+            break;
+          }
+          c2 = str.charCodeAt(i++);
+          if (i == len) {
+            out += CHARS.charAt(c1 >> 2);
+            out += CHARS.charAt(((c1 & 0x3)<< 4) | ((c2 & 0xF0) >> 4));
+            out += CHARS.charAt((c2 & 0xF) << 2);
+            out += "=";
+            break;
+          }
+          c3 = str.charCodeAt(i++);
+          out += CHARS.charAt(c1 >> 2);
+          out += CHARS.charAt(((c1 & 0x3) << 4) | ((c2 & 0xF0) >> 4));
+          out += CHARS.charAt(((c2 & 0xF) << 2) | ((c3 & 0xC0) >> 6));
+          out += CHARS.charAt(c3 & 0x3F);
+        }
+        return out;
+    }
+
+    require.ensure([], () => {
+      const View = require('./views.js');
+      $.when(
+        api.makeRequest(
+            app.config.esignServer + '/preview/' + slug + '/' + pdfType + window.location.search,
+            "GET",
+            {},
+            {
+              dataType: "text",
+              contentType: "application/text",
+              mimeType: "text/plain; charset=x-user-defined"
+            },
+        )
+      ).done((rawData) => {
+
+        const iframe = document.createElement('iframe');
+        document.title = slug + ' esignature';
+        document.body.appendChild(iframe);
+        iframe.setAttribute('style', "position:fixed; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999;");
+        iframe.setAttribute('src', "data:application/pdf;base64," + base64Encode(rawData));
+
+        $('body').scrollTo();
+        app.hideLoading();
+      });
+    }, 'campaign_chunk');
   },
 };
