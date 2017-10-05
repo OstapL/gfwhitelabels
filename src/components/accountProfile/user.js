@@ -75,6 +75,8 @@ class User {
     const companyInfo = (this.companiesMember || []).find(companyInfo => companyInfo.formc_id === formcID);
     if (companyInfo)
       companyInfo.is_paid = true;
+
+    this.updateLocalStorage();
   }
 
   updateImage(imageData) {
