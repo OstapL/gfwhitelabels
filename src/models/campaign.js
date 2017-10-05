@@ -159,13 +159,13 @@ class Campaign {
           this.gallery_group_id.data.length > 2,
         'specifics':
           this.minimum_raise >= 10000 &&
-          this.maximum_raise <= 1000000 &&
+          this.maximum_raise <= 1070000 &&
           this.minimum_increment >= 100 &&
           this.length_days >= 60 &&
           this.investor_presentation_file_id.id != null &&
-          app.utils.isBoolean(this.security_type) &&
           (this.security_type == 1 || 
-           (this.security_type == 0 && this.premoney_valuation > 0)
+           (this.security_type == 0 && this.premoney_valuation > 0) || 
+           (this.security_type == 2 && this.premoney_valuation > 0 && this.hybrid_toggle_amount >= 1000)
           ),
         'team-members': 
           this.team_members.members.length > 0  /* && 
