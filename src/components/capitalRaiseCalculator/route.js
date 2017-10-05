@@ -1,8 +1,13 @@
 module.exports = {
   routes: {
-    'calculator/capitalraise/intro': 'calculatorCapitalraiseIntro',
-    'calculator/capitalraise/step-1': 'calculatorCapitalraiseStep1',
-    'calculator/capitalraise/finish': 'calculatorCapitalraiseFinish',
+    'calculator/startup/intro': 'calculatorCapitalraiseIntro',
+    'calculator/startup/step-1': 'calculatorCapitalraiseStep1',
+    'calculator/startup/finish': 'calculatorCapitalraiseFinish',
+  },
+  historicalRoutes: {
+    'calculator/capitalraise/intro': 'calculator/startup/intro',
+    'calculator/capitalraise/step-1': 'calculator/startup/step-1',
+    'calculator/capitalraise/finish': 'calculator/startup/finish',
   },
   methods: {
     calculatorCapitalraiseIntro() {

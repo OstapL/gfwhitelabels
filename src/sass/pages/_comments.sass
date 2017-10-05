@@ -3,21 +3,27 @@
     margin-bottom: 0
   padding-bottom: rem(50)
   .form-section
-    textarea
-      border: none
-      border-bottom: solid 1px $gallery
-      outline: none
-      padding: rem(6) rem(10)
-      resize: none
-      height: 36px
-      overflow: hidden
+    
 
   .hr
     width: 100%
     height: rem(1)
     background-color: #e7e7e7
     margin-bottom: rem(45)
-
+.comment-form
+  .ask-question
+    position: relative
+    @media only screen and (max-width : 991px)
+      position: static
+.add-comments
+  textarea
+    border: none
+    border-bottom: solid 1px $gallery
+    outline: none
+    padding: rem(6) rem(10)
+    resize: none
+    height: 36px
+    overflow: hidden
 .comments
   .single-comment
     padding: rem(50) 0 0
@@ -99,6 +105,9 @@
   .edit-comment
     textarea
       border: solid 1px #ebebeb!important
+      overflow-y: scroll
+      padding: rem(10)
+      outline: none
 @media only screen and (max-width : 992px)
   .comments
     .comments-wrap

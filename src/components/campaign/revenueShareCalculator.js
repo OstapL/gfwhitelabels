@@ -265,6 +265,7 @@ module.exports = {
 
       this.$plot.shutdown();
       this.$chart.empty();
+      this.$chart = null;
     },
 
     mapToPlot(data) {
@@ -298,6 +299,8 @@ module.exports = {
     },
 
     destroy() {
+      app.helpers.calculator.unbindResizeFrom(this.$plot);
+      this.disposePlot();
       this.undelegateEvents();
       this.$el.removeData().unbind();
 
