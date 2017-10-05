@@ -1150,7 +1150,7 @@ module.exports = {
         + '&address=' +  this.el.querySelector('#personal_information_data__street_address_1').value
         + '&address2=' +  this.el.querySelector('#personal_information_data__street_address_2').value
         + '&zip_code=' +  this.el.querySelector('#personal_information_data__zip_code').value
-        + '&city=' +  this.el.querySelector('#personal_information_data__city').value
+        + '&city=' +  this.el.querySelector('#personal_information_data__city input').value
         + '&state=' +  this.el.querySelector('#personal_information_data__state').value
         + '&signature=' +  this.el.querySelector('#signature').value;
 
