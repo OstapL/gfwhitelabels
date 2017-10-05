@@ -490,9 +490,9 @@ mixin confirmStatement(name, attr)
             .col-lg-12.m-t-2
               .row
                 span By Signing You Acknowledge and Agree to the 
-                  a(href="#" data-path=app.config.esignServer + "/pdf-doc/invest/subscription_agreement.pdf" target="_blank").link-2 Subscription Agreement
+                  a(href="#" target="_blank" data-pdf-type=1).link-2.previewPdf Subscription Agreement
                   |  and 
-                  a(href="#" data-path=app.config.esignServer + "/pdf-doc/invest/participation_agreement.pdf" target="_blank").link-2 Participation Agreement
+                  a(href="#" target="_blank" data-pdf-type=0).link-2.previewPdf Participation Agreement
                   | .
             .col-lg-12.m-t-2
               .row
@@ -502,8 +502,8 @@ mixin confirmStatement(name, attr)
                     input(
                       type="text"
                       placeholder="Type Your Name"
-                      name='signature[full_name]'
-                      id='signature_full_name_input'
+                      name='signature'
+                      id='signature'
                     ).form-control.typed-name
                   .col-xl-5.col-lg-6.col-md-6
                     .electronically
