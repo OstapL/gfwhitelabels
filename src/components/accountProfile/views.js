@@ -330,6 +330,12 @@ module.exports = {
 
     },
 
+    destroy() {
+      Backbone.View.prototype.destroy.call(this);
+      this.$('.slider-net-worth').bootstrapSlider('destroy');
+      this.$('.slider-annual-income').bootstrapSlider('destroy');
+    },
+
   },
     app.helpers.phone.methods,
     app.helpers.yesNo.methods,

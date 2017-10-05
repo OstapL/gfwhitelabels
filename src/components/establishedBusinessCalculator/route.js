@@ -1,10 +1,17 @@
 module.exports = {
   routes: {
-    'calculator/establishedbusiness/intro': 'calculatorEstablishedBusinessIntro',
-    'calculator/establishedbusiness/step-1': 'calculatorEstablishedBusinessStep1',
-    'calculator/establishedbusiness/step-2': 'calculatorEstablishedBusinessStep2',
-    'calculator/establishedbusiness/step-3': 'calculatorEstablishedBusinessStep3',
-    'calculator/establishedbusiness/finish': 'calculatorEstablishedBusinessFinish',
+    'calculator/established-business/intro': 'calculatorEstablishedBusinessIntro',
+    'calculator/established-business/step-1': 'calculatorEstablishedBusinessStep1',
+    'calculator/established-business/step-2': 'calculatorEstablishedBusinessStep2',
+    'calculator/established-business/step-3': 'calculatorEstablishedBusinessStep3',
+    'calculator/established-business/finish': 'calculatorEstablishedBusinessFinish',
+  },
+  historicalRoutes: {
+    'calculator/establishedbusiness/intro': 'calculator/established-business/intro',
+    'calculator/establishedbusiness/step-1': 'calculator/established-business/step-1',
+    'calculator/establishedbusiness/step-2': 'calculator/established-business/step-2',
+    'calculator/establishedbusiness/step-3': 'calculator/established-business/step-3',
+    'calculator/establishedbusiness/finish': 'calculator/established-business/finish',
   },
   methods: {
     calculatorEstablishedBusinessIntro() {
