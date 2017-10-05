@@ -101,13 +101,16 @@ module.exports = {
     destroy() {
       Backbone.View.prototype.destroy.call(this);
       this.$('[data-toggle="tooltip"]').tooltip('dispose');
+      this.bootstrapSlider.each(function() {
+        $(this).bootstrapSlider('destroy')
+      });
     },
 
     nextStep(e) {
       e.preventDefault();
 
       if (this.validate(e)) {
-        app.routers.navigate('/calculator/whatmybusinessworth/step-2', {trigger: true});
+        app.routers.navigate('/calculator/capital-raise/step-2', {trigger: true});
       } 
     },
 
@@ -193,6 +196,9 @@ module.exports = {
     destroy() {
       Backbone.View.prototype.destroy.call(this);
       this.$('[data-toggle="tooltip"]').tooltip('dispose');
+      this.bootstrapSlider.each(function() {
+        $(this).bootstrapSlider('destroy');
+      });
     },
 
     doCalculation(e) {
@@ -215,7 +221,7 @@ module.exports = {
 
       app.helpers.calculator.saveCalculatorData(CALCULATOR_NAME, data);
 
-      app.routers.navigate('/calculator/whatmybusinessworth/finish', {trigger: true});
+      app.routers.navigate('/calculator/capital-raise/finish', {trigger: true});
     },
 
     calculateWithDelta(data, type = 'default') {
@@ -300,7 +306,7 @@ module.exports = {
     render() {
       // disable enter to the step 2 of capitalraise calculator without data entered on the first step
       // if (!this.isFirstStepFilled()) {
-      //     app.routers.navigate('/calculator/whatmybusinessworth/step-1', {trigger: true});
+      //     app.routers.navigate('/calculator/capital-raise', {trigger: true});
       //     return false;
       // }
 
@@ -343,7 +349,7 @@ module.exports = {
       // disable enter to the final step of whatmybusinessworth calculator without data
       const data = app.helpers.calculator.readCalculatorData(CALCULATOR_NAME);
       if (!data || !data.grossMargin) {
-        setTimeout(() => app.routers.navigate('/calculator/whatmybusinessworth/step-1', { trigger: true }), 100);
+        setTimeout(() => app.routers.navigate('/calculator/capital-raise/step-1', { trigger: true }), 100);
         return this;
       }
 
