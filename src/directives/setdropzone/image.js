@@ -329,7 +329,7 @@ class CropperDropzone {
           type: imageTypes.CROPRESIZE,
           transformations: [
             cropTransformation,
-            { type: "resize", resizeWidth: this.options.resize.width, resizeHeight: this.options.resize.height },
+            { type: "fill", fillWidth: this.options.resize.width, fillHeight: this.options.resize.height },
           ]
         }
       ]
@@ -386,7 +386,7 @@ class CropperDropzone {
 }
 
 module.exports = {
-  ImageElement: ImageElement,
-  ImageDropzone: ImageDropzone,
-  CropperDropzone: CropperDropzone
+  ImageElement,
+  ImageDropzone,
+  CropperDropzone,
 };
