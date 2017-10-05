@@ -22,22 +22,46 @@
             .is-new
               img(src=require("images/generals/is-new.png"), alt="")
           .more_inform
-            .title.text-center
-              if company.campaign.security_type == 0
+            .title
+              if company.campaign.security_type == security_type.CommonEquity
                 h3.text-uppercase Valuation: #{app.helpers.format.formatPrice(company.campaign.premoney_valuation)}
-              else
+              else if company.campaign.security_type == security_type.RevenueShare
                 h3.text-uppercase Percentage Revenue: #{company.campaign.percentage_revenue}%
 
             .bottom_pr
               if company.campaign.security_type == security_type.CommonEquity
                 p Price per share: #{app.helpers.format.formatPrice(company.campaign.price_per_share)}
                 p Number of shares: #{(Math.round(company.campaign.minimum_raise / company.campaign.price_per_share) || 0).toLocaleString('en-US')}
-              else
+              else if company.campaign.security_type == security_type.RevenueShare
                 //- p % Revenue: #{campaign.percentage_revenue}%
-                p Cap: #{company.campaign.cap}X
+                p Cap: #{company.campaign.cap}x
                 p Minimum Investment: $#{company.campaign.minimum_increment}
-            hr
-            .small_text
+          if company.campaign.security_type == security_type.HybridSecurity
+            .more_inform.combi
+              .text-xs-left
+                .invest
+                  span.font-weight-light Invest up to 
+                  strong #{app.helpers.format.formatPrice(company.campaign.hybrid_toggle_amount - 1)},
+                .receive
+                  span.font-weight-light receive 
+                  h4.text-uppercase.d-inline-block Revenue Share
+                .percentage Percentage revenue: #{company.campaign.percentage_revenue}%
+                .cap Cap: #{company.campaign.cap}x
+              .text-xs-right
+                .invest
+                  span.font-weight-light Invest 
+                  strong #{app.helpers.format.formatPrice(company.campaign.hybrid_toggle_amount)}
+                  span.font-weight-light  or more,
+                .receive
+                  span.font-weight-light receive 
+                  h4.text-uppercase.d-inline-block Common Equity
+                .val
+                  | Valuation: #{app.helpers.format.formatPrice(company.campaign.premoney_valuation)}
+                .price-par
+                  | Price per share: #{app.helpers.format.formatPrice(company.campaign.price_per_share)}
+
+            //hr
+              .small_text
               if company.tagline
                 h3.font-weight-light.letter-spacing-normal.m-t-2 #{company.tagline.substr(0, 120)}
         .title.text-xs-center
@@ -53,7 +77,13 @@
         .bottom_text
           span.left_desc
             i.fa.fa-get-pocket
-            h6.text-uppercase  #{company.campaign.security_type == security_type.CommonEquity ? 'Common Equity' : 'Revenue Share'}
+            if company.campaign.security_type == security_type.CommonEquity
+              h6.text-uppercase Common Equity
+            else if company.campaign.security_type == security_type.RevenueShare
+              h6.text-uppercase Revenue Share
+            else
+              h6.text-uppercase.combi Revenue Share common equity
+            // #{company.campaign.security_type == security_type.CommonEquity ? 'Common Equity' : 'Revenue Share'}
           span.right_desc
             i.fa.fa-tags
             h6.text-uppercase  !{ industry[company.industry] || "Other" }

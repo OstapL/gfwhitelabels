@@ -1,10 +1,16 @@
 const authPages = ['success-guide', 'advertising'];
 
+const historicalTemplates = {
+  'investorquestions': 'investor-questions',
+  'entrepreneurquestions': 'entrepreneur-questions',
+};
+
 module.exports = {
   routes: {
     '': 'mainPage',
     'pg/:name': 'pagePG',
     'subscription-thanks': 'subscriptionThanks',
+    'scrapper/unsubscribe': 'scrapperUnsubscribe',
   },
   methods: {
     mainPage() {
@@ -22,12 +28,13 @@ module.exports = {
     },
 
     pagePG: function (name) {
+      if (historicalTemplates[name])
+        return window.location = `/pg/${historicalTemplates[name]}`;
 
       require.ensure([], (require) => {
         //TODO: move this to common router ensure logged in
         if (authPages.includes(name) && !app.user.ensureLoggedIn(window.location.pathname))
           return false;
-
 
         const Views = require('./views.js');
 
@@ -53,6 +60,19 @@ module.exports = {
         app.currentView = new Views.subscriptionThanks({ template });
         app.currentView.render();
 
+        $('body').scrollTo();
+        app.hideLoading();
+      }, 'pg_chunk');
+    },
+
+		scrapperUnsubscribe: function () {
+
+      require.ensure([], (require) => {
+
+        const Views = require('./views.js');
+
+        app.currentView = Views.createView('scrapper-unsubscribe');
+        app.currentView.render();
         $('body').scrollTo();
         app.hideLoading();
       }, 'pg_chunk');
