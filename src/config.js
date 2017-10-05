@@ -2,16 +2,11 @@ module.exports = {
  domainUrl: "growthfountain.com",
  serverUrl: "https://django-api.growthfountain.com",
  raiseCapitalServer: "https://api-raisecapital.growthfountain.com",
-// raiseCapitalServer: "http://localhost:8003",
  authServer: "https://api-auth.growthfountain.com",
-// authServer: "http://localhost:8002",
  formcServer: "https://api-formc.growthfountain.com",
-// formcServer: "http://localhost:8001",
  investmentServer: "https://api-investment.growthfountain.com",
-// investmentServer: "http://localhost:8003",
  filerServer: "https://api-filer-go.growthfountain.com",
- esignServer: 'https://api-esign.growthfountain.com',
-//  esignServer: 'https://api-esign.growthfountain.com',
+ esignServer: 'https://api-esign-go.growthfountain.com',
  commentsServer: "https://api-comments.growthfountain.com",
  blogServer: "https://api-blog.growthfountain.com",
  notificationsServer: "https://notifications.growthfountain.com/",
@@ -21,8 +16,6 @@ module.exports = {
  teamName: 'GrowthFountain Team',
  teamTitle: "Meet The Team",
  siteTitle: "Crowdfunding | Rivermark Community CU",
-// serverUrl: "http://192.168.99.100:8000",
-// serverUrl: "http://gfauth.com:8000",
 
 
 // Growth Fountain production keys:
