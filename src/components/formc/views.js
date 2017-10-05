@@ -141,53 +141,17 @@ module.exports = {
     },
 
     saveEsign() {
-      const listingAgreement = 'formc/listing_agreement.pdf';
-      const reqUrl = app.config.esignServer + '/pdf-doc';
-      const formData = this.getDocMetaData();
-      const data = [{
-        object_id: this.model.id,
-        type: typeOfDocuments[listingAgreement],
-        meta_data: formData,
-        template: listingAgreement
-      }];
-
-      api.makeRequest(reqUrl, 'POST', data, {
-        contentType: 'application/json; charset=utf-8',
-        crossDomain: true,
-      })
-      .done( (res) => console.log('esign success: ', res))
+      api.makeRequest(
+        app.config.esignServer + '/',
+        'POST',
+        {
+          investment_id: this.model.id,
+          signature: this.formData.full_name,
+          pdf_type: 255
+        },
+        {}
+      )
       .fail( (err) => console.log('esign error: ', err));
-    },
-
-    openPdf (e) {
-      var pathToDoc = e.target.dataset.path;
-      var data = this.getDocMetaData();
-      e.target.href = pathToDoc + '?' + $.param(data);
-    },
-
-    getDocMetaData () {
-      const formData = this.formData || this.setFormData();
-      const issuer_legal_name = app.user.get('first_name') + ' ' + app.user.get('last_name');
-      
-      return {
-        esign: formData.full_name,
-        trans_percent: companyFees.trans_percent,
-        registration_fee: companyFees.registration_fee,
-        nonrefundable_fees: companyFees.nonrefundable_fees,
-        amendment_fee: companyFees.amendment_fee,
-        commencement_date_x: this.getCurrentDate(),
-        commitment_date_x: this.getCurrentDate(),
-        zip_code: app.user.company.zip_code,
-        city: app.user.company.city,
-        state: app.user.company.state,
-        address_1: app.user.company.address_1,
-        address_2: app.user.company.address_2,
-        issuer_legal_name: app.user.company.name,
-        issuer_email: app.user.get('email'),
-        issuer_signer: formData.full_name,
-        // party_fees: '',
-        // withdrawal_fee: '',
-      };
     },
 
     _success(data, newData) {
