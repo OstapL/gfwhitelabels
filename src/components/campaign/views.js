@@ -418,7 +418,7 @@ module.exports = {
       'focusout #amount': 'triggerAmountChange',
       'keyup .us-fields :input[name*=zip_code]': 'changeZipCode',
       'click .update-location': 'updateLocation',
-      'click .link-2': 'openPdf',
+      'click .previewPdf': 'openPdfPreview',
       'change #personal_information_data__country': 'changeCountry',
       'change #payment_information_type': 'changePaymentType',
       'keyup .typed-name': 'copyToSignature',
@@ -518,11 +518,6 @@ module.exports = {
 
 
       this.fields.signature = {
-        type: 'nested',
-        requiredTemp: true,
-      };
-      this.fields.signature.schema = {};
-      this.fields.signature.schema.full_name = {
         required: true,
       };
 
@@ -869,20 +864,24 @@ module.exports = {
     roundAmount(e) {
       // e.preventDefault();
 
-      //revenue share
-      if (this.model.campaign.security_type == 1)
-        return;
-
       let amount = this.getNumber(e.target.value);
+
       if (!amount)
         return;
 
       if (!this.validateAmount(amount))
         return;
 
-      let pricePerShare = this.model.campaign.price_per_share;
-      if (!pricePerShare)
+      //revenue share or amount is less that common equity amount
+      if (this.model.campaign.security_type == 1 ||
+        this.model.campaign.security_type == 2 && amount < this.model.campaign.hybrid_toggle_amount) {
         return;
+      }
+
+      let pricePerShare = this.model.campaign.price_per_share;
+      if (!pricePerShare) {
+        return;
+      }
 
       let newAmount = Math.ceil(amount / pricePerShare) *  pricePerShare;
 
@@ -1042,24 +1041,6 @@ module.exports = {
       });
     },
 
-    getSignature () {
-
-      app.cookies.set('token', app.user.token, {
-        domain: '.' + app.config.domainUrl,
-        path: '/',
-      });
-
-      const investForm = document.forms.invest_form;
-      const inputSignature = investForm.elements['signature[full_name]'];
-      const signature = inputSignature.value;
-      return signature;
-    },
-
-    copyToSignature(e) {
-      const signature = this.getSignature();
-      this.$('.signature').text(signature);
-    },
-
     changePaymentType(e) {
       let val = $(e.target).val();
       this.$('.payment-fields').hide();
@@ -1070,6 +1051,10 @@ module.exports = {
       } else if (val == 2) {
         $('.wire-fields').show();
       }
+    },
+
+    copyToSignature(e) {
+      this.$('.signature').text(this.el.querySelector("#signature").value);
     },
 
     changeCountry(e) {
@@ -1108,62 +1093,22 @@ module.exports = {
     },
 
     saveEsign(responseData) {
-      const reqUrl = app.config.esignServer + '/pdf-doc';
-      const successRoute = this.getSuccessUrl(responseData);
-      const formData = this.getDocMetaData();
-      const subscriptionAgreementPath = this.getSubscriptionAgreementPath();
-      const participationAgreementPath = 'invest/participation_agreement.pdf';
-      const data = [{
-        compaign_id: this.model.id,
-        type: typeOfDocuments[participationAgreementPath],
-        object_id: responseData.id,
-        meta_data: formData,
-        template: participationAgreementPath
-      }, {
-        compaign_id: this.model.id,
-        type: typeOfDocuments[subscriptionAgreementPath],
-        object_id: responseData.id,
-        meta_data: formData,
-        template: subscriptionAgreementPath
-      }];
-
-      api.makeRequest(reqUrl, 'POST', data, {
-        contentType: 'application/json; charset=utf-8',
-        crossDomain: true,
-      })
-      .done( () => {
+      api.makeRequest(
+        app.config.esignServer,
+        "POST",
+        {
+          investment_id: responseData.id,
+          signature: this.el.querySelector("#signature").value
+        }
+      ).done( (response) => {
         $('body').scrollTo();
         this.undelegateEvents();
-        app.routers.navigate(successRoute, {
+        app.routers.navigate(this.getSuccessUrl(responseData), {
             trigger: true,
             replace: false
         });
       })
       .fail( (err) => console.log(err));
-    },
-
-    openPdf (e) {
-      var pathToDoc = e.target.dataset.path;
-      var data = this.getDocMetaData();
-      const isSubscriptionAgreement = pathToDoc.indexOf('subscription_agreement');
-      
-      if (isSubscriptionAgreement !== -1) {
-        pathToDoc = app.config.esignServer + '/pdf-doc/';
-        pathToDoc += this.getSubscriptionAgreementPath();
-      }
-      
-      e.target.href = pathToDoc + '?' + $.param(data);
-    },
-
-    getSubscriptionAgreementPath () {
-      return this.model.campaign.security_type === 0 ?
-      'invest/subscription_agreement_common_stok.pdf' :
-      'invest/subscription_agreement_revenue_share.pdf';
-    },
-
-    getCurrentDate () {
-        const date = new Date();
-        return (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
     },
 
     updateLocation(e) {
@@ -1192,55 +1137,24 @@ module.exports = {
       });
     },
 
-    getDocMetaData () {
-      this.model.owner = this.model.owner || {};
+    openPdfPreview(e) {
 
-      const formData = $('form.invest_form').serializeJSON();
-      const issuer_signer = this.model.owner.first_name + ' ' + this.model.owner.last_name;
-      const investor_legal_name = formData.personal_information_data.first_name + ' ' + formData.personal_information_data.last_name;
-      const investment_amount = formData.amount;
-      const investor_number_purchased = investment_amount / this.model.campaign.price_per_share;
-      const aggregate_inclusive_purchase = formData.total_amount;
+      const url = '/' + this.model.slug + '/esignature/' + e.currentTarget.dataset.pdfType
+        + '?amount=' + (this.el.querySelector('#amount').value.replace(/[\$,]/g, '') || 0)
+        + '&commission=' + this.calcFeeWithCredit().fee
+        + '&company_id=' + this.model.id
+        + '&email=' + app.user.data.email
+        + '&first_name=' + this.el.querySelector('#personal_information_data__first_name').value
+        + '&last_name=' +  this.el.querySelector('#personal_information_data__last_name').value
+        + '&country=' +  this.el.querySelector('#personal_information_data__country').value
+        + '&address=' +  this.el.querySelector('#personal_information_data__street_address_1').value
+        + '&address2=' +  this.el.querySelector('#personal_information_data__street_address_2').value
+        + '&zip_code=' +  this.el.querySelector('#personal_information_data__zip_code').value
+        + '&city=' +  this.el.querySelector('#personal_information_data__city input').value
+        + '&state=' +  this.el.querySelector('#personal_information_data__state').value
+        + '&signature=' +  this.el.querySelector('#signature').value;
 
-      return {
-        compaign_id: this.model.id,
-        signature: this.getSignature(),
-
-        fees_to_investor: companyFees.fees_to_investor,
-        trans_percent: companyFees.trans_percent,
-        registration_fee: companyFees.registration_fee,
-        commitment_date_x: this.getCurrentDate(),
-        // listing_fee: '$500',
-
-        // campaign
-        issuer_legal_name: this.model.name,
-        city: this.model.city,
-        state: this.model.state,
-        zip_code: this.model.zip_code,
-        address_1: this.model.address_1,
-        address_2: this.model.address_2,
-        jurisdiction_of_organization: app.helpers.usaStates.getFullState(this.model.founding_state),
-        maximum_raise: app.helpers.format.formatNumber( this.model.campaign.maximum_raise ),
-        minimum_raise: app.helpers.format.formatNumber( this.model.campaign.minimum_raise ),
-        price_per_share: app.helpers.format.formatNumber( this.model.campaign.price_per_share ),
-        
-        // owner of campaign
-        issuer_email: this.model.owner.email,
-        issuer_signer: issuer_signer,
-        // issuer_signer_title: null,
-
-        // investor
-        investor_legal_name: investor_legal_name,
-        aggregate_inclusive_purchase: app.helpers.format.formatNumber( aggregate_inclusive_purchase ),
-        investment_amount: app.helpers.format.formatNumber( investment_amount ),
-        investor_address: formData.personal_information_data.street_address_1,
-        investor_optional_address: formData.personal_information_data.street_address_2,
-        investor_code: formData.personal_information_data.zip_code,
-        investor_city: formData.personal_information_data.city,
-        investor_state: formData.personal_information_data.state,
-        investor_email: app.user.get('email'),
-        investor_number_purchased: investor_number_purchased,
-      };
+      e.currentTarget.href = url;
     },
 
     _success(data) {
@@ -1274,6 +1188,14 @@ module.exports = {
       );
       return this;
     },
+  }),
+
+  previewPdf: Backbone.View.extend({
+    el: '#content',
+    template: require('./templates/previewPdf.pug'),
+    render() {
+      this.el.innerHTML = this.template();
+    }
   }),
 };
 
