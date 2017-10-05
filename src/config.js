@@ -6,7 +6,7 @@ module.exports = {
   formcServer: "https://api-formc.growthfountain.com",
   investmentServer: "https://api-investment.growthfountain.com",
   filerServer: "https://api-filer-go.growthfountain.com",
-  esignServer: 'https://api-esign.growthfountain.com',
+  esignServer: "https://api-esign-go.growthfountain.com",
   commentsServer: "https://api-comments.growthfountain.com",
   blogServer: "https://api-blog.growthfountain.com",
   notificationsServer: "https://notifications.growthfountain.com/",
