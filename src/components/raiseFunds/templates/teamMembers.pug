@@ -20,6 +20,12 @@ section.create-company-team-add.container
               .warning-block.text-lg-left
                 i.fa.fa-info-circle 
                 span.warning-text You have to add at least 1 team member to proceed.
+        if values.team_members.members.length >= 2
+          .row
+            .col-lg-12.m-b-2
+              .warning-block.text-lg-left
+                i.fa.fa-info-circle
+                span.warning-text Please feel free to drag and place your team members in the order you prefer.
         .row
           .col-lg-12.text-lg-center.text-md-center.text-sm-center.text-xs-center.m-b-2.add-button
             a(href='/campaign/' + values.id + '/team-members/add/member/new')#add_team_member.btn.text-uppercase
@@ -34,14 +40,14 @@ section.create-company-team-add.container
               .warning-block.warning-team-add.text-lg-left
                 i.fa.fa-info-circle 
                 span.warning-text Please upload photo for every team member
-        .row
 
+        .row.teamMembersContainer
           each v,k in values.team_members.reorder()
-            .col-xl-4.m-t-2
-              .team-add-item.text-lg-center.text-xs-center
+            .col-xl-4.m-t-2.itemContainer(data-index=v.index)
+              .team-add-item.text-lg-center.text-xs-center.teamMemberItem
                 a(href="/campaign/" + values.id + "/team-members/add/" + (v.title == 'Advisor' ? 'advisor' : 'member') + '/' + v.index).link-1
                   img(src=v.photo_image_id.getUrl('Default_photo') alt=v.first_name).img-circle
-                a(href="#" data-id=v.index style="position: absolute").link-1.delete-member.pull-right
+                a(href="#" style="position: absolute").link-1.delete-member.pull-right
                   i.fa.fa-times
                 //a(href="/campaign/" + values.id + "/team-members/add/" + (v.title == 'Advisor' ? 'advisor' : 'member') + '/' + v.index).link-1.edit-team-members
                   i.fa.fa-pencil-square-o
