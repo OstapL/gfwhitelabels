@@ -49,20 +49,24 @@ class TeamMemberFactory {
   }
 
   reorder() {
-    function memberSort(a, b) {
-      if(a.order === null) {
-        return false;
-      }
-      if(b.order === null) {
-        return false;
-      }
-      return a.order > b.order;
+    function membersComparator(a, b) {
+      if (a.order === b.order)
+        return 0;
+
+      if (a.order === null)
+        return -1;
+
+      if(b.order === null)
+        return 1;
+
+      return a.order - b.order;
     }
+
     let newMembers = this.members.slice();
     newMembers.forEach((el, i) => {
       el.index = i;
     });
-    return newMembers.sort(memberSort);
+    return newMembers.sort(membersComparator);
   }
 
   toJSON() {
@@ -77,4 +81,4 @@ class TeamMemberFactory {
 module.exports = {
   TeamMember: TeamMember,
   TeamMemberFactory: TeamMemberFactory,
-}
+};
