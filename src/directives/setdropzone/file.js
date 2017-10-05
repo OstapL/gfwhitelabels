@@ -304,7 +304,7 @@ function getInstance(...options) {
 }
 
 module.exports = {
-  getInstance: getInstance,
-  FileElement: FileElement,
-  FileDropzone: FileDropzone
+  getInstance,
+  FileElement,
+  FileDropzone,
 };

@@ -1,16 +1,24 @@
 module.exports = {
   routes: {
     'calculator/selectyourbusiness': 'selectYourBusiness',
-    'calculator/businessvaluation': 'businessValuation',
-    'calculator/whatmybusinessworth/intro': 'calculatorWhatMyBusinessWorthIntro',
-    'calculator/whatmybusinessworth/step-1': 'calculatorWhatMyBusinessWorthStep1',
-    'calculator/whatmybusinessworth/step-2': 'calculatorWhatMyBusinessWorthStep2',
-    'calculator/whatmybusinessworth/finish': 'calculatorWhatMyBusinessWorthFinish',
+    'calculator/business-valuation': 'businessValuation',
+
+    'calculator/capital-raise': 'calculatorWhatMyBusinessWorthIntro',
+    'calculator/capital-raise/step-1': 'calculatorWhatMyBusinessWorthStep1',
+    'calculator/capital-raise/step-2': 'calculatorWhatMyBusinessWorthStep2',
+    'calculator/capital-raise/finish': 'calculatorWhatMyBusinessWorthFinish',
+  },
+  historicalRoutes: {
+    'calculator/businessvaluation': 'calculator/business-valuation',
+    'calculator/whatmybusinessworth/intro': 'calculator/capital-raise',
+    'calculator/whatmybusinessworth/step-1': 'calculator/capital-raise/step-1',
+    'calculator/whatmybusinessworth/step-2': 'calculator/capital-raise/step-2',
+    'calculator/whatmybusinessworth/finish': 'calculator/capital-raise/finish',
   },
   methods: {
     selectYourBusiness() {
       //left just for backward compatibility
-      app.routers.navigate('/calculator/businessvaluation', { trigger: true });
+      app.routers.navigate('/calculator/business-valuation', { trigger: true });
     },
 
     businessValuation() {

@@ -21,9 +21,12 @@ module.exports = {
 
     isDifferent() {
       let method = this.el.querySelector('form').dataset.method || 'POST';
-      if(this.model && this.model.toJSON().hasOwnProperty('id')) {
+      const model = this.model && this.model.toJSON 
+        ? this.model.toJSON()
+        : (this.model || {});
+
+      if (model.hasOwnProperty('id'))
         method = this.el.querySelector('form').dataset.method || 'PATCH';
-      }
 
       let newData = $(this.el.querySelector('form')).serializeJSON();
       api.deleteEmptyNested.call(this, this.fields, newData);
@@ -31,7 +34,7 @@ module.exports = {
 
       if(method == 'PATCH') {
         let patchData = {};
-        let d = deepDiff(newData, this.model.toJSON());
+        let d = deepDiff(newData, model);
         (d || []).forEach((el, i) => {
           if(el.kind == 'E' || el.kind == 'A') {
             patchData[el.path[0]] = newData[el.path[0]];
