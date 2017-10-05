@@ -2,6 +2,7 @@ const { createFields } = require('fields/new-fields.js');
 const raiseHelpers = require('./helpers.js');
 const appendHttpIfNecessary = app.helpers.format.appendHttpIfNecessary;
 const valuation_determination = require('consts/raisecapital/valuation_determination.json');
+const Sortable = require('sortablejs');
 
 const snippets = {
   additional_info: require('./templates/snippets/additional_info.pug'),
@@ -269,7 +270,8 @@ module.exports = {
     },
 
     _success(data, formData) {
-      this.undelegateEvents();
+      //events will be unboound in destroy by default
+      // this.undelegateEvents();
 
       if(data == null) {
         data = {};
@@ -330,15 +332,6 @@ module.exports = {
         'click .submit_form': raiseHelpers.submitCampaign,
         'click #postForReview': raiseHelpers.postForReview,
       }, app.helpers.section.events, app.helpers.confirmOnLeave.events, app.helpers.menu.events),
-
-    preinitialize() {
-      // ToDo
-      // Hack for undelegate previous events
-      for (let k in this.events) {
-        console.log('#content ' + k.split(' ')[1]);
-        $('#content ' + k.split(' ')[1]).undelegate();
-      }
-    },
 
     _success(data, newData) {
       this.model.updateMenu(this.model.calcProgress(this.model));
@@ -424,14 +417,6 @@ module.exports = {
 
     appendHttpIfNecessary: appendHttpIfNecessary,
 
-    preinitialize() {
-      // ToDo
-      // Hack for undelegate previous events
-      for (let k in this.events) {
-        $('#content ' + k.split(' ')[1]).undelegate();
-      }
-    },
-
     initialize(options) {
       this.model = options.campaign;
       this.urlRoot = this.urlRoot.replace(':id', this.model.id);
@@ -509,6 +494,10 @@ module.exports = {
           this.model.gallery_group_data = data.file.data;
           this.model.updateMenu(this.model.calcProgress(this.model));
         },
+        onReorder: async (data) => {
+          this.model.gallery_group_data = data;
+          return await api.makeRequest(this.urlRoot, 'PATCH', { gallery_group_data: data });
+        },
         crop: {
           control: {
             aspectRatio: 1024 / 612,
@@ -574,6 +563,15 @@ module.exports = {
 
       this.createIndexes();
       this.buildSnippets(snippets);
+      this.listenToNavigate();
+    },
+
+    destroy() {
+      Backbone.View.prototype.destroy.call(this);
+      if (this.videoField) {
+        this.videoField.destroy();
+        this.videoField = null;
+      }
     },
 
     render() {
@@ -699,14 +697,6 @@ module.exports = {
       return false;
     },
 
-    preinitialize() {
-      // ToDo
-      // Hack for undelegate previous events
-      for (let k in this.events) {
-        $('#content ' + k.split(' ')[1]).undelegate();
-      }
-    },
-
     initialize(options) {
       let TeamMember = require('models/teammembercampaign.js');
       this.fields = options.fields.campaign.team_members.schema;
@@ -758,6 +748,7 @@ module.exports = {
         )
         this.submitMethod = 'POST';
       }
+      this.listenToNavigate();
     },
 
     render() {
@@ -810,14 +801,6 @@ module.exports = {
       'click .onPreview': raiseHelpers.onPreviewAction,
     }, app.helpers.menu.events),
 
-    preinitialize() {
-      // ToDo
-      // Hack for undelegate previous events
-      for (let k in this.events) {
-        $('#content ' + k.split(' ')[1]).undelegate();
-      }
-    },
-
     initialize(options) {
       this.fields = options.fields.campaign;
       this.formc = options.formc;
@@ -826,11 +809,77 @@ module.exports = {
       this.renumberTeamMembers();
 
       this.urlRoot = this.urlRoot.replace(':id', this.model.id);
+      this.listenToNavigate();
+    },
+
+    destroy() {
+      Backbone.View.prototype.destroy.call(this);
+      if (this.sortable) {
+        this.sortable.destroy();
+        this.sortable = null;
+      }
+    },
+
+    initDragDrop() {
+      this.sortable = Sortable.create(document.querySelector('.teamMembersContainer'), {
+        animation: 150,
+        draggable: '.itemContainer',
+        handle: '.teamMemberItem',
+        dataIdAttr: 'data-index',
+        onEnd: (e) => {
+          const oldIdx = e.oldIndex;
+          const newIdx = e.newIndex;
+          this.reorder({oldIdx, newIdx });
+        },
+      });
+      this.indices = this.sortable.toArray().map(idx => Number(idx));
+    },
+
+    reorder(params) {
+      const { oldIdx, newIdx } = params;
+      if (oldIdx === newIdx)
+        return;
+
+      const members = this.model.team_members && this.model.team_members.members
+        ? this.model.team_members.members
+        : [];
+
+      if (oldIdx < 0 || oldIdx >= members.length || newIdx < 0 || newIdx >= members.length)
+        return console.error(`Indices out of range old=${oldIdx}, new=${oldIdx}`);
+
+      const indices = this.sortable.toArray().map(idx => Number(idx));
+      if (!indices || !indices.length)
+        return console.error(`No sortable items with data-id`);
+
+      const reorderedMembers = indices
+        .filter((itemIdx, idx) => itemIdx !== this.indices[idx])
+        .map((oldIdx, newIdx) => {
+          const m = members.find(m => m.index === oldIdx);
+          m.order = newIdx;
+          return m;
+        });
+
+      if (!reorderedMembers || !reorderedMembers.length)
+        return;
+
+      this.sortable.option('disabled', true);
+
+      reorderedMembers.reduce((acc, member) => {
+        return acc.then(() => {
+          return api.makeRequest(`${this.urlRoot}/${member.index}`, 'PUT', member.toJSON());
+        }).catch((err) => {
+          console.log(err);
+        });
+      }, Promise.resolve()).then(() => {
+        this.sortable.option('disabled', false);
+      }).catch((err) => {
+        app.dialogs.error(err);
+        this.sortable.option('disabled', false);
+      });
     },
 
     render() {
       let template = require('./templates/teamMembers.pug');
-
       this.$el.html(
         template({
           values: this.model,
@@ -842,6 +891,7 @@ module.exports = {
       this.checkForm();
       this.$el.find('.team-add-item').equalHeights();
       this.model.updateMenu(this.model.calcProgress(this.model));
+      this.initDragDrop();
       return this;
     },
 
@@ -850,25 +900,24 @@ module.exports = {
         return;
 
       this.model.team_members.members.forEach((m, idx) => {
-        if (m.hasOwnProperty('id')) {
-          const $memberItemDelete = this.$el.find(`[data-id=${m.id}]`);
-          if ($memberItemDelete && $memberItemDelete.length)
-            $memberItemDelete[0].dataset.id = idx;
+        if (m.hasOwnProperty('index')) {
+          const $itemContainer = this.$el.find(`[data-index=${m.index}]`);
+          if ($itemContainer && $itemContainer.length)
+            $itemContainer[0].dataset.index = idx;
         }
-        m.id = idx;
+        m.index = idx;
       });
     },
 
-    deleteMember: function (e) {
-      let memberId = Number(e.currentTarget.dataset.id);
-
+    deleteMember(e) {
+      let memberId = Number(this.$(e.target).closest('.itemContainer')[0].dataset.index);
       app.dialogs.confirm('Are you sure you would like to delete this team member?').then((confirmed) => {
         if (!confirmed)
           return;
 
         api.makeRequest(this.urlRoot + '/' + memberId, 'DELETE')
           .then((data) => {
-            const idx = this.model.team_members.members.findIndex(m => m.id === memberId);
+            const idx = this.model.team_members.members.findIndex(m => m.index === memberId);
             if (idx < 0)
               return console.error(`Team member with id: ${memberId} not found`);
 
@@ -904,14 +953,6 @@ module.exports = {
       'click .submit-specifics': 'checkMinMaxRaise',
       'change #valuation_determination': 'valuationDetermine',
     }, app.helpers.confirmOnLeave.events, app.helpers.menu.events),
-
-    preinitialize() {
-      // ToDo
-      // Hack for undelegate previous events
-      for (let k in this.events) {
-        $('#content ' + k.split(' ')[1]).undelegate();
-      }
-    },
 
     initialize(options) {
       this.fields = options.fields.campaign;
@@ -956,6 +997,7 @@ module.exports = {
         security_type: 'Security Type',
         valuation_determination: 'How Did You Determine Your Valuation?',
         valuation_determination_other: 'Please Explain',
+        hybrid_toggle_amount: 'What Would You Like the Toggle Amount to Be? <div class="icon-popover-specifics"><div class="showPopover" data-content="Investments over the toggle amount will receive Common Equity. Investments under the toggle amount will receive Revenue Share."><i class="fa fa fa-question-circle"></i></div></div>',
       };
       this.assignLabels();
       this.createIndexes();
@@ -973,7 +1015,7 @@ module.exports = {
       if(this.model.hasOwnProperty('id')) {
         this.urlRoot = this.urlRoot.replace(':id', this.model.id);
       }
-
+      this.listenToNavigate();
     },
 
     checkMinMaxRaise(e) {
@@ -1016,8 +1058,8 @@ module.exports = {
 
       this.$('#min_number_of_shares').val(min_number_of_shares.toLocaleString('en-US'));
       this.$('#max_number_of_shares').val(max_number_of_shares.toLocaleString('en-US'));
-      this.$('#min_equity_offered').val(min_equity_offered + '%');
-      this.$('#max_equity_offered').val(max_equity_offered + '%');
+      this.$('.security_type_0 #min_equity_offered').val(min_equity_offered + '%');
+      this.$('.security_type_0 #max_equity_offered').val(max_equity_offered + '%');
     },
 
     _success(data, newData) {
@@ -1039,8 +1081,14 @@ module.exports = {
 
     updateSecurityType(e) {
       let val = e.currentTarget.value;
-      $('.security_type_list').hide();
-      $('.security_type_'  + val).show();
+      if (val == 2) {
+        $('.security_type_list').show();
+        $('.security_type_title').show();
+      } else {
+        $('.security_type_list').hide();
+        $('.security_type_title').hide();
+        $('.security_type_'  + val).show();
+      }
     },
 
     render() {
@@ -1070,7 +1118,7 @@ module.exports = {
       }
       */
       $('#description_determine').parent().parent().hide();
-
+      $('.security_type input[value="2"]').before('<div class="icon-popover-specifics"><div class="showPopover" data-content="<u>Revenue Share and Common Equity Agreement.</u> This hybrid enables you to offer both securities with one offering: a revenue share for smaller investors and equity for larger investors. You’ll get to set the toggle amount (for example, investor’s under $2,000 will receive the Revenue Share Agreement.  Investments of $2,000 or more will receive Common Equity)."><i class="fa fa fa-question-circle"></i></div></div>');
       app.helpers.disableEnter.disableEnter.call(this);
       this.model.updateMenu(this.model.calcProgress(this.model));
       return this;
@@ -1086,14 +1134,6 @@ module.exports = {
         'click #postForReview': raiseHelpers.postForReview,
     }, app.helpers.confirmOnLeave.events, app.helpers.menu.events, app.helpers.section.events),
 
-    preinitialize() {
-      // ToDo
-      // Hack for undelegate previous events
-      for (let k in this.events) {
-        $('#content ' + k.split(' ')[1]).undelegate();
-      }
-    },
-
     initialize(options) {
       this.fields = options.fields.campaign;
       this.formc = options.formc;
@@ -1107,6 +1147,7 @@ module.exports = {
       this.assignLabels();
       this.createIndexes();
       this.buildSnippets(snippets);
+      this.listenToNavigate();
     },
 
     render() {
