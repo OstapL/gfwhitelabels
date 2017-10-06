@@ -154,6 +154,16 @@ section.issuer-dashboard-tabs.m-t-3
           ) 
             h4.text-uppercase Material change
             .clearfix
+        li.nav-item
+          a.nav-link.text-uppercase#widget-gf-tab(
+            data-toggle="tab"
+            href="#widget-gf"
+            role="tab"
+            aria-controls="widget-gf"
+            aria-expanded="false"
+          ) 
+            h4.text-uppercase Widget GF
+            .clearfix
       .row
         .tab-content
           .tab-pane.fade.active.in#documents(
@@ -180,6 +190,12 @@ section.issuer-dashboard-tabs.m-t-3
             aria-expanded="true"
           )
             include snippets/issuerMaterial.pug
+          .tab-pane.fade#widget-gf(
+            role="tabpanel"
+            aria-labelledby="widget-gf-tab"
+            aria-expanded="true"
+          )
+            include snippets/widget.pug
 
 
 

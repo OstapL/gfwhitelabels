@@ -1,0 +1,37 @@
+section
+  .row
+    .col-xl-12
+      h2.text-uppercase widget
+  .row
+    .col-xl-12
+      p.pb10 If you want add widget to your website, please add this HTML code in your page
+      code.m-b-1
+        | #{'<div id="widget-gf" style="display: none;">'}
+        br
+        | &nbsp;&nbsp;#{'<div class="all-widget-wrap">'}
+        br
+        | &nbsp;&nbsp;&nbsp;#{'<div class="header">'}
+        br
+        | &nbsp;&nbsp;&nbsp;&nbsp;#{'<a href="#" class="close-widget" id="close-widget"><i class="fa fa-times" aria-hidden="true"></i></a>'}
+        br
+        | &nbsp;&nbsp;&nbsp;#{'</div>'}
+        br
+        | &nbsp;&nbsp;&nbsp;#{'<div class="content-widgets">'}
+        br
+        | &nbsp;&nbsp;&nbsp;&nbsp;#{'<h3>Invest in <span class="company-name">'}#{company.name}#{'</span> on</h3>'}
+        br
+        | &nbsp;&nbsp;&nbsp;&nbsp;#{'<img src="https://growthfountain.com/staticdata/img/pages/news4.1c12ebf62c0462ce5f843931ba37906a.png">'}
+        br
+        | &nbsp;&nbsp;&nbsp;&nbsp;#{'a(href="'}#{window.location.protocol + window.location.host + '/'}#{app.user.company.slug}#{'" class="btn-widget-gf">invest now</a>'}
+        br
+        | &nbsp;&nbsp;&nbsp;#{'</div>'}
+        br
+        | &nbsp;&nbsp;#{'</div>'}
+        br
+        | #{'</div>'}
+      p.pb10 after, you needs import Javascript 
+      code.m-b-1
+        | #{'<script src="https://storage.growthfountain.com/js/widget/widget-gf.js"></script>'}
+      p and initialization function
+      code
+        | #{'<script type="text/javascript">widgetsElement();</script>'}
