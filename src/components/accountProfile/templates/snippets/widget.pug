@@ -31,7 +31,7 @@ section
         | #{'</div>'}
       p.pb10 after, you needs import Javascript 
       code.m-b-1
-        | #{'<script src="https://storage.growthfountain.com/js/widget/widget-gf.js"></script>'}
+        | #{'<script src="'}#{window.location.protocol + window.location.host + '/js/widget/widget-gf.js'}#{'"></script>'}
       p and initialization function
       code
         | #{'<script type="text/javascript">widgetsElement();</script>'}
