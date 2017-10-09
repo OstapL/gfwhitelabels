@@ -20,7 +20,7 @@ section
         br
         | &nbsp;&nbsp;&nbsp;&nbsp;#{'<h3>Invest in <span class="company-name">'}#{company.name}#{'</span> on</h3>'}
         br
-        | &nbsp;&nbsp;&nbsp;&nbsp;#{'<img src="https://growthfountain.com/staticdata/img/pages/news4.1c12ebf62c0462ce5f843931ba37906a.png">'}
+        | &nbsp;&nbsp;&nbsp;&nbsp;#{'<img src="'}#{window.location.protocol + window.location.host + '/staticdata/img/logo-black.png'}#{'">'}
         br
         | &nbsp;&nbsp;&nbsp;&nbsp;#{'<a href="'}#{window.location.protocol + window.location.host + '/'}#{app.user.company.slug}#{'" class="btn-widget-gf">invest now</a>'}
         br
@@ -29,6 +29,41 @@ section
         | &nbsp;&nbsp;#{'</div>'}
         br
         | #{'</div>'}
+      h3.text-uppercase Version 2
+      code.m-b-1
+        | #{'<div id="widget-gf" class="widget-gf-v2" style="display: none;">'}
+        br
+        | &nbsp;&nbsp;#{'<div class="widget-wrap">'}
+        br
+        | &nbsp;&nbsp;&nbsp;#{'<div class="header">'}
+        br
+        | &nbsp;&nbsp;&nbsp;&nbsp;#{'<a href="#" class="close-widget" id="close-widget"><i class="fa fa-times" aria-hidden="true"></i></a>'}
+        br
+        | &nbsp;&nbsp;&nbsp;#{'</div>'}
+        br
+        | &nbsp;&nbsp;&nbsp;#{'<div class="content-widgets">'}
+        br
+        | &nbsp;&nbsp;&nbsp;&nbsp;#{'<div class="img-wrap">'}
+        br
+        | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#{'<img src="'}#{window.location.protocol + window.location.host + '/staticdata/img/fade-in-logo.png'}#{'">'}
+        br
+        | &nbsp;&nbsp;&nbsp;&nbsp;#{'</div>'}
+        br
+        | &nbsp;&nbsp;&nbsp;&nbsp;#{'<h3>Invest Now!</h3>'}
+        br
+        | &nbsp;&nbsp;&nbsp;&nbsp;#{'<p>Own a piece of <span>'}#{company.name}#{'</span> with equity crowdfunding on GrowthFountain.</p>'}
+        br
+        | &nbsp;&nbsp;&nbsp;#{'</div>'}
+        br
+        | &nbsp;&nbsp;#{'</div>'}
+        br
+        | &nbsp;&nbsp;#{'<a href="'}#{window.location.protocol + window.location.host + '/'}#{app.user.company.slug}#{'" class="btn-widget-gf">invest now</a>'}
+        br
+        | #{'</div>'}
+
+
+
+
       p.pb10 after, you needs import Javascript 
       code.m-b-1
         | #{'<script src="'}#{window.location.protocol + window.location.host + '/js/widget/widget-gf.js'}#{'"></script>'}

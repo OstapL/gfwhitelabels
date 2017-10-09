@@ -10,6 +10,8 @@ cp staticdata/img/logo.png dist/staticdata/img/logo.png
 cp staticdata/img/fade-in-logo.png dist/staticdata/img/fade-in-logo.png
 mkdir dist/staticdata/img/email
 cp staticdata/img/email/header-email.png dist/staticdata/img/email/header-email.png
+cp staticdata/img/logo-black.png dist/staticdata/img/logo-black.png
+cp staticdata/img/generals/gbi-widget.png dist/staticdata/img/generals/gbi-widget.png
 cp src/js/widget/widget-gf.js dist/js/widget/widget-gf.js
 cp src/js/widget/widget-gf.css dist/js/widget/widget-gf.css
 DIR=dist
