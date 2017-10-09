@@ -146,15 +146,6 @@ module.exports = {
           app.analytics.emitEvent(app.analytics.events.InvestmentClicked, app.user.stats);
         });
 
-        //TODO: fixme
-        // if (!window.pdfMake) {
-        //   ['/js/pdfmake.js', '/js/vfs_fonts.js'].forEach( (uri) => {
-        //     let script = document.createElement('script');
-        //     script.type = 'text/javascript';
-        //     script.src = uri;
-        //     $('head').append(script);
-        //   });
-        // }
       }, 'campaign_chunk');
     },
 

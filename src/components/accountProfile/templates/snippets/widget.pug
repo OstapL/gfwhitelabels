@@ -20,9 +20,9 @@ section
         br
         | &nbsp;&nbsp;&nbsp;&nbsp;#{'<h3>Invest in <span class="company-name">'}#{company.name}#{'</span> on</h3>'}
         br
-        | &nbsp;&nbsp;&nbsp;&nbsp;#{'<img src="'}#{window.location.protocol + window.location.host + '/staticdata/img/logo-black.png'}#{'">'}
+        | &nbsp;&nbsp;&nbsp;&nbsp;#{'<img src="'}#{window.location.protocol + '//' + window.location.host + '/staticdata/img/logo-black.png'}#{'">'}
         br
-        | &nbsp;&nbsp;&nbsp;&nbsp;#{'<a href="'}#{window.location.protocol + window.location.host + '/'}#{app.user.company.slug}#{'" class="btn-widget-gf" target="blank">invest now</a>'}
+        | &nbsp;&nbsp;&nbsp;&nbsp;#{'<a href="'}#{window.location.protocol + '//' + window.location.host + '/'}#{app.user.company.slug}#{'" class="btn-widget-gf" target="blank">invest now</a>'}
         br
         | &nbsp;&nbsp;&nbsp;#{'</div>'}
         br
@@ -45,7 +45,7 @@ section
         br
         | &nbsp;&nbsp;&nbsp;&nbsp;#{'<div class="img-wrap">'}
         br
-        | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#{'<img src="'}#{window.location.protocol + window.location.host + '/staticdata/img/fade-in-logo.png'}#{'">'}
+        | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#{'<img src="'}#{window.location.protocol + '//' + window.location.host + '/staticdata/img/fade-in-logo.png'}#{'">'}
         br
         | &nbsp;&nbsp;&nbsp;&nbsp;#{'</div>'}
         br
@@ -57,7 +57,7 @@ section
         br
         | &nbsp;&nbsp;#{'</div>'}
         br
-        | &nbsp;&nbsp;#{'<a href="'}#{window.location.protocol + window.location.host + '/'}#{app.user.company.slug}#{'" class="btn-widget-gf" target="blank">invest now</a>'}
+        | &nbsp;&nbsp;#{'<a href="'}#{window.location.protocol + '//' + window.location.host + '/'}#{app.user.company.slug}#{'" class="btn-widget-gf" target="blank">invest now</a>'}
         br
         | #{'</div>'}
 
@@ -66,7 +66,7 @@ section
 
       p.pb10 after, you needs import Javascript 
       code.m-b-1
-        | #{'<script src="'}#{window.location.protocol + window.location.host + '/js/widget/widget-gf.js'}#{'"></script>'}
+        | #{'<script src="'}#{window.location.protocol + '//' + window.location.host + '/js/widget/widget-gf.js'}#{'"></script>'}
       p and initialization function
       code
         | #{'<script type="text/javascript">widgetsElement();</script>'}
