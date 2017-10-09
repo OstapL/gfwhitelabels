@@ -9,13 +9,18 @@
 
 }
 .all-widget-wrap {
-	max-width: 390px;
+	width: 390px;
 	height: 215px;
 	background-color: #fff;
 	border-radius: 3px;
 	border-left: 7px solid #3cbdb9;
 	border-top: 1px solid #3cbdb9;
 	border-bottom: 1px solid #3cbdb9;
+}
+@media (max-width: 360px) {
+	.all-widget-wrap {
+		width: 300px;
+	}
 }
 .all-widget-wrap .header .close-widget {
 	float: right;
@@ -66,13 +71,13 @@
 #widget-gf.widget-gf-v2 {
 	position: fixed;
 	right: 15px;
-	bottom: 15px;
+	bottom: 400px;
 	font-family: 'Open Sans', sans-serif;
 }
 .widget-gf-v2 .widget-wrap {
 	width: 324px;
 	height: 186px;
-	background-image: url(https://alpha.growthfountain.com/staticdata/img/generals/gbi-widget.png);
+	background-image: url('https://alpha.growthfountain.com/staticdata/img/generals/gbi-widget.png');
 	background-repeat: no-repeat;
 }
 @media (max-width: 360px) {
