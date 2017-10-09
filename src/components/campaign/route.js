@@ -152,34 +152,6 @@ module.exports = {
     previewPdf(slug, pdfType) {
       app.showLoading();
 
-			function base64Encode(str) {
-	        var CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-	        var out = "", i = 0, len = str.length, c1, c2, c3;
-					while (i < len) {
-						c1 = str.charCodeAt(i++) & 0xff;
-						if (i == len) {
-							out += CHARS.charAt(c1 >> 2);
-							out += CHARS.charAt((c1 & 0x3) << 4);
-							out += "==";
-							break;
-						}
-						c2 = str.charCodeAt(i++);
-						if (i == len) {
-							out += CHARS.charAt(c1 >> 2);
-							out += CHARS.charAt(((c1 & 0x3)<< 4) | ((c2 & 0xF0) >> 4));
-							out += CHARS.charAt((c2 & 0xF) << 2);
-							out += "=";
-							break;
-						}
-						c3 = str.charCodeAt(i++);
-						out += CHARS.charAt(c1 >> 2);
-						out += CHARS.charAt(((c1 & 0x3) << 4) | ((c2 & 0xF0) >> 4));
-						out += CHARS.charAt(((c2 & 0xF) << 2) | ((c3 & 0xC0) >> 6));
-						out += CHARS.charAt(c3 & 0x3F);
-					}
-					return out;
-			}
-
       require.ensure([], () => {
         const View = require('./views.js');
         $.when(
@@ -195,14 +167,27 @@ module.exports = {
           )
         ).done((rawData) => {
 
-          const iframe = document.createElement('iframe');
-          document.title = slug + ' esignature';
-          document.body.appendChild(iframe);
-          iframe.setAttribute('style', "position:fixed; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999;");
-          iframe.setAttribute('src', "data:application/pdf;base64," + base64Encode(rawData));
+          if (window.navigator && window.navigator.msSaveOrOpenBlob) { // IE workaround
+						var byteCharacters = atob(app.utils.base64Encode(rawData));
+						var byteNumbers = new Array(byteCharacters.length);
+						for (var i = 0; i < byteCharacters.length; i++) {
+								byteNumbers[i] = byteCharacters.charCodeAt(i);
+						}
+						var byteArray = new Uint8Array(byteNumbers);
+						var blob = new Blob([byteArray], {type: 'application/pdf'});
+						window.navigator.msSaveOrOpenBlob(blob, fileName);
+          } else {
+            const iframe = document.createElement('embed');
+            document.title = slug + ' esignature';
+            document.body.appendChild(iframe);
+            iframe.setAttribute("type", "application/pdf");
+            iframe.setAttribute('style', "position:fixed; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999;");
+            iframe.setAttribute('src', "data:application/pdf;base64," + app.utils.base64Encode(rawData));
 
-          $('body').scrollTo();
-          app.hideLoading();
+            $('body').scrollTo();
+            app.hideLoading();
+          }
+
         });
       }, 'campaign_chunk');
     },
