@@ -22,6 +22,9 @@
 	opacity: 0;
    	-webkit-transition: opacity 1s;
     transition: opacity 1s ease;
+    -webkit-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.5);
+	-moz-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.5);
+	box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.5);
 }
 @media (max-width: 360px) { 
 	#gf__widget.gf__widget_v1 {
@@ -31,12 +34,12 @@
 		width: 320px;
 	}
 	.gf__widget_v1 #gf__widget_show {
-		bottom: 160px!important;
+		bottom: 159px!important;
 	}
 }
 .gf__widget_v1 #gf__widget_show {
 	position: fixed;
-	bottom: 175px;
+	bottom: 173px;
 	right: 0;
 	z-index: 1;
 	width: 55px;
@@ -49,6 +52,9 @@
    	-webkit-transition: opacity 1s;
     transition: opacity 1s;
     cursor: pointer;
+    -webkit-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.5);
+	-moz-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.5);
+	box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.5);
 }
 .gf__widget_v1 #gf__widget_show:hover {
 	cursor: pointer;
@@ -62,9 +68,9 @@
 	float: right;
 	color: #777777;
 	font-size: 15px;
-	position: relative;
-	right: 0px;
-	top: 0px;
+	position: absolute;
+	right: 15px;
+	top: 15px;
 }
 #gf__widget_invest .gf__close_widget:hover {
 	color: #949494;
@@ -86,6 +92,9 @@
 	letter-spacing: 1.3px;
 	cursor: pointer;
 	font-weight: bold;
+	-webkit-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.5);
+	-moz-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.5);
+	box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.5);
 }
 #gf__widget .gf__all_widget_wrap .gf__btn_widget:hover {
 	background-color: rgb(64, 200, 196);
@@ -135,6 +144,9 @@
 	#gf__widget.gf__widget_v2 {
 		bottom: 15px;
 	}
+	.gf__widget_v2 .gf__content_widgets {
+		max-width: 248px!important;
+	}
 }
 .gf__widget_v2 .gf__widget_header {
 	padding-top: 25px;
@@ -145,9 +157,9 @@
 	float: right;
 	color: #777777;
 	font-size: 15px;
-	position: relative;
-	right: 0px;
-	top: -5px!important;
+	right: 25px!important;
+	top: 20px!important;
+
 }
 .gf__widget_v2 .gf__content_widgets {
 	max-width: 268px;
@@ -200,6 +212,9 @@
 	float: right;
 	margin-top: 10px;
 	font-weight: bold;
+	-webkit-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.5);
+	-moz-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.5);
+	box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.5);
 }
 .gf__widget_v2 .gf__btn_widget:hover {
 	background-color: rgb(64, 200, 196);
