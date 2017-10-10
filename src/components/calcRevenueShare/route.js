@@ -1,8 +1,8 @@
 module.exports = {
   routes: {
-    'calculator/revenue-share': 'calculatorpaybacksharestep1',
-    'calculator/revenue-share/step-2': 'calculatorpaybacksharestep2',
-    'calculator/revenue-share/step-3': 'calculatorpaybacksharestep3',
+    'calculator/revenue-share': 'calculatorPaybackshareStep1',
+    'calculator/revenue-share/step-2': 'calculatorPaybackshareStep2',
+    'calculator/revenue-share/step-3': 'calculatorPaybackshareStep3',
   },
   //map historicalRoute: actualRoute
   historicalRoutes: {

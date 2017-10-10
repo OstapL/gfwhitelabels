@@ -1,12 +1,12 @@
 module.exports = {
   routes: {
-    'calculator/selectyourbusiness': 'selectyourbusiness',
-    'calculator/business-valuation': 'businessvaluation',
+    'calculator/selectyourbusiness': 'selectYourBusiness',
+    'calculator/business-valuation': 'businessValuation',
 
-    'calculator/capital-raise': 'calculatorwhatmybusinessworthintro',
-    'calculator/capital-raise/step-1': 'calculatorwhatmybusinessworthstep1',
-    'calculator/capital-raise/step-2': 'calculatorwhatmybusinessworthstep2',
-    'calculator/capital-raise/finish': 'calculatorwhatmybusinessworthfinish',
+    'calculator/capital-raise': 'calculatorWhatMyBusinessWorthIntro',
+    'calculator/capital-raise/step-1': 'calculatorWhatMyBusinessWorthStep1',
+    'calculator/capital-raise/step-2': 'calculatorWhatMyBusinessWorthStep2',
+    'calculator/capital-raise/finish': 'calculatorWhatMyBusinessWorthFinish',
   },
   historicalRoutes: {
     'calculator/businessvaluation': 'calculator/business-valuation',
