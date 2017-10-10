@@ -1,10 +1,16 @@
 section
   .row
     .col-xl-12
-      h2.text-uppercase widget
+      h2.text-uppercase.m-b-2 widget
   .row
     .col-xl-12
-      p.pb10 If you want add widget to your website, please add this HTML code in your page
+      p You can add a widget to your company’s website. It allows users to get directly to your campaign page on the GrowthFountain platform and to make an investment.
+    .col-xl-6.col-lg-6.col-md-6.col-sm-12.col-xs-12
+      h3.text-uppercase.text-xs-center.m-b-1 Variant 1
+      img(src=require("images/generals/widget-v1.png"), alt="Variant 1")
+      p.m-b-1 If you want to add this variant of widget to your website, please add the following 
+        span.font-weight-bold HTML code 
+        | into your page:
       code.m-b-1
         | #{'<div id="gf__widget" class="gf__widget_v1">'}
         br
@@ -35,7 +41,20 @@ section
         | &nbsp;&nbsp;#{'</div>'}
         br
         | #{'</div>'}
-      h3.text-uppercase Version 2
+      p.pb10 Then you need import 
+        span.font-weight-bold Javascript:
+      code.m-b-1
+        | #{'<script src="'}#{window.location.protocol + '//' + window.location.host + '/js/widget/widget-gf.js'}#{'"></script>'}
+      p.pb10 And initialization 
+        span.font-weight-bold function:
+      code
+        | #{'<script type="text/javascript">widgetsElement();</script>'}
+    .col-xl-6.col-lg-6.col-md-6.col-sm-12.col-xs-12
+      h3.text-uppercase.text-xs-center.m-b-1 Variant 2
+      img(src=require("images/generals/widget-v2.png"), alt="Variant 2")
+      p.m-b-1 If you want to add this variant of widget to your website, please add the following 
+        span.font-weight-bold HTML code 
+        | into your page:
       code.m-b-1
         | #{'<div id="gf__widget" class="gf__widget_v2">'}
         br
@@ -66,13 +85,11 @@ section
         | &nbsp;&nbsp;#{'<a href="'}#{window.location.protocol + '//' + window.location.host + '/'}#{app.user.company.slug}#{'" class="gf__btn_widget" target="blank">invest now</a>'}
         br
         | #{'</div>'}
-
-
-
-
-      p.pb10 after, you needs import Javascript 
+      p.pb10 Then you need import 
+        span.font-weight-bold Javascript:
       code.m-b-1
         | #{'<script src="'}#{window.location.protocol + '//' + window.location.host + '/js/widget/widget-gf.js'}#{'"></script>'}
-      p and initialization function
+      p.pb10 And initialization 
+        span.font-weight-bold function:
       code
         | #{'<script type="text/javascript">widgetsElement();</script>'}
