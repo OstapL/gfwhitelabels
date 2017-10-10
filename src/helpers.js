@@ -38,7 +38,7 @@ module.exports = {
         document.title = slug + ' esignature';
         document.body.appendChild(iframe);
         iframe.setAttribute("type", "application/pdf");
-        iframe.setAttribute('style', "position:fixed; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999;");
+        iframe.setAttribute('style', "position:fixed; display:block; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999; overflow-y: auto; -webkit-overflow-scrolling:touch;");
         iframe.setAttribute('src', "data:application/pdf;base64," + app.utils.base64Encode(rawData));
       }
     }
