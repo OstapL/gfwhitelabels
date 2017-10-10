@@ -1189,13 +1189,5 @@ module.exports = {
       return this;
     },
   }),
-
-  previewPdf: Backbone.View.extend({
-    el: '#content',
-    template: require('./templates/previewPdf.pug'),
-    render() {
-      this.el.innerHTML = this.template();
-    }
-  }),
 };
 

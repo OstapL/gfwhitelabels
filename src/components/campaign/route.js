@@ -153,7 +153,6 @@ module.exports = {
       app.showLoading();
 
       require.ensure([], () => {
-        const View = require('./views.js');
         $.when(
           api.makeRequest(
               app.config.esignServer + '/preview/' + slug + '/' + pdfType + window.location.search,
@@ -166,32 +165,10 @@ module.exports = {
               },
           )
         ).done((rawData) => {
-
-          if (window.navigator && window.navigator.msSaveOrOpenBlob) { // IE workaround
-						var byteCharacters = atob(app.utils.base64Encode(rawData));
-						var byteNumbers = new Array(byteCharacters.length);
-						for (var i = 0; i < byteCharacters.length; i++) {
-								byteNumbers[i] = byteCharacters.charCodeAt(i);
-						}
-						var byteArray = new Uint8Array(byteNumbers);
-						var blob = new Blob([byteArray], {type: 'application/pdf'});
-						window.navigator.msSaveOrOpenBlob(blob, fileName);
-          } else {
-            const iframe = document.createElement('embed');
-            document.title = slug + ' esignature';
-            document.body.appendChild(iframe);
-            iframe.setAttribute("type", "application/pdf");
-            iframe.setAttribute('style', "position:fixed; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999;");
-            iframe.setAttribute('src', "data:application/pdf;base64," + app.utils.base64Encode(rawData));
-
-          }
-          // $('body').scrollTo();
-          app.hideLoading(300);
-
+          app.currentView = new app.helpers.previewPdf(slug, rawData);
         });
       }, 'campaign_chunk');
     },
-
 
   },
 

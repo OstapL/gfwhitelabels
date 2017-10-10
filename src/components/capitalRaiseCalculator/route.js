@@ -1,8 +1,8 @@
 module.exports = {
   routes: {
-    'calculator/startup/intro': 'calculatorCapitalraiseIntro',
-    'calculator/startup/step-1': 'calculatorCapitalraiseStep1',
-    'calculator/startup/finish': 'calculatorCapitalraiseFinish',
+    'calculator/startup/intro': 'calculatorcapitalraiseIntro',
+    'calculator/startup/step-1': 'calculatorcapitalraisestep1',
+    'calculator/startup/finish': 'calculatorcapitalraisefinish',
   },
   historicalRoutes: {
     'calculator/capitalraise/intro': 'calculator/startup/intro',
