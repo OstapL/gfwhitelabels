@@ -3,8 +3,6 @@
 - document.title = 'Current Investment Offerings on GrowthFountain';
 - document.head.querySelector('meta[name="description"]').content = 'Explore investment opportunities on GrowthFountain. Start investing today with as little as $100.';
 
-- pug_html += app.breadcrumbs('Current Investment Opportunities', '', [ ['Home', '/'], ['Current Investment Opportunities', ''], ]);
-
 mixin paginator(currentPage, limit, totalCount)
   if limit < totalCount
     -
@@ -131,6 +129,7 @@ secetion.email-subscription.subscription-campaing-list
   .container
     .row
       .col-xs-12
+        h1.text-xs-center.text-uppercase.m-t-85.m-b-3 Current Investment Opportunities
         h2.text-xs-center.font-weight-light.m-t-0 Sign up and be the first to hear about new investment opportunities
     .row
       .col-xl-12
@@ -144,7 +143,6 @@ secetion.email-subscription.subscription-campaing-list
 
 section.campaing-list
   .container#campaignList
-    h2.text-uppercase.m-t-0.text-xs-center Invest in American startups and small businesses
     include _list.pug
 -
   var currentPage = Number(app.getParams().page) || 1;

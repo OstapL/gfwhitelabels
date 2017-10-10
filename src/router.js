@@ -1,14 +1,14 @@
 const componentRoutes = [
-  require('components/payBackShareCalculator/route.js'),
-  require('components/capitalRaiseCalculator/route.js'),
-  require('components/whatMyBusinessWorthCalculator/route.js'),
+  require('components/calcRevenueShare/route.js'),
+  require('components/calcStartup/route.js'),
+  require('components/calcCapitalRaise/route.js'),
+  require('components/calcEstablishedBusiness/route.js'),
   require('components/blog/route.js'),
   require('components/raiseFunds/route.js'),
   require('components/pg/route.js'),
   require('components/campaign/route.js'),
   require('components/anonymousAccount/route.js'),
   require('components/accountProfile/route.js'),
-  require('components/establishedBusinessCalculator/route.js'),
   require('components/formc/route.js'),
 ];
 

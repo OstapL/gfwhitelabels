@@ -6,7 +6,7 @@ var e = {
   formcServer: "https://api-formc-dev.growthfountain.com",
   investmentServer: "https://api-investment-dev.growthfountain.com",
   filerServer: "https://api-filer-go-dev.growthfountain.com",
-  esignServer: 'https://api-esign-dev.growthfountain.com',
+  esignServer: "https://api-esign-go-dev.growthfountain.com",
   commentsServer: "https://api-comments-dev.growthfountain.com",
   blogServer: "https://api-blog-dev.growthfountain.com",
   emailServer: "https://api-email-dev.growthfountain.com",
