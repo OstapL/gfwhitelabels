@@ -368,6 +368,7 @@ module.exports = {
 
       setTimeout(() => {
         this.initAsyncUI();
+        app.helpers.scripts.load("//platform-api.sharethis.com/js/sharethis.js#property=59dd126b609d090011a31b32&product=inline-share-buttons");
       }, 100);
 
       this.$el.find('.perks .col-xl-4 p').equalHeights();
