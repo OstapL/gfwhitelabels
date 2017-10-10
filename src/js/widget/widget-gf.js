@@ -9,12 +9,12 @@ function widgetsElement() {
     headID.appendChild(linkCss);
 
   var widget = document.querySelector("#gf__widget_invest");
-  var widgetShow = document.querySelector('#gf__widget_show');
+  var widgetShow = document.querySelectorAll('#gf__widget_show');
+  //document.querySelector('.content-widgets').innerHTML += "<a href='#' class='btn-widget-gf'> invest now</a>";
 
   setTimeout(function() {
     widget.style.display = 'block';
-    widgetShow.style.display = 'block';
-  }, 3000);
+  }, 5000);
 
   function hide(event) {
     event.stopPropagation();
@@ -25,5 +25,7 @@ function widgetsElement() {
     widget.style.display = 'block';
   };
   document.querySelector('#gFcloseWidget').addEventListener('click', hide);
-  document.querySelector('#gf__widget_show').addEventListener('click', show);
+  if (widgetShow.length != 0) {
+    document.querySelector('#gf__widget_show').addEventListener('click', show);
+  };
 }
