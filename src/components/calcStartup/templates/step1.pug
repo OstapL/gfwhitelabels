@@ -1,4 +1,7 @@
-- pug_html += app.breadcrumbs('Startup Business Valuation Calculator', 'step 1', [ ['Home', '/'], ["What's My Business Worth?", '/calculator/business-valuation'], ["Startup Business Valuation Calculator", ''],]);
+- document.title = 'Step 1 - Free Startup Valuation Calculator | GrowthFountain';
+- document.head.querySelector('meta[name="description"]').content = 'Take advantage of our free startup valuation calculator to find out how much your startup idea is worth';
+
+- pug_html += app.breadcrumbs('Startup Valuation Calculator', 'step 1', [ ['Home', '/'], ["What's My Business Worth?", '/calculator/businessvaluation'], ["Startup Valuation Calculator", ''],]);
 
 .container.calculator-container
   .row
@@ -137,7 +140,7 @@
 
           .form-group.row.clearfix.m0
             .col-xs-6.p-t-2.m-t-1
-              a(href='/calculator/startup/intro', role='button').link-3 Go back
+              a(href="/calculator/startup/intro", role='button').link-3 Go back
 
             .col-xs-6.mt30
               .controls

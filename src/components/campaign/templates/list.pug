@@ -1,5 +1,8 @@
 - 'use strict';
 
+- document.title = 'Current Investment Offerings on GrowthFountain';
+- document.head.querySelector('meta[name="description"]').content = 'Explore investment opportunities on GrowthFountain. Start investing today with as little as $100.';
+
 mixin paginator(currentPage, limit, totalCount)
   if limit < totalCount
     -
@@ -64,7 +67,7 @@ mixin paginator(currentPage, limit, totalCount)
                       i.fa.fa-angle-right
                     span.sr-only Next
 
-section.small-section.filter.p-b-0
+section.small-section.filter.p-b-0(style="display: none")
   form(
       action="/campaigns/" 
       method="get" 
@@ -126,6 +129,7 @@ secetion.email-subscription.subscription-campaing-list
   .container
     .row
       .col-xs-12
+        h1.text-xs-center.text-uppercase.m-t-85.m-b-3 Current Investment Opportunities
         h2.text-xs-center.font-weight-light.m-t-0 Sign up and be the first to hear about new investment opportunities
     .row
       .col-xl-12

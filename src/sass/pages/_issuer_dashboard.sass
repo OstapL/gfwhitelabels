@@ -385,6 +385,14 @@
     .right_fixed_text
       top: rem(45)
 .issuer-dashboard-tabs
+  code
+    display: block
+    padding: 15px
+    @media only screen and (max-width : 440px)
+      font-size: rem(9)
+    @media screen and (min-width : 992px) and (max-width : 1199px)
+      &.big-section
+        min-height: 530px
   .standart-nav-tabs
     @media only screen and (max-width : 576px)
       border-left: solid 1px $gallery
