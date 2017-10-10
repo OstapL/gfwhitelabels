@@ -13,16 +13,22 @@ function widgetsElement() {
   //document.querySelector('.content-widgets').innerHTML += "<a href='#' class='btn-widget-gf'> invest now</a>";
 
   setTimeout(function() {
-    widget.style.display = 'block';
-  }, 5000);
+    widget.style.visibility = "visible";
+    widget.style.opacity = 1;
+    widget.style.transition = "opacity 1s ease";
+  }, 4000);
 
   function hide(event) {
     event.stopPropagation();
-    widget.style.display = 'none';
+    widget.style.visibility = "hidden";
+    widget.style.opacity = 0;
+    widget.style.transition = "opacity 0.5s ease";
   };
   function show(event) {
     event.stopPropagation();
-    widget.style.display = 'block';
+    widget.style.visibility = "visible";
+    widget.style.opacity = 1;
+    widget.style.transition = "opacity 0.5s ease";
   };
   document.querySelector('#gFcloseWidget').addEventListener('click', hide);
   if (widgetShow.length != 0) {
