@@ -19,24 +19,44 @@
 	border-bottom: 1px solid #3cbdb9;
 	z-index: 2;
 	position: relative;
+	opacity: 0;
+   	-webkit-transition: opacity 1s;
+    transition: opacity 1s ease;
+}
+@media (max-width: 360px) { 
+	#gf__widget.gf__widget_v1 {
+		bottom: 1px;
+	}
+	.gf__widget_v1 #gf__widget_invest {
+		width: 320px;
+	}
+	.gf__widget_v1 #gf__widget_show {
+		bottom: 160px!important;
+	}
 }
 .gf__widget_v1 #gf__widget_show {
 	position: fixed;
-	bottom: 145px;
+	bottom: 175px;
 	right: 0;
 	z-index: 1;
-	width: 80px;
-	height: 80px;
+	width: 55px;
+	height: 55px;
 	background-color: #fff;
 	border-left: 5px solid #3cbdb9;
 	border-top: 1px solid #3cbdb9;
 	border-bottom: 1px solid #3cbdb9;
 	text-align: center;
+   	-webkit-transition: opacity 1s;
+    transition: opacity 1s;
+    cursor: pointer;
+}
+.gf__widget_v1 #gf__widget_show:hover {
+	cursor: pointer;
 }
 .gf__widget_v1 #gf__widget_show img {
-	width: 56px;
+	width: 30px;
 	margin: auto;
-	margin-top: 20px;
+	margin-top: 18px;
 }
 #gf__widget_invest .gf__close_widget {
 	float: right;
@@ -46,7 +66,10 @@
 	right: 0px;
 	top: 0px;
 }
-#gf__widget .gf__widget_header {
+#gf__widget_invest .gf__close_widget:hover {
+	color: #949494;
+}
+.gf__widget_v1 .gf__widget_header {
 	padding: 15px;
 }
 #gf__widget_invest .gf__all_widget_wrap {
@@ -61,9 +84,11 @@
 	text-transform: uppercase;
 	border-radius: 30px;
 	letter-spacing: 1.3px;
+	cursor: pointer;
+	font-weight: bold;
 }
-.gf__all_widget_wrap .gf__btn_widget:hover {
-	background-color: rgba(57,178,175, 0.7);
+#gf__widget .gf__all_widget_wrap .gf__btn_widget:hover {
+	background-color: rgb(64, 200, 196);
 	cursor: pointer;
 }
 .gf__all_widget_wrap h3 {
@@ -98,6 +123,8 @@
 	height: 186px;
 	background-image: url('https://alpha.growthfountain.com/staticdata/img/generals/gbi-widget.png');
 	background-repeat: no-repeat;
+	-webkit-transition: opacity 1s;
+    transition: opacity 1s;
 }
 @media (max-width: 360px) {
 	.gf__widget_v2 .gf_widget_wrap {
@@ -120,7 +147,7 @@
 	font-size: 15px;
 	position: relative;
 	right: 0px;
-	top: 0px;
+	top: -5px!important;
 }
 .gf__widget_v2 .gf__content_widgets {
 	max-width: 268px;
@@ -172,8 +199,9 @@
 	letter-spacing: 1.3px;
 	float: right;
 	margin-top: 10px;
+	font-weight: bold;
 }
 .gf__widget_v2 .gf__btn_widget:hover {
-	background-color: rgba(57,178,175, 0.7);
+	background-color: rgb(64, 200, 196);
 	cursor: pointer;
 }
