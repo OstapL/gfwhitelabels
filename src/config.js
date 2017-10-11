@@ -15,7 +15,7 @@ module.exports = {
 	teamName: 'GrowthFountain Team',
 	teamTitle: "Meet The Team",
   siteTitle: 'Crowdfunding | Infinity Federal Credit Union',
-
+  siteDescription: 'Invest as little as $100 in startups and small businesses. GrowthFountain is the preferred equity crowdfunding platform of more than 1 million credit union members',
 	// Growth Fountain production keys:
 	// facebookClientId: "191471871275050",
 	// googleClientId: "488593151885-87nqfd8gl444a1me0n149otrf37dbahq.apps.googleusercontent.com",
