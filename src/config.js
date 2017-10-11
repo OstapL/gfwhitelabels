@@ -16,7 +16,7 @@ var e = {
   teamName: 'GrowthFountain Team',
   teamTitle: "Meet The Team",
   siteTitle: "Crowdfunding | Momentum3 Growth",
-
+  siteDescription: 'Invest as little as $100 in startups and small businesses. GrowthFountain is the preferred equity crowdfunding platform of more than 1 million credit union members',
 
 // Growth Fountain production keys:
 //  facebookClientId: "191471871275050",
