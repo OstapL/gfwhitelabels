@@ -1,5 +1,7 @@
-- pug_html += app.breadcrumbs('Startup Business Valuation Calculator', 'finish', [ ['Home', '/'], ["What's My Business Worth?", '/calculator/business-valuation'], ["Startup Business Valuation Calculator", ''],]);
+- document.title = 'Results - Free Startup Valuation Calculator ' + app.config.siteTitle;
+- document.head.querySelector('meta[name="description"]').content = 'Take advantage of our free startup valuation calculator to find out how much your startup idea is worth';
 
+- pug_html += app.breadcrumbs('Startup Valuation Calculator', 'finish', [ ['Home', '/'], ["What's My Business Worth?", '/calculator/business-valuation'], ["Startup Valuation Calculator", ''],]);
 
 .container.calculator-container
   .row

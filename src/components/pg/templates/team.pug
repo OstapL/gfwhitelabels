@@ -1,4 +1,7 @@
-- pug_html += app.breadcrumbs(app.config.teamName, '', [ ['Home', '/'], [app.config.teamName, ''], ]);
+- document.title = 'GrowthFountain Team';
+- document.head.querySelector('meta[name="description"]').content = 'At GrowthFountain, we are dedicated to helping entrepreneurs as passionate about their business as we are.';
+
+- pug_html += app.breadcrumbs('Meet the GrowthFountain Team', '', [ ['Home', '/'], ['Meet the GrowthFountain Team', ''], ]);
 
 section.text_block.information-page
   .container
@@ -28,9 +31,9 @@ section.text_block.information-page
             .col-lg-12.text-xs-center
               h2.text-uppercase.m-t-0 #{app.config.teamTitle}
             .col-xl-12.text-xs-center
-              h3.font-weight-light.m-t-0.m-b-0 At GrowthFountain, we are dedicated to helping entrepreneurs as passionate
+              h3.font-weight-light.m-t-0.m-b-0 We are dedicated to helping entrepreneurs as passionate 
                 br
-                | about their business as we are. 
+                | about their business as we are.
           .row.m-t-3
             .col-xl-12.text-xs-center
               h4.section-bg-line.text-uppercase our Founders
@@ -77,7 +80,7 @@ section.text_block.information-page
             .col-xl-4.col-lg-4.col-md-4.col-sm-6.col-xs-12
               .one-team.text-xs-center.m-b-3
                 img(src=require("images/pages/vlad.png")).img-circle.h-100.m-b-1
-                h4.text-uppercase vladislav tarasenko
+                h4.text-uppercase vladyslav tarasenko
                   .small-text.font-weight-normal Lead Engineer
             .col-xl-4.col-lg-4.col-md-4.col-sm-6.col-xs-12
               .one-team.text-xs-center.m-b-3

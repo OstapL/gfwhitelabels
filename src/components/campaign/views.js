@@ -1139,6 +1139,11 @@ module.exports = {
 
     openPdfPreview(e) {
 
+      let cityInput = this.el.querySelector('#personal_information_data__city input');
+      if (cityInput === null) {
+        cityInput = this.el.querySelector('#personal_information_data__city');
+      }
+
       const url = '/' + this.model.slug + '/esignature/' + e.currentTarget.dataset.pdfType
         + '?amount=' + (this.el.querySelector('#amount').value.replace(/[\$,]/g, '') || 0)
         + '&commission=' + this.calcFeeWithCredit().fee
@@ -1150,7 +1155,7 @@ module.exports = {
         + '&address=' +  this.el.querySelector('#personal_information_data__street_address_1').value
         + '&address2=' +  this.el.querySelector('#personal_information_data__street_address_2').value
         + '&zip_code=' +  this.el.querySelector('#personal_information_data__zip_code').value
-        + '&city=' +  this.el.querySelector('#personal_information_data__city input').value
+        + '&city=' +  cityInput.value
         + '&state=' +  this.el.querySelector('#personal_information_data__state').value
         + '&signature=' +  this.el.querySelector('#signature').value;
 
@@ -1188,14 +1193,6 @@ module.exports = {
       );
       return this;
     },
-  }),
-
-  previewPdf: Backbone.View.extend({
-    el: '#content',
-    template: require('./templates/previewPdf.pug'),
-    render() {
-      this.el.innerHTML = this.template();
-    }
   }),
 };
 
