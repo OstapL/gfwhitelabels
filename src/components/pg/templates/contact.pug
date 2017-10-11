@@ -1,4 +1,7 @@
-- pug_html += app.breadcrumbs('Contact us', '', [ ['Home', '/'], ['Contacts us', ''], ]);
+- document.title = 'Contact Us at GrowthFountain';
+- document.head.querySelector('meta[name="description"]').content = 'Get in touch with us to learn more about equity crowdfunding.';
+
+- pug_html += app.breadcrumbs('Contact Us', '', [ ['Home', '/'], ['Contact Us', ''], ]);
 
 section.text_block  
   .container
@@ -23,6 +26,7 @@ section.text_block
             a(href='/pg/faq').d-inline-block.w-100 FAQ
 
       .col-lg-9
+        h2.text-uppercase.text-xs-center.m-t-0 Get In Touch
         include ../../../templates/map
         section.all-contacts.mt50
           .row
