@@ -297,7 +297,6 @@ const Views = {
       this.$el.html(
         this.template({})
       );
-
       setTimeout(() => {
         this.initCalendly();
         this.initCarousel();
