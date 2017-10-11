@@ -24,6 +24,11 @@ module.exports = {
   previewPdf: Backbone.View.extend({
     el: 'body',
     initialize(slug, rawData) {
+
+      let html = document.querySelector('html');
+      html.innerHTML = '<body></body>';
+      html.classList = [];
+
       if (window.navigator && window.navigator.msSaveOrOpenBlob) { // IE workaround
         var byteCharacters = atob(app.utils.base64Encode(rawData));
         var byteNumbers = new Array(byteCharacters.length);
