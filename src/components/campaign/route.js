@@ -84,8 +84,8 @@ module.exports = {
 
           const companyName = companyData[0].short_name || companyData[0].name;
 
-          document.title = companyName;
-          document.head.querySelector('meta[name="description"]').content = metaDescription;
+          document.title = companyName + ' | GrowthFountain Equity Crowdfunding';
+          document.head.querySelector('meta[name="description"]').content = companyName + ' is fundraising on GrowthFountain!';
 
           const getShareTags = () => {
             if (params === 'share') {
@@ -146,51 +146,13 @@ module.exports = {
           app.analytics.emitEvent(app.analytics.events.InvestmentClicked, app.user.stats);
         });
 
-        //TODO: fixme
-        // if (!window.pdfMake) {
-        //   ['/js/pdfmake.js', '/js/vfs_fonts.js'].forEach( (uri) => {
-        //     let script = document.createElement('script');
-        //     script.type = 'text/javascript';
-        //     script.src = uri;
-        //     $('head').append(script);
-        //   });
-        // }
       }, 'campaign_chunk');
     },
 
     previewPdf(slug, pdfType) {
       app.showLoading();
 
-			function base64Encode(str) {
-	        var CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-	        var out = "", i = 0, len = str.length, c1, c2, c3;
-					while (i < len) {
-						c1 = str.charCodeAt(i++) & 0xff;
-						if (i == len) {
-							out += CHARS.charAt(c1 >> 2);
-							out += CHARS.charAt((c1 & 0x3) << 4);
-							out += "==";
-							break;
-						}
-						c2 = str.charCodeAt(i++);
-						if (i == len) {
-							out += CHARS.charAt(c1 >> 2);
-							out += CHARS.charAt(((c1 & 0x3)<< 4) | ((c2 & 0xF0) >> 4));
-							out += CHARS.charAt((c2 & 0xF) << 2);
-							out += "=";
-							break;
-						}
-						c3 = str.charCodeAt(i++);
-						out += CHARS.charAt(c1 >> 2);
-						out += CHARS.charAt(((c1 & 0x3) << 4) | ((c2 & 0xF0) >> 4));
-						out += CHARS.charAt(((c2 & 0xF) << 2) | ((c3 & 0xC0) >> 6));
-						out += CHARS.charAt(c3 & 0x3F);
-					}
-					return out;
-			}
-
       require.ensure([], () => {
-        const View = require('./views.js');
         $.when(
           api.makeRequest(
               app.config.esignServer + '/preview/' + slug + '/' + pdfType + window.location.search,
@@ -203,19 +165,10 @@ module.exports = {
               },
           )
         ).done((rawData) => {
-
-          const iframe = document.createElement('iframe');
-          document.title = slug + ' esignature';
-          document.body.appendChild(iframe);
-          iframe.setAttribute('style', "position:fixed; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999;");
-          iframe.setAttribute('src', "data:application/pdf;base64," + base64Encode(rawData));
-
-          $('body').scrollTo();
-          app.hideLoading();
+          app.currentView = new app.helpers.previewPdf(slug, rawData);
         });
       }, 'campaign_chunk');
     },
-
 
   },
 
