@@ -51,8 +51,8 @@ class InfoProvider {
 
   facebook() {
     return 'https://www.facebook.com/dialog/share' +
-      encodeURIComponent('?app_id=' + app.config.facebookClientId + '&href='  
-          + encodeURIComponent('https://share.growthfountain.com/share?url=' + window.location.href))
+      '?app_id=' + app.config.facebookClientId + '&href='  
+      + encodeURIComponent('https://share.growthfountain.com/share?url=' + encodeURIComponent(window.location.href))
   }
 
   email() {
