@@ -61,12 +61,7 @@ class CampaignInfoProvider extends ShareInfoProvider {
   facebook() {
     return 'https://www.facebook.com/dialog/share' +
       '?app_id=' + app.config.facebookClientId +
-      '&href=' + this.data.url + '?r=' + Math.random() +
-      '&description=' + this._stripHtml(this.data.description) +
-      '&locale=' + 'en_US' +
-      '&picture=' + this.data.picture +
-      '&title=' + this.data.title +
-      '&caption=' + window.location.host.toUpperCase();
+      '&href=https://share.growthfountain.com/share?url=' + window.location.href
   }
 
   email() {
