@@ -67,12 +67,6 @@ class HeartlandInfoProvider extends ShareInfoProvider {
     };
   }
 
-  facebook() {
-    return 'https://www.facebook.com/dialog/share' +
-      '?app_id=' + app.config.facebookClientId +
-      '&href=https://share.growthfountain.com/share?url=' + window.location.href
-  }
-
   email() {
     return this._buildMailToLink({
       subject: 'I thought you\'d be interested in GrowthFountain\'s Heartland Tour',
