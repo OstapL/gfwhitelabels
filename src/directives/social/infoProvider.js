@@ -50,7 +50,9 @@ class InfoProvider {
   }
 
   facebook() {
-    throw 'Not implemented';
+    return 'https://www.facebook.com/dialog/share' +
+      '?app_id=' + app.config.facebookClientId + '&href='  
+      + encodeURIComponent('https://share.growthfountain.com/share?url=' + encodeURIComponent(window.location.href))
   }
 
   email() {
