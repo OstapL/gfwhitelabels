@@ -67,20 +67,6 @@ class HeartlandInfoProvider extends ShareInfoProvider {
     };
   }
 
-  facebook() {
-    return 'https://www.facebook.com/dialog/share' +
-      '?app_id=' + app.config.facebookClientId +
-      '&href=' + this.data.url + '?r=' + Math.random() +
-      '&description=' + this._stripHtml(
-        this._format('description', {
-          // siteName: this.data.siteName,
-        })) +
-      '&locale=' + 'en_US' +
-      '&picture=' + this.data.picture +
-      '&title=' + this.data.title +
-      '&caption=' + window.location.host.toUpperCase();
-  }
-
   email() {
     return this._buildMailToLink({
       subject: 'I thought you\'d be interested in GrowthFountain\'s Heartland Tour',
