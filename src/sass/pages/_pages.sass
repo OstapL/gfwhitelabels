@@ -121,7 +121,7 @@
 #education-page
   .education-one-item
     margin-top: rem(30)
-    margin-bottom: rem(50)
+    margin-bottom: rem(60)
     position: relative
     @media screen and (min-width : 768px) and (max-width : 1199px)
       padding-top: rem(20)
@@ -163,6 +163,11 @@
         margin-left: rem(30)
         @media screen and (min-width : 768px) and (max-width : 1199px)
           margin-left: rem(10)
+    &.five
+      img
+        margin-left: rem(30)
+        @media screen and (min-width : 768px) and (max-width : 1199px)
+          margin-left: rem(10)
   i.fa-info-circle
     font-size: rem(14)
     color: $sandy-brown-two
@@ -173,9 +178,14 @@
   .circle-education
     .like-detail-icon
       margin-top: rem(5)
+    .fa-comment-o
+      &:before
+        transform: translate(-46%, -56%)
   .pb20
     padding-bottom: rem(20)
-
+  #welcomeGF
+    h3
+      margin-bottom: 40px
 #view-wodget-v1
   background-image: url(../img/investor_slider/brouse.jpg)
   height: 95vh
