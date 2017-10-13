@@ -701,11 +701,13 @@ module.exports = {
       setTimeout(this.attachUpdateNetWorthModalEvents.bind(this), 100);
 
       $('span.current-limit').text(this._maxAllowedAmount.toLocaleString('en-US'));
-      api.makeRequest(
-        app.config.emailServer + '/subscribe',
-        'PUT',
-        {'company_id': this.model.id, 'type': 'invest'}
-      );
+      setTimeout(() => {
+        api.makeRequest(
+            app.config.emailServer + '/subscribe',
+            'PUT',
+            {'company_id': this.model.id, 'type': 'invest'}
+            );
+      }, 2500);
 
       return this;
     },
