@@ -24,7 +24,7 @@ var e = {
 
   facebookClientId: '1071081646296574',
   googleClientId: '805823281871-ve3unmva9aer69papghudk0dnpf8tqr2.apps.googleusercontent.com',
-  linkedinClientId: "77rg2wrcb8utfq",
+  linkedinClientId: "77ibchutnkhnd7",
 
   googleMapKey: "AIzaSyBpCl9-7bkVISZ0o-AaFCsKzZwGAxalkZU",
   stripeKey: "pk_live_4ZF2RPjAVJ0tXrDNMauofmgb",
