@@ -704,7 +704,7 @@ module.exports = {
       api.makeRequest(
         app.config.emailServer + '/subscribe',
         'PUT',
-        {'company_id': this.model.id}
+        {'company_id': this.model.id, 'type': 'invest'}
       );
 
       return this;
