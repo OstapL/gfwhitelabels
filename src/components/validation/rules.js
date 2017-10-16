@@ -25,8 +25,8 @@ module.exports = {
     max: '{0} must be less than or equal to {1}',
     range: '{0} must be between {1} and {2}',
     length: '{0} must be {1} characters',
-    minLength: '{0} must be at least {1} characters',
-    maxLength: '{0} must be at most {1} characters',
+    minLength: 'must be at least {1} characters',
+    maxLength: 'must be at most {1} characters',
     rangeLength: '{0} must be between {1} and {2} characters',
     oneOf: '{0} must be one of: {1}',
     equalTo: '{0} must be the same as {1}',
@@ -112,7 +112,7 @@ module.exports = {
   // the min value specified
   min: function (name, rule, attr, data) {
     let value = this.toNumber(this.getData(data, name));
-    if (value === false || value < rule) {
+    if (value !== false && value < rule) {
       throw this.format(this.messages.min, attr.label, rule);
     }
   },
@@ -126,7 +126,7 @@ module.exports = {
   // the max value specified
   max: function (name, rule, attr, data) {
     let value = this.toNumber(this.getData(data, name));
-    if (value === false || value > rule) {
+    if (value !== false && value > rule) {
       throw this.format(this.messages.max, attr.label, rule);
     }
   },
@@ -148,13 +148,6 @@ module.exports = {
   // Length validator
   // Validates that the value has to be a string with length equal to
   // the length value specified
-  _length: function (name, rule, attr, data) {
-    let value = this.getData(data, name);
-    if (!app.utils.isString(value) || value.length !== rule) {
-      throw this.format(this.messages.length, attr.label, rule);
-    }
-  },
-
   length: function (name, rule, attr, data) {
     let value = this.getData(data, name);
     if (!app.utils.isString(value) || value.length !== rule) {
@@ -197,8 +190,8 @@ module.exports = {
   // the specified array. Case sensitive matching
   oneOf: function (name, rule, attr, data) {
     let value = this.getData(data, name);
-    if (!app.utils.include(rule, value)) {
-      throw this.format(this.messages.oneOf,  attr.label, rule.join(', '));
+    if (Object.keys(rule).includes(value + "") === false) {
+      throw this.format(this.messages.oneOf,  '', Object.values(rule).join(', '));
     }
   },
 

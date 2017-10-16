@@ -124,6 +124,20 @@ module.exports = {
         this.runRule(prop, value, name, attr);
       }
     });
+
+    if (attr.validate) {
+      Object.keys(attr.validate).forEach((prop) => {
+        if (prop == 'oneOf') {
+          if (attr.validate[prop] == 'choices') {
+            this.runRule(prop, attr.validate.choices, name, attr);
+          } else {
+            this.runRule(prop, attr.validate[prop].choices, name, attr);
+          }
+        } else {
+          this.runRule(prop, attr.validate[prop], name, attr);
+        }
+      });
+    }
   },
 
   validate(schema, data) {
