@@ -199,7 +199,7 @@ const Views = {
       this.$carouselReview = $('.carousel-review').owlCarousel({
         loop: true,
         nav: true,
-        autoplay: true,
+        autoplay: false,
         autoplayTimeout: 9000,
         smartSpeed: 2000,
         responsiveClass: true,
