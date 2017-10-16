@@ -523,10 +523,10 @@
       font-style: italic
       position: relative
       margin-bottom: 30px
-      -webkit-box-shadow: 0px 0px 12px -2px rgba(0,0,0,0.75);
-      -moz-box-shadow: 0px 0px 12px -2px rgba(0,0,0,0.75);
-      box-shadow: 0px 0px 12px -2px rgba(0,0,0,0.75);
-      min-height: 208px
+      -webkit-box-shadow: 0px 0px 8px -2px rgba(0,0,0,0.5);
+      -moz-box-shadow: 0px 0px 8px -2px rgba(0,0,0,0.5);
+      box-shadow: 0px 0px 8px -2px rgba(0,0,0,0.5);
+      min-height: 220px
       &:after
         content: ''
         position: absolute
@@ -572,11 +572,11 @@
     padding: 0!important
     background-color: transparent!important
     font-size: rem(72)!important
-    color: $small-text!important
+    color: rgba($small-text, 0.7)!important
     +mt(.2s)
     &:hover
       +mt(.2s)
       background-color: transparent!important
-      color: rgba($small-text, 0.7)!important
+      color: $small-text!important
       cursor: pointer
 
