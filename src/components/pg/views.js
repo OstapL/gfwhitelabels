@@ -196,6 +196,24 @@ const Views = {
           1000: { items: 1 },
         },
       });
+      this.$carouselReview = $('.carousel-review').owlCarousel({
+        loop: true,
+        nav: true,
+        autoplay: true,
+        autoplayTimeout: 9000,
+        smartSpeed: 2000,
+        responsiveClass: true,
+        items: 3,
+        navText: [
+          '<i class="fa fa-angle-left" aria-hidden="true"></i>',
+          '<i class="fa fa-angle-right" aria-hidden="true"></i>',
+        ],
+        responsive: {
+          0: { items: 1 },
+          991: { items: 2 },
+          1200: { items: 3 },
+        },
+      });
       this.attachEvents();
     },
 
