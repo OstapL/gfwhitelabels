@@ -96,13 +96,27 @@ const Views = {
           this.model
         ),
       );
-
+      this.initStickySideMenu();
       if (!this.scrollHandler) {
         this.scrollHandler = this.updateMenuOnScroll.bind(this);
         $(window).on('scroll', this.scrollHandler);
       }
 
       return this;
+    },
+    initStickySideMenu() {
+      this.$sideMenu = this.$el.find('.sticky-side-menu');
+      if (!this.$sideMenu || !this.$sideMenu.length)
+        return;
+
+      require('components/sticky-kit/js/sticky-kit.js');
+      this.$sideMenu.stick_in_parent()
+        .on('sticky_kit:bottom', function (e) {
+          $(this).parent().css('position', 'static');
+        })
+        .on('sticky_kit:unbottom', function (e) {
+          $(this).parent().css('position', 'relative');
+        });
     },
 
     updateMenuOnScroll(e) {
@@ -180,6 +194,24 @@ const Views = {
           0: { items: 1 },
           600: { items: 1 },
           1000: { items: 1 },
+        },
+      });
+      this.$carouselReview = $('.carousel-review').owlCarousel({
+        loop: true,
+        nav: true,
+        autoplay: true,
+        autoplayTimeout: 9000,
+        smartSpeed: 2000,
+        responsiveClass: true,
+        items: 3,
+        navText: [
+          '<i class="fa fa-angle-left" aria-hidden="true"></i>',
+          '<i class="fa fa-angle-right" aria-hidden="true"></i>',
+        ],
+        responsive: {
+          0: { items: 1 },
+          991: { items: 2 },
+          1200: { items: 3 },
         },
       });
       this.attachEvents();
@@ -264,21 +296,6 @@ const Views = {
       });
     },
 
-    initStickySideMenu() {
-      this.$sideMenu = this.$el.find('.sticky-side-menu');
-      if (!this.$sideMenu || !this.$sideMenu.length)
-        return;
-
-      require('components/sticky-kit/js/sticky-kit.js');
-      this.$sideMenu.stick_in_parent()
-        .on('sticky_kit:bottom', function (e) {
-          $(this).parent().css('position', 'static');
-        })
-        .on('sticky_kit:unbottom', function (e) {
-          $(this).parent().css('position', 'relative');
-        });
-    },
-
     initCalendly() {
       app.helpers.scripts.loadCalendlyAPI().then(() => {
         this.$el.find('.scheduleCall').on('click', (e) => {
@@ -300,9 +317,16 @@ const Views = {
       setTimeout(() => {
         this.initCalendly();
         this.initCarousel();
-        this.initStickySideMenu();
         this.initAudioModalEvents();
       }, 10);
+
+      setTimeout(() => {
+        api.makeRequest(
+            app.config.emailServer + '/subscribe',
+            'PUT',
+            {'type': 'guide'}
+            );
+      }, 2500);
 
       return this;
     },
