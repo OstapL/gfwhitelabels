@@ -25,10 +25,10 @@ module.exports = {
     max: '{0} must be less than or equal to {1}',
     range: '{0} must be between {1} and {2}',
     length: '{0} must be {1} characters',
-    minLength: 'must be at least {1} characters',
-    maxLength: 'must be at most {1} characters',
+    minLength: '{0} must be at least {1} characters',
+    maxLength: '{0} must be at most {1} characters',
     rangeLength: '{0} must be between {1} and {2} characters',
-    oneOf: '{0} must be one of: {1}',
+    oneOf: 'invalid choice',
     equalTo: '{0} must be the same as {1}',
     money: '{0} must only contain digits',
     digits: '{0} must only contain digits',
@@ -56,7 +56,15 @@ module.exports = {
     if(name.indexOf('.') == -1) {
       return data[name];
     } else {
-      return name.split('.').reduce((o,i)=>o[i], data);
+      return name.split('.').reduce(function (o, i, currentIndex, array) {
+        if (i.indexOf('[') != -1) {
+          i = i.split('[');
+          let k = i[0];
+          i = i[1].replace(']', '');
+          return o[k][i];
+        }
+        return o[i];
+      }, data);
     }
   },
 
@@ -191,7 +199,7 @@ module.exports = {
   oneOf: function (name, rule, attr, data) {
     let value = this.getData(data, name);
     if (Object.keys(rule).includes(value + "") === false) {
-      throw this.format(this.messages.oneOf,  '', Object.values(rule).join(', '));
+      throw this.format(this.messages.oneOf,  '');
     }
   },
 
