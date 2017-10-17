@@ -319,8 +319,9 @@ module.exports = {
     _success(data) {
       this._updateUserInfo();
 
-      app.routers.navigate('/account/profile', { trigger: true });
-      app.hideLoading();
+      app.showLoading();
+
+      setTimeout(() => app.hideLoading(), 1000);
       return 0;
 
       // if ($("#financial_info").hasClass("active")) {
