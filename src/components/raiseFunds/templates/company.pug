@@ -1,6 +1,9 @@
-include menu.pug
+- document.title = 'Create Your Equity Crowdfunding Campaign ' + app.config.siteTitle;
+- document.head.querySelector('meta[name="description"]').content = 'Create your equity crowdfunding campaign with GrowthFountain';
 
 - pug_html += app.breadcrumbs('Create Company', '', [ ['Home', '/'], ['Create Company', ''], ['Company', ''], ]);
+
+include menu.pug
 
 section.create-company.container.m-b-85
   - var campaignId = campaign.id;

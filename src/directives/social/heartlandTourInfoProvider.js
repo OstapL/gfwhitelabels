@@ -67,20 +67,6 @@ class HeartlandInfoProvider extends ShareInfoProvider {
     };
   }
 
-  facebook() {
-    return 'https://www.facebook.com/dialog/share' +
-      '?app_id=' + app.config.facebookClientId +
-      '&href=' + this.data.url + '?r=' + Math.random() +
-      '&description=' + this._stripHtml(
-        this._format('description', {
-          // siteName: this.data.siteName,
-        })) +
-      '&locale=' + 'en_US' +
-      '&picture=' + this.data.picture +
-      '&title=' + this.data.title +
-      '&caption=' + window.location.host.toUpperCase();
-  }
-
   email() {
     return this._buildMailToLink({
       subject: 'I thought you\'d be interested in GrowthFountain\'s Heartland Tour',
@@ -94,7 +80,7 @@ class HeartlandInfoProvider extends ShareInfoProvider {
         this.placesList +
         SPECIAL_SYMBOLS.NEW_LINE +
         SPECIAL_SYMBOLS.NEW_LINE +
-        'Come take a look: https://growthfountain.com/pg/heartland-tour',
+        'Come take a look: ' + window.location.protocol + '//' + window.location.host + '/pg/heartland-tour',
     });
   }
 
@@ -105,7 +91,7 @@ class HeartlandInfoProvider extends ShareInfoProvider {
       body: 'Here is the contact information for the business I\'d like to nominate! ' +
         'I understand that if I\'m the first to introduce this business and they list on GrowthFountain, I\'ll receive $500!' +
         SPECIAL_SYMBOLS.NEW_LINE + SPECIAL_SYMBOLS.NEW_LINE +
-        'Come take a look: https://growthfountain.com/pg/heartland-tour',
+        'Come take a look: ' + window.location.protocol + '//' + window.location.host + '/pg/heartland-tour',
     });
   }
 
@@ -119,7 +105,7 @@ class HeartlandInfoProvider extends ShareInfoProvider {
         SPECIAL_SYMBOLS.NEW_LINE + SPECIAL_SYMBOLS.NEW_LINE +
         'All events will take place in September in: ' + SPECIAL_SYMBOLS.NEW_LINE +
         this.placesList + SPECIAL_SYMBOLS.NEW_LINE + SPECIAL_SYMBOLS.NEW_LINE +
-        'GrowthFountain\'s Heartland Tour: https://growthfountain.com/pg/heartland-tour',
+        'GrowthFountain\'s Heartland Tour: ' + window.location.protocol + '//' + window.location.host + '/pg/heartland-tour',
     });
   }
 

@@ -1,0 +1,46 @@
+- document.title = 'Free Startup Valuation Calculator ' + app.config.siteTitle;
+- document.head.querySelector('meta[name="description"]').content = 'Take advantage of our free startup valuation calculator to find out how much your startup idea is worth';
+
+- pug_html += app.breadcrumbs('Startup Valuation Calculator', 'intro', [ ['Home', '/'], ["What's My Business Worth?", '/calculator/business-valuation'], ["Startup Valuation Calculator", ''],]);
+
+.container.calculator-container
+  .row
+    .offset-lg-2.col-lg-8
+      ul.list-inline.top-breadcrambs.mb45.revenue-share-calculator
+        li
+          a(href="/calculator/startup/intro").current.btn
+            h4.text-uppercase.m-b-0 Intro
+        li
+          a(href="/calculator/startup/step-1").btn
+            h4.text-uppercase.m-b-0 step 1
+        li
+          //- a(href="/calculator/capitalraise/finish").btn.text-uppercase finish
+          a(href="/calculator/startup/step-1").btn
+            h4.text-uppercase.m-b-0 finish
+
+  .row
+    .offset-lg-3.col-lg-6
+      p.text-justify  If your business is not expected to generate positive cash flow over its first 12-24 months, or if you expect to reinvest the cash your business generates for the first several years, then Common Equity might be a good choice for you.
+
+  .row
+    .offset-lg-3.col-lg-6
+      p.mt15.text-justify  This calculator can help guide you to an initial valuation range at which to issue Common Equity.
+
+  .row
+    .offset-lg-3.col-lg-6
+      p.mt15.text-justify  This approach to valuing a start-up varies in several respects from an established business, as there are often no earnings or cash flow during the start-up phase.
+  .row
+    .offset-lg-3.col-lg-6
+      p.mt15.text-justify  For example, one must factor in a higher probability for failure, which can run at rates approaching 50% in the first five years of a business. On the other hand, a start-up has significantly higher potential for future growth.
+
+  .row
+    .offset-lg-3.col-lg-6
+      p.mt15.text-justify  Hence a start-up’s valuation range will typically be wider than that of an existing business, and be comprised of a higher percentage of option value.
+
+  .row
+    .offset-lg-3.col-lg-6.mt50.text-xs-center
+      a(href="/calculator/startup/step-1").btn.btn-primary.pull-sm-right.text-uppercase Ok, let&apos;s get started
+
+  .row.m-t-3
+    .offset-lg-3.col-lg-6.form-section.text-justify 
+      p.help-block Use of this calculator does not constitute investment advice. We are providing this tool to help you evaluate potential valuation ranges. Any determination as to your valuation is your sole responsibility.

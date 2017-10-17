@@ -1,4 +1,7 @@
-- pug_html += app.breadcrumbs('GrowthFountain Overview', '', [ ['Home', '/'], ['GrowthFountain Overview', ''], ]);
+- document.title = 'Overview of GrowthFountain';
+- document.head.querySelector('meta[name="description"]').content = 'GrowthFountain is the preferred equity crowdfunding platform for 1 million credit union members and counting';
+
+- pug_html += app.breadcrumbs('GrowthFountain Features', '', [ ['Home', '/'], ['GrowthFountain Features', ''], ]);
 
 section.text_block 
   .container
@@ -74,7 +77,7 @@ section.text_block
                     .icon-in-circle
                       i.fa.fa-line-chart
                 .col-xl-11.col-lg-11.col-md-11.col-sm-11.col-xs-12.text-block
-                  a(href="/calculator/whatmybusinessworth/intro" target="_blank").black-link
+                  a(href="/calculator/capital-raise" target="_blank").black-link
                     h4.text-uppercase Capital Raise Calculator
                   p This tool helps you understand how much money you might need to raise to accomplish your goals
               .row.m-b-2.text-xs-center.text-sm-left.text-md-left.text-lg-left.text-xl-left.fade-in
@@ -83,7 +86,7 @@ section.text_block
                     .icon-in-circle
                       i.fa.fa-briefcase
                 .col-xl-11.col-lg-11.col-md-11.col-sm-11.col-xs-12.text-block
-                  a(href="/calculator/businessvaluation" target="_blank").black-link
+                  a(href="/calculator/business-valuation" target="_blank").black-link
                     h4.text-uppercase What’s my Business Worth?
                   p This tool helps you benchmark valuations for similar companies
               .row.text-xs-center.text-sm-left.text-md-left.text-lg-left.text-xl-left.fade-in

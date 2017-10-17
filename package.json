@@ -70,6 +70,7 @@
     "moment": "^2.17.1",
     "owl.carousel": "^2.2.0",
     "socket.io-client": "^1.7.4",
+    "sortablejs": "^1.6.1",
     "tether": "^1.4.0",
     "underscore": "^1.8.3"
   }

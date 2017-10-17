@@ -1,0 +1,39 @@
+- document.title = 'Results - Free Capital Raise Calculator for Equity Crowdfunding ' + app.config.siteTitle;
+- document.head.querySelector('meta[name="description"]').content = 'Take advantage of our free capital raise calculator to help map out your funding plan';
+
+- pug_html += app.breadcrumbs('Capital Raise Calculator', 'finish', [ ['Home', '/'], ["Capital Raise Calculator", ''],]);
+
+.container.calculator-container
+
+  .row
+    .offset-lg-2.col-lg-8
+      ul.list-inline.top-breadcrambs.mb45.capitalraise
+        li
+          a(href="/calculator/capital-raise").btn
+            h4.text-uppercase.m-b-0 Intro
+        li
+          a(href="/calculator/capital-raise/step-1").btn
+            h4.text-uppercase.m-b-0 step 1
+        li
+          a(href="/calculator/capital-raise/step-2").btn
+            h4.text-uppercase.m-b-0 step 2
+        li
+          a(href="/calculator/capital-raise/finish").current.btn
+            h4.text-uppercase.m-b-0 finish
+
+  .row
+    .offset-lg-3.col-lg-6.text-xs-center
+      h2.font-weight-light.m-y-0
+        .like-detail-icon.d-inline-block
+          i(aria-hidden="true").fa.fa-diamond.like-icon-circle
+        | &nbsp;Based on your inputs, you may want to consider raising
+        strong.font-weight-bold &nbsp;#{app.helpers.format.formatMoney(Math.round(data.finalRaiseAmount / 1000) * 1000)}.
+
+  .row
+    .offset-md-3.col-md-6.text-sm-center
+      hr.mt50.mb50
+
+  .row
+    .offset-lg-3.col-lg-6.text-xs-center.capitalraise-calculator-finish-bottom
+      p Ready to start your campaign?
+      a(href="/raise-capital").btn.btn-primary Raise Capital

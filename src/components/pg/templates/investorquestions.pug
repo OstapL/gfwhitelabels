@@ -1,4 +1,7 @@
-- pug_html += app.breadcrumbs('FAQ', '', [ ['Home', '/'], ['FAQ', ''], ]);
+- document.title = 'Equity Crowdfunding Investor FAQ ' + app.config.siteTitle;
+- document.head.querySelector('meta[name="description"]').content = 'Learn about becoming an equity crowdfunding investor';
+
+- pug_html += app.breadcrumbs('Investor FAQs', '', [ ['Home', '/'], ['Investor FAQs', ''], ]);
  
 section.text_block
   .container
@@ -10,9 +13,9 @@ section.text_block
           li.class
             a.d-inline-block.w-100(href='/pg/faq') General Questions
           li.class
-            a.d-inline-block.w-100(href='/pg/entrepreneurquestions') Entrepreneur Questions
+            a.d-inline-block.w-100(href='/pg/entrepreneur-questions') Entrepreneur Questions
           li.class.active
-            a.d-inline-block.w-100(href='/pg/investorquestions') Investor Questions
+            a.d-inline-block.w-100(href='/pg/investor-questions') Investor Questions
       .col-lg-9
 
         .row

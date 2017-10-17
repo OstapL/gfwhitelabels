@@ -1,0 +1,35 @@
+- pug_html += app.breadcrumbs("Business Valuation Calculator", 'New startup', [ ['Home', '/'], ["Business Valuation Calculator", '/calculator/business-valuation'], ["New Startup", ''],]);
+
+
+.container.calculator-container.select-business.select-calculator-two
+  .row
+    .offset-xl-3.col-xl-6.col-lg-8.offset-lg-2
+      .warning-block.m0
+        i.fa.fa-exclamation-triangle
+        span.warning-text
+          | There are two types of securities your business can issue on GrowthFountain:&nbsp;
+          b Common Equity
+          | &nbsp;or&nbsp;
+          b Revenue Share.
+
+  .row
+    .offset-xl-3.col-xl-6.col-lg-8.offset-lg-2.mt45
+      p.text-justify
+        b Common Equity
+        |  represents an ownership share in your business. If your Company is not expecting to generate positive cash flow for the first 12-24 months, or if you expect to reinvest the cash your business generates for the first several years, then Common Equity might be the right security for your Company.
+
+  .row
+    .col-lg-12.text-xs-center.row-button
+      .col-lg-7.col-xl-6.p-xs-0
+        a(href="/calculator/startup/intro").btn.btn-lg.btn-primary.text-uppercase.sm-font-xs Startup Business Valuation Calculator
+
+  .row
+    .offset-lg-3.col-lg-6.mt45
+      p.text-justify
+        b Revenue Share &nbsp;
+        | is a GrowthFountain created revenue sharing security; it is a form of investment contract in which the Company shares 5% of its revenue annually with investors. If you expect your business to produce positive cash flow right out of the gate and don’t intend to reinvest in expansion, Revenue Share may be a good option for you.
+
+  .row
+    .col-lg-12.text-xs-center.row-button
+      .col-lg-7.col-xl-6.p-xs-0
+        a(href="/calculator/revenue-share").btn.btn-lg.btn-primary.text-uppercase revenue share calculator

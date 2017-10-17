@@ -8,6 +8,8 @@ const templateMap = {
   'privacy-policy': 'privacy_policy',
   'electronic-signature': 'electronic_signature',
   'formc-review-congratulations': 'formc_review_congratulations',
+  'investor-questions': 'investorquestions',
+  'entrepreneur-questions': 'entrepreneurquestions',
 };
 
 function scaleVideoContainer(selector='.homepage-hero-module') {
@@ -204,11 +206,6 @@ const Views = {
         }
       }, 4000);
 
-      if (this.scrollHandler) {
-        $(window).off('scroll', this.scrollHandler);
-        this.scrollHandler = null;
-      }
-
       if (this.resizeHandler) {
         $(window).off('resize', this.resizeHandler);
         this.resizeHandler = null;
@@ -300,13 +297,20 @@ const Views = {
       this.$el.html(
         this.template({})
       );
-
       setTimeout(() => {
         this.initCalendly();
         this.initCarousel();
         this.initStickySideMenu();
         this.initAudioModalEvents();
       }, 10);
+
+      setTimeout(() => {
+        api.makeRequest(
+            app.config.emailServer + '/subscribe',
+            'PUT',
+            {'type': 'guide'}
+            );
+      }, 2500);
 
       return this;
     },

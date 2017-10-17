@@ -1,14 +1,14 @@
 const componentRoutes = [
-  require('components/payBackShareCalculator/route.js'),
-  require('components/capitalRaiseCalculator/route.js'),
-  require('components/whatMyBusinessWorthCalculator/route.js'),
+  require('components/calcRevenueShare/route.js'),
+  require('components/calcStartup/route.js'),
+  require('components/calcCapitalRaise/route.js'),
+  require('components/calcEstablishedBusiness/route.js'),
   require('components/blog/route.js'),
   require('components/raiseFunds/route.js'),
   require('components/pg/route.js'),
   require('components/campaign/route.js'),
   require('components/anonymousAccount/route.js'),
   require('components/accountProfile/route.js'),
-  require('components/establishedBusinessCalculator/route.js'),
   require('components/formc/route.js'),
 ];
 
@@ -30,9 +30,18 @@ const checkSafeExtend = (dest={}, src={}) => {
 const routesMap = componentRoutes.reduce((dest, route) => {
   checkSafeExtend(dest.routes, route.routes);
   checkSafeExtend(dest.methods, route.methods);
+  checkSafeExtend(dest.routes, route.historicalRoutes || {});
 
   dest.routes = Object.assign(dest.routes, route.routes);
   dest.methods = Object.assign(dest.methods, route.methods);
+
+  Object.keys(route.historicalRoutes || {}).forEach((historicalRoute) => {
+    const actualRoute = route.historicalRoutes[historicalRoute];
+    dest.routes[historicalRoute] = () => {
+      window.location = actualRoute.startsWith('/') ? actualRoute : `/${actualRoute}`;
+    }
+  });
+
   if (Array.isArray(route.auth)) {
     dest.auth = dest.auth.concat(route.auth);
   } else if (route.auth === '*') {
@@ -80,21 +89,14 @@ module.exports = Backbone.Router.extend(Object.assign({
     }
 
 
+    app.showLoading();
     if (app.currentView) {
       app.currentView.destroy();
     }
     this.previousUrl = this.currentUrl;
     this.currentUrl = window.location.pathname;
-
-    if(app.seo.title[window.location.pathname]) {
-      document.title = app.seo.title[window.location.pathname];
-      document.head.querySelector('meta[name="description"]').content = app.seo.meta[window.location.pathname];
-      document.head.querySelector('meta[property="og:title"]').content = app.seo.title[window.location.pathname];
-      document.head.querySelector('meta[property="og:description"]').content = app.seo.meta[window.location.pathname];
-    } else {
-      document.title = 'GrowthFountain | Equity Crowdfunding Platform';
-    }
-
+    document.title = app.config.siteTitle
+    document.head.querySelector('meta[name="description"]').content = app.config.siteDescription
     document.head.querySelector('meta[property="og:url"]').content = window.location.href;
 
     if (!app.user.is_anonymous()) {
