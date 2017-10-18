@@ -145,6 +145,16 @@ section.issuer-dashboard-tabs.m-t-3
           ) 
             h4.text-uppercase investor Q&A
         li.nav-item
+          a.nav-link.text-uppercase#widget-gf-tab(
+            data-toggle="tab"
+            href="#widget-gf"
+            role="tab"
+            aria-controls="widget-gf"
+            aria-expanded="false"
+          ) 
+            h4.text-uppercase invest now
+            .clearfix
+        li.nav-item
           a.nav-link.text-uppercase#material-change-tab(
             data-toggle="tab"
             href="#material-change"
@@ -154,16 +164,7 @@ section.issuer-dashboard-tabs.m-t-3
           ) 
             h4.text-uppercase Material change
             .clearfix
-        li.nav-item
-          a.nav-link.text-uppercase#widget-gf-tab(
-            data-toggle="tab"
-            href="#widget-gf"
-            role="tab"
-            aria-controls="widget-gf"
-            aria-expanded="false"
-          ) 
-            h4.text-uppercase widget
-            .clearfix
+        
       .row
         .tab-content
           .tab-pane.fade.active.in#documents(
@@ -184,18 +185,20 @@ section.issuer-dashboard-tabs.m-t-3
             aria-expanded="true"
           )
             include snippets/issuerComments.pug
+          .tab-pane.fade#widget-gf(
+            role="tabpanel"
+            aria-labelledby="widget-gf-tab"
+            aria-expanded="true"
+          )
+            div#widget
+              
           .tab-pane.fade#material-change(
             role="tabpanel"
             aria-labelledby="material-change-tab"
             aria-expanded="true"
           )
             include snippets/issuerMaterial.pug
-          .tab-pane.fade#widget-gf(
-            role="tabpanel"
-            aria-labelledby="widget-gf-tab"
-            aria-expanded="true"
-          )
-            include snippets/widget.pug
+          
 
 
 

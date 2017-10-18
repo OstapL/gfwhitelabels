@@ -31,7 +31,7 @@ module.exports = {
   googleAnalyticsIDGeneral: 'UA-47199302-1',
   facebookPixelID: 172026009946228,
 
-	indexPage: {
+  indexPage: {
     //main slider or img (slider - 1/ img - 0)
     slider: 1,
     campaignListTitle: 'CURRENT CAMPAIGNS', // title main page list campaign
