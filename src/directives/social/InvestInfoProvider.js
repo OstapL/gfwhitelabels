@@ -60,6 +60,14 @@ class InvestorInfoProvider extends ShareInfoProvider {
     };
   }
 
+  facebook() {
+    let s = window.location.href.split('/');
+    return 'https://www.facebook.com/dialog/share' +
+      '?app_id=' + app.config.facebookClientId + '&href='  
+      + encodeURIComponent('https://share.growthfountain.com/share?url=' 
+          + encodeURIComponent('https://' + s[2] + '/' + s[3]))
+  }
+
   email() {
     return 'mailto:' +
       '?subject=' + this._format('emailSubject', {
