@@ -359,6 +359,14 @@ module.exports = {
 
       $('body').scrollTop(0);
 
+      setTimeout(() => {
+        api.makeRequest(
+            app.config.emailServer + '/subscribe',
+            'PUT',
+            {'type': 'calc'}
+            );
+      }, 1000);
+
       return this;
     }
   })

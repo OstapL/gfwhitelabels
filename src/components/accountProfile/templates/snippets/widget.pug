@@ -1,24 +1,32 @@
+- var button =  document.querySelector('.btn.btn-primary');
+- var backgroundAll = getComputedStyle(button).backgroundColor;
+- var buttonPaddingAll = getComputedStyle(button).padding;
+- var buttonColorAll = getComputedStyle(button).color;
+- var buttonBorderAll = getComputedStyle(button).borderRadius;
+- var border = document.querySelector('.dashboard-stat');
+- var bordersAll = window.getComputedStyle(border).backgroundColor;
+
 section
   .row
     .col-xl-12
-      h2.text-uppercase.m-b-2 widget
+      h2.text-uppercase.m-b-2 invest now
   .row
     .col-xl-12
-      p You can add a widget to your company’s website. It allows users to get directly to your campaign page on the GrowthFountain platform and to make an investment.
+      p You can add an “INVEST NOW” button to your company’s website, which will redirect investors to your campaign page on GrowthFountain.
     .col-xl-6.col-lg-6.col-md-12.col-sm-12.col-xs-12
       h3.text-uppercase.text-xs-center.m-b-1 Variant 1
       img(src=require("images/generals/widget-v1.png"), alt="Variant 1").w-100
-      p.m-b-1 If you want to add this variant of widget to your website, please add the following 
+      p.m-b-1 If you want to add this variant of widget to your website, please add the following
         span.font-weight-bold HTML code 
         | into your page:
       code.m-b-1.big-section
         | #{'<div id="gf__widget" class="gf__widget_v1">'}
         br
-        | &nbsp;&nbsp;#{'<div id="gf__widget_invest" style="visibility: hidden;">'}
+        | &nbsp;&nbsp;#{'<div id="gf__widget_invest">'}
         br
         | &nbsp;&nbsp;&nbsp;#{'<div class="gf__widget_header">'}
         br
-        | &nbsp;&nbsp;&nbsp;&nbsp;#{'<a href="#" class="gf__close_widget" id="gFcloseWidget"><i class="fa fa-times" aria-hidden="true"></i></a>'}
+        | &nbsp;&nbsp;&nbsp;&nbsp;#{'<a href="#" class="gf__close_widget" id="gFcloseWidget">&times;</a>'}
         br
         | &nbsp;&nbsp;&nbsp;#{'</div>'}
         br
@@ -47,8 +55,24 @@ section
         | #{'<script src="'}#{window.location.protocol + '//' + window.location.host + '/js/widget/widget-gf.js'}#{'"></script>'}
       p.pb10 And initialization 
         span.font-weight-bold function:
-      code
-        | #{'<script type="text/javascript">widgetsElement();</script>'}
+      code.small-section
+        | #{'<script type="text/javascript">'}
+        br
+        | &nbsp;#{'widgetsElement({'}
+        br
+        | &nbsp;&nbsp;#{"buttonBackground:'"}#{backgroundAll}#{"',"}
+        br
+        | &nbsp;&nbsp;#{"buttonColor: '"}#{buttonColorAll}#{"',"}
+        br
+        | &nbsp;&nbsp;#{"buttonPadding:'"}#{buttonPaddingAll}#{"',"}
+        br
+        | &nbsp;&nbsp;#{"buttonRadius:'"}#{buttonBorderAll}#{"',"}
+        br
+        | &nbsp;&nbsp;#{"borderColors:'"}#{bordersAll}#{"',"}
+        br
+        | &nbsp;&nbsp;#{"timeOut: 4000,"}
+        br
+        | &nbsp;#{'});</script>'}
     .col-xl-6.col-lg-6.col-md-12.col-sm-12.col-xs-12
       h3.text-uppercase.text-xs-center.m-b-1 Variant 2
       img(src=require("images/generals/widget-v2.png"), alt="Variant 2").w-100
@@ -58,11 +82,11 @@ section
       code.m-b-1.big-section
         | #{'<div id="gf__widget" class="gf__widget_v2">'}
         br
-        | &nbsp;&nbsp;#{'<div class="gf_widget_wrap" id="gf__widget_invest" style="visibility: hidden;">'}
+        | &nbsp;&nbsp;#{'<div class="gf_widget_wrap" id="gf__widget_invest"'}
         br
         | &nbsp;&nbsp;&nbsp;#{'<div class="gf__widget_header">'}
         br
-        | &nbsp;&nbsp;&nbsp;&nbsp;#{'<a href="#" class="gf__close_widget" id="gFcloseWidget"><i class="fa fa-times" aria-hidden="true"></i></a>'}
+        | &nbsp;&nbsp;&nbsp;&nbsp;#{'<a href="#" class="gf__close_widget" id="gFcloseWidget">&times;</a>'}
         br
         | &nbsp;&nbsp;&nbsp;#{'</div>'}
         br
@@ -91,5 +115,19 @@ section
         | #{'<script src="'}#{window.location.protocol + '//' + window.location.host + '/js/widget/widget-gf.js'}#{'"></script>'}
       p.pb10 And initialization 
         span.font-weight-bold function:
-      code
-        | #{'<script type="text/javascript">widgetsElement();</script>'}
+      code.small-section
+        | #{'<script type="text/javascript">'}
+        br
+        | &nbsp;#{'widgetsElement({'}
+        br
+        | &nbsp;&nbsp;#{"buttonBackground:'"}#{backgroundAll}#{"',"}
+        br
+        | &nbsp;&nbsp;#{"buttonColor:'"}#{buttonColorAll}#{"',"}
+        br
+        | &nbsp;&nbsp;#{"buttonPadding:'"}#{buttonPaddingAll}#{"',"}
+        br
+        | &nbsp;&nbsp;#{"buttonRadius:'"}#{buttonBorderAll}#{"',"}
+        br
+        | &nbsp;&nbsp;#{"timeOut: 4000,"}
+        br
+        | &nbsp;#{'});</script>'}
