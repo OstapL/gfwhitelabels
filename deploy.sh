@@ -13,6 +13,7 @@ cp staticdata/img/email/header-email.png dist/staticdata/img/email/header-email.
 cp staticdata/img/logo-black.png dist/staticdata/img/logo-black.png
 cp staticdata/img/generals/gbi-widget.png dist/staticdata/img/generals/gbi-widget.png
 cp src/js/widget/widget-gf.js dist/js/widget/widget-gf.js
+cp src/js/widget/widget-gfv2.js dist/js/widget/widget-gfv2.js
 cp src/js/widget/widget-gf.css dist/js/widget/widget-gf.css
 DIR=dist
 aws  s3 sync $DIR s3://$BUCKET/ --profile "$PROFILE" > /dev/null
