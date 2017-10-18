@@ -703,7 +703,13 @@ module.exports = {
           formc: this.formc,
           investors: this.investors
         })
+
       );
+
+      const widget = require('./templates/snippets/widget.pug');
+      this.el.querySelector('#widget').innerHTML = widget({
+        company: this.company,
+      });
 
       setTimeout(() => {
         $('.count-num').animateCount();
