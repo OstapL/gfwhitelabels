@@ -442,8 +442,8 @@ module.exports = {
       };
 
       // Validation rules
-      this.fields.personal_information_data.requiredTemp = true;
-      this.fields.payment_information_data.requiredTemp = true;
+      //this.fields.personal_information_data.requiredTemp = true;
+      //this.fields.payment_information_data.requiredTemp = true;
       this.fields.payment_information_data.schema.account_number = {
         type: 'password',
         required: true,
@@ -470,7 +470,7 @@ module.exports = {
 
       this.fields.payment_information_data.schema.routing_number = {
         required: true,
-        _length: 9,
+        length: 9,
         dependies: ['routing_number_re'],
         fn: function(name, value, attr, data, schema) {
           if (value != this.getData(data, 'payment_information_data.routing_number_re')) {
@@ -481,7 +481,7 @@ module.exports = {
 
       this.fields.payment_information_data.schema.routing_number_re = {
         required: true,
-        _length: 9,
+        length: 9,
         dependies: ['routing_number'],
         fn: function(name, value, attr, data, schema) {
           if (value != this.getData(data, 'payment_information_data.routing_number')) {
@@ -516,9 +516,9 @@ module.exports = {
       };
       */
 
-
       this.fields.signature = {
         required: true,
+        minLength: 4
       };
 
       const validateAmount = (amount) => {

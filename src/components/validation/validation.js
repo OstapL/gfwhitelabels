@@ -81,7 +81,7 @@ module.exports = {
         let msg = attr == 'non_field_errors' ? '' : ('<b>' + attr + ':</b> ');
         msg += errorMsg;
 
-        $el = $('<div class="alert alert-warning" role="alert"><p>' + msg + '</p></div>');
+        $el = $('<div class="alert alert-warning" role="alert"><p>' + msg + '</p></div><div class="help-block"></div>');
 
         if (view.$el.find('form').length == 0) {
           view.$el.prepend($el);
@@ -110,20 +110,39 @@ module.exports = {
       if (rules[rule]) {
         rules[rule](name, value, attr, this.data, this.schema);
       }
+      if (rules.patterns[rule]) {
+        rules.regex(name, attr, this.data, rule);
+      }
     } catch (e) {
       this.finalResult = false;
-      name = name.replace(/\./g, '__');
+      name = name.replace(/\[|\]\.|\./g, "__");
       Array.isArray(this.errors[name]) ? this.errors[name].push(e) : this.errors[name] = [e];
     }
   },
 
   runRules(attr, name) {
+    this.runRule(attr.type, attr.type, name, attr);
     Object.keys(attr || {}).forEach((prop) => {
       const value = attr[prop];
       if (fixedProps.indexOf(prop) == -1) {
         this.runRule(prop, value, name, attr);
       }
     });
+
+    if (attr.validate) {
+      Object.keys(attr.validate).forEach((prop) => {
+        if (prop == 'oneOf') {
+          if (attr.validate[prop] == 'choices') {
+            this.runRule(prop, attr.validate.choices, name, attr);
+          } else {
+            this.runRule(prop, attr.validate[prop].choices, name, attr);
+          }
+        } else {
+          this.runRule(prop, attr.validate[prop], name, attr);
+        }
+      });
+    }
+
   },
 
   validate(schema, data) {
@@ -137,50 +156,21 @@ module.exports = {
       // TODO
       // How to check nested one element if that can be blank ?
       // requiredTemp - temp fix to validate fields on investment page only
-      if (attr.type == 'nested' && attr.requiredTemp == true) {
+      if (attr.type == 'nested') {
         Object.keys(attr.schema).forEach((subname) => {
           const subattr = attr.schema[subname];
-          if (fixedRegex.indexOf(subattr.type) != -1) {
-            if (Array.isArray(subattr.validate)) {
-              subattr.validate.forEach((jsonFields, index) => {
-                try {
-                  rules.regex(name, subattr, data, subattr.type);
-                  this.runRules(subattr, name);
-                } catch (e) {
-                  this.finalResult = false;
-                  Array.isArray(this.errors[name])
-                    ? this.errors[name].push(e)
-                    : this.errors[name] = [e];
-                }
-              });
-            } else if (typeof(subattr.validate) === 'object') {
-              Object.keys(subattr.validate).forEach((key) => {
-                try {
-                  rules.regex(name, subattr, data, subattr.type);
-                  this.runRules(subattr, name);
-                } catch (e) {
-                  this.finalResult = false;
-                  Array.isArray(this.errors[name])
-                    ? this.errors[name].push(e)
-                    : this.errors[name] = [e];
-                }
-              });
+
+          // Supress nested required, if parent is not required, non of the nested field can be required
+          subattr.required &= attr.required;
+
+          if (attr.many === true) {
+            for(let k = 0; k < data[name].length; k++) {
+              this.runRules(subattr, name + '[' + k + '].' + subname);
             }
           } else {
             this.runRules(subattr, name + '.' + subname);
           }
         });
-        if (attr.fn) {
-          this.runRule('fn', attr.fn, name, attr);
-        }
-      } else if (fixedRegex.indexOf(attr.type) != -1) {
-        try {
-          rules.regex(name, attr, data, attr.type);
-          this.runRules(attr, name);
-        } catch (e) {
-          this.finalResult = false;
-          Array.isArray(this.errors[name]) ? this.errors[name].push(e) : this.errors[name] = [e];
-        }
       } else {
         this.runRules(attr, name);
       }

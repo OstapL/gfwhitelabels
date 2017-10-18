@@ -96,13 +96,27 @@ const Views = {
           this.model
         ),
       );
-
+      this.initStickySideMenu();
       if (!this.scrollHandler) {
         this.scrollHandler = this.updateMenuOnScroll.bind(this);
         $(window).on('scroll', this.scrollHandler);
       }
 
       return this;
+    },
+    initStickySideMenu() {
+      this.$sideMenu = this.$el.find('.sticky-side-menu');
+      if (!this.$sideMenu || !this.$sideMenu.length)
+        return;
+
+      require('components/sticky-kit/js/sticky-kit.js');
+      this.$sideMenu.stick_in_parent()
+        .on('sticky_kit:bottom', function (e) {
+          $(this).parent().css('position', 'static');
+        })
+        .on('sticky_kit:unbottom', function (e) {
+          $(this).parent().css('position', 'relative');
+        });
     },
 
     updateMenuOnScroll(e) {
@@ -264,21 +278,6 @@ const Views = {
       });
     },
 
-    initStickySideMenu() {
-      this.$sideMenu = this.$el.find('.sticky-side-menu');
-      if (!this.$sideMenu || !this.$sideMenu.length)
-        return;
-
-      require('components/sticky-kit/js/sticky-kit.js');
-      this.$sideMenu.stick_in_parent()
-        .on('sticky_kit:bottom', function (e) {
-          $(this).parent().css('position', 'static');
-        })
-        .on('sticky_kit:unbottom', function (e) {
-          $(this).parent().css('position', 'relative');
-        });
-    },
-
     initCalendly() {
       app.helpers.scripts.loadCalendlyAPI().then(() => {
         this.$el.find('.scheduleCall').on('click', (e) => {
@@ -300,7 +299,6 @@ const Views = {
       setTimeout(() => {
         this.initCalendly();
         this.initCarousel();
-        this.initStickySideMenu();
         this.initAudioModalEvents();
       }, 10);
 

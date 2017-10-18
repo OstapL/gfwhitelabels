@@ -524,8 +524,9 @@ module.exports = {
       this.fields.video = Object.assign(this.fields.video, {
         fn(name, value, attr, data, computed) {
           const info = app.getVideoInfo(value);
-          if (!info.provider)
+          if (!info.provider) {
             throw 'YouTube or Vimeo links only, please';
+          }
         },
       });
 
@@ -552,10 +553,11 @@ module.exports = {
         },
         additional_video: {
           headline: 'Additional Video for Campaign',
+          link: 'Video URL',
         },
         list_image_image_id: 'Thumbnail Picture',
         header_image_image_id: 'Header Image',
-        // video: 'Main Video for Campaign',
+        video: 'Main Video for Campaign',
         gallery_group_id: 'Gallery'
       };
 
@@ -725,6 +727,21 @@ module.exports = {
           template: 'withpreview'
         },
       });
+
+      this.labels = {
+        first_name: "First Name",
+        last_name: "Last Name",
+        email: "Email",
+        title: "Title",
+        bio: "Bio",
+        city: "Where Did You Grow Up?",
+        college: "Where Did You Attend College?",
+        linkedin: "Your LinkedIn Link",
+        facebook: "Your Facebook Link",
+        photo_image_id: "Profile Picture"
+      };
+
+      this.assignLabels();
 
       this.campaign = options.campaign;
       this.formc = options.formc;
@@ -1005,6 +1022,13 @@ module.exports = {
 
       this.fields.minimum_raise.dependies = ['maximum_raise',];
       this.fields.maximum_raise.dependies = ['minimum_raise',];
+      this.fields.maximum_raise = Object.assign(this.fields.maximum_raise, {
+        fn(name, value, attr, data, computed) {
+          if (value < data.minimum_raise) {
+            throw 'Value must be greater than or equal to Minimum Total Raise.';
+          }
+        },
+      });
       this.fields.premoney_valuation.dependies = ['security_type',];
       this.fields.security_type.dependies = ['premoney_valuation',];
       this.fields.price_per_share = Object.assign(this.fields.price_per_share, {
