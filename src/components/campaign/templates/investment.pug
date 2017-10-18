@@ -51,7 +51,7 @@ mixin confirmStatement(name, attr)
       h2.text-uppercase.dosis.m-t-0.text-md-center.text-sm-center.text-xs-center.text-lg-left
         | Investment
       .form-section.clearfix
-        form(action="POST" data-method="POST" name="invest_form")#investForm.invest_form.clearfix
+        form(action="POST" data-method="POST" name="invest_form" autocomplete="off")#investForm.invest_form.clearfix
           input(type="hidden" name="company_id" value=values.id)
           .row
             .col-xl-12.col-xs-8.col-sm-5.col-lg-8
