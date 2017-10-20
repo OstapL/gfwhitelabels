@@ -196,6 +196,24 @@ const Views = {
           1000: { items: 1 },
         },
       });
+      this.$carouselReview = $('.carousel-review').owlCarousel({
+        loop: true,
+        nav: true,
+        autoplay: false,
+        autoplayTimeout: 9000,
+        smartSpeed: 2000,
+        responsiveClass: true,
+        items: 3,
+        navText: [
+          '<i class="fa fa-angle-left" aria-hidden="true"></i>',
+          '<i class="fa fa-angle-right" aria-hidden="true"></i>',
+        ],
+        responsive: {
+          0: { items: 1 },
+          991: { items: 2 },
+          1200: { items: 3 },
+        },
+      });
       this.attachEvents();
     },
 
@@ -229,6 +247,9 @@ const Views = {
     render() {
       this.$el.html(this.template({ collection: this.collection, }));
       this.$el.find('.calculator-block-click .calculator-item .text-wrap').equalHeights();
+      setTimeout(() => {
+        this.$el.find('.one-review .review-text').equalHeights();
+      },1000);
       this.postRender();
       return this;
     },

@@ -492,17 +492,95 @@
       margin-top: rem(20)
       a
         font-size: rem(14)
-.news-on-main-page
-  margin-top: rem($margin-section-main-top-news)
-  h4
-    a
-      color: $black
-      +mt(.5s)
-      &:hover
-        +mt(.5s)
-        color: rgba($black, .7)
-  .news-img
-    @media only screen and (max-width : 767px)
-      padding-bottom: 30px!important
 .main-subscription
   margin-top: rem($margin-section-main-top-news)
+
+.main-reviews
+  margin-top: rem($margin-section-main-top-news + 70)
+
+  .review-title
+    position: relative
+    img
+      position: absolute
+      transform: translate(-50%, -50%)
+      left: 50%
+      top: 0
+  .carousel-review
+    padding-left: 30px
+    padding-right: 30px
+    @media only screen and (max-width : 440px)
+      padding-left: 10px
+      padding-right: 10px
+  .one-review
+    padding: rem(15)
+    padding-bottom: 0
+    @media only screen and (max-width : 440px)
+      padding-left: rem(10)
+      padding-right: rem(10)
+    .review-text
+      background-color: $review-main-text-bgc
+      padding: rem(15)
+      color: $review-main-text-color
+      font-style: italic
+      position: relative
+      margin-bottom: 30px
+      -webkit-box-shadow: 0px 0px 8px -2px rgba(0,0,0,0.5);
+      -moz-box-shadow: 0px 0px 8px -2px rgba(0,0,0,0.5);
+      box-shadow: 0px 0px 8px -2px rgba(0,0,0,0.5);
+
+      &:after
+        content: ''
+        position: absolute
+        bottom: -15px
+        left: 0
+        width: 0
+        height: 0
+        border-style: solid
+        border-width: 0 22px 15px 0
+        border-color: transparent $puerto_rico transparent transparent
+    .review-autor
+      margin-left: 20px
+      img
+        display: inline-block
+        max-width: 65px
+        vertical-align: middle
+        margin-right: 15px
+      .review-name
+        display: inline-block
+        vertical-align: middle
+        h4
+          margin: 0
+        p
+          font-size: rem(12)
+          line-height: 15px
+          color: $small-text
+          max-width: 180px
+          @media only screen and (max-width : 360px)
+            max-width: 150px
+  .owl-dots
+    display: none
+  .owl-nav
+    position: absolute
+    left: 0
+    top: 45%
+    width: 100%
+    .owl-prev
+      float: left
+      position: relative
+      left: 0
+    .owl-next
+      float: right
+      position: relative
+      right: 0
+  .owl-nav [class*='owl-']
+    padding: 0!important
+    background-color: transparent!important
+    font-size: rem(72)!important
+    color: rgba($small-text, 0.7)!important
+    +mt(.2s)
+    &:hover
+      +mt(.2s)
+      background-color: transparent!important
+      color: $small-text!important
+      cursor: pointer
+
