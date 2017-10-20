@@ -97,6 +97,11 @@ module.exports = {
   // Validates if the attribute is required or not
   // This can be specified as either a boolean value or a function that returns a boolean value
   required: function (name, rule, attr, data) {
+
+    if (typeof(rule) == 'function') {
+      rule = rule(name, attr, data);
+    }
+
     if (rule && this.hasValue(this.getData(data, name)) == false) {
       throw this.format(
         attr.messageRequired || this.messages.required,
