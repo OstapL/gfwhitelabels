@@ -11,6 +11,35 @@ const escapeSelector = (selector) => {
   return selector;
 };
 
+
+/*
+function nestedFieldsRequired(name, attr, data) {
+  // if one of the required field  not empty - all required field should be required
+  const parentName = name.split('.')[0];
+  Object.keys(attr[parentName]).forEach((el) => {
+    if (attr[el].required && rules.getData(el, data)) {
+      return true;
+    }
+  });
+}
+
+
+function nestedRequired(name, attr, data) {
+  debugger;
+  try {
+    rules.required(name, attr.required_value, attr, data);
+    if (Array.isArray(data) && data.length == 0) {
+      return true;
+    }
+    if (Object.keys(data) == 0) {
+      return true;
+    }
+  } catch(e) {
+    return false;
+  }
+}
+*/
+
 module.exports = {
   clearMsg(view, attr, selector) {
     attr = escapeSelector(attr);
@@ -153,15 +182,18 @@ module.exports = {
 
     Object.keys(schema || {}).forEach((name) => {
       const attr = schema[name];
-      // TODO
-      // How to check nested one element if that can be blank ?
-      // requiredTemp - temp fix to validate fields on investment page only
       if (attr.type == 'nested') {
+
+        // attr.required_value = attr.required;
+        // attr.required = nestedRequired;
+        this.runRules(attr, name);
+
         Object.keys(attr.schema).forEach((subname) => {
           const subattr = attr.schema[subname];
 
           // Supress nested required, if parent is not required, non of the nested field can be required
-          subattr.required &= attr.required;
+          subattr.required = attr.required & subattr.required;
+          // subattr.required = nestedRequired;
 
           if (attr.many === true) {
             for(let k = 0; k < data[name].length; k++) {
