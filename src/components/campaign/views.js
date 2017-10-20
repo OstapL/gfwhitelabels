@@ -600,10 +600,12 @@ module.exports = {
 
       this.labels = {
         personal_information_data: {
+          first_name: 'First name',
+          last_name: 'Last name',
           country: 'Country',
           street_address_1: 'Street Address 1',
           street_address_2: 'Street Address 2',
-          zip_code: 'Zip Code',
+          zip_code: 'Postal Code',
           phone: 'Phone',
           city: 'City',
         },
@@ -619,6 +621,7 @@ module.exports = {
         payment_information_type: 'I Want to Pay Using',
         amount: 'Amount',
         fee: 'Commission',
+        signature: 'Signature',
         is_reviewed_educational_material: `I confirm and represent that (a) I have reviewed
           the educational material that has been made available on this website, (b) I understand
           that the entire amount of my investment may be lost, (c) I am in a
@@ -1066,6 +1069,13 @@ module.exports = {
 
       if (!$row.length)
         return;
+
+
+      if (isUS) {
+        this.fields.personal_information_data.schema.zip_code.label = 'Postal Code';
+      } else {
+        this.fields.personal_information_data.schema.zip_code.label = 'Zip Code';
+      }
 
       let args = {
         fields: this.fields,
