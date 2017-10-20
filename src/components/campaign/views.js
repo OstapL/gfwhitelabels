@@ -600,8 +600,8 @@ module.exports = {
 
       this.labels = {
         personal_information_data: {
-          first_name: 'First name',
-          last_name: 'Last name',
+          first_name: 'First Name',
+          last_name: 'Last Name',
           country: 'Country',
           street_address_1: 'Street Address 1',
           street_address_2: 'Street Address 2',
