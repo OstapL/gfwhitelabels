@@ -247,6 +247,9 @@ const Views = {
     render() {
       this.$el.html(this.template({ collection: this.collection, }));
       this.$el.find('.calculator-block-click .calculator-item .text-wrap').equalHeights();
+      setTimeout(() => {
+        this.$el.find('.one-review .review-text').equalHeights();
+      },1000);
       this.postRender();
       return this;
     },
