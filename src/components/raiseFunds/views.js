@@ -359,9 +359,9 @@ module.exports = {
           body: 'Description',
         },
       };
-      this.fields.pitch.help_text = 'What is your edge? Do you have a competitive advantage? Why should investors want to invest in your company?';
+      this.fields.pitch.help_text = 'Put yourself in your potential investors shoes.<br><br> -Show that there is a substantial and growing demand for your product or service<br>-List your company’s strengths<br>-How are you different than your competitors?<br>-What are your future goals for the company?<br>-Briefly discuss the management team. (People often invest in a  company because they believe in the management team)';
       this.fields.intended_use_of_proceeds.help_text = 'How do you make money?';
-      this.fields.business_model.help_text = 'Why are you raising capital, and what do you intend to do with it?';
+      this.fields.business_model.help_text = 'What do you plan on doing with the money raised from your GrowthFountain campaign? <br>Will you be hiring staff, purchasing equipment or marketing your company?';
       this.fields.additional_info.help_text = 'Is there anything else you want to tell your potential investors? Received any accolades? Patents? Major contracts? Distributors, etc?';
       this.fields.faq.help_text = 'We need help text here too';
       this.assignLabels();
