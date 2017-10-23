@@ -50,9 +50,16 @@ class InfoProvider {
   }
 
   facebook() {
-    return 'https://www.facebook.com/dialog/share' +
-      '?app_id=' + app.config.facebookClientId + '&href='  
-      + encodeURIComponent('https://share.growthfountain.com/share?url=' + encodeURIComponent(window.location.href))
+    if (app.user.company !== null) {
+      let url = window.location.origin + '/' + app.user.company.slug;
+      return 'https://www.facebook.com/dialog/share' +
+        '?app_id=' + app.config.facebookClientId + '&href='  
+        + encodeURIComponent('https://share.growthfountain.com/share?url=' + encodeURIComponent(url))
+    } else {
+      return 'https://www.facebook.com/dialog/share' +
+        '?app_id=' + app.config.facebookClientId + '&href='  
+        + encodeURIComponent('https://share.growthfountain.com/share?url=' + encodeURIComponent(window.location.href))
+    }
   }
 
   email() {
