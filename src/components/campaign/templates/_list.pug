@@ -12,7 +12,7 @@
         .for_img
           -
             var alternate = company.short_name || company.name;
-          img(src=company.campaign.list_image_image_id.getUrl('350x209') alt=alternate)
+          img(src=company.campaign.list_image_image_id.getUrl('350x209') alt=alternate).company-img
           .label
             if company.campaign.daysLeft() <= 30
               .deys-left.label-one #{ company.campaign.daysLeftText() }

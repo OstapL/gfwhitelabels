@@ -1,0 +1,61 @@
+- pug_html += app.breadcrumbs('Revenue Share Calculator', 'finish', [ ['Home', '/'], ["Revenue Share Calculator", ''],]);
+
+.container.calculator-container.revenue-calculator
+  .row
+    .offset-lg-2.col-lg-8
+      h3.font-weight-light.text-xs-center.m-b-3.m-t-0 Use GrowthFountain's Revenue Share Calculator to evaluate your future business's profitability if utilizing revenue share with equity crowdfunding.
+      ul.list-inline.top-breadcrambs.mb45.revenue-share-calculator
+        li
+          a(href="/calculator/revenue-share").btn
+            h4.text-uppercase.m-b-0 Intro
+        li
+          a(href="/calculator/revenue-share/step-2").btn
+            h4.text-uppercase.m-b-0 step 1
+        li
+          a(href="/calculator/revenue-share/step-3").btn.current
+            h4.text-uppercase.m-b-0 finish
+
+  .page
+    .row
+      .col-xl-12.text-xs-center.mb15
+
+        h2.m0.text-uppercase.text-xs-center REVENUE GRAPH
+
+    .row
+      .col-xs-12
+        .js-jq-plot-area.graf-responsive
+          #chart1
+          p.plot-title Multiple Returned
+          p.plot-x-title Years
+
+    .row
+      .col-xs-12.text-xs-center.mt45
+        h2.m0.text-uppercase Your results
+
+        .table-responsive.mt30
+          table.table.table-sm.table-bordered.table-striped.table-revenue-finish
+            thead
+              tr.bgc-row
+                th Time
+                th Fundraise
+                th Revenue
+                th Annual Distributions
+                th Multiple Returned
+                th Total Distributions
+            tbody
+              each val, index in data.outputData
+                tr
+                  td(scope='row')= 'Year ' + index
+                  td= app.helpers.format.formatMoney(val.fundraise)
+                  td= app.helpers.format.formatMoney(val.revenue)
+                  td= app.helpers.format.formatMoney(val.annual)
+                  td= val.multiple
+                  td= app.helpers.format.formatMoney(val.total)
+
+    .row
+      .offset-lg-4.col-lg-4.offset-sm-3.col-sm-6.text-sm-center
+        hr.mt30.mb50
+
+    .row
+      .offset-sm-3.col-sm-6.text-xs-center
+        a(href="/calculator/revenue-share/step-2").btn.btn-primary.text-uppercase back

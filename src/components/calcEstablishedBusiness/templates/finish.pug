@@ -1,0 +1,56 @@
+- document.title = 'Results - Free Business Valuation Calculator ' + app.config.siteTitle;
+- document.head.querySelector('meta[name="description"]').content = 'Take advantage of our free business valuation calculator to understand what your business is worth';
+
+- pug_html += app.breadcrumbs('Business Valuation Calculator', 'Finish', [ ['Home', '/'], ["What's My Business Worth?", '/calculator/business-valuation'], ["Business Valuation Calculator", ''],]);
+
+.container.calculator-container.established-business-finish
+  .row
+    .offset-lg-2.col-lg-8
+      ul.list-inline.top-breadcrambs.mb45.established-business
+        li
+          a(href="/calculator/established-business/intro").btn
+            h4.text-uppercase.m-b-0 Intro
+        li
+          a(href="/calculator/established-business/step-1").btn
+            h4.text-uppercase.m-b-0 step 1
+        li
+          a(href="/calculator/established-business/step-2").btn
+            h4.text-uppercase.m-b-0 step 2
+        li
+          a(href="/calculator/established-business/step-3").btn
+            h4.text-uppercase.m-b-0 step 3
+        li
+          a(href="/calculator/established-business/finish").current.btn
+            h4.text-uppercase.m-b-0 Finish
+
+    .col-xs-12.text-xs-center.mb15
+      h2.m0.text-uppercase BUSINESS VALUATION
+  .row
+    .offset-md-2.col-md-8
+      #chart
+
+  .row.m-t-2
+    .offset-md-3.col-md-6.text-sm-left
+      p Based upon the information you submitted, GrowthFountain estimated your business to be worth &nbsp;
+        span.font-weight-bold #{ estimate }.
+  .row
+    .offset-md-3.col-md-6.text-sm-left
+      p.mt15 You are looking to raise &nbsp;
+        span.font-weight-bold #{ raise }.
+  .row
+    .offset-md-3.col-md-6.text-sm-left
+      p.mt15 Based upon this amount, GrowthFountain estimates you will need to offer&nbsp;
+        span.font-weight-bold #{ offer }%&nbsp;
+        | of your business's equity.
+  .row.m-t-3
+    .offset-lg-3.col-lg-6.form-section.text-justify
+      p.help-block.p-t-0 The Blended Valuation is based on a proprietary algorithm created by GrowthFountain. The output should only be used as a starting point for you to determine your final valuation and is not investment advice.
+  .row
+    .offset-md-3.col-md-6.text-sm-center
+      hr.mt50.mb50
+  .row
+    .offset-lg-3.col-lg-6.text-xs-center.capitalraise-calculator-finish-bottom
+      h4.text-uppercase Next steps
+      p Now that you know what your business is worth, you can estimate how much capital to raise.
+      a(href="/calculator/capital-raise").btn.btn-primary how much should I raise
+      

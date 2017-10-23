@@ -9,6 +9,7 @@ module.exports = {
     ':name': 'detail',
     ':name/invest-thanks-share': 'investThanksShareDetail',
     ':name/invest': 'investment',
+    ':slug/esignature/:pdfType': 'previewPdf',
   },
   methods: {
     investmentThankYou(companyName, investmentId) {
@@ -83,8 +84,8 @@ module.exports = {
 
           const companyName = companyData[0].short_name || companyData[0].name;
 
-          document.title = companyName;
-          document.head.querySelector('meta[name="description"]').content = metaDescription;
+          document.title = companyName + ' | GrowthFountain Equity Crowdfunding';
+          document.head.querySelector('meta[name="description"]').content = companyName + ' is fundraising on GrowthFountain!';
 
           const getShareTags = () => {
             if (params === 'share') {
@@ -145,18 +146,31 @@ module.exports = {
           app.analytics.emitEvent(app.analytics.events.InvestmentClicked, app.user.stats);
         });
 
-        //TODO: fixme
-        // if (!window.pdfMake) {
-        //   ['/js/pdfmake.js', '/js/vfs_fonts.js'].forEach( (uri) => {
-        //     let script = document.createElement('script');
-        //     script.type = 'text/javascript';
-        //     script.src = uri;
-        //     $('head').append(script);
-        //   });
-        // }
       }, 'campaign_chunk');
     },
+
+    previewPdf(slug, pdfType) {
+      app.showLoading();
+
+      require.ensure([], () => {
+        $.when(
+          api.makeRequest(
+              app.config.esignServer + '/preview/' + slug + '/' + pdfType + window.location.search,
+              "GET",
+              {},
+              {
+                dataType: "text",
+                contentType: "application/text",
+                mimeType: "text/plain; charset=x-user-defined"
+              },
+          )
+        ).done((rawData) => {
+          app.currentView = new app.helpers.previewPdf(slug, rawData);
+        });
+      }, 'campaign_chunk');
+    },
+
   },
 
-  auth: ['investment', 'investmentThankYou']
+  auth: ['investment', 'investmentThankYou', 'previewPdf',]
 };

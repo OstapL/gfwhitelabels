@@ -52,6 +52,8 @@ mixin run()
 
         else
           each value, index in values
+            if value == null
+              - value = {}
             +row(value, index)
     .row.add-link.add-work-experience
       .col-xl-12

@@ -1,0 +1,18 @@
+- document.title = 'Free Business Valuation Calculator ' + app.config.siteTitle;
+- document.head.querySelector('meta[name="description"]').content = 'Take advantage of our free business valuation calculator to understand what your business is worth';
+
+- pug_html += app.breadcrumbs("Business Valuation Calculator", '', [ ['Home', '/'], ["Business Valuation Calculator", ''],]);
+
+.container.calculator-container.select-business.text-xs-center
+  .row.text-xs-center
+    .col-xl-10.offset-xl-1
+      h2.text-uppercase.text-xs-center.m-t-0 Choose your business type
+      h3.font-weight-light.text-xs-center.m-b-3.m-t-0 GrowthFountain's free valuation calculators can help you assess what your business is worth.
+        br
+        | Any questions?  Give us a call!  646-759-8229
+    .col-xl-10.offset-xl-2.col-lg-10.offset-lg-1.p-xs-0
+      .col-xl-5.col-lg-6.col-md-12.mb30xs
+        a(href="/calculator/established-business/intro").btn.btn-lg.btn-primary.text-uppercase.btn-block i have an established business
+
+      .col-xl-5.col-lg-6.col-md-12
+        a(href="/calculator/startup/intro").btn.btn-lg.btn-primary.text-uppercase.btn-block i have a brand new startup

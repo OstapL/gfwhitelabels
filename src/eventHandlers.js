@@ -25,7 +25,7 @@ function bottomLogoScrollHandler() {
 // для скролл шапки та разшерениях меньше 991px класс "sticky-active" - меняет цвет шапки
 function stickyScrollHandler() {
   const $header = $('header');
-  if ($(this).scrollTop() > 70) {
+  if ($(window).scrollTop() > 70) {
     if (!$header.hasClass('sticky-active'))
       $header.addClass("sticky-active");
   } else {
@@ -221,6 +221,7 @@ $('html').on('click', function () {
 });
 
 $('body').on('click', '.notification-bell', function () {
+  event.preventDefault()
   if ($('.navbar-toggler:visible').length !== 0) {
     $('html').removeClass('show-menu');
     $('header').toggleClass('no-overflow-bell');

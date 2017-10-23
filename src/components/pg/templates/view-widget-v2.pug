@@ -1,0 +1,26 @@
+section#view-wodget-v1
+  h1.text-uppercase.big View widget v2
+  div#gf__widget.gf__widget_v2
+    .gf_widget_wrap#gf__widget_invest
+      .gf__widget_header
+        a(href="#" class="gf__close_widget" id="gFcloseWidget")
+          | &times;
+      .gf__content_widgets
+        .gf__img_wrap
+          img(src=window.location.protocol + '//' + window.location.host + '/staticdata/img/fade-in-logo.png')
+        h3 Invest Now!
+        p Own a piece of 
+          span AMERICAN DRAFT
+          |  with equity crowdfunding on GrowthFountain.
+    a(href=window.location.protocol + '//' + window.location.host + '/americandraft' target="blank").gf__btn_widget invest now
+
+script(src=window.location.protocol + '//' + window.location.host + "/js/widget/widget-gfv2.js" type="text/javascript")
+  
+script(type="text/javascript").
+  widgetsElement({
+    buttonBackground: '#39b2af',
+    buttonColor: '#fff',
+    buttonPadding: '15px 35px',
+    buttonRadius: '30px',
+    timeOut: 4000,
+  });
