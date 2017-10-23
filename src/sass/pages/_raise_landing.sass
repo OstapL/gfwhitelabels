@@ -314,7 +314,7 @@
   position: fixed
   right: 15px
   bottom: 65px
-  z-index: 9997
+  z-index: 998
   .raise-landing
     background-image: url("img/generals/background-triangle.png")
     padding: rem(25)
@@ -370,7 +370,19 @@
       bottom: 5px
       right: -12px
 
-
-    
+.calendly-overlay
+  z-index: 999!important
+  top: 10px!important
+  .calendly-popup
+    @media screen and (max-width: 975px)
+      top: 65px!important
+      .calendly-popup-close
+        top: -5px!important
+        right: 0px!important
+        font-size: rem(30)!important
+        width: 30px
+        text-align: center
+.calendly-badge-widget
+  z-index: 999!important
 
 
