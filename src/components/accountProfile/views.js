@@ -319,8 +319,9 @@ module.exports = {
     _success(data) {
       this._updateUserInfo();
 
-      app.routers.navigate('/account/profile', { trigger: true });
-      app.hideLoading();
+      app.showLoading();
+
+      setTimeout(() => app.hideLoading(), 1000);
       return 0;
 
       // if ($("#financial_info").hasClass("active")) {
@@ -703,7 +704,13 @@ module.exports = {
           formc: this.formc,
           investors: this.investors
         })
+
       );
+
+      const widget = require('./templates/snippets/widget.pug');
+      this.el.querySelector('#widget').innerHTML = widget({
+        company: this.company,
+      });
 
       setTimeout(() => {
         $('.count-num').animateCount();
