@@ -1,4 +1,7 @@
-- pug_html += app.breadcrumbs('FAQ', '', [ ['Home', '/'], ['FAQ', ''], ]);
+- document.title = 'Equity Crowdfunding Investor FAQ ' + app.config.siteTitle;
+- document.head.querySelector('meta[name="description"]').content = 'Learn about becoming an equity crowdfunding investor';
+
+- pug_html += app.breadcrumbs('Investor FAQs', '', [ ['Home', '/'], ['Investor FAQs', ''], ]);
  
 section.text_block
   .container
