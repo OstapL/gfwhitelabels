@@ -262,7 +262,7 @@ module.exports = {
 
       $('body').scrollTop(0);
 
-      if (app.user.data.info.length !== 0) {
+      if (app.user.data.info.length === 0) {
         setTimeout(() => {
           api.makeRequest(
               app.config.emailServer + '/subscribe',
