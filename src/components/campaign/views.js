@@ -442,8 +442,8 @@ module.exports = {
       };
 
       // Validation rules
-      this.fields.personal_information_data.requiredTemp = true;
-      this.fields.payment_information_data.requiredTemp = true;
+      //this.fields.personal_information_data.requiredTemp = true;
+      //this.fields.payment_information_data.requiredTemp = true;
       this.fields.payment_information_data.schema.account_number = {
         type: 'password',
         required: true,
@@ -470,7 +470,7 @@ module.exports = {
 
       this.fields.payment_information_data.schema.routing_number = {
         required: true,
-        _length: 9,
+        length: 9,
         dependies: ['routing_number_re'],
         fn: function(name, value, attr, data, schema) {
           if (value != this.getData(data, 'payment_information_data.routing_number_re')) {
@@ -481,7 +481,7 @@ module.exports = {
 
       this.fields.payment_information_data.schema.routing_number_re = {
         required: true,
-        _length: 9,
+        length: 9,
         dependies: ['routing_number'],
         fn: function(name, value, attr, data, schema) {
           if (value != this.getData(data, 'payment_information_data.routing_number')) {
@@ -516,9 +516,9 @@ module.exports = {
       };
       */
 
-
       this.fields.signature = {
         required: true,
+        minLength: 4
       };
 
       const validateAmount = (amount) => {
@@ -600,10 +600,12 @@ module.exports = {
 
       this.labels = {
         personal_information_data: {
+          first_name: 'First Name',
+          last_name: 'Last Name',
           country: 'Country',
           street_address_1: 'Street Address 1',
           street_address_2: 'Street Address 2',
-          zip_code: 'Zip Code',
+          zip_code: 'Postal Code',
           phone: 'Phone',
           city: 'City',
         },
@@ -619,6 +621,7 @@ module.exports = {
         payment_information_type: 'I Want to Pay Using',
         amount: 'Amount',
         fee: 'Commission',
+        signature: 'Signature',
         is_reviewed_educational_material: `I confirm and represent that (a) I have reviewed
           the educational material that has been made available on this website, (b) I understand
           that the entire amount of my investment may be lost, (c) I am in a
@@ -1067,6 +1070,13 @@ module.exports = {
       if (!$row.length)
         return;
 
+
+      if (isUS) {
+        this.fields.personal_information_data.schema.zip_code.label = 'Postal Code';
+      } else {
+        this.fields.personal_information_data.schema.zip_code.label = 'Zip Code';
+      }
+
       let args = {
         fields: this.fields,
         user: this.user,
@@ -1189,9 +1199,9 @@ module.exports = {
       );
 
       api.makeRequest(
-        app.config.emailServer + '/unsubscribe',
+        app.config.emailServer + '/unsubscribe/invest',
         'PUT',
-        { company_id: this.model.company_id }
+        {}
       );
       return this;
     },

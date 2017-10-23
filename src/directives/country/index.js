@@ -52,6 +52,12 @@ class CountryBlock {
     if (!$row.length)
       return;
 
+    if (isUS) {
+      this.fields.zip_code.label = 'Postal Code';
+    } else {
+      this.fields.zip_code.label = 'Zip Code';
+    }
+
     let args = {
       view: v,
       fields: v.fields,
