@@ -1,7 +1,7 @@
 -
   var auth = require('consts/auth/user.json');
   var SECURITY = require('consts/raisecapital/security_type.json');
-  pug_html += app.breadcrumbs('Invest in '+ values.name, '', [ ['Home', '/'], ['Explore', '/companies'], [values.name, '/' + values.id], ['Invest in ' + values.name, '']]);
+  pug_html += app.breadcrumbs('Invest in '+ values.name, '', [ ['Home', '/'], ['Explore', '/companies'], [values.name, '/' + values.slug], ['Invest in ' + values.name, '']]);
 
 mixin fieldInput(name, attr)
   - attr = attr ? attr : fields[name];
