@@ -951,6 +951,7 @@ module.exports = {
               this.$el.find('.buttons-row').show();
             }
 
+            this.model.updateMenu(this.model.calcProgress());
             this.renumberTeamMembers();
           });
       });
