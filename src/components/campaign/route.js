@@ -21,6 +21,7 @@ module.exports = {
             model: new app.models.Company(data),
           });
           app.currentView.render();
+          $('body').scrollTo();
           app.hideLoading();
         });
       }, 'campaign_chunk');
