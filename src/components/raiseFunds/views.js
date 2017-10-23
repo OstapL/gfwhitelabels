@@ -382,6 +382,18 @@ module.exports = {
       this.checkForm();
       app.helpers.disableEnter.disableEnter.call(this);
       this.model.updateMenu(this.model.calcProgress(this.model));
+
+      api.makeRequest(
+        app.config.emailServer + '/unsubscribe/calc',
+        'PUT',
+        {}
+      );
+      api.makeRequest(
+        app.config.emailServer + '/unsubscribe/guide',
+        'PUT',
+        {}
+      );
+
       return this;
     },
   }, app.helpers.confirmOnLeave.methods, app.helpers.menu.methods, app.helpers.section.methods)),
@@ -951,6 +963,7 @@ module.exports = {
               this.$el.find('.buttons-row').show();
             }
 
+            this.model.updateMenu(this.model.calcProgress());
             this.renumberTeamMembers();
           });
       });

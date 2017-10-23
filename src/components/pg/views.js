@@ -323,13 +323,15 @@ const Views = {
         this.initAudioModalEvents();
       }, 10);
 
-      setTimeout(() => {
-        api.makeRequest(
-            app.config.emailServer + '/subscribe',
-            'PUT',
-            {'type': 'guide'}
-            );
-      }, 2500);
+      if (app.user.data.info.length === 0) {
+        setTimeout(() => {
+          api.makeRequest(
+              app.config.emailServer + '/subscribe',
+              'PUT',
+              {'type': 'guide'}
+              );
+        }, 2500);
+      }
 
       return this;
     },
