@@ -359,9 +359,9 @@ module.exports = {
           body: 'Description',
         },
       };
-      this.fields.pitch.help_text = 'What is your edge? Do you have a competitive advantage? Why should investors want to invest in your company?';
+      this.fields.pitch.help_text = 'Put yourself in your potential investors shoes.<br><br> -Show that there is a substantial and growing demand for your product or service<br>-List your company’s strengths<br>-How are you different than your competitors?<br>-What are your future goals for the company?<br>-Briefly discuss the management team. (People often invest in a  company because they believe in the management team)';
       this.fields.intended_use_of_proceeds.help_text = 'How do you make money?';
-      this.fields.business_model.help_text = 'Why are you raising capital, and what do you intend to do with it?';
+      this.fields.business_model.help_text = 'What do you plan on doing with the money raised from your GrowthFountain campaign? <br>Will you be hiring staff, purchasing equipment or marketing your company?';
       this.fields.additional_info.help_text = 'Is there anything else you want to tell your potential investors? Received any accolades? Patents? Major contracts? Distributors, etc?';
       this.fields.faq.help_text = 'We need help text here too';
       this.assignLabels();
@@ -382,6 +382,18 @@ module.exports = {
       this.checkForm();
       app.helpers.disableEnter.disableEnter.call(this);
       this.model.updateMenu(this.model.calcProgress(this.model));
+
+      api.makeRequest(
+        app.config.emailServer + '/unsubscribe/calc',
+        'PUT',
+        {}
+      );
+      api.makeRequest(
+        app.config.emailServer + '/unsubscribe/guide',
+        'PUT',
+        {}
+      );
+
       return this;
     },
   }, app.helpers.confirmOnLeave.methods, app.helpers.menu.methods, app.helpers.section.methods)),
@@ -524,8 +536,9 @@ module.exports = {
       this.fields.video = Object.assign(this.fields.video, {
         fn(name, value, attr, data, computed) {
           const info = app.getVideoInfo(value);
-          if (!info.provider)
+          if (!info.provider) {
             throw 'YouTube or Vimeo links only, please';
+          }
         },
       });
 
@@ -552,10 +565,11 @@ module.exports = {
         },
         additional_video: {
           headline: 'Additional Video for Campaign',
+          link: 'Video URL',
         },
         list_image_image_id: 'Thumbnail Picture',
         header_image_image_id: 'Header Image',
-        // video: 'Main Video for Campaign',
+        video: 'Main Video for Campaign',
         gallery_group_id: 'Gallery'
       };
 
@@ -725,6 +739,21 @@ module.exports = {
           template: 'withpreview'
         },
       });
+
+      this.labels = {
+        first_name: "First Name",
+        last_name: "Last Name",
+        email: "Email",
+        title: "Title",
+        bio: "Bio",
+        city: "Where Did You Grow Up?",
+        college: "Where Did You Attend College?",
+        linkedin: "Your LinkedIn Link",
+        facebook: "Your Facebook Link",
+        photo_image_id: "Profile Picture"
+      };
+
+      this.assignLabels();
 
       this.campaign = options.campaign;
       this.formc = options.formc;
@@ -934,6 +963,7 @@ module.exports = {
               this.$el.find('.buttons-row').show();
             }
 
+            this.model.updateMenu(this.model.calcProgress());
             this.renumberTeamMembers();
           });
       });
@@ -1005,6 +1035,13 @@ module.exports = {
 
       this.fields.minimum_raise.dependies = ['maximum_raise',];
       this.fields.maximum_raise.dependies = ['minimum_raise',];
+      this.fields.maximum_raise = Object.assign(this.fields.maximum_raise, {
+        fn(name, value, attr, data, computed) {
+          if (value < data.minimum_raise) {
+            throw 'Value must be greater than or equal to Minimum Total Raise.';
+          }
+        },
+      });
       this.fields.premoney_valuation.dependies = ['security_type',];
       this.fields.security_type.dependies = ['premoney_valuation',];
       this.fields.price_per_share = Object.assign(this.fields.price_per_share, {
