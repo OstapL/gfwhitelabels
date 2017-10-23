@@ -221,6 +221,7 @@ $('html').on('click', function () {
 });
 
 $('body').on('click', '.notification-bell', function () {
+  event.preventDefault()
   if ($('.navbar-toggler:visible').length !== 0) {
     $('html').removeClass('show-menu');
     $('header').toggleClass('no-overflow-bell');
