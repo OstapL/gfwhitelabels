@@ -50,9 +50,10 @@ class InfoProvider {
   }
 
   facebook() {
+    let url = window.location.origin + '/' + app.user.company.slug;
     return 'https://www.facebook.com/dialog/share' +
       '?app_id=' + app.config.facebookClientId + '&href='  
-      + encodeURIComponent('https://share.growthfountain.com/share?url=' + encodeURIComponent(window.location.href))
+      + encodeURIComponent('https://share.growthfountain.com/share?url=' + encodeURIComponent(url))
   }
 
   email() {
