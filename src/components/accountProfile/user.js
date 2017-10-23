@@ -31,7 +31,7 @@ class User {
     this.campaign = null;
     this.formc = null;
 
-    this.data = { token: '', id: ''};
+    this.data = { token: '', id: '', info: []};
     this.token = null;
 
     this.next = null;

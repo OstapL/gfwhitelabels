@@ -323,7 +323,7 @@ const Views = {
         this.initAudioModalEvents();
       }, 10);
 
-      if (app.user.data.info.length === 0) {
+      if (app.user.data.info.length === 0 && window.location.pathname == '/pg/success_guide_1') {
         setTimeout(() => {
           api.makeRequest(
               app.config.emailServer + '/subscribe',
