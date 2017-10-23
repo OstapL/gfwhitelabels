@@ -267,7 +267,7 @@ class FileDropzone {
       app.validation.invalidMsg(
         this.view,
         this.fileElement.fieldName,
-        Object.values(error)[0]
+        error
       ); 
 
       if (this.element.classList.contains('galleryDropzone') === true) {

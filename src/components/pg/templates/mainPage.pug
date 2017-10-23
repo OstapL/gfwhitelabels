@@ -144,80 +144,50 @@ section.better
           img(src=require('images/pages/news4.png'), alt="")
 
 include ../../../templates/bottombanner
-
-section.news-on-main-page
+section.main-reviews
   .container
-    .row
-      .col-xl-12
-        h2.text-uppercase.text-xs-center.m-t-0 LATEST news
-    .row
-      ul.list-unstyled.m0
-        .col-xl-6
-          li.mb50
-            .row
-              .col-lg-4
-                .news-img.text-xs-center.mpb50
-                  a(href="https://techcrunch.com/2017/01/23/growthfountain/" target="_blank")
-                    img(src=require("images/pages/TC.jpg") alt="techcrunch")
-                
-              .col-lg-8
-                h4.open-sans.letter-spacing-0.text-muted.m0
-                  a(href="https://techcrunch.com/2017/01/23/growthfountain/" target="_blank")
-                    b
-                      | New equity crowdfunding platform GrowthFountain launched today
-                
-                p.pt10 There’s no shortage of equity crowdfunding sites out there, but GrowthFountain thinks it has the special sauce to cut through the...
-        .col-xl-6
-          li.mb50
-            .row
-              .col-lg-4
-                .news-img.text-xs-center.mpb50
-                  a(href="https://cheddar.vhx.tv/cheddar-archive/videos/cheddar-closing-bell-s3-e013017-j-full-mezz-hd-en-us" target="_blank")
-                    img(src=require("images/pages/cheddar.jpg") alt="cheddar")
-                
-              .col-lg-8
-                h4.open-sans.letter-spacing-0.text-muted.m0
-                  a(href="https://cheddar.vhx.tv/cheddar-archive/videos/cheddar-closing-bell-s3-e013017-j-full-mezz-hd-en-us" target="_blank")
-                    b
-                      | Growthfountain on The Launch of its New Equity Crowdfunding Campaign
-                
-                p.pt10.pb10 Check out our interview on 
-                  a(href="https://cheddar.vhx.tv/cheddar-archive/videos/cheddar-closing-bell-s3-e013017-j-full-mezz-hd-en-us" target="_blank").link-3 Cheddar TV
-                p Newly launched Growthfountain talks about equity crowdfunding and its latest campaign.
-    .row
-      ul.list-unstyled.m0
-        .col-xl-6
-          li.mb50
-            .row
-              .col-lg-4
-                .news-img.text-xs-center.mpb50
-                  a(href=require("doc/Credit.Union.Times.3_17_17-1.pdf") target="_blank")
-                    img(src=require("images/pages/news2.png") alt="")
-                
-              .col-lg-8
-                h4.open-sans.letter-spacing-0.text-muted.m0
-                  a(href=require("doc/Credit.Union.Times.3_17_17-1.pdf") target="_blank")
-                    b
-                      | Crowdfunding: New Opportunity for Start-Ups & Credit Unions
-
-                p.pt10 A partnership between New York City based GrowthFountain, an equity crowdfunding platform, and $7.6... 
-        .col-xl-6
-          li.mb50
-            .row
-              .col-lg-4
-                .news-img.text-xs-center.mpb50
-                  a(href="http://moneyinc.com/future-fundraising-extension-social-contract/" target="_blank")
-                    img(src=require("images/pages/moneyinc.jpg") alt="moneyinc")
-                
-              .col-lg-8
-                h4.open-sans.letter-spacing-0.text-muted.m0
-                  a(href="http://moneyinc.com/future-fundraising-extension-social-contract/" target="_blank")
-                    b
-                      | The Future of Fundraising: An Extension of the Social Contract
-
-                p.pt10 When you walk down main street anywhere in America – whether you’re in Sioux Falls, South Dakota or New York City, you’re sure to notice... 
-    .row
-      .col-xl-12.text-xs-center
-        a(href="/pg/news").btn.btn-sm.btn-secondary.btn-see-all 
-          | See All
-          i.fa.fa-angle-right
+    .review-title
+      h2.text-uppercase.m-b-0.text-xs-center GROWTHFOUNTAIN REVIEWS:
+      h3.font-weight-light.text-xs-center.m-t-1 a few words from our customers
+      img(src=require('images/generals/two-quotes.png'), alt="")
+    .owl-carousel.owl-theme.carousel-review
+      div.one-review
+        .review-text
+          p  We reached 163% of our funding goal on GrowthFountain, receiving over $163,000 in investor commitments for our company, The Herbal Compliance Co. GrowthFountain’s team was incredibly helpful, responsive, professional, and their systems are very user friendly. I highly recommend them to any startup looking to raise money.
+        .review-autor
+          img(src=require('images/main_page/briang.png'), alt="")
+          .review-name
+            h4.text-uppercase Brian G.
+            p from Chattanooga, TN
+      div.one-review
+        .review-text
+          p  We were convinced that we wanted to work with GrowthFountain because of the recommendation of Callahan & Associates. We saw the opportunity to further our service to the community in Chattanooga. Working with GrowthFountain plays right into us being the community financial institution, bringing people together to help other people.  It’s an absolutely wonderful opportunity for us to add another arrow to the quiver, helping entrepreneurs and their access to capital.
+        .review-autor
+          img(src=require('images/main_page/tommyn.png'), alt="")
+          .review-name
+            h4.text-uppercase Tommy Nix.
+            p Tennessee Valley Federal Credit Union, Chattanooga, TN
+      div.one-review
+        .review-text
+          p  You guys are doing a fantastic job! I have recommended GrowthFountain to my friends who want to make small investments outside of traditional stocks and bonds. All facts are clear and provided in simple terms so that anyone can take part.
+        .review-autor
+          img(src=require('images/main_page/jay.png'), alt="")
+          .review-name
+            h4.text-uppercase Jay K.
+            p from Cypress, TX
+      div.one-review
+        .review-text
+          p  GrowthFountain’s team was extremely helpful in setting up my campaign. Their low fees, customer service and ease of investing for investors led me to raise money for my company, StakeHaul on GrowthFountain.
+        .review-autor
+          img(src=require('images/main_page/jeff.png'), alt="")
+          .review-name
+            h4.text-uppercase Jeff L.
+            p from Milwaukie, WI
+      div.one-review
+        .review-text
+          p  The crowdfunding approach opens up an entirely new channel of investors, and I really like the option to choose between equity or a revenue share. GrowthFountain has a flexible approach and they coached us through the whole process.
+        .review-autor
+          img(src=require('images/main_page/gibd.png'), alt="")
+          .review-name
+            h4.text-uppercase Gib D.
+            p from Chattanooga, TN

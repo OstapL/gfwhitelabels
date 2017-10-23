@@ -1,0 +1,86 @@
+- document.title = 'Step 1 - Free Business Valuation Calculator ' + app.config.siteTitle;
+- document.head.querySelector('meta[name="description"]').content = 'Take advantage of our free business valuation calculator to understand what your business is worth';
+
+- pug_html += app.breadcrumbs('Business Valuation Calculator', 'Step 1', [ ['Home', '/'], ["What's My Business Worth?", '/calculator/business-valuation'], ["Business Valuation Calculator", ''],]);
+
+.container.calculator-container
+  .row
+    .offset-lg-2.col-lg-8
+      ul.list-inline.top-breadcrambs.mb45.established-business
+        li
+          a(href="/calculator/established-business/intro").btn
+            h4.text-uppercase.m-b-0 Intro
+        li
+          a(href="/calculator/established-business/step-1").current.btn
+            h4.text-uppercase.m-b-0 step 1
+        li
+          a(href="/calculator/established-business/step-2").next.btn
+            h4.text-uppercase.m-b-0 step 2
+        li
+          a(href="/calculator/established-business/step-3").next.btn
+            h4.text-uppercase.m-b-0 step 3
+        li
+          a(href="/calculator/established-business/finish").next.btn
+            h4.text-uppercase.m-b-0 Finish
+
+  .row
+    .offset-lg-3.col-lg-6
+      form(method="post" action="").form-section
+        .form-body.clearfix
+          .form-group.row
+            label(for='industry').col-lg-12.col-form-label.font-weight-normal Please provide the industry to which your business belongs.
+            .col-lg-12
+              select(name="industry")#industry.form-control.js-select
+                each val, index in industryData
+                  if val == data.industry
+                    option(selected)= val
+                  else
+                    option= val
+
+          .form-group.row
+            label(for="raiseCash").col-lg-12.font-weight-normal How much cash do you plan to raise?
+
+            .col-lg-12
+              input(
+                value= app.helpers.format.formatMoney(data.raiseCash)
+                type='money'
+                data-value-type='money'
+                placeholder='Raise Amount'
+                autocomplete='off'
+                name="raiseCash"
+              )#raiseCash.form-control.js-field
+
+          .form-group.row
+            label(for="ownCache").col-lg-12.font-weight-normal How much cash, beyond what's needed for immediate operating needs, does your business currently have?
+
+            .col-lg-12
+              input(
+                value=app.helpers.format.formatMoney(data.ownCache)
+                type='money'
+                data-value-type='money'
+                placeholder='Cash Holdings'
+                autocomplete='off'
+                name="ownCache"
+              )#ownCache.form-control.js-field
+
+          .form-group.row
+            label(for="currentDebt").col-lg-12.font-weight-normal How much debt is your business currently carrying?
+
+            .col-lg-12
+              input(
+                value= app.helpers.format.formatMoney(data.currentDebt)
+                type='money'
+                data-value-type='money'
+                placeholder='Current Debt'
+                autocomplete='off'
+                name="currentDebt"
+              )#currentDebt.form-control.js-field
+
+          .form-group.row.clearfix.m0
+            .col-xs-6.p-t-2.m-t-1
+              a(href='/calculator/established-business/intro').link-3 Go back
+
+            .col-xs-6.mt30
+              .controls
+                button.btn.btn-primary.pull-right.text-uppercase Next
+                // add class .pointer-events-none to disable all events for this button

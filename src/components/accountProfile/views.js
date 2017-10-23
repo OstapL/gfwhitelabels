@@ -319,8 +319,9 @@ module.exports = {
     _success(data) {
       this._updateUserInfo();
 
-      app.routers.navigate('/account/profile', { trigger: true });
-      app.hideLoading();
+      app.showLoading();
+
+      setTimeout(() => app.hideLoading(), 1000);
       return 0;
 
       // if ($("#financial_info").hasClass("active")) {
@@ -332,8 +333,11 @@ module.exports = {
 
     destroy() {
       Backbone.View.prototype.destroy.call(this);
-      this.$('.slider-net-worth').bootstrapSlider('destroy');
-      this.$('.slider-annual-income').bootstrapSlider('destroy');
+      try {
+        this.$('.slider-net-worth').bootstrapSlider('destroy');
+        this.$('.slider-annual-income').bootstrapSlider('destroy');
+      } catch(e) {
+      }
     },
 
   },
@@ -390,7 +394,7 @@ module.exports = {
     el: '#content',
     events: {
       'click .cancelInvestment': 'cancelInvestment',
-      'click .agreement-link': 'openAgreement',
+      'click .agreementLink': 'openAgreement',
       'click .financial-docs-link': 'showFinancialDocs',
     },
 
@@ -407,13 +411,6 @@ module.exports = {
         noInvestments: require('./templates/snippets/no-investments.pug'),
       };
 
-      //this is auth cookie for downloadable files
-      app.cookies.set('token', app.user.data.token, {
-        domain: '.' + app.config.domainUrl,
-        expires: 1000 * 60 * 60 * 24 * 30 * 12,
-        path: '/',
-      });
-
       this.listenToNavigate();
     },
 
@@ -427,13 +424,7 @@ module.exports = {
 
     openAgreement(e) {
       e.preventDefault();
-      const PARTICIPATION_AGREEMENT_ID = 2;
       const objectId = e.target.dataset.objectId;
-      const securityType = e.target.dataset.securityType;
-      const subscriptionAgreementLink =
-        app.helpers.userDocuments.getUserDocumentsByType(objectId, securityType);
-      const participationAgreementLink =
-        app.helpers.userDocuments.getUserDocumentsByType(objectId, PARTICIPATION_AGREEMENT_ID);
 
       const data = {
         title: 'Agreements',
@@ -441,11 +432,11 @@ module.exports = {
           {
             mime: 'application/pdf',
             name: 'Subscription Agreement.pdf',
-            urls: { origin: subscriptionAgreementLink },
+            urls: { origin: "/account/esignature/" + e.target.dataset.objectId + "/" + e.target.dataset.type },
           }, {
             mime: 'application/pdf',
             name: 'Participation Agreement.pdf',
-            urls: { origin: participationAgreementLink },
+            urls: { origin: "/account/esignature/" + e.target.dataset.objectId + "/0" },
           },
         ],
       };
@@ -713,7 +704,13 @@ module.exports = {
           formc: this.formc,
           investors: this.investors
         })
+
       );
+
+      const widget = require('./templates/snippets/widget.pug');
+      this.el.querySelector('#widget').innerHTML = widget({
+        company: this.company,
+      });
 
       setTimeout(() => {
         $('.count-num').animateCount();

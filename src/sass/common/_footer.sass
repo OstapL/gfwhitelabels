@@ -90,7 +90,31 @@
 	.business-resources
 		@media screen and (min-width: 544px) and (max-width : 991px)
 			clear: both
-
+	.footer-site-link
+		.item
+			display: inline-block
+			margin: 10px
+			margin-bottom: 20px
+			width: 18.35%
+			text-align: center
+			@media only screen and (max-width : 1200px)
+				width: 18%
+			@media only screen and (max-width : 991px)
+				width: 17%
+				padding: 10px
+			@media only screen and (max-width : 567px)
+					width: 43%
+					text-align: center !important
+					margin: 10px!important
+					padding: 0
+			img
+				+mt(.3s)
+				opacity: 0.5
+			&:hover
+				img
+					+mt(.3s)
+					opacity: 1
+					
 @media screen and (min-width: 768px) and (max-width : 991px)
 	.p-r-md-0
 		padding-right: 0

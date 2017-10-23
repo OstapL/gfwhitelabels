@@ -1,4 +1,4 @@
-| !{app.breadcrumbs('thank you!', '', [ ['Home', '/'], ['Explore', '/companies'], [investment.company.name, '/' + investment.company_id], ['Invest in ' + investment.company.name, '']])}
+| !{app.breadcrumbs('thank you!', '', [ ['Home', '/'], ['Explore', '/companies'], [investment.company.name, '/' + investment.company.slug], ['Invest in ' + investment.company.name, '']])}
 -
   var SECURITY_TYPE = require('consts/raisecapital/security_type.json');
   var socialDirective = require('directives/social/index.js');
