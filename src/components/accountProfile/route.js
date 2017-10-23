@@ -12,6 +12,7 @@ module.exports = {
     'account/after-final-submit-dashboard': 'afterFinalDashboard',
     'account/after-submitting-goverment-dashboard': 'afterSubmittingGovermentDashboard',
     'dashboard/:id/issuer-dashboard': 'issuerDashboard',
+    'account/esignature/:investmentId/:type': 'openEsign',
   },
   methods: {
     accountProfile(activeTab) {
@@ -209,6 +210,27 @@ module.exports = {
       }, 'profile_chunk');
     },
 
+    openEsign(investmentId, pdfType) {
+      app.showLoading();
+
+      require.ensure([], () => {
+        $.when(
+          api.makeRequest(
+              app.config.esignServer + '/' + investmentId + '/' + pdfType,
+              "GET",
+              {},
+              {
+                dataType: "text",
+                contentType: "application/text",
+                mimeType: "text/plain; charset=x-user-defined"
+              },
+          )
+        ).done((rawData) => {
+          app.currentView = new app.helpers.previewPdf("", rawData);
+        });
+      }, 'profile_chunk');
+    },
+
   },
   auth: [
     'accountProfile',
@@ -221,5 +243,6 @@ module.exports = {
     'afterFinalDashboard',
     'afterSubmittingGovermentDashboard',
     'issuerDashboard',
+    'openEsign',
   ],
 };

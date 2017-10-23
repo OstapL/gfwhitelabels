@@ -1,0 +1,121 @@
+- document.title = 'Step 2 - Free Capital Raise Calculator for Equity Crowdfunding ' + app.config.siteTitle;
+- document.head.querySelector('meta[name="description"]').content = 'Take advantage of our free capital raise calculator to help map out your funding plan';
+
+- pug_html += app.breadcrumbs('Capital Raise Calculator', 'step 2', [ ['Home', '/'], ["Capital Raise Calculator", ''],]);
+
+.container.calculator-container
+  .row
+    .offset-lg-2.col-lg-8
+      ul.list-inline.top-breadcrambs.mb45.capitalraise
+        li
+          a(href="/calculator/capital-raise").btn
+            h4.text-uppercase.m-b-0 Intro
+        li
+          a(href="/calculator/capital-raise/step-1").btn
+            h4.text-uppercase.m-b-0 step 1
+        li
+          a(href="/calculator/capital-raise/step-2").current.btn
+            h4.text-uppercase.m-b-0 step 2
+        li
+          a(href="/calculator/capital-raise/finish").next.btn
+            h4.text-uppercase.m-b-0 finish
+
+  .row
+    .offset-lg-3.col-lg-6
+      form(method="post" action="").js-calc-form.form-section
+        .form-body.clearfix
+
+          .form-group.row
+            label(for="monthlyOperatingTwoYears").col-lg-12.font-weight-normal What do you expect your monthly operating expenses to average over the subsequent 12 months? (i.e. months 13 - 24) &nbsp;&nbsp;
+              div.d-inline-block
+                div.showPopover(data-content="<u>Operating Expense.</u> The sum of a business's operating expenses for a period of time, such as a month or year. In throughput accounting, the cost accounting aspect of the theory of constraints (TOC), operating expense is the money spent turning  nventory into throughput.")
+                  i(aria-hidden="true").fa.fa-question-circle.text-muted
+
+            .col-lg-12
+              input(
+                value= app.helpers.format.formatMoney(data.monthlyOperatingTwoYears)
+                type='money'
+                data-value-type='money'
+                placeholder='Second Year Expenses'
+                autocomplete='off'
+                name="monthlyOperatingTwoYears"
+              )#monthlyOperatingTwoYears.form-control.js-field
+
+          .form-group.row
+            label(for="workingCapital").col-lg-12.font-weight-normal  How much working capital do you need to generate your projected revenue over the next 24 months?) &nbsp;&nbsp;
+              div.d-inline-block
+                div.showPopover(data-content="<u>Working Capital.</u> The amount of capital needed to carry on a business.  This represents the operating liquidity and is calculated as current assets minus current liabilities; accounts receivable plus inventory minus accounts payable.")
+                  i(aria-hidden="true").fa.fa-question-circle.text-muted
+
+            .col-lg-12.mb20.text-xs-center.bootstrap-slider-calc
+              input(
+                type='text',
+                data-slider-value= data.workingCapital || 0
+                name="workingCapital"
+              )#workingCapital.form-control.js-bootstrap-slider
+
+            p.col-lg-12.grey-text-help.m-t-1 * Input should be as a % of revenue.
+
+          .form-group.row
+            label(for="additionalOperating").col-lg-12.font-weight-normal If your revenue comes in 50% higher than you are currently projecting, how much in additional monthly operating expenses would you need? &nbsp;&nbsp;
+              div.d-inline-block
+                div.showPopover(data-content="<u>Operating Expenses.</u> The sum of a business's operating expenses for a period of time, such as a month or year. In throughput accounting, the cost accounting aspect of the theory of constraints (TOC), operating expense is the money spent turning inventory into throughput.")
+                  i(aria-hidden="true").fa.fa-question-circle.text-muted
+
+            .col-lg-12
+              input(
+                value= app.helpers.format.formatMoney(data.additionalOperating)
+                type='money'
+                data-value-type='money'
+                placeholder='Addtl. Monthly Expenses'
+                autocomplete='off'
+                name="additionalOperating"
+              )#additionalOperating.form-control.js-field
+
+          .form-group.row
+            label(for="capitalExpenditures").col-lg-12.font-weight-normal Are you expecting any Capital Expenditures over the next 24 months? &nbsp;&nbsp;
+              div.d-inline-block
+                div.showPopover(data-content="<u>Capital Expenditures.</u> Money spent by a business or organization on acquiring or maintaining fixed assets, such as land, buildings, and equipment.")
+                  i(aria-hidden="true").fa.fa-question-circle.text-muted
+
+            .col-lg-12
+              input(
+                value= app.helpers.format.formatMoney(data.capitalExpenditures)
+                type='money'
+                data-value-type='money'
+                placeholder='Capital Expenditures'
+                autocomplete='off'
+                name="capitalExpenditures"
+              )#capitalExpenditures.form-control.js-field
+
+          .form-group.row
+            label(for="taxRate").col-lg-12.font-weight-normal What Tax Rate do you expect to pay on your operating profit? (including federal, state, local, and any other taxes applicable to the operation of your business)
+
+            .col-lg-12.mb20.text-xs-center.bootstrap-slider-calc
+              input(
+                type='text'
+                data-slider-value= data.taxRate || 0
+                name="taxRate"
+              )#taxRate.form-control.js-bootstrap-slider
+
+          .form-group.row
+            label(for="annualInterest").col-lg-12.font-weight-normal What do you expect your annual interest expense to be over the next 2 years?
+
+            .col-lg-12
+              input(
+                value= app.helpers.format.formatMoney(data.annualInterest)
+                type='money'
+                data-value-type='money'
+                placeholder='Annual Interest Expense'
+                autocomplete='off'
+                name="annualInterest"
+              )#annualInterest.form-control.js-field
+
+          .form-group.row.clearfix.m0
+            .col-xs-6.p-t-2.m-t-1
+              a(href='/calculator/capital-raise/step-1').link-3 Go back
+
+            .col-xs-6.mt30
+              .controls
+                button(type="submit").btn.btn-primary.pull-right.text-uppercase Next
+                // add class .pointer-events-none to disable all events for this button

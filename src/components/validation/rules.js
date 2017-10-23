@@ -28,7 +28,7 @@ module.exports = {
     minLength: '{0} must be at least {1} characters',
     maxLength: '{0} must be at most {1} characters',
     rangeLength: '{0} must be between {1} and {2} characters',
-    oneOf: '{0} must be one of: {1}',
+    oneOf: 'invalid choice',
     equalTo: '{0} must be the same as {1}',
     money: '{0} must only contain digits',
     digits: '{0} must only contain digits',
@@ -45,7 +45,7 @@ module.exports = {
     var text = args.shift();
 
     return text.replace(/\{(\d+)\}/g, function (match, number) {
-      return typeof args[number] !== 'undefined' ? args[number] : match;
+      return typeof args[number] !== 'undefined' ? args[number] : "";
     });
   },
 
@@ -56,7 +56,15 @@ module.exports = {
     if(name.indexOf('.') == -1) {
       return data[name];
     } else {
-      return name.split('.').reduce((o,i)=>o[i], data);
+      return name.split('.').reduce(function (o, i, currentIndex, array) {
+        if (i.indexOf('[') != -1) {
+          i = i.split('[');
+          let k = i[0];
+          i = i[1].replace(']', '');
+          return o[k][i];
+        }
+        return o[i];
+      }, data);
     }
   },
 
@@ -89,6 +97,11 @@ module.exports = {
   // Validates if the attribute is required or not
   // This can be specified as either a boolean value or a function that returns a boolean value
   required: function (name, rule, attr, data) {
+
+    if (typeof(rule) == 'function') {
+      rule = rule(name, attr, data);
+    }
+
     if (rule && this.hasValue(this.getData(data, name)) == false) {
       throw this.format(
         attr.messageRequired || this.messages.required,
@@ -112,7 +125,7 @@ module.exports = {
   // the min value specified
   min: function (name, rule, attr, data) {
     let value = this.toNumber(this.getData(data, name));
-    if (value === false || value < rule) {
+    if (value !== false && value < rule) {
       throw this.format(this.messages.min, attr.label, rule);
     }
   },
@@ -126,7 +139,7 @@ module.exports = {
   // the max value specified
   max: function (name, rule, attr, data) {
     let value = this.toNumber(this.getData(data, name));
-    if (value === false || value > rule) {
+    if (value !== false && value > rule) {
       throw this.format(this.messages.max, attr.label, rule);
     }
   },
@@ -148,13 +161,6 @@ module.exports = {
   // Length validator
   // Validates that the value has to be a string with length equal to
   // the length value specified
-  _length: function (name, rule, attr, data) {
-    let value = this.getData(data, name);
-    if (!app.utils.isString(value) || value.length !== rule) {
-      throw this.format(this.messages.length, attr.label, rule);
-    }
-  },
-
   length: function (name, rule, attr, data) {
     let value = this.getData(data, name);
     if (!app.utils.isString(value) || value.length !== rule) {
@@ -197,8 +203,8 @@ module.exports = {
   // the specified array. Case sensitive matching
   oneOf: function (name, rule, attr, data) {
     let value = this.getData(data, name);
-    if (!app.utils.include(rule, value)) {
-      throw this.format(this.messages.oneOf,  attr.label, rule.join(', '));
+    if (Object.keys(rule).includes(value + "") === false) {
+      throw this.format(this.messages.oneOf,  '');
     }
   },
 
