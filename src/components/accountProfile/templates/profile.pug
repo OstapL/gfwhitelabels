@@ -43,11 +43,13 @@
           hr.profile-type-user-hr
           .profile-type-user.credit-all
             
-            h3.text-uppercase.m-t-0 your credit
-              .small-text Credit valid for #{ user.days_left } days.
-            .profile-comission
-              .wrap
-                h2.m-t-0.m-b-0 $#{ user.credit }
+            h3.text-uppercase.m-t-0
+              | your credit
+              .profile-comission
+                .wrap
+                  h2.m-t-0.m-b-0 $#{ user.credit }
+            .small-text Credit valid for #{ user.days_left } days.
+            
             .text-xs-center
               a(href="/companies").btn.btn-secondary invest
         .profile-reset-password      
