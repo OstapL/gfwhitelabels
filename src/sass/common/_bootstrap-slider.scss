@@ -105,6 +105,8 @@
 @media only screen and (max-width:767px) {
 	.slider.slider-horizontal {
 		width: 92%!important;
+		float: right;
+		margin-right: rem(15)
 	}
 }
 .bootstrap-slider-calc.has-error {
