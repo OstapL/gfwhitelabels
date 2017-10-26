@@ -43,11 +43,13 @@
           hr.profile-type-user-hr
           .profile-type-user.credit-all
             
-            h3.text-uppercase.m-t-0 your credit
-              .small-text Credit valid for #{ user.days_left } days.
-            .profile-comission
-              .wrap
-                h2.m-t-0.m-b-0 $#{ user.credit }
+            h3.text-uppercase.m-t-0
+              | your credit
+              .profile-comission
+                .wrap
+                  h2.m-t-0.m-b-0 $#{ user.credit }
+            .small-text Credit valid for #{ user.days_left } days.
+            
             .text-xs-center
               a(href="/companies").btn.btn-secondary invest
         .profile-reset-password      
@@ -159,7 +161,7 @@
                       .form-group.row.bootstrap-slider-custom
                         .col-xl-12
                           label.m-b-2 My Net Worth
-                        .col-xl-12
+                        .col-xl-12.text-xs-center
                           input(
                           type='text'
                           name="net_worth"
@@ -169,7 +171,7 @@
                       .form-group.row.bootstrap-slider-custom
                         .col-xl-12
                           label.m-b-2.m-t-1 My Annual Income
-                        .col-xl-12.custom-annual-income
+                        .col-xl-12.custom-annual-income.text-xs-center
                           input(
                           type='text'
                           name="annual_income"
