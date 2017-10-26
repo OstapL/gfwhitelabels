@@ -308,9 +308,29 @@ const Views = {
         });
       });
     },
+    initWow() {
+      app.helpers.scripts.load('https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js').then(() => {
+        var wow = new WOW(
+          {
+            boxClass:     'wow',      // animated element css class (default is wow)
+            animateClass: 'animated', // animation css class (default is animated)
+            offset:       0,          // distance to the element when triggering the animation (default is 0)
+            mobile:       true,       // trigger animations on mobile devices (default is true)
+            live:         true,       // act on asynchronously loaded content (default is true)
+            callback:     function(box) {
+              // the callback is fired every time an animation is started
+              // the argument that is passed in is the DOM node being animated
+            },
+            scrollContainer: null // optional scroll container selector, otherwise use window
+          }
+        );
+        wow.init();
+      });
+    },
 
     initialize(options) {
       this.template = require(`./templates/${ options.template }.pug`);
+
     },
 
     render() {
@@ -320,6 +340,7 @@ const Views = {
       setTimeout(() => {
         this.initCalendly();
         this.initCarousel();
+        this.initWow();
         this.initAudioModalEvents();
       }, 10);
 
@@ -344,7 +365,10 @@ const Views = {
         this.$owlCarousel.owlCarousel('destroy');
         this.$owlCarousel = null;
       }
-
+      if (this.wow) {
+        this.wow.destroy();
+        this.wow = null;
+      }
       if (this.$audioModal) {
         this.$audioModal.off('hidden.bs.modal');
         this.$audioModal = null;
