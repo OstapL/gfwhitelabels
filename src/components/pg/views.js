@@ -10,6 +10,7 @@ const templateMap = {
   'formc-review-congratulations': 'formc_review_congratulations',
   'investor-questions': 'investorquestions',
   'entrepreneur-questions': 'entrepreneurquestions',
+  'heartland-tour': 'heartland-tour',
 };
 
 function scaleVideoContainer(selector='.homepage-hero-module') {
@@ -87,6 +88,11 @@ const Views = {
       if (this.scrollHandler) {
         $(window).off('scroll', this.scrollHandler);
         this.scrollHandler = null;
+      }
+      if (this.$sideMenu) {
+        //destroy sticky side menu
+        this.$sideMenu.trigger("sticky_kit:detach");
+        this.$sideMenu = null;
       }
     },
 
@@ -300,6 +306,9 @@ const Views = {
     },
 
     initCalendly() {
+      this.$calendly = this.$el.find('.calendly');
+      if (!this.$calendly || !this.$calendly.length)
+        return;
       app.helpers.scripts.loadCalendlyAPI().then(() => {
         this.$el.find('.scheduleCall').on('click', (e) => {
           e.preventDefault();
@@ -309,6 +318,9 @@ const Views = {
       });
     },
     initWow() {
+      this.$wowJs = this.$el.find('.wow');
+      if (!this.$wowJs || !this.$wowJs.length)
+        return;
       app.helpers.scripts.load('https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js').then(() => {
         var wow = new WOW(
           {
@@ -366,18 +378,13 @@ const Views = {
         this.$owlCarousel = null;
       }
       if (this.wow) {
+        document.head.querySelector('script[src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"]').remove();
         this.wow.destroy();
         this.wow = null;
       }
       if (this.$audioModal) {
         this.$audioModal.off('hidden.bs.modal');
         this.$audioModal = null;
-      }
-
-      if (this.$sideMenu) {
-        //destroy sticky side menu
-        this.$sideMenu.trigger("sticky_kit:detach");
-        this.$sideMenu = null;
       }
     },
 
