@@ -231,7 +231,9 @@ class App {
         : '//www.youtube.com/embed/?rel=0';
 
     //lib does not handle hash after id
-    info.id = info.id.replace(/\#(.)*$/g, '');
+    if (info.id) {
+      info.id = info.id.replace(/\#(.)*$/g, '');
+    }
 
     return {
       id: info.id,
