@@ -28,7 +28,7 @@ module.exports = {
     minLength: '{0} must be at least {1} characters',
     maxLength: '{0} must be at most {1} characters',
     rangeLength: '{0} must be between {1} and {2} characters',
-    oneOf: 'Invalid choice',
+    oneOf: 'Not a valid choise.',
     equalTo: '{0} must be the same as {1}',
     money: '{0} must only contain digits',
     digits: '{0} must only contain digits',

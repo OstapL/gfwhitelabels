@@ -135,6 +135,8 @@ module.exports = {
       this.model.ssn_re = this.model.ssn;
 
       this.labels = {
+        first_name: 'First Name',
+        last_name: 'Last Name',
         country: 'Country',
         street_address_1: 'Street Address 1',
         street_address_2: 'Street Address 2',
