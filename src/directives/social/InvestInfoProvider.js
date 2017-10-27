@@ -10,6 +10,7 @@ class InvestorInfoProvider extends ShareInfoProvider {
       emailSubject: 'Everyone’s doing it! I just invested in :company on :siteName',
       emailBody: 'Hi!' +
       '%0D%0A' +
+      '%0D%0A' +
       'I just made an investment in :company and you can too! ' +
       'You can now invest in local businesses and entrepreneurs you believe in – starting at ' +
       '$:invest.' +
