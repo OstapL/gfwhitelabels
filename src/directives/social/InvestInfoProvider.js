@@ -8,7 +8,9 @@ class InvestorInfoProvider extends ShareInfoProvider {
 
     this.templates = {
       emailSubject: 'Everyone’s doing it! I just invested in :company on :siteName',
-      emailBody: 'Hi! I just made an investment in :company and you can too! ' +
+      emailBody: 'Hi!' +
+      '%0D%0A' +
+      'I just made an investment in :company and you can too! ' +
       'You can now invest in local businesses and entrepreneurs you believe in – starting at ' +
       '$:invest.' +
       '%0D%0A%0D%0ACome take a look: :url',
@@ -29,7 +31,7 @@ class InvestorInfoProvider extends ShareInfoProvider {
         ? model.campaign.minimum_increment
         : 100,
       title: this._format('title', { company: companyName, siteName: this.data.siteName }),
-      url: window.location.origin + '/' + (model.slug || model.id) + '/invest-thanks-share',
+      url: window.location.origin + '/' + (model.slug || model.id),
       description: model.description,
       companyName: companyName,
       corporateStructure: CORPORATE_STRUCTURE[model.corporate_structure] || '',
@@ -51,7 +53,7 @@ class InvestorInfoProvider extends ShareInfoProvider {
       content: {
         'title': this.data.title,
         'description': this.data.description,
-        'submitted-url': this.data.url,
+        'submitted-url': window.location.origin + '/' + (this.model.slug || this.model.id) + '/invest-thanks-share',
         'submitted-image-url': this.data.picture,
       },
       'visibility': {
