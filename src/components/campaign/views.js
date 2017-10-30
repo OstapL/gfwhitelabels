@@ -1156,7 +1156,7 @@ module.exports = {
         cityInput = this.el.querySelector('#personal_information_data__city');
       }
 
-      const url = '/' + this.model.slug + '/esignature/' + e.currentTarget.dataset.pdfType
+      const url = '/preview/' + this.model.slug + '/' + e.currentTarget.dataset.pdfType
         + '?amount=' + (this.el.querySelector('#amount').value.replace(/[\$,]/g, '') || 0)
         + '&commission=' + this.calcFeeWithCredit().fee
         + '&company_id=' + this.model.id
@@ -1171,7 +1171,21 @@ module.exports = {
         + '&state=' +  this.el.querySelector('#personal_information_data__state').value
         + '&signature=' +  this.el.querySelector('#signature').value;
 
-      e.currentTarget.href = url;
+      let form = document.createElement('form');
+      form.setAttribute('target', '_blank');
+      form.method = 'POST';
+      form.action = app.config.esignServer + url;
+
+      let jwtInput = document.createElement('input');
+      jwtInput.setAttribute('name', 'token');
+      jwtInput.value = app.user.token;
+      form.appendChild(jwtInput);
+
+      document.body.appendChild(form);
+      form.submit();
+      return false;
+
+      // e.currentTarget.href = app.config.esignServer + url;
     },
 
     _success(data) {
