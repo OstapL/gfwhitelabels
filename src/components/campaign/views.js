@@ -1120,7 +1120,15 @@ module.exports = {
             replace: false
         });
       })
-      .fail( (err) => console.log(err));
+      .fail( (err) => {
+        console.log(err);
+        $('body').scrollTo();
+        this.undelegateEvents();
+        app.routers.navigate(this.getSuccessUrl({}), {
+            trigger: true,
+            replace: false
+        });
+      });
     },
 
     updateLocation(e) {
@@ -1171,21 +1179,8 @@ module.exports = {
         + '&state=' +  this.el.querySelector('#personal_information_data__state').value
         + '&signature=' +  this.el.querySelector('#signature').value;
 
-      let form = document.createElement('form');
-      form.setAttribute('target', '_blank');
-      form.method = 'POST';
-      form.action = app.config.esignServer + url;
-
-      let jwtInput = document.createElement('input');
-      jwtInput.setAttribute('name', 'token');
-      jwtInput.value = app.user.token;
-      form.appendChild(jwtInput);
-
-      document.body.appendChild(form);
-      form.submit();
+      app.utils.openPdfPreview(url);
       return false;
-
-      // e.currentTarget.href = app.config.esignServer + url;
     },
 
     _success(data) {

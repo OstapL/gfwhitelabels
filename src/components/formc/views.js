@@ -93,9 +93,9 @@ module.exports = {
     events: Object.assign({
       'click .save-and-continue': 'submit',
       // 'submit form': 'submit',
-      'click .link-2': 'openPdf',
       'keyup #full_name': 'changeSign',
       'click #pay-btn': 'stripeSubmit',
+      'click .openPdfPreview': 'openPdfPreview',
       'click .submit_formc': submitFormc,
     }, app.helpers.menu.events, app.helpers.yesNo.events, /*app.helpers.confirmOnLeave.events*/),
 
@@ -319,6 +319,13 @@ module.exports = {
 
     changeSign() {
       this.eSignPreview.text(this.eSignFullName.val());
+    },
+
+    openPdfPreview(e) {
+      let url = e.currentTarget.getAttribute('href');
+      url += this.el.querySelector('#full_name').value;
+      app.utils.openPdfPreview(url);
+      return false;
     },
 
   }, app.helpers.menu.methods, app.helpers.yesNo.methods, app.helpers.confirmOnLeave.methods)),

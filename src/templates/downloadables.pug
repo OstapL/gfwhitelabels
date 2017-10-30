@@ -11,10 +11,10 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
           - var link = f.urls.origin;
           - if(f.site_id && f.urls.origin.startsWith('http') == false) link = app.sites[f.site_id] + f.urls.origin;
           - var iconPath = app.helpers.icons.resolveIconPath(f.mime, 'file');
-          a(class="link-file" target="_blank" href=link title=f.name)
+          a(target="_blank" href=link title=f.name data-link=f.urls.origin).link-file.openPdfPreview
             .thumb-file-container.m-b-2.d-inline-block
               img(src=iconPath alt=f.name class="img-file")
               .row
-                a(class="link-file" target="_blank" href=link title=f.name) #{ app.helpers.text.shortenFileName(f.name) }
+                a(target="_blank" href=link title=f.name data-link=f.urls.origin).link-file.openPdfPreview #{ app.helpers.text.shortenFileName(f.name) }
         else
           p No docs

@@ -63,6 +63,29 @@ module.exports = {
 
     return res;
   },
+  openPdfPreview(url) {
+    let form = document.getElementById('pdfPreviewForm');
+
+    if (form === null) {
+      form = document.createElement('form');
+      form.setAttribute('id', 'pdfPreviewForm');
+
+      form.setAttribute('target', '_blank');
+      form.method = 'POST';
+      form.style.height = 0;
+      form.style.width = 0;
+      form.style.display = 'none';
+
+      let jwtInput = document.createElement('input');
+      jwtInput.setAttribute('name', 'token');
+      jwtInput.value = app.user.token;
+      form.appendChild(jwtInput);
+      document.body.appendChild(form);
+    }
+
+    form.action = app.config.esignServer + url;
+    form.submit();
+  },
   base64Encode(str) {
     var CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
     var out = "", i = 0, len = str.length, c1, c2, c3;

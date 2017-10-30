@@ -64,7 +64,7 @@ section.formc.introduction.create-company-media.container
                   .border-bottom.m-t-3.m-b-3
               .growthfountain-charges
                 p.m-b-1 GrowthFountain charges $#{ values.registration_fee } for Form C generation, background checks and escrow. To authorize this charge and to enter into the Listing Agreement, please electronically sign below.
-                a(href="/formc/" + app.user.company.slug + "/esignature/255?amount=0&commission=0&company_id=" + app.user.company.id + "&email=&first_name=&last_name=&country=US&address=&address2=&zip_code=&city=&state=&signature=" target="_blank").link-2 To review the Listing Agreement, click here
+                a(href="/preview/" + app.user.company.slug + "/255?amount=0&commission=0&company_id=" + app.user.company.id + "&email=&first_name=&last_name=&country=US&address=&address2=&zip_code=&city=&state=&signature=" target="_blank").link-2.openPdfPreview To review the Listing Agreement, click here
                 .form-group.row.m-t-2
                   .col-xl-12.text-xl-left
                     label Credit Card Number
