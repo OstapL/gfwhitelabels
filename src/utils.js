@@ -63,31 +63,27 @@ module.exports = {
 
     return res;
   },
-  base64Encode(str) {
-    var CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-    var out = "", i = 0, len = str.length, c1, c2, c3;
-    while (i < len) {
-      c1 = str.charCodeAt(i++) & 0xff;
-      if (i == len) {
-        out += CHARS.charAt(c1 >> 2);
-        out += CHARS.charAt((c1 & 0x3) << 4);
-        out += "==";
-        break;
-      }
-      c2 = str.charCodeAt(i++);
-      if (i == len) {
-        out += CHARS.charAt(c1 >> 2);
-        out += CHARS.charAt(((c1 & 0x3)<< 4) | ((c2 & 0xF0) >> 4));
-        out += CHARS.charAt((c2 & 0xF) << 2);
-        out += "=";
-        break;
-      }
-      c3 = str.charCodeAt(i++);
-      out += CHARS.charAt(c1 >> 2);
-      out += CHARS.charAt(((c1 & 0x3) << 4) | ((c2 & 0xF0) >> 4));
-      out += CHARS.charAt(((c2 & 0xF) << 2) | ((c3 & 0xC0) >> 6));
-      out += CHARS.charAt(c3 & 0x3F);
+  openPdfPreview(url) {
+    let form = document.getElementById('pdfPreviewForm');
+
+    if (form === null) {
+      form = document.createElement('form');
+      form.setAttribute('id', 'pdfPreviewForm');
+
+      form.setAttribute('target', '_blank');
+      form.method = 'POST';
+      form.style.height = 0;
+      form.style.width = 0;
+      form.style.display = 'none';
+
+      let jwtInput = document.createElement('input');
+      jwtInput.setAttribute('name', 'token');
+      jwtInput.value = app.user.token;
+      form.appendChild(jwtInput);
+      document.body.appendChild(form);
     }
-    return out;
+
+    form.action = app.config.esignServer + url;
+    form.submit();
   },
 };
