@@ -10,6 +10,7 @@ const templateMap = {
   'formc-review-congratulations': 'formc_review_congratulations',
   'investor-questions': 'investorquestions',
   'entrepreneur-questions': 'entrepreneurquestions',
+  'heartland-tour': 'heartland-tour',
 };
 
 function scaleVideoContainer(selector='.homepage-hero-module') {
@@ -87,6 +88,11 @@ const Views = {
       if (this.scrollHandler) {
         $(window).off('scroll', this.scrollHandler);
         this.scrollHandler = null;
+      }
+      if (this.$sideMenu) {
+        //destroy sticky side menu
+        this.$sideMenu.trigger("sticky_kit:detach");
+        this.$sideMenu = null;
       }
     },
 
@@ -300,6 +306,9 @@ const Views = {
     },
 
     initCalendly() {
+      this.$calendly = this.$el.find('.calendly');
+      if (!this.$calendly || !this.$calendly.length)
+        return;
       app.helpers.scripts.loadCalendlyAPI().then(() => {
         this.$el.find('.scheduleCall').on('click', (e) => {
           e.preventDefault();
@@ -308,9 +317,32 @@ const Views = {
         });
       });
     },
+    initWow() {
+      this.$wowJs = this.$el.find('.wow');
+      if (!this.$wowJs || !this.$wowJs.length)
+        return;
+      app.helpers.scripts.load('https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js').then(() => {
+        var wow = new WOW(
+          {
+            boxClass:     'wow',      // animated element css class (default is wow)
+            animateClass: 'animated', // animation css class (default is animated)
+            offset:       0,          // distance to the element when triggering the animation (default is 0)
+            mobile:       true,       // trigger animations on mobile devices (default is true)
+            live:         true,       // act on asynchronously loaded content (default is true)
+            callback:     function(box) {
+              // the callback is fired every time an animation is started
+              // the argument that is passed in is the DOM node being animated
+            },
+            scrollContainer: null // optional scroll container selector, otherwise use window
+          }
+        );
+        wow.init();
+      });
+    },
 
     initialize(options) {
       this.template = require(`./templates/${ options.template }.pug`);
+
     },
 
     render() {
@@ -320,10 +352,11 @@ const Views = {
       setTimeout(() => {
         this.initCalendly();
         this.initCarousel();
+        this.initWow();
         this.initAudioModalEvents();
       }, 10);
 
-      if (app.user.data.info.length === 0) {
+      if (app.user.data.info.length === 0 && window.location.pathname == '/pg/success_guide_1') {
         setTimeout(() => {
           api.makeRequest(
               app.config.emailServer + '/subscribe',
@@ -344,16 +377,14 @@ const Views = {
         this.$owlCarousel.owlCarousel('destroy');
         this.$owlCarousel = null;
       }
-
+      if (this.wow) {
+        document.head.querySelector('script[src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"]').remove();
+        this.wow.destroy();
+        this.wow = null;
+      }
       if (this.$audioModal) {
         this.$audioModal.off('hidden.bs.modal');
         this.$audioModal = null;
-      }
-
-      if (this.$sideMenu) {
-        //destroy sticky side menu
-        this.$sideMenu.trigger("sticky_kit:detach");
-        this.$sideMenu = null;
       }
     },
 

@@ -1,5 +1,4 @@
-const typeOfDocuments = require('consts/typeOfDocuments.json');
-const companyFees = require('consts/companyFees.json');
+const companyFees = require('consts/raisecapital/companyFees.json');
 const securityTypeConsts = require('consts/formc/security_type.json');
 const yesNoConsts = require('consts/yesNo.json');
 const roles = ['Shareholder', 'Director', 'Officer'];
@@ -93,9 +92,9 @@ module.exports = {
     events: Object.assign({
       'click .save-and-continue': 'submit',
       // 'submit form': 'submit',
-      'click .link-2': 'openPdf',
       'keyup #full_name': 'changeSign',
       'click #pay-btn': 'stripeSubmit',
+      'click .openPdfPreview': 'openPdfPreview',
       'click .submit_formc': submitFormc,
     }, app.helpers.menu.events, app.helpers.yesNo.events, /*app.helpers.confirmOnLeave.events*/),
 
@@ -319,6 +318,13 @@ module.exports = {
 
     changeSign() {
       this.eSignPreview.text(this.eSignFullName.val());
+    },
+
+    openPdfPreview(e) {
+      let url = e.currentTarget.getAttribute('href');
+      url += this.el.querySelector('#full_name').value;
+      app.utils.openPdfPreview(url);
+      return false;
     },
 
   }, app.helpers.menu.methods, app.helpers.yesNo.methods, app.helpers.confirmOnLeave.methods)),
