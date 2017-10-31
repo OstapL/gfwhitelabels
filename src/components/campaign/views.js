@@ -1121,9 +1121,10 @@ module.exports = {
       })
       .fail( (err) => {
         console.log(err);
+        alert('Esignatures havent been created');
         $('body').scrollTo();
         this.undelegateEvents();
-        app.routers.navigate(this.getSuccessUrl({}), {
+        app.routers.navigate(this.getSuccessUrl(responseData), {
             trigger: true,
             replace: false
         });
@@ -1178,7 +1179,7 @@ module.exports = {
         + '&state=' +  this.el.querySelector('#personal_information_data__state').value
         + '&signature=' +  this.el.querySelector('#signature').value;
 
-      app.utils.openPdfPreview(url);
+      setTimeout(() => app.utils.openPdfPreview(url), 250);
       return false;
     },
 
