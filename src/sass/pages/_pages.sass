@@ -39,6 +39,9 @@
   color: $white
 
 .page.team
+  .one-team
+    img
+      max-height: 255px
   @media screen and (max-width: 991px)
     .team-member-list
       .name
@@ -211,3 +214,6 @@
     li
       h4
         line-height: 22px
+@media screen and (max-width : 991px)
+  .page.team
+    overflow: hidden

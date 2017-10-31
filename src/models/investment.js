@@ -63,7 +63,7 @@ class Investment {
   }
 
   get historical() {
-    return this.expired || this.cancelled;
+    return this.expired || this.cancelled || this.closed;
   }
 
   get active() {
