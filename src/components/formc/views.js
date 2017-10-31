@@ -1,5 +1,4 @@
-const typeOfDocuments = require('consts/typeOfDocuments.json');
-const companyFees = require('consts/companyFees.json');
+const companyFees = require('consts/raisecapital/companyFees.json');
 const securityTypeConsts = require('consts/formc/security_type.json');
 const yesNoConsts = require('consts/yesNo.json');
 const roles = ['Shareholder', 'Director', 'Officer'];

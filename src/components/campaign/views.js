@@ -1,5 +1,4 @@
-const companyFees = require('consts/companyFees.json');
-const typeOfDocuments = require('consts/typeOfDocuments.json');
+const companyFees = require('consts/raisecapital/companyFees.json');
 const STATUSES = require('consts/raisecapital/companyStatuses.json').STATUS;
 
 const COUNTRIES = require('consts/countries.json');
