@@ -135,6 +135,8 @@ module.exports = {
       this.model.ssn_re = this.model.ssn;
 
       this.labels = {
+        first_name: 'First Name',
+        last_name: 'Last Name',
         country: 'Country',
         street_address_1: 'Street Address 1',
         street_address_2: 'Street Address 2',
@@ -396,6 +398,7 @@ module.exports = {
       'click .cancelInvestment': 'cancelInvestment',
       'click .agreementLink': 'openAgreement',
       'click .financial-docs-link': 'showFinancialDocs',
+      'click .openPdfPreview': 'openPdfPreview',
     },
 
     initialize(options) {
@@ -432,16 +435,25 @@ module.exports = {
           {
             mime: 'application/pdf',
             name: 'Subscription Agreement.pdf',
-            urls: { origin: "/account/esignature/" + e.target.dataset.objectId + "/" + e.target.dataset.type },
+            urls: { origin: "/" + e.target.dataset.objectId + "/" + e.target.dataset.type },
           }, {
             mime: 'application/pdf',
             name: 'Participation Agreement.pdf',
-            urls: { origin: "/account/esignature/" + e.target.dataset.objectId + "/0" },
+            urls: { origin: "/" + e.target.dataset.objectId + "/0" },
           },
         ],
       };
 
       app.helpers.fileList.show(data);
+      document.querySelectorAll('.modal .openPdfPreview').forEach((el) => {
+        el.onclick = this.openPdfPreview;
+      });
+      // $('.openPdfPreview').click(this.openPdfPreview);
+    },
+
+    openPdfPreview(e) {
+      app.utils.openPdfPreview(e.currentTarget.dataset.link);
+      return false;
     },
 
     _findInvestment(id) {
@@ -668,6 +680,7 @@ module.exports = {
     template: require('./templates/issuerDashboard.pug'),
     events: {
       'click .cancel-campaign': 'cancelCampaign',
+      'click .openPdfPreview': 'openPdfPreview',
     },
 
     initialize(options) {
@@ -779,6 +792,12 @@ module.exports = {
       Backbone.View.prototype.destroy.call(this);
       if (this.commentsView)
         this.commentsView.destroy();
+    },
+
+    openPdfPreview(e) {
+      let url = e.currentTarget.getAttribute('href');
+      app.utils.openPdfPreview(url);
+      return false;
     },
   }),
 };
