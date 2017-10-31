@@ -1,5 +1,4 @@
-const companyFees = require('consts/companyFees.json');
-const typeOfDocuments = require('consts/typeOfDocuments.json');
+const companyFees = require('consts/raisecapital/companyFees.json');
 const STATUSES = require('consts/raisecapital/companyStatuses.json').STATUS;
 
 const COUNTRIES = require('consts/countries.json');
@@ -1120,7 +1119,15 @@ module.exports = {
             replace: false
         });
       })
-      .fail( (err) => console.log(err));
+      .fail( (err) => {
+        console.log(err);
+        $('body').scrollTo();
+        this.undelegateEvents();
+        app.routers.navigate(this.getSuccessUrl({}), {
+            trigger: true,
+            replace: false
+        });
+      });
     },
 
     updateLocation(e) {
@@ -1156,7 +1163,7 @@ module.exports = {
         cityInput = this.el.querySelector('#personal_information_data__city');
       }
 
-      const url = '/' + this.model.slug + '/esignature/' + e.currentTarget.dataset.pdfType
+      const url = '/preview/' + this.model.slug + '/' + e.currentTarget.dataset.pdfType
         + '?amount=' + (this.el.querySelector('#amount').value.replace(/[\$,]/g, '') || 0)
         + '&commission=' + this.calcFeeWithCredit().fee
         + '&company_id=' + this.model.id
@@ -1171,7 +1178,8 @@ module.exports = {
         + '&state=' +  this.el.querySelector('#personal_information_data__state').value
         + '&signature=' +  this.el.querySelector('#signature').value;
 
-      e.currentTarget.href = url;
+      app.utils.openPdfPreview(url);
+      return false;
     },
 
     _success(data) {

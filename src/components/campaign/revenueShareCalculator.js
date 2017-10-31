@@ -109,6 +109,7 @@ module.exports = {
 
       this.data.outputData = outputData;
       this.initPlot();
+      
     },
 
     // get sum of last Annual Distributions
@@ -250,6 +251,8 @@ module.exports = {
           }
         });
 
+        var scrollTop = $('#revenue-share-calculator-result').offset().top;
+        $(document).scrollTop(scrollTop - 50);
       }, 'graph_chunk');
 
       return this;
