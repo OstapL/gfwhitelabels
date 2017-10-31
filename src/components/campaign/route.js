@@ -9,7 +9,6 @@ module.exports = {
     ':name': 'detail',
     ':name/invest-thanks-share': 'investThanksShareDetail',
     ':name/invest': 'investment',
-    ':slug/esignature/:pdfType': 'previewPdf',
   },
   methods: {
     investmentThankYou(companyName, investmentId) {
@@ -150,28 +149,7 @@ module.exports = {
       }, 'campaign_chunk');
     },
 
-    previewPdf(slug, pdfType) {
-      app.showLoading();
-
-      require.ensure([], () => {
-        $.when(
-          api.makeRequest(
-              app.config.esignServer + '/preview/' + slug + '/' + pdfType + window.location.search,
-              "GET",
-              {},
-              {
-                dataType: "text",
-                contentType: "application/text",
-                mimeType: "text/plain; charset=x-user-defined"
-              },
-          )
-        ).done((rawData) => {
-          app.currentView = new app.helpers.previewPdf(slug, rawData);
-        });
-      }, 'campaign_chunk');
-    },
-
   },
 
-  auth: ['investment', 'investmentThankYou', 'previewPdf',]
+  auth: ['investment', 'investmentThankYou', ]
 };
