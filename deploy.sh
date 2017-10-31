@@ -15,8 +15,8 @@ cp staticdata/img/generals/gbi-widget.png dist/staticdata/img/generals/gbi-widge
 cp src/js/widget/widget-gfv2.js dist/js/widget/widget-gfv2.js
 cp src/js/widget/widget-gf.css dist/js/widget/widget-gf.css
 DIR=dist
-aws  s3 sync $DIR s3://$BUCKET/ --profile "$PROFILE" > /dev/null
+aws  s3 sync --cache-control max-age=604800 $DIR s3://$BUCKET/ --profile "$PROFILE" > /dev/null
 aws s3api put-object --bucket $BUCKET --key index.html --cache-control no-cache --body $DIR/index.html --content-type text/html
 aws s3api put-object --bucket $BUCKET --key error.html --cache-control no-cache --body $DIR/error.html --content-type text/html
 DIR=src/js/
-aws  s3 sync $DIR s3://$BUCKET/js/ --profile "$PROFILE" > /dev/null
+aws  s3 sync --cache-control max-age=604800 $DIR s3://$BUCKET/js/ --profile "$PROFILE" > /dev/null
