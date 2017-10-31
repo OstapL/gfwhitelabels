@@ -85,7 +85,6 @@ function getOCCF(optionsR, viewName, params = {}, View) {
 module.exports = {
   routes: {
     'formc/:id/introduction': 'introduction',
-    'formc/:slug/esignature/:pdfType': 'previewPdf',
     'formc/:id/team-members/:type/:index': 'teamMemberAdd',
     'formc/:id/team-members': 'teamMembers',
     'formc/:id/related-parties': 'relatedParties',
@@ -352,26 +351,5 @@ module.exports = {
         app.hideLoading();
       }, 'formc_chunk');
     },
-  },
-
-  previewPdf(slug, pdfType) {
-    app.showLoading();
-
-    require.ensure([], () => {
-      $.when(
-        api.makeRequest(
-            app.config.esignServer + '/preview/' + slug + '/' + pdfType + window.location.search,
-            "GET",
-            {},
-            {
-              dataType: "text",
-              contentType: "application/text",
-              mimeType: "text/plain; charset=x-user-defined"
-            },
-        )
-      ).done((rawData) => {
-        app.currentView = new app.helpers.previewPdf(slug, rawData);
-      });
-    }, 'formc_chunk');
   },
 };
