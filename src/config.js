@@ -1,17 +1,11 @@
 var e = {
   domainUrl: "growthfountain.com",
-  serverUrl: "https://django-api-dev.growthfountain.com",
   raiseCapitalServer: "https://api-raisecapital-dev.growthfountain.com",
-// raiseCapitalServer: "http://localhost:8003",
   authServer: "https://api-auth-dev.growthfountain.com",
-// authServer: "http://localhost:8002",
   formcServer: "https://api-formc-dev.growthfountain.com",
-// formcServer: "http://localhost:8001",
   investmentServer: "https://api-investment-dev.growthfountain.com",
-// investmentServer: "http://localhost:8003",
   filerServer: "https://api-filer-dev.growthfountain.com",
   esignServer: 'https://api-esign-dev.growthfountain.com',
-//  esignServer: 'https://api-esign.growthfountain.com',
   commentsServer: "https://api-comments-dev.growthfountain.com",
   blogServer: "https://api-blog-dev.growthfountain.com",
   notificationsServer: "https://notifications-dev.growthfountain.com/",
@@ -20,28 +14,14 @@ var e = {
   teamName: 'GrowthFountain Team',
   teamTitle: "Meet The Team",
   siteTitle: "Crowdfunding | Momentum3 Growth",
-// serverUrl: "http://192.168.99.100:8000",
-// serverUrl: "http://gfauth.com:8000",
 
+  facebookClientId = "547857385398592",
+  googleClientId = "372921150-paa9eek64iuo2d5pmg7nraivc72g0sfo.apps.googleusercontent.com",
+  linkedinClientId = "77hgtbs9rkjk20",
 
-// Growth Fountain production keys:
-//  facebookClientId: "191471871275050",
-//  googleClientId: "488593151885-87nqfd8gl444a1me0n149otrf37dbahq.apps.googleusercontent.com",
-//  linkedinClientId: "77wzj6tz0yyr33",
-
-  facebookClientId: "1405768896335643",
-  googleClientId: "805823281871-0sbsf2btjd5j13g5aa7sfo4pfjorn3k2.apps.googleusercontent.com",
-  linkedinClientId: "77wzj6tz0yyr33",
-
-
-  googleMapKey: "AIzaSyBpCl9-7bkVISZ0o-AaFCsKzZwGAxalkZU",
-  stripeKey: "pk_live_4ZF2RPjAVJ0tXrDNMauofmgb",
-
-  googleTagID: 'GTM-NC9XW5D',
-  googleAnalyticsID: 'UA-47199302-5',
-  googleAnalyticsIDGeneral: 'UA-47199302-1',
-  facebookPixelID: 172026009946228,
-  yandexMetricaID: 42321779,
+  googleMapKey = "AIzaSyBpCl9-7bkVISZ0o-AaFCsKzZwGAxalkZU",
+  stripeKey = "pk_test_Z7YAhlyPtnW7bpd8LJUHTSou",
+  googleAnalyticsId = 'GTM-NC9XW5D',
 
   indexPage: {
     //main slider or img (slider - 1/ img - 0)
