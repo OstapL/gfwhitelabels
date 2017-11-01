@@ -1,6 +1,5 @@
 var e = {
   domainUrl: "growthfountain.com",
-  serverUrl: "https://django-api-dev.growthfountain.com",
   raiseCapitalServer: "https://api-raisecapital-dev.growthfountain.com",
   authServer: "https://api-auth-dev.growthfountain.com",
   formcServer: "https://api-formc-dev.growthfountain.com",
@@ -15,20 +14,12 @@ var e = {
   teamTitle: "Meet The Team",
   siteTitle: 'Crowdfunding | GrowthFountain Equity Crowdfunding',
 
-  // Growth Fountain production keys:
-  // facebookClientId: "191471871275050",
-  // googleClientId: "488593151885-87nqfd8gl444a1me0n149otrf37dbahq.apps.googleusercontent.com",
-  // linkedinClientId: "77wzj6tz0yyr33",
-
-  facebookClientId: "1405768896335643",
-  googleClientId: "805823281871-0sbsf2btjd5j13g5aa7sfo4pfjorn3k2.apps.googleusercontent.com",
-  linkedinClientId: "77wzj6tz0yyr33",
+  facebookClientId = "547857385398592",
+  googleClientId = "372921150-paa9eek64iuo2d5pmg7nraivc72g0sfo.apps.googleusercontent.com",
+  linkedinClientId = "77hgtbs9rkjk20",
 
   googleMapKey: "AIzaSyBpCl9-7bkVISZ0o-AaFCsKzZwGAxalkZU",
   stripeKey: "pk_test_Z7YAhlyPtnW7bpd8LJUHTSou",
-
-  //analytics services settings
-  googleTagID: 'GTM-WP7K455',
 
   indexPage: {
     //main slider or img (slider - 1/ img - 0)
