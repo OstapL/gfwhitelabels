@@ -4,7 +4,7 @@
   var moment = require('moment');
   var socialDirective = require('directives/social/index.js');
   var CampaignInfoProvider = require('directives/social/CampaignInfoProvider.js');
-
+  var STATUSES = require('consts/raisecapital/companyStatuses.json').STATUS;
   var infoProvider = new CampaignInfoProvider(this.company);
   var directiveKey = 'issuerDashboard';
 section.issuer-dashbord-top
@@ -14,14 +14,16 @@ section.issuer-dashbord-top
         .img_under_text
           img(src=(campaign.list_image_image_id.getUrl() || require('images/default/350x282.png')) alt="")
           h2.text-uppercase.dosis.m-t-0 #{company.name}
-          .timer_day
-            if campaign.expired
+          
+          if campaign.expired
+            .timer_day
               .text-xs-center
                 p #{ moment(campaign.expiration_date).format('MM.DD.YYYY') }
                 p End Date
-            else
+          else if company.is_approved == STATUSES.VERIFIED
+            .timer_day
               | #{campaign.daysLeftText()}
-        if !campaign.expired
+        if !campaign.expired && company.is_approved == STATUSES.VERIFIED
           .share-block.d-inline-block.share
             | !{ socialDirective.render(directiveKey, infoProvider) }
       .col-xl-2.col-lg-2.col-md-3.col-sm-6.col-xs-6
@@ -72,46 +74,50 @@ section.issuer-dashbord-top
                 data-value=0
               ).interactions-count 0
             .desc New Interactions
-
-      .col-xl-7.col-lg-7.col-md-10.col-sm-10.p-r-0.col-xs-10.hidden-xs-down
-        .tpl-progress
-          -
-            var daysPassedPercents = campaign.daysPassedPercentage(company.approved_date);
-          progress(
-            value=daysPassedPercents
-            max="100").progress.big_prog #{ daysPassedPercents }%
-          span(
-            style="left:" + daysPassedPercents + "%").circle_progress
-            i.fa.fa-circle-o
-          div(style="left:" +  (daysPassedPercents) + "%").text_position
-            .text-wrap
-              - var now = new Date();
-              .font-weight-bold
-                if campaign.expired
-                  | #{ moment(campaign.expiration_date).format('DD MMMM') }
-                else
-                  | #{now.toLocaleString('en-US', { month: "short" })} #{ now.getDate() }
-              | #{ '$' + (campaign.amount_raised || 0).toLocaleString('en-US') } Raised
-              //br
-              //| #{ app.helpers.format.formatAmount(campaign.amount_commited) } Approved
-              //br
-              //| Chances: #{ Math.round(percentage_raised / (campaign.minimum_raise  / campaign.amount_commited) * 100) }%
-        .progress_description
-          .pull-left
-            p #{ moment(company.approved_date).format('MM/DD/YYYY') }
-            span Begining of campaign
-          .pull-right.text-lg-right
-            p #{ moment(campaign.expiration_date).format('MM/DD/YYYY') }
-            span End of campaign
-          .clearfix
-      .col-xl-1.col-lg-1.col-md-2.col-sm-2.col-xs-2.hidden-xs-down
-        .right_fixed_text.text-lg-center
-          b #{ app.helpers.format.formatAmount(campaign.minimum_raise || campaign.maximum_raise)}
-          span Goal
+      if company.is_approved == STATUSES.VERIFIED
+        .col-xl-7.col-lg-7.col-md-10.col-sm-10.p-r-0.col-xs-10.hidden-xs-down
+          .tpl-progress
+            -
+              var daysPassedPercents = campaign.daysPassedPercentage(company.approved_date);
+            progress(
+              value=daysPassedPercents
+              max="100").progress.big_prog #{ daysPassedPercents }%
+            span(
+              style="left:" + daysPassedPercents + "%").circle_progress
+              i.fa.fa-circle-o
+            div(style="left:" +  (daysPassedPercents) + "%").text_position
+              .text-wrap
+                - var now = new Date();
+                .font-weight-bold
+                  if campaign.expired
+                    | #{ moment(campaign.expiration_date).format('DD MMMM') }
+                  else
+                    | #{now.toLocaleString('en-US', { month: "short" })} #{ now.getDate() }
+                | #{ '$' + (campaign.amount_raised || 0).toLocaleString('en-US') } Raised
+                //br
+                //| #{ app.helpers.format.formatAmount(campaign.amount_commited) } Approved
+                //br
+                //| Chances: #{ Math.round(percentage_raised / (campaign.minimum_raise  / campaign.amount_commited) * 100) }%
+          .progress_description
+            .pull-left
+              p #{ moment(company.approved_date).format('MM/DD/YYYY') }
+              span Begining of campaign
+            .pull-right.text-lg-right
+              p #{ moment(campaign.expiration_date).format('MM/DD/YYYY') }
+              span End of campaign
+            .clearfix
+        .col-xl-1.col-lg-1.col-md-2.col-sm-2.col-xs-2.hidden-xs-down
+          .right_fixed_text.text-lg-center
+            b #{ app.helpers.format.formatAmount(campaign.minimum_raise || campaign.maximum_raise)}
+            span Goal
       .col-xl-8.col-lg-8.col-md-12.text-xs-center
-        if !campaign.expired
+        if company.is_approved != STATUSES.VERIFIED
+          a(href="/" + company.slug).btn-sm.btn.btn-secondary.text-uppercase preview campaign
+            i(aria-hidden="true").fa.fa-angle-right
+        if !campaign.expired && company.is_approved == STATUSES.VERIFIED
           a(href="/" + company.slug).btn-sm.btn.btn-secondary.text-uppercase view Campaign
             i(aria-hidden="true").fa.fa-angle-right
+        
     
 section.issuer-dashboard-tabs.m-t-3
   .container
