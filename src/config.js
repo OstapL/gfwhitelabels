@@ -15,13 +15,13 @@ var e = {
   teamTitle: "Meet The Team",
   siteTitle: "Crowdfunding | Momentum3 Growth",
 
-  facebookClientId = "547857385398592",
-  googleClientId = "372921150-paa9eek64iuo2d5pmg7nraivc72g0sfo.apps.googleusercontent.com",
-  linkedinClientId = "77hgtbs9rkjk20",
+  facebookClientId: "547857385398592",
+  googleClientId: "372921150-paa9eek64iuo2d5pmg7nraivc72g0sfo.apps.googleusercontent.com",
+  linkedinClientId: "77hgtbs9rkjk20",
 
-  googleMapKey = "AIzaSyBpCl9-7bkVISZ0o-AaFCsKzZwGAxalkZU",
-  stripeKey = "pk_test_Z7YAhlyPtnW7bpd8LJUHTSou",
-  googleAnalyticsId = 'GTM-NC9XW5D',
+  googleMapKey: "AIzaSyBpCl9-7bkVISZ0o-AaFCsKzZwGAxalkZU",
+  stripeKey: "pk_test_Z7YAhlyPtnW7bpd8LJUHTSou",
+  googleAnalyticsId: 'GTM-NC9XW5D',
 
   indexPage: {
     //main slider or img (slider - 1/ img - 0)
