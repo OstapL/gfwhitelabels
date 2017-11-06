@@ -38,23 +38,24 @@ html(lang="en")
     // Navigation panel
     header.header
       .header-wrap
-        nav.navbar.bg-invere.navbar-dark
+        nav.navbar.navbar-dark
           a(href="/").navbar-brand
             img(src=require("images/logo.png") alt="")
 
-          div.navbar-toggleable-md.pull-right
-            div#menuProfile
+          
 
-          div.navbar-toggleable-md.pull-right
+          div.navbar-expand-md.pull-right
             ul.nav.navbar-nav#menuNotification
 
           div.wrap-toggle-menu
-            button(type="button" data-toggle="collapse").navbar-toggler.hidden-lg-up#toggle_mobile_menu
+            button(type="button" data-toggle="collapse").navbar-toggler.d-lg-none#toggle_mobile_menu
               //i.fa.fa-bars
               span
 
           div.mobile-menu.full-height
             ul.nav.navbar-nav.pull-left#menuList
+          div.navbar-expand-md.pull-right
+            div#menuProfile
 
     div.page#page
       div#content

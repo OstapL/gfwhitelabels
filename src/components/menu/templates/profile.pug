@@ -6,7 +6,7 @@ if user.token != ""
           img(src=app.user.data.image_image_id.getUrl('main'))#user-thumbnail.img-fluid.img-circle
               
         #user_name #{ user.first_name } #{user.last_name}&nbsp;
-        i.fa.fa-angle-down.hidden-md-down
+        i.fa.fa-angle-down.d-none.d-lg-block
       .list-container.user-info-drop.notification-container.drop-container
         ul.submenu.list-unstyled 
           li
@@ -25,8 +25,8 @@ if user.token != ""
 else
   ul.nav.navbar-nav
     // for desktop
-    li.login-sinup.hidden-md-down
+    li.login-sinup.d-none.d-lg-block
       a(href="/account/login").btn.link-or-button Log in
     
-    li.login-sinup.hidden-md-down
+    li.login-sinup.d-none.d-lg-block
       a(href="/account/signup")#sign-up-button.btn.link-or-button sign up + get $25
