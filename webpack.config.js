@@ -27,6 +27,7 @@ const plugins = [
     'window.jQuery': 'jquery',
     'Tether': 'tether',
     'window.Tether': 'tether',
+    'Popper': ['popper.js', 'default'],
     '_': 'underscore',
     'Backbone': 'backbone',
   }),
