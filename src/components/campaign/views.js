@@ -228,8 +228,8 @@ module.exports = {
 
     initAsyncUI() {
       this.initStickyToggle();
-      if (this.model.campaign.security_type == 1)
-        (new CalculatorView.calculator()).render();
+      // if (this.model.campaign.security_type == 1)
+      //  (new CalculatorView.calculator()).render();
 
       Promise.all([
         this.initFancyBox(),
